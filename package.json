@@ -1,0 +1,36 @@
+{
+  "name": "nisi",
+  "version": "0.1.0",
+  "description": "Nothing passes unless it is admitted. A canonical JSON codec, a consent gate for on-device model input, and a static purity checker that is mutation-tested against itself \u2014 each boundary refusing with an exact named code.",
+  "license": "Apache-2.0",
+  "author": "Louis Calata",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/louiscalata/nisi.git"
+  },
+  "homepage": "https://github.com/louiscalata/nisi#readme",
+  "bugs": {
+    "url": "https://github.com/louiscalata/nisi/issues"
+  },
+  "type": "module",
+  "engines": {
+    "node": ">=22"
+  },
+  "scripts": {
+    "test": "node --test tests/*.test.mjs",
+    "check:structural": "node scripts/structural-check.mjs",
+    "check": "npm run check:structural && npm test",
+    "bench": "node scripts/bench.mjs",
+    "ab:purity": "node scripts/ab-purity.mjs contracts/structural-fixtures.json ${AFM:-afm}"
+  },
+  "devDependencies": {
+    "typescript": "^6.0.3"
+  },
+  "keywords": [
+    "canonical-json",
+    "capability-security",
+    "static-analysis",
+    "mutation-testing",
+    "foundation-models"
+  ]
+}

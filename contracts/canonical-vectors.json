@@ -1,0 +1,188 @@
+{
+  "schemaVersion": 1,
+  "profile": "nisi-canonical-json-v1",
+  "note": "Expected bytes are derived from the independent serializer in scripts/common.mjs, never from the codec under test.",
+  "vectors": [
+    {
+      "id": "CANON-KEY-ORDER-IS-BYTE-ORDER",
+      "value": {
+        "z": 2,
+        "a": 1,
+        "M": 3,
+        "m": 4
+      },
+      "canonical": "{\"M\":3,\"a\":1,\"m\":4,\"z\":2}",
+      "sha256": "a369b46ec597e1cda8fa366be69cbc0fe612b281096a0d9f234cf88c03ade6cd"
+    },
+    {
+      "id": "CANON-NESTED-OBJECTS",
+      "value": {
+        "outer": {
+          "inner": {
+            "leaf": 1
+          }
+        },
+        "sibling": 2
+      },
+      "canonical": "{\"outer\":{\"inner\":{\"leaf\":1}},\"sibling\":2}",
+      "sha256": "c907f0d1740a81f05659254ff62344ece6bf1f8b124d234c234eedf5f06424bb"
+    },
+    {
+      "id": "CANON-ARRAY-ORDER-PRESERVED",
+      "value": {
+        "items": [
+          3,
+          1,
+          2
+        ],
+        "note": "order is data"
+      },
+      "canonical": "{\"items\":[3,1,2],\"note\":\"order is data\"}",
+      "sha256": "7dcd59ba909c779b33d3ca533c717a7098e5c0a0e1e2ffbeaac1ecbd8702f4ab"
+    },
+    {
+      "id": "CANON-NEGATIVE-AND-ZERO-INTEGERS",
+      "value": {
+        "below": -1,
+        "zero": 0,
+        "above": 1,
+        "large": 9007199254740991
+      },
+      "canonical": "{\"above\":1,\"below\":-1,\"large\":9007199254740991,\"zero\":0}",
+      "sha256": "bfcae40485c86c66b903c5a2515076d860febb2712856926a0f9db57fc78affd"
+    },
+    {
+      "id": "CANON-BOOLEAN-AND-NULL-LITERALS",
+      "value": {
+        "yes": true,
+        "no": false,
+        "absentIsNotNull": null
+      },
+      "canonical": "{\"absentIsNotNull\":null,\"no\":false,\"yes\":true}",
+      "sha256": "cfb88924f035f8966ea7bc357b5e9696d95256a8ad2c6031ccc101b2531a87b8"
+    },
+    {
+      "id": "CANON-EMPTY-CONTAINERS",
+      "value": {
+        "emptyObject": {},
+        "emptyArray": [],
+        "emptyString": ""
+      },
+      "canonical": "{\"emptyArray\":[],\"emptyObject\":{},\"emptyString\":\"\"}",
+      "sha256": "351ec978473da630ea5c68426d530c20a4c5ac1470158951fd5689b7bfc00d39"
+    },
+    {
+      "id": "CANON-UNICODE-STRING-VALUES",
+      "value": {
+        "greek": "αβγ",
+        "cjk": "日本語",
+        "emoji": "🧪"
+      },
+      "canonical": "{\"cjk\":\"日本語\",\"emoji\":\"🧪\",\"greek\":\"αβγ\"}",
+      "sha256": "430d7a1b3b41a09dc369ca39abf0ad0e2208f12de7a309c13289e7333321e57c"
+    },
+    {
+      "id": "CANON-ESCAPES-IN-STRINGS",
+      "value": {
+        "quote": "he said \"hi\"",
+        "backslash": "a\\b",
+        "newline": "a\nb",
+        "tab": "a\tb"
+      },
+      "canonical": "{\"backslash\":\"a\\\\b\",\"newline\":\"a\\nb\",\"quote\":\"he said \\\"hi\\\"\",\"tab\":\"a\\tb\"}",
+      "sha256": "af992f636fec187c5b932731041990c3f815bdc35bd339b84a8dfdcc1e0fef40"
+    },
+    {
+      "id": "CANON-CONTROL-CHARACTERS",
+      "value": {
+        "bell": "\u0007",
+        "nul": "\u0000",
+        "del": ""
+      },
+      "canonical": "{\"bell\":\"\\u0007\",\"del\":\"\",\"nul\":\"\\u0000\"}",
+      "sha256": "5bdb127e7420ec63a97875c222e679341ffd0f9f0d5ffc06ad618b5065d9e7d4"
+    },
+    {
+      "id": "CANON-DEEP-NESTING",
+      "value": {
+        "a": {
+          "b": {
+            "c": {
+              "d": {
+                "e": {
+                  "f": "bottom"
+                }
+              }
+            }
+          }
+        }
+      },
+      "canonical": "{\"a\":{\"b\":{\"c\":{\"d\":{\"e\":{\"f\":\"bottom\"}}}}}}",
+      "sha256": "0872540d9ffa91f30fed4485303ee0a854c79ae7f529e01348cb64b0d5d4cc12"
+    },
+    {
+      "id": "CANON-ARRAY-OF-OBJECTS",
+      "value": {
+        "rows": [
+          {
+            "id": "b",
+            "n": 2
+          },
+          {
+            "id": "a",
+            "n": 1
+          }
+        ]
+      },
+      "canonical": "{\"rows\":[{\"id\":\"b\",\"n\":2},{\"id\":\"a\",\"n\":1}]}",
+      "sha256": "5705aba87305af4507125c549ee8970ff6c0e7d4a14077807d97d1c1c903067d"
+    },
+    {
+      "id": "CANON-MANY-KEYS-ONE-OBJECT",
+      "value": {
+        "k00": 0,
+        "k01": 1,
+        "k02": 2,
+        "k03": 3,
+        "k04": 4,
+        "k05": 5,
+        "k06": 6,
+        "k07": 7,
+        "k08": 8,
+        "k09": 9,
+        "k10": 10,
+        "k11": 11,
+        "k12": 12,
+        "k13": 13,
+        "k14": 14,
+        "k15": 15,
+        "k16": 16,
+        "k17": 17,
+        "k18": 18,
+        "k19": 19,
+        "k20": 20,
+        "k21": 21,
+        "k22": 22,
+        "k23": 23,
+        "k24": 24,
+        "k25": 25,
+        "k26": 26,
+        "k27": 27,
+        "k28": 28,
+        "k29": 29,
+        "k30": 30,
+        "k31": 31
+      },
+      "canonical": "{\"k00\":0,\"k01\":1,\"k02\":2,\"k03\":3,\"k04\":4,\"k05\":5,\"k06\":6,\"k07\":7,\"k08\":8,\"k09\":9,\"k10\":10,\"k11\":11,\"k12\":12,\"k13\":13,\"k14\":14,\"k15\":15,\"k16\":16,\"k17\":17,\"k18\":18,\"k19\":19,\"k20\":20,\"k21\":21,\"k22\":22,\"k23\":23,\"k24\":24,\"k25\":25,\"k26\":26,\"k27\":27,\"k28\":28,\"k29\":29,\"k30\":30,\"k31\":31}",
+      "sha256": "3f23abe959e9e9ee8d1959472e2d90ae9c78ba084c14f2cf270acdc3071af000"
+    },
+    {
+      "id": "CANON-SINGLE-SCALAR-FIELD",
+      "value": {
+        "only": "value"
+      },
+      "canonical": "{\"only\":\"value\"}",
+      "sha256": "84c228706ec267e4b7c70a6ee07fb58da0bd74a86cb4d9fd28f201894e57a568"
+    }
+  ]
+}
