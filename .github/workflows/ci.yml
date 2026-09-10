@@ -1,0 +1,28 @@
+name: ci
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+  test:
+    # Every Node test runs here, including the executor suite, which uses
+    # portable stub probes. The Swift probes under probes/ are deliberately not
+    # built: they need macOS 26 and Apple Intelligence, which no hosted runner has.
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        node: ['22', '24']
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: ${{ matrix.node }}
+      - run: npm ci
+      - name: Static purity check on the codec
+        run: npm run check:structural
+      - name: Tests
+        run: npm test

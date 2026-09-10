@@ -17,6 +17,8 @@ throws a typed `CanonicalJSONErrorV1` whose `.code` is that name and nothing els
 the gate and the executor return a frozen `{ ok: false, code }`. Nothing guesses,
 nothing coerces, and there is no fallback path.
 
+[![ci](https://github.com/louiscalata/nisi/actions/workflows/ci.yml/badge.svg)](https://github.com/louiscalata/nisi/actions/workflows/ci.yml)
+
 > **Where it runs.** The codec, the consent gate, the purity checker and the
 > executor are plain Node.js — anywhere Node 22 or later runs, and CI exercises
 > all of them on Linux with portable stand-in probes. The *real* probe under
@@ -271,7 +273,7 @@ npm run check      # purity check, then the full test suite
 npm run bench      # the benchmark table above
 ```
 
-CI is set up to run the same two commands on Node 22 and 24. The two Swift probes carry their
+CI runs the same two commands on Node 22 and 24. The two Swift probes carry their
 build line in their own header comment; the executor pins the resulting binary by
 digest, so a probe is rebuilt and re-pinned locally rather than committed.
 
