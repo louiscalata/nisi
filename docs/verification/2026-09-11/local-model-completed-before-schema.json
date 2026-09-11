@@ -1,0 +1,170 @@
+{
+  "report": {
+    "schemaVersion": 1,
+    "runId": "e7c1bc7b-f875-483e-859c-6e2c026dabf2",
+    "taskId": "example.retry-config",
+    "taskFingerprint": "ac86f100559c5b2a212ca495f8d00b15fffa5ed7d73e1aa6877f3d0e79c9b83c",
+    "mode": "edit",
+    "outcome": "COMPLETED",
+    "workflowOutcome": "COMPLETED",
+    "code": null,
+    "candidate": {
+      "schemaVersion": 1,
+      "authorId": "local.author",
+      "files": [
+        {
+          "path": "retry-config.json",
+          "content": "{\n  \"maxRetries\": 3,\n  \"retryDelayMs\": 250,\n  \"backoff\": \"exponential\"\n}\n"
+        }
+      ],
+      "fingerprint": "1b8ae48f41c9d1efaf79373210e38ebdad2f4057ba08cdb48634ab83b6dd9f7a"
+    },
+    "candidateFingerprint": "1b8ae48f41c9d1efaf79373210e38ebdad2f4057ba08cdb48634ab83b6dd9f7a",
+    "repairAttempts": 0,
+    "stages": [
+      {
+        "stage": "intake",
+        "status": "PASS",
+        "candidateFingerprint": null,
+        "code": null,
+        "evidence": {
+          "schemaVersion": 1,
+          "runId": "e7c1bc7b-f875-483e-859c-6e2c026dabf2",
+          "taskFingerprint": "ac86f100559c5b2a212ca495f8d00b15fffa5ed7d73e1aa6877f3d0e79c9b83c",
+          "attempt": 0,
+          "candidateFingerprint": null,
+          "taskId": "example.retry-config",
+          "mode": "edit",
+          "acceptanceCriteriaCount": 2
+        }
+      },
+      {
+        "stage": "authorizeContext",
+        "status": "PASS",
+        "candidateFingerprint": null,
+        "code": null,
+        "evidence": {
+          "schemaVersion": 1,
+          "runId": "e7c1bc7b-f875-483e-859c-6e2c026dabf2",
+          "taskFingerprint": "ac86f100559c5b2a212ca495f8d00b15fffa5ed7d73e1aa6877f3d0e79c9b83c",
+          "attempt": 0,
+          "candidateFingerprint": null,
+          "reason": ""
+        }
+      },
+      {
+        "stage": "draft",
+        "status": "PASS",
+        "candidateFingerprint": "1b8ae48f41c9d1efaf79373210e38ebdad2f4057ba08cdb48634ab83b6dd9f7a",
+        "code": null,
+        "evidence": {
+          "schemaVersion": 1,
+          "runId": "e7c1bc7b-f875-483e-859c-6e2c026dabf2",
+          "taskFingerprint": "ac86f100559c5b2a212ca495f8d00b15fffa5ed7d73e1aa6877f3d0e79c9b83c",
+          "attempt": 0,
+          "candidateFingerprint": "1b8ae48f41c9d1efaf79373210e38ebdad2f4057ba08cdb48634ab83b6dd9f7a",
+          "note": "Created retry-config.json with the required exact keys and values."
+        }
+      },
+      {
+        "stage": "staticChecks",
+        "status": "PASS",
+        "candidateFingerprint": "1b8ae48f41c9d1efaf79373210e38ebdad2f4057ba08cdb48634ab83b6dd9f7a",
+        "code": null,
+        "evidence": {
+          "schemaVersion": 1,
+          "runId": "e7c1bc7b-f875-483e-859c-6e2c026dabf2",
+          "taskFingerprint": "ac86f100559c5b2a212ca495f8d00b15fffa5ed7d73e1aa6877f3d0e79c9b83c",
+          "attempt": 0,
+          "candidateFingerprint": "1b8ae48f41c9d1efaf79373210e38ebdad2f4057ba08cdb48634ab83b6dd9f7a",
+          "findings": [],
+          "reason": ""
+        }
+      },
+      {
+        "stage": "tests",
+        "status": "PASS",
+        "candidateFingerprint": "1b8ae48f41c9d1efaf79373210e38ebdad2f4057ba08cdb48634ab83b6dd9f7a",
+        "code": null,
+        "evidence": {
+          "schemaVersion": 1,
+          "runId": "e7c1bc7b-f875-483e-859c-6e2c026dabf2",
+          "taskFingerprint": "ac86f100559c5b2a212ca495f8d00b15fffa5ed7d73e1aa6877f3d0e79c9b83c",
+          "attempt": 0,
+          "candidateFingerprint": "1b8ae48f41c9d1efaf79373210e38ebdad2f4057ba08cdb48634ab83b6dd9f7a",
+          "assertionsExecuted": 4,
+          "assertionsPassed": 4,
+          "failures": [],
+          "reason": ""
+        }
+      },
+      {
+        "stage": "review",
+        "status": "PASS",
+        "candidateFingerprint": "1b8ae48f41c9d1efaf79373210e38ebdad2f4057ba08cdb48634ab83b6dd9f7a",
+        "code": null,
+        "evidence": {
+          "schemaVersion": 1,
+          "runId": "e7c1bc7b-f875-483e-859c-6e2c026dabf2",
+          "taskFingerprint": "ac86f100559c5b2a212ca495f8d00b15fffa5ed7d73e1aa6877f3d0e79c9b83c",
+          "attempt": 0,
+          "candidateFingerprint": "1b8ae48f41c9d1efaf79373210e38ebdad2f4057ba08cdb48634ab83b6dd9f7a",
+          "reviewerId": "local.reviewer",
+          "findings": [],
+          "summary": "Inspected the candidate JSON file \"retry-config.json\" and confirmed it contains exactly the required properties: maxRetries, retryDelayMs, and backoff. The values match the acceptance criteria (maxRetries: 3, retryDelayMs: 250, backoff: \"exponential\"). No issues were found.",
+          "reason": ""
+        }
+      }
+    ],
+    "reportStored": false,
+    "reportStoreCode": null,
+    "storedReportSha256": null,
+    "reportStoreEvidence": null
+  },
+  "authorReceipts": [
+    {
+      "schemaVersion": 1,
+      "operation": "draft",
+      "adapterId": "local.author",
+      "requestedModel": "qwen/qwen3.8-27b",
+      "runId": "e7c1bc7b-f875-483e-859c-6e2c026dabf2",
+      "taskFingerprint": "ac86f100559c5b2a212ca495f8d00b15fffa5ed7d73e1aa6877f3d0e79c9b83c",
+      "attempt": 0,
+      "requestSha256": "065bca63be714d76dda5b092ae841bdb5ec988bf1d34257f2605669f21f4968b",
+      "elapsedMs": 25811,
+      "status": "RESPONSE_VALIDATED",
+      "reportedModel": "qwen/qwen3.8-27b",
+      "candidateFingerprint": "1b8ae48f41c9d1efaf79373210e38ebdad2f4057ba08cdb48634ab83b6dd9f7a",
+      "responseSha256": "a1d905e07d5aa0905b729d1bddfc2a8313d53864d4b7eff84eb7ca83ba2e49cd",
+      "contentSha256": "f94a2cf48d8b1fae3e7d99451fe2490f1105d3f1e4f6fde0e27fa9ef3d46de3c",
+      "usage": {
+        "promptTokens": 323,
+        "completionTokens": 241,
+        "totalTokens": 564
+      }
+    }
+  ],
+  "reviewerReceipts": [
+    {
+      "schemaVersion": 1,
+      "operation": "review",
+      "adapterId": "local.reviewer",
+      "requestedModel": "openai/gpt-oss-20b",
+      "runId": "e7c1bc7b-f875-483e-859c-6e2c026dabf2",
+      "taskFingerprint": "ac86f100559c5b2a212ca495f8d00b15fffa5ed7d73e1aa6877f3d0e79c9b83c",
+      "attempt": 0,
+      "requestSha256": "da7dca094a4d43b40fe1bed3f4f3026084082c97e0eaef7587863a2570f7e386",
+      "elapsedMs": 9910,
+      "status": "RESPONSE_VALIDATED",
+      "reportedModel": "openai/gpt-oss-20b",
+      "candidateFingerprint": "1b8ae48f41c9d1efaf79373210e38ebdad2f4057ba08cdb48634ab83b6dd9f7a",
+      "responseSha256": "bee37815ceae7e4ab8a79be4edfe6ce2364c9a71a12980b0f5980ee315f4577c",
+      "contentSha256": "fb42ca3f2e6344557fe298b3cb3606920946704171df627c6389324ece9f087b",
+      "usage": {
+        "promptTokens": 741,
+        "completionTokens": 101,
+        "totalTokens": 842
+      }
+    }
+  ]
+}

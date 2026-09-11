@@ -1,0 +1,86 @@
+{
+  "report": {
+    "schemaVersion": 1,
+    "runId": "a2b92f73-70df-4ba9-9bf7-ef97a1bc7835",
+    "taskId": "example.retry-config",
+    "taskFingerprint": "ac86f100559c5b2a212ca495f8d00b15fffa5ed7d73e1aa6877f3d0e79c9b83c",
+    "mode": "edit",
+    "outcome": "BLOCKED",
+    "workflowOutcome": "BLOCKED",
+    "code": "ADAPTER_EXCEPTION",
+    "candidate": null,
+    "candidateFingerprint": null,
+    "repairAttempts": 0,
+    "stages": [
+      {
+        "stage": "intake",
+        "status": "PASS",
+        "candidateFingerprint": null,
+        "code": null,
+        "evidence": {
+          "schemaVersion": 1,
+          "runId": "a2b92f73-70df-4ba9-9bf7-ef97a1bc7835",
+          "taskFingerprint": "ac86f100559c5b2a212ca495f8d00b15fffa5ed7d73e1aa6877f3d0e79c9b83c",
+          "attempt": 0,
+          "candidateFingerprint": null,
+          "taskId": "example.retry-config",
+          "mode": "edit",
+          "acceptanceCriteriaCount": 2
+        }
+      },
+      {
+        "stage": "authorizeContext",
+        "status": "PASS",
+        "candidateFingerprint": null,
+        "code": null,
+        "evidence": {
+          "schemaVersion": 1,
+          "runId": "a2b92f73-70df-4ba9-9bf7-ef97a1bc7835",
+          "taskFingerprint": "ac86f100559c5b2a212ca495f8d00b15fffa5ed7d73e1aa6877f3d0e79c9b83c",
+          "attempt": 0,
+          "candidateFingerprint": null,
+          "reason": ""
+        }
+      },
+      {
+        "stage": "draft",
+        "status": "UNAVAILABLE",
+        "candidateFingerprint": null,
+        "code": "ADAPTER_EXCEPTION",
+        "evidence": {
+          "schemaVersion": 1,
+          "runId": "a2b92f73-70df-4ba9-9bf7-ef97a1bc7835",
+          "taskFingerprint": "ac86f100559c5b2a212ca495f8d00b15fffa5ed7d73e1aa6877f3d0e79c9b83c",
+          "attempt": 0,
+          "candidateFingerprint": null,
+          "reason": "ADAPTER_EXCEPTION"
+        }
+      }
+    ],
+    "reportStored": false,
+    "reportStoreCode": null,
+    "storedReportSha256": null,
+    "reportStoreEvidence": null
+  },
+  "authorReceipts": [
+    {
+      "schemaVersion": 1,
+      "operation": "draft",
+      "adapterId": "local.author",
+      "requestedModel": "qwen/qwen3.8-27b",
+      "runId": "a2b92f73-70df-4ba9-9bf7-ef97a1bc7835",
+      "taskFingerprint": "ac86f100559c5b2a212ca495f8d00b15fffa5ed7d73e1aa6877f3d0e79c9b83c",
+      "attempt": 0,
+      "inputCandidateFingerprint": null,
+      "requestedMaxOutputTokens": 4096,
+      "requestSha256": "b1ac4e1da91e840caea8ec8559464479bdbb5a83425d40e19f2d26e45f7f45ec",
+      "elapsedMs": 12960,
+      "status": "UNAVAILABLE",
+      "code": "LOCAL_CHAT_EMPTY_RESPONSE",
+      "reportedModel": null,
+      "resultCandidateFingerprint": null,
+      "usage": null
+    }
+  ],
+  "reviewerReceipts": []
+}

@@ -1,0 +1,167 @@
+{
+  "report": {
+    "schemaVersion": 1,
+    "runId": "8e748383-b7a0-4bc5-8e99-2cc9bfe6f39c",
+    "taskId": "example.retry-config",
+    "taskFingerprint": "ac86f100559c5b2a212ca495f8d00b15fffa5ed7d73e1aa6877f3d0e79c9b83c",
+    "mode": "edit",
+    "outcome": "TIMED_OUT",
+    "workflowOutcome": "TIMED_OUT",
+    "code": "DEADLINE_EXCEEDED",
+    "candidate": {
+      "schemaVersion": 1,
+      "authorId": "local.author",
+      "files": [
+        {
+          "path": "retry-config.json",
+          "content": "{ \"maxRetries\": 3, \"retryDelayMs\": 250, \"backoff\": \"exponential\" }"
+        }
+      ],
+      "fingerprint": "ced81683e8ef95bd888fcc5a011f3464122e5befe3d6149a5ba96a2e7ca84e45"
+    },
+    "candidateFingerprint": "ced81683e8ef95bd888fcc5a011f3464122e5befe3d6149a5ba96a2e7ca84e45",
+    "repairAttempts": 0,
+    "stages": [
+      {
+        "stage": "intake",
+        "status": "PASS",
+        "candidateFingerprint": null,
+        "code": null,
+        "evidence": {
+          "schemaVersion": 1,
+          "runId": "8e748383-b7a0-4bc5-8e99-2cc9bfe6f39c",
+          "taskFingerprint": "ac86f100559c5b2a212ca495f8d00b15fffa5ed7d73e1aa6877f3d0e79c9b83c",
+          "attempt": 0,
+          "candidateFingerprint": null,
+          "taskId": "example.retry-config",
+          "mode": "edit",
+          "acceptanceCriteriaCount": 2
+        }
+      },
+      {
+        "stage": "authorizeContext",
+        "status": "PASS",
+        "candidateFingerprint": null,
+        "code": null,
+        "evidence": {
+          "schemaVersion": 1,
+          "runId": "8e748383-b7a0-4bc5-8e99-2cc9bfe6f39c",
+          "taskFingerprint": "ac86f100559c5b2a212ca495f8d00b15fffa5ed7d73e1aa6877f3d0e79c9b83c",
+          "attempt": 0,
+          "candidateFingerprint": null,
+          "reason": ""
+        }
+      },
+      {
+        "stage": "draft",
+        "status": "PASS",
+        "candidateFingerprint": "ced81683e8ef95bd888fcc5a011f3464122e5befe3d6149a5ba96a2e7ca84e45",
+        "code": null,
+        "evidence": {
+          "schemaVersion": 1,
+          "runId": "8e748383-b7a0-4bc5-8e99-2cc9bfe6f39c",
+          "taskFingerprint": "ac86f100559c5b2a212ca495f8d00b15fffa5ed7d73e1aa6877f3d0e79c9b83c",
+          "attempt": 0,
+          "candidateFingerprint": "ced81683e8ef95bd888fcc5a011f3464122e5befe3d6149a5ba96a2e7ca84e45",
+          "note": "Created retry-config.json with the specified values."
+        }
+      },
+      {
+        "stage": "staticChecks",
+        "status": "PASS",
+        "candidateFingerprint": "ced81683e8ef95bd888fcc5a011f3464122e5befe3d6149a5ba96a2e7ca84e45",
+        "code": null,
+        "evidence": {
+          "schemaVersion": 1,
+          "runId": "8e748383-b7a0-4bc5-8e99-2cc9bfe6f39c",
+          "taskFingerprint": "ac86f100559c5b2a212ca495f8d00b15fffa5ed7d73e1aa6877f3d0e79c9b83c",
+          "attempt": 0,
+          "candidateFingerprint": "ced81683e8ef95bd888fcc5a011f3464122e5befe3d6149a5ba96a2e7ca84e45",
+          "findings": [],
+          "reason": ""
+        }
+      },
+      {
+        "stage": "tests",
+        "status": "PASS",
+        "candidateFingerprint": "ced81683e8ef95bd888fcc5a011f3464122e5befe3d6149a5ba96a2e7ca84e45",
+        "code": null,
+        "evidence": {
+          "schemaVersion": 1,
+          "runId": "8e748383-b7a0-4bc5-8e99-2cc9bfe6f39c",
+          "taskFingerprint": "ac86f100559c5b2a212ca495f8d00b15fffa5ed7d73e1aa6877f3d0e79c9b83c",
+          "attempt": 0,
+          "candidateFingerprint": "ced81683e8ef95bd888fcc5a011f3464122e5befe3d6149a5ba96a2e7ca84e45",
+          "assertionsExecuted": 4,
+          "assertionsPassed": 4,
+          "failures": [],
+          "reason": ""
+        }
+      },
+      {
+        "stage": "review",
+        "status": "UNAVAILABLE",
+        "candidateFingerprint": "ced81683e8ef95bd888fcc5a011f3464122e5befe3d6149a5ba96a2e7ca84e45",
+        "code": "DEADLINE_EXCEEDED",
+        "evidence": {
+          "schemaVersion": 1,
+          "runId": "8e748383-b7a0-4bc5-8e99-2cc9bfe6f39c",
+          "taskFingerprint": "ac86f100559c5b2a212ca495f8d00b15fffa5ed7d73e1aa6877f3d0e79c9b83c",
+          "attempt": 0,
+          "candidateFingerprint": "ced81683e8ef95bd888fcc5a011f3464122e5befe3d6149a5ba96a2e7ca84e45",
+          "reason": "DEADLINE_EXCEEDED"
+        }
+      }
+    ],
+    "reportStored": false,
+    "reportStoreCode": null,
+    "storedReportSha256": null,
+    "reportStoreEvidence": null
+  },
+  "authorReceipts": [
+    {
+      "schemaVersion": 1,
+      "operation": "draft",
+      "adapterId": "local.author",
+      "requestedModel": "google/gemma-3-4b",
+      "runId": "8e748383-b7a0-4bc5-8e99-2cc9bfe6f39c",
+      "taskFingerprint": "ac86f100559c5b2a212ca495f8d00b15fffa5ed7d73e1aa6877f3d0e79c9b83c",
+      "attempt": 0,
+      "inputCandidateFingerprint": null,
+      "requestedMaxOutputTokens": 4096,
+      "requestSha256": "feba82ec2ed3c8c9a55c35eb8dc1c86d65ca96157e9f53ad35786ab2465bcc41",
+      "elapsedMs": 8133,
+      "status": "RESPONSE_VALIDATED",
+      "reportedModel": "google/gemma-3-4b",
+      "candidateFingerprint": "ced81683e8ef95bd888fcc5a011f3464122e5befe3d6149a5ba96a2e7ca84e45",
+      "resultCandidateFingerprint": "ced81683e8ef95bd888fcc5a011f3464122e5befe3d6149a5ba96a2e7ca84e45",
+      "responseSha256": "c87817aa6981563292cdc8327e76a350f8da3eb7ce8b682395b1438d3e24ea04",
+      "contentSha256": "5562ade5a08983952efbd2385cd7f7b23af85d6f9ebd7390de0447892ecc4994",
+      "usage": {
+        "promptTokens": 285,
+        "completionTokens": 65,
+        "totalTokens": 350
+      }
+    }
+  ],
+  "reviewerReceipts": [
+    {
+      "schemaVersion": 1,
+      "operation": "review",
+      "adapterId": "local.reviewer",
+      "requestedModel": "openai/gpt-oss-20b",
+      "runId": "8e748383-b7a0-4bc5-8e99-2cc9bfe6f39c",
+      "taskFingerprint": "ac86f100559c5b2a212ca495f8d00b15fffa5ed7d73e1aa6877f3d0e79c9b83c",
+      "attempt": 0,
+      "inputCandidateFingerprint": "ced81683e8ef95bd888fcc5a011f3464122e5befe3d6149a5ba96a2e7ca84e45",
+      "requestedMaxOutputTokens": 4096,
+      "requestSha256": "80d6fbcd357d2de8762f005598685225867062553320692ffa3c20b78145a144",
+      "elapsedMs": 171869,
+      "status": "UNAVAILABLE",
+      "code": "ABORTED",
+      "reportedModel": null,
+      "resultCandidateFingerprint": null,
+      "usage": null
+    }
+  ]
+}

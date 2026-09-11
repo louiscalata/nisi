@@ -1,0 +1,182 @@
+{
+  "configuration": {
+    "endpoint": "http://127.0.0.1:1234/v1/chat/completions",
+    "authorModel": "google/gemma-3-4b",
+    "reviewerModel": "google/gemma-4-26b-a4b-qat",
+    "timeoutMs": 90000
+  },
+  "report": {
+    "schemaVersion": 1,
+    "runId": "bf6fa183-c438-48eb-bb00-0201e4055739",
+    "taskId": "example.retry-config",
+    "taskFingerprint": "434c30ad23bf908f10f9b737e9bd7ccd75a01b353e96e6c871d23251c6758f8a",
+    "mode": "edit",
+    "outcome": "COMPLETED",
+    "workflowOutcome": "COMPLETED",
+    "code": null,
+    "candidate": {
+      "schemaVersion": 1,
+      "authorId": "local.author",
+      "files": [
+        {
+          "path": "retry-config.json",
+          "content": "{ \"maxRetries\": 3, \"retryDelayMs\": 250, \"backoff\": \"exponential\" }"
+        }
+      ],
+      "fingerprint": "ced81683e8ef95bd888fcc5a011f3464122e5befe3d6149a5ba96a2e7ca84e45"
+    },
+    "candidateFingerprint": "ced81683e8ef95bd888fcc5a011f3464122e5befe3d6149a5ba96a2e7ca84e45",
+    "repairAttempts": 0,
+    "stages": [
+      {
+        "stage": "intake",
+        "status": "PASS",
+        "candidateFingerprint": null,
+        "code": null,
+        "evidence": {
+          "schemaVersion": 1,
+          "runId": "bf6fa183-c438-48eb-bb00-0201e4055739",
+          "taskFingerprint": "434c30ad23bf908f10f9b737e9bd7ccd75a01b353e96e6c871d23251c6758f8a",
+          "attempt": 0,
+          "candidateFingerprint": null,
+          "taskId": "example.retry-config",
+          "mode": "edit",
+          "acceptanceCriteriaCount": 2
+        }
+      },
+      {
+        "stage": "authorizeContext",
+        "status": "PASS",
+        "candidateFingerprint": null,
+        "code": null,
+        "evidence": {
+          "schemaVersion": 1,
+          "runId": "bf6fa183-c438-48eb-bb00-0201e4055739",
+          "taskFingerprint": "434c30ad23bf908f10f9b737e9bd7ccd75a01b353e96e6c871d23251c6758f8a",
+          "attempt": 0,
+          "candidateFingerprint": null,
+          "reason": ""
+        }
+      },
+      {
+        "stage": "draft",
+        "status": "PASS",
+        "candidateFingerprint": "ced81683e8ef95bd888fcc5a011f3464122e5befe3d6149a5ba96a2e7ca84e45",
+        "code": null,
+        "evidence": {
+          "schemaVersion": 1,
+          "runId": "bf6fa183-c438-48eb-bb00-0201e4055739",
+          "taskFingerprint": "434c30ad23bf908f10f9b737e9bd7ccd75a01b353e96e6c871d23251c6758f8a",
+          "attempt": 0,
+          "candidateFingerprint": "ced81683e8ef95bd888fcc5a011f3464122e5befe3d6149a5ba96a2e7ca84e45",
+          "note": "Created retry-config.json with the specified values."
+        }
+      },
+      {
+        "stage": "staticChecks",
+        "status": "PASS",
+        "candidateFingerprint": "ced81683e8ef95bd888fcc5a011f3464122e5befe3d6149a5ba96a2e7ca84e45",
+        "code": null,
+        "evidence": {
+          "schemaVersion": 1,
+          "runId": "bf6fa183-c438-48eb-bb00-0201e4055739",
+          "taskFingerprint": "434c30ad23bf908f10f9b737e9bd7ccd75a01b353e96e6c871d23251c6758f8a",
+          "attempt": 0,
+          "candidateFingerprint": "ced81683e8ef95bd888fcc5a011f3464122e5befe3d6149a5ba96a2e7ca84e45",
+          "findings": [],
+          "reason": ""
+        }
+      },
+      {
+        "stage": "tests",
+        "status": "PASS",
+        "candidateFingerprint": "ced81683e8ef95bd888fcc5a011f3464122e5befe3d6149a5ba96a2e7ca84e45",
+        "code": null,
+        "evidence": {
+          "schemaVersion": 1,
+          "runId": "bf6fa183-c438-48eb-bb00-0201e4055739",
+          "taskFingerprint": "434c30ad23bf908f10f9b737e9bd7ccd75a01b353e96e6c871d23251c6758f8a",
+          "attempt": 0,
+          "candidateFingerprint": "ced81683e8ef95bd888fcc5a011f3464122e5befe3d6149a5ba96a2e7ca84e45",
+          "assertionsExecuted": 4,
+          "assertionsPassed": 4,
+          "failures": [],
+          "reason": ""
+        }
+      },
+      {
+        "stage": "review",
+        "status": "PASS",
+        "candidateFingerprint": "ced81683e8ef95bd888fcc5a011f3464122e5befe3d6149a5ba96a2e7ca84e45",
+        "code": null,
+        "evidence": {
+          "schemaVersion": 1,
+          "runId": "bf6fa183-c438-48eb-bb00-0201e4055739",
+          "taskFingerprint": "434c30ad23bf908f10f9b737e9bd7ccd75a01b353e96e6c871d23251c6758f8a",
+          "attempt": 0,
+          "candidateFingerprint": "ced81683e8ef95bd888fcc5a011f3464122e5befe3d6149a5ba96a2e7ca84e45",
+          "reviewerId": "local.reviewer",
+          "findings": [],
+          "summary": "Inspected retry-config.json for required keys (maxRetries, retryDelayMs, backoff) and specific values (3, 250, \"exponential\"). All criteria met.",
+          "reason": ""
+        }
+      }
+    ],
+    "reportStored": false,
+    "reportStoreCode": null,
+    "storedReportSha256": null,
+    "reportStoreEvidence": null
+  },
+  "authorReceipts": [
+    {
+      "schemaVersion": 1,
+      "operation": "draft",
+      "adapterId": "local.author",
+      "requestedModel": "google/gemma-3-4b",
+      "runId": "bf6fa183-c438-48eb-bb00-0201e4055739",
+      "taskFingerprint": "434c30ad23bf908f10f9b737e9bd7ccd75a01b353e96e6c871d23251c6758f8a",
+      "attempt": 0,
+      "inputCandidateFingerprint": null,
+      "requestedMaxOutputTokens": 4096,
+      "requestSha256": "dff44f4f28631d755417f88f7dac21e0d2d9b882dc0da89a3f0ac9f3dc2e18ff",
+      "elapsedMs": 17924,
+      "status": "RESPONSE_VALIDATED",
+      "reportedModel": "google/gemma-3-4b",
+      "candidateFingerprint": "ced81683e8ef95bd888fcc5a011f3464122e5befe3d6149a5ba96a2e7ca84e45",
+      "resultCandidateFingerprint": "ced81683e8ef95bd888fcc5a011f3464122e5befe3d6149a5ba96a2e7ca84e45",
+      "responseSha256": "6ae4859660016e572e975f79a96e3c1e64c6df85f9808a622781ccec42bae043",
+      "contentSha256": "5562ade5a08983952efbd2385cd7f7b23af85d6f9ebd7390de0447892ecc4994",
+      "usage": {
+        "promptTokens": 284,
+        "completionTokens": 65,
+        "totalTokens": 349
+      }
+    }
+  ],
+  "reviewerReceipts": [
+    {
+      "schemaVersion": 1,
+      "operation": "review",
+      "adapterId": "local.reviewer",
+      "requestedModel": "google/gemma-4-26b-a4b-qat",
+      "runId": "bf6fa183-c438-48eb-bb00-0201e4055739",
+      "taskFingerprint": "434c30ad23bf908f10f9b737e9bd7ccd75a01b353e96e6c871d23251c6758f8a",
+      "attempt": 0,
+      "inputCandidateFingerprint": "ced81683e8ef95bd888fcc5a011f3464122e5befe3d6149a5ba96a2e7ca84e45",
+      "requestedMaxOutputTokens": 4096,
+      "requestSha256": "c7e3fe39c7a7bfed937b359f6d4cfc2ea69687766118714ff6fdeac6a6d7d4d3",
+      "elapsedMs": 9326,
+      "status": "RESPONSE_VALIDATED",
+      "reportedModel": "google/gemma-4-26b-a4b-qat",
+      "candidateFingerprint": "ced81683e8ef95bd888fcc5a011f3464122e5befe3d6149a5ba96a2e7ca84e45",
+      "resultCandidateFingerprint": "ced81683e8ef95bd888fcc5a011f3464122e5befe3d6149a5ba96a2e7ca84e45",
+      "responseSha256": "9ea98ae3777cd05df7a28ab919a2ac62ea9a71514d0c69b1a02eea2c72ff1754",
+      "contentSha256": "b7d486cc56947f9d173aaa74be45ead236d528872029932c76c6686b80ea413e",
+      "usage": {
+        "promptTokens": 790,
+        "completionTokens": 51,
+        "totalTokens": 841
+      }
+    }
+  ]
+}

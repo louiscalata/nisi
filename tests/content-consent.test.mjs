@@ -248,3 +248,54 @@ test('the consent digest is pinned to its v1 domain string', () => {
   const expected = sha(Buffer.concat([Buffer.from('nisi/content-consent/v1\0', 'utf8'), grantBytes]));
   assert.equal(made.consentDigest, expected);
 });
+
+test('later clock failures are named refusals and status samples the clock once', () => {
+  const root = tempRoot(), filePath = write(root, 'clock.txt', 'clock');
+  for (const operation of ['admitContent', 'status']) {
+    let calls = 0;
+    const grant = grantOf(root, {}, () => { if (calls++ === 0) return 0; throw new Error('clock exploded'); });
+    const result = operation === 'status' ? grant.status() : grant.admitContent({ filePath, kind: 'text' });
+    if (operation === 'status') {
+      assert.equal(result.live, false);
+      assert.equal(result.refusalIfNotLive, 'CONSENT_CLOCK_INVALID');
+    } else assert.equal(result.code, 'CONSENT_CLOCK_INVALID');
+    assert.equal(calls, 2, 'one construction sample and one operation sample');
+  }
+  let calls = 0;
+  const grant = grantOf(root, { lifetimeMs: 2 }, () => calls++);
+  const status = grant.status();
+  assert.equal(calls, 2);
+  assert.equal(status.live, true);
+  assert.equal(status.refusalIfNotLive, null);
+  assert.equal(grant.status().refusalIfNotLive, 'CONSENT_EXPIRED');
+});
+
+test('a final-component replacement after validation is refused before content is returned', () => {
+  const root = tempRoot(), outside = tempRoot();
+  const filePath = write(root, 'safe.txt', 'PUBLIC');
+  const secret = write(outside, 'secret.txt', 'SECRET');
+  const grant = grantOf(root);
+  const original = fs.lstatSync;
+  let replaced = false;
+  fs.lstatSync = function(target, ...args) {
+    const result = original.call(fs, target, ...args);
+    if (target === filePath && !replaced) { replaced = true; fs.unlinkSync(filePath); fs.symlinkSync(secret, filePath); }
+    return result;
+  };
+  try {
+    const result = grant.admitContent({ filePath, kind: 'text' });
+    assert.equal(replaced, true);
+    assert.equal(result.ok, false);
+    assert.equal('bytes' in result, false);
+    assert.equal(grant.status().admittedItems, 0);
+  } finally { fs.lstatSync = original; }
+});
+
+test('file kind is a declared label; the v1 policy does not parse JSON content', () => {
+  const root = tempRoot();
+  const filePath = write(root, 'label.txt', 'plain UTF-8, not JSON');
+  const result = grantOf(root).admitContent({ filePath, kind: 'json' });
+  assert.equal(result.ok, true);
+  assert.equal(result.kind, 'json');
+  assert.equal(result.bytes.toString(), 'plain UTF-8, not JSON');
+});

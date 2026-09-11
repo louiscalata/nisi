@@ -1,0 +1,15 @@
+{
+  "schemaVersion": 1,
+  "capturedAt": "2026-09-11T18:42:31.313925+00:00",
+  "files": {
+    "docs/editor/editor.js": "2471e6f6945fb9ae04b6997c61778ee95596446b128ae819928e74f7ec771707",
+    "docs/editor/editor.css": "0d49998ad98d004c50820e1ee58250a557fb15a11d1116daa7df6f5c9eba80ff",
+    "docs/editor/chrome.html": "2c03cceef0b314d995436fb2a1fcd4343194fc56ba6bdb85334355d0e993f88e",
+    "docs/editor/build-editor.py": "d72c1d4cb2b841bbc248554b1e591c1bde386f836d852405bdc34b6474f177cb",
+    "docs/editor/check-editor.mjs": "bcbb64d06295698f2ccd0592781c812b38a97d7cd1973322e8ed94b86690eece",
+    "docs/editor/index.html": "3d45587f073cc0e0ebcda639048d8f1f336e43ab77ef7473c418d749f25a342b",
+    "docs/editor/index-typing-revision.html": "3d45587f073cc0e0ebcda639048d8f1f336e43ab77ef7473c418d749f25a342b",
+    "docs/README-draft.md": "aab6bd188e01704ceaebcf0fdd738b0262da237d0e2bade95066340767233db3",
+    "README.md": "aab6bd188e01704ceaebcf0fdd738b0262da237d0e2bade95066340767233db3"
+  }
+}

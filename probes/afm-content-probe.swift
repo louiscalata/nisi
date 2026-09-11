@@ -106,7 +106,7 @@ func run() async {
 
     guard header.contentBytes == content.count,
           header.contentBytes > 0, header.contentBytes <= 65_536,
-          header.maxAdvisoryChars > 0, header.maxAdvisoryChars <= 2048,
+          header.maxAdvisoryChars >= 0, header.maxAdvisoryChars <= 2048,
           header.consentDigest.count == 64, header.contentSha256.count == 64,
           ["json", "markdown", "text"].contains(header.kind) else { refuse("HEADER_BOUNDS") }
     guard sha256Hex(content) == header.contentSha256 else { refuse("CONTENT_DIGEST_MISMATCH") }

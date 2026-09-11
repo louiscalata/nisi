@@ -48,7 +48,7 @@ function consent(scopeRoot, overrides) {
 /** A stand-in for the probe: same framing, same evidence shape. `mutate` is a
  *  JavaScript expression applied to the evidence object before it is emitted,
  *  which is how the negative cases forge dishonest evidence. */
-function stubProbe(mutate = '', { marker = null, extra = '' } = {}) {
+function stubProbe(mutate = '', { marker = null, extra = '', output = 'JSON.stringify(evidence)' } = {}) {
   const dir = fs.mkdtempSync(path.join(os.tmpdir(), 'afm-stub-'));
   const file = path.join(dir, 'stub');
   const body = `#!${process.execPath}
@@ -60,22 +60,22 @@ const header = JSON.parse(all.subarray(0, nl).toString('utf8'));
 const content = all.subarray(nl + 1);
 ${marker ? `fs.writeFileSync(${JSON.stringify(marker)}, 'spawned');` : ''}
 ${extra}
-let advisory = 'A bounded advisory reading of ' + header.kind + ' content.';
+let advisory = ('A bounded advisory reading of ' + header.kind + ' content.').slice(0, header.maxAdvisoryChars);
 const evidence = {
   schemaVersion: 1, status: 'PASS', evidenceClass: 'CONSENTED_CONTENT_ADVISORY_READING',
   consentDigest: header.consentDigest, contentSha256: sha(content),
   contentBytes: content.length, kind: header.kind,
-  promptSha256: sha(Buffer.from('prompt', 'utf8')),
+  promptSha256: sha(Buffer.from('File kind: ' + header.kind + '\\n\\n' + new TextDecoder('utf-8', {fatal:true}).decode(content), 'utf8')),
   advisory, advisoryChars: advisory.length,
   advisorySha256: sha(Buffer.from(advisory, 'utf8')),
   modelParticipation: 'PARTICIPATED', modelIdentityStatus: 'MODEL_ID_NOT_EXPOSED_BY_API',
   route: 'system-on-device-requested', quiescent: true,
   contentPersisted: false, transcriptPersisted: false, networkEgress: false,
   externalToolsEnabled: false, acceptanceAuthorityGranted: false,
-  limitationCodes: ['ADVISORY_READING_NON_AUTHORIZING'],
+  limitationCodes: ['ADVISORY_READING_NON_AUTHORIZING', 'NO_ACCEPTANCE_OR_CERTIFICATION'],
 };
 ${mutate}
-process.stdout.write(JSON.stringify(evidence));
+process.stdout.write(${output});
 `;
   fs.writeFileSync(file, body, { mode: 0o755 });
   return { file, sha: sha(fs.readFileSync(file)), dir };
@@ -379,4 +379,65 @@ test('the answer digest binds the request bytes, not only the content', async ()
   // Same grant, same file, same advisory: only the request differs. If the
   // request digest were dropped from the composition these would collide.
   assert.notEqual(a.payloadSha256, b.payloadSha256);
+});
+
+test('pre-aborted and malformed contexts resolve to refusals without admission or spawn', async () => {
+  const root = tempRoot(), marker = path.join(root, 'spawned.marker');
+  const { grant } = consent(root), stub = stubProbe('', { marker });
+  const made = build(stub, grant, { task: { filePath: write(root, 'input.txt', 'safe'), kind: 'text' } });
+  for (const context of [null, [], false, 1, 'task', { taskId: 'task', signal: {} }]) {
+    assert.equal((await made.execute(packet, context)).ok, false);
+    assert.equal(made.refusals().at(-1).cause, 'CONTEXT_INVALID');
+  }
+  const controller = new AbortController(); controller.abort();
+  assert.equal((await made.execute(packet, { taskId: 'task', signal: controller.signal })).ok, false);
+  assert.equal(made.refusals().at(-1).cause, 'ABORTED');
+  assert.equal(grant.status().admittedItems, 0);
+  assert.equal(fs.existsSync(marker), false);
+});
+
+test('abort during listener registration prevents spawning', async () => {
+  const root = tempRoot(), marker = path.join(root, 'spawned.marker');
+  const { grant } = consent(root), stub = stubProbe('', { marker });
+  const made = build(stub, grant, { task: { filePath: write(root, 'input.txt', 'safe'), kind: 'text' } });
+  const controller = new AbortController(), original = controller.signal.addEventListener.bind(controller.signal);
+  controller.signal.addEventListener = (...args) => { original(...args); controller.abort(); };
+  assert.equal((await made.execute(packet, { taskId: 'task', signal: controller.signal })).ok, false);
+  assert.equal(made.refusals().at(-1).cause, 'ABORTED');
+  assert.equal(fs.existsSync(marker), false);
+});
+
+test('evidence refuses malformed UTF-8, duplicate keys, wrong prompts and malformed limitations', async () => {
+  const root = tempRoot(), file = write(root, 'input.txt', 'safe');
+  const cases = [
+    { mutate: "evidence.promptSha256 = 'a'.repeat(64);", cause: 'PROMPT_DIGEST_MISMATCH' },
+    ...[[null], [{}], [1], ['unknown'], ['NO_ACCEPTANCE_OR_CERTIFICATION','ADVISORY_READING_NON_AUTHORIZING'], ['ADVISORY_READING_NON_AUTHORIZING','ADVISORY_READING_NON_AUTHORIZING']].map(value => ({ mutate: `evidence.limitationCodes = ${JSON.stringify(value)};`, cause: 'EVIDENCE_LIMITATIONS' })),
+    { mutate: "evidence.advisory = '\ufffd'; evidence.advisoryChars=1; evidence.advisorySha256=sha(Buffer.from(evidence.advisory));", output: "Buffer.from(JSON.stringify(evidence).replace('\\ufffd','\\xff'), 'latin1')", cause: 'EVIDENCE_REFUSED' },
+    { output: "'{\"status\":\"FAIL\",' + JSON.stringify(evidence).slice(1)", cause: 'EVIDENCE_REFUSED' },
+    { output: "JSON.stringify(evidence).slice(0,-1) + ',\"status\":\"FAIL\"}'", cause: 'EVIDENCE_REFUSED' },
+  ];
+  for (const fixture of cases) {
+    const { grant } = consent(root), stub = stubProbe(fixture.mutate || '', { output: fixture.output });
+    const made = build(stub, grant, { task: { filePath: file, kind: 'text' } });
+    assert.equal((await made.execute(packet, { taskId: 'task' })).ok, false, JSON.stringify(fixture));
+    assert.equal(made.refusals().at(-1).cause, fixture.cause, JSON.stringify(fixture));
+    assert.deepEqual(made.readings(), []);
+  }
+});
+
+test('zero advisory cap, UTF-8 BOM and frozen item mappings follow the native contract', async () => {
+  const root = tempRoot(), originalFile = write(root, 'input.txt', Buffer.from('\ufeffsafe'));
+  const { grant } = consent(root, { maxAdvisoryChars: 0 });
+  const stub = stubProbe(), items = { task: { filePath: originalFile, kind: 'text' } };
+  const made = build(stub, grant, items);
+  items.task.filePath = path.join(root, 'does-not-exist');
+  delete items.task;
+  assert.equal((await made.execute(packet, { taskId: 'task' })).ok, true);
+  const reading = made.readings()[0];
+  assert.equal(reading.advisory, '');
+  assert.equal(reading.advisoryChars, 0);
+  assert.equal(reading.promptSha256, sha(Buffer.from('File kind: text\n\nsafe')));
+  assert.equal(reading.binarySHA256, stub.sha);
+  assert.match(reading.executionSha256, /^[a-f0-9]{64}$/);
+  assert.equal(Object.isFrozen(reading.evidence.limitationCodes), true);
 });

@@ -1,0 +1,15 @@
+{
+  "status": "PASS",
+  "environment": "isolated headless Chrome; fresh profile",
+  "sectionTextareas": 17,
+  "aboutTextareas": 1,
+  "typing": "each character entered once",
+  "previewDuringTyping": "unchanged",
+  "enterBackspace": "PASS",
+  "plateFigures": 1,
+  "earlyExitBranches": 4,
+  "nextStepsAbsent": true,
+  "markdownExportByteParity": true,
+  "downloadedHtmlReopened": true,
+  "pageErrors": []
+}

@@ -1,0 +1,364 @@
+{
+  "status": "PASS",
+  "node": "v24.18.0",
+  "modelCalls": 0,
+  "report": {
+    "schemaVersion": 1,
+    "runId": "8dc5c29c-e16f-4dc2-9197-0db03d5c4898",
+    "taskId": "example.answer",
+    "taskFingerprint": "350b56b976d8c9bd780788bfd67494203778a3673c8926e25e106858326f3575",
+    "mode": "edit",
+    "outcome": "COMPLETED",
+    "workflowOutcome": "COMPLETED",
+    "code": null,
+    "candidate": {
+      "schemaVersion": 1,
+      "authorId": "example.author",
+      "files": [
+        {
+          "path": "answer.mjs",
+          "content": "export const answer = 42;\n"
+        }
+      ],
+      "fingerprint": "a6c29b1670fb30af6027f4fb6fe9710660925821a053217ad0d4b8e322397562"
+    },
+    "candidateFingerprint": "a6c29b1670fb30af6027f4fb6fe9710660925821a053217ad0d4b8e322397562",
+    "repairAttempts": 1,
+    "stages": [
+      {
+        "stage": "intake",
+        "status": "PASS",
+        "candidateFingerprint": null,
+        "code": null,
+        "evidence": {
+          "schemaVersion": 1,
+          "runId": "8dc5c29c-e16f-4dc2-9197-0db03d5c4898",
+          "taskFingerprint": "350b56b976d8c9bd780788bfd67494203778a3673c8926e25e106858326f3575",
+          "attempt": 0,
+          "candidateFingerprint": null,
+          "taskId": "example.answer",
+          "mode": "edit",
+          "acceptanceCriteriaCount": 1
+        }
+      },
+      {
+        "stage": "authorizeContext",
+        "status": "PASS",
+        "candidateFingerprint": null,
+        "code": null,
+        "evidence": {
+          "schemaVersion": 1,
+          "runId": "8dc5c29c-e16f-4dc2-9197-0db03d5c4898",
+          "taskFingerprint": "350b56b976d8c9bd780788bfd67494203778a3673c8926e25e106858326f3575",
+          "attempt": 0,
+          "candidateFingerprint": null,
+          "reason": ""
+        }
+      },
+      {
+        "stage": "draft",
+        "status": "PASS",
+        "candidateFingerprint": "7af080a476729f8ea59341ddd4ab726972f37229e433b055daee4c7b09af240e",
+        "code": null,
+        "evidence": {
+          "schemaVersion": 1,
+          "runId": "8dc5c29c-e16f-4dc2-9197-0db03d5c4898",
+          "taskFingerprint": "350b56b976d8c9bd780788bfd67494203778a3673c8926e25e106858326f3575",
+          "attempt": 0,
+          "candidateFingerprint": "7af080a476729f8ea59341ddd4ab726972f37229e433b055daee4c7b09af240e",
+          "note": "Fixed local example; no model was called."
+        }
+      },
+      {
+        "stage": "staticChecks",
+        "status": "PASS",
+        "candidateFingerprint": "7af080a476729f8ea59341ddd4ab726972f37229e433b055daee4c7b09af240e",
+        "code": null,
+        "evidence": {
+          "schemaVersion": 1,
+          "runId": "8dc5c29c-e16f-4dc2-9197-0db03d5c4898",
+          "taskFingerprint": "350b56b976d8c9bd780788bfd67494203778a3673c8926e25e106858326f3575",
+          "attempt": 0,
+          "candidateFingerprint": "7af080a476729f8ea59341ddd4ab726972f37229e433b055daee4c7b09af240e",
+          "findings": [],
+          "reason": ""
+        }
+      },
+      {
+        "stage": "tests",
+        "status": "FAIL",
+        "candidateFingerprint": "7af080a476729f8ea59341ddd4ab726972f37229e433b055daee4c7b09af240e",
+        "code": null,
+        "evidence": {
+          "schemaVersion": 1,
+          "runId": "8dc5c29c-e16f-4dc2-9197-0db03d5c4898",
+          "taskFingerprint": "350b56b976d8c9bd780788bfd67494203778a3673c8926e25e106858326f3575",
+          "attempt": 0,
+          "candidateFingerprint": "7af080a476729f8ea59341ddd4ab726972f37229e433b055daee4c7b09af240e",
+          "assertionsExecuted": 2,
+          "assertionsPassed": 1,
+          "failures": [
+            {
+              "code": "ANSWER_VALUE",
+              "message": "Expected answer to equal 42."
+            }
+          ],
+          "reason": "An acceptance assertion failed."
+        }
+      },
+      {
+        "stage": "repair",
+        "status": "REPAIRED",
+        "candidateFingerprint": "a6c29b1670fb30af6027f4fb6fe9710660925821a053217ad0d4b8e322397562",
+        "code": null,
+        "evidence": {
+          "schemaVersion": 1,
+          "runId": "8dc5c29c-e16f-4dc2-9197-0db03d5c4898",
+          "taskFingerprint": "350b56b976d8c9bd780788bfd67494203778a3673c8926e25e106858326f3575",
+          "attempt": 1,
+          "candidateFingerprint": "a6c29b1670fb30af6027f4fb6fe9710660925821a053217ad0d4b8e322397562",
+          "note": "Fixed local example; no model was called.",
+          "baseCandidateFingerprint": "7af080a476729f8ea59341ddd4ab726972f37229e433b055daee4c7b09af240e"
+        }
+      },
+      {
+        "stage": "staticChecks",
+        "status": "PASS",
+        "candidateFingerprint": "a6c29b1670fb30af6027f4fb6fe9710660925821a053217ad0d4b8e322397562",
+        "code": null,
+        "evidence": {
+          "schemaVersion": 1,
+          "runId": "8dc5c29c-e16f-4dc2-9197-0db03d5c4898",
+          "taskFingerprint": "350b56b976d8c9bd780788bfd67494203778a3673c8926e25e106858326f3575",
+          "attempt": 1,
+          "candidateFingerprint": "a6c29b1670fb30af6027f4fb6fe9710660925821a053217ad0d4b8e322397562",
+          "findings": [],
+          "reason": ""
+        }
+      },
+      {
+        "stage": "tests",
+        "status": "PASS",
+        "candidateFingerprint": "a6c29b1670fb30af6027f4fb6fe9710660925821a053217ad0d4b8e322397562",
+        "code": null,
+        "evidence": {
+          "schemaVersion": 1,
+          "runId": "8dc5c29c-e16f-4dc2-9197-0db03d5c4898",
+          "taskFingerprint": "350b56b976d8c9bd780788bfd67494203778a3673c8926e25e106858326f3575",
+          "attempt": 1,
+          "candidateFingerprint": "a6c29b1670fb30af6027f4fb6fe9710660925821a053217ad0d4b8e322397562",
+          "assertionsExecuted": 2,
+          "assertionsPassed": 2,
+          "failures": [],
+          "reason": ""
+        }
+      },
+      {
+        "stage": "review",
+        "status": "PASS",
+        "candidateFingerprint": "a6c29b1670fb30af6027f4fb6fe9710660925821a053217ad0d4b8e322397562",
+        "code": null,
+        "evidence": {
+          "schemaVersion": 1,
+          "runId": "8dc5c29c-e16f-4dc2-9197-0db03d5c4898",
+          "taskFingerprint": "350b56b976d8c9bd780788bfd67494203778a3673c8926e25e106858326f3575",
+          "attempt": 1,
+          "candidateFingerprint": "a6c29b1670fb30af6027f4fb6fe9710660925821a053217ad0d4b8e322397562",
+          "reviewerId": "example.reviewer",
+          "findings": [],
+          "reason": "",
+          "summary": "A separate deterministic callback checked the candidate and fresh check/test results. No model review occurred."
+        }
+      }
+    ],
+    "reportStored": true,
+    "reportStoreCode": null,
+    "storedReportSha256": "a494ef7d7dd81f9afad03c262be86d1d73534af5a116b911fe4af1a8fe664441",
+    "reportStoreEvidence": {
+      "status": "PASS",
+      "evidence": {
+        "schemaVersion": 1,
+        "runId": "8dc5c29c-e16f-4dc2-9197-0db03d5c4898",
+        "taskFingerprint": "350b56b976d8c9bd780788bfd67494203778a3673c8926e25e106858326f3575",
+        "attempt": 1,
+        "candidateFingerprint": "a6c29b1670fb30af6027f4fb6fe9710660925821a053217ad0d4b8e322397562",
+        "outcome": "COMPLETED",
+        "reportSha256": "a494ef7d7dd81f9afad03c262be86d1d73534af5a116b911fe4af1a8fe664441"
+      }
+    }
+  },
+  "storedReport": {
+    "schemaVersion": 1,
+    "runId": "8dc5c29c-e16f-4dc2-9197-0db03d5c4898",
+    "taskId": "example.answer",
+    "taskFingerprint": "350b56b976d8c9bd780788bfd67494203778a3673c8926e25e106858326f3575",
+    "mode": "edit",
+    "outcome": "COMPLETED",
+    "workflowOutcome": "COMPLETED",
+    "code": null,
+    "candidate": {
+      "schemaVersion": 1,
+      "authorId": "example.author",
+      "files": [
+        {
+          "path": "answer.mjs",
+          "content": "export const answer = 42;\n"
+        }
+      ],
+      "fingerprint": "a6c29b1670fb30af6027f4fb6fe9710660925821a053217ad0d4b8e322397562"
+    },
+    "candidateFingerprint": "a6c29b1670fb30af6027f4fb6fe9710660925821a053217ad0d4b8e322397562",
+    "repairAttempts": 1,
+    "stages": [
+      {
+        "stage": "intake",
+        "status": "PASS",
+        "candidateFingerprint": null,
+        "code": null,
+        "evidence": {
+          "schemaVersion": 1,
+          "runId": "8dc5c29c-e16f-4dc2-9197-0db03d5c4898",
+          "taskFingerprint": "350b56b976d8c9bd780788bfd67494203778a3673c8926e25e106858326f3575",
+          "attempt": 0,
+          "candidateFingerprint": null,
+          "taskId": "example.answer",
+          "mode": "edit",
+          "acceptanceCriteriaCount": 1
+        }
+      },
+      {
+        "stage": "authorizeContext",
+        "status": "PASS",
+        "candidateFingerprint": null,
+        "code": null,
+        "evidence": {
+          "schemaVersion": 1,
+          "runId": "8dc5c29c-e16f-4dc2-9197-0db03d5c4898",
+          "taskFingerprint": "350b56b976d8c9bd780788bfd67494203778a3673c8926e25e106858326f3575",
+          "attempt": 0,
+          "candidateFingerprint": null,
+          "reason": ""
+        }
+      },
+      {
+        "stage": "draft",
+        "status": "PASS",
+        "candidateFingerprint": "7af080a476729f8ea59341ddd4ab726972f37229e433b055daee4c7b09af240e",
+        "code": null,
+        "evidence": {
+          "schemaVersion": 1,
+          "runId": "8dc5c29c-e16f-4dc2-9197-0db03d5c4898",
+          "taskFingerprint": "350b56b976d8c9bd780788bfd67494203778a3673c8926e25e106858326f3575",
+          "attempt": 0,
+          "candidateFingerprint": "7af080a476729f8ea59341ddd4ab726972f37229e433b055daee4c7b09af240e",
+          "note": "Fixed local example; no model was called."
+        }
+      },
+      {
+        "stage": "staticChecks",
+        "status": "PASS",
+        "candidateFingerprint": "7af080a476729f8ea59341ddd4ab726972f37229e433b055daee4c7b09af240e",
+        "code": null,
+        "evidence": {
+          "schemaVersion": 1,
+          "runId": "8dc5c29c-e16f-4dc2-9197-0db03d5c4898",
+          "taskFingerprint": "350b56b976d8c9bd780788bfd67494203778a3673c8926e25e106858326f3575",
+          "attempt": 0,
+          "candidateFingerprint": "7af080a476729f8ea59341ddd4ab726972f37229e433b055daee4c7b09af240e",
+          "findings": [],
+          "reason": ""
+        }
+      },
+      {
+        "stage": "tests",
+        "status": "FAIL",
+        "candidateFingerprint": "7af080a476729f8ea59341ddd4ab726972f37229e433b055daee4c7b09af240e",
+        "code": null,
+        "evidence": {
+          "schemaVersion": 1,
+          "runId": "8dc5c29c-e16f-4dc2-9197-0db03d5c4898",
+          "taskFingerprint": "350b56b976d8c9bd780788bfd67494203778a3673c8926e25e106858326f3575",
+          "attempt": 0,
+          "candidateFingerprint": "7af080a476729f8ea59341ddd4ab726972f37229e433b055daee4c7b09af240e",
+          "assertionsExecuted": 2,
+          "assertionsPassed": 1,
+          "failures": [
+            {
+              "code": "ANSWER_VALUE",
+              "message": "Expected answer to equal 42."
+            }
+          ],
+          "reason": "An acceptance assertion failed."
+        }
+      },
+      {
+        "stage": "repair",
+        "status": "REPAIRED",
+        "candidateFingerprint": "a6c29b1670fb30af6027f4fb6fe9710660925821a053217ad0d4b8e322397562",
+        "code": null,
+        "evidence": {
+          "schemaVersion": 1,
+          "runId": "8dc5c29c-e16f-4dc2-9197-0db03d5c4898",
+          "taskFingerprint": "350b56b976d8c9bd780788bfd67494203778a3673c8926e25e106858326f3575",
+          "attempt": 1,
+          "candidateFingerprint": "a6c29b1670fb30af6027f4fb6fe9710660925821a053217ad0d4b8e322397562",
+          "note": "Fixed local example; no model was called.",
+          "baseCandidateFingerprint": "7af080a476729f8ea59341ddd4ab726972f37229e433b055daee4c7b09af240e"
+        }
+      },
+      {
+        "stage": "staticChecks",
+        "status": "PASS",
+        "candidateFingerprint": "a6c29b1670fb30af6027f4fb6fe9710660925821a053217ad0d4b8e322397562",
+        "code": null,
+        "evidence": {
+          "schemaVersion": 1,
+          "runId": "8dc5c29c-e16f-4dc2-9197-0db03d5c4898",
+          "taskFingerprint": "350b56b976d8c9bd780788bfd67494203778a3673c8926e25e106858326f3575",
+          "attempt": 1,
+          "candidateFingerprint": "a6c29b1670fb30af6027f4fb6fe9710660925821a053217ad0d4b8e322397562",
+          "findings": [],
+          "reason": ""
+        }
+      },
+      {
+        "stage": "tests",
+        "status": "PASS",
+        "candidateFingerprint": "a6c29b1670fb30af6027f4fb6fe9710660925821a053217ad0d4b8e322397562",
+        "code": null,
+        "evidence": {
+          "schemaVersion": 1,
+          "runId": "8dc5c29c-e16f-4dc2-9197-0db03d5c4898",
+          "taskFingerprint": "350b56b976d8c9bd780788bfd67494203778a3673c8926e25e106858326f3575",
+          "attempt": 1,
+          "candidateFingerprint": "a6c29b1670fb30af6027f4fb6fe9710660925821a053217ad0d4b8e322397562",
+          "assertionsExecuted": 2,
+          "assertionsPassed": 2,
+          "failures": [],
+          "reason": ""
+        }
+      },
+      {
+        "stage": "review",
+        "status": "PASS",
+        "candidateFingerprint": "a6c29b1670fb30af6027f4fb6fe9710660925821a053217ad0d4b8e322397562",
+        "code": null,
+        "evidence": {
+          "schemaVersion": 1,
+          "runId": "8dc5c29c-e16f-4dc2-9197-0db03d5c4898",
+          "taskFingerprint": "350b56b976d8c9bd780788bfd67494203778a3673c8926e25e106858326f3575",
+          "attempt": 1,
+          "candidateFingerprint": "a6c29b1670fb30af6027f4fb6fe9710660925821a053217ad0d4b8e322397562",
+          "reviewerId": "example.reviewer",
+          "findings": [],
+          "reason": "",
+          "summary": "A separate deterministic callback checked the candidate and fresh check/test results. No model review occurred."
+        }
+      }
+    ],
+    "reportStored": false,
+    "reportStoreCode": null,
+    "storedReportSha256": null,
+    "reportStoreEvidence": null
+  }
+}

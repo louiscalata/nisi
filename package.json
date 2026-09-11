@@ -1,7 +1,7 @@
 {
   "name": "nisi",
   "version": "0.1.0",
-  "description": "Nothing passes unless it is admitted. A canonical JSON codec, a consent gate for on-device model input, and a static purity checker that is mutation-tested against itself \u2014 each boundary refusing with an exact named code.",
+  "description": "A bounded AI coding workflow engine with task-scoped evidence, file access policies, and an Apple Foundation Models adapter.",
   "license": "Apache-2.0",
   "author": "Louis Calata",
   "repository": {
@@ -21,7 +21,9 @@
     "check:structural": "node scripts/structural-check.mjs",
     "check": "npm run check:structural && npm test",
     "bench": "node scripts/bench.mjs",
-    "ab:purity": "node scripts/ab-purity.mjs contracts/structural-fixtures.json ${AFM:-afm}"
+    "ab:purity": "node scripts/ab-purity.mjs contracts/structural-fixtures.json ${AFM:-afm}",
+    "check:static": "node tools/check-side-effects.mjs",
+    "example:workflow": "node examples/workflow.mjs"
   },
   "devDependencies": {
     "typescript": "^6.0.3"
@@ -32,5 +34,15 @@
     "static-analysis",
     "mutation-testing",
     "foundation-models"
-  ]
+  ],
+  "main": "./index.mjs",
+  "exports": {
+    ".": "./index.mjs",
+    "./workflow": "./workflow/engine.mjs",
+    "./policy": "./policy/file-access.mjs",
+    "./serialization": "./serialization/canonical-json-v1.mjs",
+    "./adapters/apple-foundation-models": "./adapters/apple-foundation-models.mjs",
+    "./adapters/local-chat": "./adapters/local-chat.mjs",
+    "./*": "./*"
+  }
 }

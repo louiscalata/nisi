@@ -1,0 +1,107 @@
+{
+  "status": "PASS",
+  "timestamp": "2026-09-11T18:17:38.948Z",
+  "platform": "darwin",
+  "architecture": "arm64",
+  "node": "v24.18.0",
+  "binarySHA256": "d76d1afa1722f8c0594706cffb37e9a962396f860c103e554c3a3834ddd164d1",
+  "probeSourceSHA256": "db59f6b50da24fb9794422425524fd0abf812c5185211d4b856ff2d65bf9d691",
+  "executorSourceSHA256": "6a4c23a3495a00dbf98e9ff5c68a9008f421d6fe225a3768b6863d4e12324ed6",
+  "inputSHA256": "f9b9f7c05cafab3c236d9fc3f7b7e400470904f6a9abcd42f1897f1cfbf93582",
+  "runs": [
+    {
+      "cap": 128,
+      "result": {
+        "ok": true,
+        "code": "AFM_PACKET_ANSWERED",
+        "payloadSha256": "b72b03018fe35a573a6c4ff5cc5f3bfa3133cebf23f52721d963325a360cbdde"
+      },
+      "readings": [
+        {
+          "taskId": "sample",
+          "contentSha256": "f9b9f7c05cafab3c236d9fc3f7b7e400470904f6a9abcd42f1897f1cfbf93582",
+          "advisory": "The file appears to be a simple Markdown document with a heading and a paragraph. It has a single heading and one block of text.",
+          "advisoryChars": 128,
+          "promptSha256": "e092084a0064f4864885110ea897bac52bb765a742e1c37cf168e4a2541c6450",
+          "promptVersion": "nisi/apple-content-prompt/v1",
+          "binarySHA256": "d76d1afa1722f8c0594706cffb37e9a962396f860c103e554c3a3834ddd164d1",
+          "executionSha256": "720745f102706c78a7b973384421e04665e246524d06dd43a79c84a61620ba10",
+          "evidence": {
+            "acceptanceAuthorityGranted": false,
+            "advisory": "The file appears to be a simple Markdown document with a heading and a paragraph. It has a single heading and one block of text.",
+            "advisoryChars": 128,
+            "advisorySha256": "9562315af258daa8a8dc22dff84ddfdf98f9a557c95665e67490d218657edd17",
+            "consentDigest": "42a944e7c594253d00d7a31ae9fb1384da3d06aa7addb6d473fcca678585bc13",
+            "contentBytes": 80,
+            "contentPersisted": false,
+            "contentSha256": "f9b9f7c05cafab3c236d9fc3f7b7e400470904f6a9abcd42f1897f1cfbf93582",
+            "evidenceClass": "CONSENTED_CONTENT_ADVISORY_READING",
+            "externalToolsEnabled": false,
+            "kind": "markdown",
+            "limitationCodes": [
+              "ADVISORY_READING_NON_AUTHORIZING",
+              "NO_ACCEPTANCE_OR_CERTIFICATION"
+            ],
+            "modelIdentityStatus": "MODEL_ID_NOT_EXPOSED_BY_API",
+            "modelParticipation": "PARTICIPATED",
+            "networkEgress": false,
+            "promptSha256": "e092084a0064f4864885110ea897bac52bb765a742e1c37cf168e4a2541c6450",
+            "quiescent": true,
+            "route": "system-on-device-requested",
+            "schemaVersion": 1,
+            "status": "PASS",
+            "transcriptPersisted": false
+          }
+        }
+      ],
+      "refusals": []
+    },
+    {
+      "cap": 0,
+      "result": {
+        "ok": true,
+        "code": "AFM_PACKET_ANSWERED",
+        "payloadSha256": "264b7f41dcadeb877073120537e12d0dfd61dd862482652e047c9384cd8d09d8"
+      },
+      "readings": [
+        {
+          "taskId": "sample",
+          "contentSha256": "f9b9f7c05cafab3c236d9fc3f7b7e400470904f6a9abcd42f1897f1cfbf93582",
+          "advisory": "",
+          "advisoryChars": 0,
+          "promptSha256": "e092084a0064f4864885110ea897bac52bb765a742e1c37cf168e4a2541c6450",
+          "promptVersion": "nisi/apple-content-prompt/v1",
+          "binarySHA256": "d76d1afa1722f8c0594706cffb37e9a962396f860c103e554c3a3834ddd164d1",
+          "executionSha256": "291ebece5eb7a93db16fbacc4573362e70e70ed509339e25ce13dfcbad782e9c",
+          "evidence": {
+            "acceptanceAuthorityGranted": false,
+            "advisory": "",
+            "advisoryChars": 0,
+            "advisorySha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+            "consentDigest": "d9b1e9a5256f50305ef3e8d3e16df7ff75a5befe6539b091444b97c53962ec4f",
+            "contentBytes": 80,
+            "contentPersisted": false,
+            "contentSha256": "f9b9f7c05cafab3c236d9fc3f7b7e400470904f6a9abcd42f1897f1cfbf93582",
+            "evidenceClass": "CONSENTED_CONTENT_ADVISORY_READING",
+            "externalToolsEnabled": false,
+            "kind": "markdown",
+            "limitationCodes": [
+              "ADVISORY_READING_NON_AUTHORIZING",
+              "NO_ACCEPTANCE_OR_CERTIFICATION"
+            ],
+            "modelIdentityStatus": "MODEL_ID_NOT_EXPOSED_BY_API",
+            "modelParticipation": "PARTICIPATED",
+            "networkEgress": false,
+            "promptSha256": "e092084a0064f4864885110ea897bac52bb765a742e1c37cf168e4a2541c6450",
+            "quiescent": true,
+            "route": "system-on-device-requested",
+            "schemaVersion": 1,
+            "status": "PASS",
+            "transcriptPersisted": false
+          }
+        }
+      ],
+      "refusals": []
+    }
+  ]
+}

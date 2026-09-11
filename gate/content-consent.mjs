@@ -84,7 +84,8 @@ class ContentConsentGrant {
 
   #live() {
     if (this.#revoked) return 'CONSENT_REVOKED';
-    const now = this.#clock();
+    let now;
+    try { now = this.#clock(); } catch { return 'CONSENT_CLOCK_INVALID'; }
     if (!isInt(now, 0)) return 'CONSENT_CLOCK_INVALID';
     if (now < this.#issuedAtMs) return 'CONSENT_CLOCK_REGRESSION';
     if (now >= this.#issuedAtMs + this.#value.lifetimeMs) return 'CONSENT_EXPIRED';
@@ -97,9 +98,13 @@ class ContentConsentGrant {
   admitContent(item) {
     const notLive = this.#live();
     if (notLive) return fail(notLive);
-    if (item === null || typeof item !== 'object' || Array.isArray(item)) return fail('CONTENT_ITEM_INVALID');
-    if (Object.keys(item).sort().join('|') !== 'filePath|kind') return fail('CONTENT_ITEM_INVALID');
-    const { filePath, kind } = item;
+    let filePath, kind;
+    try {
+      if (item === null || typeof item !== 'object' || Array.isArray(item)) return fail('CONTENT_ITEM_INVALID');
+      const keys = Reflect.ownKeys(item);
+      if (keys.length !== 2 || !keys.includes('filePath') || !keys.includes('kind')) return fail('CONTENT_ITEM_INVALID');
+      ({ filePath, kind } = item);
+    } catch { return fail('CONTENT_ITEM_INVALID'); }
     if (typeof filePath !== 'string' || !path.isAbsolute(filePath)) return fail('CONTENT_PATH_INVALID');
     if (!this.#value.allowedKinds.includes(kind)) return fail('CONTENT_KIND_REFUSED');
 
@@ -114,16 +119,43 @@ class ContentConsentGrant {
     if (!resolved.startsWith(prefix)) return fail('CONTENT_OUT_OF_SCOPE');
 
     let stat;
-    try { stat = fs.lstatSync(resolved); } catch { return fail('CONTENT_PATH_UNRESOLVABLE'); }
+    try { stat = fs.lstatSync(resolved, { bigint: true }); } catch { return fail('CONTENT_PATH_UNRESOLVABLE'); }
     if (!stat.isFile()) return fail('CONTENT_NOT_REGULAR_FILE');
-    if (stat.size === 0) return fail('CONTENT_EMPTY');
-    if (stat.size > this.#value.maxContentBytes) {
-      return fail('CONTENT_BYTE_LIMIT', { bytes: stat.size, maximum: this.#value.maxContentBytes });
+    if (stat.size === 0n) return fail('CONTENT_EMPTY');
+    if (stat.size > BigInt(this.#value.maxContentBytes)) {
+      return fail('CONTENT_BYTE_LIMIT', { bytes: Number(stat.size), maximum: this.#value.maxContentBytes });
     }
 
-    let bytes;
-    try { bytes = fs.readFileSync(resolved); } catch { return fail('CONTENT_UNREADABLE'); }
-    if (bytes.length !== stat.size) return fail('CONTENT_CHANGED_DURING_READ');
+    let bytes, descriptor;
+    const sameFile = (a, b) => a.dev === b.dev && a.ino === b.ino && a.size === b.size &&
+      a.mtimeNs === b.mtimeNs && a.ctimeNs === b.ctimeNs;
+    try {
+      // Check and read the same opened object. This reduces replacement races;
+      // stable trusted parent directories are still required for pathname scope.
+      const flags = fs.constants.O_RDONLY | (fs.constants.O_NOFOLLOW || 0) | (fs.constants.O_NONBLOCK || 0);
+      descriptor = fs.openSync(resolved, flags);
+      const opened = fs.fstatSync(descriptor, { bigint: true });
+      if (!opened.isFile()) return fail('CONTENT_NOT_REGULAR_FILE');
+      if (!sameFile(stat, opened)) return fail('CONTENT_CHANGED_DURING_READ');
+      const buffer = Buffer.alloc(this.#value.maxContentBytes + 1);
+      let count = 0;
+      while (count < buffer.length) {
+        const read = fs.readSync(descriptor, buffer, count, buffer.length - count, null);
+        if (read === 0) break;
+        count += read;
+      }
+      if (count > this.#value.maxContentBytes) {
+        return fail('CONTENT_BYTE_LIMIT', { bytes: count, maximum: this.#value.maxContentBytes });
+      }
+      if (!sameFile(opened, fs.fstatSync(descriptor, { bigint: true })) || BigInt(count) !== opened.size) {
+        return fail('CONTENT_CHANGED_DURING_READ');
+      }
+      bytes = Buffer.from(buffer.subarray(0, count));
+    } catch (error) {
+      return fail(error?.code === 'ELOOP' ? 'CONTENT_CHANGED_DURING_READ' : 'CONTENT_UNREADABLE');
+    } finally {
+      if (descriptor !== undefined) { try { fs.closeSync(descriptor); } catch { /* no data is admitted by cleanup */ } }
+    }
     try { new TextDecoder('utf-8', { fatal: true }).decode(bytes); }
     catch { return fail('CONTENT_NOT_UTF8'); }
 
@@ -145,6 +177,7 @@ class ContentConsentGrant {
   }
 
   status() {
+    const notLive = this.#live();
     return answer(true, 'CONTENT_CONSENT_STATUS', {
       grantId: this.#value.grantId,
       consentClass: this.#value.consentClass,
@@ -152,8 +185,8 @@ class ContentConsentGrant {
       destination: this.#value.destination,
       networkEgress: false,
       admittedItems: this.#admitted,
-      live: this.#live() === null,
-      refusalIfNotLive: this.#live(),
+      live: notLive === null,
+      refusalIfNotLive: notLive,
     });
   }
 }

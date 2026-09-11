@@ -1,0 +1,53 @@
+{
+  "schemaVersion": 1,
+  "recordedAt": "2026-09-11T18:42:31.314697+00:00",
+  "sourceManifest": "source-manifest.json",
+  "sourceManifestSha256": "117f05a0c5122d90266e551c91e0e07416771c680ec4235e134f4c67f409a3de",
+  "platform": {
+    "os": "macOS",
+    "version": "27.0",
+    "architecture": "arm64"
+  },
+  "nodeTests": [
+    {
+      "node": "22.23.2",
+      "command": "npm run check",
+      "passed": 165,
+      "failed": 0,
+      "skipped": 0,
+      "cancelled": 0,
+      "log": "node22-check.log"
+    },
+    {
+      "node": "24.18.0",
+      "command": "npm run check",
+      "passed": 165,
+      "failed": 0,
+      "skipped": 0,
+      "cancelled": 0,
+      "log": "node24-check.log"
+    }
+  ],
+  "staticFixtures": {
+    "forbiddenCaught": 8,
+    "allowedPassed": 8,
+    "sourceFindings": 0
+  },
+  "nativeApple": {
+    "callsPassed": 2,
+    "record": "native-apple.json"
+  },
+  "deterministicWorkflow": {
+    "outcome": "COMPLETED",
+    "record": "deterministic-workflow.json"
+  },
+  "currentLocalModelWorkflow": {
+    "outcome": "COMPLETED",
+    "record": "local-model-completed.json"
+  },
+  "editor": {
+    "status": "PASS",
+    "record": "editor-browser.json",
+    "manifest": "editor-manifest.json"
+  }
+}

@@ -9,8 +9,8 @@ on:
 jobs:
   test:
     # Every Node test runs here, including the executor suite, which uses
-    # portable stub probes. The Swift probes under probes/ are deliberately not
-    # built: they need macOS 26 and Apple Intelligence, which no hosted runner has.
+    # POSIX stand-in probes. The Swift probes under probes/ are deliberately not
+    # built: this Linux job cannot exercise Apple Intelligence availability.
     runs-on: ubuntu-latest
     strategy:
       fail-fast: false
@@ -22,7 +22,7 @@ jobs:
         with:
           node-version: ${{ matrix.node }}
       - run: npm ci
-      - name: Static purity check on the codec
-        run: npm run check:structural
+      - name: Scoped static analysis check on the codec
+        run: npm run check:static
       - name: Tests
         run: npm test
