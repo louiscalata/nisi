@@ -11,6 +11,7 @@ future revision or platform.
 | Check | Recorded result | Scope |
 |---|---|---|
 | Automated Node tests | 165/165 passed on Node 22.23.2 and 24.18.0 | macOS arm64; no skipped, failed or cancelled tests |
+| Published GitHub Actions | Both Node 22 and Node 24 jobs passed 165/165 tests | Ubuntu runner at implementation commit `ec12fcb`; static check also passed |
 | Scoped static analysis | 8 forbidden and 8 allowed fixtures passed; no source-region findings | Direct patterns in the codec's marked region |
 | Deterministic workflow example | COMPLETED after one repair | Real Node syntax check, failing then passing assertions, separate callback review, report write/sync/read-back |
 | Native Apple helper | 2/2 calls passed, caps 128 and 0 | Real Foundation Models calls on the tested Mac; helper and source hashes retained |
@@ -100,6 +101,16 @@ live editor. The [editor manifest](verification/2026-09-11/editor-manifest.json)
 identifies the artifact and manuscript bytes checked. Static checks cover two
 save round trips, escaped user HTML and safe link schemes.
 
+## Published GitHub Actions
+
+[Run 34634897678](https://github.com/louiscalata/nisi/actions/runs/34634897678)
+passed both Node 22 and Node 24 jobs on `ubuntu-latest` for implementation commit
+`ec12fcbe105932d0062f9ef545589b6773fbacdd`. Each job installed dependencies,
+passed the scoped static check and passed all 165 tests. The
+[retained CI receipt](verification/2026-09-11/github-actions.json) records job and
+step results. Later documentation-only commits do not change the runtime hashes
+in the source manifest.
+
 ## Evidence limits
 
 The engine validates records, not callback honesty. The local server and native
@@ -111,6 +122,6 @@ by the helper.
 The examples cover a small configuration task and a fixed JavaScript module.
 They do not establish general coding quality, security certification, native
 Windows behavior, signed distribution, package publication, or measured gains
-in reliability, token use, cost or speed. CI is configured for Linux Node 22/24;
-configuration alone is not evidence of a completed hosted CI run. Hosted run
-results must be checked for the published commit separately.
+in reliability, token use, cost or speed. The retained hosted CI run covers Linux Node 22/24; it does not run native
+Apple inference or establish native Windows support. Results for later commits
+must be checked separately.

@@ -48,7 +48,9 @@ editorial changes remain local until another requested update.
 - [x] Experimental loopback HTTP author/reviewer adapters with closed JSON-schema
   requests, strict response validation, size/deadline limits and retained receipts.
 - [x] Full automated checks: 165/165 tests passed on each of Node 22.23.2 and
-  Node 24.18.0 on macOS arm64. Hosted CI and native Windows were not run.
+  Node 24.18.0 on macOS arm64. Published GitHub Actions also passed both Linux
+  Node 22/24 jobs with 165 tests each at implementation commit `ec12fcb`.
+  Native Windows was not run.
 
 Detailed evidence, source hashes and retained outcomes are in
 [docs/verification.md](docs/verification.md). Passing checks apply to the recorded
@@ -93,7 +95,8 @@ names are supplied by the host application.
 - [ ] Host-specific integration for applying candidates, actual independent
   author/reviewer isolation and durable production report storage.
 - [ ] Broader model/server compatibility and real project workflow evaluation.
-- [ ] Native Windows validation; hosted Linux CI results; supported-platform matrix.
+- [x] Hosted Linux CI passed for the published implementation.
+- [ ] Native Windows validation and a supported-platform matrix.
 - [ ] Distribution, installation and release checks before package publication.
 - [x] Source-update approval received for commit/push.
 - [ ] Versioned package publication and distribution release, if requested.

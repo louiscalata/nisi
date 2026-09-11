@@ -1,0 +1,107 @@
+{
+  "schemaVersion": 1,
+  "recordedAt": "2026-09-11T18:45:00.703328+00:00",
+  "runId": 34634897678,
+  "url": "https://github.com/louiscalata/nisi/actions/runs/34634897678",
+  "headSha": "ec12fcbe105932d0062f9ef545589b6773fbacdd",
+  "status": "completed",
+  "conclusion": "success",
+  "createdAt": "2026-09-11T18:43:31Z",
+  "updatedAt": "2026-09-11T18:43:46Z",
+  "runner": "ubuntu-latest",
+  "jobs": [
+    {
+      "name": "test (22)",
+      "url": "https://github.com/louiscalata/nisi/actions/runs/34634897678/job/103380284989",
+      "conclusion": "success",
+      "tests": 165,
+      "passed": 165,
+      "failed": 0,
+      "steps": [
+        {
+          "name": "Set up job",
+          "conclusion": "success"
+        },
+        {
+          "name": "Run actions/checkout@v4",
+          "conclusion": "success"
+        },
+        {
+          "name": "Run actions/setup-node@v4",
+          "conclusion": "success"
+        },
+        {
+          "name": "Run npm ci",
+          "conclusion": "success"
+        },
+        {
+          "name": "Scoped static analysis check on the codec",
+          "conclusion": "success"
+        },
+        {
+          "name": "Tests",
+          "conclusion": "success"
+        },
+        {
+          "name": "Post Run actions/setup-node@v4",
+          "conclusion": "success"
+        },
+        {
+          "name": "Post Run actions/checkout@v4",
+          "conclusion": "success"
+        },
+        {
+          "name": "Complete job",
+          "conclusion": "success"
+        }
+      ]
+    },
+    {
+      "name": "test (24)",
+      "url": "https://github.com/louiscalata/nisi/actions/runs/34634897678/job/103380285110",
+      "conclusion": "success",
+      "tests": 165,
+      "passed": 165,
+      "failed": 0,
+      "steps": [
+        {
+          "name": "Set up job",
+          "conclusion": "success"
+        },
+        {
+          "name": "Run actions/checkout@v4",
+          "conclusion": "success"
+        },
+        {
+          "name": "Run actions/setup-node@v4",
+          "conclusion": "success"
+        },
+        {
+          "name": "Run npm ci",
+          "conclusion": "success"
+        },
+        {
+          "name": "Scoped static analysis check on the codec",
+          "conclusion": "success"
+        },
+        {
+          "name": "Tests",
+          "conclusion": "success"
+        },
+        {
+          "name": "Post Run actions/setup-node@v4",
+          "conclusion": "success"
+        },
+        {
+          "name": "Post Run actions/checkout@v4",
+          "conclusion": "success"
+        },
+        {
+          "name": "Complete job",
+          "conclusion": "success"
+        }
+      ]
+    }
+  ],
+  "sourceBinding": "Runtime files match source-manifest.json; this run validates the published implementation commit."
+}
