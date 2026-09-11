@@ -16,8 +16,8 @@ import os from 'node:os';
 import path from 'node:path';
 import { createHash } from 'node:crypto';
 import { canonicalizeJSONV1 } from '../canonical/canonical-json-v1.mjs';
-import { createContentConsent } from '../neural/content-consent.mjs';
-import { createAFMContentExecutor } from '../neural/afm-content-executor.mjs';
+import { createContentConsent } from '../gate/content-consent.mjs';
+import { createAFMContentExecutor } from '../gate/afm-content-executor.mjs';
 
 const sha = b => createHash('sha256').update(b).digest('hex');
 const packet = Buffer.from('{"kind":"nisi-request-v1"}', 'utf8');

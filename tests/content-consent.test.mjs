@@ -15,7 +15,7 @@ import os from 'node:os';
 import path from 'node:path';
 import { createHash } from 'node:crypto';
 import { canonicalizeJSONV1 } from '../canonical/canonical-json-v1.mjs';
-import { createContentConsent, CONTENT_CONSENT_LIMITS, ALLOWED_CONTENT_KINDS } from '../neural/content-consent.mjs';
+import { createContentConsent, CONTENT_CONSENT_LIMITS, ALLOWED_CONTENT_KINDS } from '../gate/content-consent.mjs';
 
 const sha = b => createHash('sha256').update(b).digest('hex');
 const tempRoot = () => fs.realpathSync(fs.mkdtempSync(path.join(os.tmpdir(), 'consent-')));
