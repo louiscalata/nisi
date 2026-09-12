@@ -49,7 +49,7 @@ chrome = (base / 'chrome.html').read_text()
 state['editorBuild'] = hashlib.sha256(json.dumps([app, css, chrome], ensure_ascii=False).encode('utf-8')).hexdigest()
 assert '</script' not in app.lower(), 'App source must not terminate its HTML script element'
 data = json.dumps(state, ensure_ascii=False).replace('<', '\\u003c')
-html = '<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Nisi on GitHub — Brigade Draft</title><style id="editor-style">' + css + '</style></head><body><script id="state" type="application/json">' + data + '</script>' + chrome + '<template id="chrome">' + chrome + '</template><script id="editor-app">' + app + '</script></body></html>'
+html = '<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Nisi v0.1 on GitHub — Editable Draft</title><style id="editor-style">' + css + '</style></head><body><script id="state" type="application/json">' + data + '</script>' + chrome + '<template id="chrome">' + chrome + '</template><script id="editor-app">' + app + '</script></body></html>'
 output_name = sys.argv[1] if len(sys.argv) > 1 else 'index.html'
 assert Path(output_name).name == output_name and output_name.endswith('.html'), 'Output must be a local HTML filename'
 (base / output_name).write_text(html)

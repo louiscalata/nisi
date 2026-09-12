@@ -182,7 +182,7 @@
     const css = document.getElementById('editor-style').textContent;
     const app = document.getElementById('editor-app').textContent;
     const markup = document.getElementById('chrome').innerHTML;
-    return '<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Nisi on GitHub — Brigade Draft</title><style id="editor-style">' + css + '</style></head><body><script id="state" type="application/json">' + json + '<' + '/script>' + markup + '<template id="chrome">' + markup + '</template><script id="editor-app">' + app + '<' + '/script></body></html>';
+    return '<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Nisi v0.1 on GitHub — Editable Draft</title><style id="editor-style">' + css + '</style></head><body><script id="state" type="application/json">' + json + '<' + '/script>' + markup + '<template id="chrome">' + markup + '</template><script id="editor-app">' + app + '<' + '/script></body></html>';
   }
   function download(name, contents, type) {
     const blob = new Blob([contents], { type }), url = URL.createObjectURL(blob);

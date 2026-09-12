@@ -1,4 +1,4 @@
-# Nisi
+# Nisi v0.1
 
 **A Node.js library for running AI-assisted coding workflows.**
 

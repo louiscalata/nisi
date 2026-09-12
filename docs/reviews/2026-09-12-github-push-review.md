@@ -1,5 +1,8 @@
 # September 12 GitHub push review
 
+This record covers onboarding commit `02a0b39`. The subsequent version label
+and deadline correction have a [separate review](2026-09-12-v0.1-push-review.md).
+
 The previous README explained the background before showing how to run Nisi.
 This revision puts a working example first, separates architecture from model
 setup, and adds actionable setup checks. The public `runWorkflow` API, module

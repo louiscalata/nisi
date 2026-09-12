@@ -1,9 +1,22 @@
 # Nisi roadmap
 
 Canonical project roadmap. Updated September 12, 2026. Product name: Nisi.
-Version: 0.1.0. The September 12 documentation and onboarding revision starts
-from public commit `fc8bf1b`. Louis authorized applying the review changes and
+Display version: Nisi v0.1. Package version: 0.1.0. The September 12 documentation
+and onboarding revision starts from public commit `fc8bf1b`. Louis authorized applying the review changes and
 pushing them to GitHub. Package registry publication remains separate.
+
+## Nisi v0.1 follow-up
+
+- [x] Show Nisi v0.1 in the README, editor header and downloadable editable copy.
+- [x] Reject adapter results when the deadline passes during result copying.
+- [x] Add a regression for both required and optional report storage; confirm it
+  fails before the correction and passes afterward.
+- [x] Pass all 170 tests on Node 22 and 24, the structural check, the deterministic
+  workflow example and all 12 editor checks.
+- [x] Review the correction independently and preserve the live manuscript.
+
+The [follow-up review](docs/reviews/2026-09-12-v0.1-push-review.md) records the
+before/after behavior and verification scope.
 
 ## September 12 review plan
 

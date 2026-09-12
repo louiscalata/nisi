@@ -1,5 +1,25 @@
 # Verification record
 
+## September 12: Nisi v0.1 deadline correction
+
+The follow-up to commit `02a0b39` labels the README and editable artifact
+**Nisi v0.1** and corrects the workflow deadline check after copying an adapter
+result. A storage acknowledgement that reaches the deadline during that copy is
+now rejected with `TIMED_OUT`, including when report storage is optional.
+The pre-storage workflow outcome remains available separately.
+
+All 170 tests and the structural check passed on Node 22.23.2 and 24.18.0 on
+macOS arm64. The new regression failed before the fix and passed afterward.
+The deterministic example completed with one repair and verified report storage.
+All 12 editor checks passed, and the live draft visibly showed Nisi v0.1 with
+10 editable sections. Package metadata remains `0.1.0`.
+
+The [follow-up summary](verification/2026-09-12-v0.1/summary.json) and
+[source manifest](verification/2026-09-12-v0.1/source-manifest.json) identify this
+revision. Earlier manifests retain their original scope. Live model and native
+platform integrations were not rerun for this correction. Hosted CI must be
+checked against the published commit separately.
+
 ## September 12: documentation and onboarding revision
 
 The review revision adds Node-version preflight checks, local-model CLI argument

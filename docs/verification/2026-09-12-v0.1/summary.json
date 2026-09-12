@@ -1,0 +1,80 @@
+{
+  "date": "2026-09-12",
+  "baseCommit": "02a0b39146596da6abaf279316ff7086cd70ec52",
+  "displayVersion": "Nisi v0.1",
+  "packageVersion": "0.1.0",
+  "platform": "macOS arm64",
+  "automatedTests": {
+    "node22.23.2": {
+      "passed": 170,
+      "failed": 0,
+      "skipped": 0,
+      "cancelled": 0,
+      "scope": "Full suite on the final runtime and test source"
+    },
+    "node24.18.0": {
+      "passed": 170,
+      "failed": 0,
+      "skipped": 0,
+      "cancelled": 0,
+      "scope": "Full suite on the final runtime and test source"
+    }
+  },
+  "structuralCheck": {
+    "status": "PASS",
+    "runtimes": [
+      "node22.23.2",
+      "node24.18.0"
+    ]
+  },
+  "deadlineRegression": {
+    "scope": "Storage acknowledgement copied at the total deadline; optional and required report stores",
+    "before": {
+      "outcome": "COMPLETED",
+      "reportStored": true
+    },
+    "after": {
+      "outcome": "TIMED_OUT",
+      "workflowOutcome": "COMPLETED",
+      "reportStored": false,
+      "reportStoreCode": "DEADLINE_EXCEEDED",
+      "reportStoreEvidence": null,
+      "adapterSignalAborted": true
+    }
+  },
+  "deterministicExample": {
+    "outcome": "COMPLETED",
+    "repairAttempts": 1,
+    "reportStored": true,
+    "modelCalls": 0
+  },
+  "editorStatic": {
+    "passed": 12,
+    "sections": 10,
+    "markdownByteParity": true,
+    "htmlSaveRoundTrips": 2,
+    "repairResumesChecks": true
+  },
+  "editorBrowser": {
+    "environment": "Codex in-app browser",
+    "heading": "# Nisi v0.1",
+    "title": "Nisi v0.1 on GitHub — Editable Draft",
+    "sectionTextareas": 10,
+    "characters": 7738,
+    "fnv1a": 985188548,
+    "sourceMarkdownSha256": "257f4b00f20b7905cbbacb109c7b33b1199521f45369279e1b4cc82512ba5016",
+    "chartCount": 1,
+    "earlyExitBranches": 4,
+    "repairReturn": "Return to step 4; repeat checks, tests and review",
+    "typingHandlers": "Unchanged; typing was not retested for this label-only editor revision"
+  },
+  "review": {
+    "runtime": "Daybreak independent reproduction and focused fix review passed",
+    "documentation": "Luna source-based review found no additional material errors",
+    "claude": "NOT_RUN: authentication expired"
+  },
+  "liveModelIntegration": "NOT_RUN for this revision",
+  "nativeAppleIntegration": "NOT_RUN for this revision",
+  "nativeWindows": "NOT_RUN",
+  "hostedCI": "Check the GitHub Actions run for the published commit; not claimed by this local record."
+}
