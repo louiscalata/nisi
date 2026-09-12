@@ -1,7 +1,7 @@
 # Editable README manuscript
 
 Open `index.html` or `index-typing-revision.html` in a browser. Both contain the
-same standalone editor: 17 section text boxes, an About text box, a limited
+same standalone editor: 10 section text boxes, an About text box, a limited
 Markdown preview, and **The Path of One Plate** diagram. No build step or model
 server is needed to edit. GitHub's file viewer displays HTML source; download
 the file and open it locally to use the editor.
@@ -25,7 +25,9 @@ with `about` and `sections`. Each section has a stable `id`, `current` text and
 `baseline` text. Its joined current text must exactly match `README-draft.md`.
 Use that option when preserving editorial section IDs and original baselines.
 The embedded `<script id="state" type="application/json">` in a saved editable
-copy contains that state. Capture the user's latest saved copy before rebuilding.
+copy contains that state. Capture the user's latest live textarea values before rebuilding; an older export
+may omit unsaved edits. The September 12 manuscript uses the prior published
+wording as its comparison baseline.
 
 The Markdown preview escapes user HTML and permits only HTTP, HTTPS and mailto
 links. It supports a small Markdown subset and the fixed brigade flowchart

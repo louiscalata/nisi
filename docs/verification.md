@@ -1,5 +1,28 @@
 # Verification record
 
+## September 12: documentation and onboarding revision
+
+The review revision adds Node-version preflight checks, local-model CLI argument
+validation, an architecture guide, and a shorter editable README. The workflow
+orchestrator and model transport implementation remain unchanged. New results
+are recorded separately in the [September 12 summary](verification/2026-09-12/summary.json)
+and [source manifest](verification/2026-09-12/source-manifest.json).
+
+Local checks passed all 169 tests on Node 22.23.2 and 24.18.0 on macOS arm64.
+After removing optional chaining from the preflight, the four onboarding tests
+were rerun on both versions. An actual Node 20.20.2 invocation was refused
+with the intended setup message and exit code 1. The deterministic example completed with one repair
+and verified report storage. The editor's 12 checks cover export parity, HTML
+save round trips, safe rendering, and the corrected repair-to-checks branch.
+
+No live model, native Apple, or native Windows integration was rerun for this
+revision. The September 11 live records below keep their original source scope.
+See [GitHub Actions](https://github.com/louiscalata/nisi/actions/workflows/ci.yml)
+for hosted results and check the commit attached to each run. The workflow now
+also checks the editable README on each Linux Node job.
+
+## September 11: implementation and integration evidence
+
 These results were collected on September 11, 2026, while developing the source
 update based on Git commit `67ca3a1`. The [source manifest](verification/2026-09-11/source-manifest.json)
 identifies the tested runtime, tests, examples, native sources and package files
@@ -46,7 +69,7 @@ Unicode/JSON, contradictory assertion counts, clock errors, cancellation,
 timeouts, repair limits, no progress and storage failures. They do not themselves
 call a live model. Native and local-model runs are separate evidence.
 
-## Current live integrations
+## September 11 live integrations
 
 - [Native Apple calls](verification/2026-09-11/native-apple.json) contain helper,
   Swift source and adapter source hashes, input digest, returned evidence and
@@ -108,8 +131,8 @@ passed both Node 22 and Node 24 jobs on `ubuntu-latest` for implementation commi
 `ec12fcbe105932d0062f9ef545589b6773fbacdd`. Each job installed dependencies,
 passed the scoped static check and passed all 165 tests. The
 [retained CI receipt](verification/2026-09-11/github-actions.json) records job and
-step results. Later documentation-only commits do not change the runtime hashes
-in the source manifest.
+step results. The documentation-only follow-up through `fc8bf1b` did not change
+those runtime hashes. The September 12 onboarding revision has a separate manifest.
 
 ## Evidence limits
 

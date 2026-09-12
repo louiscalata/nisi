@@ -1,27 +1,42 @@
 # Nisi roadmap
 
-Canonical project roadmap. Updated September 11, 2026. Product name: Nisi.
-Version: 0.1.0. This local development work is based on public commit `67ca3a1`;
-Louis authorized committing and pushing the reviewed work to GitHub on September
-11, 2026. No package release is claimed by that source update.
+Canonical project roadmap. Updated September 12, 2026. Product name: Nisi.
+Version: 0.1.0. The September 12 documentation and onboarding revision starts
+from public commit `fc8bf1b`. Louis authorized applying the review changes and
+pushing them to GitHub. Package registry publication remains separate.
+
+## September 12 review plan
+
+- [x] Put purpose, checkout instructions, runnable usage and expected output first.
+- [x] Use Workflow Orchestrator in prose; retain public imports and API contracts.
+- [x] Define architecture, workflow, pipeline, run, stage, status, outcome and state.
+- [x] Keep the kitchen brigade chart and move technical detail into linked guides.
+- [x] Move brief neutral background to the end; remove the defensive aside.
+- [x] Add Node-version preflight and actionable local-model argument errors.
+- [x] Rebuild the editable manuscript without changing the typing behavior.
+- [x] Verify the changed source, examples, links, editor and before/after record.
+- [x] Complete the GitHub push review and apply its concrete findings.
+
+Publication and hosted verification are tracked per commit in
+[GitHub history](https://github.com/louiscalata/nisi/commits/main/) and
+[GitHub Actions](https://github.com/louiscalata/nisi/actions/workflows/ci.yml).
 
 ## Direction
 
 Put the portable operating rules of **initiate online code mode** into a usable
-JavaScript Workflow Engine: fixed scope and acceptance criteria, one author,
+JavaScript Workflow Orchestrator: fixed scope and acceptance criteria, one author,
 separate reviewers, deterministic checking tools, bounded repair, and outcomes
 supported by records tied to the exact task and candidate. The assistant skill
 remains operating instructions; the library can run without installing it.
 
 Use the kitchen brigade to explain the process, with conventional developer
 terms alongside each role. Louis owns the editorial voice and release decisions.
-The editable draft is the current README manuscript. The September 11 request
-"update changes to github" authorizes publishing this reviewed snapshot; later
-editorial changes remain local until another requested update.
+The editable draft is the current README manuscript. The current authorized update includes the September 12 review changes.
+Later unrequested editorial work remains local until publication is requested.
 
-## Implemented and verified locally
+## September 11 implementation record
 
-- [x] Public package entrypoint and conventional component names: Workflow Engine,
+- [x] Public package entrypoint and conventional component names: Workflow Orchestrator,
   File Access Policy, JSON Canonicalizer, Apple Foundation Models Adapter,
   Local Chat Author/Reviewer Adapters, and Static Analysis Check.
 - [x] Retain legacy component imports, factories, v1 refusal codes and digest
@@ -73,7 +88,7 @@ The HTTP integration does not invoke the LM Studio CLI, load models, or choose
 models automatically. A trusted compatible local server and configured model
 names are supplied by the host application.
 
-## Editorial draft
+## September 11 editorial record
 
 - [x] Explain what Nisi is, what it does, its intended value and current limits.
 - [x] Map brigade roles to developer terms and render **The Path of One Plate**

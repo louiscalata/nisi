@@ -1,4 +1,4 @@
-# Workflow Engine API
+# Workflow Orchestrator API
 
 Nisi is a Node.js ES module library. Import `runWorkflow`, `createCandidate`, and
 `createTaskSpecification` from `nisi/workflow` when installed, or from

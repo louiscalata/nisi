@@ -4,7 +4,7 @@ Nisi keeps its product name. Component names describe their software responsibil
 
 | Component | Public module/API | Legacy compatibility |
 |---|---|---|
-| Workflow Engine | `workflow/engine.mjs`, `runWorkflow` | New API |
+| Workflow Orchestrator | `workflow/engine.mjs`, `runWorkflow` | New API |
 | Task Specification and Candidate | `createTaskSpecification`, `createCandidate` | New contracts |
 | File Access Policy | `policy/file-access.mjs`, `createFileAccessPolicy` | `createContentConsent` and `gate/content-consent.mjs` retained |
 | JSON Canonicalizer | `serialization/canonical-json-v1.mjs`, `canonicalizeJsonV1` | `canonicalizeJSONV1`, legacy path and restricted v1 profile retained |
@@ -15,6 +15,10 @@ Nisi keeps its product name. Component names describe their software responsibil
 | Run Report / Report Store | Frozen engine result and injected `store` callback | New contract; sample store writes and verifies a report |
 
 The package root exports the public APIs. Subpath exports cover workflow, policy, serialization, Apple and local chat adapters. Existing deep imports remain available. Result codes and v1 consent/observation digest formulas are preserved; the new execution-receipt digest has a separate versioned domain.
+
+The prose name **Workflow Orchestrator** describes coordination. The public
+`runWorkflow` function and `workflow/engine.mjs` path remain stable. For workflow,
+pipeline, state, and adapter definitions, see [Architecture](architecture.md).
 
 ## How the skill becomes a core
 

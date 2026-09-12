@@ -26,3 +26,5 @@ jobs:
         run: npm run check:static
       - name: Tests
         run: npm test
+      - name: Editable README consistency
+        run: node docs/editor/check-editor.mjs ./index-typing-revision.html

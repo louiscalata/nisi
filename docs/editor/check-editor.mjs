@@ -13,6 +13,7 @@ function functionSource(name) {
   let found;
   function visit(node) {
     if (ts.isFunctionDeclaration(node) && node.name?.text === name) found = node.getText(ast);
+    if (ts.isVariableStatement(node) && node.declarationList.declarations.some(declaration => declaration.name?.text === name)) found = node.getText(ast);
     ts.forEachChild(node, visit);
   }
   visit(ast); assert.ok(found, name); return found;
@@ -59,4 +60,10 @@ vm.runInContext(functionSource('safeHref'), context);
 assert.equal(vm.runInContext('safeHref("javascript:alert(1)")', context), '#', 'Unsafe link scheme blocked');
 assert.equal(vm.runInContext('safeHref("data:text/html,test")', context), '#', 'Data links blocked');
 assert.equal(vm.runInContext('safeHref("CONTRIBUTING.md")', context), 'https://github.com/louiscalata/nisi/blob/main/CONTRIBUTING.md');
-console.log(JSON.stringify({ status: 'PASS', checks: 10, sections: state.sections.length, secondSaveRoundTrip: true, markdownByteParity: true }));
+vm.runInContext(functionSource('esc') + '\n' + functionSource('plateChart'), context);
+context.chart = draft.match(/```mermaid\n([\s\S]*?)```/)[1];
+const renderedChart = vm.runInContext('plateChart(chart)', context);
+assert.ok(renderedChart.includes('Return to step 4; repeat checks, tests and review'), 'Repair resumes checking its replacement candidate');
+context.chart = context.chart.replace('repair --> checks', 'repair --> cook');
+assert.equal(vm.runInContext('plateChart(chart)', context), null, 'Unsupported repair path remains visible as source instead of a misleading chart');
+console.log(JSON.stringify({ status: 'PASS', checks: 12, sections: state.sections.length, secondSaveRoundTrip: true, markdownByteParity: true, repairResumesChecks: true }));

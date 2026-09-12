@@ -33,7 +33,7 @@ state = {
     'id': 'nisi-brigade-editor-20260911-v1',
     'baseRevision': hashlib.sha256(markdown.encode('utf-8')).hexdigest(),
     'savedAt': 0,
-    'about': 'A JavaScript workflow engine for AI-assisted development, inspired by a kitchen brigade. Orchestrates local LLM author and reviewer calls through a configured HTTP server.',
+    'about': 'A Node.js workflow orchestrator for AI-assisted coding. Coordinates drafting, checks, tests, review, and bounded repairs, then returns a candidate and run report.',
     'sections': sections,
 }
 if len(sys.argv) > 2:

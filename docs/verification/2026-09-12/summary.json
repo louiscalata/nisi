@@ -1,0 +1,53 @@
+{
+  "date": "2026-09-12",
+  "baseCommit": "fc8bf1b11d613c7bd0d3ed3494c3f64d7cd45d18",
+  "platform": "macOS arm64",
+  "automatedTests": {
+    "node22.23.2": {
+      "passed": 169,
+      "failed": 0,
+      "skipped": 0
+    },
+    "node24.18.0": {
+      "passed": 169,
+      "failed": 0,
+      "skipped": 0
+    },
+    "scope": "Full suite before the conservative syntax change to require-node.cjs; all four affected onboarding tests then passed on both runtimes."
+  },
+  "nodePreflight": {
+    "testedRejectedRuntime": "v20.20.2",
+    "exitCode": 1,
+    "message": "Nisi requires Node.js 22 or newer; found v20.20.2. Install or switch Node, then rerun this command."
+  },
+  "deterministicExample": {
+    "outcome": "COMPLETED",
+    "repairAttempts": 1,
+    "reportStored": true,
+    "modelCalls": 0
+  },
+  "editorStatic": {
+    "passed": 12,
+    "sections": 10,
+    "markdownByteParity": true,
+    "htmlSaveRoundTrips": 2,
+    "repairResumesChecks": true
+  },
+  "editorBrowser": {
+    "environment": "Codex in-app browser; isolated copy with a distinct recovery key",
+    "sectionTextareas": 10,
+    "aboutTextareas": 1,
+    "typing": "hello Nisi 123 entered once; Enter then Backspace preserved it",
+    "previewDuringTyping": "unchanged",
+    "clipboardMarkdownCharacters": 7733,
+    "clipboardMarkdownFnv1a": 1146747763,
+    "sourceMarkdownSha256": "42250b8e6a6acdf9b71afdcee38ad2f2235d64eb216978e82c0d3e4ea6c2187d",
+    "chartCount": 1,
+    "earlyExitBranches": 4,
+    "repairReturn": "Return to step 4; repeat checks, tests and review"
+  },
+  "liveModelIntegration": "NOT_RUN for this revision",
+  "nativeAppleIntegration": "NOT_RUN for this revision",
+  "nativeWindows": "NOT_RUN",
+  "hostedCI": "Check the GitHub Actions run associated with the published commit; not claimed by this local record."
+}

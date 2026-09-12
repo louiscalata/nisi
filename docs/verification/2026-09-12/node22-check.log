@@ -1,0 +1,1037 @@
+
+> nisi@0.1.0 check
+> npm run check:structural && npm test
+
+
+> nisi@0.1.0 check:structural
+> node scripts/require-node.cjs && node scripts/structural-check.mjs
+
+{"mutationResults":[{"caught":true,"expectedRule":"process-spawn","id":"STRUCT-001-SPAWN","observedRules":["process-spawn"]},{"caught":true,"expectedRule":"filesystem-write","id":"STRUCT-002-WRITE","observedRules":["filesystem-write"]},{"caught":true,"expectedRule":"network-effect","id":"STRUCT-003-NETWORK","observedRules":["network-effect"]},{"caught":true,"expectedRule":"dynamic-code","id":"STRUCT-004-EVAL","observedRules":["dynamic-code"]},{"caught":true,"expectedRule":"dynamic-import","id":"STRUCT-005-IMPORT","observedRules":["dynamic-import"]},{"caught":true,"expectedRule":"module-load","id":"STRUCT-006-REQUIRE","observedRules":["module-load"]},{"caught":true,"expectedRule":"process-mutation","id":"STRUCT-007-PROCESS-EXIT","observedRules":["process-mutation"]},{"caught":true,"expectedRule":"dynamic-or-worker-construction","id":"STRUCT-008-WORKER","observedRules":["dynamic-or-worker-construction"]}],"positiveResults":[{"findingCount":0,"id":"ALLOW-001-CANONICAL"},{"findingCount":0,"id":"ALLOW-002-VALIDATE"},{"findingCount":0,"id":"ALLOW-003-EVAL-SUBSTRING"},{"findingCount":0,"id":"ALLOW-004-FORBIDDEN-WORDS-AS-DATA"},{"findingCount":0,"id":"ALLOW-005-FORBIDDEN-WORD-IN-STRING"},{"findingCount":0,"id":"ALLOW-006-METHOD-DECLARATION-NOT-CALL"},{"findingCount":0,"id":"ALLOW-007-ORDINARY-COLLECTION-WORK"},{"findingCount":0,"id":"ALLOW-008-HASHING-IS-PERMITTED"}],"resultDigest":"66d9c396e18a434690c34ad059279774154062982313c2973fdb14f54c52eef0","schemaVersion":1,"sourceDigest":"d1049a26d2bea0d14e959c0af22af15b975345091c5fa5360e8bd685637f8e59","sourceFindings":[],"status":"PASS"}
+
+> nisi@0.1.0 test
+> node scripts/require-node.cjs && node --test tests/*.test.mjs
+
+TAP version 13
+# Subtest: construction refuses anything outside the closed option set
+ok 1 - construction refuses anything outside the closed option set
+  ---
+  duration_ms: 7.431667
+  type: 'test'
+  ...
+# Subtest: no grant is refusal, not a permissive default
+ok 2 - no grant is refusal, not a permissive default
+  ---
+  duration_ms: 1.552833
+  type: 'test'
+  ...
+# Subtest: a consented item is read and answered, and only digests come back
+ok 3 - a consented item is read and answered, and only digests come back
+  ---
+  duration_ms: 127.334583
+  type: 'test'
+  ...
+# Subtest: the same content under the same grant answers with the same digest
+ok 4 - the same content under the same grant answers with the same digest
+  ---
+  duration_ms: 112.817375
+  type: 'test'
+  ...
+# Subtest: a request with no declared content never reaches a process
+ok 5 - a request with no declared content never reaches a process
+  ---
+  duration_ms: 0.93075
+  type: 'test'
+  ...
+# Subtest: content the grant refuses never reaches a process
+ok 6 - content the grant refuses never reaches a process
+  ---
+  duration_ms: 1.332416
+  type: 'test'
+  ...
+# Subtest: revocation stops the executor immediately and terminally
+ok 7 - revocation stops the executor immediately and terminally
+  ---
+  duration_ms: 145.309583
+  type: 'test'
+  ...
+# Subtest: evidence that claims authority is refused rather than interpreted
+ok 8 - evidence that claims authority is refused rather than interpreted
+  ---
+  duration_ms: 1913.633292
+  type: 'test'
+  ...
+# Subtest: evidence about different content, or a different grant, is refused
+ok 9 - evidence about different content, or a different grant, is refused
+  ---
+  duration_ms: 558.100792
+  type: 'test'
+  ...
+# Subtest: an advisory over the granted cap, or one that does not match its digest, is refused
+ok 10 - an advisory over the granted cap, or one that does not match its digest, is refused
+  ---
+  duration_ms: 555.4965
+  type: 'test'
+  ...
+# Subtest: the binary is re-verified before every launch
+ok 11 - the binary is re-verified before every launch
+  ---
+  duration_ms: 113.669625
+  type: 'test'
+  ...
+# Subtest: child failures are refused with their own causes, never as evidence
+ok 12 - child failures are refused with their own causes, never as evidence
+  ---
+  duration_ms: 277.833166
+  type: 'test'
+  ...
+# Subtest: an aborted run is refused and leaves no reading behind
+ok 13 - an aborted run is refused and leaves no reading behind
+  ---
+  duration_ms: 51.970084
+  type: 'test'
+  ...
+# Subtest: a request that is not bytes is refused before the grant is consulted
+ok 14 - a request that is not bytes is refused before the grant is consulted
+  ---
+  duration_ms: 0.845208
+  type: 'test'
+  ...
+# Subtest: every field of the evidence reader is load-bearing, not decorative
+ok 15 - every field of the evidence reader is load-bearing, not decorative
+  ---
+  duration_ms: 452.869792
+  type: 'test'
+  ...
+# Subtest: the answer digest binds the request bytes, not only the content
+ok 16 - the answer digest binds the request bytes, not only the content
+  ---
+  duration_ms: 90.302584
+  type: 'test'
+  ...
+# Subtest: pre-aborted and malformed contexts resolve to refusals without admission or spawn
+ok 17 - pre-aborted and malformed contexts resolve to refusals without admission or spawn
+  ---
+  duration_ms: 2.916875
+  type: 'test'
+  ...
+# Subtest: abort during listener registration prevents spawning
+ok 18 - abort during listener registration prevents spawning
+  ---
+  duration_ms: 0.614417
+  type: 'test'
+  ...
+# Subtest: evidence refuses malformed UTF-8, duplicate keys, wrong prompts and malformed limitations
+ok 19 - evidence refuses malformed UTF-8, duplicate keys, wrong prompts and malformed limitations
+  ---
+  duration_ms: 1434.520125
+  type: 'test'
+  ...
+# Subtest: zero advisory cap, UTF-8 BOM and frozen item mappings follow the native contract
+ok 20 - zero advisory cap, UTF-8 BOM and frozen item mappings follow the native contract
+  ---
+  duration_ms: 64.303458
+  type: 'test'
+  ...
+# Subtest: canonical JSON v1 exact bytes: numeric-key-order
+ok 21 - canonical JSON v1 exact bytes: numeric-key-order
+  ---
+  duration_ms: 1.519708
+  type: 'test'
+  ...
+# Subtest: canonical JSON v1 exact bytes: proto-survival
+ok 22 - canonical JSON v1 exact bytes: proto-survival
+  ---
+  duration_ms: 0.109125
+  type: 'test'
+  ...
+# Subtest: canonical JSON v1 exact bytes: scalar-order
+ok 23 - canonical JSON v1 exact bytes: scalar-order
+  ---
+  duration_ms: 0.166583
+  type: 'test'
+  ...
+# Subtest: canonical JSON v1 exact bytes: decoded-key
+ok 24 - canonical JSON v1 exact bytes: decoded-key
+  ---
+  duration_ms: 0.167458
+  type: 'test'
+  ...
+# Subtest: canonical JSON v1 exact bytes: null-value
+ok 25 - canonical JSON v1 exact bytes: null-value
+  ---
+  duration_ms: 0.133375
+  type: 'test'
+  ...
+# Subtest: canonical JSON v1 exact bytes: empty-object
+ok 26 - canonical JSON v1 exact bytes: empty-object
+  ---
+  duration_ms: 0.046167
+  type: 'test'
+  ...
+# Subtest: canonical JSON v1 exact bytes: empty-array
+ok 27 - canonical JSON v1 exact bytes: empty-array
+  ---
+  duration_ms: 0.095667
+  type: 'test'
+  ...
+# Subtest: canonical JSON v1 exact bytes: array-order
+ok 28 - canonical JSON v1 exact bytes: array-order
+  ---
+  duration_ms: 0.5305
+  type: 'test'
+  ...
+# Subtest: canonical JSON v1 exact bytes: true
+ok 29 - canonical JSON v1 exact bytes: true
+  ---
+  duration_ms: 0.317875
+  type: 'test'
+  ...
+# Subtest: canonical JSON v1 exact bytes: false
+ok 30 - canonical JSON v1 exact bytes: false
+  ---
+  duration_ms: 0.296292
+  type: 'test'
+  ...
+# Subtest: canonical JSON v1 exact bytes: null
+ok 31 - canonical JSON v1 exact bytes: null
+  ---
+  duration_ms: 0.073375
+  type: 'test'
+  ...
+# Subtest: canonical JSON v1 exact bytes: whitespace
+ok 32 - canonical JSON v1 exact bytes: whitespace
+  ---
+  duration_ms: 0.050417
+  type: 'test'
+  ...
+# Subtest: canonical JSON v1 exact bytes: nfd-value-preserved
+ok 33 - canonical JSON v1 exact bytes: nfd-value-preserved
+  ---
+  duration_ms: 0.033708
+  type: 'test'
+  ...
+# Subtest: canonical JSON v1 exact bytes: embedded-bom
+ok 34 - canonical JSON v1 exact bytes: embedded-bom
+  ---
+  duration_ms: 0.049792
+  type: 'test'
+  ...
+# Subtest: canonical JSON v1 exact bytes: surrogate-pair
+ok 35 - canonical JSON v1 exact bytes: surrogate-pair
+  ---
+  duration_ms: 0.025167
+  type: 'test'
+  ...
+# Subtest: canonical JSON v1 exact bytes: maximum-scalar
+ok 36 - canonical JSON v1 exact bytes: maximum-scalar
+  ---
+  duration_ms: 0.022792
+  type: 'test'
+  ...
+# Subtest: canonical JSON v1 exact bytes: escapes
+ok 37 - canonical JSON v1 exact bytes: escapes
+  ---
+  duration_ms: 0.028958
+  type: 'test'
+  ...
+# Subtest: canonical JSON v1 exact bytes: raw-noncontrols
+ok 38 - canonical JSON v1 exact bytes: raw-noncontrols
+  ---
+  duration_ms: 0.021583
+  type: 'test'
+  ...
+# Subtest: canonical JSON v1 integer boundary accepts 0
+ok 39 - canonical JSON v1 integer boundary accepts 0
+  ---
+  duration_ms: 0.033958
+  type: 'test'
+  ...
+# Subtest: canonical JSON v1 integer boundary accepts 1
+ok 40 - canonical JSON v1 integer boundary accepts 1
+  ---
+  duration_ms: 0.017417
+  type: 'test'
+  ...
+# Subtest: canonical JSON v1 integer boundary accepts -1
+ok 41 - canonical JSON v1 integer boundary accepts -1
+  ---
+  duration_ms: 0.020958
+  type: 'test'
+  ...
+# Subtest: canonical JSON v1 integer boundary accepts 9007199254740991
+ok 42 - canonical JSON v1 integer boundary accepts 9007199254740991
+  ---
+  duration_ms: 0.018375
+  type: 'test'
+  ...
+# Subtest: canonical JSON v1 integer boundary accepts -9007199254740991
+ok 43 - canonical JSON v1 integer boundary accepts -9007199254740991
+  ---
+  duration_ms: 0.018125
+  type: 'test'
+  ...
+# Subtest: canonical JSON v1 number refuses exact source -0
+ok 44 - canonical JSON v1 number refuses exact source -0
+  ---
+  duration_ms: 0.185708
+  type: 'test'
+  ...
+# Subtest: canonical JSON v1 number refuses exact source 1.0
+ok 45 - canonical JSON v1 number refuses exact source 1.0
+  ---
+  duration_ms: 0.056708
+  type: 'test'
+  ...
+# Subtest: canonical JSON v1 number refuses exact source 1.5
+ok 46 - canonical JSON v1 number refuses exact source 1.5
+  ---
+  duration_ms: 0.030459
+  type: 'test'
+  ...
+# Subtest: canonical JSON v1 number refuses exact source 1e0
+ok 47 - canonical JSON v1 number refuses exact source 1e0
+  ---
+  duration_ms: 0.023042
+  type: 'test'
+  ...
+# Subtest: canonical JSON v1 number refuses exact source 1E+3
+ok 48 - canonical JSON v1 number refuses exact source 1E+3
+  ---
+  duration_ms: 0.021791
+  type: 'test'
+  ...
+# Subtest: canonical JSON v1 number refuses exact source 1e-7
+ok 49 - canonical JSON v1 number refuses exact source 1e-7
+  ---
+  duration_ms: 0.021625
+  type: 'test'
+  ...
+# Subtest: canonical JSON v1 number refuses exact source 01
+ok 50 - canonical JSON v1 number refuses exact source 01
+  ---
+  duration_ms: 0.204666
+  type: 'test'
+  ...
+# Subtest: canonical JSON v1 number refuses exact source -01
+ok 51 - canonical JSON v1 number refuses exact source -01
+  ---
+  duration_ms: 0.069375
+  type: 'test'
+  ...
+# Subtest: canonical JSON v1 number refuses exact source +1
+ok 52 - canonical JSON v1 number refuses exact source +1
+  ---
+  duration_ms: 0.155292
+  type: 'test'
+  ...
+# Subtest: canonical JSON v1 number refuses exact source -
+ok 53 - canonical JSON v1 number refuses exact source -
+  ---
+  duration_ms: 0.046708
+  type: 'test'
+  ...
+# Subtest: canonical JSON v1 number refuses exact source NaN
+ok 54 - canonical JSON v1 number refuses exact source NaN
+  ---
+  duration_ms: 0.031959
+  type: 'test'
+  ...
+# Subtest: canonical JSON v1 number refuses exact source Infinity
+ok 55 - canonical JSON v1 number refuses exact source Infinity
+  ---
+  duration_ms: 0.113291
+  type: 'test'
+  ...
+# Subtest: canonical JSON v1 number refuses exact source -Infinity
+ok 56 - canonical JSON v1 number refuses exact source -Infinity
+  ---
+  duration_ms: 0.067458
+  type: 'test'
+  ...
+# Subtest: canonical JSON v1 number refuses exact source 9007199254740992
+ok 57 - canonical JSON v1 number refuses exact source 9007199254740992
+  ---
+  duration_ms: 0.033
+  type: 'test'
+  ...
+# Subtest: canonical JSON v1 number refuses exact source -9007199254740992
+ok 58 - canonical JSON v1 number refuses exact source -9007199254740992
+  ---
+  duration_ms: 0.027041
+  type: 'test'
+  ...
+# Subtest: canonical JSON v1 number refuses exact source -9223372036854775808
+ok 59 - canonical JSON v1 number refuses exact source -9223372036854775808
+  ---
+  duration_ms: 0.02275
+  type: 'test'
+  ...
+# Subtest: canonical JSON v1 number refuses exact source 18446744073709551615
+ok 60 - canonical JSON v1 number refuses exact source 18446744073709551615
+  ---
+  duration_ms: 0.021375
+  type: 'test'
+  ...
+# Subtest: canonical JSON v1 number refuses exact source 999999999999999999999999
+ok 61 - canonical JSON v1 number refuses exact source 999999999999999999999999
+  ---
+  duration_ms: 0.02925
+  type: 'test'
+  ...
+# Subtest: canonical JSON v1 refusal: same-key
+ok 62 - canonical JSON v1 refusal: same-key
+  ---
+  duration_ms: 0.048208
+  type: 'test'
+  ...
+# Subtest: canonical JSON v1 refusal: escaped-same-key
+ok 63 - canonical JSON v1 refusal: escaped-same-key
+  ---
+  duration_ms: 0.024708
+  type: 'test'
+  ...
+# Subtest: canonical JSON v1 refusal: nested-same-key
+ok 64 - canonical JSON v1 refusal: nested-same-key
+  ---
+  duration_ms: 0.024541
+  type: 'test'
+  ...
+# Subtest: canonical JSON v1 refusal: nul-key
+ok 65 - canonical JSON v1 refusal: nul-key
+  ---
+  duration_ms: 0.020166
+  type: 'test'
+  ...
+# Subtest: canonical JSON v1 refusal: nfd-key
+ok 66 - canonical JSON v1 refusal: nfd-key
+  ---
+  duration_ms: 0.062
+  type: 'test'
+  ...
+# Subtest: canonical JSON v1 refusal: nfc-nfd-collision
+ok 67 - canonical JSON v1 refusal: nfc-nfd-collision
+  ---
+  duration_ms: 0.023041
+  type: 'test'
+  ...
+# Subtest: canonical JSON v1 refusal: lone-high
+ok 68 - canonical JSON v1 refusal: lone-high
+  ---
+  duration_ms: 0.020959
+  type: 'test'
+  ...
+# Subtest: canonical JSON v1 refusal: lone-low
+ok 69 - canonical JSON v1 refusal: lone-low
+  ---
+  duration_ms: 0.0195
+  type: 'test'
+  ...
+# Subtest: canonical JSON v1 refusal: high-then-wrong-low
+ok 70 - canonical JSON v1 refusal: high-then-wrong-low
+  ---
+  duration_ms: 0.023458
+  type: 'test'
+  ...
+# Subtest: canonical JSON v1 refusal: high-then-raw
+ok 71 - canonical JSON v1 refusal: high-then-raw
+  ---
+  duration_ms: 0.020375
+  type: 'test'
+  ...
+# Subtest: canonical JSON v1 refusal: surrogate-key
+ok 72 - canonical JSON v1 refusal: surrogate-key
+  ---
+  duration_ms: 0.01925
+  type: 'test'
+  ...
+# Subtest: canonical JSON v1 refusal: bad-escape
+ok 73 - canonical JSON v1 refusal: bad-escape
+  ---
+  duration_ms: 0.019834
+  type: 'test'
+  ...
+# Subtest: canonical JSON v1 refusal: truncated-hex
+ok 74 - canonical JSON v1 refusal: truncated-hex
+  ---
+  duration_ms: 0.019417
+  type: 'test'
+  ...
+# Subtest: canonical JSON v1 refusal: invalid-hex
+ok 75 - canonical JSON v1 refusal: invalid-hex
+  ---
+  duration_ms: 0.018833
+  type: 'test'
+  ...
+# Subtest: canonical JSON v1 refusal: truncated-escape
+ok 76 - canonical JSON v1 refusal: truncated-escape
+  ---
+  duration_ms: 0.021042
+  type: 'test'
+  ...
+# Subtest: canonical JSON v1 refusal: raw-control
+ok 77 - canonical JSON v1 refusal: raw-control
+  ---
+  duration_ms: 0.021
+  type: 'test'
+  ...
+# Subtest: canonical JSON v1 refusal: unterminated
+ok 78 - canonical JSON v1 refusal: unterminated
+  ---
+  duration_ms: 0.021
+  type: 'test'
+  ...
+# Subtest: canonical JSON v1 refusal: object-trailing-comma
+ok 79 - canonical JSON v1 refusal: object-trailing-comma
+  ---
+  duration_ms: 0.019917
+  type: 'test'
+  ...
+# Subtest: canonical JSON v1 refusal: array-trailing-comma
+ok 80 - canonical JSON v1 refusal: array-trailing-comma
+  ---
+  duration_ms: 0.024625
+  type: 'test'
+  ...
+# Subtest: canonical JSON v1 refusal: top-level-tail
+ok 81 - canonical JSON v1 refusal: top-level-tail
+  ---
+  duration_ms: 0.020417
+  type: 'test'
+  ...
+# Subtest: canonical JSON v1 refusal: literal-tail
+ok 82 - canonical JSON v1 refusal: literal-tail
+  ---
+  duration_ms: 0.019334
+  type: 'test'
+  ...
+# Subtest: canonical JSON v1 refusal: empty-document
+ok 83 - canonical JSON v1 refusal: empty-document
+  ---
+  duration_ms: 0.022041
+  type: 'test'
+  ...
+# Subtest: canonical JSON v1 refusal: missing-value
+ok 84 - canonical JSON v1 refusal: missing-value
+  ---
+  duration_ms: 0.020625
+  type: 'test'
+  ...
+# Subtest: canonical JSON v1 refusal: missing-colon
+ok 85 - canonical JSON v1 refusal: missing-colon
+  ---
+  duration_ms: 0.021208
+  type: 'test'
+  ...
+# Subtest: canonical JSON v1 refusal: duplicate-proto
+ok 86 - canonical JSON v1 refusal: duplicate-proto
+  ---
+  duration_ms: 0.024292
+  type: 'test'
+  ...
+# Subtest: canonical JSON v1 refusal: fraction-without-integer
+ok 87 - canonical JSON v1 refusal: fraction-without-integer
+  ---
+  duration_ms: 0.019084
+  type: 'test'
+  ...
+# Subtest: canonical JSON v1 refusal: exponent-without-mantissa
+ok 88 - canonical JSON v1 refusal: exponent-without-mantissa
+  ---
+  duration_ms: 0.0185
+  type: 'test'
+  ...
+# Subtest: canonical JSON v1 refusal: negative-fraction-without-integer
+ok 89 - canonical JSON v1 refusal: negative-fraction-without-integer
+  ---
+  duration_ms: 0.01925
+  type: 'test'
+  ...
+# Subtest: canonical JSON v1 exact raw-byte refusal: invalid-ff-in-string
+ok 90 - canonical JSON v1 exact raw-byte refusal: invalid-ff-in-string
+  ---
+  duration_ms: 0.051416
+  type: 'test'
+  ...
+# Subtest: canonical JSON v1 exact raw-byte refusal: overlong
+ok 91 - canonical JSON v1 exact raw-byte refusal: overlong
+  ---
+  duration_ms: 0.022792
+  type: 'test'
+  ...
+# Subtest: canonical JSON v1 exact raw-byte refusal: encoded-surrogate
+ok 92 - canonical JSON v1 exact raw-byte refusal: encoded-surrogate
+  ---
+  duration_ms: 0.023375
+  type: 'test'
+  ...
+# Subtest: canonical JSON v1 exact raw-byte refusal: truncated-multibyte
+ok 93 - canonical JSON v1 exact raw-byte refusal: truncated-multibyte
+  ---
+  duration_ms: 0.021667
+  type: 'test'
+  ...
+# Subtest: canonical JSON v1 exact raw-byte refusal: above-unicode-range
+ok 94 - canonical JSON v1 exact raw-byte refusal: above-unicode-range
+  ---
+  duration_ms: 0.033292
+  type: 'test'
+  ...
+# Subtest: canonical JSON v1 exact raw-byte refusal: leading-bom
+ok 95 - canonical JSON v1 exact raw-byte refusal: leading-bom
+  ---
+  duration_ms: 0.021208
+  type: 'test'
+  ...
+# Subtest: canonical JSON v1 depth 128 admitted, 129 and exact generated 512 refused
+ok 96 - canonical JSON v1 depth 128 admitted, 129 and exact generated 512 refused
+  ---
+  duration_ms: 0.17275
+  type: 'test'
+  ...
+# Subtest: canonical JSON v1 object limit is per object, checked at 4096/4097 and generated 10000
+ok 97 - canonical JSON v1 object limit is per object, checked at 4096/4097 and generated 10000
+  ---
+  duration_ms: 19.2725
+  type: 'test'
+  ...
+# Subtest: canonical JSON v1 input-byte cap accepts exactly 1 MiB and refuses above it
+ok 98 - canonical JSON v1 input-byte cap accepts exactly 1 MiB and refuses above it
+  ---
+  duration_ms: 36.255666
+  type: 'test'
+  ...
+# Subtest: canonical JSON v1 input cannot be an arbitrary object, string, proxy or shared buffer
+ok 99 - canonical JSON v1 input cannot be an arbitrary object, string, proxy or shared buffer
+  ---
+  duration_ms: 0.127541
+  type: 'test'
+  ...
+# Subtest: canonical JSON v1 handles sliced views and refuses detached input
+ok 100 - canonical JSON v1 handles sliced views and refuses detached input
+  ---
+  duration_ms: 0.091708
+  type: 'test'
+  ...
+# Subtest: canonical JSON v1 ignores spoofed typed-array properties and never consults input hooks
+ok 101 - canonical JSON v1 ignores spoofed typed-array properties and never consults input hooks
+  ---
+  duration_ms: 0.042791
+  type: 'test'
+  ...
+# Subtest: canonical JSON v1 primitive-only emission never calls container toJSON
+ok 102 - canonical JSON v1 primitive-only emission never calls container toJSON
+  ---
+  duration_ms: 0.092042
+  type: 'test'
+  ...
+# Subtest: canonical JSON v1 key insertion permutations produce identical canonical digests
+ok 103 - canonical JSON v1 key insertion permutations produce identical canonical digests
+  ---
+  duration_ms: 0.240208
+  type: 'test'
+  ...
+# Subtest: canonical JSON v1 agrees with the independent serializer on every corpus vector
+ok 104 - canonical JSON v1 agrees with the independent serializer on every corpus vector
+  ---
+  duration_ms: 0.505375
+  type: 'test'
+  ...
+# Subtest: canonical JSON v1 does not silently migrate legacy numeric-key or proto records
+ok 105 - canonical JSON v1 does not silently migrate legacy numeric-key or proto records
+  ---
+  duration_ms: 0.158959
+  type: 'test'
+  ...
+# Subtest: canonical JSON v1 decoded astral duplicates and prefix/scalar key boundaries
+ok 106 - canonical JSON v1 decoded astral duplicates and prefix/scalar key boundaries
+  ---
+  duration_ms: 0.069708
+  type: 'test'
+  ...
+# Subtest: canonical JSON v1 size is the view length, not its larger backing allocation
+ok 107 - canonical JSON v1 size is the view length, not its larger backing allocation
+  ---
+  duration_ms: 0.06
+  type: 'test'
+  ...
+# Subtest: canonical JSON v1 captures current resized views and refuses out-of-bounds views
+ok 108 - canonical JSON v1 captures current resized views and refuses out-of-bounds views
+  ---
+  duration_ms: 0.057042
+  type: 'test'
+  ...
+# Subtest: canonical JSON v1 exact documented 400002-byte mixed string is admitted unchanged
+ok 109 - canonical JSON v1 exact documented 400002-byte mixed string is admitted unchanged
+  ---
+  duration_ms: 4.899166
+  type: 'test'
+  ...
+# Subtest: canonical JSON v1 integer magnitude is checked by value, not by digit count
+ok 110 - canonical JSON v1 integer magnitude is checked by value, not by digit count
+  ---
+  duration_ms: 0.111209
+  type: 'test'
+  ...
+# Subtest: content item traps and symbol extras are CONTENT_ITEM_INVALID before reads or admission count
+ok 111 - content item traps and symbol extras are CONTENT_ITEM_INVALID before reads or admission count
+  ---
+  duration_ms: 7.720083
+  type: 'test'
+  ...
+# Subtest: same-size in-place mutation between read and final identity check is CONTENT_CHANGED_DURING_READ
+ok 112 - same-size in-place mutation between read and final identity check is CONTENT_CHANGED_DURING_READ
+  ---
+  duration_ms: 1.257542
+  type: 'test'
+  ...
+# Subtest: executor rejects malformed item maps and snapshots valid mappings at construction
+ok 113 - executor rejects malformed item maps and snapshots valid mappings at construction
+  ---
+  duration_ms: 135.413916
+  type: 'test'
+  ...
+# Subtest: legacy payload digest remains exact while execution digest binds task identity
+ok 114 - legacy payload digest remains exact while execution digest binds task identity
+  ---
+  duration_ms: 101.20925
+  type: 'test'
+  ...
+# Subtest: a grant must be presented as canonical bytes
+ok 115 - a grant must be presented as canonical bytes
+  ---
+  duration_ms: 5.914584
+  type: 'test'
+  ...
+# Subtest: a grant is refused unless every declared boundary is the boundary
+ok 116 - a grant is refused unless every declared boundary is the boundary
+  ---
+  duration_ms: 3.0115
+  type: 'test'
+  ...
+# Subtest: a valid grant admits content inside its scope and returns the file, not the caller claim
+ok 117 - a valid grant admits content inside its scope and returns the file, not the caller claim
+  ---
+  duration_ms: 1.014334
+  type: 'test'
+  ...
+# Subtest: scope is a path boundary, not a string prefix
+ok 118 - scope is a path boundary, not a string prefix
+  ---
+  duration_ms: 0.826041
+  type: 'test'
+  ...
+# Subtest: a symlink cannot carry content across the boundary
+ok 119 - a symlink cannot carry content across the boundary
+  ---
+  duration_ms: 1.42525
+  type: 'test'
+  ...
+# Subtest: each item is checked on its own terms
+ok 120 - each item is checked on its own terms
+  ---
+  duration_ms: 2.324667
+  type: 'test'
+  ...
+# Subtest: a grant does not outlive its declared lifetime
+ok 121 - a grant does not outlive its declared lifetime
+  ---
+  duration_ms: 1.188917
+  type: 'test'
+  ...
+# Subtest: a clock that moves backwards is refused, not trusted
+ok 122 - a clock that moves backwards is refused, not trusted
+  ---
+  duration_ms: 0.376042
+  type: 'test'
+  ...
+# Subtest: revocation is immediate and terminal
+ok 123 - revocation is immediate and terminal
+  ---
+  duration_ms: 0.669916
+  type: 'test'
+  ...
+# Subtest: a grant reports what it is and claims nothing more
+ok 124 - a grant reports what it is and claims nothing more
+  ---
+  duration_ms: 1.051541
+  type: 'test'
+  ...
+# Subtest: the declared limits are the module constants, not per-call opinions
+ok 125 - the declared limits are the module constants, not per-call opinions
+  ---
+  duration_ms: 1.088625
+  type: 'test'
+  ...
+# Subtest: the consent digest is pinned to its v1 domain string
+ok 126 - the consent digest is pinned to its v1 domain string
+  ---
+  duration_ms: 0.275375
+  type: 'test'
+  ...
+# Subtest: later clock failures are named refusals and status samples the clock once
+ok 127 - later clock failures are named refusals and status samples the clock once
+  ---
+  duration_ms: 0.495917
+  type: 'test'
+  ...
+# Subtest: a final-component replacement after validation is refused before content is returned
+ok 128 - a final-component replacement after validation is refused before content is returned
+  ---
+  duration_ms: 1.02925
+  type: 'test'
+  ...
+# Subtest: file kind is a declared label; the v1 policy does not parse JSON content
+ok 129 - file kind is a declared label; the v1 policy does not parse JSON content
+  ---
+  duration_ms: 0.477541
+  type: 'test'
+  ...
+# Subtest: the README example runs and prints what the README says it prints
+ok 130 - the README example runs and prints what the README says it prints
+  ---
+  duration_ms: 37.1505
+  type: 'test'
+  ...
+# Subtest: example repairs an acceptance failure, reruns checks/tests, and reviews with evidence
+ok 131 - example repairs an acceptance failure, reruns checks/tests, and reviews with evidence
+  ---
+  duration_ms: 8.6825
+  type: 'test'
+  ...
+# Subtest: malformed model identity, finish reason, envelope schema, Unicode, and duplicate keys fail closed
+ok 132 - malformed model identity, finish reason, envelope schema, Unicode, and duplicate keys fail closed
+  ---
+  duration_ms: 1.938625
+  type: 'test'
+  ...
+# Subtest: configuration enforces exact loopback HTTP scope and bounded numeric caps
+ok 133 - configuration enforces exact loopback HTTP scope and bounded numeric caps
+  ---
+  duration_ms: 0.270167
+  type: 'test'
+  ...
+# Subtest: pre-aborted upstream signal and abort during listener registration prevent fetch
+ok 134 - pre-aborted upstream signal and abort during listener registration prevent fetch
+  ---
+  duration_ms: 0.368708
+  type: 'test'
+  ...
+# Subtest: request and response byte caps fail before transport or cancel an active reader
+ok 135 - request and response byte caps fail before transport or cancel an active reader
+  ---
+  duration_ms: 0.488709
+  type: 'test'
+  ...
+# Subtest: throwing and hanging fetches produce explicit unavailable and timeout receipts
+ok 136 - throwing and hanging fetches produce explicit unavailable and timeout receipts
+  ---
+  duration_ms: 21.59525
+  type: 'test'
+  ...
+# Subtest: adapter snapshots configuration and freezes receipt snapshots
+ok 137 - adapter snapshots configuration and freezes receipt snapshots
+  ---
+  duration_ms: 0.413667
+  type: 'test'
+  ...
+# Subtest: response cleanup preserves its original error even when cancellation throws
+ok 138 - response cleanup preserves its original error even when cancellation throws
+  ---
+  duration_ms: 0.267125
+  type: 'test'
+  ...
+# Subtest: strict codec rejects duplicate object keys and accepts one JSON fence
+ok 139 - strict codec rejects duplicate object keys and accepts one JSON fence
+  ---
+  duration_ms: 0.9125
+  type: 'test'
+  ...
+# Subtest: factory requires literal loopback HTTP destination and rejects redirects by request policy
+ok 140 - factory requires literal loopback HTTP destination and rejects redirects by request policy
+  ---
+  duration_ms: 1.973
+  type: 'test'
+  ...
+# Subtest: author builds draft result from model data and preserves exact engine binding
+ok 141 - author builds draft result from model data and preserves exact engine binding
+  ---
+  duration_ms: 0.522666
+  type: 'test'
+  ...
+# Subtest: reviewer derives PASS or FAIL and identity from its configuration
+ok 142 - reviewer derives PASS or FAIL and identity from its configuration
+  ---
+  duration_ms: 1.108375
+  type: 'test'
+  ...
+# Subtest: length finish reason and oversized streamed body are refused
+ok 143 - length finish reason and oversized streamed body are refused
+  ---
+  duration_ms: 0.603458
+  type: 'test'
+  ...
+# Subtest: Node preflight validates actual process.version and rejects unsupported versions
+ok 144 - Node preflight validates actual process.version and rejects unsupported versions
+  ---
+  duration_ms: 0.440875
+  type: 'test'
+  ...
+# Subtest: CLI parser is pure, requires exactly three arguments, and validates endpoint/model config
+ok 145 - CLI parser is pure, requires exactly three arguments, and validates endpoint/model config
+  ---
+  duration_ms: 1.31475
+  type: 'test'
+  ...
+# Subtest: programmatic example API remains callable with injected deterministic transport
+ok 146 - programmatic example API remains callable with injected deterministic transport
+  ---
+  duration_ms: 4.726458
+  type: 'test'
+  ...
+# Subtest: real CLI exits 2 for invalid argument and never reaches inference
+ok 147 - real CLI exits 2 for invalid argument and never reaches inference
+  ---
+  duration_ms: 32.8245
+  type: 'test'
+  ...
+# Subtest: descriptive public names preserve the original v1 factories and imports
+ok 148 - descriptive public names preserve the original v1 factories and imports
+  ---
+  duration_ms: 1.164708
+  type: 'test'
+  ...
+# Subtest: runnable workflow example executes failing and passing assertions, repairs, reviews and saves its report
+ok 149 - runnable workflow example executes failing and passing assertions, repairs, reviews and saves its report
+  ---
+  duration_ms: 65.663875
+  type: 'test'
+  ...
+# Subtest: normal edit mode produces a bound completed report
+ok 150 - normal edit mode produces a bound completed report
+  ---
+  duration_ms: 3.933791
+  type: 'test'
+  ...
+# Subtest: review mode validates the supplied candidate and never invokes draft or repair
+ok 151 - review mode validates the supplied candidate and never invokes draft or repair
+  ---
+  duration_ms: 0.640917
+  type: 'test'
+  ...
+# Subtest: a repair reruns all checks, tests, and reviewers with a new attempt binding
+ok 152 - a repair reruns all checks, tests, and reviewers with a new attempt binding
+  ---
+  duration_ms: 1.366084
+  type: 'test'
+  ...
+# Subtest: failed, unavailable, and not-run statuses remain non-successes with distinct outcomes
+ok 153 - failed, unavailable, and not-run statuses remain non-successes with distinct outcomes
+  ---
+  duration_ms: 1.272792
+  type: 'test'
+  ...
+# Subtest: repair budget, no progress, and repeated fingerprints are explicit
+ok 154 - repair budget, no progress, and repeated fingerprints are explicit
+  ---
+  duration_ms: 2.482583
+  type: 'test'
+  ...
+# Subtest: actual task and candidate mutation attempts fail while frozen snapshots remain unchanged
+ok 155 - actual task and candidate mutation attempts fail while frozen snapshots remain unchanged
+  ---
+  duration_ms: 0.917708
+  type: 'test'
+  ...
+# Subtest: replay identity binds task, run, attempt, and candidate evidence
+ok 156 - replay identity binds task, run, attempt, and candidate evidence
+  ---
+  duration_ms: 1.274333
+  type: 'test'
+  ...
+# Subtest: stale or malformed evidence and protected or out-of-scope candidates are blocked
+ok 157 - stale or malformed evidence and protected or out-of-scope candidates are blocked
+  ---
+  duration_ms: 1.01025
+  type: 'test'
+  ...
+# Subtest: cancellation before and during listener registration prevents adapter calls
+ok 158 - cancellation before and during listener registration prevents adapter calls
+  ---
+  duration_ms: 0.575708
+  type: 'test'
+  ...
+# Subtest: async timeout and synchronous clock advancement are timed out before later adapters
+ok 159 - async timeout and synchronous clock advancement are timed out before later adapters
+  ---
+  duration_ms: 17.169
+  type: 'test'
+  ...
+# Subtest: clock regression and deadline overflow fail closed
+ok 160 - clock regression and deadline overflow fail closed
+  ---
+  duration_ms: 0.306584
+  type: 'test'
+  ...
+# Subtest: report stores receive exact frozen report and binding hashes; required failure blocks
+ok 161 - report stores receive exact frozen report and binding hashes; required failure blocks
+  ---
+  duration_ms: 0.707167
+  type: 'test'
+  ...
+# Subtest: task specification and candidate inputs are frozen and schema-checked
+ok 162 - task specification and candidate inputs are frozen and schema-checked
+  ---
+  duration_ms: 0.240042
+  type: 'test'
+  ...
+# Subtest: captured reviewer list, IDs and methods survive caller mutation after authorization
+ok 163 - captured reviewer list, IDs and methods survive caller mutation after authorization
+  ---
+  duration_ms: 0.280708
+  type: 'test'
+  ...
+# Subtest: reviewers receive immutable fresh check and test evidence; all required reviewers run
+ok 164 - reviewers receive immutable fresh check and test evidence; all required reviewers run
+  ---
+  duration_ms: 0.457333
+  type: 'test'
+  ...
+# Subtest: captured evidence cannot replay across task, run, candidate or repair attempt
+ok 165 - captured evidence cannot replay across task, run, candidate or repair attempt
+  ---
+  duration_ms: 2.305875
+  type: 'test'
+  ...
+# Subtest: test status and assertion count invariants reject contradictory evidence
+ok 166 - test status and assertion count invariants reject contradictory evidence
+  ---
+  duration_ms: 0.953875
+  type: 'test'
+  ...
+# Subtest: all valid repair responses retain evidence, including fixed points and cycles
+ok 167 - all valid repair responses retain evidence, including fixed points and cycles
+  ---
+  duration_ms: 1.632958
+  type: 'test'
+  ...
+# Subtest: post-task setup refusals retain identity, and all invalid clocks have CLOCK_INVALID
+ok 168 - post-task setup refusals retain identity, and all invalid clocks have CLOCK_INVALID
+  ---
+  duration_ms: 0.498583
+  type: 'test'
+  ...
+# Subtest: valid store refusals, invalid receipts, exceptions, timeout and cancellation preserve the workflow outcome
+ok 169 - valid store refusals, invalid receipts, exceptions, timeout and cancellation preserve the workflow outcome
+  ---
+  duration_ms: 46.234667
+  type: 'test'
+  ...
+1..169
+# tests 169
+# suites 0
+# pass 169
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 5954.8665

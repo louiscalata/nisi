@@ -75,7 +75,7 @@
       else return null;
     }
     const required = ['order', 'ingredients', 'cook', 'checks', 'pass', 'accept', 'repair', 'stop'];
-    const topology = ['order:ingredients', 'ingredients:cook', 'cook:checks', 'checks:pass', 'pass:accept', 'pass:repair', 'pass:stop', 'repair:cook'];
+    const topology = ['order:ingredients', 'ingredients:cook', 'cook:checks', 'checks:pass', 'pass:accept', 'pass:repair', 'pass:stop', 'repair:checks'];
     const optional = ['ingredients:stop', 'cook:stop', 'checks:repair', 'checks:stop'];
     const connections = edges.map(e => e.from + ':' + e.to);
     if (Object.keys(nodes).length !== required.length || required.some(id => !nodes[id]) ||
@@ -89,7 +89,7 @@
       const forward = edgeLabel(id, required[index + 1]);
       return `<li><span class="plate-number">${index + 1}</span><div>${label(id)}${branchLinks}${forward ? `<p class="plate-forward">↓ ${forward}</p>` : ''}</div></li>`;
     }).join('');
-    const branches = ['repair', 'accept', 'stop'].map(id => `<div class="plate-outcome ${id}"><p class="plate-condition">${edgeLabel('pass', id)}</p><div>${label(id)}</div>${id === 'repair' ? '<p class="plate-return">↩ Return to step 3; repeat checks and review</p>' : ''}</div>`).join('');
+    const branches = ['repair', 'accept', 'stop'].map(id => `<div class="plate-outcome ${id}"><p class="plate-condition">${edgeLabel('pass', id)}</p><div>${label(id)}</div>${id === 'repair' ? '<p class="plate-return">↩ Return to step 4; repeat checks, tests and review</p>' : ''}</div>`).join('');
     return `<figure class="plate-flow" aria-label="Path of one plate: task, authorized context, candidate, checks and review. The displayed branches show completion, bounded repair and incomplete outcomes."><figcaption>WORKFLOW · ONE PLATE, ONE CANDIDATE</figcaption><ol class="plate-steps">${steps}</ol><div class="plate-branches">${branches}</div></figure>`;
   }
   function render(markdown) {

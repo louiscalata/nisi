@@ -9,6 +9,25 @@ import { createLocalChatAuthorAdapter, createLocalChatReviewerAdapter } from '..
 import { canonicalizeJSONV1 } from '../serialization/canonical-json-v1.mjs';
 import { runWorkflow } from '../workflow/engine.mjs';
 
+const USAGE = 'Usage: node examples/local-model-workflow.mjs http://127.0.0.1:1234/v1/chat/completions AUTHOR_MODEL REVIEWER_MODEL';
+
+export function parseLocalModelCLI(args) {
+  if (!Array.isArray(args) || args.length !== 3) throw new Error(`Expected exactly three arguments.\n${USAGE}`);
+  const [endpoint, authorModel, reviewerModel] = args.map(value => typeof value === 'string' ? value.trim() : value);
+  if ([endpoint, authorModel, reviewerModel].some(value => typeof value !== 'string' || value.trim() === '')) {
+    throw new Error(`Endpoint and model names must be non-blank.\n${USAGE}`);
+  }
+  if (authorModel === reviewerModel) throw new Error(`Author and reviewer model names must differ.\n${USAGE}`);
+  const noInference = () => { throw new Error('CLI validation must not invoke a model.'); };
+  try {
+    createLocalChatAuthorAdapter({ destination: 'LOOPBACK_HTTP', endpoint, model: authorModel, id: 'local.author', fetch: noInference });
+    createLocalChatReviewerAdapter({ destination: 'LOOPBACK_HTTP', endpoint, model: reviewerModel, id: 'local.reviewer', fetch: noInference });
+  } catch (error) {
+    throw new Error(`Invalid local chat configuration (${error?.code ?? 'LOCAL_CHAT_CONFIG_INVALID'}). Use an HTTP endpoint at 127.0.0.1 or [::1], without credentials, query, or fragment; model names must be valid configured IDs.\n${USAGE}`);
+  }
+  return Object.freeze({ endpoint, authorModel, reviewerModel });
+}
+
 export async function runLocalModelExample({ endpoint, authorModel, reviewerModel, fetch, timeoutMs = 180_000 }) {
   if (authorModel === reviewerModel) throw new Error('This demonstration requires two different configured model names.');
   const config = { destination: 'LOOPBACK_HTTP', endpoint, timeoutMs, maxOutputTokens: 4096, ...(fetch ? {fetch} : {}) };
@@ -54,12 +73,13 @@ export async function runLocalModelExample({ endpoint, authorModel, reviewerMode
 }
 
 if (process.argv[1] && import.meta.url === pathToFileURL(path.resolve(process.argv[1])).href) {
-  const [endpoint, authorModel, reviewerModel] = process.argv.slice(2);
-  if (!endpoint || !authorModel || !reviewerModel) {
-    console.error('Usage: node examples/local-model-workflow.mjs http://127.0.0.1:1234/v1/chat/completions AUTHOR_MODEL REVIEWER_MODEL');
+  let cli;
+  try { cli = parseLocalModelCLI(process.argv.slice(2)); } catch (error) {
+    console.error(error.message);
     process.exitCode = 2;
-  } else {
-    const result = await runLocalModelExample({ endpoint, authorModel, reviewerModel });
+  }
+  if (cli) {
+    const result = await runLocalModelExample(cli);
     console.log(JSON.stringify(result, null, 2));
     if (result.report.outcome !== 'COMPLETED') process.exitCode = 1;
   }

@@ -1,7 +1,7 @@
 {
   "name": "nisi",
   "version": "0.1.0",
-  "description": "A bounded AI coding workflow engine with task-scoped evidence, file access policies, and an Apple Foundation Models adapter.",
+  "description": "A Node.js workflow orchestrator for AI-assisted coding, with bounded repairs and validated run reports.",
   "license": "Apache-2.0",
   "author": "Louis Calata",
   "repository": {
@@ -17,13 +17,15 @@
     "node": ">=22"
   },
   "scripts": {
-    "test": "node --test tests/*.test.mjs",
-    "check:structural": "node scripts/structural-check.mjs",
+    "test": "node scripts/require-node.cjs && node --test tests/*.test.mjs",
+    "check:structural": "node scripts/require-node.cjs && node scripts/structural-check.mjs",
     "check": "npm run check:structural && npm test",
     "bench": "node scripts/bench.mjs",
     "ab:purity": "node scripts/ab-purity.mjs contracts/structural-fixtures.json ${AFM:-afm}",
-    "check:static": "node tools/check-side-effects.mjs",
-    "example:workflow": "node examples/workflow.mjs"
+    "check:static": "node scripts/require-node.cjs && node tools/check-side-effects.mjs",
+    "example:workflow": "node scripts/require-node.cjs && node examples/workflow.mjs",
+    "preflight": "node scripts/require-node.cjs",
+    "example:local-model": "node scripts/require-node.cjs && node examples/local-model-workflow.mjs"
   },
   "devDependencies": {
     "typescript": "^6.0.3"
@@ -44,5 +46,12 @@
     "./adapters/apple-foundation-models": "./adapters/apple-foundation-models.mjs",
     "./adapters/local-chat": "./adapters/local-chat.mjs",
     "./*": "./*"
+  },
+  "devEngines": {
+    "runtime": {
+      "name": "node",
+      "version": ">=22",
+      "onFail": "error"
+    }
   }
 }

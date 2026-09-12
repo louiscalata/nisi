@@ -28,15 +28,21 @@ const reviewer = createLocalChatReviewerAdapter({
 });
 ```
 
-Pass `author` and `[reviewer]` to the Workflow Engine along with your context
+Pass `author` and `[reviewer]` to the Workflow Orchestrator along with your context
 authorization, static checks and tests. The application supplies the task and
 enforces which project data these callbacks may receive. The Apple-only file
 grant does not authorize this destination. For the runnable configuration-data
 example, which never executes model-generated programs:
 
 ```bash
-node examples/local-model-workflow.mjs http://127.0.0.1:1234/v1/chat/completions AUTHOR_MODEL REVIEWER_MODEL
+npm run example:local-model -- http://127.0.0.1:1234/v1/chat/completions AUTHOR_MODEL REVIEWER_MODEL
 ```
+
+The command requires exactly three arguments and two different model names.
+It validates arguments before requesting inference. Missing or invalid configuration
+prints an error and usage with exit code `2`; a completed workflow exits `0`,
+and an incomplete workflow exits `1`. The Node preflight refuses unsupported
+runtimes before loading the example.
 
 ## Configuration and boundaries
 

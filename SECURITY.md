@@ -6,7 +6,7 @@ Each module enforces a specific, written boundary and refuses across it with an
 exact named code. `contracts/canonical-json-v1-profile.md` states what the codec
 guarantees and, more importantly, what it does not.
 
-The Workflow Engine validates scoped task/candidate records, adapter-result
+The Workflow Orchestrator validates scoped task/candidate records, adapter-result
 schemas and run/task/attempt/candidate bindings. It derives a completion status
 from configured required stages. That status describes those checks; it is not
 a security certification or permission to release software.
