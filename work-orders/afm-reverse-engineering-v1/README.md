@@ -99,24 +99,25 @@ symbols compile (verified from the SDK swiftinterface). reasoning is false on
 AFM 3 Core (the 20B sparse AFM 3 Core Advanced tier carries it, per Apple's
 third-gen whitepaper). Evidence: `evidence/afm-capabilities.json`.
 
-### Generation round-trip — PROVEN END-TO-END (v0.2)
+### Tool calling — schema accepted, execution loop = next increment (v0.3)
 
-`src/afm-bridge-v2.swift` uses the verified `session.respond(to:)` symbol
-(`async throws -> Response<String>`; `schema:` variant exists for guided
-generation). Result on-device (`evidence/afm-session-generation.json`):
+`src/afm-bridge-v3.swift` implements a real `Tool` (the `@Generable`-arg
+`GetTimeTool`: name/description/schema/`call(arguments:)`) and attaches it via
+`LanguageModelSession(model:tools:instructions:)`. It compiles and runs
+against the public API; the model drafts a tool use but `respond(to:)` does
+**not auto-execute** the loop — content came back as a deferred use with a
+placeholder (`evidence/afm-tool-demo.json`):
 
 ```json
-{
-  "content" : "Acknowledged.",
-  "model" : "SystemLanguageModel.default",
-  "usage.input" : 71,
-  "usage.output" : 7
-}
+{ "demo": "get_time tool round-trip", "content": "The current time in UTC is [time_value].",
+  "usage.input": 190, "usage.output": 13 }
 ```
 
-Working generation + toolCalling=true + vision=true + guidedGeneration=true
-via the public API is the complete assistant-grade proof; the remaining polish
-is a demo tool call through an `@Generable`-arg `Tool` implementation.
+The execution loop (observe `Transcript.Entry.toolCalls` → call the Tool →
+append `toolOutput` → re-respond, or force via `GenerationOptions.ToolCallingMode.required`)
+is the next increment. Everything else is proven: tool schema accepted by the
+on-device model, generation works, capabilities report toolCalling/vision/
+guidedGeneration true.
 
 ## How to run
 
