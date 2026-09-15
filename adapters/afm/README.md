@@ -17,9 +17,10 @@ Wire-in point for the reverse-engineered AFM 3 Core lane (macOS 27.0,
 - Autostarted via LaunchAgent `com.louiscalata.afm.serve`
   (`~/Library/LaunchAgents/com.louiscalata.afm.serve.plist`,
   KeepAlive + RunAtLoad; logs `/tmp/fm-serve.log`, `/tmp/fm-serve.err`).
-  Quirk: the launched process exits 1 from launchd's view while the server
-  child keeps serving (port-race at bootstrap resolved by KeepAlive);
-  the endpoint stays up.
+  Ops note: `fm serve` ignores SIGTERM — recycle with
+  `kill -9 <pid>` then `launchctl kickstart -k gui/$(id -u)/com.louiscalata.afm.serve`
+  (observed when replacing a manually-started instance; the agent otherwise
+  crash-retries while the old process holds the port).
 - Manual alternative: `scripts/afm-serve.sh` (or the original commit's pid-tracked run).
 - Endpoint: `GET /v1/models` → `{"id":"system","owned_by":"Apple"}`;
   streaming SSE and non-streaming JSON chat completions with real usage.
