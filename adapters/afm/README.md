@@ -4,6 +4,34 @@ Wire-in point for the reverse-engineered AFM 3 Core lane (macOS 27.0,
 26A428). Everything referenced below lives in
 `work-orders/afm-reverse-engineering-v1/` (full report, evidence, sources).
 
+## Two lanes (how this fits the existing repo)
+
+Nisi already had one AFM integration; the conversational lane added here sits
+*beside* it and must not blur its boundaries:
+
+- **Guarded content lane (pre-existing, authoritative for consented reads):**
+  `adapters/apple-foundation-models.mjs` →
+  `gate/afm-content-executor.mjs` + `probes/afm-content-probe.swift`.
+  Consent gate admits exactly one item per request; a hash-pinned probe reads
+  it (route `system-on-device-requested`) and returns digest-verified evidence
+  with hard boundary flags (`contentPersisted`, `transcriptPersisted`,
+  `networkEgress`, `externalToolsEnabled`, `acceptanceAuthorityGranted` all
+  false). Tests: `tests/afm-content-executor.test.mjs` (+ 6 related files);
+  native verification 2026-09-11 (`docs/verification/2026-09-11/native-apple.json`).
+- **Conversational lane (this adapter):** `fm serve` OpenAI-compatible chat
+  endpoint, opencode provider `afm/system`, and the Swift bridges with the
+  proven tool loop. General chat and tool-augmented agents only — it never
+  performs consented content reads and grants no acceptance/certification.
+
+Boundary flags in the guarded lane stay false regardless of the conversational
+lane's capabilities; the lanes share only the on-device model tier.
+
+## Health check
+
+`adapters/afm/check [--bridge]` — read-only probe of the LaunchAgent,
+`/v1/models`, a live completion, and (with `--bridge`) the v2 Swift bridge.
+Exit 0 only when the lane serves.
+
 ## Registered provider (opencode)
 
 - `~/.config/opencode/opencode.jsonc` — provider `afm` (OpenAI-compatible
