@@ -1,0 +1,748 @@
+{
+  "schemaVersion": "nisi-output-mode-checkpoint-v1",
+  "observedAt": "2026-09-13T03:00:09.559Z",
+  "status": "PASS_SCOPED",
+  "scope": "EXPLICIT_OUTPUT_MODES_AND_VERSIONED_LIVE_CONTRACTS; FULL_TASK_RUNTIME_INCOMPLETE",
+  "roadmapProgress": {
+    "percent": 30,
+    "closedMajorMilestones": 3,
+    "totalMajorMilestones": 10,
+    "basis": "equal-weight NX closure; not effort, accuracy, time or release readiness"
+  },
+  "sourceManifest": {
+    "adapters/local-chat.mjs": "ca26b49502b27f494487f5da32edfc13a9d8b85cb02da43b58c4417babb3e842",
+    "evaluation/fixtures/paired-example-v1.mjs": "2b3fd175c2408737ac8d646a19f576de7ec81a52e5fff61ab80b3fc530d58249",
+    "evaluation/intake-v1.mjs": "7c338bf7419c236bc8a8c912266f470e68ff3711848f777c56e68f0ef7c7912a",
+    "evaluation/metrics-v1.mjs": "a11f1247df37b89c661fe3033e8d88a0c347038114bd9192ac48620d52ba0e91",
+    "evaluation/paired-trial-v1.mjs": "cb75c8ac76deb31280fc356064e448b508e4fb8cc48cddaef03f461a70df943c",
+    "examples/repository-live-model.mjs": "d29cc2c86fb92e81ff785fa2a6e5736c85544edc94de4675b130e827f8196e07",
+    "examples/repository-task/fixtures/baseline/README.md": "b6ce54912db6b4605d19e4e0fdce5cc1e680de4a57bb1af82ca7b737ff578011",
+    "examples/repository-task/fixtures/baseline/config.json": "fc2001f12401983fa2632ee17e9879b6a1595f0de616e6e1484083c0c3324f04",
+    "examples/repository-task/fixtures/baseline/retry-settings.mjs": "c4932fa2ce0c73c52d385d25aeab64bed602179abced3b38fd525a31fe47bb10",
+    "examples/repository-task/fixtures/harness/check-retry-settings.mjs": "e07a9bd6a63a52ac6977734c61ea0a210c71ec2c331951f4d94b44159c8245c5",
+    "examples/repository-task/fixtures/live-baseline/retry-settings.mjs": "65525edd21e81c5de1791c6f47fa404ffea10f7ea332545a8e295afdd6270254",
+    "examples/repository-task/fixtures/live-repair/retry-settings.mjs": "73369f8d0cc0cefbb082c65388c3652c7602254ab5b6fbab138e08078b568112",
+    "examples/repository-task/fixtures/repair/retry-settings.mjs": "7de9f6b2cd29489563930f9131a0e0b077070bb50b52df8b5bd27aaf24b55ffd",
+    "examples/repository-task/reviewed-live-fixture-v1.mjs": "292bd67a2e4132c9c5122f5d716e7eeb3cdd3a6ebf5362470d046b6d025add36",
+    "hosts/repository/disk-capture.mjs": "972c8cd690a3f34253c9f4722c336b6e847dffe1b0c924aa8492384c800ae547",
+    "hosts/repository/node-adapter-v1.mjs": "6de05634f7cccd774c8072a000b556f49f111ccedfe1e37d19be37dbd036fa5d",
+    "hosts/repository/node-executor-v1.mjs": "cd999c0efe061c0706842cc06867f62dc59927553615db9e2f2af24523872258",
+    "hosts/repository/node-suite-v1.mjs": "5ed5cd9ca407b281379d6b67d93df60ab3b3a45676b6a4e82c7bfc474d29e2c2",
+    "hosts/repository/proposed-changes-v1.mjs": "045fe0d77b3b6d4d95c406964b603b09b2aeabe131cde267b41806114379f55d",
+    "hosts/repository/reviewed-live-model-v1.mjs": "741d7df962dccbba993481497779afd2bbd4253487532c5dd5bd51522be9247e",
+    "hosts/repository/reviewed-workflow-v1.mjs": "6ecc49425ae28ec1923445c8fbe79df4478b6361a5e2799b82ded24acf74dc33",
+    "hosts/repository/snapshot-contract.mjs": "2b52c23bac3a817769b7892eed71baba79cb81954b6a63724d107a9c258ba13f",
+    "hosts/repository/task-workspace-v1.mjs": "08fdb59d15d21e94914d00390e8f73ee6245b0eabec64e7c052585f23638f963",
+    "hosts/swift-verifier/adapter.mjs": "c92c21fcbf7fe91d949f60bc51a96d4cb5f185be9172d0a214c4e87d2b649388",
+    "hosts/swift-verifier/build.mjs": "ae063b627e853fc0b651e3db103dd1af01c6815374d36781e79270b7d48934fb",
+    "hosts/swift-verifier/check-plan-v1.mjs": "a30ff5596e2bebc376cfa0da84be1c00eca8443cc2b37f5b1b7da42ef44b658a",
+    "hosts/swift-verifier/executor.mjs": "3b233203d7e9d2c2e1f5aa3c458685e86f15d40fc07b2542e7b6bb48a2555db4",
+    "hosts/swift-verifier/group-adapter-v1.mjs": "471ae91cfc78a82abcb425ed75cd16aec2a76d8123cdc9b3e4063c536382e774",
+    "hosts/swift-verifier/group-contract-utils.mjs": "8fc51ac107abd68adb1c72683ccfa2af9c74ac077c5506bf89525f972b14ac82",
+    "hosts/swift-verifier/main.swift": "0d4e15b22b3231d990cfd5e7de1c52f4fdfebf4f4ab6da15b0ae22c74cea910c",
+    "hosts/swift-verifier/owned-child.mjs": "ff9bbef97b3401afd394a98c8bff4fe273a4b6af3a1f852bdf5bf872fd4474df",
+    "hosts/swift-verifier/protocol.mjs": "7557d81836f263c13e06ac7613ebfa61ce7fbeeb7b0f7db98889473806f322cc",
+    "hosts/swift-verifier/reservation.mjs": "6d7573d23a3d2b0ecdb4b396cb58f4f9ae8e5997190616c08c1b93bd0ab376fd",
+    "integrations/veritas/native/macos/CodenameVeritasFramework/Sources/VeritasCore/ArtifactSnapshot.swift": "013e796d11a844dda345f223894a8d76713b19b0f46f6a7f84019aa5b7bc0f22",
+    "integrations/veritas/native/macos/CodenameVeritasFramework/Sources/VeritasCore/DeterministicChecks.swift": "4d234fd389895cf0a55bf7daf0f5d082077ab3677880165f7d0e1236a88be474",
+    "integrations/veritas/native/macos/CodenameVeritasFramework/Sources/VeritasCore/StrictJSONDocumentValidator.swift": "bd6173e012890f2fde2e26be94c5e577cd9e098841bdad98a377b1c88dff1b2c",
+    "integrity/record-utils.mjs": "e46eb1a01170231bd6873771cd256740fd3dde6bcb01d418f6f7d7a75e6139ff",
+    "package-lock.json": "396284ceeb20491293a83094a9558cb32368bb9ccc71b75e0d10da52e86b0912",
+    "package.json": "6b5c0271f5ad95d62af409c9782a2abb0b18a9844356c01a2fcf469063f7897f",
+    "receipts/host-run-bundle-v2.mjs": "406936e6523f58323634fab1c9f560d671d58e1c343d2082f081f8a7810061fe",
+    "receipts/live-usage-v1.mjs": "f015e2973567e21329d4e79de8abc6e1f664370eff3f2338aad31490fb4791a5",
+    "receipts/repository-execution-v1.mjs": "7317e06c094bdf33e51645ce39348fc9e2d5a11ad0921af87434e34c45828cc2",
+    "receipts/repository-live-model-run-v1.mjs": "7a17b15f5d649c9255da8b09c531f5192b7d6e14ba5db928c878e1ccd13dc293",
+    "receipts/repository-run-v1.mjs": "50c1e86cec48fc666aae64b3285f9acda8e20968d5f10f0d9313e0e22051d697",
+    "receipts/swift-static-group-v1.mjs": "e07e9a361ef808f8d652f1542fec54085d4f341fd093a582f2e86baf77e4cdbb",
+    "receipts/swift-static-run-v1.mjs": "454e8657a2a2aaf6a016de5d09c5d65512d53ffb9db2a6843e05471450f8c8ef",
+    "tests/fixtures/local-chat-response-cases.json": "c05bb7e645152cc485600085eb97c95225dcc4ad39fb571c15ff9d40bd983e1e",
+    "tests/helpers/live-cli-side-effect-guard.mjs": "f1ed9b8f69c41c6027b9b8d7ed0149c1fee970d00109eaac0e7bb0714d08c00e",
+    "tests/helpers/local-chat-expected-cases.mjs": "1e1f3af35720944e447d60600487a7a9111da6911f82322c70a7750fa5a5e537",
+    "tests/helpers/node-repository-fixture.mjs": "db034a91d1ad0bfcb2b22df9b598d3e276d260c493002319e9d191e10ce2cd85",
+    "tests/helpers/repository-live-run-fixture.mjs": "7d60a9a773bff178a4abc111e7cf679e71619d34b9b45417917f8be5a5dc657a",
+    "tests/helpers/repository-run-fixture.mjs": "2877df81895185e35c5e5dd419dbb161bde5f23529f6459ed5e0128b2780b121",
+    "tests/helpers/reviewed-live-model-fixture.mjs": "539eb8530170b9f85705cd20af45b9be01463343f7ddb1691860f2628d9b5cbb",
+    "tests/helpers/swift-group-fixture.mjs": "2f8e5b98fbf2fb1757fe25bc2d78b427e30cccbdaccb64d618922f925e077d60",
+    "tests/host-run-bundle-v2.test.mjs": "ba3f06af454abd31b2b7426aedc7b04b63e7efea19696df7c24a6ff187d112cb",
+    "tests/live-output-mode.test.mjs": "a573d477e7463f8f323079bc1ba72e1d775b2116da2ebaf6f159e097258d62b7",
+    "tests/live-usage.test.mjs": "3be9d19ee463641ea521179ff31874127c5e5654f48f0ab14ced6e1dcdf82ffd",
+    "tests/local-chat-output-mode.test.mjs": "21a36fc3c14dad1f080fc16293f20443b7f90f30ddb6c12941e46abdd15b1d2c",
+    "tests/local-chat-response-matrix.test.mjs": "c4d14ba74952876b2d07061ed60ca5948ac4d26ee2e0f908d228b406fdeafe4c",
+    "tests/native/repository-host.test.mjs": "3e449395b033bf5bfd51c4ce1f2ca847eb27c03b85467a2e24eb40b5ff3f8594",
+    "tests/native/swift-executor.test.mjs": "97f93d9bb32ebcc262c5d2f915eb549f3cc187feec9b2636b7ac617047176cc1",
+    "tests/native/swift-group.test.mjs": "980ad1fbb2dae8eb5394b300a547f41ed34d4ab6b20db4f4335c467f5ac6a5d9",
+    "tests/native/swift-kernel.test.mjs": "e6726c94a1b7359c2e3042a0e8ddb71973255088da82373f7988cd3bb6873699",
+    "tests/node-executor.test.mjs": "87bd39e1b48872de468477c8c8f6fa8f96884c632df58973b0ac1b89bb195e6d",
+    "tests/node-suite.test.mjs": "ca26dc4558ef17d2a9df982dfe1634053451580fcbf0228d06369121ff53143e",
+    "tests/paired-trial.test.mjs": "979dd5e1dfb7dcdc55f874fdf1e1232a8eea356d0fd856817583921d3d10441b",
+    "tests/proposed-changes.test.mjs": "d938037e6f67749f5ef473eaf65a3c5fc054865fed504151c01b0fdfcd33bd39",
+    "tests/repository-execution-receipt.test.mjs": "1075990a6f96276df2057f525df9914bb56a5c1da43d7d544956c86567ad983d",
+    "tests/repository-fixture.test.mjs": "4febfb12c46f3bbcd5f26612475aef6103c6cba876b82ab26cdcb7b9ffe39b20",
+    "tests/repository-live-cli.test.mjs": "c15fcdaf6ea18fd477c1b32526d1416c56ad91005b23231b6c4406e1e2c5632d",
+    "tests/repository-live-model-run.test.mjs": "d0014f841de603e625b665f9526c0d75b324fa4bb28ee0c6672becdc171858ae",
+    "tests/repository-run.test.mjs": "e1c1f1a9407cfecce5b61359a1822fd542c72626d5969da8e679477c60cf176e",
+    "tests/repository-workflow.test.mjs": "ca455e66b4e97fc8530ef0b2a12d35cd1986d80ab409ef9449a977f047015359",
+    "tests/reviewed-live-fixture.test.mjs": "fcc1bd1d97383979ceca8437091624f4117aec5d0c5fba188c896c8998825b80",
+    "tests/reviewed-live-model.test.mjs": "9a6d5da731b16ba2602594561e54b2cde76a54d39a98b719b239874aa49b0e51",
+    "tests/swift-group-owner.test.mjs": "8c7c83e52873c0d6b9a76cda4746dd1ded3c09583ac1d5c34d681023e2a159d3",
+    "tests/swift-static-group.test.mjs": "9bf196d7f2ddad0d4968515e5413cfeb01f334f6d9ad90ec007234539b24015d",
+    "tests/swift-static-run.test.mjs": "d9f747a328e44966c5e88128c3b9edf2d07a1c6dc4e818a91d44164aac78a791",
+    "tests/task-workspace.test.mjs": "d9df1ee4dc36b5a239a5a70847c6d4c53abe2164cf484712666635f1be9a2ef1",
+    "tests/trial-intake.test.mjs": "42a93005ab3fc6b0f573cf413bbb03d5ba2a59d40d3280363b741ded813a6c92",
+    "workflow/contracts.mjs": "c28a3ee3db6e9a936cd58fca8b8ee3f2744ca25c259e2ea278b3b09cdbb73d82",
+    "workflow/engine.mjs": "c67c63baeadc725a8487af7108b01d3a38dd50e64ff35f1be66471c81e5f979b"
+  },
+  "sourceFileCount": 82,
+  "previousCheckpoint": {
+    "path": "/Users/louiscalata/nisi-next-private/docs/verification/2026-09-12/u02-live-contract-checkpoint.json",
+    "byteLength": 22722,
+    "sha256": "3330ad86771ea25b65771a275c0ff05cd150a964f27bbdbe839d611dc5c0c189"
+  },
+  "retainedBeforeSources": {
+    "path": "/Users/louiscalata/nisi-next-private/.build/output-mode-snv3qc/source-before.json",
+    "byteLength": 8687,
+    "sha256": "ee5dddcc140704cf0a2200f5e038cff86df61e8e1bbd48817ad65698d4f0c2b1"
+  },
+  "prior77CopiesVerified": true,
+  "prior77UnchangedCurrent": 72,
+  "changedExisting": [
+    "adapters/local-chat.mjs",
+    "examples/repository-live-model.mjs",
+    "hosts/repository/reviewed-live-model-v1.mjs",
+    "receipts/repository-live-model-run-v1.mjs",
+    "tests/helpers/reviewed-live-model-fixture.mjs"
+  ],
+  "added": [
+    "tests/fixtures/local-chat-response-cases.json",
+    "tests/helpers/local-chat-expected-cases.mjs",
+    "tests/live-output-mode.test.mjs",
+    "tests/local-chat-output-mode.test.mjs",
+    "tests/local-chat-response-matrix.test.mjs"
+  ],
+  "verification": {
+    "path": "/Users/louiscalata/nisi-next-private/.build/output-mode-snv3qc/checks-VMRfXw/summary.json",
+    "byteLength": 14794,
+    "sha256": "50da62aa9e532c77a1943291f1bf736496e0f96b3c16c7fa48b7a36ced80bc38",
+    "results": [
+      {
+        "label": "focused",
+        "executable": "/usr/local/bin/node",
+        "argv": [
+          "--test",
+          "--test-reporter=tap",
+          "tests/local-chat-output-mode.test.mjs",
+          "tests/live-output-mode.test.mjs",
+          "tests/reviewed-live-model.test.mjs",
+          "tests/repository-live-model-run.test.mjs",
+          "tests/repository-live-cli.test.mjs",
+          "tests/local-chat-response-matrix.test.mjs"
+        ],
+        "exitCode": 0,
+        "signal": null,
+        "error": null,
+        "durationMs": 2781,
+        "counts": {
+          "tests": 149,
+          "pass": 149,
+          "fail": 0,
+          "skipped": 0,
+          "cancelled": 0,
+          "todo": 0
+        },
+        "path": "/Users/louiscalata/nisi-next-private/.build/output-mode-snv3qc/checks-VMRfXw/focused.json",
+        "sha256": "82f9755265137bd122b98096ec19eef604558793bca6acfd389547d017b4d2af"
+      },
+      {
+        "label": "portable",
+        "executable": "/usr/local/bin/node",
+        "argv": [
+          "--test",
+          "--test-reporter=tap",
+          "tests/afm-content-executor.test.mjs",
+          "tests/afm-lifecycle.test.mjs",
+          "tests/benchmark-scripts.test.mjs",
+          "tests/canonical-json-v1.test.mjs",
+          "tests/component-hardening.test.mjs",
+          "tests/content-consent.test.mjs",
+          "tests/editor-input.test.mjs",
+          "tests/example.test.mjs",
+          "tests/host-run-bundle-v2.test.mjs",
+          "tests/integrity-successors.test.mjs",
+          "tests/live-output-mode.test.mjs",
+          "tests/live-usage.test.mjs",
+          "tests/local-chat-extra.test.mjs",
+          "tests/local-chat-gap-regression.test.mjs",
+          "tests/local-chat-lifecycle.test.mjs",
+          "tests/local-chat-output-mode.test.mjs",
+          "tests/local-chat-response-matrix.test.mjs",
+          "tests/local-chat.test.mjs",
+          "tests/local-model-discovery.test.mjs",
+          "tests/node-executor.test.mjs",
+          "tests/node-suite.test.mjs",
+          "tests/onboarding.test.mjs",
+          "tests/owned-temp.test.mjs",
+          "tests/paired-trial.test.mjs",
+          "tests/proposed-changes.test.mjs",
+          "tests/public-api.test.mjs",
+          "tests/reporting-regressions.test.mjs",
+          "tests/repository-disk-capture.test.mjs",
+          "tests/repository-execution-receipt.test.mjs",
+          "tests/repository-fixture.test.mjs",
+          "tests/repository-live-cli.test.mjs",
+          "tests/repository-live-model-run.test.mjs",
+          "tests/repository-run.test.mjs",
+          "tests/repository-snapshot.test.mjs",
+          "tests/repository-workflow.test.mjs",
+          "tests/reviewed-live-fixture.test.mjs",
+          "tests/reviewed-live-model.test.mjs",
+          "tests/swift-group-owner.test.mjs",
+          "tests/swift-kernel-protocol.test.mjs",
+          "tests/swift-owned-child.test.mjs",
+          "tests/swift-reservation.test.mjs",
+          "tests/swift-static-group.test.mjs",
+          "tests/swift-static-run.test.mjs",
+          "tests/task-workspace.test.mjs",
+          "tests/trial-intake.test.mjs",
+          "tests/veritas-import-snapshot.test.mjs",
+          "tests/veritas-import.test.mjs",
+          "tests/workflow-example.test.mjs",
+          "tests/workflow.test.mjs"
+        ],
+        "exitCode": 0,
+        "signal": null,
+        "error": null,
+        "durationMs": 6556,
+        "counts": {
+          "tests": 674,
+          "pass": 674,
+          "fail": 0,
+          "skipped": 0,
+          "cancelled": 0,
+          "todo": 0
+        },
+        "path": "/Users/louiscalata/nisi-next-private/.build/output-mode-snv3qc/checks-VMRfXw/portable.json",
+        "sha256": "0d4042810949964fc59d373cacd01c6ab14c18c2ab382b833235b5f4c0662657"
+      },
+      {
+        "label": "freeze",
+        "executable": "/usr/local/bin/node",
+        "argv": [
+          "scripts/verify-veritas-import.mjs"
+        ],
+        "exitCode": 0,
+        "signal": null,
+        "error": null,
+        "durationMs": 36,
+        "path": "/Users/louiscalata/nisi-next-private/.build/output-mode-snv3qc/checks-VMRfXw/freeze.json",
+        "sha256": "7f4fcf64ad2d9e4cdd342ec980cf4854f5ade2f416b286237370551380c185c2"
+      },
+      {
+        "label": "native-host",
+        "executable": "/usr/local/bin/node",
+        "argv": [
+          "--test",
+          "--test-reporter=tap",
+          "tests/native/repository-host.test.mjs"
+        ],
+        "exitCode": 0,
+        "signal": null,
+        "error": null,
+        "durationMs": 3737,
+        "counts": {
+          "tests": 2,
+          "pass": 2,
+          "fail": 0,
+          "skipped": 0,
+          "cancelled": 0,
+          "todo": 0
+        },
+        "path": "/Users/louiscalata/nisi-next-private/.build/output-mode-snv3qc/checks-VMRfXw/native-host.json",
+        "sha256": "adf27b07dcf002c0d7f2c04854ba11b4032547163d00be518b0e3f8f45aaf8d9"
+      }
+    ],
+    "focusedIsPortableSubset": true,
+    "portableAddedSincePriorCheckpoint": 71,
+    "entirePrior25NativeSelectionRerun": false
+  },
+  "mutations": {
+    "path": "/Users/louiscalata/nisi-next-private/.build/output-mode-snv3qc/mutants-TCPlxK/summary.json",
+    "byteLength": 2794,
+    "sha256": "32cff646d1a5f987d5429f68332797361627f51d9fdaaa8b62097b8d2f1acbfe",
+    "control": {
+      "path": "/Users/louiscalata/nisi-next-private/.build/output-mode-snv3qc/mutants-TCPlxK/control.json",
+      "byteLength": 15960,
+      "sha256": "2d2d91a42a766a0712d455e89b6f4fb148d32ded3a08876ec6c8668a39301507",
+      "counts": {
+        "tests": 71,
+        "pass": 71,
+        "fail": 0,
+        "skipped": 0,
+        "cancelled": 0,
+        "todo": 0
+      }
+    },
+    "detected": 8,
+    "total": 8,
+    "faults": [
+      {
+        "name": "wire-golden",
+        "detected": true,
+        "failedTests": 3,
+        "path": "/Users/louiscalata/nisi-next-private/.build/output-mode-snv3qc/mutants-TCPlxK/wire-golden.json",
+        "byteLength": 10260,
+        "sha256": "4b78c52d94e743de838db52a88510d619296953d8242e144f804968f29ed041d"
+      },
+      {
+        "name": "instruction-still-schema",
+        "detected": true,
+        "failedTests": 5,
+        "path": "/Users/louiscalata/nisi-next-private/.build/output-mode-snv3qc/mutants-TCPlxK/instruction-still-schema.json",
+        "byteLength": 26782,
+        "sha256": "38eb5101b31f62aba44e73c0a915ec148a4b96760f3e9e992efe86f8fe6f6280"
+      },
+      {
+        "name": "wrong-mode-metadata",
+        "detected": true,
+        "failedTests": 16,
+        "path": "/Users/louiscalata/nisi-next-private/.build/output-mode-snv3qc/mutants-TCPlxK/wrong-mode-metadata.json",
+        "byteLength": 20353,
+        "sha256": "c038a3713cc6091d1fa97454a2cf8b29433b7bf8e12bb7279db9c12fbb087e3f"
+      },
+      {
+        "name": "getter-mismatch",
+        "detected": true,
+        "failedTests": 1,
+        "path": "/Users/louiscalata/nisi-next-private/.build/output-mode-snv3qc/mutants-TCPlxK/getter-mismatch.json",
+        "byteLength": 8003,
+        "sha256": "9c789a3e4e9d7dac80b733e3d2943064a29c607430d9eded915ad7adbd5ffc95"
+      },
+      {
+        "name": "unbound-mode",
+        "detected": true,
+        "failedTests": 1,
+        "path": "/Users/louiscalata/nisi-next-private/.build/output-mode-snv3qc/mutants-TCPlxK/unbound-mode.json",
+        "byteLength": 4890,
+        "sha256": "cbe2770aea47e0cc740af9c4ea78bc50d390a5f2e6480ce0ef7661409fa78f6c"
+      },
+      {
+        "name": "cross-version-issued-reader",
+        "detected": true,
+        "failedTests": 5,
+        "path": "/Users/louiscalata/nisi-next-private/.build/output-mode-snv3qc/mutants-TCPlxK/cross-version-issued-reader.json",
+        "byteLength": 13668,
+        "sha256": "6f6ce604ce6b18fc18f4413eeeea3c29452f7de826f0c139f775b893e6eb0ed7"
+      },
+      {
+        "name": "reviewer-uses-author-mode",
+        "detected": true,
+        "failedTests": 2,
+        "path": "/Users/louiscalata/nisi-next-private/.build/output-mode-snv3qc/mutants-TCPlxK/reviewer-uses-author-mode.json",
+        "byteLength": 8054,
+        "sha256": "1eca1a964f269a91af6e624d9174d6beca4d28c93c250c1d34e75a4e1427e806"
+      },
+      {
+        "name": "v2-record-tamper",
+        "detected": true,
+        "failedTests": 4,
+        "path": "/Users/louiscalata/nisi-next-private/.build/output-mode-snv3qc/mutants-TCPlxK/v2-record-tamper.json",
+        "byteLength": 6899,
+        "sha256": "bdcb1d0ac40dcaee41c1d5bc007fb22f72afaab36d3a661b6b16b2f3513c4d82"
+      }
+    ],
+    "exhaustive": false,
+    "earlierClassification": {
+      "path": "/Users/louiscalata/nisi-next-private/.build/output-mode-snv3qc/mutants-MHOCXs/summary.json",
+      "byteLength": 2786,
+      "sha256": "a35eb678083d6fdb3dde844a85f0758f7a00eb07eea67d5790cf629cc3c78e35",
+      "note": "7/8 assertion-backed; wrong reviewer mode also refused with binding error; explicit valid-pair assertion added before final run"
+    }
+  },
+  "regressionPairs": [
+    {
+      "before": {
+        "path": "/Users/louiscalata/nisi-next-private/.build/output-mode-snv3qc/before-adapter.json",
+        "byteLength": 29697,
+        "sha256": "8d73db28a008134a0d8df37472b1d2de4f9eb69bb28d4949e69da8c163f9b0fb"
+      },
+      "after": {
+        "path": "/Users/louiscalata/nisi-next-private/.build/output-mode-snv3qc/after-adapter.json",
+        "byteLength": 5375,
+        "sha256": "748736fcde00e4d3f916c4661244e5f3da2c852106f80a9d31c77dc7b8cde2d5"
+      },
+      "failingBefore": 23,
+      "passingAfter": 23
+    },
+    {
+      "before": {
+        "path": "/Users/louiscalata/nisi-next-private/.build/output-mode-snv3qc/getter-before-adapter.json",
+        "byteLength": 1261,
+        "sha256": "9e25291c7138abd708ab2c18c1f79ebc60a8b1bee6d5bd7a4c496981ef7f7ceb"
+      },
+      "after": {
+        "path": "/Users/louiscalata/nisi-next-private/.build/output-mode-snv3qc/getter-after-adapter.json",
+        "byteLength": 669,
+        "sha256": "8cbabb226821fc78d6a14a72ffc3af059a242cb081d6dbcf80ab04e4eecb0d73"
+      },
+      "failingBefore": 1,
+      "passingAfter": 1
+    }
+  ],
+  "liveRun": {
+    "path": "/Users/louiscalata/nisi-next-private/.build/repository-live-demo-q33F3l/summary.json",
+    "byteLength": 2078,
+    "sha256": "5cb7c13b5cdeef634766bddaf507d384f8b5150613b4be0307ec53497bbb1847",
+    "observedSummary": {
+      "schemaVersion": "nisi-private-live-demo-summary-v1",
+      "status": "INCOMPLETE",
+      "errorCode": null,
+      "diagnosticErrors": [],
+      "directory": "/Users/louiscalata/nisi-next-private/.build/repository-live-demo-q33F3l",
+      "receiptFingerprint": "1081e57f2d6d5d747befa8b9decb02c06eb0b546a17fa4e3be19bb2ae35a7631",
+      "setupDurationMs": 2577,
+      "workflowDurationMs": 90316,
+      "usage": {
+        "calls": 1,
+        "knownCalls": 0,
+        "unknownCalls": 1,
+        "totals": null,
+        "knownSubtotal": {
+          "promptTokens": 0,
+          "completionTokens": 0,
+          "totalTokens": 0
+        },
+        "complete": false
+      },
+      "workflowOutcome": "BLOCKED",
+      "hostState": "SETTLED",
+      "modelPhase": "FAILED",
+      "remoteInferenceStopped": "NOT_OBSERVED",
+      "retained": [
+        {
+          "path": "preflight.json",
+          "byteLength": 6279,
+          "sha256": "78c474901a2a319b975c400d24540899e97aa0af54041c2ae3e9c361fadc687c"
+        },
+        {
+          "path": "native-build.json",
+          "byteLength": 2582,
+          "sha256": "1494b20e0f9b8d022cc2827b57292b238b2463e5ea43528a0be19d27b5fa93e3"
+        },
+        {
+          "path": "engine-report.json",
+          "byteLength": 4696,
+          "sha256": "12fa0d034c915fc7f88072653de6329f5116dc5e8d21814b67c35b4d4de222a6"
+        },
+        {
+          "path": "host-result.json",
+          "byteLength": 193204,
+          "sha256": "468b2e7f57a70c4e3cdce79a51abc7f2e8f3f6f6b231d8ab9633d86aaecfc9af"
+        },
+        {
+          "path": "live-run-receipt.json",
+          "byteLength": 5872,
+          "sha256": "3174e1167ea9c72270eb12b7b7475ba963f1fdcd43b671e6db08ae6b7d887745"
+        },
+        {
+          "path": "model-lane-final.json",
+          "byteLength": 4211,
+          "sha256": "e82fa899404e4c2c881a448fecc2264bf12234092a5d8a79f5c33ed2b43d5df7"
+        },
+        {
+          "path": "host-late-observations.json",
+          "byteLength": 40,
+          "sha256": "bb5ef8f2bebf2550f370629fb6190cbaa852607cd1d32934686d139990043f1e"
+        }
+      ],
+      "baselineFailureExpected": true,
+      "blindBenchmark": false,
+      "comparativeBenefitMeasured": false,
+      "rawHttpBodyRetained": false,
+      "applied": false,
+      "nativeAppAccepted": false,
+      "publicationAuthorized": false
+    },
+    "retained": [
+      {
+        "path": "/Users/louiscalata/nisi-next-private/.build/repository-live-demo-q33F3l/preflight.json",
+        "byteLength": 6279,
+        "sha256": "78c474901a2a319b975c400d24540899e97aa0af54041c2ae3e9c361fadc687c"
+      },
+      {
+        "path": "/Users/louiscalata/nisi-next-private/.build/repository-live-demo-q33F3l/native-build.json",
+        "byteLength": 2582,
+        "sha256": "1494b20e0f9b8d022cc2827b57292b238b2463e5ea43528a0be19d27b5fa93e3"
+      },
+      {
+        "path": "/Users/louiscalata/nisi-next-private/.build/repository-live-demo-q33F3l/engine-report.json",
+        "byteLength": 4696,
+        "sha256": "12fa0d034c915fc7f88072653de6329f5116dc5e8d21814b67c35b4d4de222a6"
+      },
+      {
+        "path": "/Users/louiscalata/nisi-next-private/.build/repository-live-demo-q33F3l/host-result.json",
+        "byteLength": 193204,
+        "sha256": "468b2e7f57a70c4e3cdce79a51abc7f2e8f3f6f6b231d8ab9633d86aaecfc9af"
+      },
+      {
+        "path": "/Users/louiscalata/nisi-next-private/.build/repository-live-demo-q33F3l/live-run-receipt.json",
+        "byteLength": 5872,
+        "sha256": "3174e1167ea9c72270eb12b7b7475ba963f1fdcd43b671e6db08ae6b7d887745"
+      },
+      {
+        "path": "/Users/louiscalata/nisi-next-private/.build/repository-live-demo-q33F3l/model-lane-final.json",
+        "byteLength": 4211,
+        "sha256": "e82fa899404e4c2c881a448fecc2264bf12234092a5d8a79f5c33ed2b43d5df7"
+      },
+      {
+        "path": "/Users/louiscalata/nisi-next-private/.build/repository-live-demo-q33F3l/host-late-observations.json",
+        "byteLength": 40,
+        "sha256": "bb5ef8f2bebf2550f370629fb6190cbaa852607cd1d32934686d139990043f1e"
+      }
+    ],
+    "runId": "05a7f3d6-f2e3-461d-bdd8-481fa0724330",
+    "modelLifecycle": {
+      "schemaVersion": 1,
+      "state": "QUARANTINED",
+      "pendingTransports": 0,
+      "recoveryRequired": true,
+      "remoteInferenceStopped": "NOT_OBSERVED",
+      "scope": "THIS_OWNER_ONLY"
+    },
+    "authorElapsedMs": 90002,
+    "historicalReaderRerunAsAuthority": false,
+    "acceptedRepair": false,
+    "reviewerRun": false
+  },
+  "nativeDiagnostic": {
+    "path": "/Users/louiscalata/nisi-next-private/.build/output-mode-snv3qc/native-reasoning-diagnostic.json",
+    "byteLength": 1316,
+    "sha256": "91af20d8d8c013f78d2e74994120a681f8a56eeab2888a48db84b59826160d48",
+    "observedResult": {
+      "schemaVersion": "nisi-native-reasoning-diagnostic-v1",
+      "observedAt": "2026-09-13T02:49:16.684Z",
+      "endpoint": "http://127.0.0.1:1234/api/v1/chat",
+      "request": {
+        "model": "qwen/qwen3.8-27b",
+        "input": "Return only this JSON object: {\"ready\":true}",
+        "system_prompt": "Return only the requested JSON.",
+        "integrations": [],
+        "stream": false,
+        "temperature": 0,
+        "max_output_tokens": 128,
+        "reasoning": "off",
+        "store": false
+      },
+      "requestSha256": "275111b43f681cb5b2160d12135db9e89182b90bc0bc8a64b5dbf4fe97b8a8b3",
+      "timeoutMs": 30000,
+      "status": "PASS_TINY_DIAGNOSTIC",
+      "error": null,
+      "repositoryTask": false,
+      "repositoryContentSent": false,
+      "persistentSettingsChanged": false,
+      "inferenceAuthenticated": false,
+      "chatStorageRequested": false,
+      "httpStatus": 200,
+      "responseSha256": "a552c219f5bd2c7ba4c2baa88ced24270dce87ed70e0f15217ebabe9be0c64d7",
+      "responseBytes": 329,
+      "reportedModelInstance": "qwen/qwen3.8-27b",
+      "outputTypes": [
+        "message"
+      ],
+      "responseIdPresent": false,
+      "stats": {
+        "input_tokens": 34,
+        "total_output_tokens": 6,
+        "reasoning_output_tokens": 0,
+        "tokens_per_second": 22.178447142533866,
+        "time_to_first_token_seconds": 0.343
+      },
+      "finalContentLength": 14,
+      "exactRequestedJSON": true,
+      "durationMs": 660
+    },
+    "integrated": false,
+    "operationSizedTask": false,
+    "comparativeBenefitMeasured": false
+  },
+  "unmatchedRuntimeSupplement": {
+    "path": "/Users/louiscalata/nisi-next-private/.build/output-mode-snv3qc/runtime-response-metadata.json",
+    "byteLength": 1279,
+    "sha256": "4aa6ee18006361b1a6d5655ab49c1ed3ff8eb5362a4b2fbc5ecdd15d877b5af6",
+    "adoptedAsRunUsage": false,
+    "rootCauseEstablished": false
+  },
+  "collaboration": {
+    "claude": [
+      {
+        "path": "/Users/louiscalata/nisi-next-private/.build/output-mode-snv3qc/fable-design.json",
+        "byteLength": 394,
+        "sha256": "d87a214e8a2df3bfb1a0bbb3977a93a51cd918a46d7f6995d6457f647b1abd29",
+        "requestedModel": "fable",
+        "status": "NOT_RUN",
+        "reportedModels": [],
+        "reportedCostUSD": null,
+        "wallSeconds": null
+      },
+      {
+        "path": "/Users/louiscalata/nisi-next-private/.build/output-mode-snv3qc/sonnet-design.json",
+        "byteLength": 10059,
+        "sha256": "ed5c012b197067103edf6b2a0be36c39185b60ef860949cfdff7746081a34227",
+        "requestedModel": "sonnet",
+        "status": "succeeded",
+        "reportedModels": [
+          "claude-haiku-4-5-20251001",
+          "claude-sonnet-5"
+        ],
+        "reportedCostUSD": 0.037101,
+        "wallSeconds": 33.949
+      },
+      {
+        "path": "/Users/louiscalata/nisi-next-private/.build/output-mode-snv3qc/implementation-review.json",
+        "byteLength": 2272,
+        "sha256": "4001ad9890283caec9233ab8c489f997bff9147742db4258961ceb513ee88c12",
+        "requestedModel": "sonnet",
+        "status": "PASS",
+        "reportedModels": [
+          "claude-haiku-4-5-20251001",
+          "claude-sonnet-5"
+        ],
+        "reportedCostUSD": 0.084332,
+        "wallSeconds": 31.664
+      }
+    ],
+    "knownClaudeCostUSD": 0.121433,
+    "completeTotalCostKnown": false,
+    "independentReview": "Read-only Codex reviewer found accessor defect; corrected and regression-tested by owner",
+    "opencode": {
+      "requestedRoute": "free",
+      "requestedModel": "opencode/big-pickle",
+      "attempts": 1,
+      "servedIdentity": null,
+      "tokenUsage": null,
+      "measuredCostUSD": null,
+      "wrapperElapsedMs": 25627,
+      "originalData": {
+        "path": "/Users/louiscalata/nisi-next-private/.build/output-fixtures-oPWlX2/response-cases.json",
+        "byteLength": 2639,
+        "sha256": "60ea18e89f96ec61b257f4d46ad5d5ca3c79dc28f83de8feed88d65e96b36d1f"
+      },
+      "integratedData": {
+        "path": "/Users/louiscalata/nisi-next-private/tests/fixtures/local-chat-response-cases.json",
+        "byteLength": 2640,
+        "sha256": "c05bb7e645152cc485600085eb97c95225dcc4ad39fb571c15ff9d40bd983e1e"
+      },
+      "semanticDataEqual": true,
+      "byteDataEqual": false,
+      "integrationByteChange": "Original bytes plus one terminal LF; no data-field changes",
+      "isolatedAdapterSha256": "eb7f5eb23f7b802ef3fd6d3dc36a47a646051b5a0814a8eb7176a2bb0d84374e",
+      "evidence": [
+        {
+          "path": "/Users/louiscalata/nisi-next-private/.build/output-fixtures-oPWlX2/.packets/final-content-data.packet.md",
+          "byteLength": 4700,
+          "sha256": "33d05d063dfb28318ccd5071f4202ba8adad4d968c7e03dd61222bf1367e449d"
+        },
+        {
+          "path": "/Users/louiscalata/nisi-next-private/.build/output-fixtures-oPWlX2/.packets/final-content-data.result.md",
+          "byteLength": 332,
+          "sha256": "ba715404c445a7ada5d8f28270828c524421215fdce10c649816944e46a39ade"
+        },
+        {
+          "path": "/Users/louiscalata/nisi-next-private/.build/output-fixtures-oPWlX2/evidence/packet.json",
+          "byteLength": 3200,
+          "sha256": "9e4fe430b1e3e50b37c45f2264b48576f7005f70e94c630b8be5585547af26e1"
+        },
+        {
+          "path": "/Users/louiscalata/nisi-next-private/.build/output-fixtures-oPWlX2/evidence/verify.json",
+          "byteLength": 4769,
+          "sha256": "42c2b916fcc32f9f3860266a87db194437e1d2257331c035004bf6f1a9cc5bbc"
+        },
+        {
+          "path": "/Users/louiscalata/nisi-next-private/.build/output-fixtures-oPWlX2/evidence/baseline.json",
+          "byteLength": 2816,
+          "sha256": "a1323640bcd74034714ff38e33ebbf184cc6bda7278ad71996f03a0cba08c626"
+        },
+        {
+          "path": "/Users/louiscalata/nisi-next-private/.build/output-fixtures-oPWlX2/evidence/missing.json",
+          "byteLength": 3535,
+          "sha256": "57e8ce04199a45165f8bdf8f30240e33a8d973315df861e78f8ac55bfaa368fd"
+        },
+        {
+          "path": "/Users/louiscalata/nisi-next-private/.build/output-fixtures-oPWlX2/tests/expected-cases.mjs",
+          "byteLength": 2301,
+          "sha256": "1e1f3af35720944e447d60600487a7a9111da6911f82322c70a7750fa5a5e537"
+        },
+        {
+          "path": "/Users/louiscalata/nisi-next-private/.build/output-fixtures-oPWlX2/tests/fixtures.test.mjs",
+          "byteLength": 4627,
+          "sha256": "7bb396eae0c147ea5aa47b1e7c97d87054380f4fc0a4e351baadf125fc0b305d"
+        },
+        {
+          "path": "/Users/louiscalata/nisi-next-private/.build/output-fixtures-oPWlX2/RESULT.md",
+          "byteLength": 4524,
+          "sha256": "fcd3ebbaef7ac3a590fe8d4128fedbf550972f650a98e7bb274ca9fef5c67668"
+        }
+      ],
+      "isolatedTests": 26,
+      "canonicalChecksRerun": true
+    },
+    "sharedChamiNewCallThisSlice": false,
+    "persistentTrustSettingsChanged": false
+  },
+  "documents": [
+    {
+      "path": "/Users/louiscalata/nisi-next-private/roadmap.md",
+      "byteLength": 243622,
+      "sha256": "c69c5d6b1382697bb0b1875c4cd7f42fca90d924f50f77123eef5df9588453b1"
+    },
+    {
+      "path": "/Volumes/SharedChami/Veritas Local Repository/SYSTEM-EQUATION.md",
+      "byteLength": 258788,
+      "sha256": "6b7defcee9ae2f15138ee56719f7e3d56e027e164cce1becc26b6f7209ac0629"
+    }
+  ],
+  "retainedEquationTailSha256": "703bfbd10ad108ac8b18f16e4f6864c69d29f4558794616b81dac7ab9522c4f3",
+  "verificationTools": [
+    {
+      "path": "/Users/louiscalata/nisi-next-private/.build/output-mode-snv3qc/verify.mjs",
+      "byteLength": 4111,
+      "sha256": "7ad7c890d318cc1fd01af5d544338f01021bc6d8fada3885fee0d3c201985cad"
+    },
+    {
+      "path": "/Users/louiscalata/nisi-next-private/.build/output-mode-snv3qc/mutants.mjs",
+      "byteLength": 6113,
+      "sha256": "4a08bba015d6bbf961e06283452ed6eaacfe485edcd0f1830033db7128c6db04"
+    },
+    {
+      "path": "/Users/louiscalata/nisi-next-private/.build/output-mode-snv3qc/record-check.mjs",
+      "byteLength": 2118,
+      "sha256": "f27eb700f37a640e04e7748d50112b781527e9e6d17ceecdd987dbcc05f1e68c"
+    },
+    {
+      "path": "/Users/louiscalata/nisi-next-private/.build/output-mode-snv3qc/probe-native-reasoning.mjs",
+      "byteLength": 3262,
+      "sha256": "e9baab7e70072aa0190d3ee58ce3dceb3b125708b1c6e1b9914c0fb9514225dd"
+    },
+    {
+      "path": "/Users/louiscalata/nisi-next-private/.build/output-mode-snv3qc/review-packet.mjs",
+      "byteLength": 2234,
+      "sha256": "b7732ed6cdc0c55d65f4740415a8e4dff954ffe043ecb8014f3b7ff12d683beb"
+    },
+    {
+      "path": "/Users/louiscalata/nisi-next-private/.build/output-mode-snv3qc/checkpoint.mjs",
+      "byteLength": 12593,
+      "sha256": "9f562eb22443c02797da2bafa9858340cf2d6201aab5e6b6dbbe9b8e78505afd"
+    }
+  ],
+  "pending": [
+    "Native-runtime response/termination/identity/usage/lifecycle adapter",
+    "Operation-sized probe and successful real repository repair/review",
+    "Full main-command interruption and summary-storage fault injection",
+    "Refresh isolated package/types proposal for exact new source",
+    "Per-stage history integration; native app and remaining full-merger gates"
+  ],
+  "nativeAppAccepted": false,
+  "fullMergerComplete": false,
+  "publicationAuthorized": false,
+  "comparativeBenefitMeasured": false,
+  "automaticLearningEstablished": false
+}

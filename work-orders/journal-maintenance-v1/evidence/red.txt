@@ -1,0 +1,799 @@
+TAP version 13
+# Subtest: malformed envelopes, hidden fields, symbols and accessors refuse without getter invocation
+not ok 1 - malformed envelopes, hidden fields, symbols and accessors refuse without getter invocation
+  ---
+  duration_ms: 1.620084
+  type: 'test'
+  location: '/Users/louiscalata/nisi-next-private/tests/journal-maintenance-v1.test.mjs:24:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly equal:
+    + actual - expected
+    
+    + 'NOT_IMPLEMENTED'
+    - 'INVALID_INPUT'
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: 'INVALID_INPUT'
+  actual: 'NOT_IMPLEMENTED'
+  operator: 'strictEqual'
+  stack: |-
+    assertResult (file:///Users/louiscalata/nisi-next-private/tests/journal-maintenance-v1.test.mjs:15:47)
+    TestContext.<anonymous> (file:///Users/louiscalata/nisi-next-private/tests/journal-maintenance-v1.test.mjs:30:49)
+    Test.runInAsyncScope (node:async_hooks:227:14)
+    Test.run (node:internal/test_runner/test:1325:25)
+    Test.start (node:internal/test_runner/test:1191:17)
+    startSubtestAfterBootstrap (node:internal/test_runner/harness:385:17)
+  ...
+# Subtest: invalid times and fabricated handles are INVALID_INPUT with no snapshot
+not ok 2 - invalid times and fabricated handles are INVALID_INPUT with no snapshot
+  ---
+  duration_ms: 0.203167
+  type: 'test'
+  location: '/Users/louiscalata/nisi-next-private/tests/journal-maintenance-v1.test.mjs:36:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly equal:
+    + actual - expected
+    
+    + 'NOT_IMPLEMENTED'
+    - 'INVALID_INPUT'
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: 'INVALID_INPUT'
+  actual: 'NOT_IMPLEMENTED'
+  operator: 'strictEqual'
+  stack: |-
+    assertResult (file:///Users/louiscalata/nisi-next-private/tests/journal-maintenance-v1.test.mjs:15:47)
+    TestContext.<anonymous> (file:///Users/louiscalata/nisi-next-private/tests/journal-maintenance-v1.test.mjs:39:49)
+    Test.runInAsyncScope (node:async_hooks:227:14)
+    Test.run (node:internal/test_runner/test:1325:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:911:18)
+    Test.postRun (node:internal/test_runner/test:1465:19)
+    Test.run (node:internal/test_runner/test:1390:12)
+    async startSubtestAfterBootstrap (node:internal/test_runner/harness:385:3)
+  ...
+# Subtest: plain and null-prototype exact envelopes are accepted
+not ok 3 - plain and null-prototype exact envelopes are accepted
+  ---
+  duration_ms: 0.115084
+  type: 'test'
+  location: '/Users/louiscalata/nisi-next-private/tests/journal-maintenance-v1.test.mjs:45:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly equal:
+    + actual - expected
+    
+    + 'REFUSED'
+    - 'MAINTAINED'
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: 'MAINTAINED'
+  actual: 'REFUSED'
+  operator: 'strictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///Users/louiscalata/nisi-next-private/tests/journal-maintenance-v1.test.mjs:49:12)
+    Test.runInAsyncScope (node:async_hooks:227:14)
+    Test.run (node:internal/test_runner/test:1325:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:911:18)
+    Test.postRun (node:internal/test_runner/test:1465:19)
+    Test.run (node:internal/test_runner/test:1390:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:911:7)
+  ...
+# Subtest: SEALED owner refusal preserves its snapshot and performs no IO
+not ok 4 - SEALED owner refusal preserves its snapshot and performs no IO
+  ---
+  duration_ms: 0.831125
+  type: 'test'
+  location: '/Users/louiscalata/nisi-next-private/tests/journal-maintenance-v1.test.mjs:53:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly equal:
+    + actual - expected
+    
+    + 'NOT_IMPLEMENTED'
+    - 'OWNER_SEALED'
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: 'OWNER_SEALED'
+  actual: 'NOT_IMPLEMENTED'
+  operator: 'strictEqual'
+  stack: |-
+    assertResult (file:///Users/louiscalata/nisi-next-private/tests/journal-maintenance-v1.test.mjs:15:47)
+    TestContext.<anonymous> (file:///Users/louiscalata/nisi-next-private/tests/journal-maintenance-v1.test.mjs:56:3)
+    Test.runInAsyncScope (node:async_hooks:227:14)
+    Test.run (node:internal/test_runner/test:1325:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:911:18)
+    Test.postRun (node:internal/test_runner/test:1465:19)
+    Test.run (node:internal/test_runner/test:1390:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:911:7)
+  ...
+# Subtest: COMMIT_UNCERTAIN owner refusal preserves quarantine and performs no IO
+not ok 5 - COMMIT_UNCERTAIN owner refusal preserves quarantine and performs no IO
+  ---
+  duration_ms: 1.144291
+  type: 'test'
+  location: '/Users/louiscalata/nisi-next-private/tests/journal-maintenance-v1.test.mjs:60:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly equal:
+    + actual - expected
+    
+    + 'NOT_IMPLEMENTED'
+    - 'COMMIT_UNCERTAIN'
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: 'COMMIT_UNCERTAIN'
+  actual: 'NOT_IMPLEMENTED'
+  operator: 'strictEqual'
+  stack: |-
+    assertResult (file:///Users/louiscalata/nisi-next-private/tests/journal-maintenance-v1.test.mjs:15:47)
+    TestContext.<anonymous> (file:///Users/louiscalata/nisi-next-private/tests/journal-maintenance-v1.test.mjs:66:3)
+    Test.runInAsyncScope (node:async_hooks:227:14)
+    Test.run (node:internal/test_runner/test:1325:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:911:18)
+    Test.postRun (node:internal/test_runner/test:1465:19)
+    Test.run (node:internal/test_runner/test:1390:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:911:7)
+  ...
+# Subtest: empty NEW owner persists a complete header/footer without synthetic observations
+not ok 6 - empty NEW owner persists a complete header/footer without synthetic observations
+  ---
+  duration_ms: 0.155
+  type: 'test'
+  location: '/Users/louiscalata/nisi-next-private/tests/journal-maintenance-v1.test.mjs:70:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly equal:
+    + actual - expected
+    
+    + 'REFUSED'
+    - 'MAINTAINED'
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: 'MAINTAINED'
+  actual: 'REFUSED'
+  operator: 'strictEqual'
+  stack: |-
+    assertResult (file:///Users/louiscalata/nisi-next-private/tests/journal-maintenance-v1.test.mjs:15:10)
+    TestContext.<anonymous> (file:///Users/louiscalata/nisi-next-private/tests/journal-maintenance-v1.test.mjs:72:3)
+    Test.runInAsyncScope (node:async_hooks:227:14)
+    Test.run (node:internal/test_runner/test:1325:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:911:18)
+    Test.postRun (node:internal/test_runner/test:1465:19)
+    Test.run (node:internal/test_runner/test:1390:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:911:7)
+  ...
+# Subtest: same-watermark repeat verifies disk and returns UNCHANGED without durability claim
+not ok 7 - same-watermark repeat verifies disk and returns UNCHANGED without durability claim
+  ---
+  duration_ms: 0.130292
+  type: 'test'
+  location: '/Users/louiscalata/nisi-next-private/tests/journal-maintenance-v1.test.mjs:78:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly equal:
+    + actual - expected
+    
+    + 'REFUSED'
+    - 'MAINTAINED'
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: 'MAINTAINED'
+  actual: 'REFUSED'
+  operator: 'strictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///Users/louiscalata/nisi-next-private/tests/journal-maintenance-v1.test.mjs:79:53)
+    Test.runInAsyncScope (node:async_hooks:227:14)
+    Test.run (node:internal/test_runner/test:1325:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:911:18)
+    Test.postRun (node:internal/test_runner/test:1465:19)
+    Test.run (node:internal/test_runner/test:1390:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:911:7)
+  ...
+# Subtest: later maintenance advances serialized watermark even when no payload expires
+not ok 8 - later maintenance advances serialized watermark even when no payload expires
+  ---
+  duration_ms: 0.128
+  type: 'test'
+  location: '/Users/louiscalata/nisi-next-private/tests/journal-maintenance-v1.test.mjs:85:1'
+  failureType: 'testCodeFailure'
+  error: 'The first argument must be of type string or an instance of Buffer, ArrayBuffer, or Array or an Array-like Object. Received undefined'
+  code: 'ERR_INVALID_ARG_TYPE'
+  name: 'TypeError'
+  stack: |-
+    Buffer.from (node:buffer:362:9)
+    TestContext.<anonymous> (file:///Users/louiscalata/nisi-next-private/tests/journal-maintenance-v1.test.mjs:86:110)
+    Test.runInAsyncScope (node:async_hooks:227:14)
+    Test.run (node:internal/test_runner/test:1325:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:911:18)
+    Test.postRun (node:internal/test_runner/test:1465:19)
+    Test.run (node:internal/test_runner/test:1390:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:911:7)
+  ...
+# Subtest: backward maintenance time refuses TIME and preserves exact prior snapshot and disk
+not ok 9 - backward maintenance time refuses TIME and preserves exact prior snapshot and disk
+  ---
+  duration_ms: 0.106458
+  type: 'test'
+  location: '/Users/louiscalata/nisi-next-private/tests/journal-maintenance-v1.test.mjs:92:1'
+  failureType: 'testCodeFailure'
+  error: 'The first argument must be of type string or an instance of Buffer, ArrayBuffer, or Array or an Array-like Object. Received undefined'
+  code: 'ERR_INVALID_ARG_TYPE'
+  name: 'TypeError'
+  stack: |-
+    Buffer.from (node:buffer:362:9)
+    TestContext.<anonymous> (file:///Users/louiscalata/nisi-next-private/tests/journal-maintenance-v1.test.mjs:93:114)
+    Test.runInAsyncScope (node:async_hooks:227:14)
+    Test.run (node:internal/test_runner/test:1325:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:911:18)
+    Test.postRun (node:internal/test_runner/test:1465:19)
+    Test.run (node:internal/test_runner/test:1390:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:911:7)
+  ...
+# Subtest: payload is retained immediately before TTL boundary
+not ok 10 - payload is retained immediately before TTL boundary
+  ---
+  duration_ms: 0.331958
+  type: 'test'
+  location: '/Users/louiscalata/nisi-next-private/tests/journal-maintenance-v1.test.mjs:99:1'
+  failureType: 'testCodeFailure'
+  error: "Cannot read properties of null (reading 'entries')"
+  code: 'ERR_TEST_FAILURE'
+  name: 'TypeError'
+  stack: |-
+    TestContext.<anonymous> (file:///Users/louiscalata/nisi-next-private/tests/journal-maintenance-v1.test.mjs:102:32)
+    Test.runInAsyncScope (node:async_hooks:227:14)
+    Test.run (node:internal/test_runner/test:1325:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:911:18)
+    Test.postRun (node:internal/test_runner/test:1465:19)
+    Test.run (node:internal/test_runner/test:1390:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:911:7)
+  ...
+# Subtest: payload is removed exactly at TTL while identity and fingerprint remain
+not ok 11 - payload is removed exactly at TTL while identity and fingerprint remain
+  ---
+  duration_ms: 0.308792
+  type: 'test'
+  location: '/Users/louiscalata/nisi-next-private/tests/journal-maintenance-v1.test.mjs:105:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly equal:
+    + actual - expected
+    
+    + 'REFUSED'
+    - 'MAINTAINED'
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: 'MAINTAINED'
+  actual: 'REFUSED'
+  operator: 'strictEqual'
+  stack: |-
+    assertResult (file:///Users/louiscalata/nisi-next-private/tests/journal-maintenance-v1.test.mjs:15:10)
+    TestContext.<anonymous> (file:///Users/louiscalata/nisi-next-private/tests/journal-maintenance-v1.test.mjs:111:3)
+    Test.runInAsyncScope (node:async_hooks:227:14)
+    Test.run (node:internal/test_runner/test:1325:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:911:18)
+    Test.postRun (node:internal/test_runner/test:1465:19)
+    Test.run (node:internal/test_runner/test:1390:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:911:7)
+  ...
+# Subtest: revocation expires before its target without undoing revoked liveness after reopen
+not ok 12 - revocation expires before its target without undoing revoked liveness after reopen
+  ---
+  duration_ms: 0.783792
+  type: 'test'
+  location: '/Users/louiscalata/nisi-next-private/tests/journal-maintenance-v1.test.mjs:117:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly equal:
+    + actual - expected
+    
+    + 'REFUSED'
+    - 'MAINTAINED'
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: 'MAINTAINED'
+  actual: 'REFUSED'
+  operator: 'strictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///Users/louiscalata/nisi-next-private/tests/journal-maintenance-v1.test.mjs:121:10)
+    Test.runInAsyncScope (node:async_hooks:227:14)
+    Test.run (node:internal/test_runner/test:1325:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:911:18)
+    Test.postRun (node:internal/test_runner/test:1465:19)
+    Test.run (node:internal/test_runner/test:1390:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:911:7)
+  ...
+# Subtest: capacity eviction of target and revocation payloads preserves their relation
+not ok 13 - capacity eviction of target and revocation payloads preserves their relation
+  ---
+  duration_ms: 0.729708
+  type: 'test'
+  location: '/Users/louiscalata/nisi-next-private/tests/journal-maintenance-v1.test.mjs:130:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly equal:
+    + actual - expected
+    
+    + 'REFUSED'
+    - 'MAINTAINED'
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: 'MAINTAINED'
+  actual: 'REFUSED'
+  operator: 'strictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///Users/louiscalata/nisi-next-private/tests/journal-maintenance-v1.test.mjs:135:10)
+    Test.runInAsyncScope (node:async_hooks:227:14)
+    Test.run (node:internal/test_runner/test:1325:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:911:18)
+    Test.postRun (node:internal/test_runner/test:1465:19)
+    Test.run (node:internal/test_runner/test:1390:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:911:7)
+  ...
+# Subtest: same-watermark maintenance does not conceal disk drift behind unchanged private bytes
+not ok 14 - same-watermark maintenance does not conceal disk drift behind unchanged private bytes
+  ---
+  duration_ms: 0.0795
+  type: 'test'
+  location: '/Users/louiscalata/nisi-next-private/tests/journal-maintenance-v1.test.mjs:142:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly equal:
+    + actual - expected
+    
+    + 'REFUSED'
+    - 'MAINTAINED'
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: 'MAINTAINED'
+  actual: 'REFUSED'
+  operator: 'strictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///Users/louiscalata/nisi-next-private/tests/journal-maintenance-v1.test.mjs:144:10)
+    Test.runInAsyncScope (node:async_hooks:227:14)
+    Test.run (node:internal/test_runner/test:1325:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:911:18)
+    Test.postRun (node:internal/test_runner/test:1465:19)
+    Test.run (node:internal/test_runner/test:1390:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:911:7)
+  ...
+# Subtest: open-time private pruning is durably persisted even without newly expired payload
+not ok 15 - open-time private pruning is durably persisted even without newly expired payload
+  ---
+  duration_ms: 0.185041
+  type: 'test'
+  location: '/Users/louiscalata/nisi-next-private/tests/journal-maintenance-v1.test.mjs:151:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly equal:
+    + actual - expected
+    
+    + 'REFUSED'
+    - 'MAINTAINED'
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: 'MAINTAINED'
+  actual: 'REFUSED'
+  operator: 'strictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///Users/louiscalata/nisi-next-private/tests/journal-maintenance-v1.test.mjs:155:54)
+    Test.runInAsyncScope (node:async_hooks:227:14)
+    Test.run (node:internal/test_runner/test:1325:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:911:18)
+    Test.postRun (node:internal/test_runner/test:1465:19)
+    Test.run (node:internal/test_runner/test:1390:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:911:7)
+  ...
+# Subtest: maintenance preserves already-redacted payload and never restores caller secret
+not ok 16 - maintenance preserves already-redacted payload and never restores caller secret
+  ---
+  duration_ms: 0.178958
+  type: 'test'
+  location: '/Users/louiscalata/nisi-next-private/tests/journal-maintenance-v1.test.mjs:159:1'
+  failureType: 'testCodeFailure'
+  error: "Cannot read properties of null (reading 'entries')"
+  code: 'ERR_TEST_FAILURE'
+  name: 'TypeError'
+  stack: |-
+    TestContext.<anonymous> (file:///Users/louiscalata/nisi-next-private/tests/journal-maintenance-v1.test.mjs:163:32)
+    Test.runInAsyncScope (node:async_hooks:227:14)
+    Test.run (node:internal/test_runner/test:1325:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:911:18)
+    Test.postRun (node:internal/test_runner/test:1465:19)
+    Test.run (node:internal/test_runner/test:1390:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:911:7)
+  ...
+# Subtest: durable REVOKED row removes target liveness but preserves target payload before TTL
+not ok 17 - durable REVOKED row removes target liveness but preserves target payload before TTL
+  ---
+  duration_ms: 0.562417
+  type: 'test'
+  location: '/Users/louiscalata/nisi-next-private/tests/journal-maintenance-v1.test.mjs:167:1'
+  failureType: 'testCodeFailure'
+  error: "Cannot read properties of null (reading 'interrupted')"
+  code: 'ERR_TEST_FAILURE'
+  name: 'TypeError'
+  stack: |-
+    TestContext.<anonymous> (file:///Users/louiscalata/nisi-next-private/tests/journal-maintenance-v1.test.mjs:171:80)
+    Test.runInAsyncScope (node:async_hooks:227:14)
+    Test.run (node:internal/test_runner/test:1325:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:911:18)
+    Test.postRun (node:internal/test_runner/test:1465:19)
+    Test.run (node:internal/test_runner/test:1390:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:911:7)
+  ...
+# Subtest: revocation relation and both identities survive target TTL pruning and reopen
+not ok 18 - revocation relation and both identities survive target TTL pruning and reopen
+  ---
+  duration_ms: 0.339083
+  type: 'test'
+  location: '/Users/louiscalata/nisi-next-private/tests/journal-maintenance-v1.test.mjs:176:1'
+  failureType: 'testCodeFailure'
+  error: "Cannot read properties of null (reading 'entries')"
+  code: 'ERR_TEST_FAILURE'
+  name: 'TypeError'
+  stack: |-
+    TestContext.<anonymous> (file:///Users/louiscalata/nisi-next-private/tests/journal-maintenance-v1.test.mjs:180:78)
+    Test.runInAsyncScope (node:async_hooks:227:14)
+    Test.run (node:internal/test_runner/test:1325:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:911:18)
+    Test.postRun (node:internal/test_runner/test:1465:19)
+    Test.run (node:internal/test_runner/test:1390:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:911:7)
+  ...
+# Subtest: replaying an expired target is DUPLICATE while changed content remains CONFLICT
+not ok 19 - replaying an expired target is DUPLICATE while changed content remains CONFLICT
+  ---
+  duration_ms: 0.1825
+  type: 'test'
+  location: '/Users/louiscalata/nisi-next-private/tests/journal-maintenance-v1.test.mjs:188:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly equal:
+    + actual - expected
+    
+    + 'REFUSED'
+    - 'MAINTAINED'
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: 'MAINTAINED'
+  actual: 'REFUSED'
+  operator: 'strictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///Users/louiscalata/nisi-next-private/tests/journal-maintenance-v1.test.mjs:190:80)
+    Test.runInAsyncScope (node:async_hooks:227:14)
+    Test.run (node:internal/test_runner/test:1325:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:911:18)
+    Test.postRun (node:internal/test_runner/test:1465:19)
+    Test.run (node:internal/test_runner/test:1390:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:911:7)
+  ...
+# Subtest: replaying a durable revocation is DUPLICATE and conflicting revocation is CONFLICT
+ok 20 - replaying a durable revocation is DUPLICATE and conflicting revocation is CONFLICT
+  ---
+  duration_ms: 0.684333
+  type: 'test'
+  ...
+# Subtest: REVOKED row validation still requires prior target and top-level revokes metadata
+ok 21 - REVOKED row validation still requires prior target and top-level revokes metadata
+  ---
+  duration_ms: 0.45975
+  type: 'test'
+  ...
+# Subtest: capacity pruning removes oldest payloads but conserves every accepted ID
+not ok 22 - capacity pruning removes oldest payloads but conserves every accepted ID
+  ---
+  duration_ms: 2.873541
+  type: 'test'
+  location: '/Users/louiscalata/nisi-next-private/tests/journal-maintenance-v1.test.mjs:212:1'
+  failureType: 'testCodeFailure'
+  error: "Cannot read properties of null (reading 'entries')"
+  code: 'ERR_TEST_FAILURE'
+  name: 'TypeError'
+  stack: |-
+    TestContext.<anonymous> (file:///Users/louiscalata/nisi-next-private/tests/journal-maintenance-v1.test.mjs:217:36)
+    Test.runInAsyncScope (node:async_hooks:227:14)
+    Test.run (node:internal/test_runner/test:1325:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:911:18)
+    Test.postRun (node:internal/test_runner/test:1465:19)
+    Test.run (node:internal/test_runner/test:1390:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:911:7)
+  ...
+# Subtest: stale owner maintenance detects changed disk and preserves its prior snapshot
+not ok 23 - stale owner maintenance detects changed disk and preserves its prior snapshot
+  ---
+  duration_ms: 0.214917
+  type: 'test'
+  location: '/Users/louiscalata/nisi-next-private/tests/journal-maintenance-v1.test.mjs:222:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly equal:
+    + actual - expected
+    
+    + 'REFUSED'
+    - 'STORE_CONFLICT'
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: 'STORE_CONFLICT'
+  actual: 'REFUSED'
+  operator: 'strictEqual'
+  stack: |-
+    assertResult (file:///Users/louiscalata/nisi-next-private/tests/journal-maintenance-v1.test.mjs:15:10)
+    TestContext.<anonymous> (file:///Users/louiscalata/nisi-next-private/tests/journal-maintenance-v1.test.mjs:226:3)
+    Test.runInAsyncScope (node:async_hooks:227:14)
+    Test.run (node:internal/test_runner/test:1325:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:911:18)
+    Test.postRun (node:internal/test_runner/test:1465:19)
+    Test.run (node:internal/test_runner/test:1390:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:911:7)
+  ...
+# Subtest: concurrent NEW owners accept identical bytes as verified UNCHANGED and reject different bytes
+not ok 24 - concurrent NEW owners accept identical bytes as verified UNCHANGED and reject different bytes
+  ---
+  duration_ms: 0.10975
+  type: 'test'
+  location: '/Users/louiscalata/nisi-next-private/tests/journal-maintenance-v1.test.mjs:230:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly equal:
+    + actual - expected
+    
+    + 'REFUSED'
+    - 'MAINTAINED'
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: 'MAINTAINED'
+  actual: 'REFUSED'
+  operator: 'strictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///Users/louiscalata/nisi-next-private/tests/journal-maintenance-v1.test.mjs:232:10)
+    Test.runInAsyncScope (node:async_hooks:227:14)
+    Test.run (node:internal/test_runner/test:1325:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:911:18)
+    Test.postRun (node:internal/test_runner/test:1465:19)
+    Test.run (node:internal/test_runner/test:1390:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:911:7)
+  ...
+# Subtest: precommit rename failure rolls back staged pruning and preserves disk bytes
+not ok 25 - precommit rename failure rolls back staged pruning and preserves disk bytes
+  ---
+  duration_ms: 0.1465
+  type: 'test'
+  location: '/Users/louiscalata/nisi-next-private/tests/journal-maintenance-v1.test.mjs:238:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly equal:
+    + actual - expected
+    
+    + 'REFUSED'
+    - 'STORE_FAILED'
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: 'STORE_FAILED'
+  actual: 'REFUSED'
+  operator: 'strictEqual'
+  stack: |-
+    assertResult (file:///Users/louiscalata/nisi-next-private/tests/journal-maintenance-v1.test.mjs:15:10)
+    TestContext.<anonymous> (file:///Users/louiscalata/nisi-next-private/tests/journal-maintenance-v1.test.mjs:243:3)
+    Test.runInAsyncScope (node:async_hooks:227:14)
+    Test.run (node:internal/test_runner/test:1325:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:911:18)
+    Test.postRun (node:internal/test_runner/test:1465:19)
+    Test.run (node:internal/test_runner/test:1390:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:911:7)
+  ...
+# Subtest: postcommit readback failure quarantines owner and fresh reopen reconciles committed maintenance
+not ok 26 - postcommit readback failure quarantines owner and fresh reopen reconciles committed maintenance
+  ---
+  duration_ms: 0.181209
+  type: 'test'
+  location: '/Users/louiscalata/nisi-next-private/tests/journal-maintenance-v1.test.mjs:247:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly equal:
+    + actual - expected
+    
+    + 'REFUSED'
+    - 'STORE_FAILED'
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: 'STORE_FAILED'
+  actual: 'REFUSED'
+  operator: 'strictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///Users/louiscalata/nisi-next-private/tests/journal-maintenance-v1.test.mjs:253:10)
+    Test.runInAsyncScope (node:async_hooks:227:14)
+    Test.run (node:internal/test_runner/test:1325:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:911:18)
+    Test.postRun (node:internal/test_runner/test:1465:19)
+    Test.run (node:internal/test_runner/test:1390:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:911:7)
+  ...
+# Subtest: missing fsync truthfully succeeds as non-durable MAINTAINED
+not ok 27 - missing fsync truthfully succeeds as non-durable MAINTAINED
+  ---
+  duration_ms: 0.09525
+  type: 'test'
+  location: '/Users/louiscalata/nisi-next-private/tests/journal-maintenance-v1.test.mjs:260:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly equal:
+    + actual - expected
+    
+    + 'REFUSED'
+    - 'MAINTAINED'
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: 'MAINTAINED'
+  actual: 'REFUSED'
+  operator: 'strictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///Users/louiscalata/nisi-next-private/tests/journal-maintenance-v1.test.mjs:264:10)
+    Test.runInAsyncScope (node:async_hooks:227:14)
+    Test.run (node:internal/test_runner/test:1325:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:911:18)
+    Test.postRun (node:internal/test_runner/test:1465:19)
+    Test.run (node:internal/test_runner/test:1390:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:911:7)
+  ...
+# Subtest: coherent fsync faults remain verified non-durable success rather than uncertainty
+not ok 28 - coherent fsync faults remain verified non-durable success rather than uncertainty
+  ---
+  duration_ms: 0.062916
+  type: 'test'
+  location: '/Users/louiscalata/nisi-next-private/tests/journal-maintenance-v1.test.mjs:268:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly equal:
+    + actual - expected
+    
+    + 'REFUSED'
+    - 'MAINTAINED'
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: 'MAINTAINED'
+  actual: 'REFUSED'
+  operator: 'strictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///Users/louiscalata/nisi-next-private/tests/journal-maintenance-v1.test.mjs:271:10)
+    Test.runInAsyncScope (node:async_hooks:227:14)
+    Test.run (node:internal/test_runner/test:1325:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:911:18)
+    Test.postRun (node:internal/test_runner/test:1465:19)
+    Test.run (node:internal/test_runner/test:1390:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:911:7)
+  ...
+# Subtest: maintenance holds the shared busy guard against reentrant record
+not ok 29 - maintenance holds the shared busy guard against reentrant record
+  ---
+  duration_ms: 0.073
+  type: 'test'
+  location: '/Users/louiscalata/nisi-next-private/tests/journal-maintenance-v1.test.mjs:275:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly equal:
+    + actual - expected
+    
+    + 'REFUSED'
+    - 'MAINTAINED'
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: 'MAINTAINED'
+  actual: 'REFUSED'
+  operator: 'strictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///Users/louiscalata/nisi-next-private/tests/journal-maintenance-v1.test.mjs:281:10)
+    Test.runInAsyncScope (node:async_hooks:227:14)
+    Test.run (node:internal/test_runner/test:1325:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:911:18)
+    Test.postRun (node:internal/test_runner/test:1465:19)
+    Test.run (node:internal/test_runner/test:1390:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:911:7)
+  ...
+# Subtest: record holds the shared busy guard against reentrant maintenance
+not ok 30 - record holds the shared busy guard against reentrant maintenance
+  ---
+  duration_ms: 0.275792
+  type: 'test'
+  location: '/Users/louiscalata/nisi-next-private/tests/journal-maintenance-v1.test.mjs:286:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly equal:
+    + actual - expected
+    
+    + 'NOT_IMPLEMENTED'
+    - 'OWNER_BUSY'
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: 'OWNER_BUSY'
+  actual: 'NOT_IMPLEMENTED'
+  operator: 'strictEqual'
+  stack: |-
+    assertResult (file:///Users/louiscalata/nisi-next-private/tests/journal-maintenance-v1.test.mjs:15:47)
+    TestContext.<anonymous> (file:///Users/louiscalata/nisi-next-private/tests/journal-maintenance-v1.test.mjs:293:3)
+    Test.runInAsyncScope (node:async_hooks:227:14)
+    Test.run (node:internal/test_runner/test:1325:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:911:18)
+    Test.postRun (node:internal/test_runner/test:1465:19)
+    Test.run (node:internal/test_runner/test:1390:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:911:7)
+  ...
+# Subtest: busy guard is released after failed maintenance
+not ok 31 - busy guard is released after failed maintenance
+  ---
+  duration_ms: 0.084958
+  type: 'test'
+  location: '/Users/louiscalata/nisi-next-private/tests/journal-maintenance-v1.test.mjs:296:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly equal:
+    + actual - expected
+    
+    + 'REFUSED'
+    - 'STORE_FAILED'
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: 'STORE_FAILED'
+  actual: 'REFUSED'
+  operator: 'strictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///Users/louiscalata/nisi-next-private/tests/journal-maintenance-v1.test.mjs:299:10)
+    Test.runInAsyncScope (node:async_hooks:227:14)
+    Test.run (node:internal/test_runner/test:1325:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:911:18)
+    Test.postRun (node:internal/test_runner/test:1465:19)
+    Test.run (node:internal/test_runner/test:1390:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:911:7)
+  ...
+# Subtest: maintenance snapshots are immutable and older returned payload snapshots are not erased retroactively
+not ok 32 - maintenance snapshots are immutable and older returned payload snapshots are not erased retroactively
+  ---
+  duration_ms: 0.233917
+  type: 'test'
+  location: '/Users/louiscalata/nisi-next-private/tests/journal-maintenance-v1.test.mjs:303:1'
+  failureType: 'testCodeFailure'
+  error: "Cannot read properties of null (reading 'entries')"
+  code: 'ERR_TEST_FAILURE'
+  name: 'TypeError'
+  stack: |-
+    TestContext.<anonymous> (file:///Users/louiscalata/nisi-next-private/tests/journal-maintenance-v1.test.mjs:306:32)
+    Test.runInAsyncScope (node:async_hooks:227:14)
+    Test.run (node:internal/test_runner/test:1325:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:911:18)
+    Test.postRun (node:internal/test_runner/test:1465:19)
+    Test.run (node:internal/test_runner/test:1390:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:911:7)
+  ...
+1..32
+# tests 32
+# suites 0
+# pass 2
+# fail 30
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 61.703334

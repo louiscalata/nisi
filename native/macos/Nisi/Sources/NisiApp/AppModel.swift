@@ -1,0 +1,1 @@
+../../../../../integrations/veritas/native/macos/CodenameVeritasFramework/Sources/CodenameVeritasApp/AppModel.swift

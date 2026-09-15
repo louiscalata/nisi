@@ -1,0 +1,151 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://veritas.invalid/private/schemas/stage5/assurance-genesis-event-reducer.v1.json",
+  "title": "Veritas inert M4.7 Phase B genesis-event reducer result",
+  "description": "Structural fixture shape only. Runtime validation additionally re-derives the genesis digest, a bounded three-to-sixteen-event ordinal-contiguous event chain, the terminal state, and the receipt, recomputes every digest under its own domain, evaluates the receipt disposition from the terminal barrier revision and bound terminal-state digest alone, and enforces from source bytes that the isolated pure-reducer region never references the caller-supplied terminal-state hint under any name. This schema proves no real external event observation or authentication, no durable or protected terminal state, no active product receipt or actual consumption, no replay, recall, promotion, or installation authority, and no M4, M4.7, E15, or official E16 credit.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schemaVersion",
+    "recordType",
+    "status",
+    "profile",
+    "genesisDigest",
+    "eventChainDigest",
+    "terminalStateDigest",
+    "terminalBarrierRevision",
+    "terminalBarrierStatus",
+    "receiptDigest",
+    "receiptDisposition",
+    "callerHintSupplied",
+    "callerHintIgnored",
+    "trace",
+    "authorizing",
+    "mayConsume",
+    "mayRecall",
+    "mayReplay",
+    "mayExecute",
+    "mayPromote",
+    "mayInstall",
+    "filesystemMutated",
+    "networkRequested",
+    "subprocessStarted",
+    "dynamicLoadAttempted",
+    "coordinatorMutated",
+    "officialE15Credit",
+    "officialE16Credit",
+    "m4Credit",
+    "resultDigest"
+  ],
+  "properties": {
+    "schemaVersion": {
+      "const": 1
+    },
+    "recordType": {
+      "const": "M47B_REDUCER_RESULT_FIXTURE"
+    },
+    "status": {
+      "const": "DERIVED_M47B_INERT_GENESIS_EVENT_REDUCER_ONLY"
+    },
+    "profile": {
+      "const": "veritas-m47b-inert-genesis-event-reducer-v1"
+    },
+    "genesisDigest": {
+      "$ref": "#/$defs/sha256"
+    },
+    "eventChainDigest": {
+      "$ref": "#/$defs/sha256"
+    },
+    "terminalStateDigest": {
+      "$ref": "#/$defs/sha256"
+    },
+    "terminalBarrierRevision": {
+      "type": "integer",
+      "minimum": 3,
+      "maximum": 16
+    },
+    "terminalBarrierStatus": {
+      "const": "ACTIVE_NOT_LOWERED"
+    },
+    "receiptDigest": {
+      "$ref": "#/$defs/sha256"
+    },
+    "receiptDisposition": {
+      "enum": [
+        "REFUSED_RECALL_REQUIRED",
+        "MEASURED_CURRENT_NONAUTHORIZING"
+      ]
+    },
+    "callerHintSupplied": {
+      "type": "boolean"
+    },
+    "callerHintIgnored": {
+      "const": true
+    },
+    "trace": {
+      "const": [
+        "VALIDATE_GENESIS",
+        "VALIDATE_EVENT_CHAIN",
+        "VALIDATE_RECEIPT",
+        "DERIVE_TERMINAL_STATE",
+        "COMPARE_CALLER_HINT_POST_HOC",
+        "EVALUATE_RECEIPT_DISPOSITION",
+        "RETURN_INERT"
+      ]
+    },
+    "authorizing": {
+      "const": false
+    },
+    "mayConsume": {
+      "const": false
+    },
+    "mayRecall": {
+      "const": false
+    },
+    "mayReplay": {
+      "const": false
+    },
+    "mayExecute": {
+      "const": false
+    },
+    "mayPromote": {
+      "const": false
+    },
+    "mayInstall": {
+      "const": false
+    },
+    "filesystemMutated": {
+      "const": false
+    },
+    "networkRequested": {
+      "const": false
+    },
+    "subprocessStarted": {
+      "const": false
+    },
+    "dynamicLoadAttempted": {
+      "const": false
+    },
+    "coordinatorMutated": {
+      "const": false
+    },
+    "officialE15Credit": {
+      "const": false
+    },
+    "officialE16Credit": {
+      "const": false
+    },
+    "m4Credit": {
+      "const": false
+    },
+    "resultDigest": {
+      "$ref": "#/$defs/sha256"
+    }
+  },
+  "$defs": {
+    "sha256": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{64}$"
+    }
+  }
+}

@@ -1,0 +1,44 @@
+{
+  "schema_version": 1,
+  "scope": "comparison-table-owner-local-verification",
+  "outer_response": {
+    "status": "MALFORMED_TWO_FRAGMENTS",
+    "pairs_strictly_decoded": 2,
+    "pairs_byte_identical": true,
+    "salvage": "OWNER_EXTRACTION_THEN_REFACTOR"
+  },
+  "source": {
+    "path": "src/index.mjs",
+    "sha256": "93de56c99a7b686695f57975c5777f7f8dbf80cb84a0c4a40e206af6befde1e4"
+  },
+  "protected_hashes": {
+    "package.json": "57bfbe9a74c982187799bac0a86763d52d6b5bd5a8f9cd80f1e7f1c5551d96c6",
+    "tests/baseline.test.mjs": "cf1fc4e12360366110423ab3bdc5852e3630e1637cb56ebadd2fc1cc24ae4fca",
+    "tests/acceptance.test.mjs": "7a4c02c4c17be813147175a9fda3e43c56ba3af1f3e99fdf0238cb75455e5077"
+  },
+  "checks": [
+    {
+      "command": "npm test",
+      "exit": 0,
+      "tests": 2,
+      "pass": 2,
+      "fail": 0
+    },
+    {
+      "command": "npm run test:acceptance",
+      "exit": 0,
+      "tests": 10,
+      "pass": 10,
+      "fail": 0
+    }
+  ],
+  "corrections": [
+    "broad formatting/helper refactor; no scoped behavior difference identified"
+  ],
+  "provenanceCorrection": {
+    "classification": "QWEN_INFORMED_OWNER_REFACTOR",
+    "detail": "The two recovered worker path/content pairs really are identical to each other, but the installed source is an owner formatting/helper rewrite of that source plus terminal LF. Pair-to-pair equality is not equality with the installed file. No behavior difference was identified in the scoped static comparison.",
+    "supersedes": "Original exact-extraction/no-rewrite statements",
+    "sourceChangedByThisCorrection": false
+  }
+}

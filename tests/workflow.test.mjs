@@ -197,6 +197,34 @@ test('clock regression and deadline overflow fail closed', async () => {
   assert.equal(overflow.outcome, 'BLOCKED'); assert.equal(overflow.code, 'CLOCK_INVALID');
 });
 
+test('a storage acknowledgement copied after the deadline is rejected even when storage is optional', async () => {
+  for (const required of [false, true]) {
+    let now = 0;
+    let storeSignal;
+    const task = makeTask();
+    task.policy.totalDeadlineMs = 50;
+    task.policy.requireReportStore = required;
+    const reportStore = { store({ report, reportSha256, binding, signal }) {
+      storeSignal = signal;
+      const receipt = { status: 'PASS', evidence: { ...binding, outcome: report.outcome, reportSha256 } };
+      return new Proxy(receipt, {
+        ownKeys(target) {
+          // Advance time during the snapshot without depending on timer scheduling.
+          now = 50;
+          return Reflect.ownKeys(target);
+        },
+      });
+    } };
+    const report = await runWorkflow(task, { adapters: adapters(), reportStore, clock: () => now });
+    assert.equal(report.workflowOutcome, 'COMPLETED');
+    assert.equal(report.outcome, 'TIMED_OUT');
+    assert.equal(report.reportStored, false);
+    assert.equal(report.reportStoreCode, 'DEADLINE_EXCEEDED');
+    assert.equal(report.reportStoreEvidence, null);
+    assert.equal(storeSignal.aborted, true);
+  }
+});
+
 test('report stores receive exact frozen report and binding hashes; required failure blocks', async () => {
   let received;
   const store = { async store({ report, reportSha256, binding }) {

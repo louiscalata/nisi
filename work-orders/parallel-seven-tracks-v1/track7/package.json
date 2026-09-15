@@ -1,0 +1,11 @@
+{
+  "name": "nisi-track7-release-readiness",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "license": "UNLICENSED",
+  "scripts": {
+    "test": "node --test check-release-readiness.test.mjs",
+    "test:hardening": "node --test check-release-readiness.hardening.test.mjs"
+  }
+}

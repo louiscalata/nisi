@@ -1,0 +1,75 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://veritas.invalid/private/schemas/stage5/e16-reference-scenario.v1.json",
+  "title": "Veritas Stage 5 pure E16 reference-model scenario",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "caseId",
+    "family",
+    "mutationKind",
+    "injectionPoint",
+    "modelAssumption"
+  ],
+  "properties": {
+    "caseId": {
+      "type": "string",
+      "pattern": "^E16-S5-(?:AUTH|DIGEST|PROMO|ROLLBACK)-[0-9]{3}$"
+    },
+    "family": {
+      "enum": [
+        "AUTHORITY_MUTATION",
+        "DIGEST_SUBSTITUTION",
+        "PROMOTION_CRASH_OR_RACE",
+        "PRIOR_TARGET_RECOVERY"
+      ]
+    },
+    "mutationKind": {
+      "enum": [
+        "POLICY_DIGEST_SUBSTITUTION",
+        "VERIFIER_SET_DIGEST_SUBSTITUTION",
+        "ADAPTER_SET_DIGEST_SUBSTITUTION",
+        "HOOK_SET_DIGEST_SUBSTITUTION",
+        "TRUSTED_COMMAND_SET_DIGEST_SUBSTITUTION",
+        "BASE_REVISION_SUBSTITUTION",
+        "WRITER_SELF_APPROVAL",
+        "DEPENDENCY_EPOCH_ADVANCE",
+        "FINAL_CANDIDATE_SUBSTITUTION",
+        "DECISION_SUBJECT_SUBSTITUTION",
+        "MODEL_RESPONSE_AS_ACCEPTED_ARTIFACT",
+        "DESTINATION_BYTES_SUBSTITUTION",
+        "TRANSACTION_OWNED_UNVERIFIED_REFERENCE",
+        "DESTINATION_RECEIPT_REUSE",
+        "SYMBOLIC_INTERRUPT_BEFORE_OBJECT_WRITE",
+        "SYMBOLIC_INTERRUPT_AFTER_OBJECT_WRITE",
+        "SYMBOLIC_INTERRUPT_AFTER_REFERENCE_SWAP",
+        "LOST_SUCCESS_RESPONSE_RECOVERY_REPLAY",
+        "SYMBOLIC_UNORDERED_WRITER_RACE",
+        "DEPENDENCY_EVENT_AFTER_REFERENCE_ACCEPTANCE",
+        "PREPARED_OBJECT_CORRUPTION",
+        "ROLLBACK_CURRENT_TARGET_CORRUPTION",
+        "ROLLBACK_PRIOR_TARGET_UNAVAILABLE",
+        "ROLLBACK_STALE_READBACK"
+      ]
+    },
+    "injectionPoint": {
+      "enum": [
+        "AFTER_AUTHORITY_FREEZE",
+        "AFTER_DECISION_VERIFICATION",
+        "BEFORE_OBJECT_WRITE",
+        "AFTER_OBJECT_WRITE",
+        "BEFORE_REFERENCE_SWAP",
+        "AFTER_REFERENCE_SWAP",
+        "AFTER_REFERENCE_ACCEPTANCE_BEFORE_READBACK",
+        "BEFORE_READBACK",
+        "DURING_ROLLBACK",
+        "AFTER_ACCEPTANCE"
+      ]
+    },
+    "modelAssumption": {
+      "type": "string",
+      "minLength": 24,
+      "maxLength": 320
+    }
+  }
+}

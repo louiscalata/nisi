@@ -1,0 +1,205 @@
+TAP version 13
+# Subtest: all three faithful fixed cases produce exact non-authorizing SUCCEEDED entries
+ok 1 - all three faithful fixed cases produce exact non-authorizing SUCCEEDED entries
+  ---
+  duration_ms: 3.564167
+  type: 'test'
+  ...
+# Subtest: payload has the exact meaning, bindings, digest, and permanently false claims
+ok 2 - payload has the exact meaning, bindings, digest, and permanently false claims
+  ---
+  duration_ms: 0.555292
+  type: 'test'
+  ...
+# Subtest: runner, persistence, container and absent-client reasons are retained in fixed order
+ok 3 - runner, persistence, container and absent-client reasons are retained in fixed order
+  ---
+  duration_ms: 0.412792
+  type: 'test'
+  ...
+# Subtest: process and lifecycle faults cover their independent ordered reason classes
+ok 4 - process and lifecycle faults cover their independent ordered reason classes
+  ---
+  duration_ms: 0.350167
+  type: 'test'
+  ...
+# Subtest: nonnull child cause is SIGNAL_OR_ERROR and a missing observed PID is lifecycle-inconsistent
+ok 5 - nonnull child cause is SIGNAL_OR_ERROR and a missing observed PID is lifecycle-inconsistent
+  ---
+  duration_ms: 0.4755
+  type: 'test'
+  ...
+# Subtest: truncated, count, digest, and stderr faults remain distinct and prevent success
+not ok 6 - truncated, count, digest, and stderr faults remain distinct and prevent success
+  ---
+  duration_ms: 0.839917
+  type: 'test'
+  location: '/Users/louiscalata/nisi-next-private/work-orders/fixed-xpc-journal-observation/evidence/mutants/ignore-stream-digest/observation.test.mjs:113:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly deep-equal:
+    + actual - expected
+    
+    + []
+    - [
+    -   'STREAM_DIGEST_MISMATCH'
+    - ]
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected:
+    0: 'STREAM_DIGEST_MISMATCH'
+  actual:
+  operator: 'deepStrictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///Users/louiscalata/nisi-next-private/work-orders/fixed-xpc-journal-observation/evidence/mutants/ignore-stream-digest/observation.test.mjs:121:10)
+    Test.runInAsyncScope (node:async_hooks:227:14)
+    Test.run (node:internal/test_runner/test:1325:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:911:18)
+    Test.postRun (node:internal/test_runner/test:1465:19)
+    Test.run (node:internal/test_runner/test:1390:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:911:7)
+  ...
+# Subtest: unclean or contradictory streams are never parsed to restore success
+ok 7 - unclean or contradictory streams are never parsed to restore success
+  ---
+  duration_ms: 0.535459
+  type: 'test'
+  ...
+# Subtest: missing or unequal recorded validation cannot be silently replaced
+ok 8 - missing or unequal recorded validation cannot be silently replaced
+  ---
+  duration_ms: 0.232916
+  type: 'test'
+  ...
+# Subtest: case-matrix and valid-outcome assertion failures are distinguished
+ok 9 - case-matrix and valid-outcome assertion failures are distinguished
+  ---
+  duration_ms: 0.370292
+  type: 'test'
+  ...
+# Subtest: postconditions require exact ordered seventeen-byte LF evidence
+ok 10 - postconditions require exact ordered seventeen-byte LF evidence
+  ---
+  duration_ms: 1.304333
+  type: 'test'
+  ...
+# Subtest: all twenty-four reason classes are present once and in the contractual order
+ok 11 - all twenty-four reason classes are present once and in the contractual order
+  ---
+  duration_ms: 2.595083
+  type: 'test'
+  ...
+# Subtest: no-reply accepts exactly 5000 through 7999 milliseconds
+ok 12 - no-reply accepts exactly 5000 through 7999 milliseconds
+  ---
+  duration_ms: 0.389584
+  type: 'test'
+  ...
+# Subtest: closed root, request, fixture, container, child, result and nested shapes reject alterations
+ok 13 - closed root, request, fixture, container, child, result and nested shapes reject alterations
+  ---
+  duration_ms: 1.32875
+  type: 'test'
+  ...
+# Subtest: all supplied authority and acceptance flags must remain false
+ok 14 - all supplied authority and acceptance flags must remain false
+  ---
+  duration_ms: 0.816667
+  type: 'test'
+  ...
+# Subtest: opaque optional sections are bounded and never leak into the payload
+ok 15 - opaque optional sections are bounded and never leak into the payload
+  ---
+  duration_ms: 0.367667
+  type: 'test'
+  ...
+# Subtest: serialized data resource limits and malformed Unicode fail closed
+ok 16 - serialized data resource limits and malformed Unicode fail closed
+  ---
+  duration_ms: 1.535666
+  type: 'test'
+  ...
+# Subtest: outer accessors are rejected without invocation and input is not mutated
+ok 17 - outer accessors are rejected without invocation and input is not mutated
+  ---
+  duration_ms: 0.364
+  type: 'test'
+  ...
+# Subtest: record digest binds exact whitespace while stable bytes and arguments are deterministic
+ok 18 - record digest binds exact whitespace while stable bytes and arguments are deterministic
+  ---
+  duration_ms: 0.316166
+  type: 'test'
+  ...
+# Subtest: payload, operations, source bindings, process and reasons are deeply frozen copies
+ok 19 - payload, operations, source bindings, process and reasons are deeply frozen copies
+  ---
+  duration_ms: 0.276916
+  type: 'test'
+  ...
+# Subtest: frozen journal accepts, deduplicates, conflicts, refuses wrong project and reopens exactly
+ok 20 - frozen journal accepts, deduplicates, conflicts, refuses wrong project and reopens exactly
+  ---
+  duration_ms: 1.644583
+  type: 'test'
+  ...
+# Subtest: an adverse observation cannot retain journal SUCCEEDED
+not ok 21 - an adverse observation cannot retain journal SUCCEEDED
+  ---
+  duration_ms: 5.495625
+  type: 'test'
+  location: '/Users/louiscalata/nisi-next-private/work-orders/fixed-xpc-journal-observation/evidence/mutants/ignore-stream-digest/owner-boundaries.test.mjs:6:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly equal:
+    + actual - expected
+    
+    + 'SUCCEEDED'
+    - 'FAILED'
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: 'FAILED'
+  actual: 'SUCCEEDED'
+  operator: 'strictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///Users/louiscalata/nisi-next-private/work-orders/fixed-xpc-journal-observation/evidence/mutants/ignore-stream-digest/owner-boundaries.test.mjs:14:133)
+    Test.runInAsyncScope (node:async_hooks:227:14)
+    Test.run (node:internal/test_runner/test:1325:25)
+    Test.start (node:internal/test_runner/test:1191:17)
+    startSubtestAfterBootstrap (node:internal/test_runner/harness:385:17)
+  ...
+# Subtest: timestamp order, bound case/PID and safe argument overflow are refused
+ok 22 - timestamp order, bound case/PID and safe argument overflow are refused
+  ---
+  duration_ms: 0.910292
+  type: 'test'
+  ...
+# Subtest: no-reply fixture never substitutes an owner deadline or kill for a client timeout
+ok 23 - no-reply fixture never substitutes an owner deadline or kill for a client timeout
+  ---
+  duration_ms: 0.325292
+  type: 'test'
+  ...
+# Subtest: ordinary JSON depth and node budget are independent of encoded byte budget
+ok 24 - ordinary JSON depth and node budget are independent of encoded byte budget
+  ---
+  duration_ms: 1.370042
+  type: 'test'
+  ...
+# Subtest: root getters and hidden extra authority never execute or disappear
+ok 25 - root getters and hidden extra authority never execute or disappear
+  ---
+  duration_ms: 0.317333
+  type: 'test'
+  ...
+1..25
+# tests 25
+# suites 0
+# pass 23
+# fail 2
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 61.963042

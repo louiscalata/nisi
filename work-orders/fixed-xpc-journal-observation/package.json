@@ -1,0 +1,10 @@
+{
+  "name": "nisi-private-fixed-xpc-journal-observation",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "test": "node --test --test-timeout=10000 tests/baseline.test.mjs",
+    "test:observation": "node --test --test-timeout=10000 tests/observation.test.mjs"
+  }
+}

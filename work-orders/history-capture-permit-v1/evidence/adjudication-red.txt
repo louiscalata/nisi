@@ -1,0 +1,69 @@
+TAP version 13
+# Subtest: revocation during the second clock check wins before record admission
+ok 1 - revocation during the second clock check wins before record admission
+  ---
+  duration_ms: 2.709833
+  type: 'test'
+  ...
+# Subtest: expiry arising only at the second clock check is precise once and permanently revokes
+ok 2 - expiry arising only at the second clock check is precise once and permanently revokes
+  ---
+  duration_ms: 0.365792
+  type: 'test'
+  ...
+# Subtest: reentrant capture from filesystem after admission sees CONSUMED rather than BUSY
+ok 3 - reentrant capture from filesystem after admission sees CONSUMED rather than BUSY
+  ---
+  duration_ms: 1.332083
+  type: 'test'
+  ...
+# Subtest: a second permit with changed declaration identity conflicts through bound provenance
+ok 4 - a second permit with changed declaration identity conflicts through bound provenance
+  ---
+  duration_ms: 1.309792
+  type: 'test'
+  ...
+# Subtest: source-only poison remains digest-bound input and is absent from result and stored bytes
+ok 5 - source-only poison remains digest-bound input and is absent from result and stored bytes
+  ---
+  duration_ms: 1.047
+  type: 'test'
+  ...
+# Subtest: clock callback revocation takes precedence even when that callback also throws
+not ok 6 - clock callback revocation takes precedence even when that callback also throws
+  ---
+  duration_ms: 0.479708
+  type: 'test'
+  location: '/Users/louiscalata/nisi-next-private/tests/history-capture-permit-adjudication.test.mjs:105:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly equal:
+    + actual - expected
+    
+    + 'INVALID_CLOCK'
+    - 'PERMIT_REVOKED'
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: 'PERMIT_REVOKED'
+  actual: 'INVALID_CLOCK'
+  operator: 'strictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///Users/louiscalata/nisi-next-private/tests/history-capture-permit-adjudication.test.mjs:119:10)
+    Test.runInAsyncScope (node:async_hooks:227:14)
+    Test.run (node:internal/test_runner/test:1325:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:911:18)
+    Test.postRun (node:internal/test_runner/test:1465:19)
+    Test.run (node:internal/test_runner/test:1390:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:911:7)
+  ...
+1..6
+# tests 6
+# suites 0
+# pass 5
+# fail 1
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 46.045167
+

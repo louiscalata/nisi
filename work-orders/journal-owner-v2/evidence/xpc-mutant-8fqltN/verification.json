@@ -1,0 +1,22 @@
+{
+  "schemaVersion": 1,
+  "variant": "promote-failed-observation",
+  "exitCode": 1,
+  "signal": null,
+  "error": null,
+  "tests": 4,
+  "pass": 3,
+  "fail": 1,
+  "skipped": 0,
+  "cancelled": 0,
+  "todo": 0,
+  "sourceSha256": "d1f973d81316d463efba065723db110f7d54e2287593bdc7622f40d68957d86c",
+  "protected": {
+    "src/index.mjs": "54777f65338a36ca6c208fc880c8ca4013ffce675c7aede2afdc2d8fa85f4e49",
+    "src/run-journal-v1.mjs": "dee9f490c091000b2560cd9464d945885e7f341091b87dde9ae4f2b7cdbd359e",
+    "src/run-journal-store-v1.mjs": "1356028b65f9f8b96e3b9ec8ba3bfbb4968092af53d00e8b5dfdb11b161f4792",
+    "tests/windows-xpc-integration.test.mjs": "80347a4794d664a6d806d5e0494bb0f2f551644d546c7e5353e7933d147903ef",
+    "tests/memfs.mjs": "e202da18a120645ccdf6c51da48843f64ca90b6af48e87d3fdcb5cda0f9319c0"
+  },
+  "directory": "/Users/louiscalata/nisi-next-private/work-orders/journal-owner-v2/evidence/xpc-mutant-8fqltN"
+}

@@ -1,0 +1,266 @@
+{
+  "schemaVersion": "nisi-combined-repository-host-checkpoint-v1",
+  "observedAt": "2026-09-13T01:07:10.307Z",
+  "status": "PASS_SCOPED",
+  "scope": "FIXED_SOURCE_REVIEWED_STATIC_LOCAL_SWIFT_NODE_HOST",
+  "roadmapProgress": {
+    "percent": 30,
+    "closedMajorMilestones": 3,
+    "totalMajorMilestones": 10,
+    "basis": "equal-weight NX milestone closure, not effort or release readiness"
+  },
+  "tests": {
+    "focused": {
+      "tests": 33,
+      "passed": 33,
+      "failed": 0,
+      "skipped": 0,
+      "cancelled": 0,
+      "durationMs": 816,
+      "path": "/Users/louiscalata/nisi-next-private/.build/combined-host-eVIeM7/check-Rl3cIf/focused.json",
+      "sha256": "2d9192e40232e85904c1bf95c407cab3913cb5486261ef3804a9c521b3007837"
+    },
+    "portable": {
+      "tests": 479,
+      "passed": 479,
+      "failed": 0,
+      "skipped": 0,
+      "cancelled": 0,
+      "durationMs": 7296,
+      "path": "/Users/louiscalata/nisi-next-private/.build/combined-host-eVIeM7/check-Rl3cIf/portable.json",
+      "sha256": "f9d9fcbb6936483f56c3e125faa734292d7e700885bbae815d160aa6e884cf57"
+    },
+    "native": {
+      "tests": 25,
+      "passed": 25,
+      "failed": 0,
+      "skipped": 0,
+      "cancelled": 0,
+      "durationMs": 12723,
+      "path": "/Users/louiscalata/nisi-next-private/.build/combined-host-eVIeM7/check-Y5xJj6/native.json",
+      "sha256": "3ed99d2e5fa5fe952c024daecc5ef6e3b432cc996a8b2f33a8f280e200b4bd2b"
+    }
+  },
+  "targetedMutations": {
+    "detected": 12,
+    "total": 12,
+    "path": "/Users/louiscalata/nisi-next-private/.build/combined-host-eVIeM7/mutation-results-y7BXM7/manifest.json",
+    "sha256": "c02caa389cd3151ccb17c828bccf5375ba43bfb3e44d748eda3da0b2aff250f5",
+    "exhaustive": false
+  },
+  "importedFreeze": {
+    "files": 225,
+    "exitCode": 0,
+    "path": "/Users/louiscalata/nisi-next-private/.build/combined-host-eVIeM7/check-Rl3cIf/freeze.json",
+    "sha256": "3435b2299037cc0e307b9e60c41d155f5a4cb58c17af69a051044fcf48468216"
+  },
+  "sourceManifest": {
+    "hosts/swift-verifier/check-plan-v1.mjs": "a30ff5596e2bebc376cfa0da84be1c00eca8443cc2b37f5b1b7da42ef44b658a",
+    "receipts/swift-static-group-v1.mjs": "e07e9a361ef808f8d652f1542fec54085d4f341fd093a582f2e86baf77e4cdbb",
+    "receipts/swift-static-run-v1.mjs": "454e8657a2a2aaf6a016de5d09c5d65512d53ffb9db2a6843e05471450f8c8ef",
+    "hosts/swift-verifier/group-adapter-v1.mjs": "471ae91cfc78a82abcb425ed75cd16aec2a76d8123cdc9b3e4063c536382e774",
+    "hosts/swift-verifier/group-contract-utils.mjs": "8fc51ac107abd68adb1c72683ccfa2af9c74ac077c5506bf89525f972b14ac82",
+    "hosts/swift-verifier/executor.mjs": "3b233203d7e9d2c2e1f5aa3c458685e86f15d40fc07b2542e7b6bb48a2555db4",
+    "hosts/swift-verifier/protocol.mjs": "7557d81836f263c13e06ac7613ebfa61ce7fbeeb7b0f7db98889473806f322cc",
+    "hosts/swift-verifier/build.mjs": "ae063b627e853fc0b651e3db103dd1af01c6815374d36781e79270b7d48934fb",
+    "hosts/swift-verifier/owned-child.mjs": "ff9bbef97b3401afd394a98c8bff4fe273a4b6af3a1f852bdf5bf872fd4474df",
+    "hosts/swift-verifier/reservation.mjs": "6d7573d23a3d2b0ecdb4b396cb58f4f9ae8e5997190616c08c1b93bd0ab376fd",
+    "hosts/swift-verifier/main.swift": "0d4e15b22b3231d990cfd5e7de1c52f4fdfebf4f4ab6da15b0ae22c74cea910c",
+    "hosts/repository/snapshot-contract.mjs": "2b52c23bac3a817769b7892eed71baba79cb81954b6a63724d107a9c258ba13f",
+    "hosts/repository/disk-capture.mjs": "972c8cd690a3f34253c9f4722c336b6e847dffe1b0c924aa8492384c800ae547",
+    "receipts/host-run-bundle-v2.mjs": "406936e6523f58323634fab1c9f560d671d58e1c343d2082f081f8a7810061fe",
+    "receipts/repository-execution-v1.mjs": "7317e06c094bdf33e51645ce39348fc9e2d5a11ad0921af87434e34c45828cc2",
+    "workflow/engine.mjs": "c67c63baeadc725a8487af7108b01d3a38dd50e64ff35f1be66471c81e5f979b",
+    "workflow/contracts.mjs": "c28a3ee3db6e9a936cd58fca8b8ee3f2744ca25c259e2ea278b3b09cdbb73d82",
+    "hosts/swift-verifier/adapter.mjs": "c92c21fcbf7fe91d949f60bc51a96d4cb5f185be9172d0a214c4e87d2b649388",
+    "integrity/record-utils.mjs": "e46eb1a01170231bd6873771cd256740fd3dde6bcb01d418f6f7d7a75e6139ff",
+    "tests/swift-static-group.test.mjs": "9bf196d7f2ddad0d4968515e5413cfeb01f334f6d9ad90ec007234539b24015d",
+    "tests/swift-static-run.test.mjs": "d9f747a328e44966c5e88128c3b9edf2d07a1c6dc4e818a91d44164aac78a791",
+    "tests/swift-group-owner.test.mjs": "8c7c83e52873c0d6b9a76cda4746dd1ded3c09583ac1d5c34d681023e2a159d3",
+    "tests/host-run-bundle-v2.test.mjs": "ba3f06af454abd31b2b7426aedc7b04b63e7efea19696df7c24a6ff187d112cb",
+    "tests/repository-execution-receipt.test.mjs": "1075990a6f96276df2057f525df9914bb56a5c1da43d7d544956c86567ad983d",
+    "tests/native/swift-kernel.test.mjs": "e6726c94a1b7359c2e3042a0e8ddb71973255088da82373f7988cd3bb6873699",
+    "tests/native/swift-executor.test.mjs": "97f93d9bb32ebcc262c5d2f915eb549f3cc187feec9b2636b7ac617047176cc1",
+    "tests/native/swift-group.test.mjs": "980ad1fbb2dae8eb5394b300a547f41ed34d4ab6b20db4f4335c467f5ac6a5d9",
+    "integrations/veritas/native/macos/CodenameVeritasFramework/Sources/VeritasCore/ArtifactSnapshot.swift": "013e796d11a844dda345f223894a8d76713b19b0f46f6a7f84019aa5b7bc0f22",
+    "integrations/veritas/native/macos/CodenameVeritasFramework/Sources/VeritasCore/StrictJSONDocumentValidator.swift": "bd6173e012890f2fde2e26be94c5e577cd9e098841bdad98a377b1c88dff1b2c",
+    "integrations/veritas/native/macos/CodenameVeritasFramework/Sources/VeritasCore/DeterministicChecks.swift": "4d234fd389895cf0a55bf7daf0f5d082077ab3677880165f7d0e1236a88be474",
+    "tests/helpers/swift-group-fixture.mjs": "2f8e5b98fbf2fb1757fe25bc2d78b427e30cccbdaccb64d618922f925e077d60",
+    "package.json": "6b5c0271f5ad95d62af409c9782a2abb0b18a9844356c01a2fcf469063f7897f",
+    "package-lock.json": "396284ceeb20491293a83094a9558cb32368bb9ccc71b75e0d10da52e86b0912",
+    "hosts/repository/task-workspace-v1.mjs": "08fdb59d15d21e94914d00390e8f73ee6245b0eabec64e7c052585f23638f963",
+    "tests/task-workspace.test.mjs": "d9df1ee4dc36b5a239a5a70847c6d4c53abe2164cf484712666635f1be9a2ef1",
+    "tests/repository-fixture.test.mjs": "4febfb12c46f3bbcd5f26612475aef6103c6cba876b82ab26cdcb7b9ffe39b20",
+    "examples/repository-task/fixtures/baseline/retry-settings.mjs": "c4932fa2ce0c73c52d385d25aeab64bed602179abced3b38fd525a31fe47bb10",
+    "examples/repository-task/fixtures/baseline/config.json": "fc2001f12401983fa2632ee17e9879b6a1595f0de616e6e1484083c0c3324f04",
+    "examples/repository-task/fixtures/baseline/README.md": "b6ce54912db6b4605d19e4e0fdce5cc1e680de4a57bb1af82ca7b737ff578011",
+    "examples/repository-task/fixtures/repair/retry-settings.mjs": "7de9f6b2cd29489563930f9131a0e0b077070bb50b52df8b5bd27aaf24b55ffd",
+    "examples/repository-task/fixtures/harness/check-retry-settings.mjs": "e07a9bd6a63a52ac6977734c61ea0a210c71ec2c331951f4d94b44159c8245c5",
+    "hosts/repository/node-suite-v1.mjs": "5ed5cd9ca407b281379d6b67d93df60ab3b3a45676b6a4e82c7bfc474d29e2c2",
+    "hosts/repository/node-executor-v1.mjs": "cd999c0efe061c0706842cc06867f62dc59927553615db9e2f2af24523872258",
+    "hosts/repository/node-adapter-v1.mjs": "6de05634f7cccd774c8072a000b556f49f111ccedfe1e37d19be37dbd036fa5d",
+    "tests/node-suite.test.mjs": "ca26dc4558ef17d2a9df982dfe1634053451580fcbf0228d06369121ff53143e",
+    "tests/node-executor.test.mjs": "87bd39e1b48872de468477c8c8f6fa8f96884c632df58973b0ac1b89bb195e6d",
+    "tests/helpers/node-repository-fixture.mjs": "db034a91d1ad0bfcb2b22df9b598d3e276d260c493002319e9d191e10ce2cd85",
+    "receipts/repository-run-v1.mjs": "50c1e86cec48fc666aae64b3285f9acda8e20968d5f10f0d9313e0e22051d697",
+    "hosts/repository/reviewed-workflow-v1.mjs": "6ecc49425ae28ec1923445c8fbe79df4478b6361a5e2799b82ded24acf74dc33",
+    "hosts/repository/proposed-changes-v1.mjs": "045fe0d77b3b6d4d95c406964b603b09b2aeabe131cde267b41806114379f55d",
+    "tests/helpers/repository-run-fixture.mjs": "2877df81895185e35c5e5dd419dbb161bde5f23529f6459ed5e0128b2780b121",
+    "tests/repository-run.test.mjs": "e1c1f1a9407cfecce5b61359a1822fd542c72626d5969da8e679477c60cf176e",
+    "tests/repository-workflow.test.mjs": "ca455e66b4e97fc8530ef0b2a12d35cd1986d80ab409ef9449a977f047015359",
+    "tests/proposed-changes.test.mjs": "d938037e6f67749f5ef473eaf65a3c5fc054865fed504151c01b0fdfcd33bd39",
+    "tests/native/repository-host.test.mjs": "3e449395b033bf5bfd51c4ce1f2ca847eb27c03b85467a2e24eb40b5ff3f8594"
+  },
+  "sourceFileCount": 55,
+  "priorFilesUnchanged": 46,
+  "compatiblePriorChange": {
+    "file": "hosts/repository/node-adapter-v1.mjs",
+    "reason": "Add a read-only configured registration fingerprint; exact remainder unchanged"
+  },
+  "failuresRetained": [
+    "check-NU1hQ3",
+    "check-pVdMwP",
+    "check-Rs2q6F",
+    "check-iXTyRK"
+  ],
+  "collaboration": [
+    {
+      "name": "fable-plan",
+      "path": "/Users/louiscalata/nisi-next-private/.build/combined-host-eVIeM7/fable-plan.json",
+      "sha256": "88e53ce275818da21e2267bddeb9361bb1af4c14f081aee6adb263cf9d685bc5",
+      "requested": "fable",
+      "status": "succeeded",
+      "reportedModels": [
+        "claude-haiku-4-5-20251001",
+        "claude-fable-5-1"
+      ],
+      "reportedCostUSD": 0.13505125,
+      "wallSeconds": 30.634
+    },
+    {
+      "name": "fable-bundle",
+      "path": "/Users/louiscalata/nisi-next-private/.build/combined-host-eVIeM7/fable-bundle.json",
+      "sha256": "d87a214e8a2df3bfb1a0bbb3977a93a51cd918a46d7f6995d6457f647b1abd29",
+      "requested": "fable",
+      "status": "NOT_RUN",
+      "reportedModels": null,
+      "reportedCostUSD": null,
+      "wallSeconds": null
+    },
+    {
+      "name": "fable-proposal",
+      "path": "/Users/louiscalata/nisi-next-private/.build/combined-host-eVIeM7/fable-proposal.json",
+      "sha256": "d87a214e8a2df3bfb1a0bbb3977a93a51cd918a46d7f6995d6457f647b1abd29",
+      "requested": "fable",
+      "status": "NOT_RUN",
+      "reportedModels": null,
+      "reportedCostUSD": null,
+      "wallSeconds": null
+    },
+    {
+      "name": "fable-proposal-small",
+      "path": "/Users/louiscalata/nisi-next-private/.build/combined-host-eVIeM7/fable-proposal-small.json",
+      "sha256": "2522bfe0b5efa8dfb0132e5520866f055f8c83095644da86f26e53b15c99a0c0",
+      "requested": "fable",
+      "status": "succeeded",
+      "reportedModels": [
+        "claude-haiku-4-5-20251001",
+        "claude-fable-5-1"
+      ],
+      "reportedCostUSD": 0.23374325,
+      "wallSeconds": 41.944
+    },
+    {
+      "name": "fable-test-design-small",
+      "path": "/Users/louiscalata/nisi-next-private/.build/combined-host-eVIeM7/fable-test-design-small.json",
+      "sha256": "e0b82f46fc1bb50cafd89fb60197bac7cd5d069bb26245a9e9d0a94277f44258",
+      "requested": "fable",
+      "status": "succeeded",
+      "reportedModels": [
+        "claude-haiku-4-5-20251001",
+        "claude-fable-5-1"
+      ],
+      "reportedCostUSD": 0.08185825,
+      "wallSeconds": 18.743
+    },
+    {
+      "name": "sonnet-evaluation-review",
+      "path": "/Users/louiscalata/nisi-next-private/.build/combined-host-eVIeM7/sonnet-evaluation-review.json",
+      "sha256": "b8c5a3d42d48d61eaaf0c88602f6a5b7c5746e4e2be34ecdc8bc4edf218c654c",
+      "requested": "sonnet",
+      "status": "succeeded",
+      "reportedModels": [
+        "claude-haiku-4-5-20251001",
+        "claude-sonnet-5"
+      ],
+      "reportedCostUSD": 0.04584799999999999,
+      "wallSeconds": 39.623
+    },
+    {
+      "name": "fable-host-source-review",
+      "path": "/Users/louiscalata/nisi-next-private/.build/combined-host-eVIeM7/fable-host-source-review.json",
+      "sha256": "d87a214e8a2df3bfb1a0bbb3977a93a51cd918a46d7f6995d6457f647b1abd29",
+      "requested": "fable",
+      "status": "NOT_RUN",
+      "reportedModels": null,
+      "reportedCostUSD": null,
+      "wallSeconds": null
+    },
+    {
+      "name": "opus-host-source-review",
+      "path": "/Users/louiscalata/nisi-next-private/.build/combined-host-eVIeM7/opus-host-source-review.json",
+      "sha256": "ba958d62b61c1799ed97ff87300e593a41f093f5af37050ddad0db21b635fadc",
+      "requested": "opus",
+      "status": "succeeded",
+      "reportedModels": [
+        "claude-haiku-4-5-20251001",
+        "claude-opus-5"
+      ],
+      "reportedCostUSD": 0.11906949999999998,
+      "wallSeconds": 44.798
+    },
+    {
+      "name": "fable-proposal-linkage",
+      "path": "/Users/louiscalata/nisi-next-private/.build/combined-host-eVIeM7/fable-proposal-linkage.json",
+      "sha256": "6a2d5b02db27f7205ed026c295a44b3f701e3dd708798e0f02b1291f845e2085",
+      "requested": "fable",
+      "status": "succeeded",
+      "reportedModels": [
+        "claude-haiku-4-5-20251001",
+        "claude-fable-5-1"
+      ],
+      "reportedCostUSD": 0.17287625,
+      "wallSeconds": 30.834
+    }
+  ],
+  "collaborationKnownReportedCostUSD": 0.7884465,
+  "collaborationUsageComplete": false,
+  "openCode": {
+    "local": "BLOCKED_TIMEOUT_NO_SOURCE",
+    "free": "BLOCKED_TIMEOUT_NO_SOURCE",
+    "modelInferenceAndUsage": "UNKNOWN",
+    "receipts": [
+      {
+        "path": "/Users/louiscalata/nisi-next-private/.build/combined-host-eVIeM7/opencode-local-blocked-result.md",
+        "sha256": "4602f9f9c920cfd71e29565a075e7fa31cfc2d94e624fc5af184a8552040f179"
+      },
+      {
+        "path": "/Users/louiscalata/nisi-next-private/.build/combined-host-eVIeM7/opencode-free-blocked-result.md",
+        "sha256": "a8bdc8ac98f3cbf976ff14cb7112a78e0893c8862e3cb23762e87a3edf4b5769"
+      }
+    ]
+  },
+  "flags": {
+    "actualFixedSwiftAndNode": true,
+    "originalIssuedContextRequired": true,
+    "liveModelDemo": false,
+    "nativeApp": false,
+    "durableHistory": false,
+    "sandboxed": false,
+    "descendantsContained": false,
+    "applied": false,
+    "published": false,
+    "fullMerger": false,
+    "releaseApproved": false
+  }
+}

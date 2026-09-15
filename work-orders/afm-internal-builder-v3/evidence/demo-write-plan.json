@@ -1,0 +1,20 @@
+{
+  "writes": [
+    {
+      "path": "work-orders/afm-internal-builder-v3/evidence/write-plan.json",
+      "name": "write-plan.json",
+      "bytes": 2048
+    },
+    {
+      "path": "work-orders/afm-internal-builder-v3/evidence/summary-plan.md",
+      "name": "summary-plan.md",
+      "bytes": 1024
+    }
+  ],
+  "lane": "work-orders/afm-internal-builder-v3/evidence/",
+  "manifestHash": "fffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff0",
+  "packHash": "3b0138988a515999c695f556098de956f4ab5293c8df1958f7d294154e191a37",
+  "sourcePlanHash": "d3887b5510c46ec6971978ce3937f97c7a89f1f74f1cc54bb9188730857ca713",
+  "totalBytes": 3072,
+  "stagingHash": "d9e8e813780563786e844405b7e5b07e336306121b55596e2eb153327f90786d"
+}

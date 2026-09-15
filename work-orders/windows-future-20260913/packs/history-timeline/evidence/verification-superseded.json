@@ -1,0 +1,26 @@
+{
+  "schema_version": 1,
+  "scope": "history-timeline-owner-local-verification",
+  "source": {
+    "path": "src/index.mjs",
+    "sha256": "a3c770f6534c7b2243bca1288fd642627294bf54203f432df702a07173960f79"
+  },
+  "protected_pins": {
+    "package.json": "f4502e3198e93540f3b55d7cc21fc9d3883e6068e74ca9311024b4c5cd5ada48",
+    "tests/baseline.test.mjs": "15ab9087fe868d8f674fd537de83aedee31dd6c175484c23f21786260505c209",
+    "tests/acceptance.test.mjs": "fd4b944e8d85e4c54bddf36c68723b3bcedb3c4d25a455cee8809199ed0f08bb"
+  },
+  "commands": [
+    { "command": "npm test", "exit": 0, "tests": 2, "pass": 2, "fail": 0 },
+    { "command": "npm run test:acceptance", "exit": 0, "tests": 11, "pass": 11, "fail": 0 }
+  ],
+  "pre_correction": {
+    "command": "npm run test:acceptance",
+    "exit": 1,
+    "tests": 11,
+    "pass": 9,
+    "fail": 2,
+    "failures": ["exact root keys", "negative-zero attempt/createdAt"]
+  },
+  "corrections": ["exact root key validation", "safe nonnegative integer helper rejects -0"]
+}

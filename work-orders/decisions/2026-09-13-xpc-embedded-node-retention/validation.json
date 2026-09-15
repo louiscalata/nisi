@@ -1,0 +1,67 @@
+{
+  "schemaVersion": "nisi-retention-validation-v1",
+  "verifiedAt": "2026-09-13T18:19:24Z",
+  "checks": {
+    "cp1OriginalContentPreserved": true,
+    "cp1PointersResolve": true,
+    "cp1OriginalPointersExist": true,
+    "cp1OriginalRuntimeFlagsFalse": true,
+    "cp2OriginalContentPreserved": true,
+    "cp2PointersResolve": true,
+    "cp2OriginalPointersExist": true,
+    "cp2OriginalRuntimeFlagsFalse": true,
+    "roadmapCheckboxLinesUnchanged": true,
+    "productProgressLineUnchanged": true,
+    "productProgressLine": "**Overall roadmap progress: 30% — 3 of 10 major NX milestones closed.**",
+    "briefRemainderUnchanged": true,
+    "acceptanceStatusPresent": true
+  },
+  "preexistingEvidence": {
+    "files": 357,
+    "sha256CheckExitCode": 0,
+    "allMatched": true,
+    "receipt": "work-orders/decisions/2026-09-13-xpc-embedded-node-retention/preexisting-evidence-verification.txt",
+    "modeAndFlagComparisonExitCode": 0,
+    "allModesAndFlagsUnchanged": true
+  },
+  "copies": {
+    "crashReport": {
+      "bytes": 10387,
+      "cmpExitCode": 0,
+      "sourceAndCopySha256": "c0516e6c752d39a7c0cdb5956afef7b18e7e36c8d900911ebedc59a8416305bb"
+    },
+    "inheritExcerpt": {
+      "bytes": 8504,
+      "lines": 58,
+      "cmpExitCode": 0,
+      "sourceAndCopySha256": "3fae005fe14cdaf35af092ba38d6ac1aa613e1b84c15f1a4588ee246fd13cf5e"
+    }
+  },
+  "scope": {
+    "applicationTestsRun": 0,
+    "fixtureLaunches": 0,
+    "builds": 0,
+    "signingOperations": 0,
+    "entitlementChanges": 0,
+    "generatedCandidateExecutions": 0,
+    "isolationAcceptance": false,
+    "commits": 0,
+    "pushes": 0,
+    "deletions": 0,
+    "editsToNativeCanaryAdjudicator": 0,
+    "editsToRunJournal": 0
+  },
+  "blockedCapture": {
+    "status": "BLOCKED_SANDBOX",
+    "exitCode": 64,
+    "stderr": "log: Cannot run while sandboxed",
+    "newFirstAttemptUnifiedLogExcerpt": false
+  },
+  "knownLimitations": [
+    "First-attempt raw secinitd excerpt is still missing; its findings remain explicitly attributed to Claude Fable's verification.",
+    "Pre-freeze attempt-1 inventory/context overwrite is disclosed, not reconstructed.",
+    "Approximate inherit approval time and earlier first checkpoint timestamp remain unreconciled.",
+    "Service lifecycle settlement, escaped/reparented descendant absence and generated-code isolation acceptance remain open."
+  ],
+  "note": "This verifies retention bytes, metadata and document invariants only; it is not an application or isolation test. Initial read-only git status queries invoked the macOS developer-tool shim, which emitted cache/FS-event permission diagnostics; no build command or fixture was run. Git was not used again."
+}

@@ -134,8 +134,17 @@ function createInvoker(signal, clock, totalDeadlineMs) {
         if (settled) return;
         const stoppedAfterCall = guard();
         if (stoppedAfterCall) { controller.abort(); finish(stoppedAfterCall); return; }
-        try { finish({ kind: 'result', value: cloneFreeze(value) }); }
-        catch (error) { finish({ kind: 'error', code: codeOf(error, 'ADAPTER_RESULT_INVALID') }); }
+        let snapshot;
+        try { snapshot = cloneFreeze(value); }
+        catch (error) {
+          const stoppedDuringCopy = guard();
+          if (stoppedDuringCopy) { controller.abort(); finish(stoppedDuringCopy); return; }
+          finish({ kind: 'error', code: codeOf(error, 'ADAPTER_RESULT_INVALID') });
+          return;
+        }
+        const stoppedAfterCopy = guard();
+        if (stoppedAfterCopy) { controller.abort(); finish(stoppedAfterCopy); return; }
+        finish({ kind: 'result', value: snapshot });
       }, () => finish(guard() ?? { kind: 'error', code: 'ADAPTER_EXCEPTION' }));
     });
   };

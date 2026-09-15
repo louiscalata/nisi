@@ -1,0 +1,103 @@
+{
+  "summary": "Design review for a metadata-only, versioned Node incident-candidate projection (`incidentPreview()`) computed after settlement from the original context plus `readRepositoryRunBundleV1`. Six corrections address: deriving rows only from a re-read bundle (never diagnostics or v1 history preview); disposition/receipt gating so interruptions and post-deadline records never become FAIL candidates; occurrence vs. row identity so repaired attempts are retained but not double-counted; explicit trust/attribution limits since adapters are unauthenticated; isolation from the frozen native adapter and v1 preview writer; and hashing/ordering hygiene for replay stability. Includes a compact exact row schema, qualification rules with reason codes, and test cases. No tests were run; several field-name assumptions need verification against the real host.",
+  "deliverable": "# Nisi/Veritas \u2014 source-bound incident candidate projection (design review)\n\nScope: new versioned helper `NodeIncidentCandidateV1` + `host.incidentPreview()`; metadata-only, unpersisted, not learning-eligible; native `PipelineIncidentAdapter` untouched.\n\n## Design corrections (6)\n\n1. **Rows derive only from a successful re-read, never from host diagnostics or the v1 history preview.**\n   `incidentPreview()` must: require host state SETTLED; call `readRepositoryRunBundleV1(bundle, context)` with the *retained original* context (report, preparation, suite, nodeRegistrationFingerprint, plans, groups, executions); return `{status:\"UNAVAILABLE\", reason}` with zero rows if QUARANTINED, bundle null, or reader rejects. Do not project from deserialized JSON or from retained quarantine diagnostics \u2014 original-issued checks live only in the reader. The v1 history preview (metadata summary + counts) remains untouched and must not be readable *into* candidates (\"already-stored aggregate cannot become qualified evidence\").\n\n2. **Gate by disposition and receipt validity, not by any single FAIL field.**\n   A stage FAIL is a candidate only if every execution backing that stage has `disposition == RESULT_RECORDED` and its Node receipt satisfies closed-process, confirmed-drain, no-deadline/cancel, untruncated-outputs. `ENGINE_INTERRUPTED` or post-deadline arrivals \u2192 outcome `INTERRUPTED`, never `FAIL`. For static groups, a group `FAIL` disposition does not promote a per-file check whose own result is absent \u2192 that file row is `UNAVAILABLE`. Rule of thumb: promotion requires positive evidence at the row's own granularity.\n\n3. **Separate occurrence identity from row identity; retain repaired failures without recounting.**\n   - `occurrenceKey = H(\"occ/v1\", candidateFingerprint, runId, taskId, stageIndex)` \u2014 no attempt.\n   - `rowId = H(\"row/v1\", occurrenceKey, attempt)`.\n   - `contentDigest = H(\"content/v1\", canonical row body)` \u2014 used to detect replay conflicts (same rowId, different digest \u21d2 `CONFLICT`, not silent overwrite).\n   Attempt0 FAIL + attempt1 PASS in a COMPLETED run yields two rows sharing one occurrenceKey; attempt0 row has `supersededByAttempt: 1`, `occurrenceState: \"REPAIRED\"`. Recurrence counting (future) keys on occurrenceKey only.\n\n4. **Encode trust and attribution limits in the row, not in prose.**\n   Reader does not authenticate adapters, so every row carries `sourceTrust: \"UNAUTHENTICATED_ADAPTER\"` and `verification: {executionVerified:false, authorizing:false, certificationGranted:false}` copied from output flags. There is no `cause`, `rootCause`, `modelAttributed`, `prediction` field \u2014 deliberately absent from the schema so consumers cannot populate them. `outcome` is a check outcome (`FAIL|PASS|INTERRUPTED|UNAVAILABLE`), documented as \"deterministic check result, not root cause\".\n\n5. **Hard isolation from frozen native path and from persistence.**\n   New type lives in its own module/version (`nodeIncidentCandidate.v1`), does not import or adapt to `ArtifactSnapshot`/`PipelineResult`, and is not passed to `PipelineIncidentAdapter`. `incidentPreview()` is a pure function of `(context, bundle)` returning an in-memory value; no writer accepts it; the history-preview writer's input type must not be widened. Add `schemaVersion: 1` and `persistable: false` as literal fields so any future storage path must explicitly change the type (and add scope/consent/retention/revocation checks then).\n\n6. **Hashing and ordering hygiene for replay stability.**\n   Free text (messages, evidence strings) and source paths are stored only as `H(\"text/v1\", salt, value)` where `salt` is run-scoped (e.g. derived from `nodeRegistrationFingerprint` + runId) \u2014 unsalted hashes of short paths are dictionary-reversible. Use domain-separated prefixes for every hash. Rows are emitted sorted by `(stageIndex, taskId, attempt, entryIndex)`; cap rows per stage (e.g. 256) with a `truncated:true` marker at the preview level so two replays over the same bundle produce byte-identical output. Never include wall-clock timestamps in `contentDigest` inputs.\n\n## Compact exact row schema (`NodeIncidentCandidateRowV1`)\n\n```\n{\n  schemaVersion: 1,\n  rowId: hex,                 // H(occurrenceKey, attempt)\n  occurrenceKey: hex,         // H(candidateFingerprint, runId, taskId, stageIndex)\n  contentDigest: hex,         // canonical body digest\n  binding: {\n    candidateFingerprint: hex, runId: string, taskId: string,\n    attempt: uint, stageIndex: uint, stage: string\n  },\n  kind: \"REPORT_STAGE\" | \"STATIC_GROUP\" | \"STATIC_FILE\" | \"TEST_ENTRY\",\n  outcome: \"FAIL\" | \"PASS\" | \"INTERRUPTED\" | \"UNAVAILABLE\",\n  qualification: \"QUALIFIED\" | \"UNQUALIFIED\",\n  reasonCodes: string[],      // see rules; empty iff QUALIFIED\n  disposition: \"RESULT_RECORDED\" | \"ENGINE_INTERRUPTED\" | null,\n  code: string | null,        // stage code from report, verbatim if enum-like; else hashed\n  digests: {\n    report: hex, bundle: hex, plan: hex|null, group: hex|null, receipt: hex|null\n  },\n  hashed: { evidence: hex|null, sourcePath: hex|null },   // salted, domain-separated\n  occurrenceState: \"OPEN\" | \"REPAIRED\",\n  supersededByAttempt: uint | null,\n  sourceTrust: \"UNAUTHENTICATED_ADAPTER\",\n  verification: { executionVerified:false, authorizing:false, certificationGranted:false },\n  persistable: false\n}\n```\nPreview envelope: `{ schemaVersion:1, status:\"OK\"|\"UNAVAILABLE\", reason?:string, hostState, bundleDigest, rows:[...], truncated:boolean }`.\n\n## Qualification rules (evaluate in order; first failure appends reason code, continues collecting)\n\n- `HOST_NOT_SETTLED` \u2014 host not SETTLED or bundle null \u21d2 whole preview UNAVAILABLE (no rows).\n- `READER_REJECTED` \u2014 `readRepositoryRunBundleV1` failed \u21d2 preview UNAVAILABLE.\n- `BINDING_MISMATCH` \u2014 stage evidence run/task/attempt/candidate \u2260 context/preparation values.\n- `DIGEST_MISMATCH` \u2014 receipt/plan/group/report digest recomputed from original context \u2260 bundle value.\n- `NOT_RECORDED` \u2014 any backing execution disposition \u2260 RESULT_RECORDED (\u21d2 outcome INTERRUPTED).\n- `POST_DEADLINE` \u2014 record arrived after engine deadline (\u21d2 INTERRUPTED, not FAIL).\n- `RECEIPT_INVALID` \u2014 process not closed, drain unconfirmed, deadline/cancel present, or outputs truncated.\n- `GRANULARITY_UNAVAILABLE` \u2014 per-file check absent while group says FAIL (\u21d2 UNAVAILABLE for that file row).\n- `OUTCOME_NOT_FAIL` \u2014 informational; PASS rows are emitted (needed for REPAIRED linkage) but never QUALIFIED.\nQUALIFIED \u21d4 outcome == FAIL and reasonCodes is empty. QUALIFIED means \"deterministic check failure with intact source binding\"; it does not imply attribution.\n\n## Test cases\n\n1. SETTLED run, one stage FAIL, RESULT_RECORDED, valid receipt \u21d2 1 QUALIFIED row, digests match, reasonCodes [].\n2. QUARANTINED host (owner not IDLE) \u21d2 preview UNAVAILABLE, rows [], v1 history preview unchanged.\n3. Bundle JSON tampered (evidence attempt changed) \u21d2 reader rejects \u21d2 UNAVAILABLE (never rows with BINDING_MISMATCH from JSON path).\n4. Execution ENGINE_INTERRUPTED with stage FAIL \u21d2 outcome INTERRUPTED, UNQUALIFIED [NOT_RECORDED].\n5. Record arriving after engine deadline \u21d2 [POST_DEADLINE], not FAIL.\n6. Receipt with truncated stdout \u21d2 [RECEIPT_INVALID].\n7. Static group FAIL, file X has no per-file result \u21d2 file X row UNAVAILABLE [GRANULARITY_UNAVAILABLE]; file Y with own FAIL \u21d2 QUALIFIED.\n8. Attempt0 FAIL, attempt1 PASS, run COMPLETED \u21d2 2 rows, same occurrenceKey, distinct rowIds; attempt0 `REPAIRED`, `supersededByAttempt:1`; occurrence count == 1.\n9. Replay twice over identical (context, bundle) \u21d2 byte-identical envelope; same rowIds and contentDigests.\n10. Same rowId, altered evidence text \u21d2 different contentDigest (conflict detectable); hashed fields differ, no plaintext present.\n11. Two runs with identical paths/text but different runIds \u21d2 different `hashed.*` values (salt effective).\n12. Type-level: `PipelineIncidentAdapter` and history-preview writer do not accept `NodeIncidentCandidateRowV1` (compile/type test); no import from native module.\n13. >cap rows in a stage \u21d2 `truncated:true`, deterministic subset by sort order.\n14. Schema snapshot: row has no `cause|rootCause|model|prediction|consent` keys.\n\n## Uncertainty / verification needed\n- Exact names of receipt validity fields, whether `report.stages` carries explicit taskId/attempt (vs. only via evidence), and whether a stable `stageIndex` exists across attempts \u2014 the identity scheme depends on this.\n- Whether original context objects are canonically serializable for digest recomputation; if the reader already exposes canonical digests, reuse them instead of recomputing.\n- Availability of a hash primitive with domain separation in the host runtime.\n- \"Post-deadline\" may already be folded into ENGINE_INTERRUPTED; if so, drop the separate code.\n- Salt derivation from nodeRegistrationFingerprint assumes it is not itself sensitive to expose via correlation; confirm.",
+  "risks": [
+    "Field-name assumptions (receipt flags, stageIndex, taskId on stages) are unverified against the real host; identity scheme may need adjustment.",
+    "Unsalted or weakly salted hashes of short paths/messages are dictionary-reversible; if salt is guessable the 'hash not retain' guarantee weakens.",
+    "Emitting PASS rows for repair linkage increases row volume; cap/truncation could drop the PASS row that marks an occurrence as REPAIRED unless linkage is computed before truncation.",
+    "Consumers may treat QUALIFIED as attribution despite absent cause fields; documentation and naming must reinforce 'check outcome only'.",
+    "Unauthenticated adapters mean a malicious/buggy adapter can produce QUALIFIED FAIL rows; sourceTrust flag mitigates interpretation but not injection.",
+    "Any future persistence path that copies the envelope without re-checking scope/consent/retention/revocation would violate the stated constraints; type-level `persistable:false` is a guard, not enforcement."
+  ],
+  "verification": [
+    "Confirm real host field names for receipt validity, stage indices, task/attempt binding, and disposition enum before implementing rows.",
+    "Run the 14 listed test cases; especially replay determinism (9), repair linkage (8), and type isolation from native adapter and history-preview writer (12).",
+    "Assert v1 history preview output is byte-identical before/after adding incidentPreview().",
+    "Snapshot-test the row schema for absence of cause/model/prediction/consent keys and presence of persistable:false.",
+    "Verify digest recomputation from original context matches reader's canonical comparison (no drift between two canonicalizers).",
+    "Review salt derivation and hash domain separation with whoever owns nodeRegistrationFingerprint semantics."
+  ],
+  "invocation_status": "succeeded",
+  "status": "succeeded",
+  "model_usage": {
+    "claude-haiku-4-5-20251001": {
+      "inputTokens": 1704,
+      "outputTokens": 15,
+      "cacheReadInputTokens": 0,
+      "cacheCreationInputTokens": 0,
+      "webSearchRequests": 0,
+      "costUSD": 0.001779,
+      "contextWindow": 200000,
+      "maxOutputTokens": 32000,
+      "thinkingTokens": 0,
+      "canonicalModel": "claude-haiku-4-5",
+      "provider": "firstParty",
+      "costBasis": "list"
+    },
+    "claude-opus-5": {
+      "inputTokens": 2,
+      "outputTokens": 5870,
+      "cacheReadInputTokens": 737,
+      "cacheCreationInputTokens": 1749,
+      "webSearchRequests": 0,
+      "costUSD": 0.1646185,
+      "contextWindow": 1000000,
+      "maxOutputTokens": 64000,
+      "thinkingTokens": 1095,
+      "canonicalModel": "claude-opus-5",
+      "provider": "firstParty",
+      "costBasis": "list"
+    }
+  },
+  "reported_models": [
+    "claude-haiku-4-5-20251001",
+    "claude-opus-5"
+  ],
+  "usage": {
+    "input_tokens": 2,
+    "cache_creation_input_tokens": 1749,
+    "cache_read_input_tokens": 737,
+    "output_tokens": 5870,
+    "output_tokens_details": {
+      "thinking_tokens": 1095
+    },
+    "server_tool_use": {
+      "web_search_requests": 0,
+      "web_fetch_requests": 0
+    },
+    "service_tier": "standard",
+    "cache_creation": {
+      "ephemeral_1h_input_tokens": 1749,
+      "ephemeral_5m_input_tokens": 0
+    },
+    "inference_geo": "not_available",
+    "iterations": [
+      {
+        "input_tokens": 2,
+        "output_tokens": 5870,
+        "cache_read_input_tokens": 737,
+        "cache_creation_input_tokens": 1749,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 1749
+        },
+        "type": "message"
+      }
+    ],
+    "speed": "standard"
+  },
+  "total_cost_usd": 0.1663975,
+  "duration_ms": 74802,
+  "tools_enabled": false,
+  "session_persisted": false,
+  "write_owner": "codex",
+  "requested_model": "opus",
+  "mode": "delegate",
+  "attempts": 1,
+  "wall_seconds": 75.678,
+  "created_at": "2026-09-14T03:26:57.791475+00:00",
+  "prior_attempts": [],
+  "total_wall_seconds": 75.679,
+  "prior_attempt_usage": [],
+  "total_usage_complete": true
+}

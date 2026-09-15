@@ -1,0 +1,17 @@
+{
+  "schemaVersion": "nisi-experimental-module-manifest-v1",
+  "moduleId": "veritas.bn01.contract",
+  "versionId": "veritas-bn01-offline-contract-v1",
+  "interfaceId": "veritas-bn01-offline-contract-v1",
+  "capabilityKind": "BN01_PLUGIN_METADATA",
+  "travelerRole": "PROTON",
+  "dataType": "F32",
+  "sourcePath": "integrations/veritas/tooling/neural/bn01.mjs",
+  "sourceSha256": "3c7b355e67a39c0f0f33a61329208fbfb4627bc1fef0c973d52a7e654957ee19",
+  "resources": {
+    "residentBytes": 67108864,
+    "operations": 100000000,
+    "maxInferenceMs": 10000,
+    "maxOutputBytes": 16384
+  }
+}

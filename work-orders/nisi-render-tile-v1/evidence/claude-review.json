@@ -1,0 +1,171 @@
+{
+ "verdict": "REJECT",
+ "summary": "The module passes its 15-test oracle, but four independent blockers survived refutation: identityRenderTileV1 throws foreign CanonicalJSONErrorV1 codes for tiles the reader accepts (any float, unsafe integer, lone surrogate, non-NFC/NUL key, >125-deep or >4096-member params), readRenderTileV1 throws on contract-valid deeply nested params (~5 KB, JSON.parse-reachable) and on accessor/Proxy/species/null-prototype inputs despite 'never throws', validate-then-copy re-reads let getters and toJSON hooks land unvalidated data (and a 200 KB params) in an ok:true tile or in the identity hash, and the handoff's structural-check evidence was produced against canonical-json-v1.mjs, not this module. The contract itself is internally inconsistent (params 'finite numbers' vs a safe-integer-only codec) and must be settled by the owner before the reader can be fixed; the fix pattern already exists in history/run-journal-v1.mjs copy(). Four findings were refuted as contract-permitted pre-integration state or house idiom.",
+ "confirmed_findings": [
+  {
+   "title": "identityRenderTileV1 throws non-contract codec codes for tiles the reader accepts (numbers, strings, keys, depth, member count)",
+   "severity": "blocker",
+   "file": "/Users/louiscalata/nisi-next-private/work-orders/nisi-render-tile-v1/src/render-tile-v1.mjs",
+   "line": 87,
+   "claim": "validateJSONValue accepts any finite number (line 87), any string (88), any key except three names (101), with no depth or member bound, and model is checked only for type/length (208); identity (457-458) feeds JSON.stringify output to canonicalizeJSONV1, whose grammar accepts only safe integers (canonical-json-v1.mjs 190-192), well-formed strings (152-159), NFC NUL-free keys (111-112), depth < 128 (87) and <= 4096 members (114). Reproduced: params {a:2.5} (the oracle's own line-168 fixture), {a:1e300}, 2**53, a lone surrogate in params or model, a non-NFC or NUL key, 130-deep nesting and 4097 members all read ok:true and then identity throws INVALID_JSON_NUMBER / INVALID_JSON_STRING_SURROGATE / INVALID_JSON_KEY_NOT_NFC / INVALID_JSON_DUPLICATE_KEY / INVALID_JSON_DEPTH / INVALID_JSON_OBJECT_SIZE, none in RENDER_TILE_CODES_V1, violating CONTRACT.md lines 27-31. CONTRACT.md line 58 ('finite numbers') contradicts line 113 (the codec). A float hyperparameter is the ordinary case. Merges the contract-conformance, adversarial-input and test-adequacy lenses' reports of the same defect.",
+   "fix": "Owner decision first: adopt the house number domain (safe integers, not -0, as run-journal-v1.mjs line 22 and tests/run-journal.test.mjs line 58 already do) and amend CONTRACT.md line 58. Then make the reader enforce the codec grammar: Number.isSafeInteger && !Object.is(v,-0); s.isWellFormed() for model, every params string and key; keys NFC and NUL-free; params depth <= 125 (128 minus root/recipe/params) and <= 4096 members per object; add paramsDepth/paramsMembers to RENDER_TILE_LIMITS_V1 and the contract. Alternatively catch CanonicalJSONErrorV1 in identity and rethrow RENDER_TILE_PARAMS/RENDER_TILE_RECIPE, but the reader is the right place since the pinned Python vectors fix the codec. Oracle: identityRenderTileV1 on the line-168 fixture (after moving 2.5 to the refuse list), one refuse case per new rule, and an assertion that identity never throws a non-RENDER_TILE code for any tile the reader accepts."
+  },
+  {
+   "title": "readRenderTileV1 throws (contract: never throws) on deep params, throwing getters, Proxy traps, Array species, null-prototype arrays and toJSON hooks",
+   "severity": "blocker",
+   "file": "/Users/louiscalata/nisi-next-private/work-orders/nisi-render-tile-v1/src/render-tile-v1.mjs",
+   "line": 84,
+   "claim": "CONTRACT.md line 26 is unconditional. (a) validateJSONValue (84-107), deepCopy (70-82) and deepFreeze (55-68) recurse with no depth bound; a plain {a:[[[...]]]} params of ~3000-4000 levels (5-8 KB, under paramsBytes, JSON.parse-reachable from a 400 KB manifest) overflows the stack and RangeError escapes (reproduced at 4000 deep). (b) Every member is read by plain property access (137, 122, ...) so a throwing own getter or a Proxy getPrototypeOf/ownKeys trap escapes. (c) .slice() (399, 402) and .map (78) go through Symbol.species; an own constructor on the array redirects the copy to a frozen object (TypeError escapes) or an attacker object/Proxy that becomes tile.neighbours. (d) A null-prototype array passes Array.isArray but has no iterator/slice: 'v is not iterable', 'input.children.slice is not a function' escape; the same on childOutputs makes identity throw a bare TypeError with no .code. (e) JSON.stringify(input.recipe.params) at line 241 honours a non-enumerable own toJSON invisible to Object.keys: returning undefined/1n/a cycle throws (the cycle message embeds an input key name, contra line 14), and returning a tiny stand-in hides a 200 KB payload from the byte check while deepCopy copies the real thing (reproduced: ok:true with 200000-char params). Merges the contract-conformance and adversarial-input lenses' reports.",
+   "fix": "Follow history/run-journal-v1.mjs copy(): read each member exactly once via Object.getOwnPropertyDescriptor and refuse !d.enumerable || !('value' in d); require Object.getPrototypeOf(arr) === Array.prototype and Reflect.ownKeys(arr).length === arr.length + 1; iterate arrays by index into a literal [] (never .slice/.map/for-of/new Set(arr)/spread on input arrays); walk params once with an explicit depth counter (refuse RENDER_TILE_PARAMS past the codec budget) that validates, copies and accumulates the byte length in one pass so no JSON.stringify ever touches the raw input; wrap the reader body in try/catch returning RENDER_TILE_NOT_OBJECT at '$' as a last-resort guarantee against Proxy traps (util.types.isProxy is not importable under the contract). Oracle: JSON.parse deep-nesting case, throwing getter, throwing Proxy, species-hijacked array, null-prototype array, hidden toJSON, each asserting a refusal object is returned."
+  },
+  {
+   "title": "Members are validated on one read and copied on a later read, so accessors put unvalidated data in an ok:true tile and in the identity",
+   "severity": "blocker",
+   "file": "/Users/louiscalata/nisi-next-private/work-orders/nisi-render-tile-v1/src/render-tile-v1.mjs",
+   "line": 378,
+   "claim": "tileId is checked at 147 and copied at 378; kind at 152/194/197/297/300 vs 379; inputs at 163-170 vs 383-384; params at 219/237/241 vs 394 (three reads); attempt at 322 vs 405; neighbours/children/budget/apron likewise. A getter answering differently per read yields ok:true with tile.inputs.src='NOT-A-DIGEST' (reproduced), a leaf with children:['b'], attempt={pwned:true}, or params.x=undefined; the returned tile then fails readRenderTileV1 and identity hashes the unvalidated value, breaking CONTRACT.md lines 105-108 and the premise that ok:true implies schema-valid. Contract line 40 counts own enumerable accessors as members. Merges the contract-conformance, adversarial-input and house-idiom lenses' reports.",
+   "fix": "Same mechanism as the previous finding: snapshot every member once from a data descriptor into locals (refusing accessors), validate the locals, build the output tile from the locals only, never touching input again. Oracle: a getter that flips after the first read must be refused, and readRenderTileV1(r.tile).ok === true for every ok result."
+  },
+  {
+   "title": "Structural-check evidence in the handoff verifies canonical-json-v1.mjs, not render-tile-v1.mjs; a real run would FAIL on the export block",
+   "severity": "blocker",
+   "file": "/Users/louiscalata/nisi-next-private/scripts/structural-check.mjs",
+   "line": 89,
+   "claim": "scripts/structural-check.mjs hardcodes `const subject = \"canonical/canonical-json-v1.mjs\"` with no argv/env override. evidence/structural-check.json's sourceDigest is d1049a26... = sha256 of canonical-json-v1.mjs; src/render-tile-v1.mjs hashes to e5778fcb... (verified). HANDOFF.md cites the file as 'PASS, zero findings' for this module's PURE-REGION. A refuter ran the checker's inspectSource against the actual module and got one finding: rule module-surface at line 462, the `export { ... }` block sits inside the PURE-REGION markers (lines 3/473); canonical-json-v1.mjs avoids this by using inline export declarations.",
+   "fix": "Parametrise the subject (path argument or scan for PURE-REGION-marked files), move the export list outside the markers or switch to inline `export const/function`, re-run against work-orders/nisi-render-tile-v1/src/render-tile-v1.mjs, and regenerate evidence/structural-check.json and SHA256SUMS so sourceDigest matches the module under review."
+  },
+  {
+   "title": "Identity hashes the caller's childOutputs object rather than the validated values",
+   "severity": "defect",
+   "file": "/Users/louiscalata/nisi-next-private/work-orders/nisi-render-tile-v1/src/render-tile-v1.mjs",
+   "line": 451,
+   "claim": "Entries are validated by for-of (440-446) but `children: childOutputs` (451) embeds the original array; JSON.stringify honours an own toJSON (reproduced: Object.assign([D1,null],{toJSON:()=>'x'}) hashes to 254969b1... not the pinned b098281e...; toJSON returning 1n or throwing escapes with no .code), a Proxy or accessor index answers differently between validation and serialisation (hash of [D1,D2] for a validated [D1,null]), and an own Symbol.iterator lets ['not-a-digest', {toJSON}] pass validation. Mutant copying the entries passes 15/15, so the oracle is blind to which object is hashed.",
+   "fix": "Collect validated entries by index (descriptor reads, refusing holes/accessors, prototype Array.prototype) into a fresh literal array inside the loop and pass that at line 451. Oracle: assert identityRenderTileV1(parent(), Object.assign([D1,null],{toJSON:()=>'x'})) equals the pinned vector."
+  },
+  {
+   "title": "Shared (non-cyclic) sub-objects in params are refused as RENDER_TILE_PARAMS",
+   "severity": "defect",
+   "file": "/Users/louiscalata/nisi-next-private/work-orders/nisi-render-tile-v1/src/render-tile-v1.mjs",
+   "line": 98,
+   "claim": "`seen` (90-91, 98-99) is a visited set never released on subtree exit, so {a: shared, b: shared} (valid JSON, JSON.stringify fine) is refused (reproduced); the JSON round-trip of the same value is accepted, so the verdict depends on object identity, which CONTRACT.md lines 58-60/95 do not mention. HANDOFF repair 3 intended a cycle guard only. run-journal-v1.mjs line 47 (stack.delete on exit) is the house form. Merges three lenses' reports.",
+   "fix": "Turn `seen` into a path stack (add on entry, delete before returning true in both branches) AND pair it with the single-pass node/byte budget from the never-throws fix, because a bare path stack lets an exponential DAG ({l:x,r:x} 27 deep) expand in JSON.stringify to a RangeError 'Invalid string length' (refuter reproduced: 8 s then throw). Oracle: ok(rec({a: shared, b: shared})) beside the cycle refusals at 161-166, plus an exponential-DAG case asserting refusal without throwing."
+  },
+  {
+   "title": "`constructor` and `prototype` are accepted as keys of inputs and apron",
+   "severity": "defect",
+   "file": "/Users/louiscalata/nisi-next-private/work-orders/nisi-render-tile-v1/src/render-tile-v1.mjs",
+   "line": 164,
+   "claim": "CONTRACT.md lines 40-42 refuse the three names wherever they appear as keys; both match ID_REGEX (line 30) and only params (line 101) enforces the clause, so inputs {constructor: D1} and apron {constructor: null} read ok:true (reproduced) and are hashed into the identity. The oracle pins only __proto__ (line 125), which the regex refuses anyway. Scope note: neighbours/children entries are array values, not keys, and are covered transitively via the apron key-set rule; tileId is likewise out of the clause's scope. The dead hasForbiddenKeys helper (223-235) that HANDOFF says was removed is still present and unused.",
+   "fix": "After isId(k) succeeds in the inputs loop (164) and the apron key loop (365), refuse k === 'constructor' || k === 'prototype' || k === '__proto__' with RENDER_TILE_INPUTS at $.inputs and RENDER_TILE_APRON at $.apron (matching the table rows and oracle line-125 precedent; the owner should reconcile line 42's 'path to that key' wording). Delete hasForbiddenKeys. Oracle: one case per container for both names."
+  },
+  {
+   "title": "identityRenderTileV1 throws Error objects with an empty message, unlike every other house error idiom",
+   "severity": "defect",
+   "file": "/Users/louiscalata/nisi-next-private/work-orders/nisi-render-tile-v1/src/render-tile-v1.mjs",
+   "line": 424,
+   "claim": "All four throw sites call `new Error()` and set .code afterward, so message === '' and String(e) === 'Error' (reproduced). canonical-json-v1.mjs line 22 does super(code) and run-journal-v1.mjs line 11 defaults message to code; a grep of the private tree finds bare `new Error()` only in this module. Contract-compliant (only .code is mandated) but any logger, String(err) or Node's uncaught printer shows no refusal code.",
+   "fix": "Use new Error(read.code) and new Error('RENDER_TILE_CHILD_OUTPUTS'); a code is not input content so CONTRACT.md line 14 is unaffected and no pinned vector changes."
+  },
+  {
+   "title": "Oracle does not pin the accepted side of the model (128) and neighbours (256) limits; both off-by-one mutants survive",
+   "severity": "defect",
+   "file": "/Users/louiscalata/nisi-next-private/work-orders/nisi-render-tile-v1/tests/render-tile-v1.test.mjs",
+   "line": 144,
+   "claim": "Line 144 refuses a 129-char model and line 174 refuses 257 neighbours, but unlike tileId (115), inputs (128), paramsBytes (167) and children (186) there is no accept-at-boundary case; mutants `>=` at src lines 208 and 272 pass 15/15 (reproduced by three refuters) while wrongly refusing contract-valid 128-char models and 256-neighbour tiles. Module is correct today; this is oracle adequacy, the class HANDOFF itself treats as an owner defect (M1/M2).",
+   "fix": "Add ok(rec({ model: 'm'.repeat(128) })) and a 256-neighbour ok case with a matching null apron; each makes its mutant fail."
+  },
+  {
+   "title": "Intra-entry check order (inputs id-vs-digest; recipe.apron size-vs-unit) is untested; swap mutants survive",
+   "severity": "defect",
+   "file": "/Users/louiscalata/nisi-next-private/work-orders/nisi-render-tile-v1/src/render-tile-v1.mjs",
+   "line": 163,
+   "claim": "Swapping isDigest before isId in the inputs loop changes inputs {'bad name':'zz'} from {RENDER_TILE_INPUTS,$.inputs} to {RENDER_TILE_DIGEST,'$.inputs.bad name'} (which would leak an unvalidated key into the path, contra line 14), and swapping unit before size changes {size:-0,unit:'cm'}'s path; both mutants pass 15/15 because every oracle case breaks only one condition. For recipe.apron the contract's schema-order rule already implies size first (specified, untested); for the inputs map it is genuinely unspecified.",
+   "fix": "Add one sentence to the check-order clause (bad name wins over bad value on an inputs entry; nested values in schema order) and pin inputs={'bad name':'zz'} -> RENDER_TILE_INPUTS $.inputs and recipe.apron={size:-0,unit:'cm'} -> RENDER_TILE_RECIPE $.recipe.apron.size."
+  },
+  {
+   "title": "Contract prose says identity ignores `neighbours`; it does not (neighbour ids enter via apron keys)",
+   "severity": "nit",
+   "file": "/Users/louiscalata/nisi-next-private/work-orders/nisi-render-tile-v1/CONTRACT.md",
+   "line": 116,
+   "claim": "Line 68 forces apron keys == neighbour set and line 113 hashes apron, so renaming a neighbour with the same apron value changes the identity (reproduced) while reordering does not; lines 115-116 list `neighbours` as ignored without qualification. Module follows the formula; the prose misleads a unit-03 tombstone/replay reader.",
+   "fix": "Reword: identity ignores tileId, kind, profile, schemaVersion, neighbour ORDER, children ids, budget and attempt; neighbour ids enter through apron keys. Pin notEqual for a rename and equal for a reorder."
+  },
+  {
+   "title": "`sorted by key` is unachievable for integer-like IDs in inputs/apron",
+   "severity": "nit",
+   "file": "/Users/louiscalata/nisi-next-private/work-orders/nisi-render-tile-v1/src/render-tile-v1.mjs",
+   "line": 383,
+   "claim": "All-digit IDs are valid (line 35) and JS enumerates integer-like keys first in numeric order regardless of insertion, so Object.keys(tile.inputs) for {9,10,01} is ['9','10','01'], not the promise of lines 105-106 (reproduced). Identity is unaffected because canonicalizeJSONV1 re-sorts by key bytes (its comment at 124-125 anticipates exactly this).",
+   "fix": "Amend lines 105-106 to the achievable statement (or declare only the canonical order normative) and pin one integer-like-ID case in the 'apron keys come back sorted' test."
+  },
+  {
+   "title": "Own-enumerable rule not enforced: non-enumerable required members count, symbol-keyed members are ignored",
+   "severity": "nit",
+   "file": "/Users/louiscalata/nisi-next-private/work-orders/nisi-render-tile-v1/src/render-tile-v1.mjs",
+   "line": 131,
+   "claim": "own() is hasOwnProperty, so a non-enumerable attempt satisfies the missing check (contract line 40 says it should not count); Object.keys skips symbol keys so an extra symbol-keyed own member is neither unknown nor copied (line 44 'no other members anywhere'). run-journal-v1.mjs line 38 closes both via Reflect.ownKeys length parity. Not reachable from JSON.parse.",
+   "fix": "Falls out of the descriptor-based read (require d.enumerable) plus Reflect.ownKeys(o).length !== Object.keys(o).length -> RENDER_TILE_UNKNOWN_MEMBER at the object's path."
+  },
+  {
+   "title": "Contract import clause is stale after integrator repair 2",
+   "severity": "nit",
+   "file": "/Users/louiscalata/nisi-next-private/work-orders/nisi-render-tile-v1/CONTRACT.md",
+   "line": 10,
+   "claim": "Lines 9-11 say the module imports createHash from node:crypto and canonicalizeJSONV1; src line 1 imports only canonicalizeJSONV1 and HANDOFF repair 2 removed createHash. One refuter reads 'imports only' as an upper bound the module satisfies; either way the clause no longer describes the module.",
+   "fix": "Change lines 9-11 to 'Imports only canonicalizeJSONV1 from ../../../canonical/canonical-json-v1.mjs' (narrows the allowance for future drafters)."
+  }
+ ],
+ "refuted_findings": [
+  {
+   "title": "Check order inside `inputs` depends on member insertion order (names and values interleaved)",
+   "why_refuted": "Behaviour reproduces, but CONTRACT.md lines 74-77 order only unknown/missing members (fixed-schema objects) before values; `inputs` is an {ID: SHA256} map with no unknown/missing concept, its bad-name case is routed to RENDER_TILE_INPUTS at $.inputs by the table, the table order is code enumeration order (RENDER_TILE_DIGEST also serves apron, checked last), and HANDOFF records the check-order clause being aligned deliberately. Contract-silent, so per-key walking conforms; the two-key case is folded into the intra-entry check-order defect above as an oracle/contract pin."
+  },
+  {
+   "title": "render-tile-v1.mjs is absent from every mechanism that would let it ship as part of the package",
+   "why_refuted": "CONTRACT.md lines 4-5 say 'Not integrated into the product until Louis says so' and HANDOFF.md's 'Not done, on purpose' lists exactly these steps as approval-gated; the work order is new-files-only and untracked. Absence from package.json/PRIVATE_RUNTIME_FILES is the mandated pre-integration state, not a defect; the proposed fix would violate the work order's scope."
+  },
+  {
+   "title": "The protected oracle lives outside tests/ and is not run by npm test or npm run check",
+   "why_refuted": "Same documented pre-integration state: HANDOFF lists 'copy the test under tests/' as an integration step if approved, and every other work order in the tree keeps its oracle under work-orders/<name>/tests/ with a top-level twin added only on integration (run-journal, native-probe-summary, interrupted-run-decision-v1 show the pattern). Retained as a required integration step below."
+  },
+  {
+   "title": "RENDER_TILE_LIMITS_V1.idLength is exported but not wired to the actual ID length check",
+   "why_refuted": "CONTRACT.md line 35 defines ID as the literal regex (unlike model, which is defined via limits.modelLength), every ID reader in the tree uses a literal {0,127} regex, the enforced bound equals the constant at all four ID sites (128 ok / 129 refused), and the protected oracle already pins both idLength: 128 (line 40) and the 128/129 boundary (113-115), so the two cannot drift silently. Contract-permitted house idiom."
+  }
+ ],
+ "required_before_integration": [
+  "Owner settles the params value domain in CONTRACT.md (recommend safe integers, not -0, matching run-journal-v1.mjs) and the string/key/depth/member rules the codec imposes; then the reader enforces them so identityRenderTileV1 can never throw a non-RENDER_TILE code for a tile that reads ok.",
+  "Rewrite the input walk in the run-journal-v1.mjs copy() style: descriptor reads once per member (refuse accessors and non-enumerables), Reflect.ownKeys parity, Array.prototype-only arrays copied by index into literal arrays, single-pass params validate+copy+byte-count with a depth bound, no JSON.stringify or .slice/.map/for-of/new Set on raw input, outer try/catch so readRenderTileV1 never throws; build the output tile and the identity object from the validated locals only (including a fresh childOutputs array).",
+  "Fix the params cycle guard to a path stack paired with a node/byte budget so DAGs are accepted and exponential DAGs are refused without throwing.",
+  "Refuse constructor/prototype as inputs and apron keys; delete the dead hasForbiddenKeys helper.",
+  "Move the export list outside the PURE-REGION markers (or use inline exports), parametrise scripts/structural-check.mjs, re-run it against src/render-tile-v1.mjs, and regenerate evidence/structural-check.json and SHA256SUMS with the correct sourceDigest.",
+  "Put the refusal code in identity's Error message (new Error(code)).",
+  "Re-run the oracle (extended per oracle_gaps) and the mutant set, including the surviving M-A/M-B/M-C/M-D and swap mutants, and record them in evidence/mutants.json.",
+  "On integration approval only: choose the directory, fix the relative canonical import, add package.json files/exports and PRIVATE_RUNTIME_FILES/PRIVATE_TYPED_EXPORTS entries, copy the oracle under tests/, run npm run check:private-package and npm test."
+ ],
+ "optional_improvements": [
+  "Reword CONTRACT.md lines 115-117 so neighbour ids are described as entering the identity through apron keys and only neighbour order is ignored.",
+  "Amend CONTRACT.md lines 105-106 to the achievable enumeration order for integer-like IDs, or declare the canonical byte order normative.",
+  "Update CONTRACT.md lines 9-11 to list only the canonicalizeJSONV1 import.",
+  "Add one sentence to the check-order clause pinning bad-name-before-bad-value for inputs entries and schema order for nested values.",
+  "Note in CONTRACT.md that -0 in params is flattened to 0 by JSON.stringify (or refuse it with the safe-integer rule) so the copied tile and the hashed bytes agree.",
+  "Consider a note that Proxies of plain objects are outside the reader's guarantee if the owner chooses not to add the outer try/catch."
+ ],
+ "oracle_gaps": [
+  "identityRenderTileV1 called on every accepted params shape (including the current line-168 fixture) and an assertion that identity never throws a non-RENDER_TILE code for any tile the reader accepts.",
+  "Refuse cases for a non-integer or unsafe number, lone surrogate (params string and model), non-NFC key, NUL key, 126-deep nesting and 4097-member object in params, with 125-deep and 4096-member boundary ok cases.",
+  "readRenderTileV1 returns a refusal (never throws) for: JSON.parse of a 200000-deep array manifest, an own throwing getter, a Proxy with throwing getPrototypeOf/ownKeys traps, an Array subclass or own-constructor species hijack, a null-prototype array in params/neighbours/children, and a hidden non-enumerable toJSON in params (including the 200 KB size-bypass shape).",
+  "A getter that answers valid on the first read and invalid afterwards is refused, and readRenderTileV1(r.tile).ok === true for every ok result.",
+  "identityRenderTileV1(parent(), Object.assign([D1,null],{toJSON:()=>'x'})) equals the pinned vector; a Proxy/accessor childOutputs cannot change the hash; a null-prototype childOutputs throws RENDER_TILE_CHILD_OUTPUTS.",
+  "ok(rec({ a: shared, b: shared })) for a non-cyclic shared sub-object, and an exponential DAG refused without throwing.",
+  "inputs {constructor: D1}, inputs {prototype: D1}, apron {constructor: null} refused with the container's code.",
+  "ok(rec({ model: 'm'.repeat(128) })) and a 256-neighbour tile with matching apron accepted.",
+  "inputs {'bad name':'zz'} -> RENDER_TILE_INPUTS $.inputs; recipe.apron {size:-0, unit:'cm'} -> RENDER_TILE_RECIPE $.recipe.apron.size.",
+  "Neighbour rename with the same apron value changes the identity; neighbour reorder does not.",
+  "An integer-like ID case in the 'apron keys come back sorted' test pinning the chosen ordering statement.",
+  "A non-enumerable required member is reported missing and a symbol-keyed own member is reported unknown.",
+  "identity errors carry the refusal code in .message as well as .code."
+ ],
+ "reviewer": "claude-workflow review-render-tile-v1",
+ "date": "2026-09-14"
+}

@@ -1,0 +1,14 @@
+
+> nisi-private-run-journal-store-work-order@0.0.0-private test
+> node --test --test-timeout=10000 tests/baseline.test.mjs
+
+✔ private dependency-free ESM baseline with exactly the store exports (0.603584ms)
+✔ source imports only deterministic crypto and path helpers; effects require injected fs (0.269333ms)
+ℹ tests 2
+ℹ suites 0
+ℹ pass 2
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 35.992541

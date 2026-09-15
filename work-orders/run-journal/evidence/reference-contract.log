@@ -1,0 +1,26 @@
+✔ 01 exact synchronous API, empty complete framing and non-authority (1.691084ms)
+✔ 02 closed configuration and entry schemas reject malformed data atomically (0.54625ms)
+✔ 03 full attribution retained and cross-project input refused (0.200084ms)
+✔ 04 canonical exact replay is idempotent across object key order and capacity (0.217917ms)
+✔ 05 same id with changed binding, lifecycle or redacted content is CONFLICT (0.254708ms)
+✔ 06 terminal replay never becomes new work; retries need new id and valid citation (0.165667ms)
+✔ 07 TTL boundary, irreversible payload retention and caller time validation (0.168375ms)
+✔ 08 stale heartbeat is UNKNOWN and never sufficient for retry (0.169833ms)
+✔ 09 maxEntries bounds retained payloads in insertion order but never forgets ids (0.458417ms)
+✔ 10 revocation cites an existing exact attempt and candidate without deleting it (0.264875ms)
+✔ 11 revocation survives tombstones, expiry, revoker revocation and reopen (0.415917ms)
+✔ 12 declared payload paths redact nested values and arrays before exposure (0.330417ms)
+✔ 13 complete persisted reopen is historical through replay and serialization cycles (0.407084ms)
+✔ 14 truncation recovers only committed prefix and cannot be resealed or appended (0.2835ms)
+✔ 15 invalid line stops recovery; deletion or reordering cannot bless later entries (0.218416ms)
+✔ 16 footer mismatches and data after footer report uncertainty without losing recovered ids (0.465791ms)
+✔ 17 closed persisted schema rejects profiles, duplicate ids and semantically invalid records (0.910917ms)
+✔ 18 snapshots are deeply frozen, caller-independent and serialization is deterministic (0.302083ms)
+ℹ tests 18
+ℹ suites 0
+ℹ pass 18
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 10.017875

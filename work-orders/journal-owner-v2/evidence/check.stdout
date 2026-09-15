@@ -1,0 +1,69 @@
+
+> nisi-private-journal-owner-v2@0.0.0-private check
+> node --test --test-timeout=10000 tests/baseline.test.mjs tests/owner.test.mjs tests/adjudication-boundaries.test.mjs tests/store-boundary.test.mjs tests/windows-xpc-integration.test.mjs
+
+✔ NEW open publishes its accepted clock: a later record below it gets journal TIME (2.14075ms)
+✔ concurrent NEW owners: identical first bytes are UNCHANGED and non-durable, different bytes conflict (1.610291ms)
+✔ ordered redactPaths binding refuses the same two paths in reversed order (0.541209ms)
+✔ COMPLETE open-time pruning keeps raw disk CAS hash while staging the pruned memory serialization (0.92125ms)
+✔ damaged-prefix precedence is project, then config, then clock (0.960875ms)
+✔ valid null-prototype outer envelopes are supported with a genuine private handle (0.371125ms)
+✔ explicit private dependency-free module and three named APIs (0.938292ms)
+✔ unchanged frozen journal and store formats (0.439583ms)
+✔ NEW open returns an opaque unique owner and exact frozen empty snapshot (1.860375ms)
+✔ inspection is nonmutating and may return the same latest snapshot reference (0.18125ms)
+✔ request envelopes reject extra, hidden, symbol, accessor, array and exotic forms without invoking getters (0.269416ms)
+✔ manufactured, copied and JSON-roundtripped handles are refused (0.312125ms)
+✔ open validates path, time, fs and exact config without throwing (0.117667ms)
+✔ open copies configuration and is not changed by later caller mutation (1.517625ms)
+✔ read failures, non-Buffer reads, invalid UTF-8 and size limit refuse without owner exposure (5.673083ms)
+✔ bad UTF-8 suffix after a valid prefix never exposes a lossy recovered row (0.480375ms)
+✔ wrong-project COMPLETE, INCOMPLETE and INVALID journals all refuse before prefix exposure (0.74475ms)
+✔ matching project with any other persisted config difference refuses policy drift (0.637583ms)
+✔ open refuses a clock behind the persisted journal watermark (0.248417ms)
+✔ COMPLETE recovery binds exact raw digest and publishes historical entries (0.343ms)
+✔ matching damaged prefixes open SEALED with verified prefix only and cannot record (0.492083ms)
+✔ NEW record writes, publishes exact staged evidence, redacts payload and freezes all returned evidence (0.414833ms)
+✔ current fixed-XPC projected observation is inert history payload, not authority (0.408583ms)
+✔ RUNNING stale observation is listed as interrupted only when UNKNOWN and active (0.202208ms)
+✔ revocation removes an UNKNOWN RUNNING observation from interrupted without granting authority (0.407583ms)
+✔ duplicate returns original accepted snapshot and conflict performs no storage (0.370542ms)
+✔ entry refusal and time failure preserve the accepted snapshot and do not escape (0.618791ms)
+✔ malformed record envelopes and accessor entry fields refuse without getter execution (0.287875ms)
+✔ pre-rename store failure rolls back staged append and pruning exactly (0.744334ms)
+✔ genuine stale owner detects STORE_CONFLICT despite public mutation attempts (0.744958ms)
+✔ post-rename readback mismatch seals COMMIT_UNCERTAIN without stale publication (0.304ms)
+✔ post-rename final-read exception is reconciled as COMMIT_UNCERTAIN, not rollback (0.391584ms)
+✔ reentrant record is OWNER_BUSY and performs no nested filesystem IO (0.155166ms)
+✔ successful write without fsync remains explicitly non-durable (0.176958ms)
+✔ previous snapshots remain frozen historical values after later publication (0.275625ms)
+✔ real temporary filesystem bytes recover in a fresh Node process boundary (43.593959ms)
+✔ hash pins bind the reviewed owner, frozen dependencies and memfs context (0.816916ms)
+✔ post-store extra-key response seals uncertainty and fresh open reconciles committed bytes (5.425ms)
+✔ post-store wrong-hash response seals uncertainty and fresh open reconciles committed bytes (5.352ms)
+✔ post-store wrong-bytes response seals uncertainty and fresh open reconciles committed bytes (4.425875ms)
+✔ post-store written-uncommitted response seals uncertainty and fresh open reconciles committed bytes (3.828292ms)
+✔ post-store fsync-contradiction response seals uncertainty and fresh open reconciles committed bytes (4.115542ms)
+✔ post-store bad-cleanup response seals uncertainty and fresh open reconciles committed bytes (4.270042ms)
+✔ unrepresentable post-store malformed-null response is not copied or exposed (3.51ms)
+✔ unrepresentable post-store accessor response is not copied or exposed (3.52625ms)
+✔ unrepresentable post-store function response is not copied or exposed (3.994834ms)
+✔ unrepresentable post-store buffer response is not copied or exposed (3.765333ms)
+✔ direct wrapper throw before the pinned store still seals because the owner crossed storeEntered (2.498875ms)
+✔ direct wrapper throw after the pinned store seals and fresh open finds actual committed bytes (3.704792ms)
+✔ normal pinned store accepts missing fsync as explicit non-durable success (0.689708ms)
+✔ normal pinned store accepts coherent fsync errors as non-durable committed success (0.293541ms)
+✔ normal pinned cleanupError refusal remains precommit and preserves the previous snapshot (0.268333ms)
+✔ windows-xpc-integration: valid synthetic fixed-case observation (6.295375ms)
+✔ windows-xpc-integration: malformed-request synthetic fixed-case observation (1.2135ms)
+✔ windows-xpc-integration: no-reply synthetic fixed-case observation (1.115ms)
+✔ windows-xpc-integration: adverse INCONCLUSIVE synthetic fixed-case observation (1.559584ms)
+ℹ tests 56
+ℹ suites 0
+ℹ pass 56
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 106.127459
+

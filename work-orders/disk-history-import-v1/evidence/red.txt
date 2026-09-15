@@ -1,0 +1,524 @@
+TAP version 13
+# Subtest: real file import returns the exact frozen schema, bounded evidence and journal capture
+not ok 1 - real file import returns the exact frozen schema, bounded evidence and journal capture
+  ---
+  duration_ms: 4.090667
+  type: 'test'
+  location: '/Users/louiscalata/nisi-next-private/tests/disk-history-import-v1.test.mjs:63:1'
+  failureType: 'testCodeFailure'
+  error: 'NOT_IMPLEMENTED'
+  code: 'ERR_TEST_FAILURE'
+  stack: |-
+    importFixedXpcHistoryFromDisk (file:///Users/louiscalata/nisi-next-private/hosts/history/import-fixed-xpc-from-disk-v1.mjs:2:63)
+    file:///Users/louiscalata/nisi-next-private/tests/disk-history-import-v1.test.mjs:66:24
+    async withRoot (file:///Users/louiscalata/nisi-next-private/tests/disk-history-import-v1.test.mjs:50:16)
+    async Test.run (node:internal/test_runner/test:1332:7)
+    async startSubtestAfterBootstrap (node:internal/test_runner/harness:385:3)
+  ...
+# Subtest: fresh owner reopen observes the imported journal entry
+not ok 2 - fresh owner reopen observes the imported journal entry
+  ---
+  duration_ms: 1.149584
+  type: 'test'
+  location: '/Users/louiscalata/nisi-next-private/tests/disk-history-import-v1.test.mjs:81:1'
+  failureType: 'testCodeFailure'
+  error: 'NOT_IMPLEMENTED'
+  code: 'ERR_TEST_FAILURE'
+  stack: |-
+    importFixedXpcHistoryFromDisk (file:///Users/louiscalata/nisi-next-private/hosts/history/import-fixed-xpc-from-disk-v1.mjs:2:63)
+    file:///Users/louiscalata/nisi-next-private/tests/disk-history-import-v1.test.mjs:82:42
+    withRoot (file:///Users/louiscalata/nisi-next-private/tests/disk-history-import-v1.test.mjs:50:22)
+    async Test.run (node:internal/test_runner/test:1332:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:911:7)
+  ...
+# Subtest: malformed outer requests refuse before clock, disk and digest recognition
+not ok 3 - malformed outer requests refuse before clock, disk and digest recognition
+  ---
+  duration_ms: 0.830708
+  type: 'test'
+  location: '/Users/louiscalata/nisi-next-private/tests/disk-history-import-v1.test.mjs:88:1'
+  failureType: 'testCodeFailure'
+  error: 'NOT_IMPLEMENTED'
+  code: 'ERR_TEST_FAILURE'
+  stack: |-
+    importFixedXpcHistoryFromDisk (file:///Users/louiscalata/nisi-next-private/hosts/history/import-fixed-xpc-from-disk-v1.mjs:2:63)
+    file:///Users/louiscalata/nisi-next-private/tests/disk-history-import-v1.test.mjs:94:26
+    withRoot (file:///Users/louiscalata/nisi-next-private/tests/disk-history-import-v1.test.mjs:50:22)
+    async Test.run (node:internal/test_runner/test:1332:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:911:7)
+  ...
+# Subtest: plain and null-prototype exact envelopes are accepted
+not ok 4 - plain and null-prototype exact envelopes are accepted
+  ---
+  duration_ms: 0.843708
+  type: 'test'
+  location: '/Users/louiscalata/nisi-next-private/tests/disk-history-import-v1.test.mjs:101:1'
+  failureType: 'testCodeFailure'
+  error: 'NOT_IMPLEMENTED'
+  code: 'ERR_TEST_FAILURE'
+  stack: |-
+    importFixedXpcHistoryFromDisk (file:///Users/louiscalata/nisi-next-private/hosts/history/import-fixed-xpc-from-disk-v1.mjs:2:63)
+    file:///Users/louiscalata/nisi-next-private/tests/disk-history-import-v1.test.mjs:105:25
+    withRoot (file:///Users/louiscalata/nisi-next-private/tests/disk-history-import-v1.test.mjs:50:22)
+    async TestContext.<anonymous> (file:///Users/louiscalata/nisi-next-private/tests/disk-history-import-v1.test.mjs:102:42)
+    async Test.run (node:internal/test_runner/test:1332:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:911:7)
+  ...
+# Subtest: source selection is a closed data schema and accessors are not invoked
+not ok 5 - source selection is a closed data schema and accessors are not invoked
+  ---
+  duration_ms: 1.261208
+  type: 'test'
+  location: '/Users/louiscalata/nisi-next-private/tests/disk-history-import-v1.test.mjs:109:1'
+  failureType: 'testCodeFailure'
+  error: 'NOT_IMPLEMENTED'
+  code: 'ERR_TEST_FAILURE'
+  stack: |-
+    importFixedXpcHistoryFromDisk (file:///Users/louiscalata/nisi-next-private/hosts/history/import-fixed-xpc-from-disk-v1.mjs:2:63)
+    file:///Users/louiscalata/nisi-next-private/tests/disk-history-import-v1.test.mjs:116:26
+    withRoot (file:///Users/louiscalata/nisi-next-private/tests/disk-history-import-v1.test.mjs:50:22)
+    async Test.run (node:internal/test_runner/test:1332:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:911:7)
+  ...
+# Subtest: valid source selection digest is available when already aborted, without permit or read
+not ok 6 - valid source selection digest is available when already aborted, without permit or read
+  ---
+  duration_ms: 1.348708
+  type: 'test'
+  location: '/Users/louiscalata/nisi-next-private/tests/disk-history-import-v1.test.mjs:123:1'
+  failureType: 'testCodeFailure'
+  error: 'NOT_IMPLEMENTED'
+  code: 'ERR_TEST_FAILURE'
+  stack: |-
+    importFixedXpcHistoryFromDisk (file:///Users/louiscalata/nisi-next-private/hosts/history/import-fixed-xpc-from-disk-v1.mjs:2:63)
+    file:///Users/louiscalata/nisi-next-private/tests/disk-history-import-v1.test.mjs:125:24
+    withRoot (file:///Users/louiscalata/nisi-next-private/tests/disk-history-import-v1.test.mjs:50:22)
+    async Test.run (node:internal/test_runner/test:1332:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:911:7)
+  ...
+# Subtest: invalid declaration preserves permit refusal after valid selection and before disk read
+not ok 7 - invalid declaration preserves permit refusal after valid selection and before disk read
+  ---
+  duration_ms: 0.735709
+  type: 'test'
+  location: '/Users/louiscalata/nisi-next-private/tests/disk-history-import-v1.test.mjs:131:1'
+  failureType: 'testCodeFailure'
+  error: 'NOT_IMPLEMENTED'
+  code: 'ERR_TEST_FAILURE'
+  stack: |-
+    importFixedXpcHistoryFromDisk (file:///Users/louiscalata/nisi-next-private/hosts/history/import-fixed-xpc-from-disk-v1.mjs:2:63)
+    file:///Users/louiscalata/nisi-next-private/tests/disk-history-import-v1.test.mjs:133:24
+    withRoot (file:///Users/louiscalata/nisi-next-private/tests/disk-history-import-v1.test.mjs:50:22)
+    async Test.run (node:internal/test_runner/test:1332:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:911:7)
+  ...
+# Subtest: abort during permit clock revokes recognized permit and cancels before disk read
+not ok 8 - abort during permit clock revokes recognized permit and cancels before disk read
+  ---
+  duration_ms: 0.686208
+  type: 'test'
+  location: '/Users/louiscalata/nisi-next-private/tests/disk-history-import-v1.test.mjs:138:1'
+  failureType: 'testCodeFailure'
+  error: 'NOT_IMPLEMENTED'
+  code: 'ERR_TEST_FAILURE'
+  stack: |-
+    importFixedXpcHistoryFromDisk (file:///Users/louiscalata/nisi-next-private/hosts/history/import-fixed-xpc-from-disk-v1.mjs:2:63)
+    file:///Users/louiscalata/nisi-next-private/tests/disk-history-import-v1.test.mjs:140:24
+    withRoot (file:///Users/louiscalata/nisi-next-private/tests/disk-history-import-v1.test.mjs:50:22)
+    async Test.run (node:internal/test_runner/test:1332:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:911:7)
+  ...
+# Subtest: abort while the asynchronous reader is pending awaits cleanup and returns no evidence
+not ok 9 - abort while the asynchronous reader is pending awaits cleanup and returns no evidence
+  ---
+  duration_ms: 0.789542
+  type: 'test'
+  location: '/Users/louiscalata/nisi-next-private/tests/disk-history-import-v1.test.mjs:146:1'
+  failureType: 'testCodeFailure'
+  error: 'NOT_IMPLEMENTED'
+  code: 'ERR_TEST_FAILURE'
+  stack: |-
+    importFixedXpcHistoryFromDisk (file:///Users/louiscalata/nisi-next-private/hosts/history/import-fixed-xpc-from-disk-v1.mjs:2:63)
+    file:///Users/louiscalata/nisi-next-private/tests/disk-history-import-v1.test.mjs:148:21
+    withRoot (file:///Users/louiscalata/nisi-next-private/tests/disk-history-import-v1.test.mjs:50:22)
+    async Test.run (node:internal/test_runner/test:1332:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:911:7)
+  ...
+# Subtest: a synthetic abort event neither cancels nor consumes the later real abort listener
+not ok 10 - a synthetic abort event neither cancels nor consumes the later real abort listener
+  ---
+  duration_ms: 0.765125
+  type: 'test'
+  location: '/Users/louiscalata/nisi-next-private/tests/disk-history-import-v1.test.mjs:155:1'
+  failureType: 'testCodeFailure'
+  error: 'NOT_IMPLEMENTED'
+  code: 'ERR_TEST_FAILURE'
+  stack: |-
+    importFixedXpcHistoryFromDisk (file:///Users/louiscalata/nisi-next-private/hosts/history/import-fixed-xpc-from-disk-v1.mjs:2:63)
+    file:///Users/louiscalata/nisi-next-private/tests/disk-history-import-v1.test.mjs:157:21
+    withRoot (file:///Users/louiscalata/nisi-next-private/tests/disk-history-import-v1.test.mjs:50:22)
+    async Test.run (node:internal/test_runner/test:1332:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:911:7)
+  ...
+# Subtest: source selection is copied before await and later poisoning cannot redirect scope
+not ok 11 - source selection is copied before await and later poisoning cannot redirect scope
+  ---
+  duration_ms: 0.861083
+  type: 'test'
+  location: '/Users/louiscalata/nisi-next-private/tests/disk-history-import-v1.test.mjs:165:1'
+  failureType: 'testCodeFailure'
+  error: 'NOT_IMPLEMENTED'
+  code: 'ERR_TEST_FAILURE'
+  stack: |-
+    importFixedXpcHistoryFromDisk (file:///Users/louiscalata/nisi-next-private/hosts/history/import-fixed-xpc-from-disk-v1.mjs:2:63)
+    file:///Users/louiscalata/nisi-next-private/tests/disk-history-import-v1.test.mjs:168:21
+    async withRoot (file:///Users/louiscalata/nisi-next-private/tests/disk-history-import-v1.test.mjs:50:16)
+    async Test.run (node:internal/test_runner/test:1332:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:911:7)
+  ...
+# Subtest: declaration is copied by permit before await and later poisoning cannot change binding
+not ok 12 - declaration is copied by permit before await and later poisoning cannot change binding
+  ---
+  duration_ms: 1.585375
+  type: 'test'
+  location: '/Users/louiscalata/nisi-next-private/tests/disk-history-import-v1.test.mjs:174:1'
+  failureType: 'testCodeFailure'
+  error: 'NOT_IMPLEMENTED'
+  code: 'ERR_TEST_FAILURE'
+  stack: |-
+    importFixedXpcHistoryFromDisk (file:///Users/louiscalata/nisi-next-private/hosts/history/import-fixed-xpc-from-disk-v1.mjs:2:63)
+    file:///Users/louiscalata/nisi-next-private/tests/disk-history-import-v1.test.mjs:175:65
+    withRoot (file:///Users/louiscalata/nisi-next-private/tests/disk-history-import-v1.test.mjs:50:22)
+    async Test.run (node:internal/test_runner/test:1332:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:911:7)
+  ...
+# Subtest: directory at selected path refuses after one source attempt without capture
+not ok 13 - directory at selected path refuses after one source attempt without capture
+  ---
+  duration_ms: 0.868958
+  type: 'test'
+  location: '/Users/louiscalata/nisi-next-private/tests/disk-history-import-v1.test.mjs:181:1'
+  failureType: 'testCodeFailure'
+  error: 'NOT_IMPLEMENTED'
+  code: 'ERR_TEST_FAILURE'
+  stack: |-
+    importFixedXpcHistoryFromDisk (file:///Users/louiscalata/nisi-next-private/hosts/history/import-fixed-xpc-from-disk-v1.mjs:2:63)
+    file:///Users/louiscalata/nisi-next-private/tests/disk-history-import-v1.test.mjs:183:24
+    async withRoot (file:///Users/louiscalata/nisi-next-private/tests/disk-history-import-v1.test.mjs:50:16)
+    async Test.run (node:internal/test_runner/test:1332:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:911:7)
+  ...
+# Subtest: file symlink is never followed
+not ok 14 - file symlink is never followed
+  ---
+  duration_ms: 1.225542
+  type: 'test'
+  location: '/Users/louiscalata/nisi-next-private/tests/disk-history-import-v1.test.mjs:188:1'
+  failureType: 'testCodeFailure'
+  error: 'NOT_IMPLEMENTED'
+  code: 'ERR_TEST_FAILURE'
+  stack: |-
+    importFixedXpcHistoryFromDisk (file:///Users/louiscalata/nisi-next-private/hosts/history/import-fixed-xpc-from-disk-v1.mjs:2:63)
+    file:///Users/louiscalata/nisi-next-private/tests/disk-history-import-v1.test.mjs:191:24
+    async withRoot (file:///Users/louiscalata/nisi-next-private/tests/disk-history-import-v1.test.mjs:50:16)
+    async Test.run (node:internal/test_runner/test:1332:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:911:7)
+  ...
+# Subtest: symlinked directory component is never followed
+not ok 15 - symlinked directory component is never followed
+  ---
+  duration_ms: 1.304375
+  type: 'test'
+  location: '/Users/louiscalata/nisi-next-private/tests/disk-history-import-v1.test.mjs:196:1'
+  failureType: 'testCodeFailure'
+  error: 'NOT_IMPLEMENTED'
+  code: 'ERR_TEST_FAILURE'
+  stack: |-
+    importFixedXpcHistoryFromDisk (file:///Users/louiscalata/nisi-next-private/hosts/history/import-fixed-xpc-from-disk-v1.mjs:2:63)
+    file:///Users/louiscalata/nisi-next-private/tests/disk-history-import-v1.test.mjs:199:24
+    async withRoot (file:///Users/louiscalata/nisi-next-private/tests/disk-history-import-v1.test.mjs:50:16)
+    async Test.run (node:internal/test_runner/test:1332:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:911:7)
+  ...
+# Subtest: hardlinked selected file is refused
+not ok 16 - hardlinked selected file is refused
+  ---
+  duration_ms: 1.11725
+  type: 'test'
+  location: '/Users/louiscalata/nisi-next-private/tests/disk-history-import-v1.test.mjs:204:1'
+  failureType: 'testCodeFailure'
+  error: 'NOT_IMPLEMENTED'
+  code: 'ERR_TEST_FAILURE'
+  stack: |-
+    importFixedXpcHistoryFromDisk (file:///Users/louiscalata/nisi-next-private/hosts/history/import-fixed-xpc-from-disk-v1.mjs:2:63)
+    file:///Users/louiscalata/nisi-next-private/tests/disk-history-import-v1.test.mjs:206:24
+    async withRoot (file:///Users/louiscalata/nisi-next-private/tests/disk-history-import-v1.test.mjs:50:16)
+    async Test.run (node:internal/test_runner/test:1332:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:911:7)
+  ...
+# Subtest: invalid UTF-8 is refused without echoing bytes
+not ok 17 - invalid UTF-8 is refused without echoing bytes
+  ---
+  duration_ms: 1.158917
+  type: 'test'
+  location: '/Users/louiscalata/nisi-next-private/tests/disk-history-import-v1.test.mjs:211:1'
+  failureType: 'testCodeFailure'
+  error: 'NOT_IMPLEMENTED'
+  code: 'ERR_TEST_FAILURE'
+  stack: |-
+    importFixedXpcHistoryFromDisk (file:///Users/louiscalata/nisi-next-private/hosts/history/import-fixed-xpc-from-disk-v1.mjs:2:63)
+    file:///Users/louiscalata/nisi-next-private/tests/disk-history-import-v1.test.mjs:213:24
+    async withRoot (file:///Users/louiscalata/nisi-next-private/tests/disk-history-import-v1.test.mjs:50:16)
+    async Test.run (node:internal/test_runner/test:1332:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:911:7)
+  ...
+# Subtest: file larger than 1MiB is refused without capture
+not ok 18 - file larger than 1MiB is refused without capture
+  ---
+  duration_ms: 1.55725
+  type: 'test'
+  location: '/Users/louiscalata/nisi-next-private/tests/disk-history-import-v1.test.mjs:219:1'
+  failureType: 'testCodeFailure'
+  error: 'NOT_IMPLEMENTED'
+  code: 'ERR_TEST_FAILURE'
+  stack: |-
+    importFixedXpcHistoryFromDisk (file:///Users/louiscalata/nisi-next-private/hosts/history/import-fixed-xpc-from-disk-v1.mjs:2:63)
+    file:///Users/louiscalata/nisi-next-private/tests/disk-history-import-v1.test.mjs:221:24
+    async withRoot (file:///Users/louiscalata/nisi-next-private/tests/disk-history-import-v1.test.mjs:50:16)
+    async Test.run (node:internal/test_runner/test:1332:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:911:7)
+  ...
+# Subtest: cancellation wins outer status but retains a closed reader failure code
+not ok 19 - cancellation wins outer status but retains a closed reader failure code
+  ---
+  duration_ms: 0.788834
+  type: 'test'
+  location: '/Users/louiscalata/nisi-next-private/tests/disk-history-import-v1.test.mjs:226:1'
+  failureType: 'testCodeFailure'
+  error: 'NOT_IMPLEMENTED'
+  code: 'ERR_TEST_FAILURE'
+  stack: |-
+    importFixedXpcHistoryFromDisk (file:///Users/louiscalata/nisi-next-private/hosts/history/import-fixed-xpc-from-disk-v1.mjs:2:63)
+    file:///Users/louiscalata/nisi-next-private/tests/disk-history-import-v1.test.mjs:229:21
+    async withRoot (file:///Users/louiscalata/nisi-next-private/tests/disk-history-import-v1.test.mjs:50:16)
+    async Test.run (node:internal/test_runner/test:1332:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:911:7)
+  ...
+# Subtest: source digest mismatch preserves bounded evidence but refuses capture admission
+not ok 20 - source digest mismatch preserves bounded evidence but refuses capture admission
+  ---
+  duration_ms: 1.0015
+  type: 'test'
+  location: '/Users/louiscalata/nisi-next-private/tests/disk-history-import-v1.test.mjs:237:1'
+  failureType: 'testCodeFailure'
+  error: 'NOT_IMPLEMENTED'
+  code: 'ERR_TEST_FAILURE'
+  stack: |-
+    importFixedXpcHistoryFromDisk (file:///Users/louiscalata/nisi-next-private/hosts/history/import-fixed-xpc-from-disk-v1.mjs:2:63)
+    file:///Users/louiscalata/nisi-next-private/tests/disk-history-import-v1.test.mjs:238:43
+    withRoot (file:///Users/louiscalata/nisi-next-private/tests/disk-history-import-v1.test.mjs:50:22)
+    async Test.run (node:internal/test_runner/test:1332:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:911:7)
+  ...
+# Subtest: malformed but digest-matched source record is refused by the canonical projector
+not ok 21 - malformed but digest-matched source record is refused by the canonical projector
+  ---
+  duration_ms: 0.545584
+  type: 'test'
+  location: '/Users/louiscalata/nisi-next-private/tests/disk-history-import-v1.test.mjs:245:1'
+  failureType: 'testCodeFailure'
+  error: 'NOT_IMPLEMENTED'
+  code: 'ERR_TEST_FAILURE'
+  stack: |-
+    importFixedXpcHistoryFromDisk (file:///Users/louiscalata/nisi-next-private/hosts/history/import-fixed-xpc-from-disk-v1.mjs:2:63)
+    file:///Users/louiscalata/nisi-next-private/tests/disk-history-import-v1.test.mjs:247:43
+    async withRoot (file:///Users/louiscalata/nisi-next-private/tests/disk-history-import-v1.test.mjs:50:16)
+    async Test.run (node:internal/test_runner/test:1332:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:911:7)
+  ...
+# Subtest: result never leaks root, relative path, source content or signal reason
+not ok 22 - result never leaks root, relative path, source content or signal reason
+  ---
+  duration_ms: 0.489834
+  type: 'test'
+  location: '/Users/louiscalata/nisi-next-private/tests/disk-history-import-v1.test.mjs:252:1'
+  failureType: 'testCodeFailure'
+  error: 'NOT_IMPLEMENTED'
+  code: 'ERR_TEST_FAILURE'
+  stack: |-
+    importFixedXpcHistoryFromDisk (file:///Users/louiscalata/nisi-next-private/hosts/history/import-fixed-xpc-from-disk-v1.mjs:2:63)
+    file:///Users/louiscalata/nisi-next-private/tests/disk-history-import-v1.test.mjs:253:43
+    withRoot (file:///Users/louiscalata/nisi-next-private/tests/disk-history-import-v1.test.mjs:50:22)
+    async Test.run (node:internal/test_runner/test:1332:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:911:7)
+  ...
+# Subtest: duplicate preserves the actual canonical capture result
+not ok 23 - duplicate preserves the actual canonical capture result
+  ---
+  duration_ms: 0.458125
+  type: 'test'
+  location: '/Users/louiscalata/nisi-next-private/tests/disk-history-import-v1.test.mjs:258:1'
+  failureType: 'testCodeFailure'
+  error: 'NOT_IMPLEMENTED'
+  code: 'ERR_TEST_FAILURE'
+  stack: |-
+    importFixedXpcHistoryFromDisk (file:///Users/louiscalata/nisi-next-private/hosts/history/import-fixed-xpc-from-disk-v1.mjs:2:63)
+    file:///Users/louiscalata/nisi-next-private/tests/disk-history-import-v1.test.mjs:259:66
+    withRoot (file:///Users/louiscalata/nisi-next-private/tests/disk-history-import-v1.test.mjs:50:22)
+    async Test.run (node:internal/test_runner/test:1332:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:911:7)
+  ...
+# Subtest: same observation identity with changed declaration binding reports conflict
+not ok 24 - same observation identity with changed declaration binding reports conflict
+  ---
+  duration_ms: 0.684917
+  type: 'test'
+  location: '/Users/louiscalata/nisi-next-private/tests/disk-history-import-v1.test.mjs:265:1'
+  failureType: 'testCodeFailure'
+  error: 'NOT_IMPLEMENTED'
+  code: 'ERR_TEST_FAILURE'
+  stack: |-
+    importFixedXpcHistoryFromDisk (file:///Users/louiscalata/nisi-next-private/hosts/history/import-fixed-xpc-from-disk-v1.mjs:2:63)
+    file:///Users/louiscalata/nisi-next-private/tests/disk-history-import-v1.test.mjs:266:66
+    withRoot (file:///Users/louiscalata/nisi-next-private/tests/disk-history-import-v1.test.mjs:50:22)
+    async Test.run (node:internal/test_runner/test:1332:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:911:7)
+  ...
+# Subtest: precommit journal failure preserves STORE_FAILED and the previous snapshot
+not ok 25 - precommit journal failure preserves STORE_FAILED and the previous snapshot
+  ---
+  duration_ms: 0.970041
+  type: 'test'
+  location: '/Users/louiscalata/nisi-next-private/tests/disk-history-import-v1.test.mjs:271:1'
+  failureType: 'testCodeFailure'
+  error: 'NOT_IMPLEMENTED'
+  code: 'ERR_TEST_FAILURE'
+  stack: |-
+    importFixedXpcHistoryFromDisk (file:///Users/louiscalata/nisi-next-private/hosts/history/import-fixed-xpc-from-disk-v1.mjs:2:63)
+    file:///Users/louiscalata/nisi-next-private/tests/disk-history-import-v1.test.mjs:274:24
+    withRoot (file:///Users/louiscalata/nisi-next-private/tests/disk-history-import-v1.test.mjs:50:22)
+    async Test.run (node:internal/test_runner/test:1332:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:911:7)
+  ...
+# Subtest: postrename failure is uncertain and a fresh owner reconciles actual committed bytes
+not ok 26 - postrename failure is uncertain and a fresh owner reconciles actual committed bytes
+  ---
+  duration_ms: 0.596708
+  type: 'test'
+  location: '/Users/louiscalata/nisi-next-private/tests/disk-history-import-v1.test.mjs:280:1'
+  failureType: 'testCodeFailure'
+  error: 'NOT_IMPLEMENTED'
+  code: 'ERR_TEST_FAILURE'
+  stack: |-
+    importFixedXpcHistoryFromDisk (file:///Users/louiscalata/nisi-next-private/hosts/history/import-fixed-xpc-from-disk-v1.mjs:2:63)
+    file:///Users/louiscalata/nisi-next-private/tests/disk-history-import-v1.test.mjs:285:24
+    withRoot (file:///Users/louiscalata/nisi-next-private/tests/disk-history-import-v1.test.mjs:50:22)
+    async Test.run (node:internal/test_runner/test:1332:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:911:7)
+  ...
+# Subtest: stale owner disk digest reports STORE_CONFLICT without retry
+not ok 27 - stale owner disk digest reports STORE_CONFLICT without retry
+  ---
+  duration_ms: 1.767458
+  type: 'test'
+  location: '/Users/louiscalata/nisi-next-private/tests/disk-history-import-v1.test.mjs:293:1'
+  failureType: 'testCodeFailure'
+  error: 'NOT_IMPLEMENTED'
+  code: 'ERR_TEST_FAILURE'
+  stack: |-
+    importFixedXpcHistoryFromDisk (file:///Users/louiscalata/nisi-next-private/hosts/history/import-fixed-xpc-from-disk-v1.mjs:2:63)
+    file:///Users/louiscalata/nisi-next-private/tests/disk-history-import-v1.test.mjs:296:56
+    withRoot (file:///Users/louiscalata/nisi-next-private/tests/disk-history-import-v1.test.mjs:50:22)
+    async Test.run (node:internal/test_runner/test:1332:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:911:7)
+  ...
+# Subtest: abort inside pre-record clock preserves PERMIT_REVOKED rather than outer cancellation
+not ok 28 - abort inside pre-record clock preserves PERMIT_REVOKED rather than outer cancellation
+  ---
+  duration_ms: 0.499291
+  type: 'test'
+  location: '/Users/louiscalata/nisi-next-private/tests/disk-history-import-v1.test.mjs:301:1'
+  failureType: 'testCodeFailure'
+  error: 'NOT_IMPLEMENTED'
+  code: 'ERR_TEST_FAILURE'
+  stack: |-
+    importFixedXpcHistoryFromDisk (file:///Users/louiscalata/nisi-next-private/hosts/history/import-fixed-xpc-from-disk-v1.mjs:2:63)
+    file:///Users/louiscalata/nisi-next-private/tests/disk-history-import-v1.test.mjs:303:24
+    withRoot (file:///Users/louiscalata/nisi-next-private/tests/disk-history-import-v1.test.mjs:50:22)
+    async Test.run (node:internal/test_runner/test:1332:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:911:7)
+  ...
+# Subtest: abort after record admission cannot override the actual write result
+not ok 29 - abort after record admission cannot override the actual write result
+  ---
+  duration_ms: 0.466333
+  type: 'test'
+  location: '/Users/louiscalata/nisi-next-private/tests/disk-history-import-v1.test.mjs:309:1'
+  failureType: 'testCodeFailure'
+  error: 'NOT_IMPLEMENTED'
+  code: 'ERR_TEST_FAILURE'
+  stack: |-
+    importFixedXpcHistoryFromDisk (file:///Users/louiscalata/nisi-next-private/hosts/history/import-fixed-xpc-from-disk-v1.mjs:2:63)
+    file:///Users/louiscalata/nisi-next-private/tests/disk-history-import-v1.test.mjs:312:24
+    withRoot (file:///Users/louiscalata/nisi-next-private/tests/disk-history-import-v1.test.mjs:50:22)
+    async Test.run (node:internal/test_runner/test:1332:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:911:7)
+  ...
+# Subtest: capture is invoked once: admitted store failure is consumed and never automatically retried
+not ok 30 - capture is invoked once: admitted store failure is consumed and never automatically retried
+  ---
+  duration_ms: 0.473792
+  type: 'test'
+  location: '/Users/louiscalata/nisi-next-private/tests/disk-history-import-v1.test.mjs:316:1'
+  failureType: 'testCodeFailure'
+  error: 'NOT_IMPLEMENTED'
+  code: 'ERR_TEST_FAILURE'
+  stack: |-
+    importFixedXpcHistoryFromDisk (file:///Users/louiscalata/nisi-next-private/hosts/history/import-fixed-xpc-from-disk-v1.mjs:2:63)
+    file:///Users/louiscalata/nisi-next-private/tests/disk-history-import-v1.test.mjs:319:24
+    withRoot (file:///Users/louiscalata/nisi-next-private/tests/disk-history-import-v1.test.mjs:50:22)
+    async Test.run (node:internal/test_runner/test:1332:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:911:7)
+  ...
+# Subtest: source scope is exactly the selected single path and unrelated files are not represented
+not ok 31 - source scope is exactly the selected single path and unrelated files are not represented
+  ---
+  duration_ms: 0.546542
+  type: 'test'
+  location: '/Users/louiscalata/nisi-next-private/tests/disk-history-import-v1.test.mjs:323:1'
+  failureType: 'testCodeFailure'
+  error: 'NOT_IMPLEMENTED'
+  code: 'ERR_TEST_FAILURE'
+  stack: |-
+    importFixedXpcHistoryFromDisk (file:///Users/louiscalata/nisi-next-private/hosts/history/import-fixed-xpc-from-disk-v1.mjs:2:63)
+    file:///Users/louiscalata/nisi-next-private/tests/disk-history-import-v1.test.mjs:325:24
+    async withRoot (file:///Users/louiscalata/nisi-next-private/tests/disk-history-import-v1.test.mjs:50:16)
+    async Test.run (node:internal/test_runner/test:1332:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:911:7)
+  ...
+# Subtest: invalid signal identity is INVALID_INPUT before source recognition or clock
+not ok 32 - invalid signal identity is INVALID_INPUT before source recognition or clock
+  ---
+  duration_ms: 0.473042
+  type: 'test'
+  location: '/Users/louiscalata/nisi-next-private/tests/disk-history-import-v1.test.mjs:330:1'
+  failureType: 'testCodeFailure'
+  error: 'NOT_IMPLEMENTED'
+  code: 'ERR_TEST_FAILURE'
+  stack: |-
+    importFixedXpcHistoryFromDisk (file:///Users/louiscalata/nisi-next-private/hosts/history/import-fixed-xpc-from-disk-v1.mjs:2:63)
+    file:///Users/louiscalata/nisi-next-private/tests/disk-history-import-v1.test.mjs:333:26
+    withRoot (file:///Users/louiscalata/nisi-next-private/tests/disk-history-import-v1.test.mjs:50:22)
+    async Test.run (node:internal/test_runner/test:1332:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:911:7)
+  ...
+1..32
+# tests 32
+# suites 0
+# pass 0
+# fail 32
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 74.647625
+

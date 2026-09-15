@@ -1,0 +1,32 @@
+# Nisi Windows drafting packet — history-timeline
+
+**Status: PREPARED, not dispatched or accepted.**
+**Overall product progress: 30% (3/10 NX milestones).**
+
+Draft owner: registered Windows Qwen chat worker. Code installation/test owner:
+Codex in this isolated work order only. GPT-OSS gets a separate review request.
+This is NOT an OpenCode execution receipt or permission to modify the product.
+
+## Contract
+
+Private future Nisi prototype, not integrated product API. Implement ONLY src/index.mjs as dependency-free synchronous ESM with the single named export below. No imports, filesystem, network, process, models, eval, dynamic code or clocks. Input is ordinary JSON; return REFUSED rather than throw for every malformed input. All object key sets are exact, unknown keys rejected; top-level null/array rejected. Nonempty bounded strings mean length 1..128. Array cap 200 unless stated. No mutation; output copies all rows so later input changes do not alter it. Invalid return exactly {status:'REFUSED',reason:'INVALID_INPUT',authorizing:false}. Output field ordering follows examples. No claim that this validates actual model, hardware, code accuracy, permissions or execution evidence. Only transforms supplied synthetic data.
+
+Named export: `buildTimeline(input)`.
+
+Input {runId,events}; runId bounded string. Event exact {id,attempt,stage,status,createdAt,durationMs,receiptId}; id unique bounded string; attempt and createdAt nonnegative safe integers excluding -0; stage bounded string; status PASS|FAIL|NOT_RUN|ERROR|INCONCLUSIVE|CANCELLED|TIMED_OUT; durationMs null or finite>=0 excluding -0; receiptId null or bounded string. Output {schemaVersion:1,status:'READY',runId,events:[copied event fields then sequence starting1],attempts:[{attempt,eventIds,unknownDurations}],authorizing:false}. Sort events by attempt ascending then createdAt ascending then original input index. Attempts ascending; eventIds follow sorted event order; unknownDurations count null duration in each attempt. Duplicate stage/time observations with distinct ids remain separate. Preserve every status exactly. Empty events/attempts []. Do NOT infer success, outcome, completeness, recovery, authority or auto-resume.
+
+## Required returned artifact
+
+Return only valid JSON, no markdown fences:
+`{"schemaVersion":1,"files":[{"path":"src/index.mjs","content":"complete JavaScript source"}],"notes":["brief limitations"]}`.
+One source file only, ideally <=180 lines. Do not claim tests were run: the chat
+worker has no test or filesystem tools. Do not send a fragment or pseudocode.
+
+## Owner acceptance
+
+The owner reads the whole source before executing. No imports or executable side
+effects; only the pure named function and helpers. Preserve protected tests and
+package; run `npm test` separately from `npm run test:acceptance`. Both must
+pass. Retain actual stdout, exit status, source and test hashes, model-reported
+provenance, missing usage as unknown, and separate review findings. A baseline
+pass alone never accepts the implementation. Code is for future integration only.

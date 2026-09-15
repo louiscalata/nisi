@@ -1,0 +1,220 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://veritas.invalid/private/schemas/stage5/e16-implementation-result.v1.json",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schemaVersion",
+    "recordType",
+    "profile",
+    "status",
+    "evidenceClass",
+    "sourceSha256",
+    "derivedHarnessSha256",
+    "officialE16ManifestSha256",
+    "officialE16ManifestStatus",
+    "officialE16CaseDenominator",
+    "officialE16NotRunCases",
+    "officialE16ExecutedCases",
+    "officialE16PassedCases",
+    "officialE16CreditedCases",
+    "officialE16Complete",
+    "localImplementationFixtureSelectedCaseIds",
+    "localImplementationFixtureSelectedUniqueCases",
+    "localImplementationFixtureExecutedUniqueCases",
+    "localImplementationFixturePassedUniqueCases",
+    "localImplementationFixtureRunsPerCase",
+    "localImplementationFixtureCaseRunExecutions",
+    "localImplementationFixtureDeterministicRepeat",
+    "officialCaseIdentitiesNotSelectedForLocalFixture",
+    "localFixtureOfficialE16CreditCases",
+    "platform",
+    "storageProfile",
+    "localFixtureNegativeControls",
+    "semanticFindings",
+    "localImplementationFixtureCases",
+    "limitations",
+    "credits",
+    "resultDigest"
+  ],
+  "properties": {
+    "schemaVersion": { "const": 1 },
+    "recordType": { "const": "E16_IMPLEMENTATION_SUBSET_RUN_V1" },
+    "profile": { "const": "veritas-e16-local-apfs-process-subset-v1" },
+    "status": { "const": "PASS_E16_IMPLEMENTATION_LOCAL_APFS_PROCESS_SUBSET_ONLY" },
+    "evidenceClass": { "const": "SELF_ADMINISTERED_IMPLEMENTATION_LOCAL_APFS_PROCESS_FIXTURE" },
+    "sourceSha256": { "$ref": "#/$defs/sha256" },
+    "derivedHarnessSha256": { "$ref": "#/$defs/sha256" },
+    "officialE16ManifestSha256": { "$ref": "#/$defs/sha256" },
+    "officialE16ManifestStatus": { "const": "NOT_RUN" },
+    "officialE16CaseDenominator": { "const": 24 },
+    "officialE16NotRunCases": { "const": 24 },
+    "officialE16ExecutedCases": { "const": 0 },
+    "officialE16PassedCases": { "const": 0 },
+    "officialE16CreditedCases": { "const": 0 },
+    "officialE16Complete": { "const": false },
+    "localImplementationFixtureSelectedCaseIds": {
+      "type": "array",
+      "minItems": 4,
+      "maxItems": 4,
+      "uniqueItems": true,
+      "items": { "$ref": "#/$defs/caseId" }
+    },
+    "localImplementationFixtureSelectedUniqueCases": { "const": 4 },
+    "localImplementationFixtureExecutedUniqueCases": { "const": 4 },
+    "localImplementationFixturePassedUniqueCases": { "const": 4 },
+    "localImplementationFixtureRunsPerCase": { "const": 2 },
+    "localImplementationFixtureCaseRunExecutions": { "const": 8 },
+    "localImplementationFixtureDeterministicRepeat": { "const": true },
+    "officialCaseIdentitiesNotSelectedForLocalFixture": { "const": 20 },
+    "localFixtureOfficialE16CreditCases": { "const": 0 },
+    "platform": { "const": "darwin" },
+    "storageProfile": { "const": "LOCAL_APFS_PROCESS_CRASH_FIXTURE" },
+    "localFixtureNegativeControls": {
+      "type": "array",
+      "minItems": 2,
+      "maxItems": 2,
+      "uniqueItems": true,
+      "items": { "$ref": "#/$defs/control" }
+    },
+    "semanticFindings": { "type": "array", "maxItems": 0 },
+    "localImplementationFixtureCases": {
+      "type": "array",
+      "minItems": 4,
+      "maxItems": 4,
+      "items": { "$ref": "#/$defs/case" }
+    },
+    "limitations": {
+      "type": "array",
+      "minItems": 9,
+      "maxItems": 9,
+      "uniqueItems": true,
+      "items": { "type": "string", "minLength": 8 }
+    },
+    "credits": { "$ref": "#/$defs/credits" },
+    "resultDigest": { "$ref": "#/$defs/sha256" }
+  },
+  "$defs": {
+    "sha256": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{64}$"
+    },
+    "caseId": {
+      "enum": [
+        "E16-S5-PROMO-001",
+        "E16-S5-PROMO-002",
+        "E16-S5-DIGEST-004",
+        "E16-S5-PROMO-004"
+      ]
+    },
+    "control": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "detected", "status", "resultDigest"],
+      "properties": {
+        "id": {
+          "enum": [
+            "ACCEPTED_REFERENCE_UNKNOWN_FIELD_REJECTED",
+            "FULL_REFERENCE_BINDING_MISMATCH_REJECTED"
+          ]
+        },
+        "detected": { "const": true },
+        "status": { "const": "PASS_CONTROL" },
+        "resultDigest": { "$ref": "#/$defs/sha256" }
+      }
+    },
+    "case": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schemaVersion",
+        "caseId",
+        "family",
+        "injectionPoint",
+        "expectedOutcome",
+        "observedOutcome",
+        "status",
+        "darwinKernelSigkillObserved",
+        "freshProcessRecoveryObserved",
+        "stalePreparationScavenged",
+        "priorReferenceState",
+        "finalReferenceState",
+        "receiptLifecycle",
+        "recoveryAction",
+        "secondRecoveryClean",
+        "exactPriorReferenceRestored",
+        "priorObjectDigestReverified",
+        "sameTransactionIdPreserved",
+        "sameReceiptIdPreserved",
+        "sameReceiptRecordDigestPreserved",
+        "candidateAcceptedEffectCount",
+        "caseReceiptCount",
+        "candidateProcessSpawned",
+        "generatedArtifactExecuted",
+        "protectedAuthorityVerified",
+        "semanticFindings",
+        "resultDigest"
+      ],
+      "properties": {
+        "schemaVersion": { "const": 1 },
+        "caseId": { "$ref": "#/$defs/caseId" },
+        "family": { "enum": ["DIGEST_SUBSTITUTION", "PROMOTION_CRASH_OR_RACE"] },
+        "injectionPoint": {
+          "enum": [
+            "AFTER_PREPARED_OBJECT_SYNC_BEFORE_IMMUTABLE_RENAME",
+            "AFTER_PROMOTING_STATE",
+            "AFTER_REFERENCE_SWAP",
+            "AFTER_ACTIVE_RECEIPT"
+          ]
+        },
+        "expectedOutcome": { "enum": ["CONVERGE_IDEMPOTENTLY", "ROLL_BACK_TO_PRIOR_TARGET"] },
+        "observedOutcome": { "enum": ["CONVERGE_IDEMPOTENTLY", "ROLL_BACK_TO_PRIOR_TARGET"] },
+        "status": { "const": "PASS_IMPLEMENTATION_FIXTURE_ONLY" },
+        "darwinKernelSigkillObserved": { "type": "boolean" },
+        "freshProcessRecoveryObserved": { "type": "boolean" },
+        "stalePreparationScavenged": { "type": "boolean" },
+        "priorReferenceState": { "enum": ["ABSENT", "PRIOR"] },
+        "finalReferenceState": { "enum": ["ABSENT", "PRIOR", "CANDIDATE"] },
+        "receiptLifecycle": { "enum": ["ACTIVE", "INACTIVE", "INACTIVE_THEN_ACTIVE"] },
+        "recoveryAction": { "enum": ["NONE", "ROLLED_BACK", "FINALIZED_ACCEPTED"] },
+        "secondRecoveryClean": { "const": true },
+        "exactPriorReferenceRestored": { "type": "boolean" },
+        "priorObjectDigestReverified": { "type": "boolean" },
+        "sameTransactionIdPreserved": { "type": "boolean" },
+        "sameReceiptIdPreserved": { "type": "boolean" },
+        "sameReceiptRecordDigestPreserved": { "type": "boolean" },
+        "candidateAcceptedEffectCount": { "type": "integer", "minimum": 0, "maximum": 1 },
+        "caseReceiptCount": { "type": "integer", "minimum": 1, "maximum": 2 },
+        "candidateProcessSpawned": { "const": false },
+        "generatedArtifactExecuted": { "const": false },
+        "protectedAuthorityVerified": { "const": false },
+        "semanticFindings": { "type": "array", "maxItems": 0 },
+        "resultDigest": { "$ref": "#/$defs/sha256" }
+      }
+    },
+    "credits": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "protectedAuthority",
+        "nativeRuntime",
+        "t164ThroughT183",
+        "m4",
+        "e16",
+        "patent",
+        "production",
+        "release"
+      ],
+      "properties": {
+        "protectedAuthority": { "const": false },
+        "nativeRuntime": { "const": false },
+        "t164ThroughT183": { "const": false },
+        "m4": { "const": false },
+        "e16": { "const": false },
+        "patent": { "const": false },
+        "production": { "const": false },
+        "release": { "const": false }
+      }
+    }
+  }
+}

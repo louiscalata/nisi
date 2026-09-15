@@ -1,0 +1,11 @@
+{
+  "name": "nisi-future-progress-checklist",
+  "version": "0.0.0-private",
+  "private": true,
+  "type": "module",
+  "license": "UNLICENSED",
+  "scripts": {
+    "test": "node --test --test-timeout=10000 tests/baseline.test.mjs",
+    "test:acceptance": "node --test --test-timeout=10000 tests/acceptance.test.mjs"
+  }
+}

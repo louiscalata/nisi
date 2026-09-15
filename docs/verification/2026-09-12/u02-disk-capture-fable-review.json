@@ -1,0 +1,9 @@
+{
+  "invocation_status": "failed",
+  "status": "NOT_RUN",
+  "requested_model": "fable",
+  "error": "[Errno 2] No such file or directory: '/Users/louiscalata/nisi-next-private/docs/verification/2026-09-12/u02-disk-capture-fable-review.json'",
+  "tools_enabled": false,
+  "session_persisted": false,
+  "write_owner": "codex"
+}

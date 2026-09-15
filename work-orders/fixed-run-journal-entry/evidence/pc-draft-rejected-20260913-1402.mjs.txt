@@ -1,0 +1,108 @@
+import { deepClone } from './utils.mjs';
+
+// Summary v1 contract
+function isValidSummary(summary) {
+  if (typeof summary !== 'object' || summary === null || Array.isArray(summary)) {
+    return false;
+  }
+  const { project, version, timestamp, entries } = summary;
+  if (typeof project !== 'string' || project.length === 0) return false;
+  if (version !== 'v1') return false;
+  if (typeof timestamp !== 'number' || !Number.isFinite(timestamp) || timestamp < 0) return false;
+  if (!Array.isArray(entries) || entries.length === 0) return false;
+  for (const entry of entries) {
+    if (!isValidEntry(entry)) return false;
+  }
+  return true;
+}
+
+// Entry shape
+function isValidEntry(entry) {
+  if (typeof entry !== 'object' || entry === null || Array.isArray(entry)) {
+    return false;
+  }
+  const { type, payload } = entry;
+  if (typeof type !== 'string' || type.length === 0) return false;
+  if (typeof payload !== 'object' || payload === null || Array.isArray(payload)) {
+    return false;
+  }
+  // Payload must be representable: only primitives, plain objects, arrays, no cycles
+  if (!isRepresentable(payload)) return false;
+  return true;
+}
+
+// Representability check: no functions, no symbols, no cycles, no non-plain objects
+function isRepresentable(value, seen = new WeakSet()) {
+  if (value === null || typeof value === 'undefined') return true;
+  if (typeof value !== 'object') return true;
+  if (seen.has(value)) return false;
+  seen.add(value);
+  if (Array.isArray(value)) {
+    for (const item of value) {
+      if (!isRepresentable(item, seen)) return false;
+    }
+    return true;
+  }
+  // Must be a plain object
+  if (Object.getPrototypeOf(value) !== Object.prototype) return false;
+  for (const key in value) {
+    if (Object.prototype.hasOwnProperty.call(value, key)) {
+      if (!isRepresentable(value[key], seen)) return false;
+    }
+  }
+  return true;
+}
+
+// Journal cannot hold entries with extra fields beyond type and payload
+function hasExtraFields(entry) {
+  const keys = Object.keys(entry);
+  return keys.length !== 2 || !keys.includes('type') || !keys.includes('payload');
+}
+
+export function fixedRunJournalEntry(input) {
+  // Step 1: Validate input is an object with required fields
+  if (typeof input !== 'object' || input === null || Array.isArray(input)) {
+    return { status: 'REFUSED', reason: 'INVALID_INPUT' };
+  }
+
+  const { summary, entry } = input;
+
+  // Step 2: Validate summary first (before anything else)
+  if (!isValidSummary(summary)) {
+    return { status: 'REFUSED', reason: 'INVALID_SUMMARY' };
+  }
+
+  // Step 3: Validate entry shape (must have exactly type and payload)
+  if (typeof entry !== 'object' || entry === null || Array.isArray(entry)) {
+    return { status: 'REFUSED', reason: 'INVALID_ENTRY' };
+  }
+
+  if (hasExtraFields(entry)) {
+    return { status: 'REFUSED', reason: 'INVALID_ENTRY' };
+  }
+
+  // Step 4: Validate entry type and payload
+  if (!isValidEntry(entry)) {
+    return { status: 'REFUSED', reason: 'INVALID_ENTRY' };
+  }
+
+  // Step 5: Check payload representability (fresh deep copy to avoid mutation)
+  const payloadCopy = deepClone(entry.payload);
+  if (!isRepresentable(payloadCopy)) {
+    return { status: 'REFUSED', reason: 'PAYLOAD_UNREPRESENTABLE' };
+  }
+
+  // Step 6: Build result with fresh deep copies (purity)
+  const newSummary = deepClone(summary);
+  const newEntry = deepClone(entry);
+
+  // Append entry to summary entries
+  newSummary.entries = [...newSummary.entries, newEntry];
+
+  // Return success
+  return {
+    status: 'ENTRY',
+    summary: newSummary,
+    entry: newEntry
+  };
+}

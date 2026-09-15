@@ -1,0 +1,656 @@
+TAP version 13
+# Subtest: malformed envelopes, symbols, hidden fields and invalid time refuse before inspection or projection
+not ok 1 - malformed envelopes, symbols, hidden fields and invalid time refuse before inspection or projection
+  ---
+  duration_ms: 4.313042
+  type: 'test'
+  location: '/Users/louiscalata/nisi-next-private/tests/import-fixed-xpc-observation.test.mjs:37:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly deep-equal:
+    + actual - expected
+    
+      [
+        'authorizing',
+    -   'journal',
+    -   'meaning',
+    -   'projection',
+        'reason',
+    -   'recordAttempted',
+    -   'schemaVersion',
+        'status'
+      ]
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected:
+    0: 'authorizing'
+    1: 'journal'
+    2: 'meaning'
+    3: 'projection'
+    4: 'reason'
+    5: 'recordAttempted'
+    6: 'schemaVersion'
+    7: 'status'
+  actual:
+    0: 'authorizing'
+    1: 'reason'
+    2: 'status'
+  operator: 'deepStrictEqual'
+  stack: |-
+    assertOuter (file:///Users/louiscalata/nisi-next-private/tests/import-fixed-xpc-observation.test.mjs:27:10)
+    TestContext.<anonymous> (file:///Users/louiscalata/nisi-next-private/tests/import-fixed-xpc-observation.test.mjs:48:5)
+    Test.runInAsyncScope (node:async_hooks:227:14)
+    Test.run (node:internal/test_runner/test:1325:25)
+    Test.start (node:internal/test_runner/test:1191:17)
+    startSubtestAfterBootstrap (node:internal/test_runner/harness:385:17)
+  ...
+# Subtest: plain and null-prototype exact envelopes are both accepted
+not ok 2 - plain and null-prototype exact envelopes are both accepted
+  ---
+  duration_ms: 0.463375
+  type: 'test'
+  location: '/Users/louiscalata/nisi-next-private/tests/import-fixed-xpc-observation.test.mjs:56:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly equal:
+    + actual - expected
+    
+    + 'REFUSED'
+    - 'IMPORTED'
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: 'IMPORTED'
+  actual: 'REFUSED'
+  operator: 'strictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///Users/louiscalata/nisi-next-private/tests/import-fixed-xpc-observation.test.mjs:60:12)
+    Test.runInAsyncScope (node:async_hooks:227:14)
+    Test.run (node:internal/test_runner/test:1325:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:911:18)
+    Test.postRun (node:internal/test_runner/test:1465:19)
+    Test.run (node:internal/test_runner/test:1390:12)
+    async startSubtestAfterBootstrap (node:internal/test_runner/harness:385:3)
+  ...
+# Subtest: forged owner refuses before projection
+not ok 3 - forged owner refuses before projection
+  ---
+  duration_ms: 0.231959
+  type: 'test'
+  location: '/Users/louiscalata/nisi-next-private/tests/import-fixed-xpc-observation.test.mjs:64:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly deep-equal:
+    + actual - expected
+    
+      [
+        'authorizing',
+    -   'journal',
+    -   'meaning',
+    -   'projection',
+        'reason',
+    -   'recordAttempted',
+    -   'schemaVersion',
+        'status'
+      ]
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected:
+    0: 'authorizing'
+    1: 'journal'
+    2: 'meaning'
+    3: 'projection'
+    4: 'reason'
+    5: 'recordAttempted'
+    6: 'schemaVersion'
+    7: 'status'
+  actual:
+    0: 'authorizing'
+    1: 'reason'
+    2: 'status'
+  operator: 'deepStrictEqual'
+  stack: |-
+    assertOuter (file:///Users/louiscalata/nisi-next-private/tests/import-fixed-xpc-observation.test.mjs:27:10)
+    TestContext.<anonymous> (file:///Users/louiscalata/nisi-next-private/tests/import-fixed-xpc-observation.test.mjs:66:3)
+    Test.runInAsyncScope (node:async_hooks:227:14)
+    Test.run (node:internal/test_runner/test:1325:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:911:18)
+    Test.postRun (node:internal/test_runner/test:1465:19)
+    Test.run (node:internal/test_runner/test:1390:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:911:7)
+  ...
+# Subtest: SEALED owner is refused before malformed source is projected
+not ok 4 - SEALED owner is refused before malformed source is projected
+  ---
+  duration_ms: 0.794125
+  type: 'test'
+  location: '/Users/louiscalata/nisi-next-private/tests/import-fixed-xpc-observation.test.mjs:71:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly deep-equal:
+    + actual - expected
+    
+      [
+        'authorizing',
+    -   'journal',
+    -   'meaning',
+    -   'projection',
+        'reason',
+    -   'recordAttempted',
+    -   'schemaVersion',
+        'status'
+      ]
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected:
+    0: 'authorizing'
+    1: 'journal'
+    2: 'meaning'
+    3: 'projection'
+    4: 'reason'
+    5: 'recordAttempted'
+    6: 'schemaVersion'
+    7: 'status'
+  actual:
+    0: 'authorizing'
+    1: 'reason'
+    2: 'status'
+  operator: 'deepStrictEqual'
+  stack: |-
+    assertOuter (file:///Users/louiscalata/nisi-next-private/tests/import-fixed-xpc-observation.test.mjs:27:10)
+    TestContext.<anonymous> (file:///Users/louiscalata/nisi-next-private/tests/import-fixed-xpc-observation.test.mjs:75:3)
+    Test.runInAsyncScope (node:async_hooks:227:14)
+    Test.run (node:internal/test_runner/test:1325:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:911:18)
+    Test.postRun (node:internal/test_runner/test:1465:19)
+    Test.run (node:internal/test_runner/test:1390:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:911:7)
+  ...
+# Subtest: valid observation imports with immutable summary and exact journal result
+not ok 5 - valid observation imports with immutable summary and exact journal result
+  ---
+  duration_ms: 0.207042
+  type: 'test'
+  location: '/Users/louiscalata/nisi-next-private/tests/import-fixed-xpc-observation.test.mjs:80:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly deep-equal:
+    + actual - expected
+    
+      [
+        'authorizing',
+    -   'journal',
+    -   'meaning',
+    -   'projection',
+        'reason',
+    -   'recordAttempted',
+    -   'schemaVersion',
+        'status'
+      ]
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected:
+    0: 'authorizing'
+    1: 'journal'
+    2: 'meaning'
+    3: 'projection'
+    4: 'reason'
+    5: 'recordAttempted'
+    6: 'schemaVersion'
+    7: 'status'
+  actual:
+    0: 'authorizing'
+    1: 'reason'
+    2: 'status'
+  operator: 'deepStrictEqual'
+  stack: |-
+    assertOuter (file:///Users/louiscalata/nisi-next-private/tests/import-fixed-xpc-observation.test.mjs:27:10)
+    TestContext.<anonymous> (file:///Users/louiscalata/nisi-next-private/tests/import-fixed-xpc-observation.test.mjs:83:3)
+    Test.runInAsyncScope (node:async_hooks:227:14)
+    Test.run (node:internal/test_runner/test:1325:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:911:18)
+    Test.postRun (node:internal/test_runner/test:1465:19)
+    Test.run (node:internal/test_runner/test:1390:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:911:7)
+  ...
+# Subtest: adverse structurally valid source imports as FAILED history without promotion
+not ok 6 - adverse structurally valid source imports as FAILED history without promotion
+  ---
+  duration_ms: 0.266333
+  type: 'test'
+  location: '/Users/louiscalata/nisi-next-private/tests/import-fixed-xpc-observation.test.mjs:92:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly deep-equal:
+    + actual - expected
+    
+      [
+        'authorizing',
+    -   'journal',
+    -   'meaning',
+    -   'projection',
+        'reason',
+    -   'recordAttempted',
+    -   'schemaVersion',
+        'status'
+      ]
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected:
+    0: 'authorizing'
+    1: 'journal'
+    2: 'meaning'
+    3: 'projection'
+    4: 'reason'
+    5: 'recordAttempted'
+    6: 'schemaVersion'
+    7: 'status'
+  actual:
+    0: 'authorizing'
+    1: 'reason'
+    2: 'status'
+  operator: 'deepStrictEqual'
+  stack: |-
+    assertOuter (file:///Users/louiscalata/nisi-next-private/tests/import-fixed-xpc-observation.test.mjs:27:10)
+    TestContext.<anonymous> (file:///Users/louiscalata/nisi-next-private/tests/import-fixed-xpc-observation.test.mjs:97:3)
+    Test.runInAsyncScope (node:async_hooks:227:14)
+    Test.run (node:internal/test_runner/test:1325:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:911:18)
+    Test.postRun (node:internal/test_runner/test:1465:19)
+    Test.run (node:internal/test_runner/test:1390:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:911:7)
+  ...
+# Subtest: duplicate maps to DUPLICATE and performs no additional filesystem IO
+not ok 7 - duplicate maps to DUPLICATE and performs no additional filesystem IO
+  ---
+  duration_ms: 0.1605
+  type: 'test'
+  location: '/Users/louiscalata/nisi-next-private/tests/import-fixed-xpc-observation.test.mjs:103:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly equal:
+    + actual - expected
+    
+    + 'REFUSED'
+    - 'IMPORTED'
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: 'IMPORTED'
+  actual: 'REFUSED'
+  operator: 'strictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///Users/louiscalata/nisi-next-private/tests/import-fixed-xpc-observation.test.mjs:105:10)
+    Test.runInAsyncScope (node:async_hooks:227:14)
+    Test.run (node:internal/test_runner/test:1325:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:911:18)
+    Test.postRun (node:internal/test_runner/test:1465:19)
+    Test.run (node:internal/test_runner/test:1390:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:911:7)
+  ...
+# Subtest: same entry identity with changed accepted content maps journal CONFLICT
+not ok 8 - same entry identity with changed accepted content maps journal CONFLICT
+  ---
+  duration_ms: 0.149166
+  type: 'test'
+  location: '/Users/louiscalata/nisi-next-private/tests/import-fixed-xpc-observation.test.mjs:114:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly equal:
+    + actual - expected
+    
+    + 'REFUSED'
+    - 'IMPORTED'
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: 'IMPORTED'
+  actual: 'REFUSED'
+  operator: 'strictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///Users/louiscalata/nisi-next-private/tests/import-fixed-xpc-observation.test.mjs:116:10)
+    Test.runInAsyncScope (node:async_hooks:227:14)
+    Test.run (node:internal/test_runner/test:1325:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:911:18)
+    Test.postRun (node:internal/test_runner/test:1465:19)
+    Test.run (node:internal/test_runner/test:1390:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:911:7)
+  ...
+# Subtest: stale private disk digest maps STORE_CONFLICT and preserves prior owner snapshot
+not ok 9 - stale private disk digest maps STORE_CONFLICT and preserves prior owner snapshot
+  ---
+  duration_ms: 2.228583
+  type: 'test'
+  location: '/Users/louiscalata/nisi-next-private/tests/import-fixed-xpc-observation.test.mjs:123:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly deep-equal:
+    + actual - expected
+    
+      [
+        'authorizing',
+    -   'journal',
+    -   'meaning',
+    -   'projection',
+        'reason',
+    -   'recordAttempted',
+    -   'schemaVersion',
+        'status'
+      ]
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected:
+    0: 'authorizing'
+    1: 'journal'
+    2: 'meaning'
+    3: 'projection'
+    4: 'reason'
+    5: 'recordAttempted'
+    6: 'schemaVersion'
+    7: 'status'
+  actual:
+    0: 'authorizing'
+    1: 'reason'
+    2: 'status'
+  operator: 'deepStrictEqual'
+  stack: |-
+    assertOuter (file:///Users/louiscalata/nisi-next-private/tests/import-fixed-xpc-observation.test.mjs:27:10)
+    TestContext.<anonymous> (file:///Users/louiscalata/nisi-next-private/tests/import-fixed-xpc-observation.test.mjs:130:3)
+    Test.runInAsyncScope (node:async_hooks:227:14)
+    Test.run (node:internal/test_runner/test:1325:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:911:18)
+    Test.postRun (node:internal/test_runner/test:1465:19)
+    Test.run (node:internal/test_runner/test:1390:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:911:7)
+  ...
+# Subtest: precommit rename failure maps STORE_FAILED and preserves previous snapshot
+not ok 10 - precommit rename failure maps STORE_FAILED and preserves previous snapshot
+  ---
+  duration_ms: 0.621875
+  type: 'test'
+  location: '/Users/louiscalata/nisi-next-private/tests/import-fixed-xpc-observation.test.mjs:136:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly deep-equal:
+    + actual - expected
+    
+      [
+        'authorizing',
+    -   'journal',
+    -   'meaning',
+    -   'projection',
+        'reason',
+    -   'recordAttempted',
+    -   'schemaVersion',
+        'status'
+      ]
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected:
+    0: 'authorizing'
+    1: 'journal'
+    2: 'meaning'
+    3: 'projection'
+    4: 'reason'
+    5: 'recordAttempted'
+    6: 'schemaVersion'
+    7: 'status'
+  actual:
+    0: 'authorizing'
+    1: 'reason'
+    2: 'status'
+  operator: 'deepStrictEqual'
+  stack: |-
+    assertOuter (file:///Users/louiscalata/nisi-next-private/tests/import-fixed-xpc-observation.test.mjs:27:10)
+    TestContext.<anonymous> (file:///Users/louiscalata/nisi-next-private/tests/import-fixed-xpc-observation.test.mjs:141:3)
+    Test.runInAsyncScope (node:async_hooks:227:14)
+    Test.run (node:internal/test_runner/test:1325:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:911:18)
+    Test.postRun (node:internal/test_runner/test:1465:19)
+    Test.run (node:internal/test_runner/test:1390:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:911:7)
+  ...
+# Subtest: postrename final-read fault maps UNCERTAIN, clears owner, and fresh open reconciles committed bytes
+not ok 11 - postrename final-read fault maps UNCERTAIN, clears owner, and fresh open reconciles committed bytes
+  ---
+  duration_ms: 0.325917
+  type: 'test'
+  location: '/Users/louiscalata/nisi-next-private/tests/import-fixed-xpc-observation.test.mjs:148:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly deep-equal:
+    + actual - expected
+    
+      [
+        'authorizing',
+    -   'journal',
+    -   'meaning',
+    -   'projection',
+        'reason',
+    -   'recordAttempted',
+    -   'schemaVersion',
+        'status'
+      ]
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected:
+    0: 'authorizing'
+    1: 'journal'
+    2: 'meaning'
+    3: 'projection'
+    4: 'reason'
+    5: 'recordAttempted'
+    6: 'schemaVersion'
+    7: 'status'
+  actual:
+    0: 'authorizing'
+    1: 'reason'
+    2: 'status'
+  operator: 'deepStrictEqual'
+  stack: |-
+    assertOuter (file:///Users/louiscalata/nisi-next-private/tests/import-fixed-xpc-observation.test.mjs:27:10)
+    TestContext.<anonymous> (file:///Users/louiscalata/nisi-next-private/tests/import-fixed-xpc-observation.test.mjs:157:3)
+    Test.runInAsyncScope (node:async_hooks:227:14)
+    Test.run (node:internal/test_runner/test:1325:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:911:18)
+    Test.postRun (node:internal/test_runner/test:1465:19)
+    Test.run (node:internal/test_runner/test:1390:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:911:7)
+  ...
+# Subtest: subsequent call on uncertain owner refuses before projecting malformed source
+not ok 12 - subsequent call on uncertain owner refuses before projecting malformed source
+  ---
+  duration_ms: 0.305084
+  type: 'test'
+  location: '/Users/louiscalata/nisi-next-private/tests/import-fixed-xpc-observation.test.mjs:167:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly equal:
+    + actual - expected
+    
+    + 'REFUSED'
+    - 'UNCERTAIN'
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: 'UNCERTAIN'
+  actual: 'REFUSED'
+  operator: 'strictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///Users/louiscalata/nisi-next-private/tests/import-fixed-xpc-observation.test.mjs:172:10)
+    Test.runInAsyncScope (node:async_hooks:227:14)
+    Test.run (node:internal/test_runner/test:1325:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:911:18)
+    Test.postRun (node:internal/test_runner/test:1465:19)
+    Test.run (node:internal/test_runner/test:1390:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:911:7)
+  ...
+# Subtest: missing fsync is imported while preserving non-durable store evidence
+not ok 13 - missing fsync is imported while preserving non-durable store evidence
+  ---
+  duration_ms: 0.225125
+  type: 'test'
+  location: '/Users/louiscalata/nisi-next-private/tests/import-fixed-xpc-observation.test.mjs:181:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly deep-equal:
+    + actual - expected
+    
+      [
+        'authorizing',
+    -   'journal',
+    -   'meaning',
+    -   'projection',
+        'reason',
+    -   'recordAttempted',
+    -   'schemaVersion',
+        'status'
+      ]
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected:
+    0: 'authorizing'
+    1: 'journal'
+    2: 'meaning'
+    3: 'projection'
+    4: 'reason'
+    5: 'recordAttempted'
+    6: 'schemaVersion'
+    7: 'status'
+  actual:
+    0: 'authorizing'
+    1: 'reason'
+    2: 'status'
+  operator: 'deepStrictEqual'
+  stack: |-
+    assertOuter (file:///Users/louiscalata/nisi-next-private/tests/import-fixed-xpc-observation.test.mjs:27:10)
+    TestContext.<anonymous> (file:///Users/louiscalata/nisi-next-private/tests/import-fixed-xpc-observation.test.mjs:185:3)
+    Test.runInAsyncScope (node:async_hooks:227:14)
+    Test.run (node:internal/test_runner/test:1325:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:911:18)
+    Test.postRun (node:internal/test_runner/test:1465:19)
+    Test.run (node:internal/test_runner/test:1390:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:911:7)
+  ...
+# Subtest: malformed and old source records refuse before record or write
+not ok 14 - malformed and old source records refuse before record or write
+  ---
+  duration_ms: 0.240875
+  type: 'test'
+  location: '/Users/louiscalata/nisi-next-private/tests/import-fixed-xpc-observation.test.mjs:191:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly deep-equal:
+    + actual - expected
+    
+      [
+        'authorizing',
+    -   'journal',
+    -   'meaning',
+    -   'projection',
+        'reason',
+    -   'recordAttempted',
+    -   'schemaVersion',
+        'status'
+      ]
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected:
+    0: 'authorizing'
+    1: 'journal'
+    2: 'meaning'
+    3: 'projection'
+    4: 'reason'
+    5: 'recordAttempted'
+    6: 'schemaVersion'
+    7: 'status'
+  actual:
+    0: 'authorizing'
+    1: 'reason'
+    2: 'status'
+  operator: 'deepStrictEqual'
+  stack: |-
+    assertOuter (file:///Users/louiscalata/nisi-next-private/tests/import-fixed-xpc-observation.test.mjs:27:10)
+    TestContext.<anonymous> (file:///Users/louiscalata/nisi-next-private/tests/import-fixed-xpc-observation.test.mjs:195:5)
+    Test.runInAsyncScope (node:async_hooks:227:14)
+    Test.run (node:internal/test_runner/test:1325:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:911:18)
+    Test.postRun (node:internal/test_runner/test:1465:19)
+    Test.run (node:internal/test_runner/test:1390:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:911:7)
+  ...
+# Subtest: host-configured stricter redaction is not leaked through projection summary
+not ok 15 - host-configured stricter redaction is not leaked through projection summary
+  ---
+  duration_ms: 0.354041
+  type: 'test'
+  location: '/Users/louiscalata/nisi-next-private/tests/import-fixed-xpc-observation.test.mjs:202:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly equal:
+    + actual - expected
+    
+    + 'REFUSED'
+    - 'IMPORTED'
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: 'IMPORTED'
+  actual: 'REFUSED'
+  operator: 'strictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///Users/louiscalata/nisi-next-private/tests/import-fixed-xpc-observation.test.mjs:208:10)
+    Test.runInAsyncScope (node:async_hooks:227:14)
+    Test.run (node:internal/test_runner/test:1325:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:911:18)
+    Test.postRun (node:internal/test_runner/test:1465:19)
+    Test.run (node:internal/test_runner/test:1390:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:911:7)
+  ...
+# Subtest: reentrant owner refusal is mapped once with no retry
+not ok 16 - reentrant owner refusal is mapped once with no retry
+  ---
+  duration_ms: 0.17775
+  type: 'test'
+  location: '/Users/louiscalata/nisi-next-private/tests/import-fixed-xpc-observation.test.mjs:216:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly equal:
+    + actual - expected
+    
+    + 'REFUSED'
+    - 'IMPORTED'
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: 'IMPORTED'
+  actual: 'REFUSED'
+  operator: 'strictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///Users/louiscalata/nisi-next-private/tests/import-fixed-xpc-observation.test.mjs:229:10)
+    Test.runInAsyncScope (node:async_hooks:227:14)
+    Test.run (node:internal/test_runner/test:1325:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:911:18)
+    Test.postRun (node:internal/test_runner/test:1465:19)
+    Test.run (node:internal/test_runner/test:1390:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:911:7)
+  ...
+1..16
+# tests 16
+# suites 0
+# pass 0
+# fail 16
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 73.7975

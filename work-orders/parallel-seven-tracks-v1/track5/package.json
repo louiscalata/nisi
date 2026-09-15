@@ -1,0 +1,10 @@
+{
+  "name": "nisi-track5-module-registry",
+  "private": true,
+  "type": "module",
+  "license": "UNLICENSED",
+  "scripts": {
+    "test": "node --test tests/registry-containment.test.mjs",
+    "test:author": "node --test ../tests/experimental-module-registry.test.mjs"
+  }
+}

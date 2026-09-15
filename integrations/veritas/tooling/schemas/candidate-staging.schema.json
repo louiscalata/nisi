@@ -1,0 +1,515 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://veritas.invalid/private/schemas/stage5/candidate-staging.v1.json",
+  "title": "Veritas inert declared full-tree candidate staging fixture records",
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "schemaVersion": {},
+    "recordType": {},
+    "profile": {},
+    "operationId": {},
+    "inputMode": {},
+    "ownerId": {},
+    "generation": {},
+    "base": {},
+    "files": {},
+    "expectedCandidateDigest": {},
+    "authorityMode": {},
+    "authorizing": {},
+    "mayCreateDecision": {},
+    "mayPromote": {},
+    "mayExecute": {},
+    "requestDigest": {},
+    "storeId": {},
+    "baseBindingDigest": {},
+    "protection": {},
+    "createdAt": {},
+    "fenceRecordDigest": {},
+    "declaredFilesDigest": {},
+    "fileCount": {},
+    "totalBytes": {},
+    "disposition": {},
+    "intentRecordDigest": {},
+    "candidateDigest": {},
+    "treeRelativePath": {},
+    "protectedStaging": {},
+    "durableFence": {},
+    "gitBaseVerified": {},
+    "patchApplied": {},
+    "stagedAt": {}
+  },
+  "oneOf": [
+    {
+      "$ref": "#/$defs/request"
+    },
+    {
+      "$ref": "#/$defs/fence"
+    },
+    {
+      "$ref": "#/$defs/intent"
+    },
+    {
+      "$ref": "#/$defs/result"
+    }
+  ],
+  "$defs": {
+    "sha256": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{64}$"
+    },
+    "uuidV4": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$"
+    },
+    "ownerId": {
+      "type": "string",
+      "pattern": "^[a-z][a-z0-9._-]{0,63}$"
+    },
+    "timestamp": {
+      "type": "string",
+      "format": "veritas-canonical-iso-instant"
+    },
+    "acceptedReference": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schemaVersion",
+        "targetId",
+        "objectDigest",
+        "transactionId",
+        "updatedAt"
+      ],
+      "properties": {
+        "schemaVersion": {
+          "const": 1
+        },
+        "targetId": {
+          "const": "local-content-addressed-alpha"
+        },
+        "objectDigest": {
+          "$ref": "#/$defs/sha256"
+        },
+        "transactionId": {
+          "$ref": "#/$defs/uuidV4"
+        },
+        "updatedAt": {
+          "$ref": "#/$defs/timestamp"
+        }
+      }
+    },
+    "base": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "storeId",
+        "coordinatorRevision",
+        "coordinatorHeadRecordDigest",
+        "coordinatorStateDigest",
+        "coordinatorCommitRecordDigest",
+        "acceptedReference",
+        "acceptedReferenceRecordDigest"
+      ],
+      "properties": {
+        "storeId": {
+          "type": "string",
+          "minLength": 1
+        },
+        "coordinatorRevision": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "coordinatorHeadRecordDigest": {
+          "$ref": "#/$defs/sha256"
+        },
+        "coordinatorStateDigest": {
+          "$ref": "#/$defs/sha256"
+        },
+        "coordinatorCommitRecordDigest": {
+          "$ref": "#/$defs/sha256"
+        },
+        "acceptedReference": {
+          "$ref": "#/$defs/acceptedReference"
+        },
+        "acceptedReferenceRecordDigest": {
+          "$ref": "#/$defs/sha256"
+        }
+      }
+    },
+    "declaredFile": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "relativePath",
+        "mode",
+        "byteLength",
+        "bytesBase64",
+        "bytesSha256"
+      ],
+      "properties": {
+        "relativePath": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 1024,
+          "pattern": "^(?!/)(?!.*(?:^|/)\\.\\.?/)(?!.*//)(?!\\.veritas(?:/|$))[^\\u0000\\\\]+$"
+        },
+        "mode": {
+          "enum": [
+            "100644",
+            "100755"
+          ]
+        },
+        "byteLength": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 16777216
+        },
+        "bytesBase64": {
+          "type": "string",
+          "maxLength": 22369624,
+          "pattern": "^(?:[A-Za-z0-9+/]{4})*(?:[A-Za-z0-9+/]{2}==|[A-Za-z0-9+/]{3}=)?$"
+        },
+        "bytesSha256": {
+          "$ref": "#/$defs/sha256"
+        }
+      }
+    },
+    "request": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schemaVersion",
+        "profile",
+        "operationId",
+        "inputMode",
+        "ownerId",
+        "generation",
+        "base",
+        "files",
+        "expectedCandidateDigest",
+        "authorityMode",
+        "authorizing",
+        "mayPromote",
+        "mayExecute",
+        "requestDigest"
+      ],
+      "properties": {
+        "schemaVersion": {
+          "const": 1
+        },
+        "profile": {
+          "const": "veritas-candidate-staging-v1:declared-full-tree+exact-base+inert"
+        },
+        "operationId": {
+          "$ref": "#/$defs/uuidV4"
+        },
+        "inputMode": {
+          "const": "DECLARED_FULL_TREE_BYTES"
+        },
+        "ownerId": {
+          "$ref": "#/$defs/ownerId"
+        },
+        "generation": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "base": {
+          "$ref": "#/$defs/base"
+        },
+        "files": {
+          "type": "array",
+          "minItems": 1,
+          "maxItems": 1024,
+          "items": {
+            "$ref": "#/$defs/declaredFile"
+          }
+        },
+        "expectedCandidateDigest": {
+          "$ref": "#/$defs/sha256"
+        },
+        "authorityMode": {
+          "const": "SELF_ADMINISTERED"
+        },
+        "authorizing": {
+          "const": false
+        },
+        "mayPromote": {
+          "const": false
+        },
+        "mayExecute": {
+          "const": false
+        },
+        "requestDigest": {
+          "$ref": "#/$defs/sha256"
+        }
+      }
+    },
+    "fence": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schemaVersion",
+        "recordType",
+        "profile",
+        "storeId",
+        "generation",
+        "ownerId",
+        "baseBindingDigest",
+        "authorityMode",
+        "protection",
+        "createdAt"
+      ],
+      "properties": {
+        "schemaVersion": {
+          "const": 1
+        },
+        "recordType": {
+          "const": "CANDIDATE_STAGE_FENCE"
+        },
+        "profile": {
+          "const": "veritas-candidate-staging-v1:declared-full-tree+exact-base+inert"
+        },
+        "storeId": {
+          "type": "string",
+          "minLength": 1
+        },
+        "generation": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "ownerId": {
+          "$ref": "#/$defs/ownerId"
+        },
+        "baseBindingDigest": {
+          "$ref": "#/$defs/sha256"
+        },
+        "authorityMode": {
+          "const": "SELF_ADMINISTERED"
+        },
+        "protection": {
+          "const": "COORDINATOR_REVISION_PLUS_SAME_USER_STORE_LOCK_FIXTURE_ONLY"
+        },
+        "createdAt": {
+          "$ref": "#/$defs/timestamp"
+        }
+      }
+    },
+    "intent": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schemaVersion",
+        "recordType",
+        "profile",
+        "operationId",
+        "requestDigest",
+        "storeId",
+        "generation",
+        "ownerId",
+        "baseBindingDigest",
+        "fenceRecordDigest",
+        "declaredFilesDigest",
+        "expectedCandidateDigest",
+        "fileCount",
+        "totalBytes",
+        "disposition",
+        "authorityMode",
+        "authorizing",
+        "mayCreateDecision",
+        "mayPromote",
+        "mayExecute",
+        "createdAt"
+      ],
+      "properties": {
+        "schemaVersion": {
+          "const": 1
+        },
+        "recordType": {
+          "const": "CANDIDATE_STAGE_INTENT"
+        },
+        "profile": {
+          "const": "veritas-candidate-staging-v1:declared-full-tree+exact-base+inert"
+        },
+        "operationId": {
+          "$ref": "#/$defs/uuidV4"
+        },
+        "requestDigest": {
+          "$ref": "#/$defs/sha256"
+        },
+        "storeId": {
+          "type": "string",
+          "minLength": 1
+        },
+        "generation": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "ownerId": {
+          "$ref": "#/$defs/ownerId"
+        },
+        "baseBindingDigest": {
+          "$ref": "#/$defs/sha256"
+        },
+        "fenceRecordDigest": {
+          "$ref": "#/$defs/sha256"
+        },
+        "declaredFilesDigest": {
+          "$ref": "#/$defs/sha256"
+        },
+        "expectedCandidateDigest": {
+          "$ref": "#/$defs/sha256"
+        },
+        "fileCount": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 1024
+        },
+        "totalBytes": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 67108864
+        },
+        "disposition": {
+          "const": "STAGING_INERT"
+        },
+        "authorityMode": {
+          "const": "SELF_ADMINISTERED"
+        },
+        "authorizing": {
+          "const": false
+        },
+        "mayCreateDecision": {
+          "const": false
+        },
+        "mayPromote": {
+          "const": false
+        },
+        "mayExecute": {
+          "const": false
+        },
+        "createdAt": {
+          "$ref": "#/$defs/timestamp"
+        }
+      }
+    },
+    "result": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schemaVersion",
+        "recordType",
+        "profile",
+        "operationId",
+        "requestDigest",
+        "storeId",
+        "generation",
+        "ownerId",
+        "baseBindingDigest",
+        "fenceRecordDigest",
+        "intentRecordDigest",
+        "candidateDigest",
+        "treeRelativePath",
+        "fileCount",
+        "totalBytes",
+        "disposition",
+        "authorityMode",
+        "authorizing",
+        "mayCreateDecision",
+        "mayPromote",
+        "mayExecute",
+        "protectedStaging",
+        "durableFence",
+        "gitBaseVerified",
+        "patchApplied",
+        "stagedAt"
+      ],
+      "properties": {
+        "schemaVersion": {
+          "const": 1
+        },
+        "recordType": {
+          "const": "CANDIDATE_STAGE_RESULT"
+        },
+        "profile": {
+          "const": "veritas-candidate-staging-v1:declared-full-tree+exact-base+inert"
+        },
+        "operationId": {
+          "$ref": "#/$defs/uuidV4"
+        },
+        "requestDigest": {
+          "$ref": "#/$defs/sha256"
+        },
+        "storeId": {
+          "type": "string",
+          "minLength": 1
+        },
+        "generation": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "ownerId": {
+          "$ref": "#/$defs/ownerId"
+        },
+        "baseBindingDigest": {
+          "$ref": "#/$defs/sha256"
+        },
+        "fenceRecordDigest": {
+          "$ref": "#/$defs/sha256"
+        },
+        "intentRecordDigest": {
+          "$ref": "#/$defs/sha256"
+        },
+        "candidateDigest": {
+          "$ref": "#/$defs/sha256"
+        },
+        "treeRelativePath": {
+          "type": "string",
+          "pattern": "^candidate-staging/trees/[0-9a-f]{64}$"
+        },
+        "fileCount": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 1024
+        },
+        "totalBytes": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 67108864
+        },
+        "disposition": {
+          "const": "STAGED_INERT"
+        },
+        "authorityMode": {
+          "const": "SELF_ADMINISTERED"
+        },
+        "authorizing": {
+          "const": false
+        },
+        "mayCreateDecision": {
+          "const": false
+        },
+        "mayPromote": {
+          "const": false
+        },
+        "mayExecute": {
+          "const": false
+        },
+        "protectedStaging": {
+          "const": false
+        },
+        "durableFence": {
+          "const": false
+        },
+        "gitBaseVerified": {
+          "const": false
+        },
+        "patchApplied": {
+          "const": false
+        },
+        "stagedAt": {
+          "$ref": "#/$defs/timestamp"
+        }
+      }
+    }
+  }
+}

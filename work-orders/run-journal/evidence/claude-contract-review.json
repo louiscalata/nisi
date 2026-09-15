@@ -1,0 +1,104 @@
+{
+  "summary": "Review of the proposed U02-04 observational journal contract. The bounded-payload + unbounded-tombstone retention model is the right resolution of the dilemma, but the proposal leaves five gaps: (1) no explicit lineage link between the per-state immutable observations, so \"terminal ids never new work\" and UNKNOWN handling are not mechanically checkable; (2) digest scope/canonicalization is under-specified and could collide with existing Nisi digest profiles; (3) the tombstone/payload split must be defined so eviction can never change classification or break revocation/retry; (4) the line format needs per-line sequence + chain linkage and explicit rules for extra-after-footer and sealed-journal re-serialization; (5) caller-clock validation (heartbeat vs entry time vs query now, TTL arithmetic) needs concrete rules. Each correction has suggested tests. No implementation, no tools used.",
+  "deliverable": "## Five design corrections (with tests)\n\n### 1. Make lineage explicit; validate the state machine by citation, not by tuple guessing\nProblem: states are separate immutable entries with their own ids, but nothing links a RUNNING observation to the QUEUED one it advances. \"Terminal ids never new work\" cannot be enforced if the only linkage is the (project, run, attempt, candidate) tuple, and UNKNOWN (stale heartbeat) has no defined exit.\nCorrection:\n- Every non-QUEUED observation carries required `follows: <prior observation id>` in the same journal, same (project, run, candidate, attempt). Allowed edges: QUEUED\u2192RUNNING, RUNNING\u2192RUNNING (heartbeat-only update), RUNNING\u2192SUCCEEDED|FAILED|CANCELLED, QUEUED\u2192CANCELLED. Anything citing a terminal, expired or revoked id in `follows` \u2192 REFUSED TERMINAL (distinct from DUPLICATE/CONFLICT).\n- Exactly one open lineage per (run, candidate, attempt); a second QUEUED for the same tuple \u2192 REFUSED CONFLICT-LINEAGE.\n- UNKNOWN is a query-time classification only. To move on, the caller must append an explicit FAILED/CANCELLED observation with `follows` = the stale RUNNING id and a reason code (e.g. `stale-heartbeat`); only then may `retryOf` cite that terminal id with attempt+1. UNKNOWN is never re-enqueued and never auto-transitioned.\n- `retryOf` must cite the terminal/expired/revoked *lineage head or any member*; resolve to lineage and require attempt strictly greater than the lineage's attempt.\nTests: RUNNING with `follows` pointing at SUCCEEDED \u2192 REFUSED TERMINAL; second QUEUED for same tuple \u2192 refused; RUNNING citing an expired QUEUED \u2192 REFUSED (TTL ended eligibility); stale RUNNING classified UNKNOWN, then FAILED(follows=running) accepted, then retry with same attempt \u2192 refused, attempt+1 \u2192 accepted; retryOf citing an id from a different run \u2192 refused.\n\n### 2. Pin digest scope and canonicalization; domain-separate it from Nisi digest profiles\nProblem: \"SHA-256 over sorted-key JSON of original input\" is ambiguous (which fields? what about numbers, undefined, nested arrays, non-plain objects?) and could be mistaken for a Nisi canonical digest.\nCorrection:\n- Digest input = domain prefix (e.g. `nisi-u02-04-journal/v1\\n`) + canonical JSON of the *entire submitted entry* (id, state, attribution, timestamps, ttl, heartbeat, follows, retryOf, revokes, redaction paths, and the un-redacted payload). Payload-only digests would miss replays that change state or links under the same id.\n- Canonical JSON rules: recursively sorted object keys, arrays in order, strings JSON-escaped (no raw newlines possible), numbers must be finite and safe integers or shortest-roundtrip doubles; reject `undefined`, NaN, \u00b1Infinity, BigInt, functions, symbols, Date/Map/Set/class instances, prototype-bearing objects, and `__proto__` keys \u2192 REFUSED SCHEMA.\n- Redaction: declared paths are validated as dot/array paths into `payload` only; a declared path that does not resolve \u2192 REFUSED (silent no-op risks leaks on typo). Redaction happens at serialization and in any getter output; the digest is computed once at append over the original and the original is never retained after redaction.\n- Document explicitly: the digest is an equality fingerprint, not authentication, and this profile is not a Nisi receipt/integrity digest.\nTests: same id + same content twice \u2192 DUPLICATE; same id with one payload byte changed \u2192 CONFLICT; same id, same payload, different state \u2192 CONFLICT; same content with keys in different insertion order \u2192 DUPLICATE; payload with `undefined`/NaN/Date \u2192 REFUSED; redacted field replayed as literal \"[REDACTED]\" \u2192 CONFLICT; declared redaction path missing \u2192 REFUSED; serialized output never contains the redacted value (string search on output).\n\n### 3. Define the tombstone precisely so eviction can never alter classification, revocation or retry validity\nProblem: \"maxEntries newest payloads\" plus \"TTL drops payload\" is fine only if everything the contract validates lives outside the payload; otherwise a RUNNING whose payload was evicted becomes unclassifiable, and a revocation whose payload expired could lose its target.\nCorrection:\n- Tombstone (never deleted) = id, state, project/run/attempt/candidate/stage/receipt attribution, entry timestamp, ttl/expiresAt, last heartbeat, `follows`, `retryOf`, `revokes`, reason code, redaction path list, digest, sequence number. Payload = caller's opaque body only.\n- Eviction (cap or TTL) removes only the payload and marks `payloadRetained: false`; classification, duplicate/conflict checks, lineage, revocation effectiveness are computed solely from tombstones. No REFUSED CAPACITY exists in this contract; expose `stats.identities` and `stats.retainedPayloads` so the caller can observe unbounded growth. Optionally accept an advisory `identityWarnAt` that only surfaces in results, never refuses.\n- Revocation target must be an existing same-run id; revoking an already-revoked id \u2192 DUPLICATE-REVOKE refusal (keeps history clean); a REVOKED entry itself cannot be a `follows` or `retryOf` source, only its target lineage can.\nTests: fill beyond maxEntries, confirm oldest payloads are gone but all ids remain and duplicate/conflict still detected against evicted entries; revoke, let revoking payload expire, confirm target still classified REVOKED; RUNNING with evicted payload still classifies RUNNING/UNKNOWN correctly; revoke twice \u2192 refused.\n\n### 4. Harden the line format: per-line sequence + chain, explicit post-footer and sealed re-serialization rules\nProblem: line-level checksums detect corruption within a line but not deletion/reordering of whole lines; behavior for \"valid footer then more lines\" and for serializing a sealed journal is unstated.\nCorrection:\n- Header line: `{kind:\"header\", format:\"nisi-u02-04-journal\", version:1, journalId, project, createdAt, digestProfile}`. Entry envelope: `{kind:\"entry\", seq, prevChain, entry, lineDigest}` where `lineDigest` = SHA-256 over seq+prevChain+canonical(entry) and `prevChain` is the previous line's digest (header digest for seq 0). Footer: `{kind:\"footer\", count, chain}`.\n- Reopen: parse line by line; first line not exactly a valid header \u2192 INVALID at line 1, nothing recovered. Entry with wrong seq, wrong prevChain, bad lineDigest, unknown field/status, malformed timestamp, or violating corrections 1\u20133 against the recovered prefix \u2192 INVALID at that line, prefix before it recovered. Missing footer or final line without trailing newline \u2192 INCOMPLETE. Footer count/chain mismatch \u2192 INVALID at footer line. Any line after a valid footer \u2192 INVALID at that line (prefix through footer recovered but journal sealed, since the file is not what was committed).\n- Result object always includes `{status, recoveredIds[], recoveredCount, firstBadLine|null, sealed: boolean, reason}`; never a count of \"missing\" entries.\n- Serializing a sealed journal is allowed and writes a new complete file containing only the recovered prefix, with header field `recoveredFrom: {chain, firstBadLine, status}` so the successor file cannot be mistaken for the original. Reopening that successor is valid-complete and appendable; recovered entries remain historical.\n- Re-serializing an unsealed reopened journal must produce byte-identical lines for recovered entries (chain continuity), only appending new lines.\nTests: truncate mid-line \u2192 INCOMPLETE with exact prefix ids; delete a middle line \u2192 INVALID at that seq (prevChain break); swap two lines \u2192 INVALID; append garbage after footer \u2192 INVALID + sealed; corrupt footer count \u2192 INVALID at footer; reopen valid file, append, serialize, reopen: original lines byte-identical and all old ids DUPLICATE on replay; sealed journal \u2192 append REFUSED SEALED, serialize succeeds with `recoveredFrom`.\n\n### 5. Specify caller-clock discipline: heartbeat vs entry time vs query time, TTL arithmetic\nProblem: \"future/invalid times refused\" needs a reference. With no clock, every comparison is between caller-supplied values.\nCorrection:\n- Timestamps: ISO-8601 UTC strings with `Z` only (or integer epoch ms\u2014pick one, reject the other); reject non-parsable, non-UTC, non-finite.\n- Append: `entry.ts` must be \u2265 header.createdAt and \u2265 ts of the `follows` target (non-decreasing within a lineage; across lineages no ordering required). `heartbeatAt` allowed only on RUNNING, must satisfy follows.ts \u2264 heartbeatAt \u2264 entry.ts; otherwise REFUSED TIME.\n- TTL: positive safe integer milliseconds; `expiresAt = ts + ttl` computed once and stored in the tombstone. Expiry only ends eligibility (no RUNNING may follow an expired QUEUED; no retry may cite a still-eligible entry); it never changes recorded state.\n- Query: `classify(id, {now, stalenessMs})`: `now` must be a valid timestamp \u2265 the entry's ts, else REFUSED TIME (query time in the past relative to the record is \"future heartbeat\"); `stalenessMs` positive safe integer. RUNNING with `now - lastHeartbeat > stalenessMs` \u2192 UNKNOWN. Terminal/REVOKED classification ignores now and staleness. Expired non-terminal \u2192 EXPIRED (distinct from UNKNOWN).\nTests: heartbeat later than entry ts \u2192 refused; heartbeat before follows.ts \u2192 refused; query with now earlier than entry ts \u2192 refused; boundary: `now - heartbeat == stalenessMs` \u2192 RUNNING, +1ms \u2192 UNKNOWN; ttl=0/negative/float \u2192 refused; classification of SUCCEEDED unaffected by any now; expired QUEUED \u2192 EXPIRED and RUNNING citing it \u2192 refused.\n\n## Out of scope confirmed\nNo execution issuance, no authority derived from records, no receipt/code revalidation, no persistence/host ownership; durable adapter deferred to U02-02. Existing Nisi schemas untouched and opaque.",
+  "risks": [
+    "Unbounded tombstone growth is accepted by the contract but has no enforcement; a long-lived process using this in-memory could grow without limit\u2014must be re-examined at U02-02 integration.",
+    "Digest over the full entry including un-redacted payload means the secret transiently exists in memory at append; the contract must guarantee the original is not retained after hashing (verify by inspecting stored structures in tests, not just serialized output).",
+    "Requiring `follows` on every non-QUEUED observation adds caller burden and may conflict with existing Nisi callers' expectations; confirm before adopting.",
+    "Byte-identical re-serialization of recovered lines depends on stable canonical JSON; any future canonicalization change breaks chain continuity across versions\u2014header version must gate this.",
+    "Choosing ISO string vs epoch ms timestamps affects sort/compare edge cases (leap seconds, sub-ms); pick one and reject the other explicitly.",
+    "This review is based only on the supplied description; no source or existing Nisi schema was inspected, so field-name collisions with existing integrity/receipt schemas are unverified."
+  ],
+  "verification": [
+    "Confirm with the U02-04 owner that adding a required `follows` link and refusing duplicate open lineages is acceptable versus tuple-based inference.",
+    "Run the listed tests per correction, especially: evicted-payload duplicate/conflict detection, revocation surviving revoking-payload expiry, and chain-break detection on deleted/swapped lines.",
+    "Grep serialized output and in-memory journal state for a known secret value after redaction to verify non-retention.",
+    "Verify canonical JSON implementation rejects undefined/NaN/Infinity/BigInt/Date/`__proto__` and produces identical bytes across key insertion orders.",
+    "Verify reopen result never reports a count of missing entries and always reports exact recovered ids plus firstBadLine.",
+    "Confirm the only import is node:crypto createHash and that no Date.now/Math.random/fs usage exists (static grep)."
+  ],
+  "invocation_status": "succeeded",
+  "status": "succeeded",
+  "model_usage": {
+    "claude-haiku-4-5-20251001": {
+      "inputTokens": 1579,
+      "outputTokens": 21,
+      "cacheReadInputTokens": 0,
+      "cacheCreationInputTokens": 0,
+      "webSearchRequests": 0,
+      "costUSD": 0.0016840000000000002,
+      "contextWindow": 200000,
+      "maxOutputTokens": 32000,
+      "thinkingTokens": 0,
+      "canonicalModel": "claude-haiku-4-5",
+      "provider": "firstParty",
+      "costBasis": "list"
+    },
+    "claude-fable-5-1": {
+      "inputTokens": 2,
+      "outputTokens": 7573,
+      "cacheReadInputTokens": 737,
+      "cacheCreationInputTokens": 1588,
+      "webSearchRequests": 0,
+      "costUSD": 0.41061425,
+      "contextWindow": 1000000,
+      "maxOutputTokens": 64000,
+      "thinkingTokens": 2811,
+      "canonicalModel": "claude-fable-5-1",
+      "provider": "firstParty",
+      "costBasis": "list"
+    }
+  },
+  "reported_models": [
+    "claude-haiku-4-5-20251001",
+    "claude-fable-5-1"
+  ],
+  "usage": {
+    "input_tokens": 2,
+    "cache_creation_input_tokens": 1588,
+    "cache_read_input_tokens": 737,
+    "output_tokens": 7573,
+    "output_tokens_details": {
+      "thinking_tokens": 2811
+    },
+    "server_tool_use": {
+      "web_search_requests": 0,
+      "web_fetch_requests": 0
+    },
+    "service_tier": "standard",
+    "cache_creation": {
+      "ephemeral_1h_input_tokens": 1588,
+      "ephemeral_5m_input_tokens": 0
+    },
+    "inference_geo": "not_available",
+    "iterations": [
+      {
+        "input_tokens": 2,
+        "output_tokens": 7573,
+        "cache_read_input_tokens": 737,
+        "cache_creation_input_tokens": 1588,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 1588
+        },
+        "type": "message",
+        "model": null
+      }
+    ],
+    "speed": "standard"
+  },
+  "total_cost_usd": 0.41229825000000003,
+  "duration_ms": 105218,
+  "tools_enabled": false,
+  "session_persisted": false,
+  "write_owner": "codex",
+  "requested_model": "fable",
+  "mode": "delegate",
+  "attempts": 1,
+  "wall_seconds": 106.6,
+  "created_at": "2026-09-13T17:52:29.910553+00:00",
+  "prior_attempts": [],
+  "total_wall_seconds": 106.601,
+  "prior_attempt_usage": [],
+  "total_usage_complete": true
+}

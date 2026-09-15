@@ -1,0 +1,538 @@
+{
+  "schemaVersion": 1,
+  "date": "2026-09-12",
+  "scope": "PRIVATE_REAL_TRUSTED_STATIC_DISK_CAPTURE_SLICE",
+  "status": "REAL_FIXTURE_CAPTURE_TESTED_FULL_HOST_AND_MERGER_PENDING",
+  "sourceFiles": [
+    {
+      "path": "hosts/repository/snapshot-contract.mjs",
+      "sha256": "2b52c23bac3a817769b7892eed71baba79cb81954b6a63724d107a9c258ba13f"
+    },
+    {
+      "path": "workflow/contracts.mjs",
+      "sha256": "c28a3ee3db6e9a936cd58fca8b8ee3f2744ca25c259e2ea278b3b09cdbb73d82"
+    },
+    {
+      "path": "workflow/engine.mjs",
+      "sha256": "c67c63baeadc725a8487af7108b01d3a38dd50e64ff35f1be66471c81e5f979b"
+    },
+    {
+      "path": "tests/afm-content-executor.test.mjs",
+      "sha256": "a5bea26338f78d2203ac2e2fb9d3cd71ec02b1ef08e8bff7ff8631983a4259ad"
+    },
+    {
+      "path": "tests/canonical-json-v1.test.mjs",
+      "sha256": "36d24e7de51ad13fc3f0bca1d504f711f517a56a2b9684b7156a9cc4ffc07dd7"
+    },
+    {
+      "path": "tests/component-hardening.test.mjs",
+      "sha256": "876fa7045f77bf2b8b45168f81c023d2423d8e10d7947533662c6c21e105aa12"
+    },
+    {
+      "path": "tests/content-consent.test.mjs",
+      "sha256": "df9143818b835daf023f7c9e0ef52bf5f1049f4711f37a14c65e9d8f8257889b"
+    },
+    {
+      "path": "tests/example.test.mjs",
+      "sha256": "61ccb6fbcc426b6d77c9c8b526f1d378c3296b6dfca57562b6d480a4edc58c1f"
+    },
+    {
+      "path": "tests/local-chat-extra.test.mjs",
+      "sha256": "91a6722f3a736f54e826a3224ab99892a22c5e013be3fce727c12958f2336304"
+    },
+    {
+      "path": "tests/local-chat.test.mjs",
+      "sha256": "8b3339ac52a00916d800389fb473c52b90e7f0821d55d48f01d0fe30d8bee5b8"
+    },
+    {
+      "path": "tests/onboarding.test.mjs",
+      "sha256": "594494cc5f3a80e4ca05f2abfd94ae789cf3dc31cdfb383ba42cf88e8bbb18e7"
+    },
+    {
+      "path": "tests/public-api.test.mjs",
+      "sha256": "d972ae6c54b47e4d0cc61383e128e9ab5012eb83bca291e764b1d52489b2fd31"
+    },
+    {
+      "path": "tests/repository-snapshot.test.mjs",
+      "sha256": "17c914c416ad7fa057e900cf69f65bf5c7e6765082eca2ca31c92253c737e6a1"
+    },
+    {
+      "path": "tests/veritas-import-snapshot.test.mjs",
+      "sha256": "ff548efe38f61145e3a05ca535a84f6f247502268f606022c11a146f7c47d902"
+    },
+    {
+      "path": "tests/veritas-import.test.mjs",
+      "sha256": "198b7b505d03715010c00bcf5e240ddcbd42fc95a74de36991cf8a28d706f13d"
+    },
+    {
+      "path": "tests/workflow-example.test.mjs",
+      "sha256": "a9515369dc1cb39aef83ad44a91742a96b75d2e17eef0a725901a47548028162"
+    },
+    {
+      "path": "tests/workflow.test.mjs",
+      "sha256": "8ce9c6f50928da474d8f9a53a3702bd49cdbbc8cedc17713006439c1528ac5d3"
+    },
+    {
+      "path": "adapters/apple-foundation-models.mjs",
+      "sha256": "311f4898c31b4e0693093361fc19c344086c1f24946909fe134c14d37e25d080"
+    },
+    {
+      "path": "adapters/local-chat.mjs",
+      "sha256": "75dc8b128883fb14e524ceb05b4696e53406c2c8038ec4340b42f0ca471fe043"
+    },
+    {
+      "path": "canonical/canonical-json-v1.mjs",
+      "sha256": "d1049a26d2bea0d14e959c0af22af15b975345091c5fa5360e8bd685637f8e59"
+    },
+    {
+      "path": "gate/afm-content-executor.mjs",
+      "sha256": "6a4c23a3495a00dbf98e9ff5c68a9008f421d6fe225a3768b6863d4e12324ed6"
+    },
+    {
+      "path": "gate/content-consent.mjs",
+      "sha256": "a735eb35cb1373b3f3744dc7b3caa8b24ebbf394babba53d4f722136c72a0820"
+    },
+    {
+      "path": "policy/file-access.mjs",
+      "sha256": "92f9f60220e1869ad0d6571ae2b5a8ddc9259b2463c4cf617d4cecee6eacc1d3"
+    },
+    {
+      "path": "serialization/canonical-json-v1.mjs",
+      "sha256": "1e5eb6222da2c7baae3cd45a5077ccc1e8ae25b5bc184646d9e55170dec53625"
+    },
+    {
+      "path": "examples/allow-a-file.mjs",
+      "sha256": "5099c90b4df7a83c5b0c55cca392cce55aeace90bc97d0791e02d5757f84dbea"
+    },
+    {
+      "path": "examples/local-model-workflow.mjs",
+      "sha256": "10bebdef922bb63c3716baa107cd037d3de6432b93a2e058e22151578738a2c1"
+    },
+    {
+      "path": "examples/workflow.mjs",
+      "sha256": "0d365578db02cb9aeda0aaa500aef61cad506e1dfdd0ce36a76235781d9795fd"
+    },
+    {
+      "path": "scripts/ab-purity.mjs",
+      "sha256": "e1a56f8405b94008d9232517082c1730c49512b0f8cc2c7ab81000b5ff374408"
+    },
+    {
+      "path": "scripts/bench.mjs",
+      "sha256": "031ca9342140bc0c25e7c549b1ef9e670cf63135ea7906a13eac7ee283f695c7"
+    },
+    {
+      "path": "scripts/common.mjs",
+      "sha256": "8913cd47ecf759146a5269f2941ec318e3eef06807f9fb5b4eeea94ca74220a8"
+    },
+    {
+      "path": "scripts/require-node.cjs",
+      "sha256": "1fd03efd0af99292fe704212e794122fca89ce39ddbc70183ec5bab2aff6d49b"
+    },
+    {
+      "path": "scripts/structural-check.mjs",
+      "sha256": "d3efa7860992764eca28c4c1a112288a1ae6a7f9987e4b918b83d8de28fcfbf1"
+    },
+    {
+      "path": "scripts/test-repository-snapshot-mutants.mjs",
+      "sha256": "8608bc913c413f73e2ea610bfba1f4531f768e8aae09b34a7c6bc51a4d5cfc9c"
+    },
+    {
+      "path": "scripts/test-veritas-import-mutants.mjs",
+      "sha256": "2e57780d25fc6257cd2fba0018b9065925552538fdcd52aeff5e5d21ab5bc4eb"
+    },
+    {
+      "path": "scripts/verify-veritas-import.mjs",
+      "sha256": "40542fd223dc538fd6c93003284809dff59fc2706eae69e9f516eb87dc70d48c"
+    },
+    {
+      "path": "tools/check-side-effects.mjs",
+      "sha256": "9be4a8b68a100b89279bd533cdc85fb1b9bda765f2459f1f577ba868794816ff"
+    },
+    {
+      "path": "contracts/canonical-json-v1-profile.md",
+      "sha256": "e7b636053519fe4ac21db0bc369d905e07ba80786f2b42234ddef4648f99b3da"
+    },
+    {
+      "path": "contracts/canonical-vectors.json",
+      "sha256": "51a69125be3029ed925575e2c3b32983d5d499acb48cd54875d0200a2d2021d9"
+    },
+    {
+      "path": "contracts/structural-fixtures.json",
+      "sha256": "2ddaca12d7b2319bb02b43f7db6a6cd3ab7f7683c85586749f46235176ac64c9"
+    },
+    {
+      "path": "index.mjs",
+      "sha256": "066c90d65209854cd6aeb838924ce28dca90d7dc75d0cd533d17fbba8e1c3db7"
+    },
+    {
+      "path": "package.json",
+      "sha256": "6b5c0271f5ad95d62af409c9782a2abb0b18a9844356c01a2fcf469063f7897f"
+    },
+    {
+      "path": "package-lock.json",
+      "sha256": "396284ceeb20491293a83094a9558cb32368bb9ccc71b75e0d10da52e86b0912"
+    },
+    {
+      "path": "integrations/veritas/import-manifest.json",
+      "sha256": "8207efbc465ec99f0c16a7a281c349bb7ce8819349dbbafe17534f72dd527bcb"
+    },
+    {
+      "path": "roadmap.md",
+      "sha256": "d80c75b635c1422235d381d6a40aa483c250ee0966db8b53f0dd801414731424"
+    },
+    {
+      "path": "/Volumes/SharedChami/Veritas Local Repository/SYSTEM-EQUATION.md",
+      "sha256": "5bae80caa832cc17179fa5d0a71d2aa8ba8958ab767cc0b8b3b6447fbb0c616b"
+    },
+    {
+      "path": "docs/verification/2026-09-12/u02-snapshot-claude-review.json",
+      "sha256": "f48b36ce007ddbf69133e03a82f1b2c950a09bf7c8c21a9ecc47ba92d6a5bfbf"
+    },
+    {
+      "path": "docs/verification/2026-09-12/u02-snapshot-fable-after-login-request.txt",
+      "sha256": "ffb1b80b7c7722d58c90340a76229f691526bba4f52426746dfdc5498bce6795"
+    },
+    {
+      "path": "docs/verification/2026-09-12/u02-snapshot-fable-after-login-review.json",
+      "sha256": "d87a214e8a2df3bfb1a0bbb3977a93a51cd918a46d7f6995d6457f647b1abd29"
+    },
+    {
+      "path": "docs/verification/2026-09-12/u02-snapshot-fable-bounded-request.txt",
+      "sha256": "8a53c230c9609fa84db2930d3444f082ae118fca2925bbd9822a787574e5a7e5"
+    },
+    {
+      "path": "docs/verification/2026-09-12/u02-snapshot-fable-bounded-review.json",
+      "sha256": "a05d2585f0014b34ed13077bf6f18f5d07846ffddb6544652ae1d984d394bb56"
+    },
+    {
+      "path": "docs/verification/2026-09-12/u02-snapshot-fable-request.txt",
+      "sha256": "fc5b599d90e043ae7c9d2e4d04804e37b27604e4d925ca6395b08fe2a2325994"
+    },
+    {
+      "path": "receipts/repository-execution-v1.mjs",
+      "sha256": "7317e06c094bdf33e51645ce39348fc9e2d5a11ad0921af87434e34c45828cc2"
+    },
+    {
+      "path": "tests/repository-execution-receipt.test.mjs",
+      "sha256": "1075990a6f96276df2057f525df9914bb56a5c1da43d7d544956c86567ad983d"
+    },
+    {
+      "path": "scripts/test-repository-receipt-mutants.mjs",
+      "sha256": "19585d4767f842f24b034d10dbb03c02ea80fcddb8c655a66a47203e236789d5"
+    },
+    {
+      "path": "docs/verification/2026-09-12/u02-receipt-fable-focused-request.txt",
+      "sha256": "80eb13e6c128ff5fdef4ebfe094087cfca12b4f1f81ba686213bd0b3c20c9328"
+    },
+    {
+      "path": "docs/verification/2026-09-12/u02-receipt-fable-focused-review.json",
+      "sha256": "83f9391171d7037a2cae710af0184350cf43d22745c2c8f6c4ac676a0dff4e7b"
+    },
+    {
+      "path": "docs/verification/2026-09-12/u02-receipt-fable-request.txt",
+      "sha256": "975e26eba7ba5733eb413d79fbed1f27435f17ab4a136a5682e52576430bed2d"
+    },
+    {
+      "path": "docs/verification/2026-09-12/u02-receipt-fable-resolution-request.txt",
+      "sha256": "436e2eb0f4e454c09b60b7a036f4f5146b654d82b974dc9ac9b15e8be1372e2b"
+    },
+    {
+      "path": "docs/verification/2026-09-12/u02-receipt-fable-resolution-review.json",
+      "sha256": "816d420d43dca5318414b89e23edb9307de09cd82e7e8e2aac06f7a4654b7cc3"
+    },
+    {
+      "path": "docs/verification/2026-09-12/u02-receipt-fable-review.json",
+      "sha256": "d87a214e8a2df3bfb1a0bbb3977a93a51cd918a46d7f6995d6457f647b1abd29"
+    },
+    {
+      "path": "hosts/repository/disk-capture.mjs",
+      "sha256": "972c8cd690a3f34253c9f4722c336b6e847dffe1b0c924aa8492384c800ae547"
+    },
+    {
+      "path": "tests/repository-disk-capture.test.mjs",
+      "sha256": "ff4a2bf5164647b47d92eae6d05f506e3d72324faa52c57d538aa58fc1d983c5"
+    },
+    {
+      "path": "scripts/test-repository-disk-mutants.mjs",
+      "sha256": "ad4e7c4df85203cbde4b72a62b803bc27cd8ebb9163e00760c48b75cff651f70"
+    },
+    {
+      "path": "docs/nisi-v0.1-v0.2-before-after.md",
+      "sha256": "897be117a9e6aa2f3677593f41e904cafcd2c54257f362d1907e0dec8774ddb3"
+    },
+    {
+      "path": "docs/verification/2026-09-12/u02-repository-transition-checkpoint.json",
+      "sha256": "932044470abb178aef0c1550f5529b9d155c3ea8151327ab31e32646722c9e76"
+    },
+    {
+      "path": "docs/verification/2026-09-12/u02-disk-capture-fable-request.txt",
+      "sha256": "430b2a5403bd3638bafca5c24b100f3968006ac0cf98b9312666d0218f271162"
+    },
+    {
+      "path": "docs/verification/2026-09-12/u02-disk-capture-fable-review.json",
+      "sha256": "b7d3eeb81dada17b47003e22282e9159e2d719d7399f74cdd3c9b4a60005a364"
+    },
+    {
+      "path": "docs/verification/2026-09-12/u02-disk-capture-fable-source-review.json",
+      "sha256": "668d9aad8b4d89d816fee6d4b79932b61029eee6a30045649ac5ecc720a9f537"
+    }
+  ],
+  "beforeFiles": [
+    {
+      "path": ".build/u02-disk-capture-MRGPsh/SYSTEM-EQUATION.md",
+      "sha256": "4b8ced344a6e001787e01fb00654677f9134a78d3dc3d8314b6ff31e41c651a9"
+    },
+    {
+      "path": ".build/u02-disk-capture-MRGPsh/roadmap.md",
+      "sha256": "da4be052c1c80f9b101f1b85c0c78dd2f636d9e76f658c2b70341a9ea7168021"
+    }
+  ],
+  "historicalEquationUnchanged": true,
+  "previousCodeDrift": [],
+  "environment": {
+    "node": "v24.18.0",
+    "platform": "darwin",
+    "architecture": "arm64"
+  },
+  "priorEvidence": [
+    "docs/verification/2026-09-12/u02-receipt-checkpoint.json",
+    "docs/verification/2026-09-12/u02-repository-transition-checkpoint.json"
+  ],
+  "implementation": {
+    "file": "hosts/repository/disk-capture.mjs",
+    "entryPoint": "captureRepositoryFromDisk({root, paths, profile})",
+    "requiredProfile": "operator-trusted-static-local-v1",
+    "scope": "Read actual explicitly selected text files from an operator-trusted static local directory before generated code. Captured snapshot is accepted by existing candidate preparation.",
+    "checks": [
+      "Closed data-only root/path/profile schema and existing path grammar before IO",
+      "Full-manifest type/count/byte validation before content opens",
+      "Root/intermediate/leaf symlink refusal, regular-file-only, nlink=1, same device as root",
+      "O_RDONLY | O_NOFOLLOW | O_NONBLOCK leaf open",
+      "Owned handle pre/post stat; bounded size+1 allocation; explicit-position short-read loop",
+      "Fatal UTF8 decode with BOM preserved and byte roundtrip; reject NUL binary",
+      "Explicit close with refusal on uncertainty and prior error code retention",
+      "Final directory/file stat comparison",
+      "Immutable byte-bound snapshot and capture observation, NOT_RUN and authorizing false"
+    ],
+    "platformDeclaration": "Darwin/Linux POSIX code path; only actual macOS arm64 runtime validated",
+    "nonClaims": [
+      "adversarial concurrent-parent containment",
+      "atomic filesystem snapshot",
+      "verified local mount or absence of concurrent writers",
+      "secret screening or anonymity from root hash",
+      "execution permission or model disclosure consent",
+      "subprocess execution or sandbox",
+      "hard filesystem IO deadline",
+      "native Swift or AFM integration",
+      "durable storage or validated resume"
+    ]
+  },
+  "tests": {
+    "initialFocused": {
+      "chunk_id": "3f73db",
+      "wall_time_seconds": 0.1009155,
+      "exit_code": 0,
+      "original_token_count": 896,
+      "output": "TAP version 13\n# Subtest: real disk bytes feed the existing immutable snapshot and protected-candidate preparation\nok 1 - real disk bytes feed the existing immutable snapshot and protected-candidate preparation\n  ---\n  duration_ms: 7.351167\n  type: 'test'\n  ...\n# Subtest: empty files and UTF-8 BOM bytes are preserved without normalization\nok 2 - empty files and UTF-8 BOM bytes are preserved without normalization\n  ---\n  duration_ms: 1.831625\n  type: 'test'\n  ...\n# Subtest: invalid roots profiles path manifests and getters are rejected before all filesystem I/O\nok 3 - invalid roots profiles path manifests and getters are rejected before all filesystem I/O\n  ---\n  duration_ms: 0.516875\n  type: 'test'\n  ...\n# Subtest: root leaf and intermediate symlinks are refused without reading their targets\nok 4 - root leaf and intermediate symlinks are refused without reading their targets\n  ---\n  duration_ms: 3.74275\n  type: 'test'\n  ...\n# Subtest: directories FIFOs and multiply linked files are refused before any content open\nok 5 - directories FIFOs and multiply linked files are refused before any content open\n  ---\n  duration_ms: 5.071375\n  type: 'test'\n  ...\n# Subtest: missing paths return bounded diagnostics without partial content or absolute root leakage\nok 6 - missing paths return bounded diagnostics without partial content or absolute root leakage\n  ---\n  duration_ms: 1.255833\n  type: 'test'\n  ...\n# Subtest: malformed UTF-8 and NUL-bearing binary data are refused and their owned handles close\nok 7 - malformed UTF-8 and NUL-bearing binary data are refused and their owned handles close\n  ---\n  duration_ms: 1.98375\n  type: 'test'\n  ...\n# Subtest: actual files obey inclusive per-file and aggregate byte limits before content opens\nok 8 - actual files obey inclusive per-file and aggregate byte limits before content opens\n  ---\n  duration_ms: 14.418041\n  type: 'test'\n  ...\n# Subtest: file-count overflow is rejected for a real fixture before its files are opened\nok 9 - file-count overflow is rejected for a real fixture before its files are opened\n  ---\n  duration_ms: 118.199084\n  type: 'test'\n  ...\n# Subtest: short real reads preserve all bytes and the fixed no-follow nonblocking flags\nok 10 - short real reads preserve all bytes and the fixed no-follow nonblocking flags\n  ---\n  duration_ms: 5.087416\n  type: 'test'\n  ...\n# Subtest: early EOF is refused instead of silently admitting truncated text\nok 11 - early EOF is refused instead of silently admitting truncated text\n  ---\n  duration_ms: 1.29175\n  type: 'test'\n  ...\n# Subtest: same-size in-place changes during reading are detected and the handle closes\nok 12 - same-size in-place changes during reading are detected and the handle closes\n  ---\n  duration_ms: 1.64525\n  type: 'test'\n  ...\n# Subtest: final pass detects a previously read file changed while a later file was read\nok 13 - final pass detects a previously read file changed while a later file was read\n  ---\n  duration_ms: 1.584791\n  type: 'test'\n  ...\n# Subtest: read errors close owned handles and suppress raw filesystem error messages\nok 14 - read errors close owned handles and suppress raw filesystem error messages\n  ---\n  duration_ms: 1.111541\n  type: 'test'\n  ...\n# Subtest: close uncertainty refuses capture and retains a primary read refusal without inventing closure\nok 15 - close uncertainty refuses capture and retains a primary read refusal without inventing closure\n  ---\n  duration_ms: 1.952\n  type: 'test'\n  ...\n1..15\n# tests 15\n# suites 0\n# pass 15\n# fail 0\n# cancelled 0\n# skipped 0\n# todo 0\n# duration_ms 205.815208\n"
+    },
+    "finalFocused": {
+      "tests": 15,
+      "pass": 15,
+      "controlEvidence": ".build/repository-disk-mutants-H5L1mq/stdout.txt",
+      "detail": "Final control includes valid 1024-file boundary added after initial/source-review run."
+    },
+    "fullCheck": {
+      "command": "npm run check",
+      "result": "PASS",
+      "structuralScope": "Existing scoped structural direct-call checker; not arbitrary host-effect or sandbox verification",
+      "tests": 235,
+      "pass": 235,
+      "start": {
+        "chunk_id": "8a6320",
+        "wall_time_seconds": 1.002077667,
+        "session_id": 47455,
+        "original_token_count": 602,
+        "output": "\n> nisi@0.2.0-private.0 check\n> npm run check:structural && npm test\n\n\n> nisi@0.2.0-private.0 check:structural\n> node scripts/require-node.cjs && node scripts/structural-check.mjs\n\n{\"mutationResults\":[{\"caught\":true,\"expectedRule\":\"process-spawn\",\"id\":\"STRUCT-001-SPAWN\",\"observedRules\":[\"process-spawn\"]},{\"caught\":true,\"expectedRule\":\"filesystem-write\",\"id\":\"STRUCT-002-WRITE\",\"observedRules\":[\"filesystem-write\"]},{\"caught\":true,\"expectedRule\":\"network-effect\",\"id\":\"STRUCT-003-NETWORK\",\"observedRules\":[\"network-effect\"]},{\"caught\":true,\"expectedRule\":\"dynamic-code\",\"id\":\"STRUCT-004-EVAL\",\"observedRules\":[\"dynamic-code\"]},{\"caught\":true,\"expectedRule\":\"dynamic-import\",\"id\":\"STRUCT-005-IMPORT\",\"observedRules\":[\"dynamic-import\"]},{\"caught\":true,\"expectedRule\":\"module-load\",\"id\":\"STRUCT-006-REQUIRE\",\"observedRules\":[\"module-load\"]},{\"caught\":true,\"expectedRule\":\"process-mutation\",\"id\":\"STRUCT-007-PROCESS-EXIT\",\"observedRules\":[\"process-mutation\"]},{\"caught\":true,\"expectedRule\":\"dynamic-or-worker-construction\",\"id\":\"STRUCT-008-WORKER\",\"observedRules\":[\"dynamic-or-worker-construction\"]}],\"positiveResults\":[{\"findingCount\":0,\"id\":\"ALLOW-001-CANONICAL\"},{\"findingCount\":0,\"id\":\"ALLOW-002-VALIDATE\"},{\"findingCount\":0,\"id\":\"ALLOW-003-EVAL-SUBSTRING\"},{\"findingCount\":0,\"id\":\"ALLOW-004-FORBIDDEN-WORDS-AS-DATA\"},{\"findingCount\":0,\"id\":\"ALLOW-005-FORBIDDEN-WORD-IN-STRING\"},{\"findingCount\":0,\"id\":\"ALLOW-006-METHOD-DECLARATION-NOT-CALL\"},{\"findingCount\":0,\"id\":\"ALLOW-007-ORDINARY-COLLECTION-WORK\"},{\"findingCount\":0,\"id\":\"ALLOW-008-HASHING-IS-PERMITTED\"}],\"resultDigest\":\"66d9c396e18a434690c34ad059279774154062982313c2973fdb14f54c52eef0\",\"schemaVersion\":1,\"sourceDigest\":\"d1049a26d2bea0d14e959c0af22af15b975345091c5fa5360e8bd685637f8e59\",\"sourceFindings\":[],\"status\":\"PASS\"}\n\n> nisi@0.2.0-private.0 test\n> node scripts/require-node.cjs && node --test tests/*.test.mjs\n\n✔ construction refuses anything outside the closed option set (2.770625ms)\n✔ no grant is refusal, not a permissive default (0.897458ms)\n✔ a consented item is read and answered, and only digests come back (193.170917ms)\n✔ the same content under the same grant answers with the same digest (115.677084ms)\n✔ a request with no declared content never reaches a process (1.090833ms)\n✔ content the grant refuses never reaches a process (1.844583ms)\n✔ revocation stops the executor immediately and terminally (130.546917ms)\n"
+      },
+      "completion": {
+        "chunk_id": "3b511b",
+        "wall_time_seconds": 0.000002958,
+        "exit_code": 0,
+        "original_token_count": 4693,
+        "output": "✔ evidence that claims authority is refused rather than interpreted (1766.500958ms)\n✔ evidence about different content, or a different grant, is refused (528.156959ms)\n✔ an advisory over the granted cap, or one that does not match its digest, is refused (531.386292ms)\n✔ the binary is re-verified before every launch (58.338542ms)\n✔ child failures are refused with their own causes, never as evidence (503.686ms)\n✔ an aborted run is refused and leaves no reading behind (53.569583ms)\n✔ a request that is not bytes is refused before the grant is consulted (1.157791ms)\n✔ every field of the evidence reader is load-bearing, not decorative (427.507708ms)\n✔ the answer digest binds the request bytes, not only the content (91.205083ms)\n✔ pre-aborted and malformed contexts resolve to refusals without admission or spawn (1.115125ms)\n✔ abort during listener registration prevents spawning (0.558334ms)\n✔ evidence refuses malformed UTF-8, duplicate keys, wrong prompts and malformed limitations (1484.712584ms)\n✔ zero advisory cap, UTF-8 BOM and frozen item mappings follow the native contract (66.759125ms)\n✔ canonical JSON v1 exact bytes: numeric-key-order (1.999458ms)\n✔ canonical JSON v1 exact bytes: proto-survival (0.163875ms)\n✔ canonical JSON v1 exact bytes: scalar-order (0.11375ms)\n✔ canonical JSON v1 exact bytes: decoded-key (0.125667ms)\n✔ canonical JSON v1 exact bytes: null-value (0.089833ms)\n✔ canonical JSON v1 exact bytes: empty-object (0.068292ms)\n✔ canonical JSON v1 exact bytes: empty-array (0.083125ms)\n✔ canonical JSON v1 exact bytes: array-order (0.070542ms)\n✔ canonical JSON v1 exact bytes: true (0.063625ms)\n✔ canonical JSON v1 exact bytes: false (0.095625ms)\n✔ canonical JSON v1 exact bytes: null (0.05525ms)\n✔ canonical JSON v1 exact bytes: whitespace (0.059584ms)\n✔ canonical JSON v1 exact bytes: nfd-value-preserved (0.055667ms)\n✔ canonical JSON v1 exact bytes: embedded-bom (0.071333ms)\n✔ canonical JSON v1 exact bytes: surrogate-pair (0.0695ms)\n✔ canonical JSON v1 exact bytes: maximum-scalar (0.042375ms)\n✔ canonical JSON v1 exact bytes: escapes (0.038417ms)\n✔ canonical JSON v1 exact bytes: raw-noncontrols (0.032959ms)\n✔ canonical JSON v1 integer boundary accepts 0 (0.039542ms)\n✔ canonical JSON v1 integer boundary accepts 1 (0.022958ms)\n✔ canonical JSON v1 integer boundary accepts -1 (0.037167ms)\n✔ canonical JSON v1 integer boundary accepts 9007199254740991 (0.027083ms)\n✔ canonical JSON v1 integer boundary accepts -9007199254740991 (0.023ms)\n✔ canonical JSON v1 number refuses exact source -0 (0.197792ms)\n✔ canonical JSON v1 number refuses exact source 1.0 (0.045625ms)\n✔ canonical JSON v1 number refuses exact source 1.5 (0.028208ms)\n✔ canonical JSON v1 number refuses exact source 1e0 (0.025208ms)\n✔ canonical JSON v1 number refuses exact source 1E+3 (0.02475ms)\n✔ canonical JSON v1 number refuses exact source 1e-7 (0.027375ms)\n✔ canonical JSON v1 number refuses exact source 01 (0.037625ms)\n✔ canonical JSON v1 number refuses exact source -01 (0.024667ms)\n✔ canonical JSON v1 number refuses exact source +1 (0.028792ms)\n✔ canonical JSON v1 number refuses exact source - (0.02875ms)\n✔ canonical JSON v1 number refuses exact source NaN (0.025083ms)\n✔ canonical JSON v1 number refuses exact source Infinity (0.024208ms)\n✔ canonical JSON v1 number refuses exact source -Infinity (0.042ms)\n✔ canonical JSON v1 number refuses exact source 9007199254740992 (0.026625ms)\n✔ canonical JSON v1 number refuses exact source -9007199254740992 (0.028708ms)\n✔ canonical JSON v1 number refuses exact source -9223372036854775808 (0.024625ms)\n✔ canonical JSON v1 number refuses exact source 18446744073709551615 (0.025917ms)\n✔ canonical JSON v1 number refuses exact source 999999999999999999999999 (0.031209ms)\n✔ canonical JSON v1 refusal: same-key (0.04025ms)\n✔ canonical JSON v1 refusal: escaped-same-key (1.284ms)\n✔ canonical JSON v1 refusal: nested-same-key (0.094833ms)\n✔ canonical JSON v1 refusal: nul-key (0.038ms)\n✔ canonical JSON v1 refusal: nfd-key (0.033959ms)\n✔ canonical JSON v1 refusal: nfc-nfd-collision (0.032083ms)\n✔ canonical JSON v1 refusal: lone-high (0.024667ms)\n✔ canonical JSON v1 refusal: lone-low (0.0215ms)\n✔ canonical JSON v1 refusal: high-then-wrong-low (0.02575ms)\n✔ canonical JSON v1 refusal: high-then-raw (0.0205ms)\n✔ canonical JSON v1 refusal: surrogate-key (0.02225ms)\n✔ canonical JSON v1 refusal: bad-escape (0.023916ms)\n✔ canonical JSON v1 refusal: truncated-hex (0.096709ms)\n✔ canonical JSON v1 refusal: invalid-hex (0.021709ms)\n✔ canonical JSON v1 refusal: truncated-escape (0.023458ms)\n✔ canonical JSON v1 refusal: raw-control (0.019ms)\n✔ canonical JSON v1 refusal: unterminated (0.021833ms)\n✔ canonical JSON v1 refusal: object-trailing-comma (0.0255ms)\n✔ canonical JSON v1 refusal: array-trailing-comma (0.032125ms)\n✔ canonical JSON v1 refusal: top-level-tail (0.073708ms)\n✔ canonical JSON v1 refusal: literal-tail (0.042042ms)\n✔ canonical JSON v1 refusal: empty-document (0.033667ms)\n✔ canonical JSON v1 refusal: missing-value (0.05425ms)\n✔ canonical JSON v1 refusal: missing-colon (0.036292ms)\n✔ canonical JSON v1 refusal: duplicate-proto (0.027209ms)\n✔ canonical JSON v1 refusal: fraction-without-integer (0.021042ms)\n✔ canonical JSON v1 refusal: exponent-without-mantissa (0.020625ms)\n✔ canonical JSON v1 refusal: negative-fraction-without-integer (0.031208ms)\n✔ canonical JSON v1 exact raw-byte refusal: invalid-ff-in-string (0.074ms)\n✔ canonical JSON v1 exact raw-byte refusal: overlong (0.031042ms)\n✔ canonical JSON v1 exact raw-byte refusal: encoded-surrogate (0.027375ms)\n✔ canonical JSON v1 exact raw-byte refusal: truncated-multibyte (0.026708ms)\n✔ canonical JSON v1 exact raw-byte refusal: above-unicode-range (0.028125ms)\n✔ canonical JSON v1 exact raw-byte refusal: leading-bom (0.031125ms)\n✔ canonical JSON v1 depth 128 admitted, 129 and exact generated 512 refused (0.258875ms)\n✔ canonical JSON v1 object limit is per object, checked at 4096/4097 and generated 10000 (20.907333ms)\n✔ canonical JSON v1 input-byte cap accepts exactly 1 MiB and refuses above it (27.672709ms)\n✔ canonical JSON v1 input cannot be an arbitrary object, string, proxy or shared buffer (0.39125ms)\n✔ canonical JSON v1 handles sliced views and refuses detached input (0.190666ms)\n✔ canonical JSON v1 ignores spoofed typed-array properties and never consults input hooks (0.071292ms)\n✔ canonical JSON v1 primitive-only emission never calls container toJSON (0.093792ms)\n✔ canonical JSON v1 key insertion permutations produce identical canonical digests (0.21625ms)\n✔ canonical JSON v1 agrees with the independent serializer on every corpus vector (0.831292ms)\n✔ canonical JSON v1 does not silently migrate legacy numeric-key or proto records (0.081583ms)\n✔ canonical JSON v1 decoded astral duplicates and prefix/scalar key boundaries (0.05525ms)\n✔ canonical JSON v1 size is the view length, not its larger backing allocation (0.055208ms)\n✔ canonical JSON v1 captures current resized views and refuses out-of-bounds views (0.066042ms)\n✔ canonical JSON v1 exact documented 400002-byte mixed string is admitted unchanged (4.177666ms)\n✔ canonical JSON v1 integer magnitude is checked by value, not by digit count (0.099833ms)\n✔ content item traps and symbol extras are CONTENT_ITEM_INVALID before reads or admission count (3.767041ms)\n✔ same-size in-place mutation between read and final identity check is CONTENT_CHANGED_DURING_READ (1.416416ms)\n✔ executor rejects malformed item maps and snapshots valid mappings at construction (193.337416ms)\n✔ legacy payload digest remains exact while execution digest binds task identity (115.41375ms)\n✔ a grant must be presented as canonical bytes (3.118042ms)\n✔ a grant is refused unless every declared boundary is the boundary (3.030084ms)\n✔ a valid grant admits content inside its scope and returns the file, not the caller claim (0.935958ms)\n✔ scope is a path boundary, not a string prefix (2.44125ms)\n✔ a symlink cannot carry content across the boundary (0.977ms)\n✔ each item is checked on its own terms (2.255666ms)\n✔ a grant does not outlive its declared lifetime (0.534333ms)\n✔ a clock that moves backwards is refused, not trusted (0.60125ms)\n✔ revocation is immediate and terminal (0.895666ms)\n✔ a grant reports what it is and claims nothing more (0.788958ms)\n✔ the declared limits are the module constants, not per-call opinions (0.877667ms)\n✔ the consent digest is pinned to its v1 domain string (0.22825ms)\n✔ later clock failures are named refusals and status samples the clock once (0.480708ms)\n✔ a final-component replacement after validation is refused before content is returned (1.171916ms)\n✔ file kind is a declared label; the v1 policy does not parse JSON content (0.468542ms)\n✔ the README example runs and prints what the README says it prints (44.631042ms)\n✔ example repairs an acceptance failure, reruns checks/tests, and reviews with evidence (6.218625ms)\n✔ malformed model identity, finish reason, envelope schema, Unicode, and duplicate keys fail closed (1.68175ms)\n✔ configuration enforces exact loopback HTTP scope and bounded numeric caps (0.247583ms)\n✔ pre-aborted upstream signal and abort during listener registration prevent fetch (0.299708ms)\n✔ request and response byte caps fail before transport or cancel an active reader (0.385916ms)\n✔ throwing and hanging fetches produce explicit unavailable and timeout receipts (22.023917ms)\n✔ adapter snapshots configuration and freezes receipt snapshots (0.556875ms)\n✔ response cleanup preserves its original error even when cancellation throws (0.357083ms)\n✔ strict codec rejects duplicate object keys and accepts one JSON fence (0.817875ms)\n✔ factory requires literal loopback HTTP destination and rejects redirects by request policy (1.934292ms)\n✔ author builds draft result from model data and preserves exact engine binding (1.363166ms)\n✔ reviewer derives PASS or FAIL and identity from its configuration (0.639416ms)\n✔ length finish reason and oversized streamed body are refused (0.681375ms)\n✔ Node preflight validates actual process.version and rejects unsupported versions (0.861042ms)\n✔ CLI parser is pure, requires exactly three arguments, and validates endpoint/model config (0.921708ms)\n✔ programmatic example API remains callable with injected deterministic transport (5.104041ms)\n✔ real CLI exits 2 for invalid argument and never reaches inference (37.750333ms)\n✔ descriptive public names preserve the original v1 factories and imports (1.441208ms)\n✔ real disk bytes feed the existing immutable snapshot and protected-candidate preparation (23.140792ms)\n✔ empty files and UTF-8 BOM bytes are preserved without normalization (3.744667ms)\n✔ invalid roots profiles path manifests and getters are rejected before all filesystem I/O (0.635583ms)\n✔ root leaf and intermediate symlinks are refused without reading their targets (6.912416ms)\n✔ directories FIFOs and multiply linked files are refused before any content open (9.876292ms)\n✔ missing paths return bounded diagnostics without partial content or absolute root leakage (3.447833ms)\n✔ malformed UTF-8 and NUL-bearing binary data are refused and their owned handles close (3.172459ms)\n✔ actual files obey inclusive per-file and aggregate byte limits before content opens (17.535208ms)\n✔ file-count overflow is rejected for a real fixture before its files are opened (241.561792ms)\n✔ short real reads preserve all bytes and the fixed no-follow nonblocking flags (5.4225ms)\n✔ early EOF is refused instead of silently admitting truncated text (1.071208ms)\n✔ same-size in-place changes during reading are detected and the handle closes (1.51975ms)\n✔ final pass detects a previously read file changed while a later file was read (1.27875ms)\n✔ read errors close owned handles and suppress raw filesystem error messages (0.8455ms)\n✔ close uncertainty refuses capture and retains a primary read refusal without inventing closure (1.564625ms)\n✔ execution expectations require issued preparations and preserve immutable distinct identities (4.465167ms)\n✔ profiles reject shell-shaped argv, ambiguous cwd, malformed values and extra authority (3.529959ms)\n✔ receipt identity rejects each cross-run candidate snapshot profile and command substitution (2.0185ms)\n✔ receipt schemas reject getters hidden fields symbols prototypes and missing data without invocation (0.535416ms)\n✔ PASS requires confirmed drain even when the child reports exit zero (0.30375ms)\n✔ passing and failed checks cannot hide interruption truncation error or unclosed execution (0.577708ms)\n✔ contradictory process states are refused even in adverse receipts (0.661ms)\n✔ NOT_RUN ERROR and INCONCLUSIVE retain distinct non-success semantics (0.398ms)\n✔ output summaries enforce byte bounds digest shape and exact truncation without inventing content proof (0.424458ms)\n✔ bundle links synthetic workflow records without changing v1 completion or granting authority (3.006042ms)\n✔ bundle binds final report digest not the preliminary store acknowledgement (1.400708ms)\n✔ bundle refuses extra missing duplicate reordered and cross-linked receipt inventories (2.129ms)\n✔ bundle refuses stage status contradictions even with a recomputed bundle digest (1.231875ms)\n✔ adverse receipts and engine exception stops remain readable without PASS coercion (5.891291ms)\n✔ all checks passing does not imply a completed workflow or a releasable product (0.806875ms)\n✔ bundle rejects stale expected run attempt or snapshot and malformed authority fields (1.834791ms)\n✔ cancellation and deadlines retain UNAVAILABLE and refuse a late passing receipt (2.302625ms)\n✔ repaired candidates require fresh receipts while adverse attempt history remains intact (3.108166ms)\n✔ bundle preserves adverse reasons and exact exception cancellation and deadline classifications (3.5825ms)\n✔ snapshot sorts and binds UTF-8 encoding of captured text with a domain-separated identity (2.872125ms)\n✔ captured input and returned snapshots cannot mutate identity or file content (0.51575ms)\n✔ snapshot objects reject unknown keys, accessors and prototypes without invoking getters (0.273042ms)\n✔ file arrays reject sparse, decorated and accessor entries and enforce file-count bounds (6.094416ms)\n✔ initial path profile refuses unsupported spellings and ambiguous platform paths (0.53325ms)\n✔ case-folded duplicate and prefix paths are refused in either order (0.19625ms)\n✔ content is well-formed text only, never binary or deletion markers (0.243625ms)\n✔ UTF-8 accounting admits exact byte bounds and rejects multibyte overflow (13.189125ms)\n✔ preparation overlays only changed files and preserves omitted dependencies and tests (2.27275ms)\n✔ unchanged dependency changes preparation identity despite the same task and candidate (0.5695ms)\n✔ serialized or forged baselines cannot impersonate factory-issued snapshots (0.234917ms)\n✔ all protected baseline files must exist with their fixed digests even if omitted by candidate (0.539209ms)\n✔ existing task, author, candidate scope and schemas remain enforced (0.582792ms)\n✔ overlay rechecks combined path collisions and final resource bounds (14.776958ms)\n✔ repository scope refuses ambiguous or unsupported allowed and protected paths (0.503958ms)\n✔ preparation descriptors reject getters and hidden fields without reading them (0.419958ms)\n✔ preparation identities agree with the unchanged workflow candidate and run binding (2.094917ms)\n✔ retained real private snapshot matches its frozen inventory (45.770917ms)\n✔ frozen import matches exact content; scope never expands to integration or release (6.546ms)\n✔ import refuses same-size content edit (5.337959ms)\n✔ import refuses new source (3.90125ms)\n✔ import refuses missing source (2.628125ms)\n✔ import refuses duplicate inventory entry (2.5765ms)\n✔ import refuses path traversal (2.182208ms)\n✔ import refuses unknown authority field (1.8045ms)\n✔ import refuses wrong schema (2.561416ms)\n✔ import refuses empty inventory (2.965125ms)\n✔ import refuses invalid digest (3.363875ms)\n✔ import refuses scope changed (3.327708ms)\n✔ import refuses file symlink (3.378625ms)\n✔ excluded build and hidden entries are named but not traversed or accepted as source (3.514459ms)\n✔ runnable workflow example executes failing and passing assertions, repairs, reviews and saves its report (81.95125ms)\n✔ normal edit mode produces a bound completed report (4.454416ms)\n✔ review mode validates the supplied candidate and never invokes draft or repair (0.645833ms)\n✔ a repair reruns all checks, tests, and reviewers with a new attempt binding (0.868292ms)\n✔ failed, unavailable, and not-run statuses remain non-successes with distinct outcomes (0.980625ms)\n✔ repair budget, no progress, and repeated fingerprints are explicit (1.066167ms)\n✔ actual task and candidate mutation attempts fail while frozen snapshots remain unchanged (0.375667ms)\n✔ replay identity binds task, run, attempt, and candidate evidence (0.650333ms)\n✔ stale or malformed evidence and protected or out-of-scope candidates are blocked (1.124833ms)\n✔ cancellation before and during listener registration prevents adapter calls (0.322042ms)\n✔ async timeout and synchronous clock advancement are timed out before later adapters (17.302833ms)\n✔ clock regression and deadline overflow fail closed (0.330584ms)\n✔ a storage acknowledgement copied after the deadline is rejected even when storage is optional (0.785958ms)\n✔ report stores receive exact frozen report and binding hashes; required failure blocks (1.383375ms)\n✔ task specification and candidate inputs are frozen and schema-checked (0.330417ms)\n✔ captured reviewer list, IDs and methods survive caller mutation after authorization (0.441125ms)\n✔ reviewers receive immutable fresh check and test evidence; all required reviewers run (0.330208ms)\n✔ captured evidence cannot replay across task, run, candidate or repair attempt (1.932458ms)\n✔ test status and assertion count invariants reject contradictory evidence (1.82575ms)\n✔ all valid repair responses retain evidence, including fixed points and cycles (2.29575ms)\n✔ post-task setup refusals retain identity, and all invalid clocks have CLOCK_INVALID (0.686834ms)\n✔ valid store refusals, invalid receipts, exceptions, timeout and cancellation preserve the workflow outcome (44.897125ms)\nℹ tests 235\nℹ suites 0\nℹ pass 235\nℹ fail 0\nℹ cancelled 0\nℹ skipped 0\nℹ todo 0\nℹ duration_ms 6011.532\n"
+      }
+    },
+    "mutants": {
+      "schemaVersion": 1,
+      "scope": "FOUR_TARGETED_DISK_CAPTURE_MUTANTS_ONLY",
+      "nodeVersion": "v24.18.0",
+      "platform": "darwin",
+      "architecture": "arm64",
+      "controlExitCode": 0,
+      "evidenceDirectory": "/Users/louiscalata/nisi-next-private/.build/repository-disk-mutants-H5L1mq",
+      "sourceHashes": [
+        {
+          "file": "hosts/repository/disk-capture.mjs",
+          "sha256": "972c8cd690a3f34253c9f4722c336b6e847dffe1b0c924aa8492384c800ae547"
+        },
+        {
+          "file": "tests/repository-disk-capture.test.mjs",
+          "sha256": "ff4a2bf5164647b47d92eae6d05f506e3d72324faa52c57d538aa58fc1d983c5"
+        },
+        {
+          "file": "hosts/repository/snapshot-contract.mjs",
+          "sha256": "2b52c23bac3a817769b7892eed71baba79cb81954b6a63724d107a9c258ba13f"
+        },
+        {
+          "file": "workflow/contracts.mjs",
+          "sha256": "c28a3ee3db6e9a936cd58fca8b8ee3f2744ca25c259e2ea278b3b09cdbb73d82"
+        }
+      ],
+      "results": [
+        {
+          "id": "M01-hardlink",
+          "expectedFailure": "directories FIFOs and multiply linked files are refused before any content open",
+          "exitCode": 1,
+          "signal": null,
+          "errorCode": null,
+          "failedChecks": 1,
+          "failures": [
+            "directories FIFOs and multiply linked files are refused before any content open"
+          ],
+          "caught": true
+        },
+        {
+          "id": "M02-bom",
+          "expectedFailure": "empty files and UTF-8 BOM bytes are preserved without normalization",
+          "exitCode": 1,
+          "signal": null,
+          "errorCode": null,
+          "failedChecks": 1,
+          "failures": [
+            "empty files and UTF-8 BOM bytes are preserved without normalization"
+          ],
+          "caught": true
+        },
+        {
+          "id": "M03-final-drift",
+          "expectedFailure": "final pass detects a previously read file changed while a later file was read",
+          "exitCode": 1,
+          "signal": null,
+          "errorCode": null,
+          "failedChecks": 1,
+          "failures": [
+            "final pass detects a previously read file changed while a later file was read"
+          ],
+          "caught": true
+        },
+        {
+          "id": "M04-close-uncertainty",
+          "expectedFailure": "close uncertainty refuses capture and retains a primary read refusal without inventing closure",
+          "exitCode": 1,
+          "signal": null,
+          "errorCode": null,
+          "failedChecks": 1,
+          "failures": [
+            "close uncertainty refuses capture and retains a primary read refusal without inventing closure"
+          ],
+          "caught": true
+        }
+      ],
+      "realFixtureIO": true,
+      "candidateExecutionVerified": false,
+      "hostileTreeContainment": false,
+      "legalClearance": false
+    },
+    "frozenImport": {
+      "status": "PASS_SOURCE_FREEZE_ONLY",
+      "files": 225,
+      "totalBytes": 8027242,
+      "originRechecked": false,
+      "integrationVerified": false,
+      "legalClearance": false
+    },
+    "whitespace": {
+      "command": "git diff --check",
+      "exitCode": 0
+    },
+    "fixtureCleanup": "Only synthetic test-owned mkdtemp directories are removed; each after hook verifies absence. Mutation source/control/adverse outputs remain retained. No user repository source/evidence removed.",
+    "filesystemEvidence": "Actual local fixtures cover success, BOM/empty text, limits, symlinks, FIFO, hardlinks, missing paths, invalid bytes, and real reads. Controlled test-only wrappers cover short reads, drift, read errors and close-result uncertainty; those injections are not proof of OS-wide failure behavior."
+  },
+  "collaborators": {
+    "fable": {
+      "model": "claude-fable-5-1",
+      "auxiliaryModel": "claude-haiku-4-5-20251001",
+      "toolsEnabled": false,
+      "sessionPersisted": false,
+      "writeOwner": "codex",
+      "successfulReceipt": "docs/verification/2026-09-12/u02-disk-capture-fable-source-review.json",
+      "packet": "docs/verification/2026-09-12/u02-disk-capture-fable-request.txt",
+      "verdict": "PASS",
+      "issues": [],
+      "scope": "Bounded read/UTF8/close source snippet; not complete reader audit",
+      "reportedCostUSD": 0.1238115,
+      "failedLocalInvocation": {
+        "receipt": "docs/verification/2026-09-12/u02-disk-capture-fable-review.json",
+        "status": "NOT_RUN",
+        "reason": "Root command used nonexistent review-output path as prompt input; helper refused before model invocation; corrected request used separate output filename."
+      }
+    },
+    "daybreak": {
+      "model": "gpt-daybreak-blue-latest",
+      "role": "Read-only full reader source review within stated boundary",
+      "result": "PASS",
+      "findingCount": 0,
+      "observedTests": 15,
+      "edits": false
+    },
+    "luna": {
+      "model": "gpt-5.6-luna",
+      "role": "Read-only negative test design and handle-cleanup strategy",
+      "edits": false
+    }
+  },
+  "consultedPrimarySources": [
+    {
+      "url": "https://nodejs.org/docs/latest-v24.x/api/fs.html",
+      "usedFor": "O_NOFOLLOW/O_NONBLOCK, explicit FileHandle close, bigint stat identity fields",
+      "documentationVersionReported": "24.21.0",
+      "actualRuntimeTested": "24.18.0"
+    },
+    {
+      "url": "https://nodejs.org/api/util.html#new-textdecoderencoding-options",
+      "usedFor": "fatal UTF8 decoding and ignoreBOM=true preservation; byte behavior tested locally",
+      "documentationVersionReported": "26.8.2",
+      "actualRuntimeTested": "24.18.0"
+    },
+    {
+      "url": "https://nodejs.org/docs/latest-v24.x/api/util.html#class-utiltextdecoder",
+      "status": "UNAVAILABLE_TOOL_INTERNAL_ERROR",
+      "usedFor": null
+    }
+  ],
+  "roadmapUpdates": [
+    "Current status names real trusted-static capture, not a completed runner.",
+    "Historical pre-implementation Fable scope record retained, with subsequent implementation separate.",
+    "Next explicit implementation is real fixed-profile Swift verifier then repository process host.",
+    "Original System Equation historical Veritas section byte-identical; only current Nisi section updated."
+  ],
+  "next": [
+    "Implement fixed-profile native Swift bridge against frozen Veritas verifier with exact source/build/profile/candidate bindings.",
+    "Implement actual authorized repository runner and observed process/drain receipts, retaining open isolation and durable-state boundaries.",
+    "Continue full failure history, evaluated prevention, native scheduler/providers, modules and Nisi-only repository cutover after acceptance."
+  ],
+  "publicCheckout": {
+    "path": "/Users/louiscalata/nisi",
+    "status": "CLEAN",
+    "modified": false
+  },
+  "sourceExecutionVerified": false,
+  "nativeBridgeVerified": false,
+  "wholeMergerComplete": false,
+  "repositoryCutoverPerformed": false,
+  "sourceDeleted": false,
+  "committed": false,
+  "pushed": false,
+  "published": false,
+  "authorizing": false
+}

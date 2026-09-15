@@ -1,0 +1,22 @@
+{
+  "schemaVersion": 1,
+  "project": "nisi",
+  "roadmapDigest": "0000000000000000000000000000000000000000000000000000000000000000",
+  "workOrder": {
+    "id": "AFM-DEMO-3",
+    "goal": "Prove rung-3 scoped staging-write planning end to end.",
+    "acceptance": "write plan is lane-scoped, pinned and bounded; nothing executes"
+  },
+  "lastReceipts": [],
+  "allowedSteps": [
+    "implement",
+    "test",
+    "document"
+  ],
+  "allowedChecks": [
+    "afm-v1-oracle",
+    "bridge-contract",
+    "v2-module-check",
+    "v3-module-check"
+  ]
+}

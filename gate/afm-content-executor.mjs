@@ -23,6 +23,7 @@ import path from 'node:path';
 import { spawn } from 'node:child_process';
 import { createHash } from 'node:crypto';
 import { canonicalizeJSONV1 } from '../canonical/canonical-json-v1.mjs';
+import { createOwnedChildObserver } from '../hosts/swift-verifier/owned-child.mjs';
 
 const FLAGS = Object.freeze({ authorizing: false, modelExecuted: false,
   promotionGranted: false, certificationGranted: false });
@@ -48,6 +49,7 @@ const KNOWN_CAUSES = Object.freeze(new Set([
   'ROUTE_REFUSED', 'BOUNDARY_VIOLATED', 'CONSENT_DIGEST_MISMATCH', 'CONTENT_DIGEST_MISMATCH',
   'CONTENT_BYTES_MISMATCH', 'CONTENT_KIND_MISMATCH',
   'CONTEXT_INVALID', 'PROMPT_DIGEST_MISMATCH',
+  'CHILD_OWNER_BUSY', 'CHILD_OWNER_QUARANTINED', 'CHILD_CLOSE_UNKNOWN', 'EXECUTOR_STOPPED',
 ]));
 
 const EVIDENCE_KEYS = ['schemaVersion', 'status', 'evidenceClass', 'consentDigest', 'contentSha256',
@@ -104,40 +106,6 @@ function verifyBinary(binary, binarySHA256) {
   if (sha(fs.readFileSync(binary)) !== binarySHA256) throw new Error('BINARY_DIGEST_MISMATCH');
 }
 
-function runProbe(binary, input, timeoutMs, signal) {
-  return new Promise(resolve => {
-    let child = null, timer = null, settled = false, out = Buffer.alloc(0), overflow = false;
-    const finish = value => {
-      if (settled) return;
-      settled = true;
-      if (timer) clearTimeout(timer);
-      signal?.removeEventListener('abort', onAbort);
-      resolve(value);
-    };
-    const kill = () => { if (child && child.exitCode === null && child.signalCode === null) child.kill('SIGKILL'); };
-    const onAbort = () => { kill(); finish({ code: 'ABORTED' }); };
-    signal?.addEventListener('abort', onAbort, { once: true });
-    if (signal?.aborted || settled) { onAbort(); return; }
-    try {
-      child = spawn(binary, [], { cwd: path.dirname(binary), env: { PATH: '/usr/bin:/bin' },
-        stdio: ['pipe', 'pipe', 'ignore'] });
-    } catch { return finish({ code: 'SPAWN_ERROR' }); }
-    timer = setTimeout(() => { kill(); finish({ code: 'DEADLINE_EXCEEDED' }); }, timeoutMs);
-    child.on('error', () => { kill(); finish({ code: 'SPAWN_ERROR' }); });
-    child.stdin.on('error', () => { /* the child may exit before the write drains */ });
-    child.stdout.on('data', chunk => {
-      if (out.length + chunk.length > MAX_EVIDENCE_BYTES) { overflow = true; kill(); return; }
-      out = Buffer.concat([out, chunk]);
-    });
-    child.once('close', (exitCode, sig) => {
-      if (overflow) return finish({ code: 'EVIDENCE_OVERFLOW' });
-      if (sig) return finish({ code: 'CHILD_SIGNALLED' });
-      if (exitCode !== 0) return finish({ code: 'CHILD_EXIT_NONZERO' });
-      finish({ code: 'OK', raw: out });
-    });
-    child.stdin.end(input);
-  });
-}
 
 /** Binds a consent grant, a hash-pinned probe, and the per-request content map.
  *  `items` maps a task id to the one file that request is about. A request with
@@ -169,6 +137,11 @@ export function createAFMContentExecutor(options) {
 
     const refusals = [];
     const readings = [];
+    const observations = [];
+    let stopped = false, activeController = null;
+    const owner = createOwnedChildObserver({timeoutMs,maximumOutputBytes:MAX_EVIDENCE_BYTES,stderrPolicy:'ignore',
+      launch:()=>spawn(binary,[],{cwd:path.dirname(binary),env:{PATH:'/usr/bin:/bin'},shell:false,stdio:['pipe','pipe','pipe']})});
+    const state = () => stopped ? (owner.status()==='BUSY'?'STOPPED_DRAINING':owner.status()==='QUARANTINED'?'STOPPED_QUARANTINED':'STOPPED') : owner.status();
     const refuse = (rawCause, taskId) => {
       // A grant's own refusal keeps its code, prefixed so its origin is legible.
       const cause = KNOWN_CAUSES.has(rawCause) || rawCause.startsWith('CONSENT_') ? rawCause : 'EVIDENCE_REFUSED';
@@ -179,12 +152,15 @@ export function createAFMContentExecutor(options) {
 
     const execute = async (packet, context = {}) => {
       let taskId = null;
+      let upstream = null, forwardAbort = null, controller = null;
       try {
         if (!context || typeof context !== 'object' || Array.isArray(context)) return refuse('CONTEXT_INVALID', taskId);
         taskId = context.taskId ?? null;
         const signal = context.signal;
         if (signal !== undefined && !(signal instanceof AbortSignal)) return refuse('CONTEXT_INVALID', taskId);
         if (signal?.aborted) return refuse('ABORTED', taskId);
+        if (stopped) return refuse('EXECUTOR_STOPPED', taskId);
+        if (owner.status() !== 'IDLE') return refuse(`CHILD_OWNER_${owner.status()}`, taskId);
         if (!Buffer.isBuffer(packet) || packet.length === 0) return refuse('REQUEST_BYTES', taskId);
         if (packet.buffer instanceof SharedArrayBuffer) return refuse('REQUEST_BYTES', taskId);
         const requestSha256 = sha(packet);
@@ -204,12 +180,28 @@ export function createAFMContentExecutor(options) {
           kind: admitted.kind,
         });
         const input = Buffer.concat([Buffer.from(header + '\n', 'utf8'), admitted.bytes]);
-        const run = await runProbe(binary, input, timeoutMs, signal);
-        if (run.code !== 'OK') return refuse(run.code, taskId);
-
-        const evidence = readEvidence(run.raw, admitted);
+        controller = new AbortController(); activeController = controller;
+        upstream = signal; forwardAbort = () => controller.abort();
+        upstream?.addEventListener('abort', forwardAbort, {once:true});
+        if (upstream?.aborted || stopped) controller.abort();
+        const observation = await owner.run({input,signal:controller.signal,validate:raw=>{
+          try {return {evidence:readEvidence(raw,admitted)};}
+          catch(error){if(KNOWN_CAUSES.has(error?.message))error.code=error.message;throw error;}
+        }});
+        observations.push(observation);
+        if (observations.length > 64) observations.shift();
+        if (observation.cause !== null) {
+          const map={CHILD_OUTPUT_LIMIT:'EVIDENCE_OVERFLOW',CHILD_PROCESS_ERROR:'SPAWN_ERROR',CHILD_LAUNCH_ERROR:'SPAWN_ERROR',CHILD_STDIN_ERROR:'SPAWN_ERROR',CHILD_STDOUT_ERROR:'SPAWN_ERROR',CHILD_STDERR_ERROR:'SPAWN_ERROR'};
+          const cause=observation.cause==='CHILD_TERMINATION_INCONCLUSIVE'
+            ? observation.process.signal ? 'CHILD_SIGNALLED' : observation.process.closed ? 'CHILD_EXIT_NONZERO' : 'CHILD_CLOSE_UNKNOWN'
+            : map[observation.cause] ?? observation.cause;
+          return refuse(cause,taskId);
+        }
+        if (controller.signal.aborted || stopped) return refuse(stopped?'EXECUTOR_STOPPED':'ABORTED',taskId);
+        const raw=Buffer.from(observation.stdoutHex,'hex');
+        const evidence = observation.validated.evidence;
         const executionSha256 = sha(Buffer.from(`nisi/content-execution/v1\0${APPLE_CONTENT_PROMPT_VERSION}\0` +
-          `${sha(Buffer.from(taskId, 'utf8'))}\0${binarySHA256}\0${requestSha256}\0${canonicalizeJSONV1(run.raw).sha256}`, 'utf8'));
+          `${sha(Buffer.from(taskId, 'utf8'))}\0${binarySHA256}\0${requestSha256}\0${canonicalizeJSONV1(raw).sha256}`, 'utf8'));
         readings.push(Object.freeze({
           taskId,
           contentSha256: evidence.contentSha256,
@@ -228,12 +220,18 @@ export function createAFMContentExecutor(options) {
       } catch (error) {
         const cause = error instanceof Error && typeof error.message === 'string' ? error.message : 'EVIDENCE_REFUSED';
         return refuse(cause, taskId);   // refuse() maps anything undeclared to EVIDENCE_REFUSED
+      } finally {
+        try { upstream?.removeEventListener('abort',forwardAbort); } catch {}
+        if(controller && activeController===controller) activeController=null;
       }
     };
 
     return answer(true, 'READY_PRIVATE_AFM_CONTENT_EXECUTOR_ONLY', {
       execute,
       binarySHA256,
+      status:state,
+      stop:()=>{stopped=true;activeController?.abort();},
+      observations:()=>Object.freeze([...observations]),
       refusals: () => Object.freeze(refusals.map(r => Object.freeze({ ...r }))),
       readings: () => Object.freeze(readings.map(r => Object.freeze({ ...r }))),
     });

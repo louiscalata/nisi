@@ -1,0 +1,12 @@
+{
+  "schemaVersion": "nisi-release-readiness-input/v1",
+  "artifact": {"path": "package.json", "sha256": "REQUIRES_CURRENT_PIN"},
+  "productReport": {"path": "work-orders/parallel-seven-tracks-v1/track6/readiness-input.example.json", "sha256": "REQUIRES_CURRENT_PIN"},
+  "platforms": [
+    {"id": "portable", "receipt": {"path": "evidence/portable.json", "sha256": "REQUIRES_CURRENT_PIN"}},
+    {"id": "native", "receipt": {"path": "evidence/native.json", "sha256": "REQUIRES_CURRENT_PIN"}},
+    {"id": "windows", "receipt": {"path": "evidence/windows.json", "sha256": "REQUIRES_CURRENT_PIN"}},
+    {"id": "install", "receipt": {"path": "evidence/install.json", "sha256": "REQUIRES_CURRENT_PIN"}}
+  ],
+  "approvals": {"legal": {"status": "REQUIRES_AUTHORITY"}, "disclosure": {"status": "REQUIRES_AUTHORITY"}, "release": {"status": "REQUIRES_AUTHORITY"}, "signing": {"status": "REQUIRES_AUTHORITY"}, "notarization": {"status": "REQUIRES_AUTHORITY"}, "publication": {"status": "REQUIRES_AUTHORITY"}}
+}

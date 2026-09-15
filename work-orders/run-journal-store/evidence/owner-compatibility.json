@@ -1,0 +1,13 @@
+{
+  "status": "PASS_SCOPED",
+  "observations": 3,
+  "retained": 2,
+  "reopened": "COMPLETE",
+  "byteMatch": true,
+  "historical": true,
+  "authorizing": false,
+  "writeDurableObserved": true,
+  "readDurable": false,
+  "sha256": "7f0f492fcb5bd292bfc548916b3db47ce4563f14689a6b0b87e0742b55526497",
+  "scope": "same-process product serializer/store/reopen compatibility; no host integration or crash acceptance"
+}

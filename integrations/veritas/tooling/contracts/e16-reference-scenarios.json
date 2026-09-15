@@ -1,0 +1,193 @@
+{
+  "schemaVersion": 1,
+  "profile": "veritas-e16-stage5-pure-reference-model-v1",
+  "manifestSha256": "87dbc726667cd55a45152dc0f009e6b087b3dc9bb3511549bb7c88cf69c6cfe4",
+  "evidenceClass": "SELF_ADMINISTERED_PURE_REFERENCE_MODEL",
+  "caseDenominator": 24,
+  "familyDenominators": {
+    "AUTHORITY_MUTATION": 8,
+    "DIGEST_SUBSTITUTION": 6,
+    "PROMOTION_CRASH_OR_RACE": 6,
+    "PRIOR_TARGET_RECOVERY": 4
+  },
+  "scenarios": [
+    {
+      "caseId": "E16-S5-AUTH-001",
+      "family": "AUTHORITY_MUTATION",
+      "mutationKind": "POLICY_DIGEST_SUBSTITUTION",
+      "injectionPoint": "AFTER_AUTHORITY_FREEZE",
+      "modelAssumption": "The policy digest denotes the complete frozen authority-file digest."
+    },
+    {
+      "caseId": "E16-S5-AUTH-002",
+      "family": "AUTHORITY_MUTATION",
+      "mutationKind": "VERIFIER_SET_DIGEST_SUBSTITUTION",
+      "injectionPoint": "AFTER_AUTHORITY_FREEZE",
+      "modelAssumption": "The verifier-set digest is a typed field in the modeled authority snapshot, not a current implementation claim."
+    },
+    {
+      "caseId": "E16-S5-AUTH-003",
+      "family": "AUTHORITY_MUTATION",
+      "mutationKind": "ADAPTER_SET_DIGEST_SUBSTITUTION",
+      "injectionPoint": "AFTER_AUTHORITY_FREEZE",
+      "modelAssumption": "The adapter-set digest is a typed field in the modeled authority snapshot, not a current implementation claim."
+    },
+    {
+      "caseId": "E16-S5-AUTH-004",
+      "family": "AUTHORITY_MUTATION",
+      "mutationKind": "HOOK_SET_DIGEST_SUBSTITUTION",
+      "injectionPoint": "AFTER_AUTHORITY_FREEZE",
+      "modelAssumption": "The hook-set digest is a typed field in the modeled authority snapshot, not a current implementation claim."
+    },
+    {
+      "caseId": "E16-S5-AUTH-005",
+      "family": "AUTHORITY_MUTATION",
+      "mutationKind": "TRUSTED_COMMAND_SET_DIGEST_SUBSTITUTION",
+      "injectionPoint": "AFTER_AUTHORITY_FREEZE",
+      "modelAssumption": "The trusted-command-set digest is a typed field in the modeled authority snapshot, not a current implementation claim."
+    },
+    {
+      "caseId": "E16-S5-AUTH-006",
+      "family": "AUTHORITY_MUTATION",
+      "mutationKind": "BASE_REVISION_SUBSTITUTION",
+      "injectionPoint": "AFTER_AUTHORITY_FREEZE",
+      "modelAssumption": "The base revision is frozen as part of the modeled authority snapshot."
+    },
+    {
+      "caseId": "E16-S5-AUTH-007",
+      "family": "AUTHORITY_MUTATION",
+      "mutationKind": "WRITER_SELF_APPROVAL",
+      "injectionPoint": "AFTER_AUTHORITY_FREEZE",
+      "modelAssumption": "ROLE_SEPARATED is a modeled policy; no protected principal or current implementation authority is claimed."
+    },
+    {
+      "caseId": "E16-S5-AUTH-008",
+      "family": "AUTHORITY_MUTATION",
+      "mutationKind": "DEPENDENCY_EPOCH_ADVANCE",
+      "injectionPoint": "AFTER_AUTHORITY_FREEZE",
+      "modelAssumption": "The dependency epoch is frozen before modeled decision issuance."
+    },
+    {
+      "caseId": "E16-S5-DIGEST-001",
+      "family": "DIGEST_SUBSTITUTION",
+      "mutationKind": "FINAL_CANDIDATE_SUBSTITUTION",
+      "injectionPoint": "AFTER_DECISION_VERIFICATION",
+      "modelAssumption": "The modeled promotion gate re-digests the final candidate before any destination effect."
+    },
+    {
+      "caseId": "E16-S5-DIGEST-002",
+      "family": "DIGEST_SUBSTITUTION",
+      "mutationKind": "DECISION_SUBJECT_SUBSTITUTION",
+      "injectionPoint": "AFTER_DECISION_VERIFICATION",
+      "modelAssumption": "The modeled decision binds a typed candidate-artifact subject digest."
+    },
+    {
+      "caseId": "E16-S5-DIGEST-003",
+      "family": "DIGEST_SUBSTITUTION",
+      "mutationKind": "MODEL_RESPONSE_AS_ACCEPTED_ARTIFACT",
+      "injectionPoint": "AFTER_DECISION_VERIFICATION",
+      "modelAssumption": "Model-response and accepted-artifact subjects are distinct typed bindings in the reference model."
+    },
+    {
+      "caseId": "E16-S5-DIGEST-004",
+      "family": "DIGEST_SUBSTITUTION",
+      "mutationKind": "DESTINATION_BYTES_SUBSTITUTION",
+      "injectionPoint": "AFTER_REFERENCE_SWAP",
+      "modelAssumption": "A non-null exact prior target is retained and remains readable for modeled rollback."
+    },
+    {
+      "caseId": "E16-S5-DIGEST-005",
+      "family": "DIGEST_SUBSTITUTION",
+      "mutationKind": "TRANSACTION_OWNED_UNVERIFIED_REFERENCE",
+      "injectionPoint": "AFTER_REFERENCE_SWAP",
+      "modelAssumption": "The injected reference fault remains transaction-owned; third-party substitution would be uncertain, not rollback-safe."
+    },
+    {
+      "caseId": "E16-S5-DIGEST-006",
+      "family": "DIGEST_SUBSTITUTION",
+      "mutationKind": "DESTINATION_RECEIPT_REUSE",
+      "injectionPoint": "AFTER_DECISION_VERIFICATION",
+      "modelAssumption": "Receipt lineage is validated before the modeled promotion effect."
+    },
+    {
+      "caseId": "E16-S5-PROMO-001",
+      "family": "PROMOTION_CRASH_OR_RACE",
+      "mutationKind": "SYMBOLIC_INTERRUPT_BEFORE_OBJECT_WRITE",
+      "injectionPoint": "BEFORE_OBJECT_WRITE",
+      "modelAssumption": "This is deterministic symbolic recovery replay, not process-crash or power-loss evidence."
+    },
+    {
+      "caseId": "E16-S5-PROMO-002",
+      "family": "PROMOTION_CRASH_OR_RACE",
+      "mutationKind": "SYMBOLIC_INTERRUPT_AFTER_OBJECT_WRITE",
+      "injectionPoint": "AFTER_OBJECT_WRITE",
+      "modelAssumption": "This is deterministic symbolic recovery replay, not process-crash or power-loss evidence."
+    },
+    {
+      "caseId": "E16-S5-PROMO-003",
+      "family": "PROMOTION_CRASH_OR_RACE",
+      "mutationKind": "SYMBOLIC_INTERRUPT_AFTER_REFERENCE_SWAP",
+      "injectionPoint": "AFTER_REFERENCE_SWAP",
+      "modelAssumption": "The pure model withholds without destination readback; current exact valid recovery may instead complete forward."
+    },
+    {
+      "caseId": "E16-S5-PROMO-004",
+      "family": "PROMOTION_CRASH_OR_RACE",
+      "mutationKind": "LOST_SUCCESS_RESPONSE_RECOVERY_REPLAY",
+      "injectionPoint": "AFTER_ACCEPTANCE",
+      "modelAssumption": "Idempotency applies to recovery replay of one operation identity, not API decision resubmission."
+    },
+    {
+      "caseId": "E16-S5-PROMO-005",
+      "family": "PROMOTION_CRASH_OR_RACE",
+      "mutationKind": "SYMBOLIC_UNORDERED_WRITER_RACE",
+      "injectionPoint": "BEFORE_REFERENCE_SWAP",
+      "modelAssumption": "Writer ordering is intentionally unobservable in the pure model; no native multi-process race is claimed."
+    },
+    {
+      "caseId": "E16-S5-PROMO-006",
+      "family": "PROMOTION_CRASH_OR_RACE",
+      "mutationKind": "DEPENDENCY_EVENT_AFTER_REFERENCE_ACCEPTANCE",
+      "injectionPoint": "AFTER_ACCEPTANCE",
+      "modelAssumption": "The coherent modeled event occurs after readback-verified trust acceptance; the frozen phrase 'before readback' remains an explicit wording conflict and is not implementation evidence."
+    },
+    {
+      "caseId": "E16-S5-ROLLBACK-001",
+      "family": "PRIOR_TARGET_RECOVERY",
+      "mutationKind": "PREPARED_OBJECT_CORRUPTION",
+      "injectionPoint": "AFTER_OBJECT_WRITE",
+      "modelAssumption": "A non-null exact prior target is retained and the corrupt prepared object is never accepted."
+    },
+    {
+      "caseId": "E16-S5-ROLLBACK-002",
+      "family": "PRIOR_TARGET_RECOVERY",
+      "mutationKind": "ROLLBACK_CURRENT_TARGET_CORRUPTION",
+      "injectionPoint": "DURING_ROLLBACK",
+      "modelAssumption": "A modeled readback mismatch enters rollback before target ownership becomes unprovable."
+    },
+    {
+      "caseId": "E16-S5-ROLLBACK-003",
+      "family": "PRIOR_TARGET_RECOVERY",
+      "mutationKind": "ROLLBACK_PRIOR_TARGET_UNAVAILABLE",
+      "injectionPoint": "DURING_ROLLBACK",
+      "modelAssumption": "A modeled readback mismatch enters rollback before the exact prior object becomes unavailable."
+    },
+    {
+      "caseId": "E16-S5-ROLLBACK-004",
+      "family": "PRIOR_TARGET_RECOVERY",
+      "mutationKind": "ROLLBACK_STALE_READBACK",
+      "injectionPoint": "DURING_ROLLBACK",
+      "modelAssumption": "A modeled readback mismatch enters rollback and stale bytes prevent exact rollback confirmation."
+    }
+  ],
+  "credits": {
+    "protectedAuthority": false,
+    "nativeRuntime": false,
+    "t164ThroughT183": false,
+    "m4": false,
+    "e16": false,
+    "patent": false,
+    "production": false,
+    "release": false
+  }
+}

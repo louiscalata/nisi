@@ -1,0 +1,18 @@
+{
+  "profile": "veritas-bn02-reference-mlp-prep-v1",
+  "oracleVersion": 1,
+  "comparison": "exact-binary32-output-bits",
+  "weightLayout": "little-endian-W1-row-major,b1,W2-row-major,b2",
+  "cases": [
+    {"id":"relu-positive","shape":[1,2,1],"weights":["40000000","c0400000","bf800000","3f800000","40800000","40a00000","c0000000"],"input":["3f800000"],"expected":["40000000"]},
+    {"id":"relu-zero-input","shape":[1,2,1],"weights":["40000000","c0400000","bf800000","3f800000","40800000","40a00000","c0000000"],"input":["00000000"],"expected":["40400000"]},
+    {"id":"relu-negative-input","shape":[1,2,1],"weights":["40000000","c0400000","bf800000","3f800000","40800000","40a00000","c0000000"],"input":["bf800000"],"expected":["41900000"]},
+    {"id":"multi-input-output","shape":[2,2,2],"weights":["3f800000","40000000","bf800000","40400000","bf800000","3f000000","40000000","bf800000","bf000000","40800000","3f800000","c0000000"],"input":["40000000","3f800000"],"expected":["40b00000","40200000"]},
+    {"id":"separate-multiply-add","shape":[1,1,1],"weights":["3df0f0f1","bc941b90","3f800000","00000000"],"input":["3e1d89d9"],"expected":["37a7c400"]},
+    {"id":"bias-first-order","shape":[1,2,1],"weights":["3f800000","3f800000","00000000","00000000","4b800000","3f800000","cb800000"],"input":["3f800000"],"expected":["3f800000"]},
+    {"id":"relu-positive-zero","shape":[1,1,1],"weights":["3f800000","80000000","3f800000","00000000"],"input":["80000000"],"expected":["00000000"]},
+    {"id":"finite-subnormal","shape":[1,1,1],"weights":["00800000","00000000","3f800000","00000000"],"input":["3f000000"],"expected":["00400000"]},
+    {"id":"finite-underflow","shape":[1,1,1],"weights":["00000001","00000000","3f800000","00000000"],"input":["3f000000"],"expected":["00000000"]},
+    {"id":"no-output-activation","shape":[1,1,1],"weights":["3f800000","00000000","c0000000","3f800000"],"input":["40000000"],"expected":["c0400000"]}
+  ]
+}

@@ -1,0 +1,13 @@
+OK: nisi-interrupted-run-decision-v1 — 1 item(s), root /Users/louiscalata/nisi-next-private/work-orders/interrupted-run-decision-v1
+receipt written: outcome=blocked · P1=FAILED · acceptance exit 0
+>> lint
+>> tier preflight: go — opencode-go/kimi-k2.7-code
+   tier go route reachable (credential unproven): opencode-go/kimi-k2.7-code (70 models, 241ms)
+>> opencode (packet agent, tier go) — edits only, capped at 900s
+   private diagnostics retained under: /Users/louiscalata/nisi-next-private/work-orders/interrupted-run-decision-v1/.packet-diagnostics (may contain source; do not publish)
+   edit terminality: CONFIRMED · requested route (not served-model proof): go/opencode-go/kimi-k2.7-code
+   [0m→ [0mRead README.md
+   [0m→ [0mRead tests/interrupted-run-decision.test.mjs
+   [0m→ [0mRead src/interrupted-run-decision-v1.mjs
+>> receipt (deterministic — accepts run here, not by the model)
+>> /Users/louiscalata/nisi-next-private/work-orders/interrupted-run-decision-v1/.packets/nisi-interrupted-run-decision-v1.result.md

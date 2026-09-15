@@ -154,8 +154,14 @@ test('canonical JSON v1 agrees with the independent serializer on every corpus v
   }
 });
 test('canonical JSON v1 does not silently migrate legacy numeric-key or proto records', () => {
-  for (const input of ['{"10":1,"2":2}', '{"__proto__":1}']) {
-    assert.notEqual(canonical(input).canonical, independentCanonicalJson(JSON.parse(input)));
+  // Immutable legacy outputs, not today's reporting helper: correcting that
+  // helper must not silently redefine what historical digests represented.
+  for (const [input, legacy] of [
+    ['{"10":1,"2":2}', '{"2":2,"10":1}'],
+    ['{"__proto__":1}', '{}'],
+  ]) {
+    assert.notEqual(canonical(input).canonical, legacy);
+    assert.notEqual(canonical(input).sha256, createHash('sha256').update(legacy).digest('hex'));
   }
   assert.notEqual(canonical('{"k":null}').sha256, canonical('{}').sha256);
 });

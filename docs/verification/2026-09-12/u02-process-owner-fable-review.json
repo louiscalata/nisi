@@ -1,0 +1,95 @@
+{
+  "verdict": "FAIL",
+  "issues": [
+    "Executable-hash TOCTOU: 'validates current executable hash' after close does not prove what ran. Hash (and record dev/inode/size/mtime) in the immutable initial observation before spawn, spawn from that same path in the same tick, re-check after close, and require both digests and inode identity to match; bind the receipt to the pre-spawn digest, not the post-run one.",
+    "Kill/PID-reuse and signal-attribution race: sending SIGKILL after 'exit' was already observed (or after close) can hit ESRCH or a reused PID, and an exit with signal=SIGKILL cannot be distinguished from an external kill. Only kill via the live ChildProcess handle while state is RUNNING, record kill-issued monotonic timestamp and the kill() return in the initial observation, and treat any SIGKILL exit without a recorded adapter kill as INCONCLUSIVE rather than 'cancelled'.",
+    "No linearization point between abort and receipt issue: the abort check 'during parsing or final hashing' is a flag read, so an abort that lands between the last check and receipt emission can lose. Make state transitions a single CAS (RUNNING->ISSUING vs RUNNING->ABORTING) and perform the final abort/deadline check and receipt issuance in the same synchronous tick with no awaits in between.",
+    "Stream capture at 16KiB must keep draining after the cap: if the reader stops consuming, the pipe fills, the child blocks on write, and the deadline fires, misattributing a truncation as a hang. Continue consuming and counting bytes past the cap, and make any truncated stream or code===null (signal exit) a hard non-PASS in frame validation, never mapping null to 0.",
+    "Bounded finalization budget vs workflow deadline: 'await bounded owner finalization' can itself be cut off by the Nisi DEADLINE_EXCEEDED, leaving no bundle at all. Reserve the 500ms close wait plus margin inside the workflow deadline (kill at deadline-minus-budget), and if the wait is preempted, still emit the bundle from the existing initial observation with drain=UNKNOWN and the exact stop reason.",
+    "QUARANTINED latch is in-process only: a host restart forgets the unclosed child and may spawn a new single-flight owner alongside it. Persist a quarantine marker (owner id, pid, process start time, spawn nonce) durably before spawning, clear it only on observed close, and refuse new owners at startup while the marker is present until explicit reconciliation."
+  ],
+  "invocation_status": "succeeded",
+  "status": "FAIL",
+  "model_usage": {
+    "claude-haiku-4-5-20251001": {
+      "inputTokens": 1267,
+      "outputTokens": 18,
+      "cacheReadInputTokens": 0,
+      "cacheCreationInputTokens": 0,
+      "webSearchRequests": 0,
+      "costUSD": 0.001357,
+      "contextWindow": 200000,
+      "maxOutputTokens": 32000,
+      "thinkingTokens": 0,
+      "canonicalModel": "claude-haiku-4-5",
+      "provider": "firstParty",
+      "costBasis": "list"
+    },
+    "claude-fable-5-1": {
+      "inputTokens": 2,
+      "outputTokens": 2339,
+      "cacheReadInputTokens": 626,
+      "cacheCreationInputTokens": 1088,
+      "webSearchRequests": 0,
+      "costUSD": 0.13888650000000002,
+      "contextWindow": 1000000,
+      "maxOutputTokens": 64000,
+      "thinkingTokens": 1423,
+      "canonicalModel": "claude-fable-5-1",
+      "provider": "firstParty",
+      "costBasis": "list"
+    }
+  },
+  "reported_models": [
+    "claude-haiku-4-5-20251001",
+    "claude-fable-5-1"
+  ],
+  "usage": {
+    "input_tokens": 2,
+    "cache_creation_input_tokens": 1088,
+    "cache_read_input_tokens": 626,
+    "output_tokens": 2339,
+    "output_tokens_details": {
+      "thinking_tokens": 1423
+    },
+    "server_tool_use": {
+      "web_search_requests": 0,
+      "web_fetch_requests": 0
+    },
+    "service_tier": "standard",
+    "cache_creation": {
+      "ephemeral_1h_input_tokens": 1088,
+      "ephemeral_5m_input_tokens": 0
+    },
+    "inference_geo": "not_available",
+    "iterations": [
+      {
+        "input_tokens": 2,
+        "output_tokens": 2339,
+        "cache_read_input_tokens": 626,
+        "cache_creation_input_tokens": 1088,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 1088
+        },
+        "type": "message",
+        "model": null
+      }
+    ],
+    "speed": "standard"
+  },
+  "total_cost_usd": 0.14024350000000002,
+  "duration_ms": 35547,
+  "tools_enabled": false,
+  "session_persisted": false,
+  "write_owner": "codex",
+  "requested_model": "fable",
+  "mode": "review",
+  "attempts": 1,
+  "wall_seconds": 36.562,
+  "created_at": "2026-09-12T18:53:18.909506+00:00",
+  "prior_attempts": [],
+  "total_wall_seconds": 36.563,
+  "prior_attempt_usage": [],
+  "total_usage_complete": true
+}

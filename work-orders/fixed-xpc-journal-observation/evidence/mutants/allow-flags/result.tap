@@ -1,0 +1,447 @@
+TAP version 13
+# Subtest: all three faithful fixed cases produce exact non-authorizing SUCCEEDED entries
+ok 1 - all three faithful fixed cases produce exact non-authorizing SUCCEEDED entries
+  ---
+  duration_ms: 4.391709
+  type: 'test'
+  ...
+# Subtest: payload has the exact meaning, bindings, digest, and permanently false claims
+ok 2 - payload has the exact meaning, bindings, digest, and permanently false claims
+  ---
+  duration_ms: 0.536375
+  type: 'test'
+  ...
+# Subtest: runner, persistence, container and absent-client reasons are retained in fixed order
+ok 3 - runner, persistence, container and absent-client reasons are retained in fixed order
+  ---
+  duration_ms: 0.527917
+  type: 'test'
+  ...
+# Subtest: process and lifecycle faults cover their independent ordered reason classes
+ok 4 - process and lifecycle faults cover their independent ordered reason classes
+  ---
+  duration_ms: 0.511542
+  type: 'test'
+  ...
+# Subtest: nonnull child cause is SIGNAL_OR_ERROR and a missing observed PID is lifecycle-inconsistent
+ok 5 - nonnull child cause is SIGNAL_OR_ERROR and a missing observed PID is lifecycle-inconsistent
+  ---
+  duration_ms: 0.959708
+  type: 'test'
+  ...
+# Subtest: truncated, count, digest, and stderr faults remain distinct and prevent success
+ok 6 - truncated, count, digest, and stderr faults remain distinct and prevent success
+  ---
+  duration_ms: 1.658541
+  type: 'test'
+  ...
+# Subtest: unclean or contradictory streams are never parsed to restore success
+ok 7 - unclean or contradictory streams are never parsed to restore success
+  ---
+  duration_ms: 0.442417
+  type: 'test'
+  ...
+# Subtest: missing or unequal recorded validation cannot be silently replaced
+ok 8 - missing or unequal recorded validation cannot be silently replaced
+  ---
+  duration_ms: 0.322625
+  type: 'test'
+  ...
+# Subtest: case-matrix and valid-outcome assertion failures are distinguished
+ok 9 - case-matrix and valid-outcome assertion failures are distinguished
+  ---
+  duration_ms: 0.91575
+  type: 'test'
+  ...
+# Subtest: postconditions require exact ordered seventeen-byte LF evidence
+ok 10 - postconditions require exact ordered seventeen-byte LF evidence
+  ---
+  duration_ms: 2.600292
+  type: 'test'
+  ...
+# Subtest: all twenty-four reason classes are present once and in the contractual order
+ok 11 - all twenty-four reason classes are present once and in the contractual order
+  ---
+  duration_ms: 2.761792
+  type: 'test'
+  ...
+# Subtest: no-reply accepts exactly 5000 through 7999 milliseconds
+ok 12 - no-reply accepts exactly 5000 through 7999 milliseconds
+  ---
+  duration_ms: 0.42275
+  type: 'test'
+  ...
+# Subtest: closed root, request, fixture, container, child, result and nested shapes reject alterations
+ok 13 - closed root, request, fixture, container, child, result and nested shapes reject alterations
+  ---
+  duration_ms: 1.561166
+  type: 'test'
+  ...
+# Subtest: all supplied authority and acceptance flags must remain false
+not ok 14 - all supplied authority and acceptance flags must remain false
+  ---
+  duration_ms: 1.735
+  type: 'test'
+  location: '/Users/louiscalata/nisi-next-private/work-orders/fixed-xpc-journal-observation/evidence/mutants/allow-flags/observation.test.mjs:235:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    authorizing
+    + actual - expected
+    
+      {
+        authorizing: false,
+    +   entry: {
+    +     attempt: 0,
+    +     candidateId: 'candidate-a',
+    +     createdAt: 100,
+    +     heartbeatAt: null,
+    +     id: '0123456789abcdef0123456789abcdef:0:fixed-xpc',
+    +     payload: {
+    +       authorizing: false,
+    +       caseName: 'valid',
+    +       clientOutcome: 'REPLY_RECEIVED',
+    +       failureClass: 'OBSERVATION_ONLY',
+    +       failureCode: null,
+    +       generatedCodeExecuted: false,
+    +       isolationAccepted: false,
+    +       meaning: 'FIXED_CASE_OBSERVATION_ONLY',
+    +       nativeProductAccepted: false,
+    +       observedParentPid: 101,
+    +       operations: [
+    +         {
+    +           errno: 0,
+    +           operation: 'own-open-write',
+    +           outcome: 'ALLOWED'
+    +         },
+    +         {
+    +           errno: 0,
+    +           operation: 'own-write',
+    +           outcome: 'ALLOWED'
+    +         },
+    +         {
+    +           errno: 0,
+    +           operation: 'own-close-write',
+    +           outcome: 'ALLOWED'
+    +         },
+    +         {
+    +           errno: 0,
+    +           operation: 'own-open-read',
+    +           outcome: 'ALLOWED'
+    +         },
+    +         {
+    +           errno: 0,
+    +           operation: 'own-read',
+    +           outcome: 'ALLOWED'
+    +         },
+    +         {
+    +           errno: 0,
+    +           operation: 'own-close-read',
+    +           outcome: 'ALLOWED'
+    +         },
+    +         {
+    +           errno: 1,
+    +           operation: 'outside-open-read',
+    +           outcome: 'DENIED'
+    +         },
+    +         {
+    +           errno: 0,
+    +           operation: 'outside-read',
+    +           outcome: 'NOT_RUN'
+    +         },
+    +         {
+    +           errno: 0,
+    +           operation: 'outside-close-read',
+    +           outcome: 'NOT_RUN'
+    +         },
+    +         {
+    +           errno: 13,
+    +           operation: 'outside-open-write',
+    +           outcome: 'DENIED'
+    +         },
+    +         {
+    +           errno: 0,
+    +           operation: 'outside-write',
+    +           outcome: 'NOT_RUN'
+    +         },
+    +         {
+    +           errno: 0,
+    +           operation: 'outside-close-write',
+    +           outcome: 'NOT_RUN'
+    +         },
+    +         {
+    +           errno: 0,
+    +           operation: 'socket-create',
+    +           outcome: 'ALLOWED'
+    +         },
+    +         {
+    +           errno: 1,
+    +           operation: 'socket-bind',
+    +           outcome: 'DENIED'
+    +         },
+    +         {
+    +           errno: 0,
+    +           operation: 'socket-close',
+    +           outcome: 'ALLOWED'
+    +         }
+    +       ],
+    +       persistenceClaim: 'NONE',
+    +       process: {
+    +         cancelRequested: false,
+    +         closed: true,
+    +         deadlineExceeded: false,
+    +         drain: 'CONFIRMED',
+    +         durationMs: 300,
+    +         errorCode: null,
+    +         exitCode: 0,
+    +         signal: null,
+    +         started: true
+    +       },
+    +       reasons: [],
+    +       recordDigest: '8cbb0cddebf2d47a43e1ff1a7ae9a51b23a8425ce8cd05edd7df7eecf3bf7e2c',
+    +       reportedStatus: 'FIXED_XPC_CASE_OBSERVED',
+    +       schemaVersion: 'nisi-fixed-xpc-journal-observation/v1',
+    +       selfReportedServicePid: 202,
+    +       serviceIdentityAttested: false,
+    +       serviceTerminationProven: false,
+    +       sourceBindings: {
+    +         'canonical/canonical-json-v1.mjs': '0000000000000000000000000000000000000000000000000000000000000009',
+    +         'hosts/macos-xpc/fixed-xpc-runner.mjs': '0000000000000000000000000000000000000000000000000000000000000005',
+    +         'hosts/macos-xpc/probe-client.m': '0000000000000000000000000000000000000000000000000000000000000003',
+    +         'hosts/macos-xpc/probe-service.m': '0000000000000000000000000000000000000000000000000000000000000002',
+    +         'hosts/macos-xpc/probe-wire.h': '0000000000000000000000000000000000000000000000000000000000000001',
+    +         'hosts/macos-xpc/protocol.mjs': '0000000000000000000000000000000000000000000000000000000000000004',
+    +         'hosts/repository/snapshot-contract.mjs': '000000000000000000000000000000000000000000000000000000000000000a',
+    +         'hosts/swift-verifier/owned-child.mjs': '0000000000000000000000000000000000000000000000000000000000000006',
+    +         'hosts/swift-verifier/protocol.mjs': '0000000000000000000000000000000000000000000000000000000000000007',
+    +         'workflow/contracts.mjs': '0000000000000000000000000000000000000000000000000000000000000008'
+    +       },
+    +       sourceManifestVerified: false,
+    +       stdoutSha256: '17ed46f58d9e11c3868ce11ec8b4ff9dcf0869f68dc09881aefd17cb19af71e5',
+    +       terminalPersistenceCode: null
+    +     },
+    +     projectId: 'project-a',
+    +     receiptId: 'receipt-a',
+    +     retryOf: null,
+    +     revokes: null,
+    +     runId: '0123456789abcdef0123456789abcdef',
+    +     stage: 'fixed-xpc',
+    +     state: 'SUCCEEDED',
+    +     ttlMs: 10000
+    +   },
+    +   status: 'ENTRY'
+    -   reason: 'INVALID_INPUT',
+    -   status: 'REFUSED'
+      }
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected:
+    status: 'REFUSED'
+    reason: 'INVALID_INPUT'
+    authorizing: false
+  actual:
+    status: 'ENTRY'
+    entry:
+      id: '0123456789abcdef0123456789abcdef:0:fixed-xpc'
+      projectId: 'project-a'
+      runId: '0123456789abcdef0123456789abcdef'
+      attempt: 0
+      candidateId: 'candidate-a'
+      stage: 'fixed-xpc'
+      receiptId: 'receipt-a'
+      createdAt: 100
+      ttlMs: 10000
+      state: 'SUCCEEDED'
+      heartbeatAt: ~
+      retryOf: ~
+      revokes: ~
+      payload:
+        schemaVersion: 'nisi-fixed-xpc-journal-observation/v1'
+        meaning: 'FIXED_CASE_OBSERVATION_ONLY'
+        caseName: 'valid'
+        reportedStatus: 'FIXED_XPC_CASE_OBSERVED'
+        clientOutcome: 'REPLY_RECEIVED'
+        recordDigest: '8cbb0cddebf2d47a43e1ff1a7ae9a51b23a8425ce8cd05edd7df7eecf3bf7e2c'
+        sourceBindings:
+          hosts/macos-xpc/probe-wire.h: '0000000000000000000000000000000000000000000000000000000000000001'
+          hosts/macos-xpc/probe-service.m: '0000000000000000000000000000000000000000000000000000000000000002'
+          hosts/macos-xpc/probe-client.m: '0000000000000000000000000000000000000000000000000000000000000003'
+          hosts/macos-xpc/protocol.mjs: '0000000000000000000000000000000000000000000000000000000000000004'
+          hosts/macos-xpc/fixed-xpc-runner.mjs: '0000000000000000000000000000000000000000000000000000000000000005'
+          hosts/swift-verifier/owned-child.mjs: '0000000000000000000000000000000000000000000000000000000000000006'
+          hosts/swift-verifier/protocol.mjs: '0000000000000000000000000000000000000000000000000000000000000007'
+          workflow/contracts.mjs: '0000000000000000000000000000000000000000000000000000000000000008'
+          canonical/canonical-json-v1.mjs: '0000000000000000000000000000000000000000000000000000000000000009'
+          hosts/repository/snapshot-contract.mjs: '000000000000000000000000000000000000000000000000000000000000000a'
+        sourceManifestVerified: false
+        observedParentPid: 101
+        selfReportedServicePid: 202
+        operations:
+          0:
+            operation: 'own-open-write'
+            outcome: 'ALLOWED'
+            errno: 0
+          1:
+            operation: 'own-write'
+            outcome: 'ALLOWED'
+            errno: 0
+          2:
+            operation: 'own-close-write'
+            outcome: 'ALLOWED'
+            errno: 0
+          3:
+            operation: 'own-open-read'
+            outcome: 'ALLOWED'
+            errno: 0
+          4:
+            operation: 'own-read'
+            outcome: 'ALLOWED'
+            errno: 0
+          5:
+            operation: 'own-close-read'
+            outcome: 'ALLOWED'
+            errno: 0
+          6:
+            operation: 'outside-open-read'
+            outcome: 'DENIED'
+            errno: 1
+          7:
+            operation: 'outside-read'
+            outcome: 'NOT_RUN'
+            errno: 0
+          8:
+            operation: 'outside-close-read'
+            outcome: 'NOT_RUN'
+            errno: 0
+          9:
+            operation: 'outside-open-write'
+            outcome: 'DENIED'
+            errno: 13
+          10:
+            operation: 'outside-write'
+            outcome: 'NOT_RUN'
+            errno: 0
+          11:
+            operation: 'outside-close-write'
+            outcome: 'NOT_RUN'
+            errno: 0
+          12:
+            operation: 'socket-create'
+            outcome: 'ALLOWED'
+            errno: 0
+          13:
+            operation: 'socket-bind'
+            outcome: 'DENIED'
+            errno: 1
+          14:
+            operation: 'socket-close'
+            outcome: 'ALLOWED'
+            errno: 0
+        process:
+          started: true
+          closed: true
+          drain: 'CONFIRMED'
+          exitCode: 0
+          signal: ~
+          errorCode: ~
+          cancelRequested: false
+          deadlineExceeded: false
+          durationMs: 300
+        stdoutSha256: '17ed46f58d9e11c3868ce11ec8b4ff9dcf0869f68dc09881aefd17cb19af71e5'
+        failureCode: ~
+        terminalPersistenceCode: ~
+        persistenceClaim: 'NONE'
+        failureClass: 'OBSERVATION_ONLY'
+        reasons:
+        authorizing: false
+        generatedCodeExecuted: false
+        isolationAccepted: false
+        nativeProductAccepted: false
+        serviceIdentityAttested: false
+        serviceTerminationProven: false
+    authorizing: false
+  operator: 'deepStrictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///Users/louiscalata/nisi-next-private/work-orders/fixed-xpc-journal-observation/evidence/mutants/allow-flags/observation.test.mjs:237:57)
+    Test.runInAsyncScope (node:async_hooks:227:14)
+    Test.run (node:internal/test_runner/test:1325:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:911:18)
+    Test.postRun (node:internal/test_runner/test:1465:19)
+    Test.run (node:internal/test_runner/test:1390:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:911:7)
+  ...
+# Subtest: opaque optional sections are bounded and never leak into the payload
+ok 15 - opaque optional sections are bounded and never leak into the payload
+  ---
+  duration_ms: 0.374583
+  type: 'test'
+  ...
+# Subtest: serialized data resource limits and malformed Unicode fail closed
+ok 16 - serialized data resource limits and malformed Unicode fail closed
+  ---
+  duration_ms: 2.297833
+  type: 'test'
+  ...
+# Subtest: outer accessors are rejected without invocation and input is not mutated
+ok 17 - outer accessors are rejected without invocation and input is not mutated
+  ---
+  duration_ms: 0.471292
+  type: 'test'
+  ...
+# Subtest: record digest binds exact whitespace while stable bytes and arguments are deterministic
+ok 18 - record digest binds exact whitespace while stable bytes and arguments are deterministic
+  ---
+  duration_ms: 0.358083
+  type: 'test'
+  ...
+# Subtest: payload, operations, source bindings, process and reasons are deeply frozen copies
+ok 19 - payload, operations, source bindings, process and reasons are deeply frozen copies
+  ---
+  duration_ms: 0.183541
+  type: 'test'
+  ...
+# Subtest: frozen journal accepts, deduplicates, conflicts, refuses wrong project and reopens exactly
+ok 20 - frozen journal accepts, deduplicates, conflicts, refuses wrong project and reopens exactly
+  ---
+  duration_ms: 2.865125
+  type: 'test'
+  ...
+# Subtest: an adverse observation cannot retain journal SUCCEEDED
+ok 21 - an adverse observation cannot retain journal SUCCEEDED
+  ---
+  duration_ms: 7.876083
+  type: 'test'
+  ...
+# Subtest: timestamp order, bound case/PID and safe argument overflow are refused
+ok 22 - timestamp order, bound case/PID and safe argument overflow are refused
+  ---
+  duration_ms: 1.506209
+  type: 'test'
+  ...
+# Subtest: no-reply fixture never substitutes an owner deadline or kill for a client timeout
+ok 23 - no-reply fixture never substitutes an owner deadline or kill for a client timeout
+  ---
+  duration_ms: 0.590375
+  type: 'test'
+  ...
+# Subtest: ordinary JSON depth and node budget are independent of encoded byte budget
+ok 24 - ordinary JSON depth and node budget are independent of encoded byte budget
+  ---
+  duration_ms: 2.30575
+  type: 'test'
+  ...
+# Subtest: root getters and hidden extra authority never execute or disappear
+ok 25 - root getters and hidden extra authority never execute or disappear
+  ---
+  duration_ms: 0.669291
+  type: 'test'
+  ...
+1..25
+# tests 25
+# suites 0
+# pass 24
+# fail 1
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 77.501042

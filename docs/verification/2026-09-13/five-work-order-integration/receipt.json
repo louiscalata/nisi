@@ -1,0 +1,827 @@
+{
+  "schema": "nisi-five-work-order-integration-v1",
+  "status": "INTEGRATED_PRODUCT_CHECKS_PASS_SCOPED",
+  "observedAt": "2026-09-13T19:23:47.108978+00:00",
+  "root": "/Users/louiscalata/nisi-next-private",
+  "authorization": {
+    "by": "Louis",
+    "date": "2026-09-13",
+    "approximateTime": "12:00 PDT",
+    "session": "Claude",
+    "verbatim": "Go for it",
+    "scope": "Integrate five accepted work orders, Astra sole product writer, Claude Fable 5.1 review after integration."
+  },
+  "runtime": {
+    "node": "v24.18.0",
+    "npm": "11.16.0"
+  },
+  "placements": [
+    {
+      "source": "work-orders/native-probe-summary/src/native-probe-summary.mjs",
+      "target": "hosts/macos-xpc/native-probe-summary.mjs",
+      "beforeSha256": "c048df362405ffbd3053de93aedd05a0b51ec5c64417d19c9ee5ea22a6d90056",
+      "afterSha256": "c048df362405ffbd3053de93aedd05a0b51ec5c64417d19c9ee5ea22a6d90056",
+      "sourceBytes": 1833,
+      "targetBytes": 1833,
+      "replacements": []
+    },
+    {
+      "source": "work-orders/native-canary-adjudicator/src/native-canary-adjudicator.mjs",
+      "target": "hosts/macos-xpc/native-canary-adjudicator.mjs",
+      "beforeSha256": "cf875eaa7adf335ceab49ae16f9941e2d9b5b9780f5ca15c22eea4c97405de00",
+      "afterSha256": "cf875eaa7adf335ceab49ae16f9941e2d9b5b9780f5ca15c22eea4c97405de00",
+      "sourceBytes": 8536,
+      "targetBytes": 8536,
+      "replacements": []
+    },
+    {
+      "source": "work-orders/native-canary-adapter/src/native-canary-adapter.mjs",
+      "target": "hosts/macos-xpc/native-canary-adapter.mjs",
+      "beforeSha256": "ac9c9cfaacfad91a27f08d2daee461b1f0580892509dc76693ccd36bd35a5c8f",
+      "afterSha256": "ac9c9cfaacfad91a27f08d2daee461b1f0580892509dc76693ccd36bd35a5c8f",
+      "sourceBytes": 9491,
+      "targetBytes": 9491,
+      "replacements": []
+    },
+    {
+      "source": "work-orders/native-chat-types/types/native-chat.d.ts",
+      "target": "types/native-chat.d.ts",
+      "beforeSha256": "4513f9e6e75f94b34f6216fae05a5f22e2c7c7baf8aa7dfd51f43fedcfbfbf51",
+      "afterSha256": "4513f9e6e75f94b34f6216fae05a5f22e2c7c7baf8aa7dfd51f43fedcfbfbf51",
+      "sourceBytes": 5061,
+      "targetBytes": 5061,
+      "replacements": []
+    },
+    {
+      "source": "work-orders/run-journal/src/run-journal-v1.mjs",
+      "target": "history/run-journal-v1.mjs",
+      "beforeSha256": "dee9f490c091000b2560cd9464d945885e7f341091b87dde9ae4f2b7cdbd359e",
+      "afterSha256": "dee9f490c091000b2560cd9464d945885e7f341091b87dde9ae4f2b7cdbd359e",
+      "sourceBytes": 13125,
+      "targetBytes": 13125,
+      "replacements": []
+    },
+    {
+      "source": "work-orders/native-canary-adapter/fixtures/inherit-run-node.stdout",
+      "target": "tests/fixtures/native-canary/inherit-run-node.stdout",
+      "beforeSha256": "51612e7ba818bfe7dd2a42d46e8c0cf8e84332d63f2562132842e9879bc3dddc",
+      "afterSha256": "51612e7ba818bfe7dd2a42d46e8c0cf8e84332d63f2562132842e9879bc3dddc",
+      "sourceBytes": 781,
+      "targetBytes": 781,
+      "replacements": []
+    },
+    {
+      "source": "work-orders/native-canary-adjudicator/package.json",
+      "target": "tests/fixtures/native-canary-adjudicator-package.json",
+      "beforeSha256": "63ac60508b1000f6fd45a334b2c408b58dcb00bf8218aeb6b4ff3d3f510e3938",
+      "afterSha256": "63ac60508b1000f6fd45a334b2c408b58dcb00bf8218aeb6b4ff3d3f510e3938",
+      "sourceBytes": 407,
+      "targetBytes": 407,
+      "replacements": []
+    },
+    {
+      "source": "work-orders/native-canary-adapter/package.json",
+      "target": "tests/fixtures/native-canary-adapter-package.json",
+      "beforeSha256": "76c4da320ab687b303eb33c288e344fbed2fc7a929437ea8048e5c4f8832a823",
+      "afterSha256": "76c4da320ab687b303eb33c288e344fbed2fc7a929437ea8048e5c4f8832a823",
+      "sourceBytes": 321,
+      "targetBytes": 321,
+      "replacements": []
+    },
+    {
+      "source": "work-orders/native-probe-summary/tests/native-probe-summary.test.mjs",
+      "target": "tests/native-probe-summary.test.mjs",
+      "beforeSha256": "203ab14a1096a6de072af45e45ef39d527c9b6c3b6053985185e130986cc4e67",
+      "afterSha256": "6ff76741de5e4970077bb26d77dbe446282c7e1a7a5f111a3ca88666b7c9f5be",
+      "sourceBytes": 7268,
+      "targetBytes": 7292,
+      "replacements": [
+        {
+          "before": "../src/native-probe-summary.mjs",
+          "after": "../hosts/macos-xpc/native-probe-summary.mjs",
+          "occurrences": 2
+        }
+      ]
+    },
+    {
+      "source": "work-orders/native-canary-adjudicator/tests/adjudicate.test.mjs",
+      "target": "tests/native-canary-adjudicator.test.mjs",
+      "beforeSha256": "95b3c2b18fa84a44ca201cd786b9c6aac09b712a02a68cd3fbc9db0a8dbe84a6",
+      "afterSha256": "106eb4fe2ea39b87b7094c5a56bfff01813a14b69ebbc057b96ed7c4c5ddfdc8",
+      "sourceBytes": 8650,
+      "targetBytes": 8674,
+      "replacements": [
+        {
+          "before": "../src/native-canary-adjudicator.mjs",
+          "after": "../hosts/macos-xpc/native-canary-adjudicator.mjs",
+          "occurrences": 2
+        }
+      ]
+    },
+    {
+      "source": "work-orders/native-canary-adjudicator/tests/format.test.mjs",
+      "target": "tests/native-canary-table.test.mjs",
+      "beforeSha256": "f980156c71ff918db3a7da1e5ad50964a79c22531b7fb25c1a3f4e5a575e1584",
+      "afterSha256": "f3f5472db904abb9a3af32df75cf115801b9ad361b7771684b42d32275aa2afe",
+      "sourceBytes": 4061,
+      "targetBytes": 4073,
+      "replacements": [
+        {
+          "before": "../src/native-canary-adjudicator.mjs",
+          "after": "../hosts/macos-xpc/native-canary-adjudicator.mjs",
+          "occurrences": 1
+        }
+      ]
+    },
+    {
+      "source": "work-orders/native-canary-adjudicator/tests/baseline.test.mjs",
+      "target": "tests/native-canary-adjudicator-baseline.test.mjs",
+      "beforeSha256": "177b83c2a19bb8eb7bcf494e56277bc7ff32d5c6844cc9688c09bafa2077de9b",
+      "afterSha256": "6ce47a651d8139e198b7b3d585229913481832004ffbaa03e7941306643b185e",
+      "sourceBytes": 873,
+      "targetBytes": 919,
+      "replacements": [
+        {
+          "before": "../src/native-canary-adjudicator.mjs",
+          "after": "../hosts/macos-xpc/native-canary-adjudicator.mjs",
+          "occurrences": 1
+        },
+        {
+          "before": "../package.json",
+          "after": "./fixtures/native-canary-adjudicator-package.json",
+          "occurrences": 1
+        }
+      ]
+    },
+    {
+      "source": "work-orders/native-canary-adapter/tests/adapter.test.mjs",
+      "target": "tests/native-canary-adapter.test.mjs",
+      "beforeSha256": "21c383e51d0fb156b170bae87cc26d860680299c60c9e149477f16598b20b9af",
+      "afterSha256": "aa3c70c9c2174e126d87840596b553e6495c635fd82755877ac6c174c1026f55",
+      "sourceBytes": 18923,
+      "targetBytes": 18972,
+      "replacements": [
+        {
+          "before": "../src/native-canary-adapter.mjs",
+          "after": "../hosts/macos-xpc/native-canary-adapter.mjs",
+          "occurrences": 2
+        },
+        {
+          "before": "../src/native-canary-adjudicator.mjs",
+          "after": "../hosts/macos-xpc/native-canary-adjudicator.mjs",
+          "occurrences": 1
+        },
+        {
+          "before": "../fixtures/inherit-run-node.stdout",
+          "after": "./fixtures/native-canary/inherit-run-node.stdout",
+          "occurrences": 1
+        }
+      ]
+    },
+    {
+      "source": "work-orders/native-canary-adapter/tests/baseline.test.mjs",
+      "target": "tests/native-canary-adapter-baseline.test.mjs",
+      "beforeSha256": "26a6689dae6763114af5a5c17d4b51894b5c323d49313d9d502535f6e88c699b",
+      "afterSha256": "046d29c1c2ad8a1b42cdecf627c00018cb1157fe27b42bd39a6375ea80eee410",
+      "sourceBytes": 1796,
+      "targetBytes": 1875,
+      "replacements": [
+        {
+          "before": "../src/native-canary-adapter.mjs",
+          "after": "../hosts/macos-xpc/native-canary-adapter.mjs",
+          "occurrences": 1
+        },
+        {
+          "before": "../src/native-canary-adjudicator.mjs",
+          "after": "../hosts/macos-xpc/native-canary-adjudicator.mjs",
+          "occurrences": 2
+        },
+        {
+          "before": "../fixtures/inherit-run-node.stdout",
+          "after": "./fixtures/native-canary/inherit-run-node.stdout",
+          "occurrences": 1
+        },
+        {
+          "before": "../package.json",
+          "after": "./fixtures/native-canary-adapter-package.json",
+          "occurrences": 1
+        }
+      ]
+    },
+    {
+      "source": "work-orders/run-journal/tests/run-journal.test.mjs",
+      "target": "tests/run-journal.test.mjs",
+      "beforeSha256": "25355f0d280a262243f1fe707fd4e0de5fc795926ce37d910c40a12721390c6d",
+      "afterSha256": "2d46da21f23b6d58156db162ca5dfd45ca78b095c383411f9ac858cb20aeb12a",
+      "sourceBytes": 16915,
+      "targetBytes": 16919,
+      "replacements": [
+        {
+          "before": "../src/run-journal-v1.mjs",
+          "after": "../history/run-journal-v1.mjs",
+          "occurrences": 1
+        }
+      ]
+    },
+    {
+      "source": "work-orders/native-chat-types/tests/consumer/native-chat.mts",
+      "target": "tests/private-consumer/native-chat.mts",
+      "beforeSha256": "8c5a6bec3593f2a20903bda436e592d2b40766e72f21fb411e0af7304ce1b1aa",
+      "afterSha256": "4417aa2a221a61bbb3cff0ddaa5485b5abced9abd476afe4082342e7e0ebe8d2",
+      "sourceBytes": 5723,
+      "targetBytes": 5711,
+      "replacements": [
+        {
+          "before": "../../types/native-chat.js",
+          "after": "nisi/adapters/native-chat",
+          "occurrences": 2
+        },
+        {
+          "before": "../../types/workflow.js",
+          "after": "nisi/workflow",
+          "occurrences": 1
+        }
+      ]
+    }
+  ],
+  "movedTests": {
+    "native-probe-summary": 13,
+    "native-canary-adjudicator": 19,
+    "native-canary-adapter": 17,
+    "run-journal": 18,
+    "total": 67
+  },
+  "addedTests": {
+    "syntheticNativeChatPackageAliasLifecycle": 1
+  },
+  "nativeChatOracle": {
+    "consumersBefore": 5,
+    "consumersAfter": 6,
+    "negativeControlsBefore": 29,
+    "negativeControlsAfter": 39,
+    "assertionsUnchanged": true
+  },
+  "productChecks": {
+    "before": {
+      "check": {
+        "exitCode": 0,
+        "tests": 1092,
+        "pass": 1092,
+        "fail": 0,
+        "cancelled": 0,
+        "skipped": 0
+      },
+      "structural": {
+        "status": "PASS",
+        "mutationsCaught": 8,
+        "mutationsTotal": 8,
+        "allowed": 8,
+        "sourceFindings": 0
+      },
+      "testTypes": {
+        "exitCode": 0,
+        "consumers": 5
+      },
+      "privatePackage": {
+        "status": "PASS_SCOPED",
+        "archiveFiles": 24,
+        "negativeControls": {
+          "expected": 29,
+          "observed": 29,
+          "allExpectedLocationsDetected": true
+        },
+        "runtimeTests": 7,
+        "archivePath": "/Users/louiscalata/nisi-next-private/.build/private-package-XZccfY/nisi-0.2.0-private.0.tgz",
+        "archiveSha256": "a5432520c4c70631c86c22328f50021058924df6645c3de189c3c1fad4d3b812",
+        "receipt": "/Users/louiscalata/nisi-next-private/.build/private-package-XZccfY/receipt.json"
+      }
+    },
+    "after": {
+      "check": {
+        "exitCode": 1,
+        "tests": 1160,
+        "pass": 1159,
+        "fail": 1,
+        "cancelled": 0,
+        "skipped": 0
+      },
+      "structural": {
+        "status": "PASS",
+        "mutationsCaught": 8,
+        "mutationsTotal": 8,
+        "allowed": 8,
+        "sourceFindings": 0
+      },
+      "testTypes": {
+        "exitCode": 0,
+        "consumers": 6
+      },
+      "privatePackage": {
+        "status": "PASS_SCOPED",
+        "archiveFiles": 27,
+        "negativeControls": {
+          "expected": 39,
+          "observed": 39,
+          "allExpectedLocationsDetected": true
+        },
+        "runtimeTests": 8,
+        "archivePath": "/Users/louiscalata/nisi-next-private/.build/private-package-aVftYN/nisi-0.2.0-private.0.tgz",
+        "archiveSha256": "d368985e340002993046fdcba14501ba804993fcdc32154d1f88480339e2cbd3",
+        "receipt": "/Users/louiscalata/nisi-next-private/.build/private-package-aVftYN/receipt.json",
+        "inventoryInspected": true,
+        "exactInstalledByteMatch": true
+      }
+    },
+    "snapshotScopes": {
+      "before": "Before five-work-order integration",
+      "after": "Initial integration before the inventory correction; preserved historical failure",
+      "closingPass": "Current closing pass after the exact authorized inventory correction"
+    },
+    "closingPass": {
+      "check": {
+        "command": "npm run check",
+        "exitCode": 0,
+        "tests": 1160,
+        "suites": 0,
+        "pass": 1160,
+        "fail": 0,
+        "cancelled": 0,
+        "skipped": 0,
+        "todo": 0,
+        "testDurationMs": 6963.975083
+      },
+      "structural": {
+        "status": "PASS",
+        "mutationsCaught": 8,
+        "mutationsTotal": 8,
+        "allowed": 8,
+        "sourceFindings": 0
+      },
+      "testTypes": {
+        "command": "npm run test:types",
+        "exitCode": 0,
+        "consumers": 6,
+        "diagnostics": 0
+      },
+      "privatePackage": {
+        "command": "npm run check:private-package",
+        "exitCode": 0,
+        "status": "PASS_SCOPED",
+        "observedAt": "2026-09-13T19:44:21.468Z",
+        "completedAt": "2026-09-13T19:44:23.463Z",
+        "archiveFiles": 27,
+        "negativeControls": {
+          "expected": 39,
+          "observed": 39,
+          "allExpectedLocationsDetected": true
+        },
+        "runtimeTests": 8,
+        "runtimeCounts": {
+          "tests": 8,
+          "pass": 8,
+          "fail": 0,
+          "cancelled": 0,
+          "skipped": 0,
+          "todo": 0
+        },
+        "typeConsumers": 6,
+        "typeCheckExitCode": 0,
+        "archivePath": "/Users/louiscalata/nisi-next-private/.build/private-package-TjKZxZ/nisi-0.2.0-private.0.tgz",
+        "archiveSha256": "d368985e340002993046fdcba14501ba804993fcdc32154d1f88480339e2cbd3",
+        "receipt": "/Users/louiscalata/nisi-next-private/.build/private-package-TjKZxZ/receipt.json",
+        "receiptSha256": "04832af6e89e357dd6e77fb612c4328b1d57a73f3732a5ffc8bd3823afe5dc0c",
+        "inventoryInspected": true,
+        "exactInstalledByteMatch": true
+      }
+    }
+  },
+  "blocker": {
+    "path": "tests/private-package-contract.test.mjs",
+    "line": 9,
+    "beforeExpectation": 24,
+    "requiredInventory": 27,
+    "cause": "Mandated native runtime, protocol and type additions expand the existing 24-file inventory by three. Baseline check passed before integration. All other tests pass.",
+    "requestedException": "Change only the two exact inventory count literals from 24 to 27; leave every other assertion unchanged.",
+    "authorization": "APPROVED: Louis closing instructions confirm the existing Go for it authorization covers this mechanical consequence; user reports Claude Fable 5.1 approval.",
+    "testUnchanged": false,
+    "status": "RESOLVED",
+    "onlyTwoCountLiteralsChanged": true,
+    "resolvedBy": "docs/verification/2026-09-13/five-work-order-integration/proposed-inventory-count.diff"
+  },
+  "packageChanges": [
+    {
+      "path": "package.json",
+      "beforeSha256": "307e73e19199186cb33a346da92941d2feed4d64b43ebc86c678207c6a79e45c",
+      "afterSha256": "82a8a5c67103920f8615a9ded2e263ad4091efa238b1ba5cf59acc5071386553"
+    },
+    {
+      "path": "scripts/private-package-contract.mjs",
+      "beforeSha256": "52b73fad04e639475895261d5b982b1442ee5545a02ffaeaa9726e58bbd58288",
+      "afterSha256": "188a8a51191b3e1d268ad9c336458770494b7b8237866e9a9084e7bdf265a623"
+    },
+    {
+      "path": "scripts/check-private-package.mjs",
+      "beforeSha256": "80b384b406dbde63a65408c16cdb5634596c15bfcc19b60971b50b8e0580b841",
+      "afterSha256": "55a476c062b535a6e3df8b071bedad8c57a5acadbac04c006f40f3e4f4ede740"
+    },
+    {
+      "path": "tests/private-consumer.test.mjs",
+      "beforeSha256": "0a29cb423a2b11163864a5a6b63471e93ab042897cda601ecec40a9c34b2ec07",
+      "afterSha256": "fa38d22d43c32753c48c3509bc1c700b82de1395d1d61550775e59608ebd75f2"
+    },
+    {
+      "path": "tests/private-package-contract.test.mjs",
+      "beforeSha256": "177193ffcf7ad6111a047c4beba718888c607b1710625655fc275606d558451f",
+      "afterSha256": "177193ffcf7ad6111a047c4beba718888c607b1710625655fc275606d558451f"
+    },
+    {
+      "path": "adapters/native-chat-v1.mjs",
+      "beforeSha256": "45f8149f2f526cab75ba5758aed8b05aeea136fa4cb107a8a45196045ce205bd",
+      "afterSha256": "45f8149f2f526cab75ba5758aed8b05aeea136fa4cb107a8a45196045ce205bd"
+    },
+    {
+      "path": "adapters/native-chat-protocol-v1.mjs",
+      "beforeSha256": "44468cb8b6ebc97e1821405a5add4916a97bf82b0ffeaa2076f85e79e12255f3",
+      "afterSha256": "44468cb8b6ebc97e1821405a5add4916a97bf82b0ffeaa2076f85e79e12255f3"
+    },
+    {
+      "path": "package-lock.json",
+      "beforeSha256": "bb677e234c47798b323e8a9a4643ef64bc174729c950094b43d3b00c0dfc0233",
+      "afterSha256": "bb677e234c47798b323e8a9a4643ef64bc174729c950094b43d3b00c0dfc0233"
+    }
+  ],
+  "mutationRunnerPlacement": {
+    "source": "work-orders/run-journal/scripts/test-history-mutants.mjs",
+    "target": "scripts/test-history-mutants.mjs",
+    "beforeSha256": "f318bb8ec2ff3e11a7827e548e49efbf2d582719e64ffd334d4eb375cce4bc35",
+    "afterSha256": "69304e339c57a3313fee0b0eaa69ad46e4be5c713cfc8e4be3cc850d8b2b4d23",
+    "replacements": [
+      {
+        "before": "'src/run-journal-v1.mjs'",
+        "after": "'history/run-journal-v1.mjs'"
+      },
+      {
+        "before": "25355f0d280a262243f1fe707fd4e0de5fc795926ce37d910c40a12721390c6d",
+        "after": "2d46da21f23b6d58156db162ca5dfd45ca78b095c383411f9ac858cb20aeb12a"
+      },
+      {
+        "before": "'../src/run-journal-v1.mjs'",
+        "after": "'../history/run-journal-v1.mjs'"
+      },
+      {
+        "before": "join(root,'evidence','mutants-'",
+        "after": "join(root,'.build','history-mutants-'"
+      },
+      {
+        "before": "mkdirSync(out);",
+        "after": "mkdirSync(out,{recursive:true});"
+      }
+    ],
+    "scope": "Prepared runner only; product paths, relocated oracle hash and .build evidence output. Accepted journal module unchanged."
+  },
+  "historyMutants": {
+    "sourceSha256": "dee9f490c091000b2560cd9464d945885e7f341091b87dde9ae4f2b7cdbd359e",
+    "oracleSha256": "2d46da21f23b6d58156db162ca5dfd45ca78b095c383411f9ac858cb20aeb12a",
+    "scope": "One-site deliberate variants against the unchanged 18-test oracle; only import URL redirected in memory.",
+    "results": [
+      {
+        "id": "conflict-as-duplicate",
+        "sourceSha256": "a2285c28982fcc95678967cf2a10677c4b87d6a72223f7002a1f813b9c461b38",
+        "exit": 1,
+        "tests": 18,
+        "passed": 12,
+        "failed": 6,
+        "skipped": 0,
+        "cancelled": 0,
+        "status": "CAUGHT"
+      },
+      {
+        "id": "reopen-as-fresh",
+        "sourceSha256": "5ec05d11568af97c19fc0513c987292c763fb7a2ccb20e868ebf4dd66ffd1a4f",
+        "exit": 1,
+        "tests": 18,
+        "passed": 15,
+        "failed": 3,
+        "skipped": 0,
+        "cancelled": 0,
+        "status": "CAUGHT"
+      },
+      {
+        "id": "unseal-damaged-prefix",
+        "sourceSha256": "98cff59a56a384ec2d7be1b31f6aaafceee5b3988137dc494baffae386a94f5d",
+        "exit": 1,
+        "tests": 18,
+        "passed": 17,
+        "failed": 1,
+        "skipped": 0,
+        "cancelled": 0,
+        "status": "CAUGHT"
+      },
+      {
+        "id": "payload-only-identity",
+        "sourceSha256": "40631e0e55e0740d5d0dbd4e9ae9532d27efb73da0035164c14eb39fa45ebf60",
+        "exit": 1,
+        "tests": 18,
+        "passed": 13,
+        "failed": 5,
+        "skipped": 0,
+        "cancelled": 0,
+        "status": "CAUGHT"
+      },
+      {
+        "id": "forget-reopened-revocation",
+        "sourceSha256": "30c1444bdddcfa40b86119f4177c4cfd752997571eea23511e12f6383ebc9a8d",
+        "exit": 1,
+        "tests": 18,
+        "passed": 17,
+        "failed": 1,
+        "skipped": 0,
+        "cancelled": 0,
+        "status": "CAUGHT"
+      },
+      {
+        "id": "ignore-prefix-order",
+        "sourceSha256": "3d7eb1ec9b13d535bb5377c53e1d1ab06ea29752beb111dd753ba72b6aea9a9a",
+        "exit": 1,
+        "tests": 18,
+        "passed": 17,
+        "failed": 1,
+        "skipped": 0,
+        "cancelled": 0,
+        "status": "CAUGHT"
+      },
+      {
+        "id": "ignore-payload-expiry",
+        "sourceSha256": "d15c568af81bf7dac5508e57493c1cbe85ffd9325f372f4918901eb304c0a62c",
+        "exit": 1,
+        "tests": 18,
+        "passed": 17,
+        "failed": 1,
+        "skipped": 0,
+        "cancelled": 0,
+        "status": "CAUGHT"
+      },
+      {
+        "id": "stale-heartbeat-permits-retry",
+        "sourceSha256": "f214452d9cf645ff9c6de0fdcbff5c2546e3057046925004aec8140899d75db1",
+        "exit": 1,
+        "tests": 18,
+        "passed": 17,
+        "failed": 1,
+        "skipped": 0,
+        "cancelled": 0,
+        "status": "CAUGHT"
+      }
+    ],
+    "status": "PASS"
+  },
+  "preservation": {
+    "originalFilesModified": [
+      {
+        "path": "scripts/check-private-package.mjs",
+        "beforeSha256": "80b384b406dbde63a65408c16cdb5634596c15bfcc19b60971b50b8e0580b841",
+        "afterSha256": "55a476c062b535a6e3df8b071bedad8c57a5acadbac04c006f40f3e4f4ede740"
+      },
+      {
+        "path": "scripts/private-package-contract.mjs",
+        "beforeSha256": "52b73fad04e639475895261d5b982b1442ee5545a02ffaeaa9726e58bbd58288",
+        "afterSha256": "188a8a51191b3e1d268ad9c336458770494b7b8237866e9a9084e7bdf265a623"
+      },
+      {
+        "path": "tests/private-consumer.test.mjs",
+        "beforeSha256": "0a29cb423a2b11163864a5a6b63471e93ab042897cda601ecec40a9c34b2ec07",
+        "afterSha256": "fa38d22d43c32753c48c3509bc1c700b82de1395d1d61550775e59608ebd75f2"
+      },
+      {
+        "path": "work-orders/native-canary-adapter/roadmap.md",
+        "beforeSha256": "b5e45cdca14353b72cc659fc3cf61a090cb4775749981e612fcc350558834b81",
+        "afterSha256": "5c7753446f65ce664b098e575759813c31426c5625ba55d6f22127bb4544aeff"
+      },
+      {
+        "path": "work-orders/native-canary-adjudicator/roadmap.md",
+        "beforeSha256": "afd8d2b35e92df3a73343166e093ef3d21f2b2697eac583838675620b37b33ed",
+        "afterSha256": "f9b8fe5c760c5f0b917c78e9d41b1c9fc79f34d29f89cb4c52e6180f58da625e"
+      },
+      {
+        "path": "work-orders/native-chat-types/roadmap.md",
+        "beforeSha256": "4b26a55f4f6483c8354d043596835c2a6edd19fc39eb4a762e8a002de907c2c8",
+        "afterSha256": "c843ca091e3d6f50432b166fcf1b93bbb3ce848c351bd4e1d98e588b3cef4c84"
+      },
+      {
+        "path": "work-orders/native-probe-summary/roadmap.md",
+        "beforeSha256": "0db33d2b2d59701d31e2a65848dff2af7ec5c619b7c849d81dbc515938e20ef5",
+        "afterSha256": "7aeab937ece2393738198129800a74da2fe20445a0288699875dd4a8f8ade5f3"
+      },
+      {
+        "path": "work-orders/run-journal/roadmap.md",
+        "beforeSha256": "5f98a7231d2ceb738583a0477dfcd9349acaaf9151c42f9669efe0e69f3142e7",
+        "afterSha256": "e7f3b6b203e1708d0dcc0a9c1477689619493ccc6fa928daffb28c0c70537db8"
+      },
+      {
+        "path": "package.json",
+        "beforeSha256": "307e73e19199186cb33a346da92941d2feed4d64b43ebc86c678207c6a79e45c",
+        "afterSha256": "82a8a5c67103920f8615a9ded2e263ad4091efa238b1ba5cf59acc5071386553"
+      },
+      {
+        "path": "roadmap.md",
+        "beforeSha256": "440b0b17aa034a66ca32dc234d06372ca69d3809f47707d117ec838990cb6780",
+        "afterSha256": "536545e0b5402d7af6de786325869080804875452aabe9ec8ea23ff6ebf81cb9"
+      }
+    ],
+    "placementVerification": {
+      "files": 16,
+      "exactTransforms": true,
+      "originalSourcesAndAssertionsUnchanged": true
+    },
+    "roadmapSectionsChanged": [
+      "# Nisi roadmap",
+      "#### U02-02 \u2014 make one repository change end to end",
+      "#### U02-03 \u2014 make the implemented library usable and packageable privately",
+      "#### U02-04 \u2014 persist trustworthy history and recover honestly",
+      "#### U02-08 \u2014 acceptance, blockers and handoff discipline"
+    ],
+    "roadmapSectionsUnchanged": 97,
+    "progressLineUnchanged": true,
+    "baselineTestNamesRetained": true,
+    "baselineFiles": 657,
+    "scope": "Initial integration snapshot before the closing pass, with corrected roadmap section accounting; closingPass.fileChanges records later edits.",
+    "roadmapSectionsTotal": 102,
+    "roadmapEditAccounting": {
+      "coordinateBasis": "Integrated review snapshot before the one-line closing follow-up insertion",
+      "topSection": "# Nisi roadmap",
+      "edits": [
+        {
+          "reviewLines": "12-20",
+          "finalLines": "12-20",
+          "description": "New integration summary paragraph under # Nisi roadmap."
+        },
+        {
+          "reviewLines": "29-30",
+          "finalLines": "29-30; follow-up 36",
+          "description": "In-place blocked-attempt rewrite now restored byte-for-byte to the original historical paragraph; one dated line records later formatter completion (13/13), accepted c048df362405ffbd3053de93aedd05a0b51ec5c64417d19c9ee5ea22a6d90056 and hosts/macos-xpc/native-probe-summary.mjs integration."
+        },
+        {
+          "reviewLines": "48",
+          "finalLines": "49",
+          "description": "Newly ticked implementation-review box; integration follow-up at review lines 49-50, final lines 50-51."
+        },
+        {
+          "reviewLines": "4030-4032",
+          "finalLines": "4031-4033",
+          "description": "Existing U02-03 typed-consumer bullet edited in place: ten to eleven declarations; 16-path to 18-path mapping."
+        }
+      ],
+      "correctedRowReference": {
+        "incorrect": "roadmap.md:4166",
+        "reviewRows": [
+          4180,
+          4182,
+          4183
+        ],
+        "finalRows": [
+          4181,
+          4183,
+          4184
+        ],
+        "rowSubjects": [
+          "candidate execution isolation",
+          "prevention and durable history",
+          "archive inventory count"
+        ]
+      }
+    }
+  },
+  "reviews": {
+    "integrationOwner": "Astra (Codex), only writer",
+    "daybreakBlue": "self-reported, no artifact retained",
+    "luna": "self-reported, no artifact retained",
+    "claudeFable51": {
+      "status": "ACCEPT_WITH_DEFECTS",
+      "provenance": "Louis supplied this completed independent review in the 2026-09-13 closing instructions; no transcript recovered and no fresh review invoked in this closing pass.",
+      "agents": 6,
+      "mode": "read-only",
+      "diffBase": {
+        "checkpoint": "1179f1b",
+        "beforeManifestTime": "12:15:30",
+        "beforeManifest": "docs/verification/2026-09-13/five-work-order-integration/before-manifest.json"
+      },
+      "inventoryCorrection": "APPROVED per Louis-supplied review",
+      "retainedAttributionNote": "docs/verification/2026-09-13/five-work-order-integration/closing-corrections.md"
+    },
+    "spark": "NOT_RUN; not exposed as an available model in this session."
+  },
+  "notClaimed": [
+    "Native launcher or UI wiring",
+    "New native experiment or generated-code isolation acceptance",
+    "Host journal integration",
+    "Durable storage, fsync, locking or crash qualification",
+    "Fresh-process persisted reopen acceptance",
+    "Incident admission or prevention evidence",
+    "Node 22 or Windows acceptance",
+    "U02-02/U02-03/U02-04 or NX milestone closure",
+    "Bionic model loads, Windows dispatch, packet execution",
+    "Product Git commit, push, publication",
+    "Fresh Claude review of closing edits or independently retained transcript of the user-reported review"
+  ],
+  "checkpoint": {
+    "status": "REFUSED_SIGNING_ENV",
+    "command": "/Users/louiscalata/bin/nisi-ckpt",
+    "exitCode": 3,
+    "output": "nisi-ckpt: refusing - signing env injected (run from your own shell or Codex, not a Claude session)\n",
+    "checkpointCreated": false,
+    "environmentModified": false,
+    "observedAt": "2026-09-13T19:48:48.695974+00:00",
+    "closingPassInvocations": 1
+  },
+  "closingObservedAt": "2026-09-13T19:47:37.443698+00:00",
+  "closingPass": {
+    "date": "2026-09-13",
+    "startedAt": "2026-09-13T19:42:40.857612+00:00",
+    "recordedAt": "2026-09-13T19:47:37.443698+00:00",
+    "owner": "Astra (Codex), single writer",
+    "scope": "Only requested fixes 1-7; optional item 8 omitted. No product source edits.",
+    "correctionsNote": "docs/verification/2026-09-13/five-work-order-integration/closing-corrections.md",
+    "receiptBeforeSha256": "839aa57fadf2e5ae35f0fc773b4fe62bcac56214413aee9cec1128dae6aa75e8",
+    "fileChanges": [
+      {
+        "path": "tests/private-package-contract.test.mjs",
+        "beforeSha256": "177193ffcf7ad6111a047c4beba718888c607b1710625655fc275606d558451f",
+        "afterSha256": "2fc26ef962f778502688294fc7b0939734a8a262a1bd2e5e003acacfd9363784"
+      },
+      {
+        "path": "roadmap.md",
+        "beforeSha256": "536545e0b5402d7af6de786325869080804875452aabe9ec8ea23ff6ebf81cb9",
+        "afterSha256": "50f6420fe17aa145b7b341467be00d4032968fcb4ac361871f9a45c34f94bd68"
+      },
+      {
+        "path": "docs/verification/2026-09-13/five-work-order-integration/closing-corrections.md",
+        "beforeSha256": null,
+        "afterSha256": "f12e46eef5f6903d9a56421c651e7fe5c23deaf92f44e36b843bae896b58ac3f"
+      },
+      {
+        "path": "work-orders/native-canary-adapter/handoff-claude-20260913/SHA256SUMS",
+        "beforeSha256": "ea95ffeea91947f2fbbcf8a04c2e5c40af59c08d7c569f81c446b5a89e646d30",
+        "afterSha256": "0fb474dfa5bf4b831c85b6d62cb9a8eaf6778e636032d1dee065b6a6fd5a31ce"
+      },
+      {
+        "path": "work-orders/native-chat-types/roadmap.md",
+        "beforeSha256": "c843ca091e3d6f50432b166fcf1b93bbb3ce848c351bd4e1d98e588b3cef4c84",
+        "afterSha256": "72dee5aaec1435ca42173e282761f2e8f638fe5c1aa7edc1ab365742fe05c60a"
+      }
+    ],
+    "inventoryDiffAppliedExactly": true,
+    "historicalRoadmapParagraphRestoredExactly": true,
+    "previousIntegrationNonPathChanges": [
+      {
+        "path": "scripts/check-private-package.mjs",
+        "countLiteralChanges": [
+          "7 to 9",
+          "5 to 6",
+          "29 to 39",
+          "7 to 8"
+        ],
+        "category": "Same inventory/cardinality-literal edit category as closing fix 1",
+        "beforeSha256": "80b384b406dbde63a65408c16cdb5634596c15bfcc19b60971b50b8e0580b841",
+        "afterSha256": "55a476c062b535a6e3df8b071bedad8c57a5acadbac04c006f40f3e4f4ede740",
+        "changedInClosingPass": false
+      },
+      {
+        "path": "scripts/test-history-mutants.mjs",
+        "line": 16,
+        "before": "mkdirSync(out);",
+        "after": "mkdirSync(out,{recursive:true});",
+        "category": "Benign non-path change",
+        "line15NoOverwriteGuardIntact": true,
+        "changedInClosingPass": false
+      }
+    ],
+    "optionalItem8": {
+      "applied": false,
+      "reason": "Clear preservation of the requested baseline checks would exceed the approximately 15-line allowance.",
+      "newProductTests": 0
+    },
+    "otherFilesBefore": {
+      "count": 709,
+      "manifestSha256": "38a7dd21d49b7f74d35d73302635768259f0fc7fbcdd3a4027678d33f9a135e4"
+    },
+    "checkpointAttempt": {
+      "status": "REFUSED_SIGNING_ENV",
+      "command": "/Users/louiscalata/bin/nisi-ckpt",
+      "exitCode": 3,
+      "output": "nisi-ckpt: refusing - signing env injected (run from your own shell or Codex, not a Claude session)\n",
+      "checkpointCreated": false,
+      "environmentModified": false,
+      "observedAt": "2026-09-13T19:48:48.695974+00:00",
+      "closingPassInvocations": 1
+    },
+    "completedAt": "2026-09-13T19:48:48.695974+00:00",
+    "scopeVerification": {
+      "status": "PASS",
+      "allowedPaths": 6,
+      "otherFilesUnchanged": 709,
+      "otherFilesManifestSha256": "38a7dd21d49b7f74d35d73302635768259f0fc7fbcdd3a4027678d33f9a135e4",
+      "basis": "git tracked and non-ignored untracked regular files; excludes permitted six paths and ignored generated check artifacts",
+      "exactRequestedEditsVerified": true
+    }
+  }
+}

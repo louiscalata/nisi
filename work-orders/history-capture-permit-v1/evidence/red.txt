@@ -1,0 +1,439 @@
+✖ create returns exact CREATED response with empty frozen opaque permit and canonical digest (1.049542ms)
+✖ create exact envelope rejects missing, extra, symbols, hidden fields and getters without invocation (0.173708ms)
+✖ plain and null-prototype create envelopes are accepted (0.1115ms)
+✖ closed declaration rejects missing, extra, accessor and malformed scalar cases before owner (0.115208ms)
+✖ declaration temporal and retention scalar bounds are closed (0.152708ms)
+✖ unknown, SEALED and COMMIT_UNCERTAIN owners follow create precedence (0.052542ms)
+✖ create clock throw and invalid values refuse without a handle (0.089125ms)
+✖ create temporal currentness reasons are precise (0.087167ms)
+✖ declaration is privately copied and digest is recursively canonical (0.141584ms)
+✖ capture exact envelope and forged permit refuse with no declaration recognition (0.120541ms)
+✖ revoke exact responses reject malformed and unknown handles (0.057792ms)
+✖ recognized revoke is idempotent and later capture reports PERMIT_REVOKED (0.087667ms)
+✖ invalid source types, malformed Unicode and >1MiB leave permit reusable (0.095959ms)
+✖ source digest mismatch leaves permit reusable and never exposes source (0.108042ms)
+✖ projector INVALID_INPUT leaves permit reusable (0.081625ms)
+✖ capture clock invalidity permanently revokes permit after first precise INVALID_CLOCK (0.090458ms)
+✖ backward capture clock permanently revokes permit (0.365875ms)
+✖ capture expiry returns precise reason once then permanently revoked (0.247208ms)
+✖ observation expiry during capture returns precise reason once then permanently revoked (0.107708ms)
+✖ reentrant capture of the same permit is PERMIT_BUSY and outer capture remains valid (0.0805ms)
+✖ reentrant revocation from trusted clock before admission prevents record (0.07425ms)
+✖ revoke from filesystem callback after admission does not abort actual journal outcome (0.099916ms)
+✖ successful capture stores only closed provenance and preserves immutable owner result (0.082333ms)
+✖ permit remains privately bound to its original owner and cannot write another owner (0.093459ms)
+✖ same consumed permit cannot be reused (0.074167ms)
+✖ a second permit for identical source maps owner duplicate without a fresh write (0.079083ms)
+✖ project mismatch is an attempted one-shot journal refusal (0.291125ms)
+✖ precommit write failure is returned once and permit remains consumed without retry (0.05825ms)
+✖ postrename read failure returns UNCERTAIN and fresh explicit open reconciles bytes (0.063375ms)
+✖ configured journal redaction applies to capture provenance without leaking unredacted payload (0.169125ms)
+✖ adverse source preserves FAILED observation state and non-authorizing flags (0.2405ms)
+ℹ tests 31
+ℹ suites 0
+ℹ pass 0
+ℹ fail 31
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 51.800292
+
+✖ failing tests:
+
+test at tests/history-capture-permit-v1.test.mjs:73:1
+✖ create returns exact CREATED response with empty frozen opaque permit and canonical digest (1.049542ms)
+  Error: NOT_IMPLEMENTED
+      at createFixedXpcHistoryPermit (file:///Users/louiscalata/nisi-next-private/history/history-capture-permit-v1.mjs:2:55)
+      at create (file:///Users/louiscalata/nisi-next-private/tests/history-capture-permit-v1.test.mjs:50:3)
+      at TestContext.<anonymous> (file:///Users/louiscalata/nisi-next-private/tests/history-capture-permit-v1.test.mjs:75:18)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1325:25)
+      at Test.start (node:internal/test_runner/test:1191:17)
+      at startSubtestAfterBootstrap (node:internal/test_runner/harness:385:17)
+
+test at tests/history-capture-permit-v1.test.mjs:81:1
+✖ create exact envelope rejects missing, extra, symbols, hidden fields and getters without invocation (0.173708ms)
+  Error: NOT_IMPLEMENTED
+      at createFixedXpcHistoryPermit (file:///Users/louiscalata/nisi-next-private/history/history-capture-permit-v1.mjs:2:55)
+      at TestContext.<anonymous> (file:///Users/louiscalata/nisi-next-private/tests/history-capture-permit-v1.test.mjs:88:20)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1325:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:911:18)
+      at Test.postRun (node:internal/test_runner/test:1465:19)
+      at Test.run (node:internal/test_runner/test:1390:12)
+      at async startSubtestAfterBootstrap (node:internal/test_runner/harness:385:3)
+
+test at tests/history-capture-permit-v1.test.mjs:95:1
+✖ plain and null-prototype create envelopes are accepted (0.1115ms)
+  Error: NOT_IMPLEMENTED
+      at createFixedXpcHistoryPermit (file:///Users/louiscalata/nisi-next-private/history/history-capture-permit-v1.mjs:2:55)
+      at TestContext.<anonymous> (file:///Users/louiscalata/nisi-next-private/tests/history-capture-permit-v1.test.mjs:100:18)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1325:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:911:18)
+      at Test.postRun (node:internal/test_runner/test:1465:19)
+      at Test.run (node:internal/test_runner/test:1390:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:911:7)
+
+test at tests/history-capture-permit-v1.test.mjs:104:1
+✖ closed declaration rejects missing, extra, accessor and malformed scalar cases before owner (0.115208ms)
+  Error: NOT_IMPLEMENTED
+      at createFixedXpcHistoryPermit (file:///Users/louiscalata/nisi-next-private/history/history-capture-permit-v1.mjs:2:55)
+      at TestContext.<anonymous> (file:///Users/louiscalata/nisi-next-private/tests/history-capture-permit-v1.test.mjs:120:43)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1325:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:911:18)
+      at Test.postRun (node:internal/test_runner/test:1465:19)
+      at Test.run (node:internal/test_runner/test:1390:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:911:7)
+
+test at tests/history-capture-permit-v1.test.mjs:124:1
+✖ declaration temporal and retention scalar bounds are closed (0.152708ms)
+  Error: NOT_IMPLEMENTED
+      at createFixedXpcHistoryPermit (file:///Users/louiscalata/nisi-next-private/history/history-capture-permit-v1.mjs:2:55)
+      at create (file:///Users/louiscalata/nisi-next-private/tests/history-capture-permit-v1.test.mjs:50:3)
+      at TestContext.<anonymous> (file:///Users/louiscalata/nisi-next-private/tests/history-capture-permit-v1.test.mjs:130:19)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1325:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:911:18)
+      at Test.postRun (node:internal/test_runner/test:1465:19)
+      at Test.run (node:internal/test_runner/test:1390:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:911:7)
+
+test at tests/history-capture-permit-v1.test.mjs:133:1
+✖ unknown, SEALED and COMMIT_UNCERTAIN owners follow create precedence (0.052542ms)
+  Error: NOT_IMPLEMENTED
+      at createFixedXpcHistoryPermit (file:///Users/louiscalata/nisi-next-private/history/history-capture-permit-v1.mjs:2:55)
+      at create (file:///Users/louiscalata/nisi-next-private/tests/history-capture-permit-v1.test.mjs:50:3)
+      at TestContext.<anonymous> (file:///Users/louiscalata/nisi-next-private/tests/history-capture-permit-v1.test.mjs:134:16)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1325:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:911:18)
+      at Test.postRun (node:internal/test_runner/test:1465:19)
+      at Test.run (node:internal/test_runner/test:1390:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:911:7)
+
+test at tests/history-capture-permit-v1.test.mjs:145:1
+✖ create clock throw and invalid values refuse without a handle (0.089125ms)
+  Error: NOT_IMPLEMENTED
+      at createFixedXpcHistoryPermit (file:///Users/louiscalata/nisi-next-private/history/history-capture-permit-v1.mjs:2:55)
+      at create (file:///Users/louiscalata/nisi-next-private/tests/history-capture-permit-v1.test.mjs:50:3)
+      at TestContext.<anonymous> (file:///Users/louiscalata/nisi-next-private/tests/history-capture-permit-v1.test.mjs:147:39)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1325:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:911:18)
+      at Test.postRun (node:internal/test_runner/test:1465:19)
+      at Test.run (node:internal/test_runner/test:1390:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:911:7)
+
+test at tests/history-capture-permit-v1.test.mjs:154:1
+✖ create temporal currentness reasons are precise (0.087167ms)
+  Error: NOT_IMPLEMENTED
+      at createFixedXpcHistoryPermit (file:///Users/louiscalata/nisi-next-private/history/history-capture-permit-v1.mjs:2:55)
+      at create (file:///Users/louiscalata/nisi-next-private/tests/history-capture-permit-v1.test.mjs:50:3)
+      at TestContext.<anonymous> (file:///Users/louiscalata/nisi-next-private/tests/history-capture-permit-v1.test.mjs:161:75)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1325:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:911:18)
+      at Test.postRun (node:internal/test_runner/test:1465:19)
+      at Test.run (node:internal/test_runner/test:1390:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:911:7)
+
+test at tests/history-capture-permit-v1.test.mjs:164:1
+✖ declaration is privately copied and digest is recursively canonical (0.141584ms)
+  Error: NOT_IMPLEMENTED
+      at createFixedXpcHistoryPermit (file:///Users/louiscalata/nisi-next-private/history/history-capture-permit-v1.mjs:2:55)
+      at create (file:///Users/louiscalata/nisi-next-private/tests/history-capture-permit-v1.test.mjs:50:3)
+      at TestContext.<anonymous> (file:///Users/louiscalata/nisi-next-private/tests/history-capture-permit-v1.test.mjs:166:19)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1325:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:911:18)
+      at Test.postRun (node:internal/test_runner/test:1465:19)
+      at Test.run (node:internal/test_runner/test:1390:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:911:7)
+
+test at tests/history-capture-permit-v1.test.mjs:174:1
+✖ capture exact envelope and forged permit refuse with no declaration recognition (0.120541ms)
+  Error: NOT_IMPLEMENTED
+      at createFixedXpcHistoryPermit (file:///Users/louiscalata/nisi-next-private/history/history-capture-permit-v1.mjs:2:55)
+      at create (file:///Users/louiscalata/nisi-next-private/tests/history-capture-permit-v1.test.mjs:50:3)
+      at TestContext.<anonymous> (file:///Users/louiscalata/nisi-next-private/tests/history-capture-permit-v1.test.mjs:175:38)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1325:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:911:18)
+      at Test.postRun (node:internal/test_runner/test:1465:19)
+      at Test.run (node:internal/test_runner/test:1390:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:911:7)
+
+test at tests/history-capture-permit-v1.test.mjs:184:1
+✖ revoke exact responses reject malformed and unknown handles (0.057792ms)
+  Error: NOT_IMPLEMENTED
+      at revokeFixedXpcHistoryPermit (file:///Users/louiscalata/nisi-next-private/history/history-capture-permit-v1.mjs:4:55)
+      at TestContext.<anonymous> (file:///Users/louiscalata/nisi-next-private/tests/history-capture-permit-v1.test.mjs:187:16)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1325:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:911:18)
+      at Test.postRun (node:internal/test_runner/test:1465:19)
+      at Test.run (node:internal/test_runner/test:1390:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:911:7)
+
+test at tests/history-capture-permit-v1.test.mjs:194:1
+✖ recognized revoke is idempotent and later capture reports PERMIT_REVOKED (0.087667ms)
+  Error: NOT_IMPLEMENTED
+      at createFixedXpcHistoryPermit (file:///Users/louiscalata/nisi-next-private/history/history-capture-permit-v1.mjs:2:55)
+      at create (file:///Users/louiscalata/nisi-next-private/tests/history-capture-permit-v1.test.mjs:50:3)
+      at TestContext.<anonymous> (file:///Users/louiscalata/nisi-next-private/tests/history-capture-permit-v1.test.mjs:195:38)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1325:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:911:18)
+      at Test.postRun (node:internal/test_runner/test:1465:19)
+      at Test.run (node:internal/test_runner/test:1390:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:911:7)
+
+test at tests/history-capture-permit-v1.test.mjs:204:1
+✖ invalid source types, malformed Unicode and >1MiB leave permit reusable (0.095959ms)
+  Error: NOT_IMPLEMENTED
+      at createFixedXpcHistoryPermit (file:///Users/louiscalata/nisi-next-private/history/history-capture-permit-v1.mjs:2:55)
+      at create (file:///Users/louiscalata/nisi-next-private/tests/history-capture-permit-v1.test.mjs:50:3)
+      at TestContext.<anonymous> (file:///Users/louiscalata/nisi-next-private/tests/history-capture-permit-v1.test.mjs:205:38)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1325:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:911:18)
+      at Test.postRun (node:internal/test_runner/test:1465:19)
+      at Test.run (node:internal/test_runner/test:1390:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:911:7)
+
+test at tests/history-capture-permit-v1.test.mjs:214:1
+✖ source digest mismatch leaves permit reusable and never exposes source (0.108042ms)
+  Error: NOT_IMPLEMENTED
+      at createFixedXpcHistoryPermit (file:///Users/louiscalata/nisi-next-private/history/history-capture-permit-v1.mjs:2:55)
+      at create (file:///Users/louiscalata/nisi-next-private/tests/history-capture-permit-v1.test.mjs:50:3)
+      at TestContext.<anonymous> (file:///Users/louiscalata/nisi-next-private/tests/history-capture-permit-v1.test.mjs:215:38)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1325:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:911:18)
+      at Test.postRun (node:internal/test_runner/test:1465:19)
+      at Test.run (node:internal/test_runner/test:1390:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:911:7)
+
+test at tests/history-capture-permit-v1.test.mjs:223:1
+✖ projector INVALID_INPUT leaves permit reusable (0.081625ms)
+  Error: NOT_IMPLEMENTED
+      at createFixedXpcHistoryPermit (file:///Users/louiscalata/nisi-next-private/history/history-capture-permit-v1.mjs:2:55)
+      at create (file:///Users/louiscalata/nisi-next-private/tests/history-capture-permit-v1.test.mjs:50:3)
+      at TestContext.<anonymous> (file:///Users/louiscalata/nisi-next-private/tests/history-capture-permit-v1.test.mjs:225:38)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1325:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:911:18)
+      at Test.postRun (node:internal/test_runner/test:1465:19)
+      at Test.run (node:internal/test_runner/test:1390:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:911:7)
+
+test at tests/history-capture-permit-v1.test.mjs:232:1
+✖ capture clock invalidity permanently revokes permit after first precise INVALID_CLOCK (0.090458ms)
+  Error: NOT_IMPLEMENTED
+      at createFixedXpcHistoryPermit (file:///Users/louiscalata/nisi-next-private/history/history-capture-permit-v1.mjs:2:55)
+      at create (file:///Users/louiscalata/nisi-next-private/tests/history-capture-permit-v1.test.mjs:50:3)
+      at TestContext.<anonymous> (file:///Users/louiscalata/nisi-next-private/tests/history-capture-permit-v1.test.mjs:233:38)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1325:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:911:18)
+      at Test.postRun (node:internal/test_runner/test:1465:19)
+      at Test.run (node:internal/test_runner/test:1390:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:911:7)
+
+test at tests/history-capture-permit-v1.test.mjs:245:1
+✖ backward capture clock permanently revokes permit (0.365875ms)
+  Error: NOT_IMPLEMENTED
+      at createFixedXpcHistoryPermit (file:///Users/louiscalata/nisi-next-private/history/history-capture-permit-v1.mjs:2:55)
+      at create (file:///Users/louiscalata/nisi-next-private/tests/history-capture-permit-v1.test.mjs:50:3)
+      at TestContext.<anonymous> (file:///Users/louiscalata/nisi-next-private/tests/history-capture-permit-v1.test.mjs:246:38)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1325:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:911:18)
+      at Test.postRun (node:internal/test_runner/test:1465:19)
+      at Test.run (node:internal/test_runner/test:1390:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:911:7)
+
+test at tests/history-capture-permit-v1.test.mjs:251:1
+✖ capture expiry returns precise reason once then permanently revoked (0.247208ms)
+  Error: NOT_IMPLEMENTED
+      at createFixedXpcHistoryPermit (file:///Users/louiscalata/nisi-next-private/history/history-capture-permit-v1.mjs:2:55)
+      at create (file:///Users/louiscalata/nisi-next-private/tests/history-capture-permit-v1.test.mjs:50:3)
+      at TestContext.<anonymous> (file:///Users/louiscalata/nisi-next-private/tests/history-capture-permit-v1.test.mjs:252:81)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1325:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:911:18)
+      at Test.postRun (node:internal/test_runner/test:1465:19)
+      at Test.run (node:internal/test_runner/test:1390:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:911:7)
+
+test at tests/history-capture-permit-v1.test.mjs:257:1
+✖ observation expiry during capture returns precise reason once then permanently revoked (0.107708ms)
+  Error: NOT_IMPLEMENTED
+      at createFixedXpcHistoryPermit (file:///Users/louiscalata/nisi-next-private/history/history-capture-permit-v1.mjs:2:55)
+      at create (file:///Users/louiscalata/nisi-next-private/tests/history-capture-permit-v1.test.mjs:50:3)
+      at TestContext.<anonymous> (file:///Users/louiscalata/nisi-next-private/tests/history-capture-permit-v1.test.mjs:258:82)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1325:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:911:18)
+      at Test.postRun (node:internal/test_runner/test:1465:19)
+      at Test.run (node:internal/test_runner/test:1390:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:911:7)
+
+test at tests/history-capture-permit-v1.test.mjs:263:1
+✖ reentrant capture of the same permit is PERMIT_BUSY and outer capture remains valid (0.0805ms)
+  Error: NOT_IMPLEMENTED
+      at createFixedXpcHistoryPermit (file:///Users/louiscalata/nisi-next-private/history/history-capture-permit-v1.mjs:2:55)
+      at create (file:///Users/louiscalata/nisi-next-private/tests/history-capture-permit-v1.test.mjs:50:3)
+      at TestContext.<anonymous> (file:///Users/louiscalata/nisi-next-private/tests/history-capture-permit-v1.test.mjs:269:13)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1325:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:911:18)
+      at Test.postRun (node:internal/test_runner/test:1465:19)
+      at Test.run (node:internal/test_runner/test:1390:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:911:7)
+
+test at tests/history-capture-permit-v1.test.mjs:275:1
+✖ reentrant revocation from trusted clock before admission prevents record (0.07425ms)
+  Error: NOT_IMPLEMENTED
+      at createFixedXpcHistoryPermit (file:///Users/louiscalata/nisi-next-private/history/history-capture-permit-v1.mjs:2:55)
+      at create (file:///Users/louiscalata/nisi-next-private/tests/history-capture-permit-v1.test.mjs:50:3)
+      at TestContext.<anonymous> (file:///Users/louiscalata/nisi-next-private/tests/history-capture-permit-v1.test.mjs:281:13)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1325:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:911:18)
+      at Test.postRun (node:internal/test_runner/test:1465:19)
+      at Test.run (node:internal/test_runner/test:1390:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:911:7)
+
+test at tests/history-capture-permit-v1.test.mjs:288:1
+✖ revoke from filesystem callback after admission does not abort actual journal outcome (0.099916ms)
+  Error: NOT_IMPLEMENTED
+      at createFixedXpcHistoryPermit (file:///Users/louiscalata/nisi-next-private/history/history-capture-permit-v1.mjs:2:55)
+      at create (file:///Users/louiscalata/nisi-next-private/tests/history-capture-permit-v1.test.mjs:50:3)
+      at TestContext.<anonymous> (file:///Users/louiscalata/nisi-next-private/tests/history-capture-permit-v1.test.mjs:289:62)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1325:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:911:18)
+      at Test.postRun (node:internal/test_runner/test:1465:19)
+      at Test.run (node:internal/test_runner/test:1390:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:911:7)
+
+test at tests/history-capture-permit-v1.test.mjs:302:1
+✖ successful capture stores only closed provenance and preserves immutable owner result (0.082333ms)
+  Error: NOT_IMPLEMENTED
+      at createFixedXpcHistoryPermit (file:///Users/louiscalata/nisi-next-private/history/history-capture-permit-v1.mjs:2:55)
+      at create (file:///Users/louiscalata/nisi-next-private/tests/history-capture-permit-v1.test.mjs:50:3)
+      at TestContext.<anonymous> (file:///Users/louiscalata/nisi-next-private/tests/history-capture-permit-v1.test.mjs:303:38)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1325:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:911:18)
+      at Test.postRun (node:internal/test_runner/test:1465:19)
+      at Test.run (node:internal/test_runner/test:1390:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:911:7)
+
+test at tests/history-capture-permit-v1.test.mjs:314:1
+✖ permit remains privately bound to its original owner and cannot write another owner (0.093459ms)
+  Error: NOT_IMPLEMENTED
+      at createFixedXpcHistoryPermit (file:///Users/louiscalata/nisi-next-private/history/history-capture-permit-v1.mjs:2:55)
+      at create (file:///Users/louiscalata/nisi-next-private/tests/history-capture-permit-v1.test.mjs:50:3)
+      at TestContext.<anonymous> (file:///Users/louiscalata/nisi-next-private/tests/history-capture-permit-v1.test.mjs:317:19)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1325:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:911:18)
+      at Test.postRun (node:internal/test_runner/test:1465:19)
+      at Test.run (node:internal/test_runner/test:1390:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:911:7)
+
+test at tests/history-capture-permit-v1.test.mjs:324:1
+✖ same consumed permit cannot be reused (0.074167ms)
+  Error: NOT_IMPLEMENTED
+      at createFixedXpcHistoryPermit (file:///Users/louiscalata/nisi-next-private/history/history-capture-permit-v1.mjs:2:55)
+      at create (file:///Users/louiscalata/nisi-next-private/tests/history-capture-permit-v1.test.mjs:50:3)
+      at TestContext.<anonymous> (file:///Users/louiscalata/nisi-next-private/tests/history-capture-permit-v1.test.mjs:325:38)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1325:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:911:18)
+      at Test.postRun (node:internal/test_runner/test:1465:19)
+      at Test.run (node:internal/test_runner/test:1390:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:911:7)
+
+test at tests/history-capture-permit-v1.test.mjs:330:1
+✖ a second permit for identical source maps owner duplicate without a fresh write (0.079083ms)
+  Error: NOT_IMPLEMENTED
+      at createFixedXpcHistoryPermit (file:///Users/louiscalata/nisi-next-private/history/history-capture-permit-v1.mjs:2:55)
+      at create (file:///Users/louiscalata/nisi-next-private/tests/history-capture-permit-v1.test.mjs:50:3)
+      at TestContext.<anonymous> (file:///Users/louiscalata/nisi-next-private/tests/history-capture-permit-v1.test.mjs:331:65)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1325:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:911:18)
+      at Test.postRun (node:internal/test_runner/test:1465:19)
+      at Test.run (node:internal/test_runner/test:1390:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:911:7)
+
+test at tests/history-capture-permit-v1.test.mjs:340:1
+✖ project mismatch is an attempted one-shot journal refusal (0.291125ms)
+  Error: NOT_IMPLEMENTED
+      at createFixedXpcHistoryPermit (file:///Users/louiscalata/nisi-next-private/history/history-capture-permit-v1.mjs:2:55)
+      at create (file:///Users/louiscalata/nisi-next-private/tests/history-capture-permit-v1.test.mjs:50:3)
+      at TestContext.<anonymous> (file:///Users/louiscalata/nisi-next-private/tests/history-capture-permit-v1.test.mjs:341:38)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1325:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:911:18)
+      at Test.postRun (node:internal/test_runner/test:1465:19)
+      at Test.run (node:internal/test_runner/test:1390:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:911:7)
+
+test at tests/history-capture-permit-v1.test.mjs:348:1
+✖ precommit write failure is returned once and permit remains consumed without retry (0.05825ms)
+  Error: NOT_IMPLEMENTED
+      at createFixedXpcHistoryPermit (file:///Users/louiscalata/nisi-next-private/history/history-capture-permit-v1.mjs:2:55)
+      at create (file:///Users/louiscalata/nisi-next-private/tests/history-capture-permit-v1.test.mjs:50:3)
+      at TestContext.<anonymous> (file:///Users/louiscalata/nisi-next-private/tests/history-capture-permit-v1.test.mjs:349:67)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1325:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:911:18)
+      at Test.postRun (node:internal/test_runner/test:1465:19)
+      at Test.run (node:internal/test_runner/test:1390:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:911:7)
+
+test at tests/history-capture-permit-v1.test.mjs:358:1
+✖ postrename read failure returns UNCERTAIN and fresh explicit open reconciles bytes (0.063375ms)
+  Error: NOT_IMPLEMENTED
+      at createFixedXpcHistoryPermit (file:///Users/louiscalata/nisi-next-private/history/history-capture-permit-v1.mjs:2:55)
+      at create (file:///Users/louiscalata/nisi-next-private/tests/history-capture-permit-v1.test.mjs:50:3)
+      at TestContext.<anonymous> (file:///Users/louiscalata/nisi-next-private/tests/history-capture-permit-v1.test.mjs:359:67)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1325:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:911:18)
+      at Test.postRun (node:internal/test_runner/test:1465:19)
+      at Test.run (node:internal/test_runner/test:1390:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:911:7)
+
+test at tests/history-capture-permit-v1.test.mjs:372:1
+✖ configured journal redaction applies to capture provenance without leaking unredacted payload (0.169125ms)
+  Error: NOT_IMPLEMENTED
+      at createFixedXpcHistoryPermit (file:///Users/louiscalata/nisi-next-private/history/history-capture-permit-v1.mjs:2:55)
+      at create (file:///Users/louiscalata/nisi-next-private/tests/history-capture-permit-v1.test.mjs:50:3)
+      at TestContext.<anonymous> (file:///Users/louiscalata/nisi-next-private/tests/history-capture-permit-v1.test.mjs:374:38)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1325:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:911:18)
+      at Test.postRun (node:internal/test_runner/test:1465:19)
+      at Test.run (node:internal/test_runner/test:1390:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:911:7)
+
+test at tests/history-capture-permit-v1.test.mjs:382:1
+✖ adverse source preserves FAILED observation state and non-authorizing flags (0.2405ms)
+  Error: NOT_IMPLEMENTED
+      at createFixedXpcHistoryPermit (file:///Users/louiscalata/nisi-next-private/history/history-capture-permit-v1.mjs:2:55)
+      at create (file:///Users/louiscalata/nisi-next-private/tests/history-capture-permit-v1.test.mjs:50:3)
+      at TestContext.<anonymous> (file:///Users/louiscalata/nisi-next-private/tests/history-capture-permit-v1.test.mjs:385:19)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1325:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:911:18)
+      at Test.postRun (node:internal/test_runner/test:1465:19)
+      at Test.run (node:internal/test_runner/test:1390:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:911:7)
+

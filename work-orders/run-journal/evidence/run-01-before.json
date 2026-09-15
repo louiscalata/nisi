@@ -1,0 +1,8 @@
+{
+  "package.json": "bf9426c4d4d00fb0c449ad92855437e48217a163d313de361393b81ed7410a9a",
+  "tests/baseline.test.mjs": "adb784891764841fe628e00b0aa9d9fdf025035e659aaacdedd766cafa81b8d3",
+  "tests/run-journal.test.mjs": "25355f0d280a262243f1fe707fd4e0de5fc795926ce37d910c40a12721390c6d",
+  "roadmap.md": "c8e8976d23bf11db54592424f76c206824ff8c16eaf514a9c35e9782ce5ca8e2",
+  "src/run-journal-v1.mjs": "c9a4cc003509d25ec798f80233c0460e89f52ec6df7e454e4133139df65d96a5",
+  ".packets/nisi-run-journal.packet.md": "6ec654f6a063b2f9ed8c73a33b10d8bfa3ca8101521f7fe1c870e0b580735a2a"
+}

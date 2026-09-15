@@ -1,0 +1,411 @@
+
+> nisi-private-run-journal-store-work-order@0.0.0-private test:store
+> node --test --test-timeout=10000 tests/run-journal-store.test.mjs
+
+✖ raw UTF-8 round trip preserves bytes and records successful file and directory fsync (4.6925ms)
+✖ exclusive same-directory temp, file sync and temp verification precede rename; directory sync and final verification follow (0.61975ms)
+✖ short writes are completed; zero progress is refused and the owned temp is cleaned (0.442834ms)
+✖ file fsync failure is recorded, still writes and verifies, and cannot claim durability (0.414917ms)
+✖ directory fsync or directory-open failure records a committed but non-durable write (0.4895ms)
+✖ absent fsync support is recorded for both attempts and never upgraded to durable (0.462417ms)
+✖ different existing content needs exact previous sha256; conflicts preserve bytes without opening any file (0.737167ms)
+✖ same bytes are an explicit non-durable no-op; supplied stale expected hash still refuses (1.527375ms)
+✖ read refuses every truncated prefix, including complete-line boundaries, and never returns partial data (1.072917ms)
+✖ read refuses malformed UTF-8, corrupt chain/footer/schema, trailing data and noncanonical JSON (1.359459ms)
+✖ write validates strings, framing and expected hash before mutation; corrupt existing data stays intact (0.693458ms)
+✖ missing and unreadable files are refusals, and read never attempts mutations or sync (0.656125ms)
+✖ write and rename failures preserve old bytes, close descriptors and clean only the owned temp (0.941917ms)
+✖ temp read-back mismatch refuses before rename and final mismatch never reports durable success (1.938208ms)
+✖ destination is rechecked before rename and an observed concurrent change is preserved (1.560208ms)
+✖ file close failure refuses before rename, preserves destination and cannot claim durability (0.633833ms)
+ℹ tests 16
+ℹ suites 0
+ℹ pass 0
+ℹ fail 16
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 87.305625
+
+✖ failing tests:
+
+test at tests/run-journal-store.test.mjs:67:1
+✖ raw UTF-8 round trip preserves bytes and records successful file and directory fsync (4.6925ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  + actual - expected
+  
+  + 'REFUSED'
+  - 'WRITTEN'
+  
+      at written (file:///Users/louiscalata/nisi-next-private/work-orders/run-journal-store/tests/run-journal-store.test.mjs:60:10)
+      at TestContext.<anonymous> (file:///Users/louiscalata/nisi-next-private/work-orders/run-journal-store/tests/run-journal-store.test.mjs:71:3)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1325:25)
+      at Test.start (node:internal/test_runner/test:1191:17)
+      at startSubtestAfterBootstrap (node:internal/test_runner/harness:385:17) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 'REFUSED',
+    expected: 'WRITTEN',
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at tests/run-journal-store.test.mjs:86:1
+✖ exclusive same-directory temp, file sync and temp verification precede rename; directory sync and final verification follow (0.61975ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  + actual - expected
+  
+  + 'REFUSED'
+  - 'WRITTEN'
+  
+      at written (file:///Users/louiscalata/nisi-next-private/work-orders/run-journal-store/tests/run-journal-store.test.mjs:60:10)
+      at TestContext.<anonymous> (file:///Users/louiscalata/nisi-next-private/work-orders/run-journal-store/tests/run-journal-store.test.mjs:88:3)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1325:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:911:18)
+      at Test.postRun (node:internal/test_runner/test:1465:19)
+      at Test.run (node:internal/test_runner/test:1390:12)
+      at async startSubtestAfterBootstrap (node:internal/test_runner/harness:385:3) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 'REFUSED',
+    expected: 'WRITTEN',
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at tests/run-journal-store.test.mjs:106:1
+✖ short writes are completed; zero progress is refused and the owned temp is cleaned (0.442834ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  + actual - expected
+  
+  + 'REFUSED'
+  - 'WRITTEN'
+  
+      at written (file:///Users/louiscalata/nisi-next-private/work-orders/run-journal-store/tests/run-journal-store.test.mjs:60:10)
+      at TestContext.<anonymous> (file:///Users/louiscalata/nisi-next-private/work-orders/run-journal-store/tests/run-journal-store.test.mjs:108:3)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1325:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:911:18)
+      at Test.postRun (node:internal/test_runner/test:1465:19)
+      at Test.run (node:internal/test_runner/test:1390:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:911:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 'REFUSED',
+    expected: 'WRITTEN',
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at tests/run-journal-store.test.mjs:116:1
+✖ file fsync failure is recorded, still writes and verifies, and cannot claim durability (0.414917ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  + actual - expected
+  
+  + 'REFUSED'
+  - 'WRITTEN'
+  
+      at written (file:///Users/louiscalata/nisi-next-private/work-orders/run-journal-store/tests/run-journal-store.test.mjs:60:10)
+      at TestContext.<anonymous> (file:///Users/louiscalata/nisi-next-private/work-orders/run-journal-store/tests/run-journal-store.test.mjs:122:3)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1325:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:911:18)
+      at Test.postRun (node:internal/test_runner/test:1465:19)
+      at Test.run (node:internal/test_runner/test:1390:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:911:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 'REFUSED',
+    expected: 'WRITTEN',
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at tests/run-journal-store.test.mjs:130:1
+✖ directory fsync or directory-open failure records a committed but non-durable write (0.4895ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  + actual - expected
+  
+  + 'REFUSED'
+  - 'WRITTEN'
+  
+      at written (file:///Users/louiscalata/nisi-next-private/work-orders/run-journal-store/tests/run-journal-store.test.mjs:60:10)
+      at TestContext.<anonymous> (file:///Users/louiscalata/nisi-next-private/work-orders/run-journal-store/tests/run-journal-store.test.mjs:137:5)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1325:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:911:18)
+      at Test.postRun (node:internal/test_runner/test:1465:19)
+      at Test.run (node:internal/test_runner/test:1390:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:911:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 'REFUSED',
+    expected: 'WRITTEN',
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at tests/run-journal-store.test.mjs:146:1
+✖ absent fsync support is recorded for both attempts and never upgraded to durable (0.462417ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  + actual - expected
+  
+  + 'REFUSED'
+  - 'WRITTEN'
+  
+      at written (file:///Users/louiscalata/nisi-next-private/work-orders/run-journal-store/tests/run-journal-store.test.mjs:60:10)
+      at TestContext.<anonymous> (file:///Users/louiscalata/nisi-next-private/work-orders/run-journal-store/tests/run-journal-store.test.mjs:150:3)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1325:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:911:18)
+      at Test.postRun (node:internal/test_runner/test:1465:19)
+      at Test.run (node:internal/test_runner/test:1390:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:911:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 'REFUSED',
+    expected: 'WRITTEN',
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at tests/run-journal-store.test.mjs:158:1
+✖ different existing content needs exact previous sha256; conflicts preserve bytes without opening any file (0.737167ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  + actual - expected
+  
+  + 'UNIMPLEMENTED'
+  - 'CONFLICT'
+  
+      at refused (file:///Users/louiscalata/nisi-next-private/work-orders/run-journal-store/tests/run-journal-store.test.mjs:56:22)
+      at TestContext.<anonymous> (file:///Users/louiscalata/nisi-next-private/work-orders/run-journal-store/tests/run-journal-store.test.mjs:164:5)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1325:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:911:18)
+      at Test.postRun (node:internal/test_runner/test:1465:19)
+      at Test.run (node:internal/test_runner/test:1390:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:911:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 'UNIMPLEMENTED',
+    expected: 'CONFLICT',
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at tests/run-journal-store.test.mjs:172:1
+✖ same bytes are an explicit non-durable no-op; supplied stale expected hash still refuses (1.527375ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  + actual - expected
+  
+  + 'REFUSED'
+  - 'UNCHANGED'
+  
+      at TestContext.<anonymous> (file:///Users/louiscalata/nisi-next-private/work-orders/run-journal-store/tests/run-journal-store.test.mjs:178:12)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1325:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:911:18)
+      at Test.postRun (node:internal/test_runner/test:1465:19)
+      at Test.run (node:internal/test_runner/test:1390:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:911:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 'REFUSED',
+    expected: 'UNCHANGED',
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at tests/run-journal-store.test.mjs:189:1
+✖ read refuses every truncated prefix, including complete-line boundaries, and never returns partial data (1.072917ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  + actual - expected
+  
+  + 'UNIMPLEMENTED'
+  - 'INVALID_JOURNAL'
+  
+      at refused (file:///Users/louiscalata/nisi-next-private/work-orders/run-journal-store/tests/run-journal-store.test.mjs:56:22)
+      at TestContext.<anonymous> (file:///Users/louiscalata/nisi-next-private/work-orders/run-journal-store/tests/run-journal-store.test.mjs:195:5)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1325:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:911:18)
+      at Test.postRun (node:internal/test_runner/test:1465:19)
+      at Test.run (node:internal/test_runner/test:1390:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:911:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 'UNIMPLEMENTED',
+    expected: 'INVALID_JOURNAL',
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at tests/run-journal-store.test.mjs:200:1
+✖ read refuses malformed UTF-8, corrupt chain/footer/schema, trailing data and noncanonical JSON (1.359459ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  + actual - expected
+  
+  + 'UNIMPLEMENTED'
+  - 'INVALID_JOURNAL'
+  
+      at refused (file:///Users/louiscalata/nisi-next-private/work-orders/run-journal-store/tests/run-journal-store.test.mjs:56:22)
+      at TestContext.<anonymous> (file:///Users/louiscalata/nisi-next-private/work-orders/run-journal-store/tests/run-journal-store.test.mjs:215:5)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1325:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:911:18)
+      at Test.postRun (node:internal/test_runner/test:1465:19)
+      at Test.run (node:internal/test_runner/test:1390:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:911:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 'UNIMPLEMENTED',
+    expected: 'INVALID_JOURNAL',
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at tests/run-journal-store.test.mjs:221:1
+✖ write validates strings, framing and expected hash before mutation; corrupt existing data stays intact (0.693458ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  + actual - expected
+  
+  + 'UNIMPLEMENTED'
+  - 'INVALID_JOURNAL'
+  
+      at refused (file:///Users/louiscalata/nisi-next-private/work-orders/run-journal-store/tests/run-journal-store.test.mjs:56:22)
+      at TestContext.<anonymous> (file:///Users/louiscalata/nisi-next-private/work-orders/run-journal-store/tests/run-journal-store.test.mjs:225:5)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1325:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:911:18)
+      at Test.postRun (node:internal/test_runner/test:1465:19)
+      at Test.run (node:internal/test_runner/test:1390:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:911:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 'UNIMPLEMENTED',
+    expected: 'INVALID_JOURNAL',
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at tests/run-journal-store.test.mjs:235:1
+✖ missing and unreadable files are refusals, and read never attempts mutations or sync (0.656125ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  + actual - expected
+  
+  + 'UNIMPLEMENTED'
+  - 'NOT_FOUND'
+  
+      at refused (file:///Users/louiscalata/nisi-next-private/work-orders/run-journal-store/tests/run-journal-store.test.mjs:56:22)
+      at TestContext.<anonymous> (file:///Users/louiscalata/nisi-next-private/work-orders/run-journal-store/tests/run-journal-store.test.mjs:237:3)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1325:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:911:18)
+      at Test.postRun (node:internal/test_runner/test:1465:19)
+      at Test.run (node:internal/test_runner/test:1390:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:911:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 'UNIMPLEMENTED',
+    expected: 'NOT_FOUND',
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at tests/run-journal-store.test.mjs:247:1
+✖ write and rename failures preserve old bytes, close descriptors and clean only the owned temp (0.941917ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  + actual - expected
+  
+  + 'UNIMPLEMENTED'
+  - 'WRITE_FAILED'
+  
+      at refused (file:///Users/louiscalata/nisi-next-private/work-orders/run-journal-store/tests/run-journal-store.test.mjs:56:22)
+      at TestContext.<anonymous> (file:///Users/louiscalata/nisi-next-private/work-orders/run-journal-store/tests/run-journal-store.test.mjs:251:5)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1325:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:911:18)
+      at Test.postRun (node:internal/test_runner/test:1465:19)
+      at Test.run (node:internal/test_runner/test:1390:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:911:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 'UNIMPLEMENTED',
+    expected: 'WRITE_FAILED',
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at tests/run-journal-store.test.mjs:267:1
+✖ temp read-back mismatch refuses before rename and final mismatch never reports durable success (1.938208ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  + actual - expected
+  
+  + 'UNIMPLEMENTED'
+  - 'READBACK_MISMATCH'
+  
+      at refused (file:///Users/louiscalata/nisi-next-private/work-orders/run-journal-store/tests/run-journal-store.test.mjs:56:22)
+      at TestContext.<anonymous> (file:///Users/louiscalata/nisi-next-private/work-orders/run-journal-store/tests/run-journal-store.test.mjs:280:5)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1325:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:911:18)
+      at Test.postRun (node:internal/test_runner/test:1465:19)
+      at Test.run (node:internal/test_runner/test:1390:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:911:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 'UNIMPLEMENTED',
+    expected: 'READBACK_MISMATCH',
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at tests/run-journal-store.test.mjs:288:1
+✖ destination is rechecked before rename and an observed concurrent change is preserved (1.560208ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  + actual - expected
+  
+  + 'UNIMPLEMENTED'
+  - 'CONFLICT'
+  
+      at refused (file:///Users/louiscalata/nisi-next-private/work-orders/run-journal-store/tests/run-journal-store.test.mjs:56:22)
+      at TestContext.<anonymous> (file:///Users/louiscalata/nisi-next-private/work-orders/run-journal-store/tests/run-journal-store.test.mjs:295:3)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1325:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:911:18)
+      at Test.postRun (node:internal/test_runner/test:1465:19)
+      at Test.run (node:internal/test_runner/test:1390:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:911:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 'UNIMPLEMENTED',
+    expected: 'CONFLICT',
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at tests/run-journal-store.test.mjs:301:1
+✖ file close failure refuses before rename, preserves destination and cannot claim durability (0.633833ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  + actual - expected
+  
+  + 'UNIMPLEMENTED'
+  - 'WRITE_FAILED'
+  
+      at refused (file:///Users/louiscalata/nisi-next-private/work-orders/run-journal-store/tests/run-journal-store.test.mjs:56:22)
+      at TestContext.<anonymous> (file:///Users/louiscalata/nisi-next-private/work-orders/run-journal-store/tests/run-journal-store.test.mjs:308:3)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1325:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:911:18)
+      at Test.postRun (node:internal/test_runner/test:1465:19)
+      at Test.run (node:internal/test_runner/test:1390:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:911:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 'UNIMPLEMENTED',
+    expected: 'WRITE_FAILED',
+    operator: 'strictEqual',
+    diff: 'simple'
+  }

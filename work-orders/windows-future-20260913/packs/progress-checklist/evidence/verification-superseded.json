@@ -1,0 +1,18 @@
+{
+  "schema_version": 1,
+  "scope": "progress-checklist-owner-local-verification",
+  "source": {
+    "path": "src/index.mjs",
+    "sha256": "36b1439f433d5c7a2f8663e8aef412c3be9f6404e7c6578f8f2213d7d1d01984"
+  },
+  "protected_pins": {
+    "package.json": "55f78e3cbe0042ad4d2e75fea2b13c2abe66dc87a2f406f64a0970ba67d84b01",
+    "tests/baseline.test.mjs": "743b93738afa1b32f12695d16d79325a03a37a4af0381faf2b1fa31bd13967d3",
+    "tests/acceptance.test.mjs": "24baaa1e8c5af703c845a0e7c7011eb44cfe344eb60da73ec618f17c89aed314"
+  },
+  "commands": [
+    { "command": "npm test", "exit": 0, "tests": 2, "pass": 2, "fail": 0 },
+    { "command": "npm run test:acceptance", "exit": 0, "tests": 11, "pass": 11, "fail": 0 }
+  ],
+  "corrections": []
+}

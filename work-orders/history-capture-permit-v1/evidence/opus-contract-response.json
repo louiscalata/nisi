@@ -1,0 +1,105 @@
+{
+  "summary": "Critique of the \"Private history-capture permit v1\" contract based solely on the pasted text. Four concrete problems: (1) the permit state machine (BUSY/REVOKED/CONSUMED/INVALID) and reentrancy outcomes are underspecified; (2) the currentness predicate (boundaries, monotonic equality, creation-time validity, future issuedAt) is unpinned; (3) owner-state handling at create/capture and whether owner-side refusals consume the permit is unspecified; (4) injecting `historyCapture` into a deeply frozen projector ENTRY is not obviously possible without a documented extension slot in recordJournalObservation. A compact implementation outline follows. No tests or code were executed; nothing about existing APIs was source-reviewed.",
+  "deliverable": "## Four concrete problems and fixes\n\n### P1. Permit state machine and reentrancy outcomes are underspecified\nThe contract names BUSY, revoked, expired, clock-invalid and consumed, but does not define transitions or what each API returns in each state. Open cases: (a) `captureFixedXpcHistory` reentered while BUSY (from the clock or projector callback); (b) `revoke` called while BUSY \u2014 it must return REVOKED and must be honored by the in-flight capture after the clock returns; (c) `revoke` after CONSUMED \u2014 \"REVOKED (idempotent)\" hides from the host that a write was already admitted; (d) clock throwing (not just returning invalid/backward values).\n\n**Fix:** pin a closed state set `ACTIVE | BUSY | REVOKED | CONSUMED | INVALID` with these rules:\n- capture on `BUSY` \u2192 `REFUSED / PERMIT_BUSY`, no clock call, state unchanged.\n- capture on `REVOKED|CONSUMED|INVALID` \u2192 `REFUSED / PERMIT_<STATE>`, no clock call.\n- revoke on `ACTIVE|BUSY` \u2192 set private `revokeRequested=true`, return `REVOKED, writeAdmitted:false`; revoke on `CONSUMED` \u2192 `REVOKED, writeAdmitted:true`; revoke on `REVOKED|INVALID` \u2192 `REVOKED` (idempotent, `writeAdmitted` reflects prior consumption).\n- Capture re-reads `revokeRequested` immediately after every clock return and again immediately before `record`; if set \u2192 `REFUSED / PERMIT_REVOKED`, permit stays revoked, `recordAttempted:false`.\n- Clock throw, non-integer, negative, unsafe, or strictly decreasing value \u2192 `INVALID` permanently, `REFUSED / CLOCK_INVALID`, exception text never surfaced.\n- Transition to `CONSUMED` happens synchronously in the statement before `record` is invoked, so a throwing owner still leaves the permit consumed.\n\n### P2. Currentness predicate is not pinned\n\"Positive lifetime\", \"monotonic\", \"expired at admission\" leave boundary ambiguity: is `now === expiresAt` expired? Is an equal clock reading allowed? Is a declaration that is not yet current (`issuedAt > now`) or already expired accepted at create? Is observation retention checked at create or only at capture?\n\n**Fix:** define one predicate `current(now)` used at create, at admission, and pre-record:\n`issuedAt <= now && now < expiresAt && now < createdAt + retentionMs` (all safe integers, `expiresAt - issuedAt` in `1..3_600_000`, `createdAt <= now`). Monotonicity: `now >= lastNow` allowed (non-decreasing), `now < lastNow` \u2192 INVALID. `createFixedXpcHistoryPermit` calls the clock once and REFUSES (`DECLARATION_NOT_CURRENT`) if the predicate fails, so a CREATED permit is always usable at creation and future-dated declarations are not admitted. State explicitly that there is no skew allowance because the host clock is trusted.\n\n### P3. Owner state at create/capture and the consumption boundary for owner-side refusals\nThe contract binds the permit to the real opaque handle but does not say whether `inspectJournalOwner` must report `OPEN` at create, nor what happens if the owner is `SEALED`/`COMMIT_UNCERTAIN` at capture. Since \"consume regardless of outcome\" applies once `record` is called, a deterministic owner refusal (sealed owner, project mismatch) would burn a one-shot permit, forcing the host to acquire a new written declaration for a condition it could have detected before admission.\n\n**Fix:**\n- create: `inspectJournalOwner({owner})` must return `SNAPSHOT` with `state: OPEN`; otherwise `REFUSED / OWNER_NOT_OPEN` (or `OWNER_UNRECOGNIZED` on REFUSED). Bind the returned handle identity, never the caller's owner ID.\n- capture: after source validation and before the second clock check, re-inspect; non-`OPEN` \u2192 `REFUSED / OWNER_NOT_OPEN`, `recordAttempted:false`, permit **not** consumed (treated like pre-record malformed input). Only `record` invocation consumes.\n- Document that a `COMMIT_UNCERTAIN` owner or a fresh reopen yields a different handle; the old permit cannot migrate and a new declaration/permit is required. Project mismatch stays delegated to the owner and therefore does consume \u2014 state this explicitly so tests assert it rather than assume it.\n\n### P4. `historyCapture` cannot be added to a deeply frozen projector ENTRY\n`fixedXpcJournalObservation` returns a deeply frozen ENTRY; `recordJournalObservation` is a frozen, unmodifiable API. \"Add only this closed metadata to its payload\" is only implementable if the record API already accepts an extension slot (e.g. a separate metadata argument or an ENTRY copy with one extra key that the owner's exact-schema validation tolerates). If it does not, the contract is unimplementable under the \"no edits to existing owner/projector\" rule.\n\n**Fix:** make the record input shape explicit in the contract, e.g. `recordJournalObservation({owner, entry, historyCapture})` or a documented `entry.extensions.historyCapture` slot. The wrapper must build a fresh frozen envelope from the ENTRY (never mutate it), include exactly the six closed keys, and keep `declarationDigest` as the only permit-derived value. Add a test that the owner accepts the extended shape and that a stray seventh key is rejected before `record`. Until the slot is confirmed, mark this item as blocking.\n\n## Compact implementation outline\n\n**Module state (all private):**\n- `permits: WeakMap<permitHandle, {ownerHandle, declaration (frozen copy), digest, state, lastNow, revokeRequested}>`\n- `owners: WeakMap` lookup is delegated to `inspectJournalOwner`; store only the handle identity it recognized.\n\n**Shared validators:**\n- `exactObject(value, spec)`: `Object.getPrototypeOf(value)` is `Object.prototype` or `null`; `Reflect.ownKeys` contains no symbols; every own key is in `spec`, every spec key present; each descriptor is a data property (`'value' in d`, no get/set) and enumerable; scalar checks per spec (identifier regex, hex64, safe ints, exact literals, exactly `false`).\n- `canonicalJson(obj)`: recursive key sort, `JSON.stringify` on the validated copy only.\n- `sha256Hex(bytes)`: `node:crypto` (assumption\u2014verify runtime availability).\n\n**createFixedXpcHistoryPermit({owner, declaration, clock}):**\n1. `exactObject` on request (3 keys), `clock` typeof function, declaration per closed schema.\n2. `inspectJournalOwner({owner})` \u2192 require `SNAPSHOT/OPEN`.\n3. Call clock once \u2192 validate; `current(now)` must hold.\n4. Copy+freeze declaration; `digest = sha256Hex('nisi-history-declaration/v1\\n' + canonicalJson(copy))`.\n5. `permit = Object.freeze({})`; store record `{state:'ACTIVE', lastNow: now, revokeRequested:false, ...}`.\n6. Return frozen `{status:'CREATED', permit, declarationDigest, authorizing:false}`; any failure \u2192 frozen `{status:'REFUSED', reason}` with closed reason enum.\n\n**captureFixedXpcHistory({permit, serializedRecord}):**\n1. `exactObject` on request; lookup permit \u2192 unknown \u2192 `REFUSED/PERMIT_UNRECOGNIZED`, `declarationDigest:null`.\n2. If state \u2260 `ACTIVE` \u2192 `REFUSED/PERMIT_<STATE>` (no clock).\n3. `state='BUSY'`; from here every exit path restores `ACTIVE` unless the exit sets `CONSUMED|INVALID|REVOKED`.\n4. `now = clock()` inside try/catch \u2192 validate + monotonic; check `revokeRequested`; check `current(now)`; failures \u2192 INVALID/REVOKED as in P1/P2 (expired \u2192 `INVALID`, reason `PERMIT_EXPIRED`).\n5. Source: `typeof === 'string'`, `isWellFormed()` (or surrogate scan), `TextEncoder` bytes `<= 1_048_576`, `sha256Hex(bytes) === declaration.sourceSha256`; failure \u2192 `REFUSED/SOURCE_INVALID|SOURCE_TOO_LARGE|SOURCE_DIGEST_MISMATCH`, state back to `ACTIVE`.\n6. `entry = fixedXpcJournalObservation(...)` with declaration metadata only; `REFUSED` \u2192 `REFUSED/PROJECTION_REFUSED`, back to `ACTIVE`.\n7. Build frozen envelope with `historyCapture` (P4 slot).\n8. Re-inspect owner \u2192 non-OPEN \u2192 `REFUSED/OWNER_NOT_OPEN`, back to `ACTIVE`.\n9. Second clock call \u2192 same validation as step 4 (revoke re-read, monotonic, current).\n10. `state='CONSUMED'` (synchronous, before the call); `journal = recordJournalObservation(...)` in try/catch; owner throw \u2192 status `STORE_FAILED`, `journal:null`, no exception text.\n11. Map status per contract; return frozen `{schemaVersion:'nisi-fixed-xpc-history-capture/v1', status, reason, recordAttempted, declarationDigest, journal, meaning:'HISTORY_OBSERVATIONS_ONLY', authorizing:false}`.\n12. Drop all references to `serializedRecord`, bytes and envelope before returning (no closure retention).\n\n**revokeFixedXpcHistoryPermit({permit}):** exact envelope; unknown \u2192 `REFUSED`; else set `revokeRequested`, move `ACTIVE\u2192REVOKED` (BUSY stays BUSY, honored at next check), return frozen `{status:'REVOKED', writeAdmitted: state==='CONSUMED'}`.\n\n**Test order (red first):** exact-schema negatives (getters, symbols, extras, prototype), forged owner/permit, declaration copy isolation, digest pin vector, currentness boundaries (`now===expiresAt`, equal clock, backward clock, future issuedAt, observation expiry), BUSY reentrancy via clock, pre- vs post-admission revoke via clock callback on first vs second call, one-shot on DUPLICATE/CONFLICT/REFUSED/throw, UNCERTAIN mapping with cleared rows preserved, sealed owner not consuming, fresh reopen requiring new permit, targeted mutants (drop second clock check, consume-after-record, revoke flag not re-read).",
+  "risks": [
+    "P4 may be blocking: if recordJournalObservation has no extension slot for historyCapture, the contract cannot be met without editing the frozen owner/projector, which is forbidden.",
+    "serializedRecord type and size semantics (JS string vs bytes; 1MiB in encoded bytes; lone-surrogate handling) are not pinned; mismatched interpretation between host and wrapper would yield spurious SOURCE_DIGEST_MISMATCH.",
+    "Assumes node:crypto SHA-256 and TextEncoder are available in the target runtime; not verified here.",
+    "Whether the owner accepts records in COMMIT_UNCERTAIN state is unknown; the P3 fix refuses all non-OPEN states pre-admission, which may be stricter than the owner's own policy.",
+    "Closed reason enum must be enforced so no owner/projector/clock exception text or byte offsets leak in refusals; a catch-all that forwards error messages would violate the contract.",
+    "Consumption on project mismatch (delegated to owner) burns a one-shot permit; hosts must be told this explicitly or they may loop re-creating permits.",
+    "This critique is based only on the pasted contract; the described frozen APIs were not source-reviewed and their real return shapes may differ."
+  ],
+  "verification": [
+    "Confirm the real recordJournalObservation signature/accepted ENTRY shape and whether an extra historyCapture key or metadata argument is tolerated (P4).",
+    "Write red tests for each currentness boundary (now===expiresAt, equal clock reads, backward clock, issuedAt>now at create, createdAt+retentionMs<=now) before implementation and confirm they fail on a naive version.",
+    "Reentrancy tests: clock callback that calls revoke on first call (expect REFUSED, recordAttempted:false) versus on second call (same) versus owner callback after admission (expect real outcome, permit CONSUMED, revoke reports writeAdmitted:true).",
+    "Mutant tests: remove second clock check; set CONSUMED after record instead of before; skip revokeRequested re-read; each must be caught by a failing test.",
+    "Verify digest pin: canonical JSON of a known declaration with domain prefix matches a fixed SHA-256 vector, and that a declaration copy mutation by the caller after create does not alter digest or behavior.",
+    "Verify refusal payloads contain no raw source, projection rows, or exception strings (snapshot-assert the closed reason enum).",
+    "Confirm runtime availability of node:crypto SHA-256 and TextEncoder in the bounded host environment."
+  ],
+  "invocation_status": "succeeded",
+  "status": "succeeded",
+  "model_usage": {
+    "claude-haiku-4-5-20251001": {
+      "inputTokens": 2586,
+      "outputTokens": 15,
+      "cacheReadInputTokens": 0,
+      "cacheCreationInputTokens": 0,
+      "webSearchRequests": 0,
+      "costUSD": 0.002661,
+      "contextWindow": 200000,
+      "maxOutputTokens": 32000,
+      "thinkingTokens": 0,
+      "canonicalModel": "claude-haiku-4-5",
+      "provider": "firstParty",
+      "costBasis": "list"
+    },
+    "claude-opus-5": {
+      "inputTokens": 2,
+      "outputTokens": 9098,
+      "cacheReadInputTokens": 737,
+      "cacheCreationInputTokens": 3089,
+      "webSearchRequests": 0,
+      "costUSD": 0.2587185,
+      "contextWindow": 1000000,
+      "maxOutputTokens": 64000,
+      "thinkingTokens": 4079,
+      "canonicalModel": "claude-opus-5",
+      "provider": "firstParty",
+      "costBasis": "list"
+    }
+  },
+  "reported_models": [
+    "claude-haiku-4-5-20251001",
+    "claude-opus-5"
+  ],
+  "usage": {
+    "input_tokens": 2,
+    "cache_creation_input_tokens": 3089,
+    "cache_read_input_tokens": 737,
+    "output_tokens": 9098,
+    "output_tokens_details": {
+      "thinking_tokens": 4079
+    },
+    "server_tool_use": {
+      "web_search_requests": 0,
+      "web_fetch_requests": 0
+    },
+    "service_tier": "standard",
+    "cache_creation": {
+      "ephemeral_1h_input_tokens": 3089,
+      "ephemeral_5m_input_tokens": 0
+    },
+    "inference_geo": "not_available",
+    "iterations": [
+      {
+        "input_tokens": 2,
+        "output_tokens": 9098,
+        "cache_read_input_tokens": 737,
+        "cache_creation_input_tokens": 3089,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 3089
+        },
+        "type": "message"
+      }
+    ],
+    "speed": "standard"
+  },
+  "total_cost_usd": 0.26137950000000004,
+  "duration_ms": 118770,
+  "tools_enabled": false,
+  "session_persisted": false,
+  "write_owner": "codex",
+  "requested_model": "opus",
+  "mode": "delegate",
+  "attempts": 1,
+  "wall_seconds": 120.069,
+  "created_at": "2026-09-14T01:23:07.369701+00:00",
+  "prior_attempts": [],
+  "total_wall_seconds": 120.069,
+  "prior_attempt_usage": [],
+  "total_usage_complete": true
+}

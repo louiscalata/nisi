@@ -1,0 +1,8 @@
+{
+  "schema_version": 1,
+  "id": "mac-20260914232427-f9829b96c8ced649",
+  "status": "success",
+  "output": "1. HIGH: `planStagedCompileV1` does not enforce `writePlan.stagingHash === sha256 of canonicalizeJSONV1(Buffer.from(JSON.stringify(sources)))` — mismatch triggers undetected source-staging inconsistency.  \n2. HIGH: `planStagedCompileV1` does not verify `writePlan.totalBytes === sum(writes.map(w => w.bytes))` — budget bypass via inflated `totalBytes`.  \n3. HIGH: `planStagedCompileV1` does not reject `writePlan.writes` entries where `path !== lane + name` — violates lane/path safety.  \n4. MEDIUM: `planStagedCompileV1` does not enforce `writePlan.lane` matches `lane` from compilePolicy — lane mismatch enables cross-lane injection.  \n5. MEDIUM: `planStagedCompileV1` does not validate `writePlan.packHash` is 64-lowercase-hex — invalid hash breaks determinism of `planHash`.  \n6. MEDIUM: `planStagedCompileV1` does not ensure `writePlan.sourcePlanHash` equals `sourceStagingHash` — breaks cross-rung pin consistency.  \n7. LOW: `stagedCompilePlanHashV1` throws on non-object input instead of returning refusal — violates “never throws” contract.  \n8. LOW: `stagedCompilePlanSourceV1` does not reject `compilePlanResult` with `ok: false` — violates descriptor-walk snapshot refusal semantics.  \n\nCONTRACT CHANGE REQUIRED",
+  "model": "Qwen3-Coder-Next 80B-A3B Q4_K_M",
+  "elapsed_seconds": 33.9
+}

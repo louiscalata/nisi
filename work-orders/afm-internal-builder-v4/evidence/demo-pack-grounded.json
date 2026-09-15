@@ -1,0 +1,22 @@
+{
+  "schemaVersion": 1,
+  "project": "nisi",
+  "roadmapDigest": "0000000000000000000000000000000000000000000000000000000000000000",
+  "workOrder": {
+    "id": "AFM-DEMO-4",
+    "goal": "Prove rung-4 sandboxed staged compile planning end to end.",
+    "acceptance": "compile plan is lane-scoped, exact swiftc argv, pinned, no network; nothing executes"
+  },
+  "lastReceipts": [],
+  "allowedSteps": [
+    "implement",
+    "test",
+    "document"
+  ],
+  "allowedChecks": [
+    "afm-v1-oracle",
+    "bridge-contract",
+    "v2-module-check",
+    "v3-module-check"
+  ]
+}

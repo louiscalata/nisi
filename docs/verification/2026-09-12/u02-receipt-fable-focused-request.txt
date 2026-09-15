@@ -1,0 +1,7 @@
+PRIVATE authorized bounded review, no tools or writing. Answer concisely in the required review schema; review these status rules only. Previous broader packet timed out; this is a smaller distinct question, not a request to ignore problems.
+
+Nisi needs closed execution receipts for host-reported data. They cannot authenticate the host or prove execution. Expected run/task/attempt/candidate/full-snapshot/profile/argv identities come from separate trusted inputs. A bundle maps receipts to exact engine-report stages and hashes the FINAL report under a new domain, not its preliminary store digest. No changes to existing v1 schemas.
+
+Proposed status rules: PASS/FAIL require started and closed, confirmed process drain, no deadline/cancellation/error/truncated output; PASS additionally exit=0, signal=null, empty reason. FAIL can be semantic failure with exit=0 or test failure with nonzero exit, but no signal. NOT_RUN requires not started, not closed, no exit/signal/output and drain NOT_APPLICABLE. ERROR/INCONCLUSIVE retain nonblank reasons and process problems, never coerce to PASS. Unknown drain remains readable only as non-success. ERROR and INCONCLUSIVE map to v1 UNAVAILABLE, NOT_RUN to NOT_RUN. Engine stop records use UNAVAILABLE with only binding+reason and a non-null error code; richer normal fields cannot be required there.
+
+Identify only concrete missing contradictions in these status rules. A CONSISTENT bundle is never certification, release permission, authority or full independent engine-state audit.

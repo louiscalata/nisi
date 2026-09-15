@@ -1,0 +1,11 @@
+--- a/tests/private-package-contract.test.mjs
++++ b/tests/private-package-contract.test.mjs
+@@ -6,7 +6,7 @@
+   assert.deepEqual(p.files, [...PRIVATE_RUNTIME_FILES, ...PRIVATE_TYPE_FILES]); assert.equal(p.types, './types/index.d.ts');
+ });
+ test('every declared private payload source exists as a regular non-symlink file', () => {
+-  assert.equal(PRIVATE_PACKAGE_FILES.length, 24); assert.equal(new Set(PRIVATE_PACKAGE_FILES).size, 24);
++  assert.equal(PRIVATE_PACKAGE_FILES.length, 27); assert.equal(new Set(PRIVATE_PACKAGE_FILES).size, 27);
+   for (const f of PRIVATE_PACKAGE_FILES) {
+     const stat = fs.lstatSync(new URL('../' + f, import.meta.url)); assert(stat.isFile()); assert(!stat.isSymbolicLink());
+   }

@@ -1,0 +1,163 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://veritas.invalid/private/schemas/stage5/assurance-dependency-closure.v1.json",
+  "title": "Veritas inert declared assurance dependency closure graph",
+  "description": "Structural graph shape only. Runtime validation additionally requires exact node and edge digests, canonical ordering, exact declared-set equality, acyclicity, root reachability, and an external expected graph digest. This schema does not prove real runtime completeness, currentness, destination readback, receipt recall, authority, execution, or release readiness.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schemaVersion",
+    "recordType",
+    "status",
+    "profile",
+    "foundationOnly",
+    "subjectType",
+    "subjectDigest",
+    "rootNodeDigest",
+    "requiredDependencies",
+    "nodes",
+    "edges",
+    "nodeCount",
+    "edgeCount",
+    "authorityMode",
+    "externalCompletenessVerified",
+    "currentnessVerified",
+    "destinationReadbackVerified",
+    "authorizing",
+    "mayCreateDecision",
+    "mayStage",
+    "mayPromote",
+    "mayRecall",
+    "mayReplay",
+    "mayInstall",
+    "mayExecute",
+    "graphDigest"
+  ],
+  "properties": {
+    "schemaVersion": { "const": 1 },
+    "recordType": { "const": "M46_DEPENDENCY_CLOSURE_GRAPH" },
+    "status": { "const": "DECLARED_INERT" },
+    "profile": { "const": "veritas-m46-inert-dependency-closure-v1" },
+    "foundationOnly": { "const": true },
+    "subjectType": { "const": "ACCEPTED_ARTIFACT" },
+    "subjectDigest": { "$ref": "#/$defs/sha256" },
+    "rootNodeDigest": { "$ref": "#/$defs/sha256" },
+    "requiredDependencies": {
+      "type": "array",
+      "minItems": 6,
+      "maxItems": 63,
+      "uniqueItems": true,
+      "items": { "$ref": "#/$defs/requiredDependency" }
+    },
+    "nodes": {
+      "type": "array",
+      "minItems": 7,
+      "maxItems": 64,
+      "uniqueItems": true,
+      "items": { "$ref": "#/$defs/node" }
+    },
+    "edges": {
+      "type": "array",
+      "minItems": 6,
+      "maxItems": 256,
+      "uniqueItems": true,
+      "items": { "$ref": "#/$defs/edge" }
+    },
+    "nodeCount": { "type": "integer", "minimum": 7, "maximum": 64 },
+    "edgeCount": { "type": "integer", "minimum": 6, "maximum": 256 },
+    "authorityMode": { "const": "SELF_ADMINISTERED" },
+    "externalCompletenessVerified": { "const": false },
+    "currentnessVerified": { "const": false },
+    "destinationReadbackVerified": { "const": false },
+    "authorizing": { "const": false },
+    "mayCreateDecision": { "const": false },
+    "mayStage": { "const": false },
+    "mayPromote": { "const": false },
+    "mayRecall": { "const": false },
+    "mayReplay": { "const": false },
+    "mayInstall": { "const": false },
+    "mayExecute": { "const": false },
+    "graphDigest": { "$ref": "#/$defs/sha256" }
+  },
+  "$defs": {
+    "sha256": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{64}$"
+    },
+    "nodeId": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 128,
+      "pattern": "^[a-z][a-z0-9]*(?:[.-][a-z0-9]+)*(?:/[a-z][a-z0-9]*(?:[.-][a-z0-9]+)*)*$"
+    },
+    "node": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schemaVersion",
+        "recordType",
+        "nodeType",
+        "nodeId",
+        "contentDigest",
+        "nodeDigest"
+      ],
+      "properties": {
+        "schemaVersion": { "const": 1 },
+        "recordType": { "const": "M46_DEPENDENCY_NODE" },
+        "nodeType": {
+          "enum": [
+            "CLOSURE_ROOT",
+            "VERIFIER",
+            "POLICY",
+            "ADAPTER",
+            "RUNTIME",
+            "EVIDENCE",
+            "DESTINATION"
+          ]
+        },
+        "nodeId": { "$ref": "#/$defs/nodeId" },
+        "contentDigest": { "$ref": "#/$defs/sha256" },
+        "nodeDigest": { "$ref": "#/$defs/sha256" }
+      }
+    },
+    "requiredDependency": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["nodeType", "nodeId", "nodeDigest"],
+      "properties": {
+        "nodeType": {
+          "enum": [
+            "VERIFIER",
+            "POLICY",
+            "ADAPTER",
+            "RUNTIME",
+            "EVIDENCE",
+            "DESTINATION"
+          ]
+        },
+        "nodeId": { "$ref": "#/$defs/nodeId" },
+        "nodeDigest": { "$ref": "#/$defs/sha256" }
+      }
+    },
+    "edge": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schemaVersion",
+        "recordType",
+        "edgeType",
+        "fromNodeDigest",
+        "toNodeDigest",
+        "edgeDigest"
+      ],
+      "properties": {
+        "schemaVersion": { "const": 1 },
+        "recordType": { "const": "M46_DEPENDENCY_EDGE" },
+        "edgeType": { "const": "DEPENDS_ON" },
+        "fromNodeDigest": { "$ref": "#/$defs/sha256" },
+        "toNodeDigest": { "$ref": "#/$defs/sha256" },
+        "edgeDigest": { "$ref": "#/$defs/sha256" }
+      }
+    }
+  }
+}

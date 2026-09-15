@@ -1,0 +1,73 @@
+{
+  "schemaVersion": 1,
+  "profile": "veritas-e16-local-apfs-process-subset-v1",
+  "status": "PREPARED_E16_IMPLEMENTATION_LOCAL_APFS_PROCESS_SUBSET",
+  "evidenceClass": "SELF_ADMINISTERED_IMPLEMENTATION_LOCAL_APFS_PROCESS_FIXTURE",
+  "officialE16ManifestSha256": "87dbc726667cd55a45152dc0f009e6b087b3dc9bb3511549bb7c88cf69c6cfe4",
+  "officialE16ManifestStatus": "NOT_RUN",
+  "officialE16CaseDenominator": 24,
+  "localImplementationFixtureSelectedCases": [
+    {
+      "caseId": "E16-S5-PROMO-001",
+      "family": "PROMOTION_CRASH_OR_RACE",
+      "injectionPoint": "AFTER_PREPARED_OBJECT_SYNC_BEFORE_IMMUTABLE_RENAME",
+      "expectedOutcome": "CONVERGE_IDEMPOTENTLY"
+    },
+    {
+      "caseId": "E16-S5-PROMO-002",
+      "family": "PROMOTION_CRASH_OR_RACE",
+      "injectionPoint": "AFTER_PROMOTING_STATE",
+      "expectedOutcome": "CONVERGE_IDEMPOTENTLY"
+    },
+    {
+      "caseId": "E16-S5-DIGEST-004",
+      "family": "DIGEST_SUBSTITUTION",
+      "injectionPoint": "AFTER_REFERENCE_SWAP",
+      "expectedOutcome": "ROLL_BACK_TO_PRIOR_TARGET"
+    },
+    {
+      "caseId": "E16-S5-PROMO-004",
+      "family": "PROMOTION_CRASH_OR_RACE",
+      "injectionPoint": "AFTER_ACTIVE_RECEIPT",
+      "expectedOutcome": "CONVERGE_IDEMPOTENTLY"
+    }
+  ],
+  "expectedCounters": {
+    "officialE16NotRunCases": 24,
+    "officialE16ExecutedCases": 0,
+    "officialE16PassedCases": 0,
+    "officialE16CreditedCases": 0,
+    "localImplementationFixtureSelectedUniqueCases": 4,
+    "localImplementationFixtureExecutedUniqueCases": 4,
+    "localImplementationFixturePassedUniqueCases": 4,
+    "localImplementationFixtureRunsPerCase": 2,
+    "localImplementationFixtureCaseRunExecutions": 8,
+    "officialCaseIdentitiesNotSelectedForLocalFixture": 20,
+    "localFixtureOfficialE16CreditCases": 0
+  },
+  "localFixtureNegativeControlIds": [
+    "ACCEPTED_REFERENCE_UNKNOWN_FIELD_REJECTED",
+    "FULL_REFERENCE_BINDING_MISMATCH_REJECTED"
+  ],
+  "limitations": [
+    "SELF_ADMINISTERED_IMPLEMENTATION_LOCAL_APFS_PROCESS_FIXTURE",
+    "DARWIN_KERNEL_SIGKILL_PROCESS_CRASH_ONLY",
+    "NO_POWER_LOSS_DURABILITY_PROOF",
+    "NO_MULTI_WRITER_CONFORMANCE",
+    "NO_SHARED_FILESYSTEM_ATOMICITY_CLAIM",
+    "NO_PROTECTED_AUTHORITY_OR_DISTINCT_PRINCIPAL",
+    "NO_GENERATED_ARTIFACT_OR_CANDIDATE_PROCESS_EXECUTION",
+    "OFFICIAL_E16_MANIFEST_REMAINS_NOT_RUN",
+    "NO_T164_THROUGH_T183_M4_E16_PATENT_PRODUCTION_OR_RELEASE_CREDIT"
+  ],
+  "credits": {
+    "protectedAuthority": false,
+    "nativeRuntime": false,
+    "t164ThroughT183": false,
+    "m4": false,
+    "e16": false,
+    "patent": false,
+    "production": false,
+    "release": false
+  }
+}

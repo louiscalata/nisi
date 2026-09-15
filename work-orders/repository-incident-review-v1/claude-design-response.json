@@ -1,0 +1,101 @@
+{
+  "summary": "Design is sound in its safety posture (selection \u2260 permission, no bulk store, original-brand-only permits, separate cleanup status). Five material gaps: (1) \"revalidate original preview identity\" is under-specified\u2014which object is pinned vs. re-queried; (2) the wrapped clock can inject cancellation/budget failures *during* captureIncident, manufacturing UNCERTAIN results; (3) permitReleaseStatus and capture-validity mapping is not defined per capture status and risks recomputing declarationDigest independently; (4) caller-supplied openOwner/host are not identity-checked, undermining the trusted single-writer assumption; (5) refuse/budget/late-answer semantics (terminal vs reprompt, what counts, remaining-time threading) and the CLI nonTTY gate ordering are ambiguous. Concrete bounded tests follow. No execution performed.",
+  "deliverable": "## Material corrections (max 5)\n\n### 1. Pin one original preview object; define \"revalidation\" precisely\nProblem: \"revalidate exact original preview identity before every page/after answers/before admission\" can be read as re-calling host.incidentPreview() and using the *new* object. A re-queried preview is a different branded instance; using it for createIncidentPermit changes the object the declaration/previewSha256 was derived from, and a clone check alone cannot detect substrate-side change.\nCorrection:\n- Read `PREVIEW = host.incidentPreview()` exactly once at entry; require `isIssuedRepositoryIncidentPreviewV1(PREVIEW)` before any property read; freeze `previewSha256`, and the selected row's `{rowId, rowFingerprint, binding.taskFingerprint}` from that object.\n- Revalidation = call the captured `incidentPreview` descriptor again, require the fresh result is branded, and require `fresh.previewSha256 === PREVIEW.previewSha256` and the selected row (once selected) still present with identical rowId/rowFingerprint/status. Discard the fresh object; the permit is always created with `PREVIEW` (the original brand).\n- Any mismatch, throw, or non-branded result \u2192 `NOT_STORED / PREVIEW_CHANGED` (or `PREVIEW_UNAVAILABLE` on throw) with `ownerOpenAttempted:false`. Do this after the SELECT answer, after the STORE answer, and immediately before createIncidentPermit (the \"admission\" point, post-openOwner is too late\u2014do it before openOwner as well so a changed preview never opens the owner).\n\n### 2. Wrapped clock must not inject failures once captureIncident is invoked\nProblem: \"wrapped clock reads intrinsic cancel + wall-budget state before and after caller clock\" means an abort or prompt-budget expiry that lands during `captureIncident({permit})` makes the substrate's clock read throw/refuse mid-capture \u2192 UNCERTAIN, with the row possibly consumed. That contradicts \"consumed post-call result remains visible even if later cancelled\" and conflates the *prompt* wall budget with the *permit* window.\nCorrection:\n- Prompt wall budget (`promptTimeoutMs`, \u2264120000) governs only prompt phases. It ends when the STORE answer is accepted. The 60s permit window is enforced solely by the substrate via the clock value.\n- Wrapped clock: (a) validates the caller clock result (Number.isSafeInteger, \u22650) and refuses before permit creation if invalid; (b) checks abort only while `captureCallAttempted === false`\u2014an abort observed there revokes any created permit and returns `NOT_STORED / CANCELLED` (with `permitReleaseStatus: REVOKED|UNCONFIRMED`); (c) once `captureCallAttempted = true`, it passes the caller clock through unchanged and only sets `cancelledAfterCaptureCall = true` if abort is observed. Clock throw after capture start \u2192 let it propagate; the module then reports `UNCERTAIN / CAPTURE_UNCONFIRMED`, never NOT_STORED.\n- Record clock reads count/monotonicity is not required, but a non-integer/NaN/negative read *before* capture \u2192 `NOT_STORED / INVALID_CLOCK`, permit not created.\n\n### 3. Define capture validity and permitReleaseStatus per capture status; do not recompute declarationDigest\nProblem: \"require row/declaration identity match\" and \"flags coherent\" are undefined; if the review module hashes the declaration itself, any canonicalization drift from the substrate yields false CAPTURE_UNCONFIRMED. Release status mapping is unspecified for DUPLICATE/CONFLICT/REFUSED/STORE_FAILED.\nCorrection:\n- Expected `declarationDigest` is taken from the permit handle/createIncidentPermit return (substrate-computed), not recomputed. If the substrate does not expose it, compare the returned `capture.declaration` field-by-field against the built 15-field declaration instead.\n- Valid capture iff: plain object; `status \u2208 {STORED,DUPLICATE,CONFLICT,REFUSED,STORE_FAILED,UNCERTAIN}`; `rowId === selectedRowId`; `declarationDigest === expected`; `attempted`/`consumed` booleans with coherence: STORED \u21d2 attempted&&consumed; REFUSED \u21d2 !consumed; STORE_FAILED \u21d2 attempted; UNCERTAIN \u21d2 any; `journal` string equals `<runDirectory>/incident-journal.jsonl`.\n- permitReleaseStatus: `NOT_CREATED` if permitCallAttempted false or createPermit threw; `CONSUMED` only if valid capture has `consumed === true` (no revoke call); otherwise call `revokeIncidentPermit` once in `finally`\u2014resolves cleanly \u2192 `REVOKED`; throws/rejects/non-settled \u2192 `UNCONFIRMED`. Invalid capture object or capture throw \u2192 `status: UNCERTAIN, reason: CAPTURE_UNCONFIRMED, capture: null, captureCallAttempted: true`, then attempt revoke (may legitimately fail because consumed \u2192 `UNCONFIRMED`, reported separately).\n- Output `status` mirrors valid capture.status; `reason` for capture outcomes is fixed (e.g. `CAPTURE_RESULT`) so callers do not have to parse free text.\n\n### 4. Identity-check openOwner and host methods against the trusted module, or import them\nProblem: input carries `openOwner` and `host` from the caller. The substrate's safety rests on \"actual journal FS is a trusted single-writer dependency\" and \"genuine identity/substrate createPermit\". A caller-supplied `openOwner` returning an arbitrary owner object defeats that without any brand check, and the review output would then claim `ownerOpenAttempted:true` against a fake owner.\nCorrection: either (preferred) import `openJournalOwner` and the host factory/brand checker directly in review-repository-incidents-v1.mjs and drop `openOwner` from the input, or require `openOwner === openJournalOwner` (module export identity) and `host` to pass the substrate's host brand/identity check before any prompt. Capture the four host methods via `Object.getOwnPropertyDescriptor` and require `value` to be a function (reject accessor descriptors and prototype-inherited methods). Failure \u2192 `NOT_STORED / INVALID_HOST` before prompt, no busy acquisition needed but return via the same finally path.\n\n### 5. Make refuse/budget/late-answer and CLI gating semantics explicit\nProblem: \"unrecognized/out-of-range refuse\" does not say whether refusal ends the review or reprompts; \"32 interactions\" does not say what counts; per-prompt read needs the remaining overall budget; late answers must be provably inert; CLI nonTTY ordering is stated but not tied to a parse-time check.\nCorrection:\n- Refusal is terminal: unrecognized command, out-of-range PAGE, NEXT on last page, PREV on first page, SELECT of a rowId not on the shown page, and any STORE with wrong fingerprint/sha (including old `STORE <digest>` form) \u2192 `NOT_STORED` with reasons `UNRECOGNIZED_COMMAND / PAGE_OUT_OF_RANGE / ROW_NOT_ON_PAGE / DECLINED / APPROVAL_MISMATCH`. Decline (`no`/`n`/empty) \u2192 `DECLINED`. EOF \u2192 `EOF`. No reprompt loop.\n- Every issued prompt (paging, select, store) counts toward 32; hitting 32 without STORE \u2192 `NOT_STORED / INTERACTION_LIMIT`. Each raw line read receives `remainingMs = deadline - now` (from the caller clock via wrapper); \u22640 \u2192 `TIMEOUT`. A `settled` flag is set before returning from any path; the line reader's resolve is ignored if `settled` is already true, and the reader is torn down in finally so a late line can never reach the STORE branch. Refuse `promptTimeoutMs` not a positive safe integer \u2264120000.\n- Busy WeakSet: add `host` before first callback, delete in finally; concurrent call \u2192 `NOT_STORED / BUSY` without prompting.\n- CLI: `parseLiveDemoInvocation` returns the old shape byte-for-byte when `--review-incidents` is absent (test with deep-equal snapshot); duplicate flag or combined with `--help` \u2192 parse error. TTY check (`process.stdin.isTTY && process.stdout.isTTY`) runs immediately after parse when either review flag is set, before fixture/model/compiler startup. Order: history review \u2192 host settles (await pending host ops) \u2192 incident review \u2192 unchanged live receipt. `incidentReview` key present only when requested; verdict computation takes no input from it (assert by test that a STORED review does not change verdict).\n\n## Concrete bounded tests (synthetic host/adapters, fixed fixtures; no native/model launch)\n\nReview module (unit, fake TTY prompt + fake clock + fake host built on the real substrate brand):\n1. No eligible rows \u2192 NOT_STORED/NO_FAILURE_CANDIDATES; prompt and openOwner call counts 0; busy released.\n2. 23 candidates: page 1 shows 10 + \"23 total, 3 pages\"; NEXT, NEXT shows 3; PREV; PAGE 3; PAGE 4 \u2192 PAGE_OUT_OF_RANGE terminal; NEXT on page 3 \u2192 terminal; order equals preview order; every rowId appears exactly once across pages.\n3. SELECT of rowId on page 2 while page 1 shown \u2192 ROW_NOT_ON_PAGE; SELECT with trailing space / lowercase \u2192 UNRECOGNIZED_COMMAND (no trim).\n4. Correct SELECT then second prompt content assertion: exact row, previewSha256, rowFingerprint, task namespace, `<runDirectory>/incident-journal.jsonl`, 14-day text, all five warnings.\n5. Approval: `STORE <digest>` (old form), `STORE <fp>`, swapped args, ` STORE <fp> <sha>` \u2192 APPROVAL_MISMATCH, permitCallAttempted false; `no`, `n`, `` \u2192 DECLINED.\n6. Preview change: host returns different previewSha256 (a) after SELECT, (b) after STORE, (c) between openOwner and permit \u2192 PREVIEW_CHANGED; ownerOpenAttempted false in (a)(b); permit never created; clone of preview passed as host output \u2192 PREVIEW_UNAVAILABLE.\n7. Clock invalid (NaN, -1, 2**53, string) at confirmation \u2192 INVALID_CLOCK, permitCallAttempted false.\n8. Timeout: prompt never resolves, fake clock advances past budget \u2192 TIMEOUT; later resolving the pending line does not call createPermit/capture (spy count 0); listeners removed.\n9. Cancellation before capture: abort during STORE prompt \u2192 CANCELLED, permitReleaseStatus NOT_CREATED; abort after permit created but before capture call \u2192 REVOKED and revoke spy called with that permit; cancellation after capture invoked \u2192 capture status preserved, cancelledAfterCaptureCall true, no revoke when consumed.\n10. Capture result validation: wrong rowId, wrong declarationDigest, STORED with consumed:false, non-object, throw \u2192 UNCERTAIN/CAPTURE_UNCONFIRMED, capture:null, captureCallAttempted true; revoke throwing \u2192 UNCONFIRMED.\n11. Real host happy path (temp runDirectory): STORE accepted \u2192 STORED, journal file has one line, fresh `incidentPreview()` reports the row as RECORDED/duplicate; second review of same row \u2192 DUPLICATE; return object has no `permit` key (Object.keys snapshot); learningEligible false, authorizing false.\n12. Input validation: relative/root/NUL runDirectory, non-AbortSignal signal (`{aborted:false}`), accessor-descriptor host method, wrong openOwner identity \u2192 INVALID_* before any prompt. Busy: two concurrent calls \u2192 second BUSY.\n13. Interaction limit: 31 NEXT/PREV then SELECT \u2192 allowed; 32nd prompt without STORE \u2192 INTERACTION_LIMIT.\n14. Types: positive (exact input/output shapes compile) and negative (extra output field, `permitReleaseStatus:'RELEASED'`, `learningEligible:true`, missing `capture`) fail type checks.\n\nCLI (parser + PTY):\n15. parseLiveDemoInvocation without flag deep-equals recorded old shape; `--review-incidents` twice, or with `--help` \u2192 error; non-TTY stdin \u2192 exits before fixture loader spy is called.\n16. PTY with synthetic workflow: decline path emits incidentReview NOT_STORED/DECLINED and verdict identical to run without flag; approve path emits STORED, verdict unchanged, receipt unchanged; both flags: history prompt observed before any incident page output.\n17. Package exports/allowlist snapshot unchanged; existing terminal-history-prompt-v1 reader tests untouched and still pass.",
+  "risks": [
+    "I cannot see the actual substrate code; whether createIncidentPermit exposes declarationDigest on the handle (needed for correction 3) is unverified\u2014if not, field-by-field comparison is the fallback.",
+    "Terminal-refusal semantics (correction 5) are stricter for operators than a reprompt loop; if the team wants reprompt, the 32-interaction cap and reason codes still hold but tests 2/3/13 change.",
+    "Importing openJournalOwner directly (correction 4) may complicate test injection; the identity-check alternative keeps injectability but requires the module export to be stable.",
+    "Revalidating by re-calling incidentPreview may itself be expensive or non-idempotent on the real host; if previews are cached this is fine, otherwise page-by-page revalidation cost should be measured.",
+    "Fake-clock tests for timeout depend on the line reader accepting a remaining-ms budget; if the existing reader only accepts a fixed timeout, a small wrapper (not a reader change) is needed."
+  ],
+  "verification": [
+    "Confirm against the substrate source whether the permit handle or createIncidentPermit return exposes declarationDigest and the declaration object.",
+    "Confirm openJournalOwner and host factory are importable from the review module without a cyclic import.",
+    "Run the proposed test list on the real host in a temp directory and check the journal line count and fresh-preview status change.",
+    "Snapshot parseLiveDemoInvocation output for existing argv combinations before adding the flag, then diff after.",
+    "Verify the existing bounded line reader can be given a per-call remaining-ms deadline without modification."
+  ],
+  "invocation_status": "succeeded",
+  "status": "succeeded",
+  "model_usage": {
+    "claude-haiku-4-5-20251001": {
+      "inputTokens": 2293,
+      "outputTokens": 16,
+      "cacheReadInputTokens": 0,
+      "cacheCreationInputTokens": 0,
+      "webSearchRequests": 0,
+      "costUSD": 0.002373,
+      "contextWindow": 200000,
+      "maxOutputTokens": 32000,
+      "thinkingTokens": 0,
+      "canonicalModel": "claude-haiku-4-5",
+      "provider": "firstParty",
+      "costBasis": "list"
+    },
+    "claude-opus-5": {
+      "inputTokens": 2,
+      "outputTokens": 8147,
+      "cacheReadInputTokens": 737,
+      "cacheCreationInputTokens": 2606,
+      "webSearchRequests": 0,
+      "costUSD": 0.2301135,
+      "contextWindow": 1000000,
+      "maxOutputTokens": 64000,
+      "thinkingTokens": 2666,
+      "canonicalModel": "claude-opus-5",
+      "provider": "firstParty",
+      "costBasis": "list"
+    }
+  },
+  "reported_models": [
+    "claude-haiku-4-5-20251001",
+    "claude-opus-5"
+  ],
+  "usage": {
+    "input_tokens": 2,
+    "cache_creation_input_tokens": 2606,
+    "cache_read_input_tokens": 737,
+    "output_tokens": 8147,
+    "output_tokens_details": {
+      "thinking_tokens": 2666
+    },
+    "server_tool_use": {
+      "web_search_requests": 0,
+      "web_fetch_requests": 0
+    },
+    "service_tier": "standard",
+    "cache_creation": {
+      "ephemeral_1h_input_tokens": 2606,
+      "ephemeral_5m_input_tokens": 0
+    },
+    "inference_geo": "not_available",
+    "iterations": [
+      {
+        "input_tokens": 2,
+        "output_tokens": 8147,
+        "cache_read_input_tokens": 737,
+        "cache_creation_input_tokens": 2606,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 2606
+        },
+        "type": "message"
+      }
+    ],
+    "speed": "standard"
+  },
+  "total_cost_usd": 0.23248649999999998,
+  "duration_ms": 109530,
+  "tools_enabled": false,
+  "session_persisted": false,
+  "write_owner": "codex",
+  "requested_model": "opus",
+  "mode": "delegate",
+  "attempts": 1,
+  "wall_seconds": 110.482,
+  "created_at": "2026-09-14T04:19:30.557567+00:00",
+  "prior_attempts": [],
+  "total_wall_seconds": 110.483,
+  "prior_attempt_usage": [],
+  "total_usage_complete": true
+}

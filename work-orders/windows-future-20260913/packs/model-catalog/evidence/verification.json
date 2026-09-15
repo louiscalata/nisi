@@ -1,0 +1,50 @@
+{
+  "schema_version": 1,
+  "scope": "model-catalog-owner-local-verification",
+  "source": {
+    "path": "src/index.mjs",
+    "sha256": "383fea468bb42469e7abb6aaec7ef5a479bc995b3fb96237e32591985d608a65"
+  },
+  "protected_pins": {
+    "package.json": "5ff6f1fdbcb6d77072fff7628b3d3df23e0fb5ed655564eec3fdca4b33ce8b29",
+    "tests/baseline.test.mjs": "2cba3cd0fccb697d96c7160bc929d4c1f7aa189e9c0004c4ba8f4a5357e451c2",
+    "tests/acceptance.test.mjs": "a59ee6cd8de2c55753fd8bb7e836d0fc05e1083a9278e68111818e04c9e8d475"
+  },
+  "commands": [
+    {
+      "command": "npm test",
+      "exit": 0,
+      "tests": 2,
+      "pass": 2,
+      "fail": 0
+    },
+    {
+      "command": "npm run test:acceptance",
+      "exit": 0,
+      "tests": 11,
+      "pass": 11,
+      "fail": 0
+    }
+  ],
+  "pre_correction": {
+    "command": "npm run test:acceptance",
+    "exit": 1,
+    "tests": 11,
+    "pass": 9,
+    "fail": 2,
+    "failures": [
+      "extra top-level keys",
+      "dangerous top-level JSON keys"
+    ]
+  },
+  "corrections": [
+    "broad formatting/helper refactor",
+    "exact root key validation"
+  ],
+  "provenanceCorrection": {
+    "classification": "QWEN_INFORMED_OWNER_REFACTOR",
+    "detail": "Installed source is a broad owner formatting/helper refactor of the decoded Qwen draft, plus exact root-key validation. Root validation is the identified behavior correction, not the only byte-level change. It is not an exact extracted copy.",
+    "supersedes": "Original exact-extraction/no-rewrite statements",
+    "sourceChangedByThisCorrection": false
+  }
+}

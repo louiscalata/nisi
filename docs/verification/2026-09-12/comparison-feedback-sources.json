@@ -1,0 +1,112 @@
+{
+  "schemaVersion": 1,
+  "items": [
+    {
+      "id": "existing-overlap",
+      "title": "Workflow and reliability mechanisms already overlap",
+      "queries": [
+        {
+          "id": "public-repository-docs",
+          "summary": "The reviewed projects document durable workflow infrastructure, development skills and verification-oriented completion mechanisms.",
+          "source": {
+            "label": "Public project documentation",
+            "links": [
+              {
+                "label": "LangGraph.js",
+                "href": "https://github.com/langchain-ai/langgraphjs"
+              },
+              {
+                "label": "Superpowers",
+                "href": "https://github.com/obra/superpowers"
+              },
+              {
+                "label": "Loop Engineer",
+                "href": "https://github.com/SollanSystems/loop-engineer"
+              }
+            ],
+            "caveats": [
+              "Documentation was reviewed; competing implementations were not run or comprehensively audited.",
+              "Feature overlap does not establish comparative performance or a patentability conclusion."
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "deadline-correction",
+      "title": "The private deadline correction passed focused verification",
+      "queries": [
+        {
+          "id": "local-regression",
+          "summary": "The new deadline regression failed on the older engine; after the exact upstream correction, all 35 workflow and import tests passed.",
+          "source": {
+            "label": "Local regression evidence",
+            "files": [
+              {
+                "label": "workflow/engine.mjs"
+              },
+              {
+                "label": "tests/workflow.test.mjs"
+              },
+              {
+                "label": "nisi-upstream-deadline-port.json"
+              }
+            ],
+            "links": [
+              {
+                "label": "Public df321f8 correction",
+                "href": "https://github.com/louiscalata/nisi/commit/df321f8676f1da6b21885ad0781c7bd0549e1f32"
+              }
+            ],
+            "caveats": [
+              "This is a focused local Node 24.18.0 check, not the full public suite, native integration or a comparative coding benchmark."
+            ],
+            "evidenceFlow": [
+              {
+                "kind": "validation",
+                "title": "Before correction",
+                "detail": "Workflow suite: 21 tests, 20 passed and one failed; the failure was the new deadline regression."
+              },
+              {
+                "kind": "validation",
+                "title": "After correction",
+                "detail": "Combined workflow and source-import suites: 35 tests passed, zero failed. Engine and workflow test file matched the reviewed upstream revision exactly."
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "planned-measurement",
+      "title": "The next evaluation is specified, not measured",
+      "queries": [
+        {
+          "id": "private-roadmap-plan",
+          "source": {
+            "label": "Private Nisi roadmap",
+            "files": [
+              {
+                "label": "roadmap.md"
+              }
+            ],
+            "metricDefinitions": [
+              {
+                "label": "Independently accepted solutions",
+                "definition": "The proposed outcome metric counts final candidates passing the fixed independent acceptance oracle across all eligible started runs."
+              },
+              {
+                "label": "Incorrect completion claims",
+                "definition": "The proposed guardrail counts COMPLETED results contradicted by the independent oracle, with unknown oracle results reported separately."
+              }
+            ],
+            "caveats": [
+              "No controlled comparison has been run and no numerical quality or savings target has been assigned.",
+              "Tasks, tools, models, tests and budgets must be matched; prevention policies require a separate held-out evaluation."
+            ]
+          }
+        }
+      ]
+    }
+  ]
+}

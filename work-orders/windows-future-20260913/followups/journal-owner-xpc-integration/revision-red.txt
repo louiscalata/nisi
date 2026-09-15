@@ -1,0 +1,72 @@
+✖ windows-xpc-integration: valid synthetic fixed-case observation (6.400791ms)
+✖ windows-xpc-integration: malformed-request synthetic fixed-case observation (1.609041ms)
+✖ windows-xpc-integration: no-reply synthetic fixed-case observation (1.368709ms)
+✖ windows-xpc-integration: adverse INCONCLUSIVE synthetic fixed-case observation (0.853792ms)
+ℹ tests 4
+ℹ suites 0
+ℹ pass 0
+ℹ fail 4
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 60.18575
+
+✖ failing tests:
+
+test at tests/windows-xpc-integration.test.mjs:60:1
+✖ windows-xpc-integration: valid synthetic fixed-case observation (6.400791ms)
+  TypeError: Cannot read properties of undefined (reading '0')
+      at runCase (file:///Users/louiscalata/nisi-next-private/work-orders/journal-owner-v2/tests/windows-xpc-integration.test.mjs:50:31)
+      at TestContext.<anonymous> (file:///Users/louiscalata/nisi-next-private/work-orders/journal-owner-v2/tests/windows-xpc-integration.test.mjs:60:76)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1325:25)
+      at Test.start (node:internal/test_runner/test:1191:17)
+      at startSubtestAfterBootstrap (node:internal/test_runner/harness:385:17)
+
+test at tests/windows-xpc-integration.test.mjs:61:1
+✖ windows-xpc-integration: malformed-request synthetic fixed-case observation (1.609041ms)
+  TypeError: Cannot read properties of undefined (reading '0')
+      at runCase (file:///Users/louiscalata/nisi-next-private/work-orders/journal-owner-v2/tests/windows-xpc-integration.test.mjs:50:31)
+      at TestContext.<anonymous> (file:///Users/louiscalata/nisi-next-private/work-orders/journal-owner-v2/tests/windows-xpc-integration.test.mjs:61:88)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1325:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:911:18)
+      at Test.postRun (node:internal/test_runner/test:1465:19)
+      at Test.run (node:internal/test_runner/test:1390:12)
+      at async startSubtestAfterBootstrap (node:internal/test_runner/harness:385:3)
+
+test at tests/windows-xpc-integration.test.mjs:62:1
+✖ windows-xpc-integration: no-reply synthetic fixed-case observation (1.368709ms)
+  TypeError: Cannot read properties of undefined (reading '0')
+      at runCase (file:///Users/louiscalata/nisi-next-private/work-orders/journal-owner-v2/tests/windows-xpc-integration.test.mjs:50:31)
+      at TestContext.<anonymous> (file:///Users/louiscalata/nisi-next-private/work-orders/journal-owner-v2/tests/windows-xpc-integration.test.mjs:62:79)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1325:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:911:18)
+      at Test.postRun (node:internal/test_runner/test:1465:19)
+      at Test.run (node:internal/test_runner/test:1390:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:911:7)
+
+test at tests/windows-xpc-integration.test.mjs:63:1
+✖ windows-xpc-integration: adverse INCONCLUSIVE synthetic fixed-case observation (0.853792ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  + actual - expected
+  
+  + 'SUCCEEDED'
+  - 'FAILED'
+  
+      at runCase (file:///Users/louiscalata/nisi-next-private/work-orders/journal-owner-v2/tests/windows-xpc-integration.test.mjs:25:10)
+      at TestContext.<anonymous> (file:///Users/louiscalata/nisi-next-private/work-orders/journal-owner-v2/tests/windows-xpc-integration.test.mjs:63:91)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1325:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:911:18)
+      at Test.postRun (node:internal/test_runner/test:1465:19)
+      at Test.run (node:internal/test_runner/test:1390:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:911:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 'SUCCEEDED',
+    expected: 'FAILED',
+    operator: 'strictEqual',
+    diff: 'simple'
+  }

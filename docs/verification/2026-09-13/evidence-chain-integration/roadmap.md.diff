@@ -1,0 +1,24 @@
+--- roadmap.md (pre-state)
++++ roadmap.md
+@@ -4027,6 +4027,9 @@
+ evidence. If live access is unavailable, record fixture acceptance and live
+ `NOT_RUN`; do not grant the complete repository-demonstration label.
+ 
++
++- **2026-09-13 integrated checkpoint — fixed-run summary:** `hosts/macos-xpc/native-canary-summary.mjs`, SHA256 `92590f11d91071fb7d5c1a0208958ef7c094d06a723fd38c5827fc63e6fb9c41`; **13/13 tests** (10 functional + 3 baseline), included in the product **1230/1230** check with zero failed/skipped/cancelled/todo. Not closed: host wiring of the bundle to the XPC runner, real-filesystem durability, cross-process locking, crash qualification, or incident admission. U02-02/U02-04 and overall milestone acceptance remain open; progress stays **30% — 3 of 10**. [Integration receipt](docs/verification/2026-09-13/evidence-chain-integration/receipt.json).
++
+ #### U02-03 — make the implemented library usable and packageable privately
+ 
+ - [x] **Portable typed-consumer slice, Node 24:** eleven integrated declarations,
+@@ -4122,6 +4125,11 @@
+ attributed and revoked, without duplicate eligible occurrences or silent success
+ on an uncertain write. Loss of optional history may reduce capability, never
+ manufacture history or a required acceptance result.
++
++
++- **2026-09-13 integrated checkpoint — fixed-run entry builder:** `history/fixed-run-journal-entry.mjs`, SHA256 `ba888a4f4d5b1b78f799045e44fbdfe79b75545847ab9b3ed2673fd7b353585c`; **11/11 tests** (8 functional + 3 baseline), included in the product **1230/1230** check with zero failed/skipped/cancelled/todo. Not closed: host wiring of the bundle to the XPC runner, real-filesystem durability, cross-process locking, crash qualification, or incident admission. U02-02/U02-04 and overall milestone acceptance remain open; progress stays **30% — 3 of 10**. [Integration receipt](docs/verification/2026-09-13/evidence-chain-integration/receipt.json).
++- **2026-09-13 integrated checkpoint — disk store:** `history/run-journal-store-v1.mjs`, SHA256 `1356028b65f9f8b96e3b9ec8ba3bfbb4968092af53d00e8b5dfdb11b161f4792`; **19/19 tests** (17 functional + 2 baseline), included in the product **1230/1230** check with zero failed/skipped/cancelled/todo. Not closed: host wiring of the bundle to the XPC runner, real-filesystem durability, cross-process locking, crash qualification, or incident admission. U02-02/U02-04 and overall milestone acceptance remain open; progress stays **30% — 3 of 10**. [Integration receipt](docs/verification/2026-09-13/evidence-chain-integration/receipt.json).
++- **2026-09-13 integrated checkpoint — host bundle:** `history/host-journal-bundle.mjs`, SHA256 `97b2554b7fe50812fcb0065197964967d2beefc0c8cb322a38154ec16ebb9894`; **17/17 tests** (14 functional + 3 baseline), included in the product **1230/1230** check with zero failed/skipped/cancelled/todo. Not closed: host wiring of the bundle to the XPC runner, real-filesystem durability, cross-process locking, crash qualification, or incident admission. U02-02/U02-04 and overall milestone acceptance remain open; progress stays **30% — 3 of 10**. [Integration receipt](docs/verification/2026-09-13/evidence-chain-integration/receipt.json).
+ 
+ #### U02-05 — implement the part that can earn differentiation
+ 

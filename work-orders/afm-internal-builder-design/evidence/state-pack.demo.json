@@ -1,0 +1,16 @@
+{
+  "schemaVersion": 1,
+  "project": "nisi",
+  "roadmapDigest": "open-3-of-10-nx-internal-builder-v0",
+  "workOrder": {
+    "id": "AFM-DEMO-1",
+    "goal": "Propose the next bounded development step for the AFM internal-builder lane.",
+    "acceptance": "proposedStep must be exactly one of allowedSteps; testsToRun must be a non-empty subset of allowedChecks with at most 3 entries."
+  },
+  "lastReceipts": [
+    "oracle-final: 15/15 PASS (render-tile-v1)",
+    "mutation-M1: caught (14/1) and reverted"
+  ],
+  "allowedSteps": ["implement", "test", "document"],
+  "allowedChecks": ["swift-build", "swift-test", "unit-01"]
+}

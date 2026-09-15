@@ -1,8 +1,9 @@
 {
   "name": "nisi",
-  "version": "0.1.0",
+  "version": "0.2.0-private.0",
+  "private": true,
   "description": "A Node.js workflow orchestrator for AI-assisted coding, with bounded repairs and validated run reports.",
-  "license": "Apache-2.0",
+  "license": "UNLICENSED",
   "author": "Louis Calata",
   "repository": {
     "type": "git",
@@ -25,9 +26,12 @@
     "check:static": "node scripts/require-node.cjs && node tools/check-side-effects.mjs",
     "example:workflow": "node scripts/require-node.cjs && node examples/workflow.mjs",
     "preflight": "node scripts/require-node.cjs",
-    "example:local-model": "node scripts/require-node.cjs && node examples/local-model-workflow.mjs"
+    "example:local-model": "node scripts/require-node.cjs && node examples/local-model-workflow.mjs",
+    "test:types": "tsc --noEmit --ignoreConfig --strict --exactOptionalPropertyTypes --noUncheckedIndexedAccess --module NodeNext --target ES2022 --types node tests/private-consumer/*.mts",
+    "check:private-package": "node scripts/check-private-package.mjs"
   },
   "devDependencies": {
+    "@types/node": "24.13.3",
     "typescript": "^6.0.3"
   },
   "keywords": [
@@ -39,12 +43,78 @@
   ],
   "main": "./index.mjs",
   "exports": {
-    ".": "./index.mjs",
-    "./workflow": "./workflow/engine.mjs",
-    "./policy": "./policy/file-access.mjs",
-    "./serialization": "./serialization/canonical-json-v1.mjs",
-    "./adapters/apple-foundation-models": "./adapters/apple-foundation-models.mjs",
-    "./adapters/local-chat": "./adapters/local-chat.mjs",
+    ".": {
+      "types": "./types/index.d.ts",
+      "default": "./index.mjs"
+    },
+    "./workflow": {
+      "types": "./types/workflow.d.ts",
+      "default": "./workflow/engine.mjs"
+    },
+    "./policy": {
+      "types": "./types/policy.d.ts",
+      "default": "./policy/file-access.mjs"
+    },
+    "./serialization": {
+      "types": "./types/serialization.d.ts",
+      "default": "./serialization/canonical-json-v1.mjs"
+    },
+    "./adapters/apple-foundation-models": {
+      "types": "./types/apple-foundation-models.d.ts",
+      "default": "./adapters/apple-foundation-models.mjs"
+    },
+    "./adapters/local-chat": {
+      "types": "./types/local-chat.d.ts",
+      "default": "./adapters/local-chat.mjs"
+    },
+    "./adapters/native-chat": {
+      "types": "./types/native-chat.d.ts",
+      "default": "./adapters/native-chat-v1.mjs"
+    },
+    "./index.mjs": {
+      "types": "./types/index.d.ts",
+      "default": "./index.mjs"
+    },
+    "./workflow/engine.mjs": {
+      "types": "./types/workflow.d.ts",
+      "default": "./workflow/engine.mjs"
+    },
+    "./workflow/contracts.mjs": {
+      "types": "./types/contracts.d.ts",
+      "default": "./workflow/contracts.mjs"
+    },
+    "./policy/file-access.mjs": {
+      "types": "./types/policy.d.ts",
+      "default": "./policy/file-access.mjs"
+    },
+    "./serialization/canonical-json-v1.mjs": {
+      "types": "./types/serialization.d.ts",
+      "default": "./serialization/canonical-json-v1.mjs"
+    },
+    "./adapters/apple-foundation-models.mjs": {
+      "types": "./types/apple-foundation-models.d.ts",
+      "default": "./adapters/apple-foundation-models.mjs"
+    },
+    "./adapters/local-chat.mjs": {
+      "types": "./types/local-chat.d.ts",
+      "default": "./adapters/local-chat.mjs"
+    },
+    "./adapters/native-chat-v1.mjs": {
+      "types": "./types/native-chat.d.ts",
+      "default": "./adapters/native-chat-v1.mjs"
+    },
+    "./canonical/canonical-json-v1.mjs": {
+      "types": "./types/canonical.d.ts",
+      "default": "./canonical/canonical-json-v1.mjs"
+    },
+    "./gate/content-consent.mjs": {
+      "types": "./types/content-consent.d.ts",
+      "default": "./gate/content-consent.mjs"
+    },
+    "./gate/afm-content-executor.mjs": {
+      "types": "./types/afm-content-executor.d.ts",
+      "default": "./gate/afm-content-executor.mjs"
+    },
     "./*": "./*"
   },
   "devEngines": {
@@ -53,5 +123,34 @@
       "version": ">=22",
       "onFail": "error"
     }
-  }
+  },
+  "types": "./types/index.d.ts",
+  "files": [
+    "adapters/apple-foundation-models.mjs",
+    "adapters/local-chat.mjs",
+    "adapters/native-chat-v1.mjs",
+    "adapters/native-chat-protocol-v1.mjs",
+    "canonical/canonical-json-v1.mjs",
+    "gate/afm-content-executor.mjs",
+    "gate/content-consent.mjs",
+    "hosts/repository/snapshot-contract.mjs",
+    "hosts/swift-verifier/owned-child.mjs",
+    "hosts/swift-verifier/protocol.mjs",
+    "index.mjs",
+    "policy/file-access.mjs",
+    "serialization/canonical-json-v1.mjs",
+    "workflow/contracts.mjs",
+    "workflow/engine.mjs",
+    "types/afm-content-executor.d.ts",
+    "types/apple-foundation-models.d.ts",
+    "types/canonical.d.ts",
+    "types/content-consent.d.ts",
+    "types/contracts.d.ts",
+    "types/index.d.ts",
+    "types/local-chat.d.ts",
+    "types/native-chat.d.ts",
+    "types/policy.d.ts",
+    "types/serialization.d.ts",
+    "types/workflow.d.ts"
+  ]
 }

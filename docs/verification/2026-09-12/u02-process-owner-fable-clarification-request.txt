@@ -1,0 +1,24 @@
+PRIVATE bounded follow-up. Review only whether these corrected dispositions resolve the three wording issues in your last review. No full-host or security certification is requested. Do not infer safeguards outside these excerpts. Tool-free, no full repository, personal data, model inference or publication.
+
+1. Final result order: the larger `prepared` tree is deeply frozen FIRST. After listener cleanup, `guard()` samples the final signal and monotonic clock. A NEW small top-level object and NEW process object are frozen and published. No existing frozen object is mutated. Actual excerpt:
+guard();
+const result = Object.freeze({ ...prepared, cause: firstCause,
+  validated: firstCause === null ? prepared.validated : null,
+  process: Object.freeze({ ...prepared.process, errorCode, cancelRequested, deadlineExceeded,
+    durationMs: started ? elapsed() : 0 }) });
+done = true;
+resolve(result);
+There is no await or caller callback between this guard and resolve. The final duration regression passes; reverting just duration to prepared.process.durationMs fails exactly that regression.
+
+2. No-launch means the launch function was never invoked, NOT absence of a spawn event. Actual pre-spawn ordering:
+launchCalled = true;
+child = launch();
+The release predicate is:
+observation && (observation.lifecycle.closeObserved || !observation.lifecycle.launchCalled)
+Therefore timeout before a later spawn has launchCalled=true and cannot release absent observed close. Even a throwing launch remains conservatively uncertain once invoked. A pre-invocation interruption can release. Late spawn after grace is best-effort killed, logged separately by operation ID, and NEVER clears quarantine or rewrites the old receipt. Its regression and targeted containment mutant pass. Product executor and adapter now expose the frozen bounded lateObservations snapshot.
+
+3. Crash recovery: an existing reservation refuses future acquisition, regardless of PID or age. There is NO automatic reclamation or recovery API. Explicit manual reconciliation is the only current path; do not simply delete a marker while prior work may still exist. This is not durable workflow resume. File and parent-directory fsync failures leave the marker and block acquisition in the tested local fixtures.
+
+Still OPEN: same-account hostile pathname replacement/true executable attestation; full multi-file repository host and native app; two-layer report bundle support when native work passes but the engine separately times out. Mandatory operator-exclusive-static-local-v1 is an explicit operational precondition, not enforcement against same-account attackers. A true native PASS and engine TIMED_OUT are retained separately; the old v1 bundle refuses that combination rather than fabricating flags.
+
+Current evidence: 20 focused lifecycle/reservation checks; 11 real fixed-kernel adapter tests with fixture authorization/reviewer callbacks; 261 portable checks; six owner/reservation mutants caught at exact expected tests. The control passes. No claim of live AI, hostile filesystem containment, full merger or release. Return FAIL for a concrete remaining contradiction in the corrected dispositions, otherwise PASS within this wording/excerpt scope only.

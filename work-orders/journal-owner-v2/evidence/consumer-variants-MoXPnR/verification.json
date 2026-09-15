@@ -1,0 +1,87 @@
+{
+  "schemaVersion": 1,
+  "status": "PASS_SCOPED",
+  "evidence": "/Users/louiscalata/nisi-next-private/work-orders/journal-owner-v2/evidence/consumer-variants-MoXPnR",
+  "startedAt": "2026-09-14T00:58:26.579Z",
+  "sourceManifest": {
+    "history/import-fixed-xpc-observation-v1.mjs": "8e3d35c462c90524ca8de4e191be9ac22b74fd498efe2e6dd76a7826ea483961",
+    "tests/import-fixed-xpc-observation.test.mjs": "37fe00a9d5b508d1a72185ba596bb21ec234dea972ac0159882017535c9ff663",
+    "history/fixed-xpc-journal-observation-v1.mjs": "00cc7a0a0e6331777889979ebd9c6353fc06bf83781e3d9687918180a71a3ba2",
+    "hosts/macos-xpc/protocol.mjs": "93976fb2d102c0070085938bff72d0be8d364a94f0f184d10ad70f9e752bd713",
+    "tests/fixtures/fixed-xpc-journal-observation.mjs": "0ebb84f73271d364147a8e635c8d124ca096753282a1d1e7895d2d1771adbf5f",
+    "work-orders/journal-owner-v2/src/index.mjs": "54777f65338a36ca6c208fc880c8ca4013ffce675c7aede2afdc2d8fa85f4e49",
+    "work-orders/journal-owner-v2/src/run-journal-v1.mjs": "dee9f490c091000b2560cd9464d945885e7f341091b87dde9ae4f2b7cdbd359e",
+    "work-orders/journal-owner-v2/src/run-journal-store-v1.mjs": "1356028b65f9f8b96e3b9ec8ba3bfbb4968092af53d00e8b5dfdb11b161f4792",
+    "work-orders/journal-owner-v2/tests/memfs.mjs": "e202da18a120645ccdf6c51da48843f64ca90b6af48e87d3fdcb5cda0f9319c0",
+    "work-orders/journal-owner-v2/tests/helper.mjs": "67fc7262cc751d58000bb626cde33151c60f572329b4f52ca374821e8886b334"
+  },
+  "runs": [
+    {
+      "id": "baseline",
+      "exitCode": 0,
+      "signal": null,
+      "error": null,
+      "sourceSha256": "8e3d35c462c90524ca8de4e191be9ac22b74fd498efe2e6dd76a7826ea483961",
+      "tests": 16,
+      "pass": 16,
+      "fail": 0,
+      "cancelled": 0,
+      "skipped": 0,
+      "todo": 0
+    },
+    {
+      "id": "hide-uncertainty",
+      "exitCode": 1,
+      "signal": null,
+      "error": null,
+      "sourceSha256": "b383cfaf43fb2313c2a39d3f23161aeee90e781a60e2f986012a9c043fc833b6",
+      "tests": 16,
+      "pass": 14,
+      "fail": 2,
+      "cancelled": 0,
+      "skipped": 0,
+      "todo": 0
+    },
+    {
+      "id": "promote-duplicate",
+      "exitCode": 1,
+      "signal": null,
+      "error": null,
+      "sourceSha256": "78411c4524990df74f77e77674c6d65e8e264e41e60738030c88c4a3bb199ed1",
+      "tests": 16,
+      "pass": 15,
+      "fail": 1,
+      "cancelled": 0,
+      "skipped": 0,
+      "todo": 0
+    },
+    {
+      "id": "bypass-host-redaction",
+      "exitCode": 1,
+      "signal": null,
+      "error": null,
+      "sourceSha256": "b3bf48bbbe4be2268e41b6a1107f241a665132a2ef68e0659e2e0dd601e5e2fb",
+      "tests": 16,
+      "pass": 13,
+      "fail": 3,
+      "cancelled": 0,
+      "skipped": 0,
+      "todo": 0
+    },
+    {
+      "id": "promote-failed-observation",
+      "exitCode": 1,
+      "signal": null,
+      "error": null,
+      "sourceSha256": "c13ce7125c2837bfed67965c957ecd3007494b778fe7d86081cfcf709c256891",
+      "tests": 16,
+      "pass": 15,
+      "fail": 1,
+      "cancelled": 0,
+      "skipped": 0,
+      "todo": 0
+    }
+  ],
+  "authorizing": false,
+  "completedAt": "2026-09-14T00:58:27.355Z"
+}

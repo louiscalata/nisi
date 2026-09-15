@@ -1,0 +1,730 @@
+{
+  "schema": "nisi-candidate-review-checkpoint-v1",
+  "createdAt": "2026-09-13T04:34:04.300Z",
+  "status": "PASS_SCOPED",
+  "overallMilestones": {
+    "completed": 3,
+    "total": 10,
+    "percentage": 30
+  },
+  "previousCheckpoint": {
+    "path": "/Users/louiscalata/nisi-next-private/docs/verification/2026-09-12/u02-live-v3-checkpoint.json",
+    "byteLength": 127399,
+    "sha256": "f3414409e5b7c581b1dd72529b02e75e47a41645990a5942739ff2c7f7cd82a3"
+  },
+  "sourceManifest": {
+    "adapters/local-chat.mjs": "ca26b49502b27f494487f5da32edfc13a9d8b85cb02da43b58c4417babb3e842",
+    "adapters/native-chat-protocol-v1.mjs": "44468cb8b6ebc97e1821405a5add4916a97bf82b0ffeaa2076f85e79e12255f3",
+    "adapters/native-chat-v1.mjs": "45f8149f2f526cab75ba5758aed8b05aeea136fa4cb107a8a45196045ce205bd",
+    "evaluation/fixtures/paired-example-v1.mjs": "2b3fd175c2408737ac8d646a19f576de7ec81a52e5fff61ab80b3fc530d58249",
+    "evaluation/intake-v1.mjs": "7c338bf7419c236bc8a8c912266f470e68ff3711848f777c56e68f0ef7c7912a",
+    "evaluation/metrics-v1.mjs": "a11f1247df37b89c661fe3033e8d88a0c347038114bd9192ac48620d52ba0e91",
+    "evaluation/paired-trial-v1.mjs": "cb75c8ac76deb31280fc356064e448b508e4fb8cc48cddaef03f461a70df943c",
+    "examples/repository-live-model.mjs": "dddb7d9d1235308ecf8a5f154cad3c02e5d5546f9bfa92822cab684321617f39",
+    "examples/repository-task/fixtures/baseline/README.md": "b6ce54912db6b4605d19e4e0fdce5cc1e680de4a57bb1af82ca7b737ff578011",
+    "examples/repository-task/fixtures/baseline/config.json": "fc2001f12401983fa2632ee17e9879b6a1595f0de616e6e1484083c0c3324f04",
+    "examples/repository-task/fixtures/baseline/retry-settings.mjs": "c4932fa2ce0c73c52d385d25aeab64bed602179abced3b38fd525a31fe47bb10",
+    "examples/repository-task/fixtures/harness/check-retry-settings.mjs": "e07a9bd6a63a52ac6977734c61ea0a210c71ec2c331951f4d94b44159c8245c5",
+    "examples/repository-task/fixtures/live-baseline/retry-settings.mjs": "65525edd21e81c5de1791c6f47fa404ffea10f7ea332545a8e295afdd6270254",
+    "examples/repository-task/fixtures/live-repair/retry-settings.mjs": "73369f8d0cc0cefbb082c65388c3652c7602254ab5b6fbab138e08078b568112",
+    "examples/repository-task/fixtures/repair/retry-settings.mjs": "7de9f6b2cd29489563930f9131a0e0b077070bb50b52df8b5bd27aaf24b55ffd",
+    "examples/repository-task/reviewed-live-fixture-v1.mjs": "292bd67a2e4132c9c5122f5d716e7eeb3cdd3a6ebf5362470d046b6d025add36",
+    "hosts/repository/disk-capture.mjs": "972c8cd690a3f34253c9f4722c336b6e847dffe1b0c924aa8492384c800ae547",
+    "hosts/repository/live-model-selection-v3.mjs": "22a242290248180f158974d7a733a368a82669c270b0171eae747ac18c638520",
+    "hosts/repository/node-adapter-v1.mjs": "6de05634f7cccd774c8072a000b556f49f111ccedfe1e37d19be37dbd036fa5d",
+    "hosts/repository/node-executor-v1.mjs": "cd999c0efe061c0706842cc06867f62dc59927553615db9e2f2af24523872258",
+    "hosts/repository/node-suite-v1.mjs": "5ed5cd9ca407b281379d6b67d93df60ab3b3a45676b6a4e82c7bfc474d29e2c2",
+    "hosts/repository/proposed-changes-v1.mjs": "045fe0d77b3b6d4d95c406964b603b09b2aeabe131cde267b41806114379f55d",
+    "hosts/repository/reviewed-live-model-v1.mjs": "741d7df962dccbba993481497779afd2bbd4253487532c5dd5bd51522be9247e",
+    "hosts/repository/reviewed-live-model-v3.mjs": "e9f7f810f2fab36a34b1486034128752ce0b4df5989998300e2f239829ff307e",
+    "hosts/repository/reviewed-workflow-v1.mjs": "6ecc49425ae28ec1923445c8fbe79df4478b6361a5e2799b82ded24acf74dc33",
+    "hosts/repository/snapshot-contract.mjs": "2b52c23bac3a817769b7892eed71baba79cb81954b6a63724d107a9c258ba13f",
+    "hosts/repository/task-workspace-v1.mjs": "08fdb59d15d21e94914d00390e8f73ee6245b0eabec64e7c052585f23638f963",
+    "hosts/swift-verifier/adapter.mjs": "c92c21fcbf7fe91d949f60bc51a96d4cb5f185be9172d0a214c4e87d2b649388",
+    "hosts/swift-verifier/build.mjs": "ae063b627e853fc0b651e3db103dd1af01c6815374d36781e79270b7d48934fb",
+    "hosts/swift-verifier/check-plan-v1.mjs": "a30ff5596e2bebc376cfa0da84be1c00eca8443cc2b37f5b1b7da42ef44b658a",
+    "hosts/swift-verifier/executor.mjs": "3b233203d7e9d2c2e1f5aa3c458685e86f15d40fc07b2542e7b6bb48a2555db4",
+    "hosts/swift-verifier/group-adapter-v1.mjs": "471ae91cfc78a82abcb425ed75cd16aec2a76d8123cdc9b3e4063c536382e774",
+    "hosts/swift-verifier/group-contract-utils.mjs": "8fc51ac107abd68adb1c72683ccfa2af9c74ac077c5506bf89525f972b14ac82",
+    "hosts/swift-verifier/main.swift": "0d4e15b22b3231d990cfd5e7de1c52f4fdfebf4f4ab6da15b0ae22c74cea910c",
+    "hosts/swift-verifier/owned-child.mjs": "ff9bbef97b3401afd394a98c8bff4fe273a4b6af3a1f852bdf5bf872fd4474df",
+    "hosts/swift-verifier/protocol.mjs": "7557d81836f263c13e06ac7613ebfa61ce7fbeeb7b0f7db98889473806f322cc",
+    "hosts/swift-verifier/reservation.mjs": "6d7573d23a3d2b0ecdb4b396cb58f4f9ae8e5997190616c08c1b93bd0ab376fd",
+    "integrations/veritas/native/macos/CodenameVeritasFramework/Sources/VeritasCore/ArtifactSnapshot.swift": "013e796d11a844dda345f223894a8d76713b19b0f46f6a7f84019aa5b7bc0f22",
+    "integrations/veritas/native/macos/CodenameVeritasFramework/Sources/VeritasCore/DeterministicChecks.swift": "4d234fd389895cf0a55bf7daf0f5d082077ab3677880165f7d0e1236a88be474",
+    "integrations/veritas/native/macos/CodenameVeritasFramework/Sources/VeritasCore/StrictJSONDocumentValidator.swift": "bd6173e012890f2fde2e26be94c5e577cd9e098841bdad98a377b1c88dff1b2c",
+    "integrity/record-utils.mjs": "e46eb1a01170231bd6873771cd256740fd3dde6bcb01d418f6f7d7a75e6139ff",
+    "package-lock.json": "396284ceeb20491293a83094a9558cb32368bb9ccc71b75e0d10da52e86b0912",
+    "package.json": "6b5c0271f5ad95d62af409c9782a2abb0b18a9844356c01a2fcf469063f7897f",
+    "receipts/host-run-bundle-v2.mjs": "406936e6523f58323634fab1c9f560d671d58e1c343d2082f081f8a7810061fe",
+    "receipts/live-usage-v1.mjs": "f015e2973567e21329d4e79de8abc6e1f664370eff3f2338aad31490fb4791a5",
+    "receipts/repository-execution-v1.mjs": "7317e06c094bdf33e51645ce39348fc9e2d5a11ad0921af87434e34c45828cc2",
+    "receipts/repository-live-model-run-v1.mjs": "7a17b15f5d649c9255da8b09c531f5192b7d6e14ba5db928c878e1ccd13dc293",
+    "receipts/repository-live-model-run-v3.mjs": "66f7598c6b3be393c65dbd92e1a3c58c52b7ca66c4e73f57a46c8556739614a4",
+    "receipts/repository-run-v1.mjs": "50c1e86cec48fc666aae64b3285f9acda8e20968d5f10f0d9313e0e22051d697",
+    "receipts/swift-static-group-v1.mjs": "e07e9a361ef808f8d652f1542fec54085d4f341fd093a582f2e86baf77e4cdbb",
+    "receipts/swift-static-run-v1.mjs": "454e8657a2a2aaf6a016de5d09c5d65512d53ffb9db2a6843e05471450f8c8ef",
+    "tests/fixtures/local-chat-response-cases.json": "c05bb7e645152cc485600085eb97c95225dcc4ad39fb571c15ff9d40bd983e1e",
+    "tests/fixtures/native-response-cases.json": "64b8cc5a2050d541d917b4b459392114debe1d374579bfe7a76c5ff0ce7a0efb",
+    "tests/fixtures/v3-cli-cases.json": "eb344b3ad7b1c63e55e9da944a11c569a517803b36ce4dd298989d7a0bc41c4a",
+    "tests/helpers/live-cli-side-effect-guard.mjs": "f1ed9b8f69c41c6027b9b8d7ed0149c1fee970d00109eaac0e7bb0714d08c00e",
+    "tests/helpers/live-model-v3-fixture.mjs": "29da9ad187efe09ee0a24e0e27b14737e9872de7035d4c96dac13da1930febd7",
+    "tests/helpers/local-chat-expected-cases.mjs": "1e1f3af35720944e447d60600487a7a9111da6911f82322c70a7750fa5a5e537",
+    "tests/helpers/native-chat-fixture.mjs": "3d5029a0d73880a055d8823d9ca629c40d40e55795d2abe1192345a8ecbb0b52",
+    "tests/helpers/native-response-expected.mjs": "76724d266bcbd2576079df1517ee8be7cd7b3e8ed17894a197e20b75660ed4af",
+    "tests/helpers/node-repository-fixture.mjs": "db034a91d1ad0bfcb2b22df9b598d3e276d260c493002319e9d191e10ce2cd85",
+    "tests/helpers/repository-live-run-fixture.mjs": "17e24de717f46a1b3844cf37c05cf1baf23f69d71f6f3f02f53f2c881d0f08ea",
+    "tests/helpers/repository-run-fixture.mjs": "2877df81895185e35c5e5dd419dbb161bde5f23529f6459ed5e0128b2780b121",
+    "tests/helpers/reviewed-live-model-fixture.mjs": "539eb8530170b9f85705cd20af45b9be01463343f7ddb1691860f2628d9b5cbb",
+    "tests/helpers/swift-group-fixture.mjs": "2f8e5b98fbf2fb1757fe25bc2d78b427e30cccbdaccb64d618922f925e077d60",
+    "tests/helpers/v3-cli-expected.mjs": "93c9606c00ecdfc1449336f9e53a75e4da76c2b985146d401c54457c8f71e6d9",
+    "tests/host-run-bundle-v2.test.mjs": "ba3f06af454abd31b2b7426aedc7b04b63e7efea19696df7c24a6ff187d112cb",
+    "tests/live-model-v3-cli.test.mjs": "54207c8bd4f081411f997b10fa9df749d8e6d26fa1b78ab7302f1de5b6e0ea80",
+    "tests/live-model-v3-receipt.test.mjs": "38ef7f69f1444952de9dcef39ace75487cd0ba38ab359097b7994d9a233264b8",
+    "tests/live-model-v3.test.mjs": "d4a5cf960819e0fdf8630a21e1743b13171aeb285ac780f1904135b758fef13d",
+    "tests/live-output-mode.test.mjs": "a573d477e7463f8f323079bc1ba72e1d775b2116da2ebaf6f159e097258d62b7",
+    "tests/live-usage.test.mjs": "3be9d19ee463641ea521179ff31874127c5e5654f48f0ab14ced6e1dcdf82ffd",
+    "tests/local-chat-output-mode.test.mjs": "21a36fc3c14dad1f080fc16293f20443b7f90f30ddb6c12941e46abdd15b1d2c",
+    "tests/local-chat-response-matrix.test.mjs": "c4d14ba74952876b2d07061ed60ca5948ac4d26ee2e0f908d228b406fdeafe4c",
+    "tests/native-chat.test.mjs": "0257a2622b19939de5da09b557167e7c49a425f41d109e42b91fd0f820712c37",
+    "tests/native-response-matrix.test.mjs": "c5563856227f4b2d387681b8a1943834ca514706d77ffd057b76c6ab0d8bef16",
+    "tests/native/repository-host.test.mjs": "3e449395b033bf5bfd51c4ce1f2ca847eb27c03b85467a2e24eb40b5ff3f8594",
+    "tests/native/swift-executor.test.mjs": "97f93d9bb32ebcc262c5d2f915eb549f3cc187feec9b2636b7ac617047176cc1",
+    "tests/native/swift-group.test.mjs": "980ad1fbb2dae8eb5394b300a547f41ed34d4ab6b20db4f4335c467f5ac6a5d9",
+    "tests/native/swift-kernel.test.mjs": "e6726c94a1b7359c2e3042a0e8ddb71973255088da82373f7988cd3bb6873699",
+    "tests/node-executor.test.mjs": "87bd39e1b48872de468477c8c8f6fa8f96884c632df58973b0ac1b89bb195e6d",
+    "tests/node-suite.test.mjs": "ca26dc4558ef17d2a9df982dfe1634053451580fcbf0228d06369121ff53143e",
+    "tests/paired-trial.test.mjs": "979dd5e1dfb7dcdc55f874fdf1e1232a8eea356d0fd856817583921d3d10441b",
+    "tests/proposed-changes.test.mjs": "d938037e6f67749f5ef473eaf65a3c5fc054865fed504151c01b0fdfcd33bd39",
+    "tests/repository-execution-receipt.test.mjs": "1075990a6f96276df2057f525df9914bb56a5c1da43d7d544956c86567ad983d",
+    "tests/repository-fixture.test.mjs": "4febfb12c46f3bbcd5f26612475aef6103c6cba876b82ab26cdcb7b9ffe39b20",
+    "tests/repository-live-cli.test.mjs": "c15fcdaf6ea18fd477c1b32526d1416c56ad91005b23231b6c4406e1e2c5632d",
+    "tests/repository-live-model-run.test.mjs": "d0014f841de603e625b665f9526c0d75b324fa4bb28ee0c6672becdc171858ae",
+    "tests/repository-run.test.mjs": "e1c1f1a9407cfecce5b61359a1822fd542c72626d5969da8e679477c60cf176e",
+    "tests/repository-workflow.test.mjs": "ca455e66b4e97fc8530ef0b2a12d35cd1986d80ab409ef9449a977f047015359",
+    "tests/reviewed-live-fixture.test.mjs": "fcc1bd1d97383979ceca8437091624f4117aec5d0c5fba188c896c8998825b80",
+    "tests/reviewed-live-model.test.mjs": "9a6d5da731b16ba2602594561e54b2cde76a54d39a98b719b239874aa49b0e51",
+    "tests/swift-group-owner.test.mjs": "8c7c83e52873c0d6b9a76cda4746dd1ded3c09583ac1d5c34d681023e2a159d3",
+    "tests/swift-static-group.test.mjs": "9bf196d7f2ddad0d4968515e5413cfeb01f334f6d9ad90ec007234539b24015d",
+    "tests/swift-static-run.test.mjs": "d9f747a328e44966c5e88128c3b9edf2d07a1c6dc4e818a91d44164aac78a791",
+    "tests/task-workspace.test.mjs": "d9df1ee4dc36b5a239a5a70847c6d4c53abe2164cf484712666635f1be9a2ef1",
+    "tests/trial-intake.test.mjs": "42a93005ab3fc6b0f573cf413bbb03d5ba2a59d40d3280363b741ded813a6c92",
+    "workflow/contracts.mjs": "c28a3ee3db6e9a936cd58fca8b8ee3f2744ca25c259e2ea278b3b09cdbb73d82",
+    "workflow/engine.mjs": "c67c63baeadc725a8487af7108b01d3a38dd50e64ff35f1be66471c81e5f979b",
+    "hosts/repository/candidate-review-v1.mjs": "da52c69f0a3fc893c7b3b25b756fceb031d1c916923f1c501cbb1bd27dc43183",
+    "tests/candidate-review.test.mjs": "1c46af99fda3919dbb858de49f393cbff019b3e717b8e64961c65651301a6e4a"
+  },
+  "previous98Unchanged": true,
+  "newFiles": [
+    "hosts/repository/candidate-review-v1.mjs",
+    "tests/candidate-review.test.mjs"
+  ],
+  "checks": {
+    "focused": {
+      "path": "/Users/louiscalata/nisi-next-private/.build/candidate-admission-DLlc7y/defensive-after.json",
+      "byteLength": 29619,
+      "sha256": "358cf1aacafd7b7d6d15201d4b62f0ee9ad91e3aba2cc7d43063a474a78c2dd5",
+      "counts": {
+        "tests": 34,
+        "pass": 34,
+        "fail": 0,
+        "cancelled": 0,
+        "skipped": 0,
+        "todo": 0
+      },
+      "exitCode": 0,
+      "argv": [
+        "--test",
+        "--test-reporter=tap",
+        "tests/candidate-review.test.mjs"
+      ],
+      "elapsedMs": 92,
+      "currentSource": true,
+      "sourceManifestSha256": "6558fcc4a2c9e2d01f019c6848ac01b89d6e5a1d709cddf808b8922ae5921a86"
+    },
+    "portable": {
+      "path": "/Users/louiscalata/nisi-next-private/.build/candidate-admission-DLlc7y/final-portable.json",
+      "byteLength": 207773,
+      "sha256": "3b249d7d23cc20e5e31151f51b48db8c1579d92edf3dd70f9dc1a6e00952a067",
+      "counts": {
+        "tests": 851,
+        "pass": 851,
+        "fail": 0,
+        "cancelled": 0,
+        "skipped": 0,
+        "todo": 0
+      },
+      "exitCode": 0,
+      "argv": [
+        "--test",
+        "--test-reporter=tap",
+        "tests/afm-content-executor.test.mjs",
+        "tests/afm-lifecycle.test.mjs",
+        "tests/benchmark-scripts.test.mjs",
+        "tests/candidate-review.test.mjs",
+        "tests/canonical-json-v1.test.mjs",
+        "tests/component-hardening.test.mjs",
+        "tests/content-consent.test.mjs",
+        "tests/editor-input.test.mjs",
+        "tests/example.test.mjs",
+        "tests/host-run-bundle-v2.test.mjs",
+        "tests/integrity-successors.test.mjs",
+        "tests/live-model-v3-cli.test.mjs",
+        "tests/live-model-v3-receipt.test.mjs",
+        "tests/live-model-v3.test.mjs",
+        "tests/live-output-mode.test.mjs",
+        "tests/live-usage.test.mjs",
+        "tests/local-chat-extra.test.mjs",
+        "tests/local-chat-gap-regression.test.mjs",
+        "tests/local-chat-lifecycle.test.mjs",
+        "tests/local-chat-output-mode.test.mjs",
+        "tests/local-chat-response-matrix.test.mjs",
+        "tests/local-chat.test.mjs",
+        "tests/local-model-discovery.test.mjs",
+        "tests/native-chat.test.mjs",
+        "tests/native-response-matrix.test.mjs",
+        "tests/node-executor.test.mjs",
+        "tests/node-suite.test.mjs",
+        "tests/onboarding.test.mjs",
+        "tests/owned-temp.test.mjs",
+        "tests/paired-trial.test.mjs",
+        "tests/proposed-changes.test.mjs",
+        "tests/public-api.test.mjs",
+        "tests/reporting-regressions.test.mjs",
+        "tests/repository-disk-capture.test.mjs",
+        "tests/repository-execution-receipt.test.mjs",
+        "tests/repository-fixture.test.mjs",
+        "tests/repository-live-cli.test.mjs",
+        "tests/repository-live-model-run.test.mjs",
+        "tests/repository-run.test.mjs",
+        "tests/repository-snapshot.test.mjs",
+        "tests/repository-workflow.test.mjs",
+        "tests/reviewed-live-fixture.test.mjs",
+        "tests/reviewed-live-model.test.mjs",
+        "tests/swift-group-owner.test.mjs",
+        "tests/swift-kernel-protocol.test.mjs",
+        "tests/swift-owned-child.test.mjs",
+        "tests/swift-reservation.test.mjs",
+        "tests/swift-static-group.test.mjs",
+        "tests/swift-static-run.test.mjs",
+        "tests/task-workspace.test.mjs",
+        "tests/trial-intake.test.mjs",
+        "tests/veritas-import-snapshot.test.mjs",
+        "tests/veritas-import.test.mjs",
+        "tests/workflow-example.test.mjs",
+        "tests/workflow.test.mjs"
+      ],
+      "elapsedMs": 6487,
+      "currentSource": true,
+      "sourceManifestSha256": "6558fcc4a2c9e2d01f019c6848ac01b89d6e5a1d709cddf808b8922ae5921a86"
+    }
+  },
+  "adverseAndIntermediate": [
+    {
+      "path": "/Users/louiscalata/nisi-next-private/.build/candidate-admission-DLlc7y/initial.json",
+      "byteLength": 28032,
+      "sha256": "598886707fa484f28bb64ba2bec4d4603c2c4e7d1bf7a36c4c8520eff33481af",
+      "counts": {
+        "tests": 27,
+        "pass": 27,
+        "fail": 0,
+        "cancelled": 0,
+        "skipped": 0,
+        "todo": 0
+      },
+      "exitCode": 0,
+      "argv": [
+        "--test",
+        "--test-reporter=tap",
+        "tests/candidate-review.test.mjs"
+      ],
+      "elapsedMs": 84,
+      "currentSource": false,
+      "sourceManifestSha256": "e13556fc0e804c4d4d6ead97dfc324a81fef71454c36909767ef5592570fc235"
+    },
+    {
+      "path": "/Users/louiscalata/nisi-next-private/.build/candidate-admission-DLlc7y/design-regressions-before.json",
+      "byteLength": 31594,
+      "sha256": "d28a4cce7f575a6a3518c803a302542668eef78536cab86a60a448574f847161",
+      "counts": {
+        "tests": 30,
+        "pass": 27,
+        "fail": 3,
+        "cancelled": 0,
+        "skipped": 0,
+        "todo": 0
+      },
+      "exitCode": 1,
+      "argv": [
+        "--test",
+        "--test-reporter=tap",
+        "tests/candidate-review.test.mjs"
+      ],
+      "elapsedMs": 89,
+      "currentSource": false,
+      "sourceManifestSha256": "829166728d4cbcaef758e9e98b3b83a20beaaffc289edeedecd250abf18f56bd"
+    },
+    {
+      "path": "/Users/louiscalata/nisi-next-private/.build/candidate-admission-DLlc7y/design-regressions-after.json",
+      "byteLength": 28711,
+      "sha256": "29331de4d4b13f0647a687be037146681bb733b4f8785bfd1a7f4a8ce56c33b2",
+      "counts": {
+        "tests": 30,
+        "pass": 30,
+        "fail": 0,
+        "cancelled": 0,
+        "skipped": 0,
+        "todo": 0
+      },
+      "exitCode": 0,
+      "argv": [
+        "--test",
+        "--test-reporter=tap",
+        "tests/candidate-review.test.mjs"
+      ],
+      "elapsedMs": 88,
+      "currentSource": false,
+      "sourceManifestSha256": "378b998866e89c8d5ff821fb9771c362a190344214807410e8038664aeca938a"
+    },
+    {
+      "path": "/Users/louiscalata/nisi-next-private/.build/candidate-admission-DLlc7y/defensive-before.json",
+      "byteLength": 32876,
+      "sha256": "aad1040c157221367319703bcdb31d7e121c63c8b3e6583245d9298f1d55b14f",
+      "counts": {
+        "tests": 34,
+        "pass": 30,
+        "fail": 4,
+        "cancelled": 0,
+        "skipped": 0,
+        "todo": 0
+      },
+      "exitCode": 1,
+      "argv": [
+        "--test",
+        "--test-reporter=tap",
+        "tests/candidate-review.test.mjs"
+      ],
+      "elapsedMs": 91,
+      "currentSource": false,
+      "sourceManifestSha256": "3f2e048aa5a5ad69d35ac4b790f950015125deefa9d2299821e7a2dc2a35b8cf"
+    }
+  ],
+  "sourceFreeze": {
+    "path": "/Users/louiscalata/nisi-next-private/.build/candidate-admission-DLlc7y/final-freeze.json",
+    "byteLength": 23355,
+    "sha256": "d93ef6620cc8e00bb66cd636252298f2e2f74916dfa2277b6ce2ff9f7b09884c",
+    "result": {
+      "status": "PASS_SOURCE_FREEZE_ONLY",
+      "files": 225,
+      "totalBytes": 8027242,
+      "excluded": [],
+      "originRechecked": false,
+      "integrationVerified": false,
+      "legalClearance": false
+    }
+  },
+  "mutations": {
+    "path": "/Users/louiscalata/nisi-next-private/.build/candidate-admission-DLlc7y/mutants-oR8c9Q/summary.json",
+    "byteLength": 4627,
+    "sha256": "da8b322ed6bc100a623c67621e96d83493061ed5a6a3f50fdf917554b500b073",
+    "detected": 8,
+    "total": 8,
+    "exhaustive": false,
+    "records": [
+      {
+        "path": "/Users/louiscalata/nisi-next-private/.build/candidate-admission-DLlc7y/mutants-oR8c9Q/control.json",
+        "byteLength": 6986,
+        "sha256": "cc1be022405c78b5b5b7091b0e1e0d07ec9d0656eae5633ab0f7660d88112649",
+        "counts": {
+          "tests": 34,
+          "pass": 34,
+          "fail": 0,
+          "cancelled": 0,
+          "skipped": 0,
+          "todo": 0
+        },
+        "exitCode": 0,
+        "assertionFailure": false,
+        "mutantSha256": "da52c69f0a3fc893c7b3b25b756fceb031d1c916923f1c501cbb1bd27dc43183"
+      },
+      {
+        "path": "/Users/louiscalata/nisi-next-private/.build/candidate-admission-DLlc7y/mutants-oR8c9Q/wrong-candidate.json",
+        "byteLength": 7633,
+        "sha256": "d57723b7b5d59f8cd3e3bb4cf000b35d4e53101563c4fe9f2b83a66d305cc1fe",
+        "counts": {
+          "tests": 34,
+          "pass": 33,
+          "fail": 1,
+          "cancelled": 0,
+          "skipped": 0,
+          "todo": 0
+        },
+        "exitCode": 1,
+        "assertionFailure": true,
+        "mutantSha256": "fee15dd80373fd67dbb87a1d685a31c8f3228272bf8b9bf426b9538612e075a4"
+      },
+      {
+        "path": "/Users/louiscalata/nisi-next-private/.build/candidate-admission-DLlc7y/mutants-oR8c9Q/copied-session.json",
+        "byteLength": 7684,
+        "sha256": "50afc97a7e93b9eda11972760564e44f6e7ce307985ce81c890f2652d0bbc605",
+        "counts": {
+          "tests": 34,
+          "pass": 33,
+          "fail": 1,
+          "cancelled": 0,
+          "skipped": 0,
+          "todo": 0
+        },
+        "exitCode": 1,
+        "assertionFailure": true,
+        "mutantSha256": "f5d7ef1abbae0f69e26cef6505823e0673327655f8d56af7dc1ab195333a4fcf"
+      },
+      {
+        "path": "/Users/louiscalata/nisi-next-private/.build/candidate-admission-DLlc7y/mutants-oR8c9Q/shared-issuance.json",
+        "byteLength": 7899,
+        "sha256": "e6da17388ec7e73d155d59afe63ec03c4bc0364ed9d620b1bd6cd353b061798c",
+        "counts": {
+          "tests": 34,
+          "pass": 33,
+          "fail": 1,
+          "cancelled": 0,
+          "skipped": 0,
+          "todo": 0
+        },
+        "exitCode": 1,
+        "assertionFailure": true,
+        "mutantSha256": "9b884400bb89a41e25bda10891aaabcae47a8b0da4f592d2a07cf9d901c6f62e"
+      },
+      {
+        "path": "/Users/louiscalata/nisi-next-private/.build/candidate-admission-DLlc7y/mutants-oR8c9Q/repeated-handoff.json",
+        "byteLength": 7824,
+        "sha256": "4cb50a0ac68e711e1fed54907697cdfc8ddc528c6890364ca04060e3ebd35775",
+        "counts": {
+          "tests": 34,
+          "pass": 33,
+          "fail": 1,
+          "cancelled": 0,
+          "skipped": 0,
+          "todo": 0
+        },
+        "exitCode": 1,
+        "assertionFailure": true,
+        "mutantSha256": "a6c684831f804873834b62fccc6090ba0c217b0a9d5408651c8727991f9c9d3f"
+      },
+      {
+        "path": "/Users/louiscalata/nisi-next-private/.build/candidate-admission-DLlc7y/mutants-oR8c9Q/lost-expiry.json",
+        "byteLength": 10001,
+        "sha256": "58b7bf6cc15240176cab37555b2ddf3c5ead0425087eaaef672575f044206477",
+        "counts": {
+          "tests": 34,
+          "pass": 30,
+          "fail": 4,
+          "cancelled": 0,
+          "skipped": 0,
+          "todo": 0
+        },
+        "exitCode": 1,
+        "assertionFailure": true,
+        "mutantSha256": "5ebb41e02f83c1e8f8bc34a364563468e3b13655bc9847218e51fd8d1aa3bdfe"
+      },
+      {
+        "path": "/Users/louiscalata/nisi-next-private/.build/candidate-admission-DLlc7y/mutants-oR8c9Q/unprotected-harness.json",
+        "byteLength": 7649,
+        "sha256": "7a98c61ba96690a9c60f7ba8905fa5f94e9a6776f250d2f5bbe50eb2c2ef2f90",
+        "counts": {
+          "tests": 34,
+          "pass": 33,
+          "fail": 1,
+          "cancelled": 0,
+          "skipped": 0,
+          "todo": 0
+        },
+        "exitCode": 1,
+        "assertionFailure": true,
+        "mutantSha256": "d5c7a330df352854700617591d1aa9d73d83614109e0ab9f49917e537461d657"
+      },
+      {
+        "path": "/Users/louiscalata/nisi-next-private/.build/candidate-admission-DLlc7y/mutants-oR8c9Q/historical-laundering.json",
+        "byteLength": 7829,
+        "sha256": "f175356e82f69b1e7ad8db39b2aad28cd5036cd2d6be176e8ad6cb468628da44",
+        "counts": {
+          "tests": 34,
+          "pass": 33,
+          "fail": 1,
+          "cancelled": 0,
+          "skipped": 0,
+          "todo": 0
+        },
+        "exitCode": 1,
+        "assertionFailure": true,
+        "mutantSha256": "97aec7ada7388f958f51bf44e1bd6f51fa8a6fce05dc34a6eadfe113b78c0344"
+      },
+      {
+        "path": "/Users/louiscalata/nisi-next-private/.build/candidate-admission-DLlc7y/mutants-oR8c9Q/false-authority.json",
+        "byteLength": 8447,
+        "sha256": "4a2f24ad8bfb7d985f02b76db80bb961f042e8cdd2e79bce890bd59d50c4161a",
+        "counts": {
+          "tests": 34,
+          "pass": 32,
+          "fail": 2,
+          "cancelled": 0,
+          "skipped": 0,
+          "todo": 0
+        },
+        "exitCode": 1,
+        "assertionFailure": true,
+        "mutantSha256": "deb78d179c0807356061d46aa73aa62a750b5798865de8d171e2c14c31658f21"
+      }
+    ]
+  },
+  "retainedCandidate": {
+    "path": "/Users/louiscalata/nisi-next-private/.build/candidate-admission-DLlc7y/retained-candidate-review.json",
+    "byteLength": 8785,
+    "sha256": "d8aa99e64a726097a162a7c3dfa11ecb591295b30127aad7910ef95601a15f63",
+    "status": "HISTORICAL_CANDIDATE_REVIEWED_NOT_EXECUTED",
+    "priorEvidence": [
+      {
+        "path": "/Users/louiscalata/nisi-next-private/.build/native-chat-uGeaKs/operation-lwyKbD/preflight.json",
+        "byteLength": 1429,
+        "sha256": "355442f6fd4f6c87499f5086c1e0a36f02de87beecb1f20396b1f89d667ec839"
+      },
+      {
+        "path": "/Users/louiscalata/nisi-next-private/.build/native-chat-uGeaKs/operation-lwyKbD/adapter-result.json",
+        "byteLength": 1033,
+        "sha256": "d77bac0b245577f22e41dcd8951b6cd444a83e057a9acd5f9b1fe39145ff1152"
+      },
+      {
+        "path": "/Users/louiscalata/nisi-next-private/.build/native-chat-uGeaKs/operation-lwyKbD/adapter-receipts.json",
+        "byteLength": 1953,
+        "sha256": "c0a20bdd7cca65caae527f79432046342fd38199f6daf3c7e37ccbc6ea6f1de0"
+      },
+      {
+        "path": "/Users/louiscalata/nisi-next-private/.build/native-chat-uGeaKs/operation-lwyKbD/summary.json",
+        "byteLength": 1595,
+        "sha256": "3432e49a83dc754edec1c9923d5d2c6f0f6287c0450a1aea30d9f1fc089028af"
+      }
+    ],
+    "candidateFingerprint": "a3a713ec43002762c434692e43dff8aed858a5c8fba650d32b6352d0422580c4",
+    "authorizing": false,
+    "sourceExecuted": false
+  },
+  "collaboration": {
+    "claude": {
+      "evidence": [
+        {
+          "path": "/Users/louiscalata/nisi-next-private/.build/candidate-admission-DLlc7y/claude-candidate-design-prompt.md",
+          "byteLength": 5658,
+          "sha256": "163817ee1500e8b1a79a1b6427286bdbcb9e4de49c2f2b7a46ef3b28c08c3f9f"
+        },
+        {
+          "path": "/Users/louiscalata/nisi-next-private/.build/candidate-admission-DLlc7y/claude-candidate-design-result.json",
+          "byteLength": 10198,
+          "sha256": "b39da506b0565e0093ba057dd461cd5a4def5975f49aaf8ff100ab3c6bfa46f7"
+        },
+        {
+          "path": "/Users/louiscalata/nisi-next-private/.build/candidate-admission-DLlc7y/claude-candidate-design-adjudication.md",
+          "byteLength": 5572,
+          "sha256": "5cb423d98bc88d10199f920ec49c321bac382162845bd22ae3adbd901e421380"
+        }
+      ],
+      "requestedModel": "opus",
+      "reportedModels": [
+        "claude-haiku-4-5-20251001",
+        "claude-opus-5"
+      ],
+      "modelUsage": {
+        "claude-haiku-4-5-20251001": {
+          "inputTokens": 2063,
+          "outputTokens": 20,
+          "cacheReadInputTokens": 0,
+          "cacheCreationInputTokens": 0,
+          "webSearchRequests": 0,
+          "costUSD": 0.002163,
+          "contextWindow": 200000,
+          "maxOutputTokens": 32000,
+          "thinkingTokens": 0,
+          "canonicalModel": "claude-haiku-4-5",
+          "provider": "firstParty",
+          "costBasis": "list"
+        },
+        "claude-opus-5": {
+          "inputTokens": 2,
+          "outputTokens": 2784,
+          "cacheReadInputTokens": 737,
+          "cacheCreationInputTokens": 2337,
+          "webSearchRequests": 0,
+          "costUSD": 0.09334849999999999,
+          "contextWindow": 1000000,
+          "maxOutputTokens": 64000,
+          "thinkingTokens": 34,
+          "canonicalModel": "claude-opus-5",
+          "provider": "firstParty",
+          "costBasis": "list"
+        }
+      },
+      "reportedSuccessfulAttemptCostUSD": 0.09551149999999999,
+      "totalWallSeconds": 133.549,
+      "priorAttempts": [
+        {
+          "requested_model": "fable",
+          "status": "NOT_RUN",
+          "error": "Claude exceeded 45s cap"
+        },
+        {
+          "requested_model": "sonnet",
+          "status": "NOT_RUN",
+          "error": "Claude exceeded 45s cap"
+        }
+      ],
+      "totalUsageComplete": false
+    },
+    "daybreak": {
+      "evidence": [
+        {
+          "path": "/Users/louiscalata/nisi-next-private/.build/candidate-admission-DLlc7y/daybreak-review.md",
+          "byteLength": 4576,
+          "sha256": "c2933597071f40b4cb676d016459442fe32efa0ffcecbc2bf346e43102bab539"
+        },
+        {
+          "path": "/Users/louiscalata/nisi-next-private/.build/candidate-admission-DLlc7y/daybreak-final-review.md",
+          "byteLength": 2470,
+          "sha256": "90cd6716c879df97bdb8c0dc67d25102ab6c44ac51f9760ced10b214f8bf8466"
+        }
+      ],
+      "scope": "bounded source and final delta review, not test execution"
+    },
+    "lunaOpenCode": {
+      "requestedRoute": "opencode/big-pickle",
+      "outcome": "BLOCKED_P1_FAILED",
+      "raw": {
+        "path": "/Users/louiscalata/nisi-next-private/.build/private-consumer-upgrade-gCMyew/.packets/local-chat-output-mode-types.result.md",
+        "byteLength": 436,
+        "sha256": "8f013e188c5f4ad8f6fd7c61f1f83c67761077f4e31e466a1e29320e994e810d"
+      },
+      "ownerCorrectedV1OutputModeType": true,
+      "initialGeneratedBytesRetained": false,
+      "canonicalPackageIntegrated": false
+    },
+    "sharedChami": {
+      "dispatchedThisSlice": false
+    }
+  },
+  "isolatedPackage": {
+    "ownerEvidence": {
+      "path": "/Users/louiscalata/nisi-next-private/.build/candidate-admission-DLlc7y/package-owner-verification.json",
+      "byteLength": 8978,
+      "sha256": "ad706546cd2302ffb5fdabbf7c2c117b722761738c3f5cef2795cd88f20181a4"
+    },
+    "archive": {
+      "path": ".build/private-consumer-upgrade-gCMyew/archive-v2/nisi-0.2.0-private.0.tgz",
+      "sha256": "107221c4fdd63146041205b094ae48138f3c6794c2490a425ca86b3359908502",
+      "entries": {
+        "adapters/apple-foundation-models.mjs": "311f4898c31b4e0693093361fc19c344086c1f24946909fe134c14d37e25d080",
+        "adapters/local-chat.mjs": "ca26b49502b27f494487f5da32edfc13a9d8b85cb02da43b58c4417babb3e842",
+        "canonical/canonical-json-v1.mjs": "d1049a26d2bea0d14e959c0af22af15b975345091c5fa5360e8bd685637f8e59",
+        "gate/afm-content-executor.mjs": "29955d7e80d7b7fdc0bdb88fbd24e782a317b4bdc78548b56f3b48598d21e74d",
+        "gate/content-consent.mjs": "a735eb35cb1373b3f3744dc7b3caa8b24ebbf394babba53d4f722136c72a0820",
+        "hosts/repository/snapshot-contract.mjs": "2b52c23bac3a817769b7892eed71baba79cb81954b6a63724d107a9c258ba13f",
+        "hosts/swift-verifier/owned-child.mjs": "ff9bbef97b3401afd394a98c8bff4fe273a4b6af3a1f852bdf5bf872fd4474df",
+        "hosts/swift-verifier/protocol.mjs": "7557d81836f263c13e06ac7613ebfa61ce7fbeeb7b0f7db98889473806f322cc",
+        "index.mjs": "066c90d65209854cd6aeb838924ce28dca90d7dc75d0cd533d17fbba8e1c3db7",
+        "package.json": "6d243032c775adf961c4cc99d98cb2674a2e33accdd792108e71201ea1e138a9",
+        "policy/file-access.mjs": "92f9f60220e1869ad0d6571ae2b5a8ddc9259b2463c4cf617d4cecee6eacc1d3",
+        "serialization/canonical-json-v1.mjs": "1e5eb6222da2c7baae3cd45a5077ccc1e8ae25b5bc184646d9e55170dec53625",
+        "types/afm-content-executor.d.ts": "05d4dc617ba58abc67f2469d912a0cc0a025a06bae784be263ea67b286504b94",
+        "types/apple-foundation-models.d.ts": "09086a14ea7e0441df3cbe4e414f00e6aa6d3d8e8a53dfb812d5c13d1d97a90d",
+        "types/canonical.d.ts": "8fb8a3a402d2f4e9a24ad945705d407ddde9f1a5555c23ae53db7075e0f101f4",
+        "types/content-consent.d.ts": "94b27ebef08df7e85a22ca8b1bf7d84d88fcc79e5145981e827bdc9aeb78f7c9",
+        "types/contracts.d.ts": "6ad05a1db5d18de910a22cc696257fb0b2d2b7a8cfe875090f0c3b6b70658c15",
+        "types/index.d.ts": "b12ba5fb5f8d15efd89ee8ca263d0ca8c97e228059ab98ee78a42446b101fab6",
+        "types/local-chat.d.ts": "8faccd51bef36c9a5380c5b4568f01d7c9afc20311d65e60dde2d87501c920ae",
+        "types/policy.d.ts": "843edb85c40728778e1a76763dd90b8b560e89cdd716d7ff8a5f8c19dc460f80",
+        "types/serialization.d.ts": "c699b39740237933ded4b7afea48fe20d9c0eb2f8bbcecdad472f9f0bca05084",
+        "types/workflow.d.ts": "92d155a41afa9734bdf333419fb8d1bc5c129d4d5724979c8f3dd82a09e7dd18",
+        "workflow/contracts.mjs": "c28a3ee3db6e9a936cd58fca8b8ee3f2744ca25c259e2ea278b3b09cdbb73d82",
+        "workflow/engine.mjs": "c67c63baeadc725a8487af7108b01d3a38dd50e64ff35f1be66471c81e5f979b"
+      }
+    },
+    "scope": "existing installed artifact reverified against archive; no new installation; five type consumers and seven injected runtime checks",
+    "originalReceiptHashErrors": {
+      "path": ".build/private-consumer-upgrade-gCMyew/receipt.json",
+      "sha256": "0d4e7699a27473834308ff9a57fdd9fa21706511c76e276e836c6d0905f44f0b",
+      "staleAssertions": [
+        {
+          "path": "types/contracts.d.ts",
+          "claimed": "6ad05a1db5d18de910a22cc696257fbf0b2d2b7a8cfe875090f0c3b6b70658c15",
+          "actual": "6ad05a1db5d18de910a22cc696257fb0b2d2b7a8cfe875090f0c3b6b70658c15"
+        },
+        {
+          "path": "consumers/adoption-reviewed.mts",
+          "claimed": "99574ead665b363864c423add29aa40a4ad85107c578b3e56fbe687d7d8622d",
+          "actual": "99574ead665b363864c423add29aa40a4ad85107c578b3e56b8fe687d7d8622d"
+        },
+        {
+          "path": "consumers/edge-cases.mts",
+          "claimed": "457ee56cb0c846ee09cd70fd0c1d38ffa11514c2ba913aa690002da2d0090990",
+          "actual": "457ee56a0127e81703fb72eb2c943e6341dd1316d7fc1fadf3fe64ef5ef54af7"
+        }
+      ]
+    },
+    "canonicalIntegrated": false
+  },
+  "evidenceTools": [
+    {
+      "path": "/Users/louiscalata/nisi-next-private/.build/candidate-admission-DLlc7y/record.mjs",
+      "byteLength": 2110,
+      "sha256": "227c5c080b5941460301782efdbae5ed59b443b975308f990db1405ca32240e1"
+    },
+    {
+      "path": "/Users/louiscalata/nisi-next-private/.build/candidate-admission-DLlc7y/mutants.mjs",
+      "byteLength": 4245,
+      "sha256": "129977aafbca645911e5fe0b1dd9f518873bc3ece9a266a3179e538391b59ee9"
+    },
+    {
+      "path": "/Users/louiscalata/nisi-next-private/.build/candidate-admission-DLlc7y/review-retained-candidate.mjs",
+      "byteLength": 3487,
+      "sha256": "7f5999d66727574ebaee7037d3660dc3cae6cadcbd8be8c57dff6821d7ec56b2"
+    },
+    {
+      "path": "/Users/louiscalata/nisi-next-private/.build/candidate-admission-DLlc7y/package-verification.mjs",
+      "byteLength": 4985,
+      "sha256": "438685fba15d67223615293730a9ef5d7a63be07ced19b5d904a4620ec654c2c"
+    },
+    {
+      "path": "/Users/louiscalata/nisi-next-private/.build/candidate-admission-DLlc7y/checkpoint.mjs",
+      "byteLength": 8642,
+      "sha256": "f3057d964119d0d8d4adb97556a54cd6763bdfa617d16fd22bc9a4747ec63694"
+    }
+  ],
+  "documents": [
+    {
+      "path": "/Users/louiscalata/nisi-next-private/roadmap.md",
+      "byteLength": 269598,
+      "sha256": "4d2fa4d9386bbe89988c8c540e3e228c4de2bc1cb180598fab169b8c16f98ecd"
+    },
+    {
+      "path": "/Volumes/SharedChami/Veritas Local Repository/SYSTEM-EQUATION.md",
+      "byteLength": 267010,
+      "sha256": "efc2ccc7eeaa4812fb441243c1b7bfbbf1073a53e9c5aa3b2f34f64edaf8f167"
+    }
+  ],
+  "retainedTailSha256": "703bfbd10ad108ac8b18f16e4f6864c69d29f4558794616b81dac7ab9522c4f3",
+  "boundaries": {
+    "trustedHostSingleProcessOnly": true,
+    "providerOriginAttested": false,
+    "reviewerIdentityAttested": false,
+    "executionAuthorized": false,
+    "sandboxImplemented": false,
+    "liveCLIReviewSeamIntegrated": false,
+    "v3LiveWorkflow": "NOT_RUN",
+    "nativeAppAcceptance": "NOT_RUN",
+    "nativeTestsRerunThisSlice": false,
+    "priorCombinedNativeTests": "HISTORICAL_2_OF_2",
+    "newInferenceForRetainedCandidate": false,
+    "canonicalPackageChanged": false,
+    "completeMerger": false,
+    "measuredProductSavings": false,
+    "publication": false,
+    "persistentTrustChanged": false
+  }
+}

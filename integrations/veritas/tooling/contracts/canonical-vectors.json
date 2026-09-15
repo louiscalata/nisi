@@ -1,0 +1,577 @@
+{
+  "schemaVersion": 1,
+  "profile": "veritas-canonical-json-stage5-v1",
+  "vectors": [
+    {
+      "id": "CANON-S5-001-KEY-ORDER",
+      "value": {
+        "z": 2,
+        "a": 1
+      },
+      "canonical": "{\"a\":1,\"z\":2}",
+      "sha256": "99168216144c7fed5d4c54916cf98d9c66096280c04a499822a99b6658bd177a"
+    },
+    {
+      "id": "CANON-S5-002-NESTED",
+      "value": {
+        "outer": {
+          "b": false,
+          "a": null
+        },
+        "list": [
+          3,
+          2,
+          1
+        ]
+      },
+      "canonical": "{\"list\":[3,2,1],\"outer\":{\"a\":null,\"b\":false}}",
+      "sha256": "4e476e2a92b95dbeb909689ed5e37f1964f857df6d978953477b014fcfb8d016"
+    },
+    {
+      "id": "CANON-S5-003-TYPED-SUBJECT",
+      "value": {
+        "subjectType": "ACCEPTED_ARTIFACT",
+        "subjectDigest": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "inheritsTrust": false,
+        "schemaVersion": 1
+      },
+      "canonical": "{\"inheritsTrust\":false,\"schemaVersion\":1,\"subjectDigest\":\"aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa\",\"subjectType\":\"ACCEPTED_ARTIFACT\"}",
+      "sha256": "5250dfff2c0bb540ae71f469290a5ae8c447a328f6a21541163c9109c21da91e"
+    },
+    {
+      "id": "CANON-S5-004-NEGATIVE-AUTHORITY",
+      "value": {
+        "protectedAuthorityVerified": false,
+        "executionUseLimit": 0,
+        "maySpawnProcess": false,
+        "status": "NOT_RUN"
+      },
+      "canonical": "{\"executionUseLimit\":0,\"maySpawnProcess\":false,\"protectedAuthorityVerified\":false,\"status\":\"NOT_RUN\"}",
+      "sha256": "4778ec818f3ef440d256566646e5a8484877f50569993248185e2b3903fcc5fa"
+    },
+    {
+      "id": "CANON-S5-005-GIT-BASE-INERT",
+      "value": {
+        "status": "VERIFIED_INERT",
+        "objectFormat": "sha1",
+        "protectedRef": false,
+        "mayStage": false
+      },
+      "canonical": "{\"mayStage\":false,\"objectFormat\":\"sha1\",\"protectedRef\":false,\"status\":\"VERIFIED_INERT\"}",
+      "sha256": "8f59b414a28f1e1c5d6a15b097deae8c9534c19a6735c9aea93ce12c7e7baff1"
+    },
+    {
+      "id": "CANON-S5-006-GIT-TREE-DELTA-INERT",
+      "value": {
+        "status": "DERIVED_INERT",
+        "operationSemantics": "ONE_BASE_ONE_OP_PER_PATH_SIMULTANEOUS",
+        "freshBaseReverified": true,
+        "gitSubprocessInvoked": false,
+        "textPatchParsed": false,
+        "filesystemMutated": false,
+        "mayStage": false,
+        "mayExecute": false,
+        "referenceFinalTreeDigest": "b5dd23296dbb6947d4a8ca6eaa2daf77fb6bfea21ca24118cd5c3cee63f86855"
+      },
+      "canonical": "{\"filesystemMutated\":false,\"freshBaseReverified\":true,\"gitSubprocessInvoked\":false,\"mayExecute\":false,\"mayStage\":false,\"operationSemantics\":\"ONE_BASE_ONE_OP_PER_PATH_SIMULTANEOUS\",\"referenceFinalTreeDigest\":\"b5dd23296dbb6947d4a8ca6eaa2daf77fb6bfea21ca24118cd5c3cee63f86855\",\"status\":\"DERIVED_INERT\",\"textPatchParsed\":false}",
+      "sha256": "dad2600a1b3cec6976d835a545511f9b71613a215244ed26581d46747092b103"
+    },
+    {
+      "id": "CANON-S5-007-M46-DEPENDENCY-CLOSURE-INERT",
+      "value": {
+        "status": "DECLARED_INERT",
+        "profile": "veritas-m46-inert-dependency-closure-v1",
+        "subjectType": "ACCEPTED_ARTIFACT",
+        "referenceSubjectDigest": "6cb844f7d84248db3054f3cb932dbe61abeaa1f357d21c31b8adaed605bcccc6",
+        "nodeTypes": [
+          "ADAPTER",
+          "CLOSURE_ROOT",
+          "DESTINATION",
+          "EVIDENCE",
+          "POLICY",
+          "RUNTIME",
+          "VERIFIER"
+        ],
+        "declaredSetClosed": true,
+        "externalCompletenessVerified": false,
+        "mayRecall": false,
+        "mayExecute": false,
+        "referenceGraphDigest": "62f1c2b3bc6a98fc59a86fa0a53baba83c0ffc8d5d01d72c88a370fdef2a1eb9"
+      },
+      "canonical": "{\"declaredSetClosed\":true,\"externalCompletenessVerified\":false,\"mayExecute\":false,\"mayRecall\":false,\"nodeTypes\":[\"ADAPTER\",\"CLOSURE_ROOT\",\"DESTINATION\",\"EVIDENCE\",\"POLICY\",\"RUNTIME\",\"VERIFIER\"],\"profile\":\"veritas-m46-inert-dependency-closure-v1\",\"referenceGraphDigest\":\"62f1c2b3bc6a98fc59a86fa0a53baba83c0ffc8d5d01d72c88a370fdef2a1eb9\",\"referenceSubjectDigest\":\"6cb844f7d84248db3054f3cb932dbe61abeaa1f357d21c31b8adaed605bcccc6\",\"status\":\"DECLARED_INERT\",\"subjectType\":\"ACCEPTED_ARTIFACT\"}",
+      "sha256": "c80aa79cafc0894c90a000edcc714af2ae19f95ad5a3754f73f11b2b0d692ef6"
+    },
+    {
+      "id": "CANON-S5-008-M46-RECALL-BEFORE-REUSE-INERT",
+      "value": {
+        "status": "DERIVED_INERT",
+        "profile": "veritas-m46-inert-scoped-recall-v1",
+        "subjectDigest": "6cb844f7d84248db3054f3cb932dbe61abeaa1f357d21c31b8adaed605bcccc6",
+        "graphDigest": "62f1c2b3bc6a98fc59a86fa0a53baba83c0ffc8d5d01d72c88a370fdef2a1eb9",
+        "receiptSetDigest": "ef0600af646843392f56ddd63a974d2853bc662bc0d4f042bb42f806a268ffab",
+        "beforeStateDigest": "19c36597c46db184b5ff86f538fba82f59d430100b80516f85d7a8eef916a23d",
+        "eventDigest": "51191ea4bfa8ff317e255af182fe293c4c00cc6d16e6802804e9549bcfb18e6f",
+        "barrierStateDigest": "c2c22b622051fd584c590a24165ead8c3fc14145c19348d737e61ca69a40c9d3",
+        "afterStateDigest": "ea01570c2dacf75ccd3d014a6b8e7880aa89c26696d03da9e5f15875d1d125fc",
+        "resultDigest": "e52cfdd4e2df1c847c37d8fa09992baed72475ccf5847b71eaf80bf894ad0aa4",
+        "ledgerRevisions": [
+          7,
+          8
+        ],
+        "affectedDisposition": "REFUSED_RECALL_REQUIRED",
+        "unrelatedDisposition": "MEASURED_UNAFFECTED_NONAUTHORIZING",
+        "externalCompletenessVerified": false,
+        "realEventObserved": false,
+        "protectedMonotonicStateVerified": false,
+        "mayConsume": false,
+        "mayRecall": false,
+        "actualRecallPerformed": false,
+        "receiptConsumed": false,
+        "mayReplay": false,
+        "mayExecute": false,
+        "filesystemMutated": false,
+        "networkRequested": false,
+        "subprocessStarted": false,
+        "dynamicLoadAttempted": false,
+        "coordinatorMutated": false
+      },
+      "canonical": "{\"actualRecallPerformed\":false,\"affectedDisposition\":\"REFUSED_RECALL_REQUIRED\",\"afterStateDigest\":\"ea01570c2dacf75ccd3d014a6b8e7880aa89c26696d03da9e5f15875d1d125fc\",\"barrierStateDigest\":\"c2c22b622051fd584c590a24165ead8c3fc14145c19348d737e61ca69a40c9d3\",\"beforeStateDigest\":\"19c36597c46db184b5ff86f538fba82f59d430100b80516f85d7a8eef916a23d\",\"coordinatorMutated\":false,\"dynamicLoadAttempted\":false,\"eventDigest\":\"51191ea4bfa8ff317e255af182fe293c4c00cc6d16e6802804e9549bcfb18e6f\",\"externalCompletenessVerified\":false,\"filesystemMutated\":false,\"graphDigest\":\"62f1c2b3bc6a98fc59a86fa0a53baba83c0ffc8d5d01d72c88a370fdef2a1eb9\",\"ledgerRevisions\":[7,8],\"mayConsume\":false,\"mayExecute\":false,\"mayRecall\":false,\"mayReplay\":false,\"networkRequested\":false,\"profile\":\"veritas-m46-inert-scoped-recall-v1\",\"protectedMonotonicStateVerified\":false,\"realEventObserved\":false,\"receiptConsumed\":false,\"receiptSetDigest\":\"ef0600af646843392f56ddd63a974d2853bc662bc0d4f042bb42f806a268ffab\",\"resultDigest\":\"e52cfdd4e2df1c847c37d8fa09992baed72475ccf5847b71eaf80bf894ad0aa4\",\"status\":\"DERIVED_INERT\",\"subjectDigest\":\"6cb844f7d84248db3054f3cb932dbe61abeaa1f357d21c31b8adaed605bcccc6\",\"subprocessStarted\":false,\"unrelatedDisposition\":\"MEASURED_UNAFFECTED_NONAUTHORIZING\"}",
+      "sha256": "bfbba3d2c9a6c9fc6797250edc799f6b6b0e1e8b23913110b1c4660a3e12dad8"
+    },
+    {
+      "id": "CANON-S5-009-FI0-INERT-INCIDENT-CONTRACT",
+      "value": {
+        "status": "DERIVED_INERT",
+        "profile": "veritas-fi0-inert-incident-contract-v1",
+        "externalGenesisDigest": "7ed46565cce2391c253119d894e74dc6285a8adf27293a951434163fe16060ce",
+        "evidenceManifestDigest": "39168b68ab9845ece19778973bf6f8ef3580c8af817bdf33be732c728309d9a2",
+        "incidentDigest": "7c675c9d43a3edc8f6148a38ae3244ade7475fecfa3bceb2e20f2933dafce7db",
+        "eventChainHeadDigest": "7199a1b63946071a528e731f2f879be52079dd32f59da9520f11f23252448c9f",
+        "importEnvelopeDigest": "a10d8f9de863c15a8c17ec71aa94b4032e9cb3f29e4f9091c62ba94675d88f4e",
+        "viewDigest": "e6a13b763834859ad82d62f980d2a0851f4d913f4dbfdaa39f9b718712a6cbef",
+        "baselineBundleDigest": "750352fadbfe479a944de9f3998e2f9468bc34aae88e52e7007d1b98c9ab41af",
+        "incidentState": "CANDIDATE",
+        "viewState": "INCONCLUSIVE",
+        "eventCount": 3,
+        "baselineFailureModes": [
+          "DISABLED",
+          "MISSING",
+          "MALFORMED",
+          "CORRUPT",
+          "SLOW_BUDGET_EXCEEDED",
+          "STORE_FULL",
+          "THREW"
+        ],
+        "authorizing": false,
+        "protectedAuthorityVerified": false,
+        "importPerformed": false,
+        "historicalFactsVerified": false,
+        "mayCapture": false,
+        "mayImport": false,
+        "mayAdjudicate": false,
+        "mayConfirm": false,
+        "mayPromote": false,
+        "mayRetrieve": false,
+        "mayInjectContext": false,
+        "mayRepair": false,
+        "mayCertify": false,
+        "mayExecute": false,
+        "baselineMutated": false
+      },
+      "canonical": "{\"authorizing\":false,\"baselineBundleDigest\":\"750352fadbfe479a944de9f3998e2f9468bc34aae88e52e7007d1b98c9ab41af\",\"baselineFailureModes\":[\"DISABLED\",\"MISSING\",\"MALFORMED\",\"CORRUPT\",\"SLOW_BUDGET_EXCEEDED\",\"STORE_FULL\",\"THREW\"],\"baselineMutated\":false,\"eventChainHeadDigest\":\"7199a1b63946071a528e731f2f879be52079dd32f59da9520f11f23252448c9f\",\"eventCount\":3,\"evidenceManifestDigest\":\"39168b68ab9845ece19778973bf6f8ef3580c8af817bdf33be732c728309d9a2\",\"externalGenesisDigest\":\"7ed46565cce2391c253119d894e74dc6285a8adf27293a951434163fe16060ce\",\"historicalFactsVerified\":false,\"importEnvelopeDigest\":\"a10d8f9de863c15a8c17ec71aa94b4032e9cb3f29e4f9091c62ba94675d88f4e\",\"importPerformed\":false,\"incidentDigest\":\"7c675c9d43a3edc8f6148a38ae3244ade7475fecfa3bceb2e20f2933dafce7db\",\"incidentState\":\"CANDIDATE\",\"mayAdjudicate\":false,\"mayCapture\":false,\"mayCertify\":false,\"mayConfirm\":false,\"mayExecute\":false,\"mayImport\":false,\"mayInjectContext\":false,\"mayPromote\":false,\"mayRepair\":false,\"mayRetrieve\":false,\"profile\":\"veritas-fi0-inert-incident-contract-v1\",\"protectedAuthorityVerified\":false,\"status\":\"DERIVED_INERT\",\"viewDigest\":\"e6a13b763834859ad82d62f980d2a0851f4d913f4dbfdaa39f9b718712a6cbef\",\"viewState\":\"INCONCLUSIVE\"}",
+      "sha256": "a07ba231b9a725252b9467d196fa88c23d82f9f1e8fa2f3711af0fb0553d7898"
+    },
+    {
+      "id": "CANON-S5-010-M07-E14-FROZEN-SCENARIO",
+      "value": {
+        "status": "FROZEN_E14_SCENARIO_ONLY",
+        "profile": "veritas-e14-assurance-continuity-displacement-v1",
+        "evidenceClass": "SELF_ADMINISTERED_SCENARIO_FREEZE",
+        "manifestSha256": "f9a60fb3ed7c5776645eee108ee5196c2d611129d800e195dd80a28f22960b59",
+        "caseSetDigest": "511ae18dc58c4cb12d79ff4fd98b13bf5fa3e33037bea6133dbadf33b735e3ba",
+        "verifierSourceSha256": "5a5ae45dd63a8e0ca4fb89cf2d0c7c4de86dcd3ab6fee81da5b1859bd142eb24",
+        "caseSlotsPerFreshStoreRepetition": 42,
+        "repeatedStructuralPasses": 2,
+        "structuralCaseSlotChecks": 84,
+        "pairedCaseSlotsPerComparisonPair": 84,
+        "laneResultSlotsPerComparisonPair": 168,
+        "runStatus": "NOT_RUN",
+        "e14ExecutedCases": 0,
+        "comparisonRuns": 0,
+        "comparisonFairness": "NOT_ASSESSED",
+        "m07ScenarioFreezeValidated": true,
+        "technicalE14Credited": false,
+        "adoptionE14Credited": false,
+        "comparisonCredited": false,
+        "m4Credited": false,
+        "uniquenessCredited": false,
+        "patentCredited": false,
+        "productionCredited": false,
+        "signingCredited": false,
+        "releaseCredited": false
+      },
+      "canonical": "{\"adoptionE14Credited\":false,\"caseSetDigest\":\"511ae18dc58c4cb12d79ff4fd98b13bf5fa3e33037bea6133dbadf33b735e3ba\",\"caseSlotsPerFreshStoreRepetition\":42,\"comparisonCredited\":false,\"comparisonFairness\":\"NOT_ASSESSED\",\"comparisonRuns\":0,\"e14ExecutedCases\":0,\"evidenceClass\":\"SELF_ADMINISTERED_SCENARIO_FREEZE\",\"laneResultSlotsPerComparisonPair\":168,\"m07ScenarioFreezeValidated\":true,\"m4Credited\":false,\"manifestSha256\":\"f9a60fb3ed7c5776645eee108ee5196c2d611129d800e195dd80a28f22960b59\",\"pairedCaseSlotsPerComparisonPair\":84,\"patentCredited\":false,\"productionCredited\":false,\"profile\":\"veritas-e14-assurance-continuity-displacement-v1\",\"releaseCredited\":false,\"repeatedStructuralPasses\":2,\"runStatus\":\"NOT_RUN\",\"signingCredited\":false,\"status\":\"FROZEN_E14_SCENARIO_ONLY\",\"structuralCaseSlotChecks\":84,\"technicalE14Credited\":false,\"uniquenessCredited\":false,\"verifierSourceSha256\":\"5a5ae45dd63a8e0ca4fb89cf2d0c7c4de86dcd3ab6fee81da5b1859bd142eb24\"}",
+      "sha256": "94964e744838e26a4221c58e94a90750e63b0c6b15114d7e85f4c3e1849365c5"
+    },
+    {
+      "id": "CANON-S5-011-M47-FROZEN-SET-ORACLE-AGREEMENT-INERT",
+      "value": {
+        "schemaVersion": 1,
+        "recordType": "M47_ORACLE_AGREEMENT_RESULT_FIXTURE",
+        "status": "DERIVED_M47_INERT_FROZEN_SET_PLAN_ONLY",
+        "profile": "veritas-m47-inert-frozen-set-plan-oracle-v1",
+        "graphDigest": "62f1c2b3bc6a98fc59a86fa0a53baba83c0ffc8d5d01d72c88a370fdef2a1eb9",
+        "universeDigest": "77e7e1b162f3d4544dfa2427ebb5ee988c442ffff6d688775152b37a0de48048",
+        "checkSetDigest": "5e7209b7c5e26a0165be34e596169d2f847c5356bffb3a506c32a571d351b121",
+        "freezeDigest": "3c6f16b05636465283bbed6d0278720b53968958782f1c8a60fef723796d3777",
+        "mode": "FROZEN_SET_FALLBACK",
+        "includedCheckIds": [
+          "check/approval-binding",
+          "check/authority-reference",
+          "check/cross-invariant-regression-canary",
+          "check/decision-binding",
+          "check/dependency-continuity",
+          "check/destination-readback",
+          "check/evidence-binding",
+          "check/policy-profile",
+          "check/receipt-binding",
+          "check/subject-identity",
+          "check/transformation-determinism",
+          "check/verifier-pinning"
+        ],
+        "knownChange": {
+          "vectorKind": "KNOWN_CHANGE",
+          "changeDigest": "277fc0eaf643144325d41deb55e9a29231428b8d3a19fa650b97a0bfe90bfd75",
+          "planDigest": "bcc4b0a1f974f7a0028b8756749b0081907122cff02c500042b5ceb7baadad09",
+          "reasonKind": "DIRECT_GRAPH_INTERSECTION",
+          "reasonPaths": [
+            {
+              "checkId": "check/approval-binding",
+              "reasonKind": "DIRECT_GRAPH_INTERSECTION",
+              "pathNodes": [
+                "f5ea1f11cc953c73eddb1892a5328fe1bb102cddd2d094d6184e7a6ed97e1875"
+              ]
+            },
+            {
+              "checkId": "check/authority-reference",
+              "reasonKind": "DIRECT_GRAPH_INTERSECTION",
+              "pathNodes": [
+                "f5ea1f11cc953c73eddb1892a5328fe1bb102cddd2d094d6184e7a6ed97e1875"
+              ]
+            },
+            {
+              "checkId": "check/cross-invariant-regression-canary",
+              "reasonKind": "DIRECT_GRAPH_INTERSECTION",
+              "pathNodes": [
+                "f5ea1f11cc953c73eddb1892a5328fe1bb102cddd2d094d6184e7a6ed97e1875",
+                "7d7477cdaac2aee388260ccefe8fec7b4ffbabd78f33d95303075e1d40b26a78"
+              ]
+            },
+            {
+              "checkId": "check/decision-binding",
+              "reasonKind": "DIRECT_GRAPH_INTERSECTION",
+              "pathNodes": [
+                "f5ea1f11cc953c73eddb1892a5328fe1bb102cddd2d094d6184e7a6ed97e1875"
+              ]
+            },
+            {
+              "checkId": "check/dependency-continuity",
+              "reasonKind": "DIRECT_GRAPH_INTERSECTION",
+              "pathNodes": [
+                "f5ea1f11cc953c73eddb1892a5328fe1bb102cddd2d094d6184e7a6ed97e1875"
+              ]
+            },
+            {
+              "checkId": "check/destination-readback",
+              "reasonKind": "DIRECT_GRAPH_INTERSECTION",
+              "pathNodes": [
+                "f5ea1f11cc953c73eddb1892a5328fe1bb102cddd2d094d6184e7a6ed97e1875",
+                "7d7477cdaac2aee388260ccefe8fec7b4ffbabd78f33d95303075e1d40b26a78"
+              ]
+            },
+            {
+              "checkId": "check/evidence-binding",
+              "reasonKind": "DIRECT_GRAPH_INTERSECTION",
+              "pathNodes": [
+                "f5ea1f11cc953c73eddb1892a5328fe1bb102cddd2d094d6184e7a6ed97e1875",
+                "7d7477cdaac2aee388260ccefe8fec7b4ffbabd78f33d95303075e1d40b26a78"
+              ]
+            },
+            {
+              "checkId": "check/policy-profile",
+              "reasonKind": "DIRECT_GRAPH_INTERSECTION",
+              "pathNodes": [
+                "f5ea1f11cc953c73eddb1892a5328fe1bb102cddd2d094d6184e7a6ed97e1875"
+              ]
+            },
+            {
+              "checkId": "check/receipt-binding",
+              "reasonKind": "DIRECT_GRAPH_INTERSECTION",
+              "pathNodes": [
+                "f5ea1f11cc953c73eddb1892a5328fe1bb102cddd2d094d6184e7a6ed97e1875",
+                "7d7477cdaac2aee388260ccefe8fec7b4ffbabd78f33d95303075e1d40b26a78"
+              ]
+            },
+            {
+              "checkId": "check/subject-identity",
+              "reasonKind": "DIRECT_GRAPH_INTERSECTION",
+              "pathNodes": [
+                "f5ea1f11cc953c73eddb1892a5328fe1bb102cddd2d094d6184e7a6ed97e1875",
+                "7d7477cdaac2aee388260ccefe8fec7b4ffbabd78f33d95303075e1d40b26a78"
+              ]
+            },
+            {
+              "checkId": "check/transformation-determinism",
+              "reasonKind": "DIRECT_GRAPH_INTERSECTION",
+              "pathNodes": [
+                "f5ea1f11cc953c73eddb1892a5328fe1bb102cddd2d094d6184e7a6ed97e1875",
+                "7d7477cdaac2aee388260ccefe8fec7b4ffbabd78f33d95303075e1d40b26a78"
+              ]
+            },
+            {
+              "checkId": "check/verifier-pinning",
+              "reasonKind": "DIRECT_GRAPH_INTERSECTION",
+              "pathNodes": [
+                "f5ea1f11cc953c73eddb1892a5328fe1bb102cddd2d094d6184e7a6ed97e1875",
+                "7d7477cdaac2aee388260ccefe8fec7b4ffbabd78f33d95303075e1d40b26a78"
+              ]
+            }
+          ],
+          "excludedCheckReasons": [],
+          "missedCheckIds": [],
+          "extraCheckIds": []
+        },
+        "unresolvedDependency": {
+          "vectorKind": "UNRESOLVED_DEPENDENCY",
+          "changeDigest": "730d71df66e98c4449d6788bf48395e9cd48f04e46ab8eb86841c45cff0100c8",
+          "planDigest": "3d5bc7107af4537bab5f9640d19776cd5d1bcd39a3e5e85fe219099e2051d9e8",
+          "reasonKind": "UNRESOLVED_DEPENDENCY_FALLBACK",
+          "reasonPaths": [
+            {
+              "checkId": "check/approval-binding",
+              "reasonKind": "UNRESOLVED_DEPENDENCY_FALLBACK",
+              "pathNodes": [
+                "dependency/ambiguous-adapter-or-runtime",
+                "7d7477cdaac2aee388260ccefe8fec7b4ffbabd78f33d95303075e1d40b26a78"
+              ]
+            },
+            {
+              "checkId": "check/authority-reference",
+              "reasonKind": "UNRESOLVED_DEPENDENCY_FALLBACK",
+              "pathNodes": [
+                "dependency/ambiguous-adapter-or-runtime",
+                "7d7477cdaac2aee388260ccefe8fec7b4ffbabd78f33d95303075e1d40b26a78"
+              ]
+            },
+            {
+              "checkId": "check/cross-invariant-regression-canary",
+              "reasonKind": "UNRESOLVED_DEPENDENCY_FALLBACK",
+              "pathNodes": [
+                "dependency/ambiguous-adapter-or-runtime",
+                "7d7477cdaac2aee388260ccefe8fec7b4ffbabd78f33d95303075e1d40b26a78"
+              ]
+            },
+            {
+              "checkId": "check/decision-binding",
+              "reasonKind": "UNRESOLVED_DEPENDENCY_FALLBACK",
+              "pathNodes": [
+                "dependency/ambiguous-adapter-or-runtime",
+                "7d7477cdaac2aee388260ccefe8fec7b4ffbabd78f33d95303075e1d40b26a78"
+              ]
+            },
+            {
+              "checkId": "check/dependency-continuity",
+              "reasonKind": "UNRESOLVED_DEPENDENCY_FALLBACK",
+              "pathNodes": [
+                "dependency/ambiguous-adapter-or-runtime",
+                "7d7477cdaac2aee388260ccefe8fec7b4ffbabd78f33d95303075e1d40b26a78"
+              ]
+            },
+            {
+              "checkId": "check/destination-readback",
+              "reasonKind": "UNRESOLVED_DEPENDENCY_FALLBACK",
+              "pathNodes": [
+                "dependency/ambiguous-adapter-or-runtime",
+                "7d7477cdaac2aee388260ccefe8fec7b4ffbabd78f33d95303075e1d40b26a78"
+              ]
+            },
+            {
+              "checkId": "check/evidence-binding",
+              "reasonKind": "UNRESOLVED_DEPENDENCY_FALLBACK",
+              "pathNodes": [
+                "dependency/ambiguous-adapter-or-runtime",
+                "7d7477cdaac2aee388260ccefe8fec7b4ffbabd78f33d95303075e1d40b26a78"
+              ]
+            },
+            {
+              "checkId": "check/policy-profile",
+              "reasonKind": "UNRESOLVED_DEPENDENCY_FALLBACK",
+              "pathNodes": [
+                "dependency/ambiguous-adapter-or-runtime",
+                "7d7477cdaac2aee388260ccefe8fec7b4ffbabd78f33d95303075e1d40b26a78"
+              ]
+            },
+            {
+              "checkId": "check/receipt-binding",
+              "reasonKind": "UNRESOLVED_DEPENDENCY_FALLBACK",
+              "pathNodes": [
+                "dependency/ambiguous-adapter-or-runtime",
+                "7d7477cdaac2aee388260ccefe8fec7b4ffbabd78f33d95303075e1d40b26a78"
+              ]
+            },
+            {
+              "checkId": "check/subject-identity",
+              "reasonKind": "UNRESOLVED_DEPENDENCY_FALLBACK",
+              "pathNodes": [
+                "dependency/ambiguous-adapter-or-runtime",
+                "7d7477cdaac2aee388260ccefe8fec7b4ffbabd78f33d95303075e1d40b26a78"
+              ]
+            },
+            {
+              "checkId": "check/transformation-determinism",
+              "reasonKind": "UNRESOLVED_DEPENDENCY_FALLBACK",
+              "pathNodes": [
+                "dependency/ambiguous-adapter-or-runtime",
+                "7d7477cdaac2aee388260ccefe8fec7b4ffbabd78f33d95303075e1d40b26a78"
+              ]
+            },
+            {
+              "checkId": "check/verifier-pinning",
+              "reasonKind": "UNRESOLVED_DEPENDENCY_FALLBACK",
+              "pathNodes": [
+                "dependency/ambiguous-adapter-or-runtime",
+                "7d7477cdaac2aee388260ccefe8fec7b4ffbabd78f33d95303075e1d40b26a78"
+              ]
+            }
+          ],
+          "excludedCheckReasons": [],
+          "missedCheckIds": [],
+          "extraCheckIds": []
+        },
+        "trace": [
+          "VALIDATE_FROZEN_ORACLE",
+          "VALIDATE_REGISTERED_CHECKS",
+          "VALIDATE_PRE_PLANNER_FREEZE",
+          "VALIDATE_CHANGE_VECTORS",
+          "DERIVE_FROZEN_SET_PLANS",
+          "COMPARE_ORACLE_AND_PLANS",
+          "RETURN_INERT"
+        ],
+        "authorizing": false,
+        "protectedAuthorityVerified": false,
+        "generatedArtifactExecuted": false,
+        "runtimeDependencyObserved": false,
+        "realEventObserved": false,
+        "mayRecall": false,
+        "mayReplay": false,
+        "mayExecute": false,
+        "mayPromote": false,
+        "mayInstall": false,
+        "filesystemMutated": false,
+        "networkRequested": false,
+        "subprocessStarted": false,
+        "dynamicLoadAttempted": false,
+        "coordinatorMutated": false,
+        "officialE15Credit": false,
+        "officialE16Credit": false,
+        "m4Credit": false,
+        "resultDigest": "0c6485c091816b6929b200665dea9fb710e3e3b47731b91a945b0f67f8d69008"
+      },
+      "canonical": "{\"authorizing\":false,\"checkSetDigest\":\"5e7209b7c5e26a0165be34e596169d2f847c5356bffb3a506c32a571d351b121\",\"coordinatorMutated\":false,\"dynamicLoadAttempted\":false,\"filesystemMutated\":false,\"freezeDigest\":\"3c6f16b05636465283bbed6d0278720b53968958782f1c8a60fef723796d3777\",\"generatedArtifactExecuted\":false,\"graphDigest\":\"62f1c2b3bc6a98fc59a86fa0a53baba83c0ffc8d5d01d72c88a370fdef2a1eb9\",\"includedCheckIds\":[\"check/approval-binding\",\"check/authority-reference\",\"check/cross-invariant-regression-canary\",\"check/decision-binding\",\"check/dependency-continuity\",\"check/destination-readback\",\"check/evidence-binding\",\"check/policy-profile\",\"check/receipt-binding\",\"check/subject-identity\",\"check/transformation-determinism\",\"check/verifier-pinning\"],\"knownChange\":{\"changeDigest\":\"277fc0eaf643144325d41deb55e9a29231428b8d3a19fa650b97a0bfe90bfd75\",\"excludedCheckReasons\":[],\"extraCheckIds\":[],\"missedCheckIds\":[],\"planDigest\":\"bcc4b0a1f974f7a0028b8756749b0081907122cff02c500042b5ceb7baadad09\",\"reasonKind\":\"DIRECT_GRAPH_INTERSECTION\",\"reasonPaths\":[{\"checkId\":\"check/approval-binding\",\"pathNodes\":[\"f5ea1f11cc953c73eddb1892a5328fe1bb102cddd2d094d6184e7a6ed97e1875\"],\"reasonKind\":\"DIRECT_GRAPH_INTERSECTION\"},{\"checkId\":\"check/authority-reference\",\"pathNodes\":[\"f5ea1f11cc953c73eddb1892a5328fe1bb102cddd2d094d6184e7a6ed97e1875\"],\"reasonKind\":\"DIRECT_GRAPH_INTERSECTION\"},{\"checkId\":\"check/cross-invariant-regression-canary\",\"pathNodes\":[\"f5ea1f11cc953c73eddb1892a5328fe1bb102cddd2d094d6184e7a6ed97e1875\",\"7d7477cdaac2aee388260ccefe8fec7b4ffbabd78f33d95303075e1d40b26a78\"],\"reasonKind\":\"DIRECT_GRAPH_INTERSECTION\"},{\"checkId\":\"check/decision-binding\",\"pathNodes\":[\"f5ea1f11cc953c73eddb1892a5328fe1bb102cddd2d094d6184e7a6ed97e1875\"],\"reasonKind\":\"DIRECT_GRAPH_INTERSECTION\"},{\"checkId\":\"check/dependency-continuity\",\"pathNodes\":[\"f5ea1f11cc953c73eddb1892a5328fe1bb102cddd2d094d6184e7a6ed97e1875\"],\"reasonKind\":\"DIRECT_GRAPH_INTERSECTION\"},{\"checkId\":\"check/destination-readback\",\"pathNodes\":[\"f5ea1f11cc953c73eddb1892a5328fe1bb102cddd2d094d6184e7a6ed97e1875\",\"7d7477cdaac2aee388260ccefe8fec7b4ffbabd78f33d95303075e1d40b26a78\"],\"reasonKind\":\"DIRECT_GRAPH_INTERSECTION\"},{\"checkId\":\"check/evidence-binding\",\"pathNodes\":[\"f5ea1f11cc953c73eddb1892a5328fe1bb102cddd2d094d6184e7a6ed97e1875\",\"7d7477cdaac2aee388260ccefe8fec7b4ffbabd78f33d95303075e1d40b26a78\"],\"reasonKind\":\"DIRECT_GRAPH_INTERSECTION\"},{\"checkId\":\"check/policy-profile\",\"pathNodes\":[\"f5ea1f11cc953c73eddb1892a5328fe1bb102cddd2d094d6184e7a6ed97e1875\"],\"reasonKind\":\"DIRECT_GRAPH_INTERSECTION\"},{\"checkId\":\"check/receipt-binding\",\"pathNodes\":[\"f5ea1f11cc953c73eddb1892a5328fe1bb102cddd2d094d6184e7a6ed97e1875\",\"7d7477cdaac2aee388260ccefe8fec7b4ffbabd78f33d95303075e1d40b26a78\"],\"reasonKind\":\"DIRECT_GRAPH_INTERSECTION\"},{\"checkId\":\"check/subject-identity\",\"pathNodes\":[\"f5ea1f11cc953c73eddb1892a5328fe1bb102cddd2d094d6184e7a6ed97e1875\",\"7d7477cdaac2aee388260ccefe8fec7b4ffbabd78f33d95303075e1d40b26a78\"],\"reasonKind\":\"DIRECT_GRAPH_INTERSECTION\"},{\"checkId\":\"check/transformation-determinism\",\"pathNodes\":[\"f5ea1f11cc953c73eddb1892a5328fe1bb102cddd2d094d6184e7a6ed97e1875\",\"7d7477cdaac2aee388260ccefe8fec7b4ffbabd78f33d95303075e1d40b26a78\"],\"reasonKind\":\"DIRECT_GRAPH_INTERSECTION\"},{\"checkId\":\"check/verifier-pinning\",\"pathNodes\":[\"f5ea1f11cc953c73eddb1892a5328fe1bb102cddd2d094d6184e7a6ed97e1875\",\"7d7477cdaac2aee388260ccefe8fec7b4ffbabd78f33d95303075e1d40b26a78\"],\"reasonKind\":\"DIRECT_GRAPH_INTERSECTION\"}],\"vectorKind\":\"KNOWN_CHANGE\"},\"m4Credit\":false,\"mayExecute\":false,\"mayInstall\":false,\"mayPromote\":false,\"mayRecall\":false,\"mayReplay\":false,\"mode\":\"FROZEN_SET_FALLBACK\",\"networkRequested\":false,\"officialE15Credit\":false,\"officialE16Credit\":false,\"profile\":\"veritas-m47-inert-frozen-set-plan-oracle-v1\",\"protectedAuthorityVerified\":false,\"realEventObserved\":false,\"recordType\":\"M47_ORACLE_AGREEMENT_RESULT_FIXTURE\",\"resultDigest\":\"0c6485c091816b6929b200665dea9fb710e3e3b47731b91a945b0f67f8d69008\",\"runtimeDependencyObserved\":false,\"schemaVersion\":1,\"status\":\"DERIVED_M47_INERT_FROZEN_SET_PLAN_ONLY\",\"subprocessStarted\":false,\"trace\":[\"VALIDATE_FROZEN_ORACLE\",\"VALIDATE_REGISTERED_CHECKS\",\"VALIDATE_PRE_PLANNER_FREEZE\",\"VALIDATE_CHANGE_VECTORS\",\"DERIVE_FROZEN_SET_PLANS\",\"COMPARE_ORACLE_AND_PLANS\",\"RETURN_INERT\"],\"universeDigest\":\"77e7e1b162f3d4544dfa2427ebb5ee988c442ffff6d688775152b37a0de48048\",\"unresolvedDependency\":{\"changeDigest\":\"730d71df66e98c4449d6788bf48395e9cd48f04e46ab8eb86841c45cff0100c8\",\"excludedCheckReasons\":[],\"extraCheckIds\":[],\"missedCheckIds\":[],\"planDigest\":\"3d5bc7107af4537bab5f9640d19776cd5d1bcd39a3e5e85fe219099e2051d9e8\",\"reasonKind\":\"UNRESOLVED_DEPENDENCY_FALLBACK\",\"reasonPaths\":[{\"checkId\":\"check/approval-binding\",\"pathNodes\":[\"dependency/ambiguous-adapter-or-runtime\",\"7d7477cdaac2aee388260ccefe8fec7b4ffbabd78f33d95303075e1d40b26a78\"],\"reasonKind\":\"UNRESOLVED_DEPENDENCY_FALLBACK\"},{\"checkId\":\"check/authority-reference\",\"pathNodes\":[\"dependency/ambiguous-adapter-or-runtime\",\"7d7477cdaac2aee388260ccefe8fec7b4ffbabd78f33d95303075e1d40b26a78\"],\"reasonKind\":\"UNRESOLVED_DEPENDENCY_FALLBACK\"},{\"checkId\":\"check/cross-invariant-regression-canary\",\"pathNodes\":[\"dependency/ambiguous-adapter-or-runtime\",\"7d7477cdaac2aee388260ccefe8fec7b4ffbabd78f33d95303075e1d40b26a78\"],\"reasonKind\":\"UNRESOLVED_DEPENDENCY_FALLBACK\"},{\"checkId\":\"check/decision-binding\",\"pathNodes\":[\"dependency/ambiguous-adapter-or-runtime\",\"7d7477cdaac2aee388260ccefe8fec7b4ffbabd78f33d95303075e1d40b26a78\"],\"reasonKind\":\"UNRESOLVED_DEPENDENCY_FALLBACK\"},{\"checkId\":\"check/dependency-continuity\",\"pathNodes\":[\"dependency/ambiguous-adapter-or-runtime\",\"7d7477cdaac2aee388260ccefe8fec7b4ffbabd78f33d95303075e1d40b26a78\"],\"reasonKind\":\"UNRESOLVED_DEPENDENCY_FALLBACK\"},{\"checkId\":\"check/destination-readback\",\"pathNodes\":[\"dependency/ambiguous-adapter-or-runtime\",\"7d7477cdaac2aee388260ccefe8fec7b4ffbabd78f33d95303075e1d40b26a78\"],\"reasonKind\":\"UNRESOLVED_DEPENDENCY_FALLBACK\"},{\"checkId\":\"check/evidence-binding\",\"pathNodes\":[\"dependency/ambiguous-adapter-or-runtime\",\"7d7477cdaac2aee388260ccefe8fec7b4ffbabd78f33d95303075e1d40b26a78\"],\"reasonKind\":\"UNRESOLVED_DEPENDENCY_FALLBACK\"},{\"checkId\":\"check/policy-profile\",\"pathNodes\":[\"dependency/ambiguous-adapter-or-runtime\",\"7d7477cdaac2aee388260ccefe8fec7b4ffbabd78f33d95303075e1d40b26a78\"],\"reasonKind\":\"UNRESOLVED_DEPENDENCY_FALLBACK\"},{\"checkId\":\"check/receipt-binding\",\"pathNodes\":[\"dependency/ambiguous-adapter-or-runtime\",\"7d7477cdaac2aee388260ccefe8fec7b4ffbabd78f33d95303075e1d40b26a78\"],\"reasonKind\":\"UNRESOLVED_DEPENDENCY_FALLBACK\"},{\"checkId\":\"check/subject-identity\",\"pathNodes\":[\"dependency/ambiguous-adapter-or-runtime\",\"7d7477cdaac2aee388260ccefe8fec7b4ffbabd78f33d95303075e1d40b26a78\"],\"reasonKind\":\"UNRESOLVED_DEPENDENCY_FALLBACK\"},{\"checkId\":\"check/transformation-determinism\",\"pathNodes\":[\"dependency/ambiguous-adapter-or-runtime\",\"7d7477cdaac2aee388260ccefe8fec7b4ffbabd78f33d95303075e1d40b26a78\"],\"reasonKind\":\"UNRESOLVED_DEPENDENCY_FALLBACK\"},{\"checkId\":\"check/verifier-pinning\",\"pathNodes\":[\"dependency/ambiguous-adapter-or-runtime\",\"7d7477cdaac2aee388260ccefe8fec7b4ffbabd78f33d95303075e1d40b26a78\"],\"reasonKind\":\"UNRESOLVED_DEPENDENCY_FALLBACK\"}],\"vectorKind\":\"UNRESOLVED_DEPENDENCY\"}}",
+      "sha256": "297242a689049ea29550d4408003b7a7d44e3be3440c5d089f7a84e2a05e7842"
+    },
+    {
+      "id": "CANON-S5-012-M47B-GENESIS-EVENT-REDUCER-INERT",
+      "value": {
+        "schemaVersion": 1,
+        "recordType": "M47B_REDUCER_RESULT_FIXTURE",
+        "status": "DERIVED_M47B_INERT_GENESIS_EVENT_REDUCER_ONLY",
+        "profile": "veritas-m47b-inert-genesis-event-reducer-v1",
+        "genesisDigest": "8c5ac0e03f799d1730a3582f2b3790f144921a0bc4564a9d0647cd4aa1d501e5",
+        "eventChainDigest": "502efc3ec2880a1b5836a6d01a302ce16daf1e162a7ce0551641c3b73bd1ce4b",
+        "terminalStateDigest": "1d5fc1ee1055e4b1b12c6cc1485bc641285496565f083974d03ddecd3eb1b88e",
+        "terminalBarrierRevision": 3,
+        "terminalBarrierStatus": "ACTIVE_NOT_LOWERED",
+        "receiptDigest": "e95f0022671302f54d6642e3946173091ee33ffd2d2c80425a2cd842bb95cda6",
+        "receiptDisposition": "MEASURED_CURRENT_NONAUTHORIZING",
+        "callerHintSupplied": false,
+        "callerHintIgnored": true,
+        "trace": [
+          "VALIDATE_GENESIS",
+          "VALIDATE_EVENT_CHAIN",
+          "VALIDATE_RECEIPT",
+          "DERIVE_TERMINAL_STATE",
+          "COMPARE_CALLER_HINT_POST_HOC",
+          "EVALUATE_RECEIPT_DISPOSITION",
+          "RETURN_INERT"
+        ],
+        "authorizing": false,
+        "mayConsume": false,
+        "mayRecall": false,
+        "mayReplay": false,
+        "mayExecute": false,
+        "mayPromote": false,
+        "mayInstall": false,
+        "filesystemMutated": false,
+        "networkRequested": false,
+        "subprocessStarted": false,
+        "dynamicLoadAttempted": false,
+        "coordinatorMutated": false,
+        "officialE15Credit": false,
+        "officialE16Credit": false,
+        "m4Credit": false,
+        "resultDigest": "772de68d0ccdeebbc803948dea0ad8cf318ab482cd2e4ba47060fdc2804a9d54"
+      },
+      "canonical": "{\"authorizing\":false,\"callerHintIgnored\":true,\"callerHintSupplied\":false,\"coordinatorMutated\":false,\"dynamicLoadAttempted\":false,\"eventChainDigest\":\"502efc3ec2880a1b5836a6d01a302ce16daf1e162a7ce0551641c3b73bd1ce4b\",\"filesystemMutated\":false,\"genesisDigest\":\"8c5ac0e03f799d1730a3582f2b3790f144921a0bc4564a9d0647cd4aa1d501e5\",\"m4Credit\":false,\"mayConsume\":false,\"mayExecute\":false,\"mayInstall\":false,\"mayPromote\":false,\"mayRecall\":false,\"mayReplay\":false,\"networkRequested\":false,\"officialE15Credit\":false,\"officialE16Credit\":false,\"profile\":\"veritas-m47b-inert-genesis-event-reducer-v1\",\"receiptDigest\":\"e95f0022671302f54d6642e3946173091ee33ffd2d2c80425a2cd842bb95cda6\",\"receiptDisposition\":\"MEASURED_CURRENT_NONAUTHORIZING\",\"recordType\":\"M47B_REDUCER_RESULT_FIXTURE\",\"resultDigest\":\"772de68d0ccdeebbc803948dea0ad8cf318ab482cd2e4ba47060fdc2804a9d54\",\"schemaVersion\":1,\"status\":\"DERIVED_M47B_INERT_GENESIS_EVENT_REDUCER_ONLY\",\"subprocessStarted\":false,\"terminalBarrierRevision\":3,\"terminalBarrierStatus\":\"ACTIVE_NOT_LOWERED\",\"terminalStateDigest\":\"1d5fc1ee1055e4b1b12c6cc1485bc641285496565f083974d03ddecd3eb1b88e\",\"trace\":[\"VALIDATE_GENESIS\",\"VALIDATE_EVENT_CHAIN\",\"VALIDATE_RECEIPT\",\"DERIVE_TERMINAL_STATE\",\"COMPARE_CALLER_HINT_POST_HOC\",\"EVALUATE_RECEIPT_DISPOSITION\",\"RETURN_INERT\"]}",
+      "sha256": "4db42da4217bdb4067c584c20349821766f30333a5172f429ae4f10a4065e704"
+    },
+    {
+      "id": "CANON-S5-013-M4J-NO-EXECUTION-PRODUCT-JOURNEY-INERT",
+      "value": {
+        "schemaVersion": 1,
+        "recordType": "M4J_JOURNEY_RESULT_FIXTURE",
+        "status": "DERIVED_M4J_INERT_NO_EXECUTION_JOURNEY_ONLY",
+        "profile": "veritas-m4j-inert-no-execution-product-journey-v1",
+        "subjectDigest": "6cb844f7d84248db3054f3cb932dbe61abeaa1f357d21c31b8adaed605bcccc6",
+        "graphDigest": "62f1c2b3bc6a98fc59a86fa0a53baba83c0ffc8d5d01d72c88a370fdef2a1eb9",
+        "stageDigest": "903e8c6dd093879174b374c2f03fb614e04e3d7affb8047e129c4d45bcb3962b",
+        "checkDigest": "9571911c5f5b2a46ac2eab10b9dd7a14e595e97ee16829b5eeea57fda645a634",
+        "explainDigest": "eecccf00386699bb6c946fdabc2ee9ea3621170d5d0a39fb6264764231623638",
+        "promoteDigest": "0919482bf9f83f73154b7a62e118b960b5a84cddf5c97dcf944bd2fc6fa6ebfc",
+        "dependencyEventDigest": "24a2b2ef09bedc14e35ab9a4cca53078c376c0e600b8b90efec6f61724b7cf24",
+        "recallDigest": "69e6b7a18ff99702156f4ed93d48a065b3a393bd36b31a8e634dd8bd88c1abda",
+        "replayDigest": "fd86ed0429b9257954f0f3bd74cd4d4ac66242ee506cdc02c9540cd1979da3e3",
+        "trace": [
+          "VALIDATE_STAGE",
+          "VALIDATE_CHECK",
+          "VALIDATE_EXPLAIN",
+          "VALIDATE_PROMOTE",
+          "VALIDATE_DEPENDENCY_EVENT",
+          "VALIDATE_RECALL",
+          "VALIDATE_REPLAY",
+          "RETURN_INERT"
+        ],
+        "authorizing": false,
+        "mayConsume": false,
+        "mayCreateDecision": false,
+        "mayStage": false,
+        "mayRecall": false,
+        "mayReplay": false,
+        "mayPromote": false,
+        "mayInstall": false,
+        "mayExecute": false,
+        "filesystemMutated": false,
+        "networkRequested": false,
+        "subprocessStarted": false,
+        "dynamicLoadAttempted": false,
+        "coordinatorMutated": false,
+        "officialE15Credit": false,
+        "officialE16Credit": false,
+        "m4Credit": false,
+        "resultDigest": "97a2ce5b3aa138a5d42cb460be5d83312fc6c7de95dd363e1bf6ce35f5a23cd1"
+      },
+      "canonical": "{\"authorizing\":false,\"checkDigest\":\"9571911c5f5b2a46ac2eab10b9dd7a14e595e97ee16829b5eeea57fda645a634\",\"coordinatorMutated\":false,\"dependencyEventDigest\":\"24a2b2ef09bedc14e35ab9a4cca53078c376c0e600b8b90efec6f61724b7cf24\",\"dynamicLoadAttempted\":false,\"explainDigest\":\"eecccf00386699bb6c946fdabc2ee9ea3621170d5d0a39fb6264764231623638\",\"filesystemMutated\":false,\"graphDigest\":\"62f1c2b3bc6a98fc59a86fa0a53baba83c0ffc8d5d01d72c88a370fdef2a1eb9\",\"m4Credit\":false,\"mayConsume\":false,\"mayCreateDecision\":false,\"mayExecute\":false,\"mayInstall\":false,\"mayPromote\":false,\"mayRecall\":false,\"mayReplay\":false,\"mayStage\":false,\"networkRequested\":false,\"officialE15Credit\":false,\"officialE16Credit\":false,\"profile\":\"veritas-m4j-inert-no-execution-product-journey-v1\",\"promoteDigest\":\"0919482bf9f83f73154b7a62e118b960b5a84cddf5c97dcf944bd2fc6fa6ebfc\",\"recallDigest\":\"69e6b7a18ff99702156f4ed93d48a065b3a393bd36b31a8e634dd8bd88c1abda\",\"recordType\":\"M4J_JOURNEY_RESULT_FIXTURE\",\"replayDigest\":\"fd86ed0429b9257954f0f3bd74cd4d4ac66242ee506cdc02c9540cd1979da3e3\",\"resultDigest\":\"97a2ce5b3aa138a5d42cb460be5d83312fc6c7de95dd363e1bf6ce35f5a23cd1\",\"schemaVersion\":1,\"stageDigest\":\"903e8c6dd093879174b374c2f03fb614e04e3d7affb8047e129c4d45bcb3962b\",\"status\":\"DERIVED_M4J_INERT_NO_EXECUTION_JOURNEY_ONLY\",\"subjectDigest\":\"6cb844f7d84248db3054f3cb932dbe61abeaa1f357d21c31b8adaed605bcccc6\",\"subprocessStarted\":false,\"trace\":[\"VALIDATE_STAGE\",\"VALIDATE_CHECK\",\"VALIDATE_EXPLAIN\",\"VALIDATE_PROMOTE\",\"VALIDATE_DEPENDENCY_EVENT\",\"VALIDATE_RECALL\",\"VALIDATE_REPLAY\",\"RETURN_INERT\"]}",
+      "sha256": "3f8226c23c3fb3ef3315bd2eca2a846bc9bb94c58f454c38199706bc009d9b75"
+    }
+  ]
+}

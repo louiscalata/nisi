@@ -1,0 +1,9 @@
+{
+  "proposedStep": "implement",
+  "testsToRun": [
+    "afm-v1-oracle",
+    "bridge-contract"
+  ],
+  "explanation": "End-to-end rung-1 to rung-4 integration proof.",
+  "packHash": "78253fd56a83fb1ea4f23f75defa66e1cd45e16bdd67aecfb9e4c720df107111"
+}

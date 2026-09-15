@@ -1,0 +1,303 @@
+TAP version 13
+# Subtest: windows-xpc-integration: valid synthetic fixed-case observation
+ok 1 - windows-xpc-integration: valid synthetic fixed-case observation
+  ---
+  duration_ms: 5.392167
+  type: 'test'
+  ...
+# Subtest: windows-xpc-integration: malformed-request synthetic fixed-case observation
+ok 2 - windows-xpc-integration: malformed-request synthetic fixed-case observation
+  ---
+  duration_ms: 0.983708
+  type: 'test'
+  ...
+# Subtest: windows-xpc-integration: no-reply synthetic fixed-case observation
+ok 3 - windows-xpc-integration: no-reply synthetic fixed-case observation
+  ---
+  duration_ms: 1.021375
+  type: 'test'
+  ...
+# Subtest: windows-xpc-integration: adverse INCONCLUSIVE synthetic fixed-case observation
+not ok 4 - windows-xpc-integration: adverse INCONCLUSIVE synthetic fixed-case observation
+  ---
+  duration_ms: 1.768042
+  type: 'test'
+  location: '/Users/louiscalata/nisi-next-private/work-orders/journal-owner-v2/evidence/xpc-mutant-8fqltN/tests/windows-xpc-integration.test.mjs:72:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly deep-equal:
+    + actual - expected
+    ... Skipped lines
+    
+      {
+        attempt: 0,
+        candidateId: 'candidate-a',
+        createdAt: 100,
+        heartbeatAt: null,
+    ...
+        stage: 'fixed-xpc',
+    +   state: 'SUCCEEDED',
+    -   state: 'FAILED',
+        ttlMs: 1000
+      }
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected:
+    id: '0123456789abcdef0123456789abcdef:0:fixed-xpc'
+    projectId: 'project-a'
+    runId: '0123456789abcdef0123456789abcdef'
+    attempt: 0
+    candidateId: 'candidate-a'
+    stage: 'fixed-xpc'
+    receiptId: 'receipt-a'
+    createdAt: 100
+    ttlMs: 1000
+    state: 'FAILED'
+    heartbeatAt: ~
+    retryOf: ~
+    revokes: ~
+    payload:
+      schemaVersion: 'nisi-fixed-xpc-journal-observation/v1'
+      meaning: 'FIXED_CASE_OBSERVATION_ONLY'
+      caseName: 'valid'
+      reportedStatus: 'INCONCLUSIVE'
+      clientOutcome: 'REPLY_RECEIVED'
+      recordDigest: '0fc7758100e6926137a1e5e8fc4cf9961647fc6bbf393ecc94549f7cc61f9c2c'
+      sourceBindings:
+        hosts/macos-xpc/probe-wire.h: '0000000000000000000000000000000000000000000000000000000000000001'
+        hosts/macos-xpc/probe-service.m: '0000000000000000000000000000000000000000000000000000000000000002'
+        hosts/macos-xpc/probe-client.m: '0000000000000000000000000000000000000000000000000000000000000003'
+        hosts/macos-xpc/protocol.mjs: '0000000000000000000000000000000000000000000000000000000000000004'
+        hosts/macos-xpc/fixed-xpc-runner.mjs: '0000000000000000000000000000000000000000000000000000000000000005'
+        hosts/swift-verifier/owned-child.mjs: '0000000000000000000000000000000000000000000000000000000000000006'
+        hosts/swift-verifier/protocol.mjs: '0000000000000000000000000000000000000000000000000000000000000007'
+        workflow/contracts.mjs: '0000000000000000000000000000000000000000000000000000000000000008'
+        canonical/canonical-json-v1.mjs: '0000000000000000000000000000000000000000000000000000000000000009'
+        hosts/repository/snapshot-contract.mjs: '000000000000000000000000000000000000000000000000000000000000000a'
+      sourceManifestVerified: false
+      observedParentPid: 101
+      selfReportedServicePid: 202
+      operations:
+        0:
+          operation: 'own-open-write'
+          outcome: 'ALLOWED'
+          errno: 0
+        1:
+          operation: 'own-write'
+          outcome: 'ALLOWED'
+          errno: 0
+        2:
+          operation: 'own-close-write'
+          outcome: 'ALLOWED'
+          errno: 0
+        3:
+          operation: 'own-open-read'
+          outcome: 'ALLOWED'
+          errno: 0
+        4:
+          operation: 'own-read'
+          outcome: 'ALLOWED'
+          errno: 0
+        5:
+          operation: 'own-close-read'
+          outcome: 'ALLOWED'
+          errno: 0
+        6:
+          operation: 'outside-open-read'
+          outcome: 'DENIED'
+          errno: 1
+        7:
+          operation: 'outside-read'
+          outcome: 'NOT_RUN'
+          errno: 0
+        8:
+          operation: 'outside-close-read'
+          outcome: 'NOT_RUN'
+          errno: 0
+        9:
+          operation: 'outside-open-write'
+          outcome: 'DENIED'
+          errno: 13
+        10:
+          operation: 'outside-write'
+          outcome: 'NOT_RUN'
+          errno: 0
+        11:
+          operation: 'outside-close-write'
+          outcome: 'NOT_RUN'
+          errno: 0
+        12:
+          operation: 'socket-create'
+          outcome: 'ALLOWED'
+          errno: 0
+        13:
+          operation: 'socket-bind'
+          outcome: 'DENIED'
+          errno: 1
+        14:
+          operation: 'socket-close'
+          outcome: 'ALLOWED'
+          errno: 0
+      process:
+        started: true
+        closed: true
+        drain: 'CONFIRMED'
+        exitCode: 0
+        signal: ~
+        errorCode: ~
+        cancelRequested: false
+        deadlineExceeded: false
+        durationMs: 300
+      stdoutSha256: '17ed46f58d9e11c3868ce11ec8b4ff9dcf0869f68dc09881aefd17cb19af71e5'
+      failureCode: ~
+      terminalPersistenceCode: ~
+      persistenceClaim: 'NONE'
+      failureClass: 'OBSERVATION_ONLY'
+      reasons:
+        0: 'RUNNER_INCONCLUSIVE'
+      authorizing: false
+      generatedCodeExecuted: false
+      isolationAccepted: false
+      nativeProductAccepted: false
+      serviceIdentityAttested: false
+      serviceTerminationProven: false
+  actual:
+    id: '0123456789abcdef0123456789abcdef:0:fixed-xpc'
+    projectId: 'project-a'
+    runId: '0123456789abcdef0123456789abcdef'
+    attempt: 0
+    candidateId: 'candidate-a'
+    stage: 'fixed-xpc'
+    receiptId: 'receipt-a'
+    createdAt: 100
+    ttlMs: 1000
+    state: 'SUCCEEDED'
+    heartbeatAt: ~
+    retryOf: ~
+    revokes: ~
+    payload:
+      schemaVersion: 'nisi-fixed-xpc-journal-observation/v1'
+      meaning: 'FIXED_CASE_OBSERVATION_ONLY'
+      caseName: 'valid'
+      reportedStatus: 'INCONCLUSIVE'
+      clientOutcome: 'REPLY_RECEIVED'
+      recordDigest: '0fc7758100e6926137a1e5e8fc4cf9961647fc6bbf393ecc94549f7cc61f9c2c'
+      sourceBindings:
+        hosts/macos-xpc/probe-wire.h: '0000000000000000000000000000000000000000000000000000000000000001'
+        hosts/macos-xpc/probe-service.m: '0000000000000000000000000000000000000000000000000000000000000002'
+        hosts/macos-xpc/probe-client.m: '0000000000000000000000000000000000000000000000000000000000000003'
+        hosts/macos-xpc/protocol.mjs: '0000000000000000000000000000000000000000000000000000000000000004'
+        hosts/macos-xpc/fixed-xpc-runner.mjs: '0000000000000000000000000000000000000000000000000000000000000005'
+        hosts/swift-verifier/owned-child.mjs: '0000000000000000000000000000000000000000000000000000000000000006'
+        hosts/swift-verifier/protocol.mjs: '0000000000000000000000000000000000000000000000000000000000000007'
+        workflow/contracts.mjs: '0000000000000000000000000000000000000000000000000000000000000008'
+        canonical/canonical-json-v1.mjs: '0000000000000000000000000000000000000000000000000000000000000009'
+        hosts/repository/snapshot-contract.mjs: '000000000000000000000000000000000000000000000000000000000000000a'
+      sourceManifestVerified: false
+      observedParentPid: 101
+      selfReportedServicePid: 202
+      operations:
+        0:
+          operation: 'own-open-write'
+          outcome: 'ALLOWED'
+          errno: 0
+        1:
+          operation: 'own-write'
+          outcome: 'ALLOWED'
+          errno: 0
+        2:
+          operation: 'own-close-write'
+          outcome: 'ALLOWED'
+          errno: 0
+        3:
+          operation: 'own-open-read'
+          outcome: 'ALLOWED'
+          errno: 0
+        4:
+          operation: 'own-read'
+          outcome: 'ALLOWED'
+          errno: 0
+        5:
+          operation: 'own-close-read'
+          outcome: 'ALLOWED'
+          errno: 0
+        6:
+          operation: 'outside-open-read'
+          outcome: 'DENIED'
+          errno: 1
+        7:
+          operation: 'outside-read'
+          outcome: 'NOT_RUN'
+          errno: 0
+        8:
+          operation: 'outside-close-read'
+          outcome: 'NOT_RUN'
+          errno: 0
+        9:
+          operation: 'outside-open-write'
+          outcome: 'DENIED'
+          errno: 13
+        10:
+          operation: 'outside-write'
+          outcome: 'NOT_RUN'
+          errno: 0
+        11:
+          operation: 'outside-close-write'
+          outcome: 'NOT_RUN'
+          errno: 0
+        12:
+          operation: 'socket-create'
+          outcome: 'ALLOWED'
+          errno: 0
+        13:
+          operation: 'socket-bind'
+          outcome: 'DENIED'
+          errno: 1
+        14:
+          operation: 'socket-close'
+          outcome: 'ALLOWED'
+          errno: 0
+      process:
+        started: true
+        closed: true
+        drain: 'CONFIRMED'
+        exitCode: 0
+        signal: ~
+        errorCode: ~
+        cancelRequested: false
+        deadlineExceeded: false
+        durationMs: 300
+      stdoutSha256: '17ed46f58d9e11c3868ce11ec8b4ff9dcf0869f68dc09881aefd17cb19af71e5'
+      failureCode: ~
+      terminalPersistenceCode: ~
+      persistenceClaim: 'NONE'
+      failureClass: 'OBSERVATION_ONLY'
+      reasons:
+        0: 'RUNNER_INCONCLUSIVE'
+      authorizing: false
+      generatedCodeExecuted: false
+      isolationAccepted: false
+      nativeProductAccepted: false
+      serviceIdentityAttested: false
+      serviceTerminationProven: false
+  operator: 'deepStrictEqual'
+  stack: |-
+    runCase (file:///Users/louiscalata/nisi-next-private/work-orders/journal-owner-v2/evidence/xpc-mutant-8fqltN/tests/windows-xpc-integration.test.mjs:47:10)
+    TestContext.<anonymous> (file:///Users/louiscalata/nisi-next-private/work-orders/journal-owner-v2/evidence/xpc-mutant-8fqltN/tests/windows-xpc-integration.test.mjs:72:91)
+    Test.runInAsyncScope (node:async_hooks:227:14)
+    Test.run (node:internal/test_runner/test:1325:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:911:18)
+    Test.postRun (node:internal/test_runner/test:1465:19)
+    Test.run (node:internal/test_runner/test:1390:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:911:7)
+  ...
+1..4
+# tests 4
+# suites 0
+# pass 3
+# fail 1
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 53.571083

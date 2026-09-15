@@ -1,0 +1,86 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://veritas.invalid/private/schemas/stage5/promotion-transaction.v1.json",
+  "title": "Veritas Stage 5 promotion transaction fixture",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schemaVersion",
+    "transactionId",
+    "authorityDigest",
+    "candidateDigest",
+    "decisionDigest",
+    "acceptedDigest",
+    "priorDestinationDigest",
+    "destinationDigest",
+    "state",
+    "readbackMatches",
+    "priorTargetRecoverable",
+    "effectCount",
+    "receiptStatus"
+  ],
+  "properties": {
+    "schemaVersion": {
+      "const": 1
+    },
+    "transactionId": {
+      "type": "string",
+      "pattern": "^e16-tx-[0-9]{3}$"
+    },
+    "authorityDigest": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{64}$"
+    },
+    "candidateDigest": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{64}$"
+    },
+    "decisionDigest": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{64}$"
+    },
+    "acceptedDigest": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{64}$"
+    },
+    "priorDestinationDigest": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{64}$"
+    },
+    "destinationDigest": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{64}$"
+    },
+    "state": {
+      "enum": [
+        "PREPARED",
+        "OBJECT_WRITTEN",
+        "REFERENCE_SWAPPED",
+        "READBACK_CONFIRMED",
+        "ROLLED_BACK",
+        "REJECTED",
+        "UNCERTAIN"
+      ]
+    },
+    "readbackMatches": {
+      "type": "boolean"
+    },
+    "priorTargetRecoverable": {
+      "type": "boolean"
+    },
+    "effectCount": {
+      "type": "integer",
+      "minimum": 0,
+      "maximum": 1
+    },
+    "receiptStatus": {
+      "enum": [
+        "NOT_RUN",
+        "INCONCLUSIVE",
+        "REJECTED",
+        "ROLLED_BACK",
+        "ACCEPTED"
+      ]
+    }
+  }
+}

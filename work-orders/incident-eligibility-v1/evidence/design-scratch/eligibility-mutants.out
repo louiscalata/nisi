@@ -1,0 +1,25 @@
+KILLED   M1 source gate disabled  by: T16 plan refusals verbatim, INVALID_INPUT collapses
+KILLED   M2 fingerprint compare dropped  by: T17 fingerprint -> CONFLICT
+KILLED   M3 JOURNAL_* mapped INELIGIBLE  by: T5 JOURNAL_UNAVAILABLE -> UNCERTAIN | T6 JOURNAL_NOT_OPEN -> UNCERTAIN
+KILLED   M4 lifecycle mapped UNCERTAIN  by: T9 MISSING -> INELIGIBLE/MISSING | T11 EXPIRED -> INELIGIBLE/EXPIRED
+KILLED   M5 project check dropped  by: T13 PROJECT_MISMATCH
+KILLED   M6 stage gate dropped  by: T14 tests-stage observation -> UNSUPPORTED_STAGE
+KILLED   M7a classification cond dropped  by: T15 quadruple: each cell off alone -> ROW_NOT_FAILURE
+KILLED   M7b rawStatus cond dropped  by: T15 quadruple: each cell off alone -> ROW_NOT_FAILURE
+KILLED   M7c disposition cond dropped  by: T15 quadruple: each cell off alone -> ROW_NOT_FAILURE
+KILLED   M8 admitted derived from status  by: T1 baseline ELIGIBLE + constants + frozen
+KILLED   M9 checks not frozen  by: T1 baseline ELIGIBLE + constants + frozen
+KILLED   M10 record length check weakened  by: T3 extra key -> INVALID_INPUT
+KILLED   M11 query refusal mapped UNCERTAIN  by: T8 query INVALID_INPUT -> INELIGIBLE/INVALID_OBSERVATION
+KILLED   M12 plan INVALID_INPUT passthrough  by: T16 plan refusals verbatim, INVALID_INPUT collapses
+KILLED   M13 preview compare dropped  by: T17 previewSha256 -> PREVIEW_MISMATCH
+KILLED   M14 binding compare dropped  by: T17 binding.attempt -> CONFLICT
+KILLED   M14b source compare dropped  by: T17 source.receiptSha256 -> CONFLICT
+KILLED   M15 failure-code vocabulary dropped  by: T20 [REDACTED] failure code -> INVALID_INPUT
+KILLED   M16 row.sourceTrust literal dropped  by: T3 row.sourceTrust other -> INVALID_INPUT
+KILLED   M17 JOURNAL_NOT_OPEN not uncertain  by: T6 JOURNAL_NOT_OPEN -> UNCERTAIN
+KILLED   M18 rowId compare dropped  by: T17 rowId -> ROW_MISMATCH
+KILLED   M19 [REDACTED]-style hex check weakened  by: T20 [REDACTED] digest -> INVALID_INPUT
+KILLED   M20 try/catch removed (throws on hostile)  by: T4 hostile never throws
+baseline oracle: 20/20 pass
+survivors: 0

@@ -1,0 +1,17 @@
+{
+  "invocation_status": "failed",
+  "status": "NOT_RUN",
+  "attempts": 1,
+  "prior_attempts": [
+    {
+      "requested_model": "fable",
+      "status": "NOT_RUN",
+      "error": "{\"subtype\": \"error_max_budget_usd\", \"errors\": [\"Reached maximum budget ($0.5)\"], \"error\": null, \"result\": null}"
+    }
+  ],
+  "error": "No usable Claude response within the bounded model ladder",
+  "model_usage": null,
+  "tools_enabled": false,
+  "session_persisted": false,
+  "write_owner": "codex"
+}

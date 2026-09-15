@@ -1,0 +1,11 @@
+OK: nisi-interrupted-run-decision-v1 — 1 item(s), root /Users/louiscalata/nisi-next-private/work-orders/interrupted-run-decision-v1
+>> lint
+>> tier preflight: free — opencode/big-pickle
+   tier free route reachable (credential unproven): opencode/big-pickle (70 models, 195ms)
+>> opencode (packet agent, tier free) — edits only, capped at 900s
+   private diagnostics retained under: /Users/louiscalata/nisi-next-private/work-orders/interrupted-run-decision-v1/.packet-diagnostics (may contain source; do not publish)
+   edit terminality: CONFIRMED · requested route (not served-model proof): free/opencode/big-pickle
+   [0m→ [0mRead README.md
+   [0m→ [0mRead tests/interrupted-run-decision.test.mjs
+   [0m→ [0mRead src/interrupted-run-decision-v1.mjs
+   refusing receipt: edit phase timed out

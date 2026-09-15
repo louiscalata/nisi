@@ -1,0 +1,904 @@
+{
+  "info": {
+    "id": "ses_f637a66f9ffe362t0WOs1u0p6Y",
+    "slug": "crisp-panda",
+    "projectID": "df66818655ce46721434dbcf88d859be9349be22",
+    "directory": "/Users/louiscalata/nisi-next-private",
+    "path": "",
+    "title": "nisi-run-journal-store v1 packet execution",
+    "agent": "packet",
+    "model": {
+      "id": "qwen/qwen3.8-27b",
+      "providerID": "lmstudio",
+      "variant": "default"
+    },
+    "version": "1.18.5",
+    "summary": {
+      "additions": 0,
+      "deletions": 0,
+      "files": 0
+    },
+    "cost": 0,
+    "tokens": {
+      "input": 37745,
+      "output": 362,
+      "reasoning": 710,
+      "cache": {
+        "read": 0,
+        "write": 0
+      }
+    },
+    "permission": [
+      {
+        "permission": "question",
+        "pattern": "*",
+        "action": "deny"
+      },
+      {
+        "permission": "plan_enter",
+        "pattern": "*",
+        "action": "deny"
+      },
+      {
+        "permission": "plan_exit",
+        "pattern": "*",
+        "action": "deny"
+      }
+    ],
+    "time": {
+      "created": 1789332396295,
+      "updated": 1789332633085
+    }
+  },
+  "messages": [
+    {
+      "info": {
+        "role": "user",
+        "time": {
+          "created": 1789332397442
+        },
+        "agent": "packet",
+        "model": {
+          "providerID": "lmstudio",
+          "modelID": "qwen/qwen3.8-27b"
+        },
+        "summary": {
+          "diffs": [
+            {
+              "file": "work-orders/fixed-run-journal-entry/fixtures/generate-summary-fixtures.mjs",
+              "patch": "Index: work-orders/fixed-run-journal-entry/fixtures/generate-summary-fixtures.mjs\n===================================================================\n--- work-orders/fixed-run-journal-entry/fixtures/generate-summary-fixtures.mjs\t\n+++ work-orders/fixed-run-journal-entry/fixtures/generate-summary-fixtures.mjs\t\n@@ -0,0 +1,55 @@\n+// Fixture generator (Claude, 2026-09-13). Builds fixed-run summary objects\n+// exactly as the accepted native-canary-summary contract specifies, from the\n+// frozen adapter/adjudicator and the real inherit-run evidence. Re-run once the\n+// summary module is accepted and diff: the outputs must be byte-identical.\n+import { readFile, writeFile } from 'node:fs/promises';\n+import { fixedCanaryMappingV1, adaptFixedCanaryOutput, expectedMatrixFor } from '../../native-canary-summary/src/native-canary-adapter.mjs';\n+import { adjudicateFixedCanaries, formatCanaryTable } from '../../native-canary-summary/src/native-canary-adjudicator.mjs';\n+const here = new URL('./', import.meta.url);\n+const RECEIPT = JSON.parse(await readFile(new URL('../../native-canary-summary/fixtures/inherit-run-service-raw.json', import.meta.url), 'utf8'));\n+const STDOUT = await readFile(new URL('../../native-canary-summary/fixtures/inherit-run-node.stdout', import.meta.url), 'utf8');\n+const own = (o, k) => Object.hasOwn(o, k) ? o[k] : null;\n+const posInt = v => Number.isSafeInteger(v) && v > 0 ? v : null;\n+const int = v => Number.isSafeInteger(v) ? v : null;\n+const bool = v => v === true || v === false ? v : null;\n+function summarize(receipt, stdout) {\n+  const s = stdout ?? '';\n+  const identity = { childPid: posInt(own(receipt, 'childPid')), servicePid: posInt(own(receipt, 'servicePid')), waitObservedPid: posInt(own(receipt, 'waitObservedPid')) };\n+  const sig = own(receipt, 'signal');\n+  const lifecycle = { spawnReturn: int(own(receipt, 'spawnReturn')), exitCode: int(own(receipt, 'exitCode')),\n+    signal: sig === undefined || sig === null ? null : (typeof sig === 'number' || typeof sig === 'string') ? sig : null,\n+    rawWaitStatus: int(own(receipt, 'rawWaitStatus')), stdoutEOF: bool(own(receipt, 'stdoutEOF')), stderrEOF: bool(own(receipt, 'stderrEOF')),\n+    drainObserved: bool(own(receipt, 'drainObserved')), waitObserved: bool(own(receipt, 'waitObserved')), timeout: bool(own(receipt, 'timeout')), outputCapExceeded: bool(own(receipt, 'outputCapExceeded')) };\n+  const reasons = [];\n+  if (lifecycle.spawnReturn !== 0) reasons.push('SPAWN_FAILED');\n+  if (lifecycle.waitObserved !== true) reasons.push('WAIT_NOT_OBSERVED');\n+  const idOk = identity.childPid !== null && identity.servicePid !== null;\n+  if (!idOk) reasons.push('IDENTITY_UNAVAILABLE');\n+  if (idOk && identity.waitObservedPid !== identity.childPid) reasons.push('PID_MISMATCH');\n+  if (lifecycle.signal !== null) reasons.push('SIGNALED');\n+  if (lifecycle.exitCode !== 0) reasons.push('NONZERO_EXIT');\n+  if (lifecycle.stdoutEOF !== true) reasons.push('STDOUT_NOT_DRAINED');\n+  if (lifecycle.stderrEOF !== true) reasons.push('STDERR_NOT_DRAINED');\n+  if (lifecycle.drainObserved !== true) reasons.push('DRAIN_NOT_OBSERVED');\n+  if (lifecycle.timeout !== false) reasons.push('TIMEOUT');\n+  if (lifecycle.outputCapExceeded !== false) reasons.push('OUTPUT_CAP_EXCEEDED');\n+  const gate = reasons.length === 0 ? 'RUN_COMPLETE' : 'RUN_INCOMPLETE';\n+  let adaptation = null, adjudication = null, table = null;\n+  if (idOk) {\n+    adaptation = adaptFixedCanaryOutput(s, fixedCanaryMappingV1());\n+    adjudication = adjudicateFixedCanaries(adaptation.adaptedOutput, expectedMatrixFor({ childPid: identity.childPid, servicePid: identity.servicePid }));\n+    table = formatCanaryTable(adjudication);\n+    if (adjudication.overall !== 'ALL_MATCHED') reasons.push('CANARIES_NOT_MATCHED');\n+  }\n+  return { schemaVersion: 'nisi-fixed-run-summary/v1', identity, lifecycle, gate, reasons, adaptation, adjudication, table,\n+    overall: reasons.length === 0 ? 'OBSERVED' : 'NOT_ACCEPTED', isolationAccepted: false, generatedCodeExecuted: false, authorizing: false };\n+}\n+const tampered = STDOUT.split('\\n'); tampered[3] = '{\"operation\":\"outside_read\",\"outcome\":\"allowed\",\"errno\":0,\"generatedCodeExecuted\":false,\"completeIsolation\":false,\"authorizing\":false}';\n+const out = {\n+  'summary-observed.json': summarize(RECEIPT, STDOUT),\n+  'summary-canaries-not-matched.json': summarize(RECEIPT, tampered.join('\\n')),\n+  'summary-timeout.json': summarize({ ...RECEIPT, timeout: true, exitCode: null, signal: 'SIGKILL', stdoutEOF: false }, STDOUT),\n+  'summary-identity-unavailable.json': summarize({ ...RECEIPT, childPid: undefined }, STDOUT),\n+};\n+for (const [name, value] of Object.entries(out)) await writeFile(new URL(name, here), JSON.stringify(value, null, 2) + '\\n');\n+console.log(Object.entries(out).map(([n, v]) => `${n}: overall=${v.overall} reasons=${JSON.stringify(v.reasons)} table=${v.table === null ? 'null' : v.table.length + ' chars'}`).join('\\n'));\n",
+              "additions": 55,
+              "deletions": 0,
+              "status": "added"
+            },
+            {
+              "file": "work-orders/fixed-run-journal-entry/fixtures/summary-canaries-not-matched.json",
+              "patch": "Index: work-orders/fixed-run-journal-entry/fixtures/summary-canaries-not-matched.json\n===================================================================\n--- work-orders/fixed-run-journal-entry/fixtures/summary-canaries-not-matched.json\t\n+++ work-orders/fixed-run-journal-entry/fixtures/summary-canaries-not-matched.json\t\n@@ -0,0 +1,153 @@\n+{\n+  \"schemaVersion\": \"nisi-fixed-run-summary/v1\",\n+  \"identity\": {\n+    \"childPid\": 20280,\n+    \"servicePid\": 20279,\n+    \"waitObservedPid\": 20280\n+  },\n+  \"lifecycle\": {\n+    \"spawnReturn\": 0,\n+    \"exitCode\": 0,\n+    \"signal\": null,\n+    \"rawWaitStatus\": 0,\n+    \"stdoutEOF\": true,\n+    \"stderrEOF\": true,\n+    \"drainObserved\": true,\n+    \"waitObserved\": true,\n+    \"timeout\": false,\n+    \"outputCapExceeded\": false\n+  },\n+  \"gate\": \"RUN_COMPLETE\",\n+  \"reasons\": [\n+    \"CANARIES_NOT_MATCHED\"\n+  ],\n+  \"adaptation\": {\n+    \"version\": \"nisi-fixed-canary-mapping/v1\",\n+    \"adaptedOutput\": \"{\\\"op\\\":\\\"self-report\\\",\\\"pid\\\":20280,\\\"ppid\\\":20279}\\n{\\\"op\\\":\\\"own-write\\\",\\\"outcome\\\":\\\"ALLOWED\\\",\\\"errno\\\":0}\\n{\\\"op\\\":\\\"own-read\\\",\\\"outcome\\\":\\\"ALLOWED\\\",\\\"errno\\\":0}\\n{\\\"op\\\":\\\"outside-read\\\",\\\"outcome\\\":\\\"ALLOWED\\\",\\\"errno\\\":0}\\n{\\\"op\\\":\\\"loopback-bind\\\",\\\"outcome\\\":\\\"DENIED\\\",\\\"errno\\\":1}\\n\",\n+    \"report\": [\n+      {\n+        \"line\": 1,\n+        \"action\": \"MAPPED_IDENTITY\",\n+        \"operation\": \"self_report\",\n+        \"op\": \"self-report\",\n+        \"outcome\": \"observed\",\n+        \"mappedOutcome\": null\n+      },\n+      {\n+        \"line\": 2,\n+        \"action\": \"MAPPED\",\n+        \"operation\": \"own_container_write\",\n+        \"op\": \"own-write\",\n+        \"outcome\": \"allowed\",\n+        \"mappedOutcome\": \"ALLOWED\"\n+      },\n+      {\n+        \"line\": 3,\n+        \"action\": \"MAPPED\",\n+        \"operation\": \"own_container_read\",\n+        \"op\": \"own-read\",\n+        \"outcome\": \"allowed\",\n+        \"mappedOutcome\": \"ALLOWED\"\n+      },\n+      {\n+        \"line\": 4,\n+        \"action\": \"MAPPED\",\n+        \"operation\": \"outside_read\",\n+        \"op\": \"outside-read\",\n+        \"outcome\": \"allowed\",\n+        \"mappedOutcome\": \"ALLOWED\"\n+      },\n+      {\n+        \"line\": 5,\n+        \"action\": \"MAPPED_DENIAL\",\n+        \"operation\": \"ipv4_loopback_bind\",\n+        \"op\": \"loopback-bind\",\n+        \"outcome\": \"error\",\n+        \"mappedOutcome\": \"DENIED\"\n+      },\n+      {\n+        \"line\": 6,\n+        \"action\": \"BLANK\",\n+        \"operation\": null,\n+        \"op\": null,\n+        \"outcome\": null,\n+        \"mappedOutcome\": null\n+      }\n+    ],\n+    \"counts\": {\n+      \"mapped\": 5,\n+      \"passthrough\": 0,\n+      \"rejected\": 0,\n+      \"blank\": 1\n+    }\n+  },\n+  \"adjudication\": {\n+    \"rows\": [\n+      {\n+        \"operation\": \"own-write\",\n+        \"expectedOutcome\": \"ALLOWED\",\n+        \"expectedErrno\": 0,\n+        \"observedOutcome\": \"ALLOWED\",\n+        \"observedErrno\": 0,\n+        \"observedPid\": null,\n+        \"observedPpid\": null,\n+        \"verdict\": \"MATCH\"\n+      },\n+      {\n+        \"operation\": \"own-read\",\n+        \"expectedOutcome\": \"ALLOWED\",\n+        \"expectedErrno\": 0,\n+        \"observedOutcome\": \"ALLOWED\",\n+        \"observedErrno\": 0,\n+        \"observedPid\": null,\n+        \"observedPpid\": null,\n+        \"verdict\": \"MATCH\"\n+      },\n+      {\n+        \"operation\": \"outside-read\",\n+        \"expectedOutcome\": \"DENIED\",\n+        \"expectedErrno\": 1,\n+        \"observedOutcome\": \"ALLOWED\",\n+        \"observedErrno\": 0,\n+        \"observedPid\": null,\n+        \"observedPpid\": null,\n+        \"verdict\": \"MISMATCH\"\n+      },\n+      {\n+        \"operation\": \"loopback-bind\",\n+        \"expectedOutcome\": \"DENIED\",\n+        \"expectedErrno\": 1,\n+        \"observedOutcome\": \"DENIED\",\n+        \"observedErrno\": 1,\n+        \"observedPid\": null,\n+        \"observedPpid\": null,\n+        \"verdict\": \"MATCH\"\n+      },\n+      {\n+        \"operation\": \"self-report\",\n+        \"expectedOutcome\": \"SELF_REPORT\",\n+        \"expectedErrno\": null,\n+        \"observedOutcome\": null,\n+        \"observedErrno\": null,\n+        \"observedPid\": 20280,\n+        \"observedPpid\": 20279,\n+        \"verdict\": \"MATCH\"\n+      }\n+    ],\n+    \"malformedLines\": [],\n+    \"unexpectedOperations\": [],\n+    \"counts\": {\n+      \"matched\": 4,\n+      \"mismatched\": 1,\n+      \"notObserved\": 0,\n+      \"ambiguous\": 0\n+    },\n+    \"overall\": \"NOT_ACCEPTED\",\n+    \"isolationAccepted\": false\n+  },\n+  \"table\": \"Fixed canary adjudication\\nOverall: NOT_ACCEPTED\\nRows:\\n- own-write: expected ALLOWED errno 0, observed ALLOWED (errno 0) -> MATCH\\n- own-read: expected ALLOWED errno 0, observed ALLOWED (errno 0) -> MATCH\\n- outside-read: expected DENIED errno 1, observed ALLOWED (errno 0) -> MISMATCH\\n- loopback-bind: expected DENIED errno 1, observed DENIED (errno 1) -> MATCH\\n- self-report: expected SELF_REPORT, observed pid 20280 ppid 20279 -> MATCH\\nMalformed lines: 0\\nUnexpected operations: none\\n\\nIsolation acceptance is not established by this table.\\n\",\n+  \"overall\": \"NOT_ACCEPTED\",\n+  \"isolationAccepted\": false,\n+  \"generatedCodeExecuted\": false,\n+  \"authorizing\": false\n+}\n",
+              "additions": 153,
+              "deletions": 0,
+              "status": "added"
+            },
+            {
+              "file": "work-orders/fixed-run-journal-entry/fixtures/summary-identity-unavailable.json",
+              "patch": "Index: work-orders/fixed-run-journal-entry/fixtures/summary-identity-unavailable.json\n===================================================================\n--- work-orders/fixed-run-journal-entry/fixtures/summary-identity-unavailable.json\t\n+++ work-orders/fixed-run-journal-entry/fixtures/summary-identity-unavailable.json\t\n@@ -0,0 +1,31 @@\n+{\n+  \"schemaVersion\": \"nisi-fixed-run-summary/v1\",\n+  \"identity\": {\n+    \"childPid\": null,\n+    \"servicePid\": 20279,\n+    \"waitObservedPid\": 20280\n+  },\n+  \"lifecycle\": {\n+    \"spawnReturn\": 0,\n+    \"exitCode\": 0,\n+    \"signal\": null,\n+    \"rawWaitStatus\": 0,\n+    \"stdoutEOF\": true,\n+    \"stderrEOF\": true,\n+    \"drainObserved\": true,\n+    \"waitObserved\": true,\n+    \"timeout\": false,\n+    \"outputCapExceeded\": false\n+  },\n+  \"gate\": \"RUN_INCOMPLETE\",\n+  \"reasons\": [\n+    \"IDENTITY_UNAVAILABLE\"\n+  ],\n+  \"adaptation\": null,\n+  \"adjudication\": null,\n+  \"table\": null,\n+  \"overall\": \"NOT_ACCEPTED\",\n+  \"isolationAccepted\": false,\n+  \"generatedCodeExecuted\": false,\n+  \"authorizing\": false\n+}\n",
+              "additions": 31,
+              "deletions": 0,
+              "status": "added"
+            },
+            {
+              "file": "work-orders/fixed-run-journal-entry/fixtures/summary-observed.json",
+              "patch": "Index: work-orders/fixed-run-journal-entry/fixtures/summary-observed.json\n===================================================================\n--- work-orders/fixed-run-journal-entry/fixtures/summary-observed.json\t\n+++ work-orders/fixed-run-journal-entry/fixtures/summary-observed.json\t\n@@ -0,0 +1,151 @@\n+{\n+  \"schemaVersion\": \"nisi-fixed-run-summary/v1\",\n+  \"identity\": {\n+    \"childPid\": 20280,\n+    \"servicePid\": 20279,\n+    \"waitObservedPid\": 20280\n+  },\n+  \"lifecycle\": {\n+    \"spawnReturn\": 0,\n+    \"exitCode\": 0,\n+    \"signal\": null,\n+    \"rawWaitStatus\": 0,\n+    \"stdoutEOF\": true,\n+    \"stderrEOF\": true,\n+    \"drainObserved\": true,\n+    \"waitObserved\": true,\n+    \"timeout\": false,\n+    \"outputCapExceeded\": false\n+  },\n+  \"gate\": \"RUN_COMPLETE\",\n+  \"reasons\": [],\n+  \"adaptation\": {\n+    \"version\": \"nisi-fixed-canary-mapping/v1\",\n+    \"adaptedOutput\": \"{\\\"op\\\":\\\"self-report\\\",\\\"pid\\\":20280,\\\"ppid\\\":20279}\\n{\\\"op\\\":\\\"own-write\\\",\\\"outcome\\\":\\\"ALLOWED\\\",\\\"errno\\\":0}\\n{\\\"op\\\":\\\"own-read\\\",\\\"outcome\\\":\\\"ALLOWED\\\",\\\"errno\\\":0}\\n{\\\"op\\\":\\\"outside-read\\\",\\\"outcome\\\":\\\"DENIED\\\",\\\"errno\\\":1}\\n{\\\"op\\\":\\\"loopback-bind\\\",\\\"outcome\\\":\\\"DENIED\\\",\\\"errno\\\":1}\\n\",\n+    \"report\": [\n+      {\n+        \"line\": 1,\n+        \"action\": \"MAPPED_IDENTITY\",\n+        \"operation\": \"self_report\",\n+        \"op\": \"self-report\",\n+        \"outcome\": \"observed\",\n+        \"mappedOutcome\": null\n+      },\n+      {\n+        \"line\": 2,\n+        \"action\": \"MAPPED\",\n+        \"operation\": \"own_container_write\",\n+        \"op\": \"own-write\",\n+        \"outcome\": \"allowed\",\n+        \"mappedOutcome\": \"ALLOWED\"\n+      },\n+      {\n+        \"line\": 3,\n+        \"action\": \"MAPPED\",\n+        \"operation\": \"own_container_read\",\n+        \"op\": \"own-read\",\n+        \"outcome\": \"allowed\",\n+        \"mappedOutcome\": \"ALLOWED\"\n+      },\n+      {\n+        \"line\": 4,\n+        \"action\": \"MAPPED_DENIAL\",\n+        \"operation\": \"outside_read\",\n+        \"op\": \"outside-read\",\n+        \"outcome\": \"error\",\n+        \"mappedOutcome\": \"DENIED\"\n+      },\n+      {\n+        \"line\": 5,\n+        \"action\": \"MAPPED_DENIAL\",\n+        \"operation\": \"ipv4_loopback_bind\",\n+        \"op\": \"loopback-bind\",\n+        \"outcome\": \"error\",\n+        \"mappedOutcome\": \"DENIED\"\n+      },\n+      {\n+        \"line\": 6,\n+        \"action\": \"BLANK\",\n+        \"operation\": null,\n+        \"op\": null,\n+        \"outcome\": null,\n+        \"mappedOutcome\": null\n+      }\n+    ],\n+    \"counts\": {\n+      \"mapped\": 5,\n+      \"passthrough\": 0,\n+      \"rejected\": 0,\n+      \"blank\": 1\n+    }\n+  },\n+  \"adjudication\": {\n+    \"rows\": [\n+      {\n+        \"operation\": \"own-write\",\n+        \"expectedOutcome\": \"ALLOWED\",\n+        \"expectedErrno\": 0,\n+        \"observedOutcome\": \"ALLOWED\",\n+        \"observedErrno\": 0,\n+        \"observedPid\": null,\n+        \"observedPpid\": null,\n+        \"verdict\": \"MATCH\"\n+      },\n+      {\n+        \"operation\": \"own-read\",\n+        \"expectedOutcome\": \"ALLOWED\",\n+        \"expectedErrno\": 0,\n+        \"observedOutcome\": \"ALLOWED\",\n+        \"observedErrno\": 0,\n+        \"observedPid\": null,\n+        \"observedPpid\": null,\n+        \"verdict\": \"MATCH\"\n+      },\n+      {\n+        \"operation\": \"outside-read\",\n+        \"expectedOutcome\": \"DENIED\",\n+        \"expectedErrno\": 1,\n+        \"observedOutcome\": \"DENIED\",\n+        \"observedErrno\": 1,\n+        \"observedPid\": null,\n+        \"observedPpid\": null,\n+        \"verdict\": \"MATCH\"\n+      },\n+      {\n+        \"operation\": \"loopback-bind\",\n+        \"expectedOutcome\": \"DENIED\",\n+        \"expectedErrno\": 1,\n+        \"observedOutcome\": \"DENIED\",\n+        \"observedErrno\": 1,\n+        \"observedPid\": null,\n+        \"observedPpid\": null,\n+        \"verdict\": \"MATCH\"\n+      },\n+      {\n+        \"operation\": \"self-report\",\n+        \"expectedOutcome\": \"SELF_REPORT\",\n+        \"expectedErrno\": null,\n+        \"observedOutcome\": null,\n+        \"observedErrno\": null,\n+        \"observedPid\": 20280,\n+        \"observedPpid\": 20279,\n+        \"verdict\": \"MATCH\"\n+      }\n+    ],\n+    \"malformedLines\": [],\n+    \"unexpectedOperations\": [],\n+    \"counts\": {\n+      \"matched\": 5,\n+      \"mismatched\": 0,\n+      \"notObserved\": 0,\n+      \"ambiguous\": 0\n+    },\n+    \"overall\": \"ALL_MATCHED\",\n+    \"isolationAccepted\": false\n+  },\n+  \"table\": \"Fixed canary adjudication\\nOverall: ALL_MATCHED\\nRows:\\n- own-write: expected ALLOWED errno 0, observed ALLOWED (errno 0) -> MATCH\\n- own-read: expected ALLOWED errno 0, observed ALLOWED (errno 0) -> MATCH\\n- outside-read: expected DENIED errno 1, observed DENIED (errno 1) -> MATCH\\n- loopback-bind: expected DENIED errno 1, observed DENIED (errno 1) -> MATCH\\n- self-report: expected SELF_REPORT, observed pid 20280 ppid 20279 -> MATCH\\nMalformed lines: 0\\nUnexpected operations: none\\n\\nIsolation acceptance is not established by this table.\\n\",\n+  \"overall\": \"OBSERVED\",\n+  \"isolationAccepted\": false,\n+  \"generatedCodeExecuted\": false,\n+  \"authorizing\": false\n+}\n",
+              "additions": 151,
+              "deletions": 0,
+              "status": "added"
+            },
+            {
+              "file": "work-orders/fixed-run-journal-entry/fixtures/summary-timeout.json",
+              "patch": "Index: work-orders/fixed-run-journal-entry/fixtures/summary-timeout.json\n===================================================================\n--- work-orders/fixed-run-journal-entry/fixtures/summary-timeout.json\t\n+++ work-orders/fixed-run-journal-entry/fixtures/summary-timeout.json\t\n@@ -0,0 +1,156 @@\n+{\n+  \"schemaVersion\": \"nisi-fixed-run-summary/v1\",\n+  \"identity\": {\n+    \"childPid\": 20280,\n+    \"servicePid\": 20279,\n+    \"waitObservedPid\": 20280\n+  },\n+  \"lifecycle\": {\n+    \"spawnReturn\": 0,\n+    \"exitCode\": null,\n+    \"signal\": \"SIGKILL\",\n+    \"rawWaitStatus\": 0,\n+    \"stdoutEOF\": false,\n+    \"stderrEOF\": true,\n+    \"drainObserved\": true,\n+    \"waitObserved\": true,\n+    \"timeout\": true,\n+    \"outputCapExceeded\": false\n+  },\n+  \"gate\": \"RUN_INCOMPLETE\",\n+  \"reasons\": [\n+    \"SIGNALED\",\n+    \"NONZERO_EXIT\",\n+    \"STDOUT_NOT_DRAINED\",\n+    \"TIMEOUT\"\n+  ],\n+  \"adaptation\": {\n+    \"version\": \"nisi-fixed-canary-mapping/v1\",\n+    \"adaptedOutput\": \"{\\\"op\\\":\\\"self-report\\\",\\\"pid\\\":20280,\\\"ppid\\\":20279}\\n{\\\"op\\\":\\\"own-write\\\",\\\"outcome\\\":\\\"ALLOWED\\\",\\\"errno\\\":0}\\n{\\\"op\\\":\\\"own-read\\\",\\\"outcome\\\":\\\"ALLOWED\\\",\\\"errno\\\":0}\\n{\\\"op\\\":\\\"outside-read\\\",\\\"outcome\\\":\\\"DENIED\\\",\\\"errno\\\":1}\\n{\\\"op\\\":\\\"loopback-bind\\\",\\\"outcome\\\":\\\"DENIED\\\",\\\"errno\\\":1}\\n\",\n+    \"report\": [\n+      {\n+        \"line\": 1,\n+        \"action\": \"MAPPED_IDENTITY\",\n+        \"operation\": \"self_report\",\n+        \"op\": \"self-report\",\n+        \"outcome\": \"observed\",\n+        \"mappedOutcome\": null\n+      },\n+      {\n+        \"line\": 2,\n+        \"action\": \"MAPPED\",\n+        \"operation\": \"own_container_write\",\n+        \"op\": \"own-write\",\n+        \"outcome\": \"allowed\",\n+        \"mappedOutcome\": \"ALLOWED\"\n+      },\n+      {\n+        \"line\": 3,\n+        \"action\": \"MAPPED\",\n+        \"operation\": \"own_container_read\",\n+        \"op\": \"own-read\",\n+        \"outcome\": \"allowed\",\n+        \"mappedOutcome\": \"ALLOWED\"\n+      },\n+      {\n+        \"line\": 4,\n+        \"action\": \"MAPPED_DENIAL\",\n+        \"operation\": \"outside_read\",\n+        \"op\": \"outside-read\",\n+        \"outcome\": \"error\",\n+        \"mappedOutcome\": \"DENIED\"\n+      },\n+      {\n+        \"line\": 5,\n+        \"action\": \"MAPPED_DENIAL\",\n+        \"operation\": \"ipv4_loopback_bind\",\n+        \"op\": \"loopback-bind\",\n+        \"outcome\": \"error\",\n+        \"mappedOutcome\": \"DENIED\"\n+      },\n+      {\n+        \"line\": 6,\n+        \"action\": \"BLANK\",\n+        \"operation\": null,\n+        \"op\": null,\n+        \"outcome\": null,\n+        \"mappedOutcome\": null\n+      }\n+    ],\n+    \"counts\": {\n+      \"mapped\": 5,\n+      \"passthrough\": 0,\n+      \"rejected\": 0,\n+      \"blank\": 1\n+    }\n+  },\n+  \"adjudication\": {\n+    \"rows\": [\n+      {\n+        \"operation\": \"own-write\",\n+        \"expectedOutcome\": \"ALLOWED\",\n+        \"expectedErrno\": 0,\n+        \"observedOutcome\": \"ALLOWED\",\n+        \"observedErrno\": 0,\n+        \"observedPid\": null,\n+        \"observedPpid\": null,\n+        \"verdict\": \"MATCH\"\n+      },\n+      {\n+        \"operation\": \"own-read\",\n+        \"expectedOutcome\": \"ALLOWED\",\n+        \"expectedErrno\": 0,\n+        \"observedOutcome\": \"ALLOWED\",\n+        \"observedErrno\": 0,\n+        \"observedPid\": null,\n+        \"observedPpid\": null,\n+        \"verdict\": \"MATCH\"\n+      },\n+      {\n+        \"operation\": \"outside-read\",\n+        \"expectedOutcome\": \"DENIED\",\n+        \"expectedErrno\": 1,\n+        \"observedOutcome\": \"DENIED\",\n+        \"observedErrno\": 1,\n+        \"observedPid\": null,\n+        \"observedPpid\": null,\n+        \"verdict\": \"MATCH\"\n+      },\n+      {\n+        \"operation\": \"loopback-bind\",\n+        \"expectedOutcome\": \"DENIED\",\n+        \"expectedErrno\": 1,\n+        \"observedOutcome\": \"DENIED\",\n+        \"observedErrno\": 1,\n+        \"observedPid\": null,\n+        \"observedPpid\": null,\n+        \"verdict\": \"MATCH\"\n+      },\n+      {\n+        \"operation\": \"self-report\",\n+        \"expectedOutcome\": \"SELF_REPORT\",\n+        \"expectedErrno\": null,\n+        \"observedOutcome\": null,\n+        \"observedErrno\": null,\n+        \"observedPid\": 20280,\n+        \"observedPpid\": 20279,\n+        \"verdict\": \"MATCH\"\n+      }\n+    ],\n+    \"malformedLines\": [],\n+    \"unexpectedOperations\": [],\n+    \"counts\": {\n+      \"matched\": 5,\n+      \"mismatched\": 0,\n+      \"notObserved\": 0,\n+      \"ambiguous\": 0\n+    },\n+    \"overall\": \"ALL_MATCHED\",\n+    \"isolationAccepted\": false\n+  },\n+  \"table\": \"Fixed canary adjudication\\nOverall: ALL_MATCHED\\nRows:\\n- own-write: expected ALLOWED errno 0, observed ALLOWED (errno 0) -> MATCH\\n- own-read: expected ALLOWED errno 0, observed ALLOWED (errno 0) -> MATCH\\n- outside-read: expected DENIED errno 1, observed DENIED (errno 1) -> MATCH\\n- loopback-bind: expected DENIED errno 1, observed DENIED (errno 1) -> MATCH\\n- self-report: expected SELF_REPORT, observed pid 20280 ppid 20279 -> MATCH\\nMalformed lines: 0\\nUnexpected operations: none\\n\\nIsolation acceptance is not established by this table.\\n\",\n+  \"overall\": \"NOT_ACCEPTED\",\n+  \"isolationAccepted\": false,\n+  \"generatedCodeExecuted\": false,\n+  \"authorizing\": false\n+}\n",
+              "additions": 156,
+              "deletions": 0,
+              "status": "added"
+            },
+            {
+              "file": "work-orders/fixed-run-journal-entry/src/run-journal-v1.mjs",
+              "patch": "Index: work-orders/fixed-run-journal-entry/src/run-journal-v1.mjs\n===================================================================\n--- work-orders/fixed-run-journal-entry/src/run-journal-v1.mjs\t\n+++ work-orders/fixed-run-journal-entry/src/run-journal-v1.mjs\t\n@@ -0,0 +1,175 @@\n+import {createHash} from 'node:crypto';\n+\n+const STATES = new Set(['QUEUED','RUNNING','SUCCEEDED','FAILED','CANCELLED','REVOKED']);\n+const ENTRY_KEYS = ['id','projectId','runId','attempt','candidateId','stage','receiptId','createdAt','ttlMs','state','heartbeatAt','retryOf','revokes','payload'];\n+const RECORD_KEYS = ['entry','fingerprint','retained'];\n+const ID = /^[A-Za-z0-9][A-Za-z0-9_.:-]{0,127}$/;\n+const SEG = /^(?:[A-Za-z_][A-Za-z0-9_]*|0|[1-9][0-9]*)$/;\n+const BAD = new Set(['__proto__','prototype','constructor']);\n+const MARK = '[REDACTED]';\n+\n+const err = (code, message = code) => { const e = new Error(message); e.code = code; return e; };\n+const own = (o, k) => Object.prototype.hasOwnProperty.call(o, k);\n+const exact = (o, keys) => o && typeof o === 'object' && !Array.isArray(o) &&\n+  Object.keys(o).length === keys.length && keys.every(k => own(o, k));\n+const safe = n => Number.isSafeInteger(n) && n >= 0 && !Object.is(n, -0);\n+\n+function copy(x, stack = new Set()) {\n+  if (x === null || typeof x === 'string' || typeof x === 'boolean') {\n+    if (typeof x === 'string') for (let i=0;i<x.length;i++) { const n=x.charCodeAt(i); if (n>=0xd800&&n<=0xdbff) { const m=x.charCodeAt(++i); if (!(m>=0xdc00&&m<=0xdfff)) throw err('ENTRY'); } else if (n>=0xdc00&&n<=0xdfff) throw err('ENTRY'); }\n+    return x;\n+  }\n+  if (typeof x === 'number') { if (!Number.isSafeInteger(x) || Object.is(x, -0)) throw err('ENTRY'); return x; }\n+  if (!x || typeof x !== 'object' || stack.has(x)) throw err('ENTRY');\n+  const proto = Object.getPrototypeOf(x); if (Array.isArray(x) ? proto !== Array.prototype : proto !== Object.prototype && proto !== null) throw err('ENTRY');\n+  stack.add(x);\n+  let out;\n+  if (Array.isArray(x)) {\n+    const names = Object.getOwnPropertyNames(x);\n+    if (names.length !== x.length + 1 || !names.includes('length') || Reflect.ownKeys(x).length !== names.length) throw err('ENTRY');\n+    out = [];\n+    for (let i=0;i<x.length;i++) {\n+      const d = Object.getOwnPropertyDescriptor(x, String(i));\n+      if (!d || !d.enumerable || !('value' in d)) throw err('ENTRY');\n+      out.push(copy(d.value, stack));\n+    }\n+  } else {\n+    const names = Object.getOwnPropertyNames(x), keys = Object.keys(x);\n+    if (names.length !== keys.length || Reflect.ownKeys(x).length !== keys.length) throw err('ENTRY');\n+    out = {};\n+    for (const k of keys) {\n+      if (BAD.has(k) || !k.isWellFormed()) throw err('ENTRY');\n+      const d = Object.getOwnPropertyDescriptor(x, k);\n+      if (!d || !d.enumerable || !('value' in d)) throw err('ENTRY');\n+      out[k] = copy(d.value, stack);\n+    }\n+  }\n+  stack.delete(x); return out;\n+}\n+\n+function C(x) {\n+  if (Array.isArray(x)) return '[' + x.map(C).join(',') + ']';\n+  if (x && typeof x === 'object') return '{' + Object.keys(x).sort().map(k => JSON.stringify(k)+':'+C(x[k])).join(',') + '}';\n+  return JSON.stringify(x);\n+}\n+function H(x) { return createHash('sha256').update(x).digest('hex'); }\n+function freeze(x, seen = new Set()) {\n+  if (x && typeof x === 'object' && !seen.has(x)) { seen.add(x); for (const v of Object.values(x)) freeze(v, seen); Object.freeze(x); }\n+  return x;\n+}\n+function id(x) { return typeof x === 'string' && ID.test(x); }\n+function configOf(input) {\n+  let c; try { c = copy(input); } catch (_) { throw err('CONFIG'); }\n+  if (!exact(c, ['projectId','maxEntries','heartbeatTtlMs','redactPaths']) || !id(c.projectId) ||\n+      !Number.isSafeInteger(c.maxEntries) || c.maxEntries < 1 || c.maxEntries > 10000 ||\n+      !Number.isSafeInteger(c.heartbeatTtlMs) || c.heartbeatTtlMs < 1 || !Array.isArray(c.redactPaths)) throw err('CONFIG');\n+  const paths = []; for (const p of c.redactPaths) {\n+    if (typeof p !== 'string' || !p.startsWith('payload.') || p.length < 9) throw err('CONFIG');\n+    const a = p.split('.'); if (a.some(s => !SEG.test(s) || BAD.has(s))) throw err('CONFIG');\n+    for (const q of paths) if (a.length === q.length ? a.every((s,i)=>s===q[i]) :\n+      (a.length < q.length ? a.every((s,i)=>s===q[i]) : q.every((s,i)=>s===a[i]))) throw err('CONFIG');\n+    paths.push(a);\n+  }\n+  c.redactPaths = c.redactPaths.slice(); c._paths = paths; return c;\n+}\n+function entryOf(input, now) {\n+  let e; try { e = copy(input); } catch (_) { throw err('ENTRY'); }\n+  if (!exact(e, ENTRY_KEYS) || !id(e.id) || !id(e.projectId) || !id(e.runId) || !id(e.candidateId) || !id(e.stage) ||\n+      !Number.isSafeInteger(e.attempt) || e.attempt < 0 || !safe(e.createdAt) || !Number.isSafeInteger(e.ttlMs) || e.ttlMs < 1 ||\n+      !safe(e.createdAt + e.ttlMs) || !STATES.has(e.state) || (e.heartbeatAt !== null && !safe(e.heartbeatAt)) ||\n+      (e.heartbeatAt !== null && e.heartbeatAt > e.createdAt) || (e.receiptId !== null && !id(e.receiptId)) ||\n+      (e.retryOf !== null && !id(e.retryOf)) || (e.revokes !== null && !id(e.revokes)) ||\n+      (e.state === 'REVOKED' ? e.revokes === null || e.retryOf !== null : e.revokes !== null) ||\n+      (now !== undefined && e.createdAt > now)) throw err('ENTRY');\n+  return e;\n+}\n+function redact(e, paths) {\n+  for (const path of paths) {\n+    let cur = e; for (let i=0;i<path.length-1;i++) { const k=path[i]; if (!cur || typeof cur !== 'object' || !own(cur,k) || Array.isArray(cur) && !/^(0|[1-9][0-9]*)$/.test(k)) throw err('REDACTION'); cur=cur[k]; }\n+    const k=path.at(-1); if (!cur || typeof cur !== 'object' || !own(cur,k) || Array.isArray(cur) && !/^(0|[1-9][0-9]*)$/.test(k)) throw err('REDACTION'); cur[k]=MARK;\n+  }\n+}\n+function expired(r, now) { return now >= r.entry.createdAt + r.entry.ttlMs; }\n+\n+function build(config, watermark = 0, initial = [], sealed = false) {\n+  const records = initial.slice(), byId = new Map(), revoked = new Set();\n+  for (const r of records) { byId.set(r.entry.id, r); if (r.entry.revokes !== null) revoked.add(r.entry.revokes); }\n+  let mark = watermark;\n+  const prune = now => {\n+    const out=[]; for (const r of records) if (r.retained && expired(r,now)) { r.retained=false; r.entry.payload=null; out.push(r.entry.id); }\n+    let n=records.filter(r=>r.retained).length;\n+    for (const r of records) if (n>config.maxEntries && r.retained) { r.retained=false; r.entry.payload=null; n--; out.push(r.entry.id); }\n+    const pruned = new Set(out); return records.filter(r=>pruned.has(r.entry.id)).map(r=>r.entry.id);\n+  };\n+  const time = now => { if (!safe(now) || now < mark) throw err('TIME'); mark=now; };\n+  const view = (r, now) => {\n+    const terminal = new Set(['SUCCEEDED','FAILED','CANCELLED','REVOKED']);\n+    let l = revoked.has(r.entry.id) ? 'REVOKED' : terminal.has(r.entry.state) ? r.entry.state : expired(r,now) ? 'EXPIRED' :\n+      r.entry.state === 'RUNNING' && (r.entry.heartbeatAt === null || now-r.entry.heartbeatAt > config.heartbeatTtlMs) ? 'UNKNOWN' : r.entry.state;\n+    return freeze({entry:copy(r.entry), historical:r.historical, retained:r.retained, revoked:revoked.has(r.entry.id), expired:expired(r,now), liveness:l, authorizing:false});\n+  };\n+  const append = (input, now) => {\n+    if (!safe(now) || now < mark) throw err('TIME');\n+    const e=entryOf(input,now);\n+    if (sealed) return freeze({status:'REFUSED',id:e.id,reason:'SEALED'});\n+    if (e.projectId !== config.projectId) return freeze({status:'REFUSED',id:e.id,reason:'PROJECT'});\n+    const fp=H('nisi-run-journal/input/v1\\n'+C(e)), old=byId.get(e.id);\n+    if (old) return freeze(old.fingerprint===fp ? {status:'DUPLICATE',id:e.id} : {status:'CONFLICT',id:e.id,reason:'ID_CONTENT_MISMATCH'});\n+    if (e.retryOf !== null) {\n+      const t=byId.get(e.retryOf); if (!t || e.state!=='QUEUED' || t.entry.runId!==e.runId || e.attempt<=t.entry.attempt || e.createdAt<t.entry.createdAt ||\n+        !(new Set(['SUCCEEDED','FAILED','CANCELLED','REVOKED'])).has(t.entry.state) && !expired(t,now) && !revoked.has(t.entry.id)) return freeze({status:'REFUSED',id:e.id,reason:'RETRY'});\n+    }\n+    if (e.revokes !== null) { const t=byId.get(e.revokes); if (!t || t.entry.runId!==e.runId || t.entry.attempt!==e.attempt || t.entry.candidateId!==e.candidateId || t.entry.createdAt>e.createdAt) return freeze({status:'REFUSED',id:e.id,reason:'REVOCATION'}); }\n+    redact(e,config._paths);\n+    const r={entry:e,fingerprint:fp,retained:true,historical:false}; records.push(r); byId.set(e.id,r); if (e.revokes!==null) revoked.add(e.revokes);\n+    mark=now; prune(now); return freeze({status:'APPENDED',id:e.id});\n+  };\n+  const list = now => { time(now); prune(now); return freeze(records.map(r=>view(r,now))); };\n+  const retain = now => { time(now); return freeze(prune(now)); };\n+  const serialize = () => {\n+    if (sealed) throw err('SEALED');\n+    const header={type:'header',schema:'nisi-run-journal-v1',config:{projectId:config.projectId,maxEntries:config.maxEntries,heartbeatTtlMs:config.heartbeatTtlMs,redactPaths:config.redactPaths.slice()},now:mark};\n+    let prev=H('nisi-run-journal/header/v1\\n'+C(header)), lines=[C(header)];\n+    records.forEach((r,i)=>{ const record={entry:r.entry,fingerprint:r.fingerprint,retained:r.retained}, env={type:'entry',seq:i+1,previousHash:prev,record,hash:H('nisi-run-journal/record/v1\\n'+C({seq:i+1,previousHash:prev,record}))}; lines.push(C(env)); prev=env.hash; });\n+    lines.push(C({type:'footer',count:records.length,lastHash:prev})); return lines.join('\\n')+'\\n';\n+  };\n+  return {api:freeze({append,list,retain,serialize}), records, byId, revoked, get watermark(){return mark;}};\n+}\n+\n+function parseLine(raw) {\n+  try { const v=JSON.parse(raw); return C(v)===raw ? v : null; } catch (_) { return null; }\n+}\n+function report(status, ids, line, reason) { return freeze({status,recoveredIds:ids,rejectedLine:line,reason,authorizing:false}); }\n+\n+export function createRunJournal(input) { const c=configOf(input), b=build(c); return b.api; }\n+\n+function reopenData(serialized) {\n+  if (typeof serialized !== 'string' || !serialized.includes('\\n')) return {journal:null,report:report('INVALID',[],1,'HEADER')};\n+  const trailing=!serialized.endsWith('\\n'); let ls=serialized.split('\\n'); let tail=null; if (trailing) tail=ls.pop(); else ls.pop();\n+  const h=parseLine(ls[0]);\n+  if (!h || !exact(h,['type','schema','config','now']) || h.type!=='header' || h.schema!=='nisi-run-journal-v1' || !safe(h.now)) return {journal:null,report:report('INVALID',[],1,'HEADER')};\n+  let c; try { c=configOf(h.config); } catch (_) { return {journal:null,report:report('INVALID',[],1,'HEADER')}; }\n+  const b=build(c,h.now), ids=[]; let prev=H('nisi-run-journal/header/v1\\n'+C(h)), footer=false, bad=null, retained=0;\n+  const failAt=(line,reason='RECORD',status='INVALID')=>{bad={line,reason,status};};\n+  for(let n=1;n<ls.length&&!bad;n++) {\n+    const v=parseLine(ls[n]); if (!v) { failAt(n+1); break; }\n+    if (v.type==='footer') {\n+      if (!exact(v,['type','count','lastHash']) || v.type!=='footer' || !Number.isSafeInteger(v.count) || v.count!==ids.length || v.lastHash!==prev) failAt(n+1,'FOOTER'); else footer=true;\n+      if (footer && (n+1<ls.length || trailing)) failAt(n+1<ls.length ? n+2 : ls.length+1,'TRAILING_DATA');\n+      break;\n+    }\n+    if (!exact(v,['type','seq','previousHash','record','hash']) || v.type!=='entry' || v.seq!==n || v.previousHash!==prev || typeof v.hash!=='string' || !/^[0-9a-f]{64}$/.test(v.hash) ||\n+        H('nisi-run-journal/record/v1\\n'+C({seq:v.seq,previousHash:v.previousHash,record:v.record}))!==v.hash || !exact(v.record,RECORD_KEYS) || typeof v.record.fingerprint!=='string' || !/^[0-9a-f]{64}$/.test(v.record.fingerprint) || typeof v.record.retained!=='boolean') { failAt(n+1); break; }\n+    let e; try { e=entryOf(v.record.entry,h.now); } catch (_) { failAt(n+1); break; }\n+    if (e.projectId!==c.projectId || b.byId.has(e.id) || (!v.record.retained && e.payload!==null)) { failAt(n+1); break; }\n+    if (v.record.retained) { try { for(const p of c._paths){let x=e;for(const k of p){if(!x||typeof x!=='object'||!own(x,k)||Array.isArray(x)&&!/^(0|[1-9][0-9]*)$/.test(k))throw 0;x=x[k];}if(x!==MARK)throw 0;} } catch (_) { failAt(n+1); break; } if (expired({entry:e},h.now)) { failAt(n+1); break; } retained++; if(retained>c.maxEntries){failAt(n+1);break;} }\n+    if (e.retryOf!==null) { const t=b.byId.get(e.retryOf); if(!t || e.state!=='QUEUED' || t.entry.runId!==e.runId || e.attempt<=t.entry.attempt || e.createdAt<t.entry.createdAt || !(new Set(['SUCCEEDED','FAILED','CANCELLED','REVOKED'])).has(t.entry.state) && !expired(t,h.now) && !b.revoked.has(t.entry.id)) { failAt(n+1); break; } }\n+    if (e.revokes!==null) { const t=b.byId.get(e.revokes); if(!t || t.entry.runId!==e.runId || t.entry.attempt!==e.attempt || t.entry.candidateId!==e.candidateId || t.entry.createdAt>e.createdAt){failAt(n+1);break;} }\n+    const r={entry:e,fingerprint:v.record.fingerprint,retained:v.record.retained,historical:true}; b.records.push(r); b.byId.set(e.id,r); if(e.revokes!==null)b.revoked.add(e.revokes); prev=v.hash; ids.push(e.id);\n+  }\n+  if (!bad && !footer) bad={line:ls.length+1,reason:trailing?'TRUNCATED':'MISSING_FOOTER',status:'INCOMPLETE'};\n+  if (bad) { const sealed=build(c,h.now,b.records,true); return {journal:sealed.api,report:report(bad.status,ids,bad.line,bad.reason)}; }\n+  return {journal:b.api,report:report('COMPLETE',ids,null,null)};\n+}\n+\n+export function reopen(serialized) { return freeze(reopenData(serialized)); }\n",
+              "additions": 175,
+              "deletions": 0,
+              "status": "added"
+            },
+            {
+              "file": "work-orders/run-journal-store/evidence/daybreak-design-review.md",
+              "patch": "Index: work-orders/run-journal-store/evidence/daybreak-design-review.md\n===================================================================\n--- work-orders/run-journal-store/evidence/daybreak-design-review.md\t\n+++ work-orders/run-journal-store/evidence/daybreak-design-review.md\t\n@@ -1,15 +1,30 @@\n # Daybreak Blue protected-test review — 2026-09-13\n \n Live read-only collaborator /root/store_contract_review, gpt-daybreak-blue-latest.\n Findings accepted by Astra BEFORE packet execution:\n \n 1. Test a 2-entry disconnected chain and skipped sequence with self-consistent recomputed entry/footer hashes.\n 2. Correct close-fault fixture: the descriptor can already be released when close reports failure; never require a retry. Require one attempt, refusal, original destination preserved and no rename.\n 3. Add throwing temp/final readback I/O failures alongside mismatched buffers, with precise committed flags.\n 4. Assert temp close happens between file fsync and temp readback.\n 5. Corrupt entry/footer type markers independently of entry-content hashes.\n \n All five applied before tests freeze. Existing 16 test count retained by expanding cases.\n No implementation existed when these test/packet corrections were made.\n Raw JSONL, caller-owned writer serialization, and semantic validation delegated\n to product reopen were explicitly not defects.\n+\n+## Confirmation and evidence limit\n+\n+Daybreak independently confirmed final test SHA-256\n+7190d7d212f8c2012b8978057e6a5e2314ff2bbeee29e69a377ff9bdc36e4834\n+and all five corrections, with no remaining blocker in this bounded review.\n+\n+The collaborator additionally attempted a Fable review via\n+`python3 /Users/louiscalata/.codex/skills/local-llm-orchestrator/scripts/claude_review.py --model fable --timeout 120`\n+with stdin prompt and no output file. It captured only an empty initial chunk\n+at 30.2 seconds and discarded session/exit metadata. No terminal stdout, model\n+identity, usage, exit code or error is retained. Record NOT_RUN / unavailable\n+evidence due to orchestration capture loss; this is not proof of an empty Claude\n+response or a failed model. No review or token/cost claim relies on this attempt.\n+The root's successful claude-design.json remains valid retained Claude evidence.\n",
+              "additions": 15,
+              "deletions": 0,
+              "status": "modified"
+            },
+            {
+              "file": "work-orders/run-journal-store/evidence/owner-compatibility.mjs",
+              "patch": "Index: work-orders/run-journal-store/evidence/owner-compatibility.mjs\n===================================================================\n--- work-orders/run-journal-store/evidence/owner-compatibility.mjs\t\n+++ work-orders/run-journal-store/evidence/owner-compatibility.mjs\t\n@@ -0,0 +1,31 @@\n+import assert from 'node:assert/strict';\n+import * as fs from 'node:fs';\n+import { tmpdir } from 'node:os';\n+import { join } from 'node:path';\n+import { createHash } from 'node:crypto';\n+import { createRunJournal, reopen } from '../../../history/run-journal-v1.mjs';\n+import { writeSerializedJournal, readSerializedJournal } from '../src/run-journal-store-v1.mjs';\n+\n+const dir = fs.mkdtempSync(join(tmpdir(), 'nisi-store-owner-'));\n+try {\n+  const path = join(dir, 'journal.jsonl');\n+  const journal = createRunJournal({ projectId: 'owner', maxEntries: 2, heartbeatTtlMs: 10, redactPaths: [] });\n+  for (let n = 1; n <= 3; n++) {\n+    assert.equal(journal.append({ id: 'e' + n, projectId: 'owner', runId: 'run', attempt: 0, candidateId: 'candidate', stage: 'test', receiptId: null, createdAt: n, ttlMs: 100, state: 'SUCCEEDED', heartbeatAt: null, retryOf: null, revokes: null, payload: { text: 'café 🌱', n } }, n).status, 'APPENDED');\n+  }\n+  const serialized = journal.serialize();\n+  const stored = writeSerializedJournal({ path, serialized, fs });\n+  assert.equal(stored.status, 'WRITTEN');\n+  const loaded = readSerializedJournal({ path, fs });\n+  assert.equal(loaded.status, 'READ');\n+  assert.equal(loaded.serialized, serialized);\n+  assert.equal(loaded.durable, false);\n+  const result = reopen(loaded.serialized);\n+  assert.equal(result.report.status, 'COMPLETE');\n+  assert.equal(result.journal.serialize(), serialized);\n+  assert.ok(result.journal.list(3).every(view => view.historical && view.authorizing === false));\n+  assert.equal(result.journal.list(3)[0].retained, false);\n+  console.log(JSON.stringify({ status: 'PASS_SCOPED', observations: 3, retained: 2, reopened: 'COMPLETE', byteMatch: true, historical: true, authorizing: false, writeDurableObserved: stored.durable, readDurable: loaded.durable, sha256: createHash('sha256').update(serialized).digest('hex'), scope: 'same-process product serializer/store/reopen compatibility; no host integration or crash acceptance' }, null, 2));\n+} finally {\n+  fs.rmSync(dir, { recursive: true, force: true });\n+}\n",
+              "additions": 31,
+              "deletions": 0,
+              "status": "added"
+            }
+          ]
+        },
+        "id": "msg_09c859d82001KUO8GFtrJIc7sA",
+        "sessionID": "ses_f637a66f9ffe362t0WOs1u0p6Y"
+      },
+      "parts": [
+        {
+          "type": "text",
+          "text": "Execute the packet at `/Users/louiscalata/nisi-next-private/work-orders/run-journal-store/.packets/nisi-run-journal-store-v1.packet.md` (a `.packets/<slug>.packet.md` path).\n\nYou are the write owner for this packet and nothing else. This contract\nOVERRIDES your general autonomy: a packet is a work order, not a problem to\nsolve creatively. You do not decide whether items passed — the receipt tool\nruns the accept commands and decides. Your job is the edits.\n\nRead the packet once in full. Context is ground truth; do not re-explore\nbeyond opening the files an item names. Constraints are absolute.\n\nFor each item, top to bottom, ONE item at a time:\n- Skip it if any `needs` id is one you could not complete (note why).\n- Make exactly the change `do` describes, in exactly the `files` listed. At\n  most two edit attempts per item. Never touch another path — not even to\n  make something pass. Never install anything. Never change a test the packet\n  did not ask you to write.\n- If you cannot make the change as written, record a one-line note for that\n  item and MOVE ON. Do not improvise around it.\n\nWhen you have attempted every item, stop. The receipt is produced outside\nyou by `packet-run` (it runs every accept and the packet acceptance and\nderives the verdicts from real exit codes). Do NOT call `chami_packet_receipt_write`: it flips the packet's status, which\nchanges the bytes that were hashed at lint time, and the real receipt then\nrefuses to execute anything (exit 125, every item BLOCKED). The receipt is\nproduced for you either way.\n\nNever run accept commands yourself, never use browser or playwright tools,\nnever call `codemode_verify_golden` (it gates verifier changes, not packets),\nnever commit, never push.\n\nReply with ONLY the list of files you changed. No summaries, no next steps —\nthe receipt, not your reply, is the record.",
+          "id": "prt_09c859d89001lcpm15PazI4pKn",
+          "sessionID": "ses_f637a66f9ffe362t0WOs1u0p6Y",
+          "messageID": "msg_09c859d82001KUO8GFtrJIc7sA"
+        }
+      ]
+    },
+    {
+      "info": {
+        "parentID": "msg_09c859d82001KUO8GFtrJIc7sA",
+        "role": "assistant",
+        "mode": "packet",
+        "agent": "packet",
+        "path": {
+          "cwd": "/Users/louiscalata/nisi-next-private",
+          "root": "/Users/louiscalata/nisi-next-private"
+        },
+        "cost": 0,
+        "tokens": {
+          "total": 4320,
+          "input": 4253,
+          "output": 54,
+          "reasoning": 13,
+          "cache": {
+            "write": 0,
+            "read": 0
+          }
+        },
+        "modelID": "qwen/qwen3.8-27b",
+        "providerID": "lmstudio",
+        "time": {
+          "created": 1789332397479,
+          "completed": 1789332424026
+        },
+        "finish": "tool-calls",
+        "id": "msg_09c859da7001bApO03PPLSM90q",
+        "sessionID": "ses_f637a66f9ffe362t0WOs1u0p6Y"
+      },
+      "parts": [
+        {
+          "snapshot": "913becd75f927b46e0455f7fcdeddb87f2eae551",
+          "type": "step-start",
+          "id": "prt_09c85cccf001eEgeNQP410Yqp5",
+          "sessionID": "ses_f637a66f9ffe362t0WOs1u0p6Y",
+          "messageID": "msg_09c859da7001bApO03PPLSM90q"
+        },
+        {
+          "type": "reasoning",
+          "text": "Let's read through the packet first, in its entirety.\n",
+          "time": {
+            "start": 1789332409553,
+            "end": 1789332411680
+          },
+          "id": "prt_09c85ccd10010l5y1Egt98F5OU",
+          "sessionID": "ses_f637a66f9ffe362t0WOs1u0p6Y",
+          "messageID": "msg_09c859da7001bApO03PPLSM90q"
+        },
+        {
+          "type": "text",
+          "text": "\n\n",
+          "time": {
+            "start": 1789332411682,
+            "end": 1789332423807
+          },
+          "id": "prt_09c85d522001ZWWXH5dT6Ydx7H",
+          "sessionID": "ses_f637a66f9ffe362t0WOs1u0p6Y",
+          "messageID": "msg_09c859da7001bApO03PPLSM90q"
+        },
+        {
+          "type": "tool",
+          "tool": "read",
+          "callID": "979032686",
+          "state": {
+            "status": "completed",
+            "input": {
+              "filePath": "/Users/louiscalata/nisi-next-private/work-orders/run-journal-store/.packets/nisi-run-journal-store-v1.packet.md"
+            },
+            "output": "<path>/Users/louiscalata/nisi-next-private/work-orders/run-journal-store/.packets/nisi-run-journal-store-v1.packet.md</path>\n<type>file</type>\n<content>\n1: ---\n2: packet: nisi-run-journal-store-v1\n3: project_root: /Users/louiscalata/nisi-next-private/work-orders/run-journal-store\n4: created_by: codex\n5: created: 2026-09-13T13:43:59-07:00\n6: write_owner: opencode\n7: status: executing\n8: ---\n9: \n10: # U02-04 — run-journal disk store v1\n11: \n12: ## Context\n13: \n14: This is an isolated private dependency-free ESM work order, Node v24.18.0,\n15: npm 11.16.0. Astra authored the protected tests BEFORE implementation. Measured\n16: placeholder baseline `npm test` passes 2/2 and the discriminating\n17: `npm run test:store` fails all 16 tests, with zero skipped/cancelled. Tests use\n18: real temporary directories and a recording injected fs with fault injection.\n19: Implement the one source file from this contract. Read the protected tests if\n20: needed; their content is immutable. Do not explore the parent repository.\n21: \n22: Export exactly two SYNCHRONOUS functions:\n23: \n24: ```text\n25: writeSerializedJournal({ path, serialized, fs, expectedPreviousSha256 })\n26: readSerializedJournal({ path, fs })\n27: ```\n28: \n29: Optional expectedPreviousSha256 is the SHA-256 of the previous raw serialized\n30: UTF-8 bytes, lowercase 64-hex, never a new content hash or envelope hash.\n31: No stored outer envelope: ON-DISK BYTES MUST EQUAL Buffer.from(serialized,'utf8').\n32: Imports may only be deterministic createHash from node:crypto and helpers from\n33: node:path. Buffer is available globally. No ambient fs, clock, randomness,\n34: configuration, logging, network or application-module dependency. The caller\n35: owns a trusted directory and serializes all writers. Recheck before rename as\n36: specified, but do not claim a cross-process CAS lock or hostile-directory safety.\n37: No parent-directory creation. Path is a nonempty string without NUL.\n38: \n39: ### Injected fs and results\n40: \n41: The fs object exposes sync methods with native Node signatures: readFileSync\n42: (called WITHOUT an encoding, returning Buffer), openSync, writeSync, fsyncSync,\n43: closeSync, renameSync, unlinkSync. There is no existsSync/stat requirement.\n44: Tests' recording double exposes only these methods; it forwards to real fs.\n45: All disk activity MUST go through this object. Inputs/fs are trusted ordinary\n46: objects, not hostile getters or Proxies. Catch malformed data and ordinary I/O\n47: exceptions and return REFUSED; do not throw for these cases. Invalid path/fs\n48: arguments return INVALID_INPUT. Missing fsyncSync is supported as a failed sync,\n49: NOT an invalid fs. No asynchronous functions or promises.\n50: \n51: Every returned result includes `durable` boolean, `fsync:{file:boolean,\n52: directory:boolean}` and `fsyncErrors:{file:null|string,directory:null|string}`.\n53: Default sync flags are false and errors null (not attempted). A successful\n54: fsyncSync call sets its flag true. Failure records error.code if a nonempty\n55: string, otherwise a nonempty fallback such as FSYNC_FAILED. Missing fsyncSync\n56: records a nonempty error for each attempt. Directory open/close errors count as\n57: directory sync failures, recorded under directory. No swallowed sync evidence.\n58: \n59: Results:\n60: - WRITTEN: `{status:'WRITTEN',sha256,bytes,verified:true,committed:true,...}`.\n61:   `bytes` is UTF-8 byte length. `durable` is true ONLY when BOTH file and\n62:   directory fsyncs succeeded, closes succeeded and final exact-byte verification\n63:   succeeded. Successful fsync calls are an observation, not power-loss proof.\n64: - UNCHANGED: same-byte no-op, includes sha256,bytes,verified:true,\n65:   `committed:false,durable:false`; no mutating operations and no fsync attempted.\n66: - READ: `{status:'READ',serialized,sha256,bytes,verified:true,committed:false,\n67:   durable:false,...}`. A read never proves that anyone previously flushed data.\n68: - REFUSED: `{status:'REFUSED',reason,committed,durable:false,...}`. Do not expose\n69:   `serialized` or a recovered prefix. `committed` is true iff this call already\n70:   renamed its temp to destination; false before rename and always false on read.\n71:   Even if both sync flags are true, failed verification MUST be durable:false.\n72: \n73: Reason vocabulary: INVALID_INPUT, INVALID_JOURNAL, NOT_FOUND, READ_FAILED,\n74: EXISTING_INVALID, CONFLICT, WRITE_FAILED, RENAME_FAILED, READBACK_MISMATCH.\n75: All other operation errors map to their stage, never arbitrary success.\n76: \n77: ### Raw journal framing and integrity validator\n78: \n79: Use ONE shared nonthrowing validator for read and write. It checks storage\n80: framing and chain integrity, NOT full journal-entry semantic admission. Entry\n81: identity, retention, retry/revocation and authority validation remain the product\n82: journal's reopen responsibility. This module grants no execution authority.\n83: \n84: Input must be a well-formed Unicode string (isWellFormed), newline-terminated,\n85: at least two nonempty JSON lines, with no blank lines or trailing garbage. For\n86: read, also require raw Buffer UTF-8 roundtrip equality: Buffer.from(decoded)\n87: equals original Buffer; invalid UTF-8 cannot be silently replaced. Parse each\n88: line and require canonical text equality; canonical JSON C recursively sorts\n89: object keys lexically, preserves array order, uses compact JSON escaping and\n90: no whitespace. Duplicate JSON keys and alternate encodings fail this equality.\n91: Catch parse/recursion/data failures as INVALID_JOURNAL.\n92: \n93: Framing shapes (require exact own keys and object/nonarray types at these levels):\n94: \n95: ```text\n96: header = {type:'header',schema:'nisi-run-journal-v1',config,now}\n97: envelope = {type:'entry',seq,previousHash,record,hash}\n98: record = {entry,fingerprint,retained}\n99: footer = {type:'footer',count,lastHash}\n100: ```\n101: \n102: Header config must be a nonnull nonarray object, now a nonnegative safe integer.\n103: Initial previousHash = SHA256('nisi-run-journal/header/v1\\n' + C(header)).\n104: All interior lines are entry envelopes with seq starting at 1 without gaps,\n105: previousHash equal to the prior hash, record.entry a nonnull nonarray object,\n106: record.fingerprint lowercase 64-hex and record.retained boolean. Envelope hash\n107: must be lowercase 64-hex and equal to SHA256('nisi-run-journal/record/v1\\n' +\n108: C({seq,previousHash,record})). Advance previousHash to envelope.hash. Footer\n109: must be the last line, count exactly the entry count and lastHash equal to the\n110: final hash (header hash for zero entries). Unknown schema, incomplete entry,\n111: missing footer or missing terminal newline refuses. Tests carry independent\n112: canonical fixtures including multibyte text and a valid zero-entry journal.\n113: Do not import/copy the product journal implementation or widen validation to\n114: unrequested full entry semantics. Checksums detect accidental damage, not forgery.\n115: \n116: ### Read operation\n117: \n118: Validate path and read capability. readFileSync(path) ENOENT -> NOT_FOUND;\n119: other read exceptions -> READ_FAILED. Bytes failing the validator ->\n120: INVALID_JOURNAL. Valid bytes -> READ result above. No writes, opens, syncs or\n121: cleanup during a read, and no dependence on a prior write in this module.\n122: \n123: ### Write operation and compare-before-replace\n124: \n125: 1. Validate path/fs, serialized and expectedPreviousSha256 BEFORE any disk\n126:    mutation. Invalid serialization -> INVALID_JOURNAL, malformed expected hash\n127:    -> INVALID_INPUT. Compute the exact Buffer, its byte count and SHA-256.\n128: 2. Read the existing destination without encoding. ENOENT means absent; other\n129:    exceptions -> READ_FAILED. Existing malformed bytes -> EXISTING_INVALID even\n130:    when expectedPreviousSha256 matches their hash. Never auto-repair corruption.\n131: 3. Absent + supplied expected hash -> CONFLICT. Present + supplied expected\n132:    hash not equal to actual existing SHA-256 -> CONFLICT (including same-byte\n133:    writes). Present + different new bytes + no expected hash -> CONFLICT.\n134:    Present + same bytes and no conflicting expected hash -> UNCHANGED. Only\n135:    readFileSync may have run on these paths; preserve existing bytes untouched.\n136: 4. For a new write/update create a temp sibling using deterministic name\n137:    `path + '.' + newSha256 + '.tmp'`. openSync(temp,'wx',0o600) ensures exclusive\n138:    creation; a collision is WRITE_FAILED. Do not remove any file unless this\n139:    invocation successfully opened/owns it. Never open destination for writing.\n140: 5. Write Buffer using writeSync(fd,buffer,offset,remaining,null) in a loop until\n141:    every byte is written. Support short positive writes. Noninteger, negative,\n142:    overlarge or zero progress -> WRITE_FAILED. Attempt fsyncSync on the file,\n143:    recording success/failure; a failed fsync is best effort and does not stop the\n144:    byte-safe write. Close file; close failure -> WRITE_FAILED before rename.\n145:    Clear the owned descriptor reference BEFORE attempting close. Do not retry\n146:    a failed close: it may have already released that descriptor.\n147: 6. Read the temp back without encoding and compare exact Buffer bytes. Read\n148:    exception or inequality -> READBACK_MISMATCH. Record no verified success.\n149: 7. Read destination again immediately before rename. It must have the same\n150:    presence and byte content observed at step 2; an observed change -> CONFLICT,\n151:    preserving the new external bytes. Non-ENOENT read failure -> READ_FAILED.\n152:    This mitigates observed interference; caller serialization is still required.\n153: 8. renameSync(temp,path) commits; failure -> RENAME_FAILED, old bytes unchanged.\n154:    After success mark committed=true and relinquish temp ownership.\n155: 9. openSync(dirname(path),'r'), fsyncSync(directoryFd), closeSync(directoryFd).\n156:    These are best effort with explicit fsyncErrors.directory; write can succeed\n157:    as non-durable if they fail. Close each opened directory descriptor at most\n158:    once; clear its reference before attempting close.\n159: 10. Read destination back and compare exact bytes to the input. Exceptions or\n160:     mismatch -> READBACK_MISMATCH with committed:true,durable:false. Do not try\n161:     a dangerous rollback after rename. Otherwise WRITTEN with computed hash,\n162:     bytes, verified:true and durability derived only from the recorded syncs.\n163: \n164: On pre-rename errors close any open descriptor and remove ONLY the owned temp,\n165: best effort. Cleanup must never throw over the result. If cleanup itself fails,\n166: record a nonempty `cleanupError` rather than claiming complete cleanup. Do not\n167: unlink the destination or any preexisting colliding temp. No infinite retry.\n168: \n169: ## Constraints\n170: \n171: - Write ONLY `src/run-journal-store-v1.mjs`. All tests, package.json, roadmap.md,\n172:   evidence and .packets are protected. No parent/sibling access or writes.\n173: - Do not modify tests, disable assertions, inspect test names to branch behavior,\n174:   hardcode fixtures or bypass the fs injection. No new exports or dependencies.\n175: - No test execution, shell commands, config edits, worker dispatch, nested\n176:   packets, receipt calls, commit or push by the executor. Outer wrapper owns\n177:   deterministic acceptance and receipts; author reads and reruns tests afterward.\n178: - No ambient clock/random/fs/network effects or dynamic imports/evaluation. The\n179:   baseline also scans source/comments for forbidden ambient API names.\n180: - Local tier is pinned by the launcher. Never load/switch models yourself.\n181: - No host integration, locking protocol, platform acceptance or roadmap closure.\n182: \n183: ## Items\n184: \n185: ### P1 — Implement byte-preserving atomic disk store with honest durability\n186: - **files**: src/run-journal-store-v1.mjs\n187: - **do**: Replace the placeholder with the two synchronous store functions implementing the complete contract above. Keep tests and all other paths read-only. Write a compact readable module using only injected fs and deterministic crypto/path helpers. The wrapper runs the protected store tests and baseline after your source edit; do not run commands or decide acceptance yourself.\n188: - **accept**: npm run test:store\n189: \n190: ## Packet acceptance\n191: npm test\n\n(End of file - total 191 lines)\n</content>",
+            "metadata": {
+              "preview": "---\npacket: nisi-run-journal-store-v1\nproject_root: /Users/louiscalata/nisi-next-private/work-orders/run-journal-store\ncreated_by: codex\ncreated: 2026-09-13T13:43:59-07:00\nwrite_owner: opencode\nstatus: executing\n---\n\n# U02-04 — run-journal disk store v1\n\n## Context\n\nThis is an isolated private dependency-free ESM work order, Node v24.18.0,\nnpm 11.16.0. Astra authored the protected tests BEFORE implementation. Measured\nplaceholder baseline `npm test` passes 2/2 and the discriminating\n`npm run test:store` fails all 16 tests, with zero skipped/cancelled. Tests use\nreal temporary directories and a recording injected fs with fault injection.\nImplement the one source file from this contract. Read the protected tests if\nneeded; their content is immutable. Do not explore the parent repository.",
+              "truncated": false,
+              "loaded": [],
+              "display": {
+                "type": "file",
+                "path": "/Users/louiscalata/nisi-next-private/work-orders/run-journal-store/.packets/nisi-run-journal-store-v1.packet.md",
+                "text": "---\npacket: nisi-run-journal-store-v1\nproject_root: /Users/louiscalata/nisi-next-private/work-orders/run-journal-store\ncreated_by: codex\ncreated: 2026-09-13T13:43:59-07:00\nwrite_owner: opencode\nstatus: executing\n---\n\n# U02-04 — run-journal disk store v1\n\n## Context\n\nThis is an isolated private dependency-free ESM work order, Node v24.18.0,\nnpm 11.16.0. Astra authored the protected tests BEFORE implementation. Measured\nplaceholder baseline `npm test` passes 2/2 and the discriminating\n`npm run test:store` fails all 16 tests, with zero skipped/cancelled. Tests use\nreal temporary directories and a recording injected fs with fault injection.\nImplement the one source file from this contract. Read the protected tests if\nneeded; their content is immutable. Do not explore the parent repository.\n\nExport exactly two SYNCHRONOUS functions:\n\n```text\nwriteSerializedJournal({ path, serialized, fs, expectedPreviousSha256 })\nreadSerializedJournal({ path, fs })\n```\n\nOptional expectedPreviousSha256 is the SHA-256 of the previous raw serialized\nUTF-8 bytes, lowercase 64-hex, never a new content hash or envelope hash.\nNo stored outer envelope: ON-DISK BYTES MUST EQUAL Buffer.from(serialized,'utf8').\nImports may only be deterministic createHash from node:crypto and helpers from\nnode:path. Buffer is available globally. No ambient fs, clock, randomness,\nconfiguration, logging, network or application-module dependency. The caller\nowns a trusted directory and serializes all writers. Recheck before rename as\nspecified, but do not claim a cross-process CAS lock or hostile-directory safety.\nNo parent-directory creation. Path is a nonempty string without NUL.\n\n### Injected fs and results\n\nThe fs object exposes sync methods with native Node signatures: readFileSync\n(called WITHOUT an encoding, returning Buffer), openSync, writeSync, fsyncSync,\ncloseSync, renameSync, unlinkSync. There is no existsSync/stat requirement.\nTests' recording double exposes only these methods; it forwards to real fs.\nAll disk activity MUST go through this object. Inputs/fs are trusted ordinary\nobjects, not hostile getters or Proxies. Catch malformed data and ordinary I/O\nexceptions and return REFUSED; do not throw for these cases. Invalid path/fs\narguments return INVALID_INPUT. Missing fsyncSync is supported as a failed sync,\nNOT an invalid fs. No asynchronous functions or promises.\n\nEvery returned result includes `durable` boolean, `fsync:{file:boolean,\ndirectory:boolean}` and `fsyncErrors:{file:null|string,directory:null|string}`.\nDefault sync flags are false and errors null (not attempted). A successful\nfsyncSync call sets its flag true. Failure records error.code if a nonempty\nstring, otherwise a nonempty fallback such as FSYNC_FAILED. Missing fsyncSync\nrecords a nonempty error for each attempt. Directory open/close errors count as\ndirectory sync failures, recorded under directory. No swallowed sync evidence.\n\nResults:\n- WRITTEN: `{status:'WRITTEN',sha256,bytes,verified:true,committed:true,...}`.\n  `bytes` is UTF-8 byte length. `durable` is true ONLY when BOTH file and\n  directory fsyncs succeeded, closes succeeded and final exact-byte verification\n  succeeded. Successful fsync calls are an observation, not power-loss proof.\n- UNCHANGED: same-byte no-op, includes sha256,bytes,verified:true,\n  `committed:false,durable:false`; no mutating operations and no fsync attempted.\n- READ: `{status:'READ',serialized,sha256,bytes,verified:true,committed:false,\n  durable:false,...}`. A read never proves that anyone previously flushed data.\n- REFUSED: `{status:'REFUSED',reason,committed,durable:false,...}`. Do not expose\n  `serialized` or a recovered prefix. `committed` is true iff this call already\n  renamed its temp to destination; false before rename and always false on read.\n  Even if both sync flags are true, failed verification MUST be durable:false.\n\nReason vocabulary: INVALID_INPUT, INVALID_JOURNAL, NOT_FOUND, READ_FAILED,\nEXISTING_INVALID, CONFLICT, WRITE_FAILED, RENAME_FAILED, READBACK_MISMATCH.\nAll other operation errors map to their stage, never arbitrary success.\n\n### Raw journal framing and integrity validator\n\nUse ONE shared nonthrowing validator for read and write. It checks storage\nframing and chain integrity, NOT full journal-entry semantic admission. Entry\nidentity, retention, retry/revocation and authority validation remain the product\njournal's reopen responsibility. This module grants no execution authority.\n\nInput must be a well-formed Unicode string (isWellFormed), newline-terminated,\nat least two nonempty JSON lines, with no blank lines or trailing garbage. For\nread, also require raw Buffer UTF-8 roundtrip equality: Buffer.from(decoded)\nequals original Buffer; invalid UTF-8 cannot be silently replaced. Parse each\nline and require canonical text equality; canonical JSON C recursively sorts\nobject keys lexically, preserves array order, uses compact JSON escaping and\nno whitespace. Duplicate JSON keys and alternate encodings fail this equality.\nCatch parse/recursion/data failures as INVALID_JOURNAL.\n\nFraming shapes (require exact own keys and object/nonarray types at these levels):\n\n```text\nheader = {type:'header',schema:'nisi-run-journal-v1',config,now}\nenvelope = {type:'entry',seq,previousHash,record,hash}\nrecord = {entry,fingerprint,retained}\nfooter = {type:'footer',count,lastHash}\n```\n\nHeader config must be a nonnull nonarray object, now a nonnegative safe integer.\nInitial previousHash = SHA256('nisi-run-journal/header/v1\\n' + C(header)).\nAll interior lines are entry envelopes with seq starting at 1 without gaps,\npreviousHash equal to the prior hash, record.entry a nonnull nonarray object,\nrecord.fingerprint lowercase 64-hex and record.retained boolean. Envelope hash\nmust be lowercase 64-hex and equal to SHA256('nisi-run-journal/record/v1\\n' +\nC({seq,previousHash,record})). Advance previousHash to envelope.hash. Footer\nmust be the last line, count exactly the entry count and lastHash equal to the\nfinal hash (header hash for zero entries). Unknown schema, incomplete entry,\nmissing footer or missing terminal newline refuses. Tests carry independent\ncanonical fixtures including multibyte text and a valid zero-entry journal.\nDo not import/copy the product journal implementation or widen validation to\nunrequested full entry semantics. Checksums detect accidental damage, not forgery.\n\n### Read operation\n\nValidate path and read capability. readFileSync(path) ENOENT -> NOT_FOUND;\nother read exceptions -> READ_FAILED. Bytes failing the validator ->\nINVALID_JOURNAL. Valid bytes -> READ result above. No writes, opens, syncs or\ncleanup during a read, and no dependence on a prior write in this module.\n\n### Write operation and compare-before-replace\n\n1. Validate path/fs, serialized and expectedPreviousSha256 BEFORE any disk\n   mutation. Invalid serialization -> INVALID_JOURNAL, malformed expected hash\n   -> INVALID_INPUT. Compute the exact Buffer, its byte count and SHA-256.\n2. Read the existing destination without encoding. ENOENT means absent; other\n   exceptions -> READ_FAILED. Existing malformed bytes -> EXISTING_INVALID even\n   when expectedPreviousSha256 matches their hash. Never auto-repair corruption.\n3. Absent + supplied expected hash -> CONFLICT. Present + supplied expected\n   hash not equal to actual existing SHA-256 -> CONFLICT (including same-byte\n   writes). Present + different new bytes + no expected hash -> CONFLICT.\n   Present + same bytes and no conflicting expected hash -> UNCHANGED. Only\n   readFileSync may have run on these paths; preserve existing bytes untouched.\n4. For a new write/update create a temp sibling using deterministic name\n   `path + '.' + newSha256 + '.tmp'`. openSync(temp,'wx',0o600) ensures exclusive\n   creation; a collision is WRITE_FAILED. Do not remove any file unless this\n   invocation successfully opened/owns it. Never open destination for writing.\n5. Write Buffer using writeSync(fd,buffer,offset,remaining,null) in a loop until\n   every byte is written. Support short positive writes. Noninteger, negative,\n   overlarge or zero progress -> WRITE_FAILED. Attempt fsyncSync on the file,\n   recording success/failure; a failed fsync is best effort and does not stop the\n   byte-safe write. Close file; close failure -> WRITE_FAILED before rename.\n   Clear the owned descriptor reference BEFORE attempting close. Do not retry\n   a failed close: it may have already released that descriptor.\n6. Read the temp back without encoding and compare exact Buffer bytes. Read\n   exception or inequality -> READBACK_MISMATCH. Record no verified success.\n7. Read destination again immediately before rename. It must have the same\n   presence and byte content observed at step 2; an observed change -> CONFLICT,\n   preserving the new external bytes. Non-ENOENT read failure -> READ_FAILED.\n   This mitigates observed interference; caller serialization is still required.\n8. renameSync(temp,path) commits; failure -> RENAME_FAILED, old bytes unchanged.\n   After success mark committed=true and relinquish temp ownership.\n9. openSync(dirname(path),'r'), fsyncSync(directoryFd), closeSync(directoryFd).\n   These are best effort with explicit fsyncErrors.directory; write can succeed\n   as non-durable if they fail. Close each opened directory descriptor at most\n   once; clear its reference before attempting close.\n10. Read destination back and compare exact bytes to the input. Exceptions or\n    mismatch -> READBACK_MISMATCH with committed:true,durable:false. Do not try\n    a dangerous rollback after rename. Otherwise WRITTEN with computed hash,\n    bytes, verified:true and durability derived only from the recorded syncs.\n\nOn pre-rename errors close any open descriptor and remove ONLY the owned temp,\nbest effort. Cleanup must never throw over the result. If cleanup itself fails,\nrecord a nonempty `cleanupError` rather than claiming complete cleanup. Do not\nunlink the destination or any preexisting colliding temp. No infinite retry.\n\n## Constraints\n\n- Write ONLY `src/run-journal-store-v1.mjs`. All tests, package.json, roadmap.md,\n  evidence and .packets are protected. No parent/sibling access or writes.\n- Do not modify tests, disable assertions, inspect test names to branch behavior,\n  hardcode fixtures or bypass the fs injection. No new exports or dependencies.\n- No test execution, shell commands, config edits, worker dispatch, nested\n  packets, receipt calls, commit or push by the executor. Outer wrapper owns\n  deterministic acceptance and receipts; author reads and reruns tests afterward.\n- No ambient clock/random/fs/network effects or dynamic imports/evaluation. The\n  baseline also scans source/comments for forbidden ambient API names.\n- Local tier is pinned by the launcher. Never load/switch models yourself.\n- No host integration, locking protocol, platform acceptance or roadmap closure.\n\n## Items\n\n### P1 — Implement byte-preserving atomic disk store with honest durability\n- **files**: src/run-journal-store-v1.mjs\n- **do**: Replace the placeholder with the two synchronous store functions implementing the complete contract above. Keep tests and all other paths read-only. Write a compact readable module using only injected fs and deterministic crypto/path helpers. The wrapper runs the protected store tests and baseline after your source edit; do not run commands or decide acceptance yourself.\n- **accept**: npm run test:store\n\n## Packet acceptance\nnpm test",
+                "lineStart": 1,
+                "lineEnd": 191,
+                "totalLines": 191,
+                "truncated": false
+              }
+            },
+            "title": "work-orders/run-journal-store/.packets/nisi-run-journal-store-v1.packet.md",
+            "time": {
+              "start": 1789332421513,
+              "end": 1789332421524
+            }
+          },
+          "id": "prt_09c85db62001jXvKCvK82xFlb4",
+          "sessionID": "ses_f637a66f9ffe362t0WOs1u0p6Y",
+          "messageID": "msg_09c859da7001bApO03PPLSM90q"
+        },
+        {
+          "reason": "tool-calls",
+          "snapshot": "913becd75f927b46e0455f7fcdeddb87f2eae551",
+          "type": "step-finish",
+          "tokens": {
+            "total": 4320,
+            "input": 4253,
+            "output": 54,
+            "reasoning": 13,
+            "cache": {
+              "write": 0,
+              "read": 0
+            }
+          },
+          "cost": 0,
+          "id": "prt_09c8604f6001jk7tcUMaWknovU",
+          "sessionID": "ses_f637a66f9ffe362t0WOs1u0p6Y",
+          "messageID": "msg_09c859da7001bApO03PPLSM90q"
+        }
+      ]
+    },
+    {
+      "info": {
+        "parentID": "msg_09c859d82001KUO8GFtrJIc7sA",
+        "role": "assistant",
+        "mode": "packet",
+        "agent": "packet",
+        "path": {
+          "cwd": "/Users/louiscalata/nisi-next-private",
+          "root": "/Users/louiscalata/nisi-next-private"
+        },
+        "cost": 0,
+        "tokens": {
+          "total": 7953,
+          "input": 7703,
+          "output": 41,
+          "reasoning": 209,
+          "cache": {
+            "write": 0,
+            "read": 0
+          }
+        },
+        "modelID": "qwen/qwen3.8-27b",
+        "providerID": "lmstudio",
+        "time": {
+          "created": 1789332424029,
+          "completed": 1789332491559
+        },
+        "finish": "tool-calls",
+        "id": "msg_09c86055d001Ij5eN3FlLnDSUF",
+        "sessionID": "ses_f637a66f9ffe362t0WOs1u0p6Y"
+      },
+      "parts": [
+        {
+          "snapshot": "913becd75f927b46e0455f7fcdeddb87f2eae551",
+          "type": "step-start",
+          "id": "prt_09c863a85001v29h0XpKhJAkt5",
+          "sessionID": "ses_f637a66f9ffe362t0WOs1u0p6Y",
+          "messageID": "msg_09c86055d001Ij5eN3FlLnDSUF"
+        },
+        {
+          "type": "reasoning",
+          "text": "Let's understand the task:\n\n1. The work order is at `/Users/louiscalata/nisi-next-private/work-orders/run-journal-store/`\n2. One item: P1 — implement `src/run-journal-store-v1.mjs` with two synchronous functions:\n   - `writeSerializedJournal({ path, serialized, fs, expectedPreviousSha256 })`\n   - `readSerializedJournal({ path, fs })`\n\nFirst, let's look at the project structure to understand what exists — the placeholder file, the tests, package.json. The packet says \"read the protected tests as necessary; their contents are immutable.\" This is to understand what the tests expect exactly. But it also says \"do not re-explore beyond the files named in the items\" — the items name `src/run-journal-store-v1.mjs`. But reading the protected tests is explicitly permitted: \"read the protected tests as necessary.\"\n\nFirst, let's check the project structure to find the files.\n",
+          "time": {
+            "start": 1789332437641,
+            "end": 1789332477869
+          },
+          "id": "prt_09c863a8900140NQME9ZM6ZaW6",
+          "sessionID": "ses_f637a66f9ffe362t0WOs1u0p6Y",
+          "messageID": "msg_09c86055d001Ij5eN3FlLnDSUF"
+        },
+        {
+          "type": "text",
+          "text": "\n\n",
+          "time": {
+            "start": 1789332477871,
+            "end": 1789332491343
+          },
+          "id": "prt_09c86d7af001InkyVYW1SIDToJ",
+          "sessionID": "ses_f637a66f9ffe362t0WOs1u0p6Y",
+          "messageID": "msg_09c86055d001Ij5eN3FlLnDSUF"
+        },
+        {
+          "type": "tool",
+          "tool": "read",
+          "callID": "559632499",
+          "state": {
+            "status": "completed",
+            "input": {
+              "filePath": "/Users/louiscalata/nisi-next-private/work-orders/run-journal-store"
+            },
+            "output": "<path>/Users/louiscalata/nisi-next-private/work-orders/run-journal-store</path>\n<type>directory</type>\n<entries>\n.packets/\nevidence/\npackage.json\nroadmap.md\nsrc/\ntests/\n\n(6 entries)\n</entries>",
+            "metadata": {
+              "preview": ".packets/\nevidence/\npackage.json\nroadmap.md\nsrc/\ntests/",
+              "truncated": false,
+              "loaded": [],
+              "display": {
+                "type": "directory",
+                "path": "/Users/louiscalata/nisi-next-private/work-orders/run-journal-store",
+                "entries": [
+                  ".packets/",
+                  "evidence/",
+                  "package.json",
+                  "roadmap.md",
+                  "src/",
+                  "tests/"
+                ],
+                "offset": 1,
+                "totalEntries": 6,
+                "truncated": false
+              }
+            },
+            "title": "work-orders/run-journal-store",
+            "time": {
+              "start": 1789332488812,
+              "end": 1789332488819
+            }
+          },
+          "id": "prt_09c86de1b001SOoXb2mHzKe1Eb",
+          "sessionID": "ses_f637a66f9ffe362t0WOs1u0p6Y",
+          "messageID": "msg_09c86055d001Ij5eN3FlLnDSUF"
+        },
+        {
+          "reason": "tool-calls",
+          "snapshot": "766127d3937c58e83d7f5cfce26a3a2e2951eea3",
+          "type": "step-finish",
+          "tokens": {
+            "total": 7953,
+            "input": 7703,
+            "output": 41,
+            "reasoning": 209,
+            "cache": {
+              "write": 0,
+              "read": 0
+            }
+          },
+          "cost": 0,
+          "id": "prt_09c870cad001EqqXueIRdhEn5B",
+          "sessionID": "ses_f637a66f9ffe362t0WOs1u0p6Y",
+          "messageID": "msg_09c86055d001Ij5eN3FlLnDSUF"
+        },
+        {
+          "type": "patch",
+          "hash": "913becd75f927b46e0455f7fcdeddb87f2eae551",
+          "files": [
+            "/Users/louiscalata/nisi-next-private/work-orders/run-journal-store/evidence/daybreak-design-review.md",
+            "/Users/louiscalata/nisi-next-private/work-orders/run-journal-store/evidence/owner-compatibility.mjs"
+          ],
+          "id": "prt_09c870d22001V18uzNR4ylJ5b4",
+          "sessionID": "ses_f637a66f9ffe362t0WOs1u0p6Y",
+          "messageID": "msg_09c86055d001Ij5eN3FlLnDSUF"
+        }
+      ]
+    },
+    {
+      "info": {
+        "parentID": "msg_09c859d82001KUO8GFtrJIc7sA",
+        "role": "assistant",
+        "mode": "packet",
+        "agent": "packet",
+        "path": {
+          "cwd": "/Users/louiscalata/nisi-next-private",
+          "root": "/Users/louiscalata/nisi-next-private"
+        },
+        "cost": 0,
+        "tokens": {
+          "total": 8179,
+          "input": 8033,
+          "output": 123,
+          "reasoning": 23,
+          "cache": {
+            "write": 0,
+            "read": 0
+          }
+        },
+        "modelID": "qwen/qwen3.8-27b",
+        "providerID": "lmstudio",
+        "time": {
+          "created": 1789332491564,
+          "completed": 1789332528335
+        },
+        "finish": "tool-calls",
+        "id": "msg_09c870d2c001M9YR8ruJDC9F44",
+        "sessionID": "ses_f637a66f9ffe362t0WOs1u0p6Y"
+      },
+      "parts": [
+        {
+          "snapshot": "766127d3937c58e83d7f5cfce26a3a2e2951eea3",
+          "type": "step-start",
+          "id": "prt_09c871ffc001JQMx05zx3o88q2",
+          "sessionID": "ses_f637a66f9ffe362t0WOs1u0p6Y",
+          "messageID": "msg_09c870d2c001M9YR8ruJDC9F44"
+        },
+        {
+          "type": "reasoning",
+          "text": "(Thinking) To get a handle on the layout, let me read package.json, src, and tests.\n",
+          "time": {
+            "start": 1789332496386,
+            "end": 1789332499949
+          },
+          "id": "prt_09c872002001iPr3jDpfQS0Hib",
+          "sessionID": "ses_f637a66f9ffe362t0WOs1u0p6Y",
+          "messageID": "msg_09c870d2c001M9YR8ruJDC9F44"
+        },
+        {
+          "type": "text",
+          "text": "\n\n\n\n",
+          "time": {
+            "start": 1789332499951,
+            "end": 1789332528119
+          },
+          "id": "prt_09c872def001GFejG4iF06HKL3",
+          "sessionID": "ses_f637a66f9ffe362t0WOs1u0p6Y",
+          "messageID": "msg_09c870d2c001M9YR8ruJDC9F44"
+        },
+        {
+          "type": "tool",
+          "tool": "read",
+          "callID": "636925458",
+          "state": {
+            "status": "completed",
+            "input": {
+              "filePath": "/Users/louiscalata/nisi-next-private/work-orders/run-journal-store/package.json"
+            },
+            "output": "<path>/Users/louiscalata/nisi-next-private/work-orders/run-journal-store/package.json</path>\n<type>file</type>\n<content>\n1: {\n2:   \"name\": \"nisi-private-run-journal-store-work-order\",\n3:   \"version\": \"0.0.0-private\",\n4:   \"private\": true,\n5:   \"type\": \"module\",\n6:   \"license\": \"UNLICENSED\",\n7:   \"scripts\": {\n8:     \"test\": \"node --test --test-timeout=10000 tests/baseline.test.mjs\",\n9:     \"test:store\": \"node --test --test-timeout=10000 tests/run-journal-store.test.mjs\"\n10:   }\n11: }\n\n(End of file - total 11 lines)\n</content>",
+            "metadata": {
+              "preview": "{\n  \"name\": \"nisi-private-run-journal-store-work-order\",\n  \"version\": \"0.0.0-private\",\n  \"private\": true,\n  \"type\": \"module\",\n  \"license\": \"UNLICENSED\",\n  \"scripts\": {\n    \"test\": \"node --test --test-timeout=10000 tests/baseline.test.mjs\",\n    \"test:store\": \"node --test --test-timeout=10000 tests/run-journal-store.test.mjs\"\n  }\n}",
+              "truncated": false,
+              "loaded": [],
+              "display": {
+                "type": "file",
+                "path": "/Users/louiscalata/nisi-next-private/work-orders/run-journal-store/package.json",
+                "text": "{\n  \"name\": \"nisi-private-run-journal-store-work-order\",\n  \"version\": \"0.0.0-private\",\n  \"private\": true,\n  \"type\": \"module\",\n  \"license\": \"UNLICENSED\",\n  \"scripts\": {\n    \"test\": \"node --test --test-timeout=10000 tests/baseline.test.mjs\",\n    \"test:store\": \"node --test --test-timeout=10000 tests/run-journal-store.test.mjs\"\n  }\n}",
+                "lineStart": 1,
+                "lineEnd": 11,
+                "totalLines": 11,
+                "truncated": false
+              }
+            },
+            "title": "work-orders/run-journal-store/package.json",
+            "time": {
+              "start": 1789332507392,
+              "end": 1789332507403
+            }
+          },
+          "id": "prt_09c87346600133hr977t7C1RgP",
+          "sessionID": "ses_f637a66f9ffe362t0WOs1u0p6Y",
+          "messageID": "msg_09c870d2c001M9YR8ruJDC9F44"
+        },
+        {
+          "type": "tool",
+          "tool": "read",
+          "callID": "690873719",
+          "state": {
+            "status": "completed",
+            "input": {
+              "filePath": "/Users/louiscalata/nisi-next-private/work-orders/run-journal-store/src"
+            },
+            "output": "<path>/Users/louiscalata/nisi-next-private/work-orders/run-journal-store/src</path>\n<type>directory</type>\n<entries>\nrun-journal-store-v1.mjs\n\n(1 entries)\n</entries>",
+            "metadata": {
+              "preview": "run-journal-store-v1.mjs",
+              "truncated": false,
+              "loaded": [],
+              "display": {
+                "type": "directory",
+                "path": "/Users/louiscalata/nisi-next-private/work-orders/run-journal-store/src",
+                "entries": [
+                  "run-journal-store-v1.mjs"
+                ],
+                "offset": 1,
+                "totalEntries": 1,
+                "truncated": false
+              }
+            },
+            "title": "work-orders/run-journal-store/src",
+            "time": {
+              "start": 1789332517603,
+              "end": 1789332517606
+            }
+          },
+          "id": "prt_09c87566d001m2NAMAwBN90i6I",
+          "sessionID": "ses_f637a66f9ffe362t0WOs1u0p6Y",
+          "messageID": "msg_09c870d2c001M9YR8ruJDC9F44"
+        },
+        {
+          "type": "tool",
+          "tool": "read",
+          "callID": "695183639",
+          "state": {
+            "status": "completed",
+            "input": {
+              "filePath": "/Users/louiscalata/nisi-next-private/work-orders/run-journal-store/tests"
+            },
+            "output": "<path>/Users/louiscalata/nisi-next-private/work-orders/run-journal-store/tests</path>\n<type>directory</type>\n<entries>\nbaseline.test.mjs\nrun-journal-store.test.mjs\n\n(2 entries)\n</entries>",
+            "metadata": {
+              "preview": "baseline.test.mjs\nrun-journal-store.test.mjs",
+              "truncated": false,
+              "loaded": [],
+              "display": {
+                "type": "directory",
+                "path": "/Users/louiscalata/nisi-next-private/work-orders/run-journal-store/tests",
+                "entries": [
+                  "baseline.test.mjs",
+                  "run-journal-store.test.mjs"
+                ],
+                "offset": 1,
+                "totalEntries": 2,
+                "truncated": false
+              }
+            },
+            "title": "work-orders/run-journal-store/tests",
+            "time": {
+              "start": 1789332525113,
+              "end": 1789332525118
+            }
+          },
+          "id": "prt_09c877ae9001l5H7hIbdudiSqZ",
+          "sessionID": "ses_f637a66f9ffe362t0WOs1u0p6Y",
+          "messageID": "msg_09c870d2c001M9YR8ruJDC9F44"
+        },
+        {
+          "reason": "tool-calls",
+          "snapshot": "766127d3937c58e83d7f5cfce26a3a2e2951eea3",
+          "type": "step-finish",
+          "tokens": {
+            "total": 8179,
+            "input": 8033,
+            "output": 123,
+            "reasoning": 23,
+            "cache": {
+              "write": 0,
+              "read": 0
+            }
+          },
+          "cost": 0,
+          "id": "prt_09c879c54001qNH4G6q1ZE0N0B",
+          "sessionID": "ses_f637a66f9ffe362t0WOs1u0p6Y",
+          "messageID": "msg_09c870d2c001M9YR8ruJDC9F44"
+        }
+      ]
+    },
+    {
+      "info": {
+        "parentID": "msg_09c859d82001KUO8GFtrJIc7sA",
+        "role": "assistant",
+        "mode": "packet",
+        "agent": "packet",
+        "path": {
+          "cwd": "/Users/louiscalata/nisi-next-private",
+          "root": "/Users/louiscalata/nisi-next-private"
+        },
+        "cost": 0,
+        "tokens": {
+          "total": 8625,
+          "input": 8510,
+          "output": 95,
+          "reasoning": 20,
+          "cache": {
+            "write": 0,
+            "read": 0
+          }
+        },
+        "modelID": "qwen/qwen3.8-27b",
+        "providerID": "lmstudio",
+        "time": {
+          "created": 1789332528339,
+          "completed": 1789332548095
+        },
+        "finish": "tool-calls",
+        "id": "msg_09c879cd3001bp4epsfL1JlcEp",
+        "sessionID": "ses_f637a66f9ffe362t0WOs1u0p6Y"
+      },
+      "parts": [
+        {
+          "snapshot": "766127d3937c58e83d7f5cfce26a3a2e2951eea3",
+          "type": "step-start",
+          "id": "prt_09c87a9a60015vbWJuicfZi1sc",
+          "sessionID": "ses_f637a66f9ffe362t0WOs1u0p6Y",
+          "messageID": "msg_09c879cd3001bp4epsfL1JlcEp"
+        },
+        {
+          "type": "reasoning",
+          "text": "To understand exactly what the tests expect, I'll read the placeholder source and the protected tests.\n",
+          "time": {
+            "start": 1789332531625,
+            "end": 1789332534449
+          },
+          "id": "prt_09c87a9a9001Gh46Mc8nq737xs",
+          "sessionID": "ses_f637a66f9ffe362t0WOs1u0p6Y",
+          "messageID": "msg_09c879cd3001bp4epsfL1JlcEp"
+        },
+        {
+          "type": "text",
+          "text": "\n\n\n",
+          "time": {
+            "start": 1789332534452,
+            "end": 1789332547909
+          },
+          "id": "prt_09c87b4b4001b0rT28qL6rh0dR",
+          "sessionID": "ses_f637a66f9ffe362t0WOs1u0p6Y",
+          "messageID": "msg_09c879cd3001bp4epsfL1JlcEp"
+        },
+        {
+          "type": "tool",
+          "tool": "read",
+          "callID": "820943386",
+          "state": {
+            "status": "completed",
+            "input": {
+              "filePath": "/Users/louiscalata/nisi-next-private/work-orders/run-journal-store/src/run-journal-store-v1.mjs"
+            },
+            "output": "<path>/Users/louiscalata/nisi-next-private/work-orders/run-journal-store/src/run-journal-store-v1.mjs</path>\n<type>file</type>\n<content>\n1: export function writeSerializedJournal() {\n2:   return { status: 'REFUSED', reason: 'UNIMPLEMENTED', durable: false };\n3: }\n4: \n5: export function readSerializedJournal() {\n6:   return { status: 'REFUSED', reason: 'UNIMPLEMENTED', durable: false };\n7: }\n\n(End of file - total 7 lines)\n</content>",
+            "metadata": {
+              "preview": "export function writeSerializedJournal() {\n  return { status: 'REFUSED', reason: 'UNIMPLEMENTED', durable: false };\n}\n\nexport function readSerializedJournal() {\n  return { status: 'REFUSED', reason: 'UNIMPLEMENTED', durable: false };\n}",
+              "truncated": false,
+              "loaded": [],
+              "display": {
+                "type": "file",
+                "path": "/Users/louiscalata/nisi-next-private/work-orders/run-journal-store/src/run-journal-store-v1.mjs",
+                "text": "export function writeSerializedJournal() {\n  return { status: 'REFUSED', reason: 'UNIMPLEMENTED', durable: false };\n}\n\nexport function readSerializedJournal() {\n  return { status: 'REFUSED', reason: 'UNIMPLEMENTED', durable: false };\n}",
+                "lineStart": 1,
+                "lineEnd": 7,
+                "totalLines": 7,
+                "truncated": false
+              }
+            },
+            "title": "work-orders/run-journal-store/src/run-journal-store-v1.mjs",
+            "time": {
+              "start": 1789332541034,
+              "end": 1789332541046
+            }
+          },
+          "id": "prt_09c87b9ce0014vcq3j1r6xslMa",
+          "sessionID": "ses_f637a66f9ffe362t0WOs1u0p6Y",
+          "messageID": "msg_09c879cd3001bp4epsfL1JlcEp"
+        },
+        {
+          "type": "tool",
+          "tool": "read",
+          "callID": "273445204",
+          "state": {
+            "status": "completed",
+            "input": {
+              "filePath": "/Users/louiscalata/nisi-next-private/work-orders/run-journal-store/tests/baseline.test.mjs"
+            },
+            "output": "<path>/Users/louiscalata/nisi-next-private/work-orders/run-journal-store/tests/baseline.test.mjs</path>\n<type>file</type>\n<content>\n1: import test from 'node:test';\n2: import assert from 'node:assert/strict';\n3: import { readFileSync } from 'node:fs';\n4: import * as store from '../src/run-journal-store-v1.mjs';\n5: \n6: test('private dependency-free ESM baseline with exactly the store exports', () => {\n7:   const pkg = JSON.parse(readFileSync(new URL('../package.json', import.meta.url), 'utf8'));\n8:   assert.equal(pkg.private, true);\n9:   assert.equal(pkg.type, 'module');\n10:   assert.equal(pkg.license, 'UNLICENSED');\n11:   assert.equal(pkg.dependencies, undefined);\n12:   assert.equal(pkg.devDependencies, undefined);\n13:   assert.deepEqual(Object.keys(pkg.scripts), ['test', 'test:store']);\n14:   assert.deepEqual(Object.keys(store).sort(), ['readSerializedJournal', 'writeSerializedJournal']);\n15: });\n16: \n17: test('source imports only deterministic crypto and path helpers; effects require injected fs', () => {\n18:   const source = readFileSync(new URL('../src/run-journal-store-v1.mjs', import.meta.url), 'utf8');\n19:   const imports = [...source.matchAll(/\\bfrom\\s*['\"]([^'\"]+)['\"]/g)].map(match => match[1]);\n20:   assert.ok(imports.every(name => ['node:crypto', 'node:path'].includes(name)));\n21:   assert.doesNotMatch(source, /node:(?:fs|os|child_process|net|http|https)|\\b(?:process|require|fetch|eval|Function|Date|performance|setTimeout|setInterval)\\b|Math\\.random|randomUUID|randomBytes|import\\s*\\(|import\\s*['\"]/);\n22: });\n\n(End of file - total 22 lines)\n</content>",
+            "metadata": {
+              "preview": "import test from 'node:test';\nimport assert from 'node:assert/strict';\nimport { readFileSync } from 'node:fs';\nimport * as store from '../src/run-journal-store-v1.mjs';\n\ntest('private dependency-free ESM baseline with exactly the store exports', () => {\n  const pkg = JSON.parse(readFileSync(new URL('../package.json', import.meta.url), 'utf8'));\n  assert.equal(pkg.private, true);\n  assert.equal(pkg.type, 'module');\n  assert.equal(pkg.license, 'UNLICENSED');\n  assert.equal(pkg.dependencies, undefined);\n  assert.equal(pkg.devDependencies, undefined);\n  assert.deepEqual(Object.keys(pkg.scripts), ['test', 'test:store']);\n  assert.deepEqual(Object.keys(store).sort(), ['readSerializedJournal', 'writeSerializedJournal']);\n});\n\ntest('source imports only deterministic crypto and path helpers; effects require injected fs', () => {\n  const source = readFileSync(new URL('../src/run-journal-store-v1.mjs', import.meta.url), 'utf8');\n  const imports = [...source.matchAll(/\\bfrom\\s*['\"]([^'\"]+)['\"]/g)].map(match => match[1]);\n  assert.ok(imports.every(name => ['node:crypto', 'node:path'].includes(name)));",
+              "truncated": false,
+              "loaded": [],
+              "display": {
+                "type": "file",
+                "path": "/Users/louiscalata/nisi-next-private/work-orders/run-journal-store/tests/baseline.test.mjs",
+                "text": "import test from 'node:test';\nimport assert from 'node:assert/strict';\nimport { readFileSync } from 'node:fs';\nimport * as store from '../src/run-journal-store-v1.mjs';\n\ntest('private dependency-free ESM baseline with exactly the store exports', () => {\n  const pkg = JSON.parse(readFileSync(new URL('../package.json', import.meta.url), 'utf8'));\n  assert.equal(pkg.private, true);\n  assert.equal(pkg.type, 'module');\n  assert.equal(pkg.license, 'UNLICENSED');\n  assert.equal(pkg.dependencies, undefined);\n  assert.equal(pkg.devDependencies, undefined);\n  assert.deepEqual(Object.keys(pkg.scripts), ['test', 'test:store']);\n  assert.deepEqual(Object.keys(store).sort(), ['readSerializedJournal', 'writeSerializedJournal']);\n});\n\ntest('source imports only deterministic crypto and path helpers; effects require injected fs', () => {\n  const source = readFileSync(new URL('../src/run-journal-store-v1.mjs', import.meta.url), 'utf8');\n  const imports = [...source.matchAll(/\\bfrom\\s*['\"]([^'\"]+)['\"]/g)].map(match => match[1]);\n  assert.ok(imports.every(name => ['node:crypto', 'node:path'].includes(name)));\n  assert.doesNotMatch(source, /node:(?:fs|os|child_process|net|http|https)|\\b(?:process|require|fetch|eval|Function|Date|performance|setTimeout|setInterval)\\b|Math\\.random|randomUUID|randomBytes|import\\s*\\(|import\\s*['\"]/);\n});",
+                "lineStart": 1,
+                "lineEnd": 22,
+                "totalLines": 22,
+                "truncated": false
+              }
+            },
+            "title": "work-orders/run-journal-store/tests/baseline.test.mjs",
+            "time": {
+              "start": 1789332547749,
+              "end": 1789332547756
+            }
+          },
+          "id": "prt_09c87d4b4001NW9XsamL8cjXaK",
+          "sessionID": "ses_f637a66f9ffe362t0WOs1u0p6Y",
+          "messageID": "msg_09c879cd3001bp4epsfL1JlcEp"
+        },
+        {
+          "reason": "tool-calls",
+          "snapshot": "766127d3937c58e83d7f5cfce26a3a2e2951eea3",
+          "type": "step-finish",
+          "tokens": {
+            "total": 8625,
+            "input": 8510,
+            "output": 95,
+            "reasoning": 20,
+            "cache": {
+              "write": 0,
+              "read": 0
+            }
+          },
+          "cost": 0,
+          "id": "prt_09c87e9a90010PFvoa5Ju8CI4E",
+          "sessionID": "ses_f637a66f9ffe362t0WOs1u0p6Y",
+          "messageID": "msg_09c879cd3001bp4epsfL1JlcEp"
+        }
+      ]
+    },
+    {
+      "info": {
+        "parentID": "msg_09c859d82001KUO8GFtrJIc7sA",
+        "role": "assistant",
+        "mode": "packet",
+        "agent": "packet",
+        "path": {
+          "cwd": "/Users/louiscalata/nisi-next-private",
+          "root": "/Users/louiscalata/nisi-next-private"
+        },
+        "cost": 0,
+        "tokens": {
+          "total": 9740,
+          "input": 9246,
+          "output": 49,
+          "reasoning": 445,
+          "cache": {
+            "write": 0,
+            "read": 0
+          }
+        },
+        "modelID": "qwen/qwen3.8-27b",
+        "providerID": "lmstudio",
+        "time": {
+          "created": 1789332548100,
+          "completed": 1789332633078
+        },
+        "finish": "tool-calls",
+        "id": "msg_09c87ea04001BC6SqxKX1Std2U",
+        "sessionID": "ses_f637a66f9ffe362t0WOs1u0p6Y"
+      },
+      "parts": [
+        {
+          "snapshot": "766127d3937c58e83d7f5cfce26a3a2e2951eea3",
+          "type": "step-start",
+          "id": "prt_09c87f914001GO996hOBbuF4l3",
+          "sessionID": "ses_f637a66f9ffe362t0WOs1u0p6Y",
+          "messageID": "msg_09c87ea04001BC6SqxKX1Std2U"
+        },
+        {
+          "type": "reasoning",
+          "text": "Key constraints from the baseline test:\n- The only allowed imports: `node:crypto` and `node:path`.\n- The source must not contain any of the following (regex): `node:(?:fs|os|child_process|net|http|https)` or `\\b(?:process|require|fetch|eval|Function|Date|performance|setTimeout|setInterval)\\b` or `Math.random|randomUUID|randomBytes|import\\s*\\(|import\\s*['\"]`.\n\nSo we need to be careful:\n- The word `process` must not appear (as a word) — not even inside a comment.\n- `require` must not appear as a word — careful with words like \"requirements\"? `\\brequire\\b` — \"requirements\" won't match. That's because after \"require\" there's an \"s\"… no wait, `\\brequire\\b` — \"requirements\" = \"require\" followed by \"ments\". Is there a word boundary after \"require\" in \"requirements\"? \"requirements\" — the \"r\" after \"require\" is a word character, so no boundary. Therefore `\\brequire\\b` won't match \"requirements\". OK.\n- `Date` must not appear as a word.\n- `fetch`, `eval`, `Function`, `performance`, `setTimeout`, `setInterval` must not appear as words.\n- `import (` or `import '` / `import \"` must not appear (no dynamic imports).\n- Also, the regex for the fs module `node:fs|node:os|...` is not allowed. Note that it only matches `node:fs` — so `node:fs/promises` also starts with `node:fs`… the regex is `node:(?:fs|os|...` without a boundary anchor, so `node:filesystem` would also match. But we aren't importing node:fs in the first place. We use the injected fs. But note: we must not use `node:fs` anywhere in the source, even inside a comment.\n\nSo let's read the protected store tests to understand exactly what is expected.\n",
+          "time": {
+            "start": 1789332551964,
+            "end": 1789332614326
+          },
+          "id": "prt_09c87f91c001JQB5KkvsygWiGD",
+          "sessionID": "ses_f637a66f9ffe362t0WOs1u0p6Y",
+          "messageID": "msg_09c87ea04001BC6SqxKX1Std2U"
+        },
+        {
+          "type": "text",
+          "text": "\n\n",
+          "time": {
+            "start": 1789332614332,
+            "end": 1789332632845
+          },
+          "id": "prt_09c88ecbc001zWFJYdDZv3hxn3",
+          "sessionID": "ses_f637a66f9ffe362t0WOs1u0p6Y",
+          "messageID": "msg_09c87ea04001BC6SqxKX1Std2U"
+        },
+        {
+          "type": "tool",
+          "tool": "read",
+          "callID": "532476696",
+          "state": {
+            "status": "completed",
+            "input": {
+              "filePath": "/Users/louiscalata/nisi-next-private/work-orders/run-journal-store/tests/run-journal-store.test.mjs"
+            },
+            "output": "<path>/Users/louiscalata/nisi-next-private/work-orders/run-journal-store/tests/run-journal-store.test.mjs</path>\n<type>file</type>\n<content>\n1: import test from 'node:test';\n2: import assert from 'node:assert/strict';\n3: import * as realFs from 'node:fs';\n4: import { tmpdir } from 'node:os';\n5: import { join, dirname } from 'node:path';\n6: import { createHash } from 'node:crypto';\n7: import { writeSerializedJournal as write, readSerializedJournal as read } from '../src/run-journal-store-v1.mjs';\n8: \n9: const hash = value => createHash('sha256').update(value).digest('hex');\n10: const canonical = value => Array.isArray(value) ? '[' + value.map(canonical).join(',') + ']'\n11:   : value && typeof value === 'object' ? '{' + Object.keys(value).sort().map(k => JSON.stringify(k) + ':' + canonical(value[k])).join(',') + '}'\n12:     : JSON.stringify(value);\n13: \n14: function journal(payload = 'café 🌱', empty = false, count = 1) {\n15:   const header = { type: 'header', schema: 'nisi-run-journal-v1', config: { projectId: 'store', maxEntries: 10, heartbeatTtlMs: 100, redactPaths: [] }, now: 10 };\n16:   const lines = [canonical(header)];\n17:   let previousHash = hash('nisi-run-journal/header/v1\\n' + lines[0]);\n18:   for (let index = 0; index < (empty ? 0 : count); index++) {\n19:     const entry = { id: 'e' + (index + 1), projectId: 'store', runId: 'r1', attempt: 0, candidateId: 'c1', stage: 'test', receiptId: null, createdAt: 10, ttlMs: 100, state: 'SUCCEEDED', heartbeatAt: null, retryOf: null, revokes: null, payload };\n20:     const record = { entry, fingerprint: hash('nisi-run-journal/input/v1\\n' + canonical(entry)), retained: true };\n21:     const body = { seq: index + 1, previousHash, record };\n22:     previousHash = hash('nisi-run-journal/record/v1\\n' + canonical(body));\n23:     lines.push(canonical({ type: 'entry', ...body, hash: previousHash }));\n24:   }\n25:   lines.push(canonical({ type: 'footer', count: empty ? 0 : count, lastHash: previousHash }));\n26:   return lines.join('\\n') + '\\n';\n27: }\n28: \n29: function fixture(t, hooks = {}) {\n30:   const dir = realFs.mkdtempSync(join(tmpdir(), 'nisi-journal-store-'));\n31:   t.after(() => realFs.rmSync(dir, { recursive: true, force: true }));\n32:   const path = join(dir, 'journal.jsonl');\n33:   const events = [];\n34:   const descriptors = new Map();\n35:   const fs = {};\n36:   for (const name of ['openSync', 'writeSync', 'fsyncSync', 'closeSync', 'readFileSync', 'renameSync', 'unlinkSync']) {\n37:     fs[name] = (...args) => {\n38:       const descriptor = descriptors.get(args[0]);\n39:       const event = { name, args, descriptor };\n40:       events.push(event);\n41:       const invoke = () => realFs[name](...args);\n42:       try {\n43:         const value = hooks[name] ? hooks[name](event, invoke) : invoke();\n44:         if (name === 'openSync') descriptors.set(value, { path: args[0], flags: args[1] });\n45:         return value;\n46:       } finally {\n47:         // The close fault below simulates a descriptor released before an error.\n48:         if (name === 'closeSync') descriptors.delete(args[0]);\n49:       }\n50:     };\n51:   }\n52:   return { dir, path, fs, events, descriptors };\n53: }\n54: \n55: function refused(result, reason) {\n56:   assert.equal(result.status, 'REFUSED');\n57:   assert.equal(result.durable, false);\n58:   assert.equal(typeof result.reason, 'string');\n59:   assert.ok(result.reason.length > 0);\n60:   if (reason) assert.equal(result.reason, reason);\n61: }\n62: \n63: function written(result, serialized) {\n64:   assert.equal(result.status, 'WRITTEN');\n65:   assert.equal(result.sha256, hash(Buffer.from(serialized)));\n66:   assert.equal(result.bytes, Buffer.byteLength(serialized));\n67:   assert.equal(result.verified, true);\n68:   assert.equal(typeof result.durable, 'boolean');\n69: }\n70: \n71: test('raw UTF-8 round trip preserves bytes and records successful file and directory fsync', t => {\n72:   const f = fixture(t);\n73:   const serialized = journal();\n74:   const result = write({ ...f, serialized });\n75:   written(result, serialized);\n76:   assert.equal(result.durable, true);\n77:   assert.deepEqual(result.fsync, { file: true, directory: true });\n78:   assert.deepEqual(result.fsyncErrors, { file: null, directory: null });\n79:   assert.deepEqual(realFs.readFileSync(f.path), Buffer.from(serialized));\n80:   const loaded = read(f);\n81:   assert.equal(loaded.status, 'READ');\n82:   assert.equal(loaded.serialized, serialized);\n83:   assert.equal(loaded.sha256, hash(Buffer.from(serialized)));\n84:   assert.equal(loaded.bytes, Buffer.byteLength(serialized));\n85:   assert.equal(loaded.durable, false);\n86:   assert.deepEqual(realFs.readdirSync(f.dir), ['journal.jsonl']);\n87:   assert.equal(f.descriptors.size, 0);\n88: });\n89: \n90: test('exclusive same-directory temp, file sync and temp verification precede rename; directory sync and final verification follow', t => {\n91:   const f = fixture(t);\n92:   written(write({ ...f, serialized: journal() }), journal());\n93:   const opens = f.events.filter(e => e.name === 'openSync');\n94:   const tempOpen = opens.find(e => e.args[0] !== f.dir);\n95:   assert.ok(tempOpen);\n96:   assert.equal(tempOpen.args[1], 'wx');\n97:   assert.equal(tempOpen.args[2], 0o600);\n98:   assert.equal(dirname(tempOpen.args[0]), f.dir);\n99:   assert.notEqual(tempOpen.args[0], f.path);\n100:   assert.ok(opens.every(e => e.args[0] !== f.path));\n101:   const renameAt = f.events.findIndex(e => e.name === 'renameSync');\n102:   const fileSyncAt = f.events.findIndex(e => e.name === 'fsyncSync' && e.descriptor.path !== f.dir);\n103:   const dirSyncAt = f.events.findIndex(e => e.name === 'fsyncSync' && e.descriptor.path === f.dir);\n104:   const tempReadAt = f.events.findIndex(e => e.name === 'readFileSync' && e.args[0] === tempOpen.args[0]);\n105:   const tempCloseAt = f.events.findIndex(e => e.name === 'closeSync' && e.descriptor.path === tempOpen.args[0]);\n106:   assert.ok(fileSyncAt >= 0 && fileSyncAt < tempCloseAt && tempCloseAt < tempReadAt && tempReadAt < renameAt && renameAt < dirSyncAt);\n107:   assert.ok(f.events.slice(dirSyncAt + 1).some(e => e.name === 'readFileSync' && e.args[0] === f.path));\n108:   assert.deepEqual(f.events[renameAt].args, [tempOpen.args[0], f.path]);\n109: });\n110: \n111: test('short writes are completed; zero progress is refused and the owned temp is cleaned', t => {\n112:   const f = fixture(t, { writeSync: ({ args }) => realFs.writeSync(args[0], args[1], args[2], Math.min(7, args[3]), args[4]) });\n113:   written(write({ ...f, serialized: journal() }), journal());\n114:   assert.ok(f.events.filter(e => e.name === 'writeSync').length > 1);\n115:   const z = fixture(t, { writeSync: () => 0 });\n116:   refused(write({ ...z, serialized: journal() }), 'WRITE_FAILED');\n117:   assert.deepEqual(realFs.readdirSync(z.dir), []);\n118:   assert.equal(z.descriptors.size, 0);\n119: });\n120: \n121: test('file fsync failure is recorded, still writes and verifies, and cannot claim durability', t => {\n122:   const f = fixture(t, { fsyncSync: (e, invoke) => {\n123:     if (e.descriptor.flags === 'wx') throw Object.assign(new Error('unsupported'), { code: 'ENOTSUP' });\n124:     return invoke();\n125:   } });\n126:   const result = write({ ...f, serialized: journal() });\n127:   written(result, journal());\n128:   assert.equal(result.durable, false);\n129:   assert.deepEqual(result.fsync, { file: false, directory: true });\n130:   assert.equal(result.fsyncErrors.file, 'ENOTSUP');\n131:   assert.equal(read(f).serialized, journal());\n132:   assert.equal(f.descriptors.size, 0);\n133: });\n134: \n135: test('directory fsync or directory-open failure records a committed but non-durable write', t => {\n136:   for (const point of ['fsyncSync', 'openSync']) {\n137:     const f = fixture(t, { [point]: (e, invoke) => {\n138:       if (point === 'openSync' ? e.args[1] === 'r' : e.descriptor.flags === 'r') throw Object.assign(new Error('unsupported'), { code: 'ENOTSUP' });\n139:       return invoke();\n140:     } });\n141:     const result = write({ ...f, serialized: journal() });\n142:     written(result, journal());\n143:     assert.equal(result.durable, false);\n144:     assert.deepEqual(result.fsync, { file: true, directory: false });\n145:     assert.equal(result.fsyncErrors.directory, 'ENOTSUP');\n146:     assert.equal(read(f).serialized, journal());\n147:     assert.equal(f.descriptors.size, 0);\n148:   }\n149: });\n150: \n151: test('absent fsync support is recorded for both attempts and never upgraded to durable', t => {\n152:   const f = fixture(t);\n153:   delete f.fs.fsyncSync;\n154:   const result = write({ ...f, serialized: journal() });\n155:   written(result, journal());\n156:   assert.equal(result.durable, false);\n157:   assert.deepEqual(result.fsync, { file: false, directory: false });\n158:   assert.equal(typeof result.fsyncErrors.file, 'string');\n159:   assert.equal(typeof result.fsyncErrors.directory, 'string');\n160:   assert.equal(f.descriptors.size, 0);\n161: });\n162: \n163: test('different existing content needs exact previous sha256; conflicts preserve bytes without opening any file', t => {\n164:   const f = fixture(t);\n165:   const before = journal('old');\n166:   realFs.writeFileSync(f.path, before);\n167:   for (const expectedPreviousSha256 of [undefined, '0'.repeat(64)]) {\n168:     f.events.length = 0;\n169:     refused(write({ ...f, serialized: journal('new'), expectedPreviousSha256 }), 'CONFLICT');\n170:     assert.equal(realFs.readFileSync(f.path, 'utf8'), before);\n171:     assert.ok(f.events.every(e => e.name === 'readFileSync'));\n172:   }\n173:   written(write({ ...f, serialized: journal('new'), expectedPreviousSha256: hash(before) }), journal('new'));\n174:   assert.equal(realFs.readFileSync(f.path, 'utf8'), journal('new'));\n175: });\n176: \n177: test('same bytes are an explicit non-durable no-op; supplied stale expected hash still refuses', t => {\n178:   const f = fixture(t);\n179:   realFs.writeFileSync(f.path, journal());\n180:   for (const expectedPreviousSha256 of [undefined, hash(journal())]) {\n181:     f.events.length = 0;\n182:     const result = write({ ...f, serialized: journal(), expectedPreviousSha256 });\n183:     assert.equal(result.status, 'UNCHANGED');\n184:     assert.equal(result.sha256, hash(journal()));\n185:     assert.equal(result.durable, false);\n186:     assert.ok(f.events.every(e => e.name === 'readFileSync'));\n187:   }\n188:   refused(write({ ...f, serialized: journal(), expectedPreviousSha256: '0'.repeat(64) }), 'CONFLICT');\n189:   const missing = fixture(t);\n190:   refused(write({ ...missing, serialized: journal(), expectedPreviousSha256: hash(journal()) }), 'CONFLICT');\n191:   assert.deepEqual(realFs.readdirSync(missing.dir), []);\n192: });\n193: \n194: test('read refuses every truncated prefix, including complete-line boundaries, and never returns partial data', t => {\n195:   const f = fixture(t);\n196:   const bytes = Buffer.from(journal());\n197:   for (let end = 0; end < bytes.length; end++) {\n198:     realFs.writeFileSync(f.path, bytes.subarray(0, end));\n199:     const result = read(f);\n200:     refused(result, 'INVALID_JOURNAL');\n201:     assert.equal(result.serialized, undefined);\n202:   }\n203: });\n204: \n205: test('read refuses malformed UTF-8, corrupt chain/footer/schema, trailing data and noncanonical JSON', t => {\n206:   const f = fixture(t);\n207:   const lines = journal().trimEnd().split('\\n');\n208:   const footer = JSON.parse(lines[2]);\n209:   const invalid = [\n210:     Buffer.from([0xff, 0x0a]),\n211:     journal().replace('café', 'cafe'),\n212:     lines[0] + '\\n' + lines[1] + '\\n' + canonical({ ...footer, count: 2 }) + '\\n',\n213:     lines[0] + '\\n' + lines[1] + '\\n' + canonical({ ...footer, lastHash: '0'.repeat(64) }) + '\\n',\n214:     journal().replace('nisi-run-journal-v1', 'nisi-run-journal-v2'),\n215:     journal() + '{}\\n', journal() + '\\n', journal().replace('{', '{ '),\n216:     journal().replace('\\\"type\\\":\\\"entry\\\"', '\\\"type\\\":\\\"wrong\\\"'),\n217:     journal().replace('\\\"type\\\":\\\"footer\\\"', '\\\"type\\\":\\\"wrong\\\"'),\n218:     'null\\nnull\\n', '{}\\n{}\\n'\n219:   ];\n220:   for (const field of ['seq', 'previousHash']) {\n221:     const chain = journal('two entries', false, 2).trimEnd().split('\\n').map(JSON.parse);\n222:     const target = chain[2];\n223:     target[field] = field === 'seq' ? 3 : '0'.repeat(64);\n224:     target.hash = hash('nisi-run-journal/record/v1\\n' + canonical({ seq: target.seq, previousHash: target.previousHash, record: target.record }));\n225:     chain[3].lastHash = target.hash;\n226:     invalid.push(chain.map(canonical).join('\\n') + '\\n');\n227:   }\n228:   for (const bytes of invalid) {\n229:     realFs.writeFileSync(f.path, bytes);\n230:     refused(read(f), 'INVALID_JOURNAL');\n231:   }\n232:   realFs.writeFileSync(f.path, journal('two entries', false, 2));\n233:   assert.equal(read(f).serialized, journal('two entries', false, 2));\n234:   realFs.writeFileSync(f.path, journal('empty', true));\n235:   assert.equal(read(f).serialized, journal('empty', true));\n236: });\n237: \n238: test('write validates strings, framing and expected hash before mutation; corrupt existing data stays intact', t => {\n239:   const f = fixture(t);\n240:   for (const serialized of [null, 4, Buffer.from(journal()), '', journal().slice(0, -1), journal() + '\\ud800', '{}\\n{}\\n']) {\n241:     f.events.length = 0;\n242:     refused(write({ ...f, serialized }), 'INVALID_JOURNAL');\n243:     assert.equal(f.events.length, 0);\n244:   }\n245:   refused(write({ ...f, serialized: journal(), expectedPreviousSha256: 'bad' }), 'INVALID_INPUT');\n246:   assert.deepEqual(realFs.readdirSync(f.dir), []);\n247:   realFs.writeFileSync(f.path, 'broken');\n248:   refused(write({ ...f, serialized: journal(), expectedPreviousSha256: hash('broken') }), 'EXISTING_INVALID');\n249:   assert.equal(realFs.readFileSync(f.path, 'utf8'), 'broken');\n250: });\n251: \n252: test('missing and unreadable files are refusals, and read never attempts mutations or sync', t => {\n253:   const f = fixture(t);\n254:   refused(read(f), 'NOT_FOUND');\n255:   assert.ok(f.events.every(e => e.name === 'readFileSync'));\n256:   const bad = fixture(t, { readFileSync: () => { throw Object.assign(new Error('denied'), { code: 'EACCES' }); } });\n257:   refused(read(bad), 'READ_FAILED');\n258:   refused(write({ ...bad, serialized: journal() }), 'READ_FAILED');\n259:   assert.ok(bad.events.every(e => e.name === 'readFileSync'));\n260:   refused(read({ path: '', fs: f.fs }), 'INVALID_INPUT');\n261:   refused(write({ path: '', serialized: journal(), fs: f.fs }), 'INVALID_INPUT');\n262: });\n263: \n264: test('write and rename failures preserve old bytes, close descriptors and clean only the owned temp', t => {\n265:   for (const point of ['writeSync', 'renameSync']) {\n266:     const f = fixture(t, { [point]: () => { throw Object.assign(new Error('disk error'), { code: 'EIO' }); } });\n267:     realFs.writeFileSync(f.path, journal('old'));\n268:     refused(write({ ...f, serialized: journal('new'), expectedPreviousSha256: hash(journal('old')) }), point === 'writeSync' ? 'WRITE_FAILED' : 'RENAME_FAILED');\n269:     assert.equal(realFs.readFileSync(f.path, 'utf8'), journal('old'));\n270:     assert.deepEqual(realFs.readdirSync(f.dir), ['journal.jsonl']);\n271:     assert.equal(f.descriptors.size, 0);\n272:   }\n273:   const collision = fixture(t, { openSync: (e, invoke) => {\n274:     if (e.args[1] === 'wx') realFs.writeFileSync(e.args[0], 'belongs to somebody else');\n275:     return invoke();\n276:   } });\n277:   refused(write({ ...collision, serialized: journal() }), 'WRITE_FAILED');\n278:   const files = realFs.readdirSync(collision.dir);\n279:   assert.equal(files.length, 1);\n280:   assert.equal(realFs.readFileSync(join(collision.dir, files[0]), 'utf8'), 'belongs to somebody else');\n281:   assert.ok(collision.events.every(e => e.name !== 'unlinkSync'));\n282: });\n283: \n284: test('temp read-back mismatch refuses before rename and final mismatch never reports durable success', t => {\n285:   let renamed = false;\n286:   for (const [phase, fault] of [['temp', 'mismatch'], ['final', 'mismatch'], ['temp', 'throw'], ['final', 'throw']]) {\n287:     renamed = false;\n288:     const f = fixture(t, {\n289:       renameSync: (e, invoke) => { const value = invoke(); renamed = true; return value; },\n290:       readFileSync: (e, invoke) => {\n291:         if (phase === 'temp' ? e.args[0] !== f.path : renamed && e.args[0] === f.path) {\n292:           if (fault === 'throw') throw Object.assign(new Error('readback failed'), { code: 'EIO' });\n293:           return Buffer.from('mismatch');\n294:         }\n295:         return invoke();\n296:       }\n297:     });\n298:     realFs.writeFileSync(f.path, journal('old'));\n299:     const result = write({ ...f, serialized: journal('new'), expectedPreviousSha256: hash(journal('old')) });\n300:     refused(result, 'READBACK_MISMATCH');\n301:     assert.equal(result.committed, phase === 'final');\n302:     if (phase === 'temp') assert.equal(realFs.readFileSync(f.path, 'utf8'), journal('old'));\n303:     assert.deepEqual(realFs.readdirSync(f.dir), ['journal.jsonl']);\n304:     assert.equal(f.descriptors.size, 0);\n305:   }\n306: });\n307: \n308: test('destination is rechecked before rename and an observed concurrent change is preserved', t => {\n309:   let changed = false;\n310:   const f = fixture(t, { fsyncSync: (e, invoke) => {\n311:     if (e.descriptor.flags === 'wx' && !changed) { realFs.writeFileSync(f.path, journal('interloper')); changed = true; }\n312:     return invoke();\n313:   } });\n314:   realFs.writeFileSync(f.path, journal('old'));\n315:   refused(write({ ...f, serialized: journal('new'), expectedPreviousSha256: hash(journal('old')) }), 'CONFLICT');\n316:   assert.equal(realFs.readFileSync(f.path, 'utf8'), journal('interloper'));\n317:   assert.ok(f.events.every(e => e.name !== 'renameSync'));\n318:   assert.deepEqual(realFs.readdirSync(f.dir), ['journal.jsonl']);\n319: });\n320: \n321: test('file close failure refuses before rename, preserves destination and cannot claim durability', t => {\n322:   let fail = true;\n323:   const f = fixture(t, { closeSync: (e, invoke) => {\n324:     if (fail && e.descriptor.flags === 'wx') {\n325:       fail = false;\n326:       invoke();\n327:       throw Object.assign(new Error('close reported error after releasing descriptor'), { code: 'EIO' });\n328:     }\n329:     return invoke();\n330:   } });\n331:   realFs.writeFileSync(f.path, journal('old'));\n332:   refused(write({ ...f, serialized: journal('new'), expectedPreviousSha256: hash(journal('old')) }), 'WRITE_FAILED');\n333:   assert.equal(realFs.readFileSync(f.path, 'utf8'), journal('old'));\n334:   assert.deepEqual(realFs.readdirSync(f.dir), ['journal.jsonl']);\n335:   assert.equal(f.events.filter(e => e.name === 'closeSync').length, 1);\n336:   assert.ok(f.events.every(e => e.name !== 'renameSync'));\n337:   assert.equal(f.descriptors.size, 0);\n338: });\n\n(End of file - total 338 lines)\n</content>",
+            "metadata": {
+              "preview": "import test from 'node:test';\nimport assert from 'node:assert/strict';\nimport * as realFs from 'node:fs';\nimport { tmpdir } from 'node:os';\nimport { join, dirname } from 'node:path';\nimport { createHash } from 'node:crypto';\nimport { writeSerializedJournal as write, readSerializedJournal as read } from '../src/run-journal-store-v1.mjs';\n\nconst hash = value => createHash('sha256').update(value).digest('hex');\nconst canonical = value => Array.isArray(value) ? '[' + value.map(canonical).join(',') + ']'\n  : value && typeof value === 'object' ? '{' + Object.keys(value).sort().map(k => JSON.stringify(k) + ':' + canonical(value[k])).join(',') + '}'\n    : JSON.stringify(value);\n\nfunction journal(payload = 'café 🌱', empty = false, count = 1) {\n  const header = { type: 'header', schema: 'nisi-run-journal-v1', config: { projectId: 'store', maxEntries: 10, heartbeatTtlMs: 100, redactPaths: [] }, now: 10 };\n  const lines = [canonical(header)];\n  let previousHash = hash('nisi-run-journal/header/v1\\n' + lines[0]);\n  for (let index = 0; index < (empty ? 0 : count); index++) {\n    const entry = { id: 'e' + (index + 1), projectId: 'store', runId: 'r1', attempt: 0, candidateId: 'c1', stage: 'test', receiptId: null, createdAt: 10, ttlMs: 100, state: 'SUCCEEDED', heartbeatAt: null, retryOf: null, revokes: null, payload };\n    const record = { entry, fingerprint: hash('nisi-run-journal/input/v1\\n' + canonical(entry)), retained: true };",
+              "truncated": false,
+              "loaded": [],
+              "display": {
+                "type": "file",
+                "path": "/Users/louiscalata/nisi-next-private/work-orders/run-journal-store/tests/run-journal-store.test.mjs",
+                "text": "import test from 'node:test';\nimport assert from 'node:assert/strict';\nimport * as realFs from 'node:fs';\nimport { tmpdir } from 'node:os';\nimport { join, dirname } from 'node:path';\nimport { createHash } from 'node:crypto';\nimport { writeSerializedJournal as write, readSerializedJournal as read } from '../src/run-journal-store-v1.mjs';\n\nconst hash = value => createHash('sha256').update(value).digest('hex');\nconst canonical = value => Array.isArray(value) ? '[' + value.map(canonical).join(',') + ']'\n  : value && typeof value === 'object' ? '{' + Object.keys(value).sort().map(k => JSON.stringify(k) + ':' + canonical(value[k])).join(',') + '}'\n    : JSON.stringify(value);\n\nfunction journal(payload = 'café 🌱', empty = false, count = 1) {\n  const header = { type: 'header', schema: 'nisi-run-journal-v1', config: { projectId: 'store', maxEntries: 10, heartbeatTtlMs: 100, redactPaths: [] }, now: 10 };\n  const lines = [canonical(header)];\n  let previousHash = hash('nisi-run-journal/header/v1\\n' + lines[0]);\n  for (let index = 0; index < (empty ? 0 : count); index++) {\n    const entry = { id: 'e' + (index + 1), projectId: 'store', runId: 'r1', attempt: 0, candidateId: 'c1', stage: 'test', receiptId: null, createdAt: 10, ttlMs: 100, state: 'SUCCEEDED', heartbeatAt: null, retryOf: null, revokes: null, payload };\n    const record = { entry, fingerprint: hash('nisi-run-journal/input/v1\\n' + canonical(entry)), retained: true };\n    const body = { seq: index + 1, previousHash, record };\n    previousHash = hash('nisi-run-journal/record/v1\\n' + canonical(body));\n    lines.push(canonical({ type: 'entry', ...body, hash: previousHash }));\n  }\n  lines.push(canonical({ type: 'footer', count: empty ? 0 : count, lastHash: previousHash }));\n  return lines.join('\\n') + '\\n';\n}\n\nfunction fixture(t, hooks = {}) {\n  const dir = realFs.mkdtempSync(join(tmpdir(), 'nisi-journal-store-'));\n  t.after(() => realFs.rmSync(dir, { recursive: true, force: true }));\n  const path = join(dir, 'journal.jsonl');\n  const events = [];\n  const descriptors = new Map();\n  const fs = {};\n  for (const name of ['openSync', 'writeSync', 'fsyncSync', 'closeSync', 'readFileSync', 'renameSync', 'unlinkSync']) {\n    fs[name] = (...args) => {\n      const descriptor = descriptors.get(args[0]);\n      const event = { name, args, descriptor };\n      events.push(event);\n      const invoke = () => realFs[name](...args);\n      try {\n        const value = hooks[name] ? hooks[name](event, invoke) : invoke();\n        if (name === 'openSync') descriptors.set(value, { path: args[0], flags: args[1] });\n        return value;\n      } finally {\n        // The close fault below simulates a descriptor released before an error.\n        if (name === 'closeSync') descriptors.delete(args[0]);\n      }\n    };\n  }\n  return { dir, path, fs, events, descriptors };\n}\n\nfunction refused(result, reason) {\n  assert.equal(result.status, 'REFUSED');\n  assert.equal(result.durable, false);\n  assert.equal(typeof result.reason, 'string');\n  assert.ok(result.reason.length > 0);\n  if (reason) assert.equal(result.reason, reason);\n}\n\nfunction written(result, serialized) {\n  assert.equal(result.status, 'WRITTEN');\n  assert.equal(result.sha256, hash(Buffer.from(serialized)));\n  assert.equal(result.bytes, Buffer.byteLength(serialized));\n  assert.equal(result.verified, true);\n  assert.equal(typeof result.durable, 'boolean');\n}\n\ntest('raw UTF-8 round trip preserves bytes and records successful file and directory fsync', t => {\n  const f = fixture(t);\n  const serialized = journal();\n  const result = write({ ...f, serialized });\n  written(result, serialized);\n  assert.equal(result.durable, true);\n  assert.deepEqual(result.fsync, { file: true, directory: true });\n  assert.deepEqual(result.fsyncErrors, { file: null, directory: null });\n  assert.deepEqual(realFs.readFileSync(f.path), Buffer.from(serialized));\n  const loaded = read(f);\n  assert.equal(loaded.status, 'READ');\n  assert.equal(loaded.serialized, serialized);\n  assert.equal(loaded.sha256, hash(Buffer.from(serialized)));\n  assert.equal(loaded.bytes, Buffer.byteLength(serialized));\n  assert.equal(loaded.durable, false);\n  assert.deepEqual(realFs.readdirSync(f.dir), ['journal.jsonl']);\n  assert.equal(f.descriptors.size, 0);\n});\n\ntest('exclusive same-directory temp, file sync and temp verification precede rename; directory sync and final verification follow', t => {\n  const f = fixture(t);\n  written(write({ ...f, serialized: journal() }), journal());\n  const opens = f.events.filter(e => e.name === 'openSync');\n  const tempOpen = opens.find(e => e.args[0] !== f.dir);\n  assert.ok(tempOpen);\n  assert.equal(tempOpen.args[1], 'wx');\n  assert.equal(tempOpen.args[2], 0o600);\n  assert.equal(dirname(tempOpen.args[0]), f.dir);\n  assert.notEqual(tempOpen.args[0], f.path);\n  assert.ok(opens.every(e => e.args[0] !== f.path));\n  const renameAt = f.events.findIndex(e => e.name === 'renameSync');\n  const fileSyncAt = f.events.findIndex(e => e.name === 'fsyncSync' && e.descriptor.path !== f.dir);\n  const dirSyncAt = f.events.findIndex(e => e.name === 'fsyncSync' && e.descriptor.path === f.dir);\n  const tempReadAt = f.events.findIndex(e => e.name === 'readFileSync' && e.args[0] === tempOpen.args[0]);\n  const tempCloseAt = f.events.findIndex(e => e.name === 'closeSync' && e.descriptor.path === tempOpen.args[0]);\n  assert.ok(fileSyncAt >= 0 && fileSyncAt < tempCloseAt && tempCloseAt < tempReadAt && tempReadAt < renameAt && renameAt < dirSyncAt);\n  assert.ok(f.events.slice(dirSyncAt + 1).some(e => e.name === 'readFileSync' && e.args[0] === f.path));\n  assert.deepEqual(f.events[renameAt].args, [tempOpen.args[0], f.path]);\n});\n\ntest('short writes are completed; zero progress is refused and the owned temp is cleaned', t => {\n  const f = fixture(t, { writeSync: ({ args }) => realFs.writeSync(args[0], args[1], args[2], Math.min(7, args[3]), args[4]) });\n  written(write({ ...f, serialized: journal() }), journal());\n  assert.ok(f.events.filter(e => e.name === 'writeSync').length > 1);\n  const z = fixture(t, { writeSync: () => 0 });\n  refused(write({ ...z, serialized: journal() }), 'WRITE_FAILED');\n  assert.deepEqual(realFs.readdirSync(z.dir), []);\n  assert.equal(z.descriptors.size, 0);\n});\n\ntest('file fsync failure is recorded, still writes and verifies, and cannot claim durability', t => {\n  const f = fixture(t, { fsyncSync: (e, invoke) => {\n    if (e.descriptor.flags === 'wx') throw Object.assign(new Error('unsupported'), { code: 'ENOTSUP' });\n    return invoke();\n  } });\n  const result = write({ ...f, serialized: journal() });\n  written(result, journal());\n  assert.equal(result.durable, false);\n  assert.deepEqual(result.fsync, { file: false, directory: true });\n  assert.equal(result.fsyncErrors.file, 'ENOTSUP');\n  assert.equal(read(f).serialized, journal());\n  assert.equal(f.descriptors.size, 0);\n});\n\ntest('directory fsync or directory-open failure records a committed but non-durable write', t => {\n  for (const point of ['fsyncSync', 'openSync']) {\n    const f = fixture(t, { [point]: (e, invoke) => {\n      if (point === 'openSync' ? e.args[1] === 'r' : e.descriptor.flags === 'r') throw Object.assign(new Error('unsupported'), { code: 'ENOTSUP' });\n      return invoke();\n    } });\n    const result = write({ ...f, serialized: journal() });\n    written(result, journal());\n    assert.equal(result.durable, false);\n    assert.deepEqual(result.fsync, { file: true, directory: false });\n    assert.equal(result.fsyncErrors.directory, 'ENOTSUP');\n    assert.equal(read(f).serialized, journal());\n    assert.equal(f.descriptors.size, 0);\n  }\n});\n\ntest('absent fsync support is recorded for both attempts and never upgraded to durable', t => {\n  const f = fixture(t);\n  delete f.fs.fsyncSync;\n  const result = write({ ...f, serialized: journal() });\n  written(result, journal());\n  assert.equal(result.durable, false);\n  assert.deepEqual(result.fsync, { file: false, directory: false });\n  assert.equal(typeof result.fsyncErrors.file, 'string');\n  assert.equal(typeof result.fsyncErrors.directory, 'string');\n  assert.equal(f.descriptors.size, 0);\n});\n\ntest('different existing content needs exact previous sha256; conflicts preserve bytes without opening any file', t => {\n  const f = fixture(t);\n  const before = journal('old');\n  realFs.writeFileSync(f.path, before);\n  for (const expectedPreviousSha256 of [undefined, '0'.repeat(64)]) {\n    f.events.length = 0;\n    refused(write({ ...f, serialized: journal('new'), expectedPreviousSha256 }), 'CONFLICT');\n    assert.equal(realFs.readFileSync(f.path, 'utf8'), before);\n    assert.ok(f.events.every(e => e.name === 'readFileSync'));\n  }\n  written(write({ ...f, serialized: journal('new'), expectedPreviousSha256: hash(before) }), journal('new'));\n  assert.equal(realFs.readFileSync(f.path, 'utf8'), journal('new'));\n});\n\ntest('same bytes are an explicit non-durable no-op; supplied stale expected hash still refuses', t => {\n  const f = fixture(t);\n  realFs.writeFileSync(f.path, journal());\n  for (const expectedPreviousSha256 of [undefined, hash(journal())]) {\n    f.events.length = 0;\n    const result = write({ ...f, serialized: journal(), expectedPreviousSha256 });\n    assert.equal(result.status, 'UNCHANGED');\n    assert.equal(result.sha256, hash(journal()));\n    assert.equal(result.durable, false);\n    assert.ok(f.events.every(e => e.name === 'readFileSync'));\n  }\n  refused(write({ ...f, serialized: journal(), expectedPreviousSha256: '0'.repeat(64) }), 'CONFLICT');\n  const missing = fixture(t);\n  refused(write({ ...missing, serialized: journal(), expectedPreviousSha256: hash(journal()) }), 'CONFLICT');\n  assert.deepEqual(realFs.readdirSync(missing.dir), []);\n});\n\ntest('read refuses every truncated prefix, including complete-line boundaries, and never returns partial data', t => {\n  const f = fixture(t);\n  const bytes = Buffer.from(journal());\n  for (let end = 0; end < bytes.length; end++) {\n    realFs.writeFileSync(f.path, bytes.subarray(0, end));\n    const result = read(f);\n    refused(result, 'INVALID_JOURNAL');\n    assert.equal(result.serialized, undefined);\n  }\n});\n\ntest('read refuses malformed UTF-8, corrupt chain/footer/schema, trailing data and noncanonical JSON', t => {\n  const f = fixture(t);\n  const lines = journal().trimEnd().split('\\n');\n  const footer = JSON.parse(lines[2]);\n  const invalid = [\n    Buffer.from([0xff, 0x0a]),\n    journal().replace('café', 'cafe'),\n    lines[0] + '\\n' + lines[1] + '\\n' + canonical({ ...footer, count: 2 }) + '\\n',\n    lines[0] + '\\n' + lines[1] + '\\n' + canonical({ ...footer, lastHash: '0'.repeat(64) }) + '\\n',\n    journal().replace('nisi-run-journal-v1', 'nisi-run-journal-v2'),\n    journal() + '{}\\n', journal() + '\\n', journal().replace('{', '{ '),\n    journal().replace('\\\"type\\\":\\\"entry\\\"', '\\\"type\\\":\\\"wrong\\\"'),\n    journal().replace('\\\"type\\\":\\\"footer\\\"', '\\\"type\\\":\\\"wrong\\\"'),\n    'null\\nnull\\n', '{}\\n{}\\n'\n  ];\n  for (const field of ['seq', 'previousHash']) {\n    const chain = journal('two entries', false, 2).trimEnd().split('\\n').map(JSON.parse);\n    const target = chain[2];\n    target[field] = field === 'seq' ? 3 : '0'.repeat(64);\n    target.hash = hash('nisi-run-journal/record/v1\\n' + canonical({ seq: target.seq, previousHash: target.previousHash, record: target.record }));\n    chain[3].lastHash = target.hash;\n    invalid.push(chain.map(canonical).join('\\n') + '\\n');\n  }\n  for (const bytes of invalid) {\n    realFs.writeFileSync(f.path, bytes);\n    refused(read(f), 'INVALID_JOURNAL');\n  }\n  realFs.writeFileSync(f.path, journal('two entries', false, 2));\n  assert.equal(read(f).serialized, journal('two entries', false, 2));\n  realFs.writeFileSync(f.path, journal('empty', true));\n  assert.equal(read(f).serialized, journal('empty', true));\n});\n\ntest('write validates strings, framing and expected hash before mutation; corrupt existing data stays intact', t => {\n  const f = fixture(t);\n  for (const serialized of [null, 4, Buffer.from(journal()), '', journal().slice(0, -1), journal() + '\\ud800', '{}\\n{}\\n']) {\n    f.events.length = 0;\n    refused(write({ ...f, serialized }), 'INVALID_JOURNAL');\n    assert.equal(f.events.length, 0);\n  }\n  refused(write({ ...f, serialized: journal(), expectedPreviousSha256: 'bad' }), 'INVALID_INPUT');\n  assert.deepEqual(realFs.readdirSync(f.dir), []);\n  realFs.writeFileSync(f.path, 'broken');\n  refused(write({ ...f, serialized: journal(), expectedPreviousSha256: hash('broken') }), 'EXISTING_INVALID');\n  assert.equal(realFs.readFileSync(f.path, 'utf8'), 'broken');\n});\n\ntest('missing and unreadable files are refusals, and read never attempts mutations or sync', t => {\n  const f = fixture(t);\n  refused(read(f), 'NOT_FOUND');\n  assert.ok(f.events.every(e => e.name === 'readFileSync'));\n  const bad = fixture(t, { readFileSync: () => { throw Object.assign(new Error('denied'), { code: 'EACCES' }); } });\n  refused(read(bad), 'READ_FAILED');\n  refused(write({ ...bad, serialized: journal() }), 'READ_FAILED');\n  assert.ok(bad.events.every(e => e.name === 'readFileSync'));\n  refused(read({ path: '', fs: f.fs }), 'INVALID_INPUT');\n  refused(write({ path: '', serialized: journal(), fs: f.fs }), 'INVALID_INPUT');\n});\n\ntest('write and rename failures preserve old bytes, close descriptors and clean only the owned temp', t => {\n  for (const point of ['writeSync', 'renameSync']) {\n    const f = fixture(t, { [point]: () => { throw Object.assign(new Error('disk error'), { code: 'EIO' }); } });\n    realFs.writeFileSync(f.path, journal('old'));\n    refused(write({ ...f, serialized: journal('new'), expectedPreviousSha256: hash(journal('old')) }), point === 'writeSync' ? 'WRITE_FAILED' : 'RENAME_FAILED');\n    assert.equal(realFs.readFileSync(f.path, 'utf8'), journal('old'));\n    assert.deepEqual(realFs.readdirSync(f.dir), ['journal.jsonl']);\n    assert.equal(f.descriptors.size, 0);\n  }\n  const collision = fixture(t, { openSync: (e, invoke) => {\n    if (e.args[1] === 'wx') realFs.writeFileSync(e.args[0], 'belongs to somebody else');\n    return invoke();\n  } });\n  refused(write({ ...collision, serialized: journal() }), 'WRITE_FAILED');\n  const files = realFs.readdirSync(collision.dir);\n  assert.equal(files.length, 1);\n  assert.equal(realFs.readFileSync(join(collision.dir, files[0]), 'utf8'), 'belongs to somebody else');\n  assert.ok(collision.events.every(e => e.name !== 'unlinkSync'));\n});\n\ntest('temp read-back mismatch refuses before rename and final mismatch never reports durable success', t => {\n  let renamed = false;\n  for (const [phase, fault] of [['temp', 'mismatch'], ['final', 'mismatch'], ['temp', 'throw'], ['final', 'throw']]) {\n    renamed = false;\n    const f = fixture(t, {\n      renameSync: (e, invoke) => { const value = invoke(); renamed = true; return value; },\n      readFileSync: (e, invoke) => {\n        if (phase === 'temp' ? e.args[0] !== f.path : renamed && e.args[0] === f.path) {\n          if (fault === 'throw') throw Object.assign(new Error('readback failed'), { code: 'EIO' });\n          return Buffer.from('mismatch');\n        }\n        return invoke();\n      }\n    });\n    realFs.writeFileSync(f.path, journal('old'));\n    const result = write({ ...f, serialized: journal('new'), expectedPreviousSha256: hash(journal('old')) });\n    refused(result, 'READBACK_MISMATCH');\n    assert.equal(result.committed, phase === 'final');\n    if (phase === 'temp') assert.equal(realFs.readFileSync(f.path, 'utf8'), journal('old'));\n    assert.deepEqual(realFs.readdirSync(f.dir), ['journal.jsonl']);\n    assert.equal(f.descriptors.size, 0);\n  }\n});\n\ntest('destination is rechecked before rename and an observed concurrent change is preserved', t => {\n  let changed = false;\n  const f = fixture(t, { fsyncSync: (e, invoke) => {\n    if (e.descriptor.flags === 'wx' && !changed) { realFs.writeFileSync(f.path, journal('interloper')); changed = true; }\n    return invoke();\n  } });\n  realFs.writeFileSync(f.path, journal('old'));\n  refused(write({ ...f, serialized: journal('new'), expectedPreviousSha256: hash(journal('old')) }), 'CONFLICT');\n  assert.equal(realFs.readFileSync(f.path, 'utf8'), journal('interloper'));\n  assert.ok(f.events.every(e => e.name !== 'renameSync'));\n  assert.deepEqual(realFs.readdirSync(f.dir), ['journal.jsonl']);\n});\n\ntest('file close failure refuses before rename, preserves destination and cannot claim durability', t => {\n  let fail = true;\n  const f = fixture(t, { closeSync: (e, invoke) => {\n    if (fail && e.descriptor.flags === 'wx') {\n      fail = false;\n      invoke();\n      throw Object.assign(new Error('close reported error after releasing descriptor'), { code: 'EIO' });\n    }\n    return invoke();\n  } });\n  realFs.writeFileSync(f.path, journal('old'));\n  refused(write({ ...f, serialized: journal('new'), expectedPreviousSha256: hash(journal('old')) }), 'WRITE_FAILED');\n  assert.equal(realFs.readFileSync(f.path, 'utf8'), journal('old'));\n  assert.deepEqual(realFs.readdirSync(f.dir), ['journal.jsonl']);\n  assert.equal(f.events.filter(e => e.name === 'closeSync').length, 1);\n  assert.ok(f.events.every(e => e.name !== 'renameSync'));\n  assert.equal(f.descriptors.size, 0);\n});",
+                "lineStart": 1,
+                "lineEnd": 338,
+                "totalLines": 338,
+                "truncated": false
+              }
+            },
+            "title": "work-orders/run-journal-store/tests/run-journal-store.test.mjs",
+            "time": {
+              "start": 1789332629488,
+              "end": 1789332629511
+            }
+          },
+          "id": "prt_09c88f1050011LVbD4y0ENIEX1",
+          "sessionID": "ses_f637a66f9ffe362t0WOs1u0p6Y",
+          "messageID": "msg_09c87ea04001BC6SqxKX1Std2U"
+        },
+        {
+          "reason": "tool-calls",
+          "snapshot": "847e3cabe326f8b95908cd752df72d23df0778aa",
+          "type": "step-finish",
+          "tokens": {
+            "total": 9740,
+            "input": 9246,
+            "output": 49,
+            "reasoning": 445,
+            "cache": {
+              "write": 0,
+              "read": 0
+            }
+          },
+          "cost": 0,
+          "id": "prt_09c89359c001RIk7H7imIh1otE",
+          "sessionID": "ses_f637a66f9ffe362t0WOs1u0p6Y",
+          "messageID": "msg_09c87ea04001BC6SqxKX1Std2U"
+        },
+        {
+          "type": "patch",
+          "hash": "766127d3937c58e83d7f5cfce26a3a2e2951eea3",
+          "files": [
+            "/Users/louiscalata/nisi-next-private/work-orders/fixed-run-journal-entry/fixtures/generate-summary-fixtures.mjs",
+            "/Users/louiscalata/nisi-next-private/work-orders/fixed-run-journal-entry/fixtures/summary-canaries-not-matched.json",
+            "/Users/louiscalata/nisi-next-private/work-orders/fixed-run-journal-entry/fixtures/summary-identity-unavailable.json",
+            "/Users/louiscalata/nisi-next-private/work-orders/fixed-run-journal-entry/fixtures/summary-observed.json",
+            "/Users/louiscalata/nisi-next-private/work-orders/fixed-run-journal-entry/fixtures/summary-timeout.json",
+            "/Users/louiscalata/nisi-next-private/work-orders/fixed-run-journal-entry/src/run-journal-v1.mjs"
+          ],
+          "id": "prt_09c8935f3001oLFlftK4A1LY3I",
+          "sessionID": "ses_f637a66f9ffe362t0WOs1u0p6Y",
+          "messageID": "msg_09c87ea04001BC6SqxKX1Std2U"
+        }
+      ]
+    },
+    {
+      "info": {
+        "parentID": "msg_09c859d82001KUO8GFtrJIc7sA",
+        "role": "assistant",
+        "mode": "packet",
+        "agent": "packet",
+        "path": {
+          "cwd": "/Users/louiscalata/nisi-next-private",
+          "root": "/Users/louiscalata/nisi-next-private"
+        },
+        "cost": 0,
+        "tokens": {
+          "input": 0,
+          "output": 0,
+          "reasoning": 0,
+          "cache": {
+            "read": 0,
+            "write": 0
+          }
+        },
+        "modelID": "qwen/qwen3.8-27b",
+        "providerID": "lmstudio",
+        "time": {
+          "created": 1789332633083
+        },
+        "id": "msg_09c8935fb0015RMb0DBJx6F9lN",
+        "sessionID": "ses_f637a66f9ffe362t0WOs1u0p6Y"
+      },
+      "parts": [
+        {
+          "snapshot": "847e3cabe326f8b95908cd752df72d23df0778aa",
+          "type": "step-start",
+          "id": "prt_09c89a6ae001xphhgNDL9xcUW4",
+          "sessionID": "ses_f637a66f9ffe362t0WOs1u0p6Y",
+          "messageID": "msg_09c8935fb0015RMb0DBJx6F9lN"
+        },
+        {
+          "type": "reasoning",
+          "text": "",
+          "time": {
+            "start": 1789332661958
+          },
+          "id": "prt_09c89a6c6001duW4ll7IB5FYLw",
+          "sessionID": "ses_f637a66f9ffe362t0WOs1u0p6Y",
+          "messageID": "msg_09c8935fb0015RMb0DBJx6F9lN"
+        }
+      ]
+    }
+  ]
+}

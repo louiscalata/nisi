@@ -1,0 +1,26 @@
+✔ empty input returns the exact ready shape with zero totals (0.734292ms)
+✔ known zero counters and duration remain numeric zero (0.463958ms)
+✔ nullable metrics produce row and column unknowns without inventing zeros (0.071167ms)
+✔ reasoning tokens are reported as a subset and are not double-counted in totalTokens (0.1005ms)
+✔ multiple rows sum each known column and count unknown rows (0.07825ms)
+✔ input is exact and invalid ordinary values are refused (0.097875ms)
+✔ provider and model may be null but non-null labels must be bounded nonempty strings (0.078125ms)
+✔ negative, unsafe, negative-zero and invalid duration metrics are refused (0.086792ms)
+✔ known reasoning count with unknown output does not invent a contradiction (0.071542ms)
+✔ numeric overflow makes the affected totals null (0.099917ms)
+✔ output is cloned and does not mutate or alias the input (0.105666ms)
+✔ identical input is deterministic (0.060458ms)
+✔ private dependency-free ESM package (0.486875ms)
+✔ named synchronous API placeholder exists (0.053209ms)
+✔ unknown input on an earlier row cannot skip independent later columns (0.728458ms)
+✔ known reasoning/output contradiction is refused even when input tokens unknown (0.071416ms)
+✔ combined input and output overflow stays null although column sums individually fit (0.067833ms)
+✔ unknown reasoning on one row does not skip later duration sums (0.06275ms)
+ℹ tests 18
+ℹ suites 0
+ℹ pass 18
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 42.432041

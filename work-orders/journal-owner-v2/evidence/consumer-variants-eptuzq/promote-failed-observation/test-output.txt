@@ -1,0 +1,128 @@
+TAP version 13
+# Subtest: malformed envelopes, symbols, hidden fields and invalid time refuse before inspection or projection
+ok 1 - malformed envelopes, symbols, hidden fields and invalid time refuse before inspection or projection
+  ---
+  duration_ms: 2.9785
+  type: 'test'
+  ...
+# Subtest: plain and null-prototype exact envelopes are both accepted
+ok 2 - plain and null-prototype exact envelopes are both accepted
+  ---
+  duration_ms: 3.400583
+  type: 'test'
+  ...
+# Subtest: forged owner refuses before projection
+ok 3 - forged owner refuses before projection
+  ---
+  duration_ms: 0.157667
+  type: 'test'
+  ...
+# Subtest: SEALED owner is refused before malformed source is projected
+ok 4 - SEALED owner is refused before malformed source is projected
+  ---
+  duration_ms: 0.328375
+  type: 'test'
+  ...
+# Subtest: valid observation imports with immutable summary and exact journal result
+ok 5 - valid observation imports with immutable summary and exact journal result
+  ---
+  duration_ms: 0.6585
+  type: 'test'
+  ...
+# Subtest: adverse structurally valid source imports as FAILED history without promotion
+not ok 6 - adverse structurally valid source imports as FAILED history without promotion
+  ---
+  duration_ms: 1.335375
+  type: 'test'
+  location: '/Users/louiscalata/nisi-next-private/work-orders/journal-owner-v2/evidence/consumer-variants-eptuzq/promote-failed-observation/tests/import-fixed-xpc-observation.test.mjs:92:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly equal:
+    + actual - expected
+    
+    + 'SUCCEEDED'
+    - 'FAILED'
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: 'FAILED'
+  actual: 'SUCCEEDED'
+  operator: 'strictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///Users/louiscalata/nisi-next-private/work-orders/journal-owner-v2/evidence/consumer-variants-eptuzq/promote-failed-observation/tests/import-fixed-xpc-observation.test.mjs:99:10)
+    Test.runInAsyncScope (node:async_hooks:227:14)
+    Test.run (node:internal/test_runner/test:1325:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:911:18)
+    Test.postRun (node:internal/test_runner/test:1465:19)
+    Test.run (node:internal/test_runner/test:1390:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:911:7)
+  ...
+# Subtest: duplicate maps to DUPLICATE and performs no additional filesystem IO
+ok 7 - duplicate maps to DUPLICATE and performs no additional filesystem IO
+  ---
+  duration_ms: 0.853959
+  type: 'test'
+  ...
+# Subtest: same entry identity with changed accepted content maps journal CONFLICT
+ok 8 - same entry identity with changed accepted content maps journal CONFLICT
+  ---
+  duration_ms: 0.968834
+  type: 'test'
+  ...
+# Subtest: stale private disk digest maps STORE_CONFLICT and preserves prior owner snapshot
+ok 9 - stale private disk digest maps STORE_CONFLICT and preserves prior owner snapshot
+  ---
+  duration_ms: 0.798167
+  type: 'test'
+  ...
+# Subtest: precommit rename failure maps STORE_FAILED and preserves previous snapshot
+ok 10 - precommit rename failure maps STORE_FAILED and preserves previous snapshot
+  ---
+  duration_ms: 0.528292
+  type: 'test'
+  ...
+# Subtest: postrename final-read fault maps UNCERTAIN, clears owner, and fresh open reconciles committed bytes
+ok 11 - postrename final-read fault maps UNCERTAIN, clears owner, and fresh open reconciles committed bytes
+  ---
+  duration_ms: 0.738709
+  type: 'test'
+  ...
+# Subtest: subsequent call on uncertain owner refuses before projecting malformed source
+ok 12 - subsequent call on uncertain owner refuses before projecting malformed source
+  ---
+  duration_ms: 0.459666
+  type: 'test'
+  ...
+# Subtest: missing fsync is imported while preserving non-durable store evidence
+ok 13 - missing fsync is imported while preserving non-durable store evidence
+  ---
+  duration_ms: 0.700042
+  type: 'test'
+  ...
+# Subtest: malformed and old source records refuse before record or write
+ok 14 - malformed and old source records refuse before record or write
+  ---
+  duration_ms: 0.576
+  type: 'test'
+  ...
+# Subtest: host-configured stricter redaction is not leaked through projection summary
+ok 15 - host-configured stricter redaction is not leaked through projection summary
+  ---
+  duration_ms: 0.647417
+  type: 'test'
+  ...
+# Subtest: reentrant owner refusal is mapped once with no retry
+ok 16 - reentrant owner refusal is mapped once with no retry
+  ---
+  duration_ms: 0.682583
+  type: 'test'
+  ...
+1..16
+# tests 16
+# suites 0
+# pass 15
+# fail 1
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 54.451792

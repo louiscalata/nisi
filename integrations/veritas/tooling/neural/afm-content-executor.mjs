@@ -1,0 +1,204 @@
+// Dispatcher executor for consented, packet-specific content.
+//
+// This is the path the consent gate opens. Unlike the fixed-experiment executor
+// beside it, real caller content reaches the model here — but only content the
+// grant admits, one item per packet, checked individually.
+//
+// Order matters and is not negotiable: the consent grant admits the item (which
+// resolves symlinks, enforces the scope root, the kind, the byte ceiling and
+// UTF-8) BEFORE any bytes are handed to a process. A packet with no declared
+// item, or an item the grant refuses, never reaches the model at all.
+//
+// The probe binary is hash-pinned and re-verified before every launch, takes no
+// argv, inherits no environment, and receives the artifact only on stdin. It
+// returns digests, counts and a length-capped advisory string; the artifact is
+// never echoed back, never written, and no transcript is kept.
+import fs from 'node:fs';
+import path from 'node:path';
+import { spawn } from 'node:child_process';
+import { createHash } from 'node:crypto';
+
+const FLAGS = Object.freeze({ authorizing: false, modelExecuted: false,
+  promotionGranted: false, certificationGranted: false });
+const answer = (ok, code, fields = {}) => Object.freeze({ ...fields, ok, code, ...FLAGS });
+const fail = (code, fields = {}) => answer(false, code, fields);
+const sha = bytes => createHash('sha256').update(bytes).digest('hex');
+const isHex64 = v => typeof v === 'string' && /^[0-9a-f]{64}$/.test(v);
+
+const MAX_EVIDENCE_BYTES = 16384;
+
+/** Every refusal this executor can report. A cause outside this set would be an
+ *  exception message leaking out where an exact code belongs, so it is mapped to
+ *  the generic evidence refusal rather than surfaced. */
+const KNOWN_CAUSES = Object.freeze(new Set([
+  'PACKET_BYTES', 'NO_CONTENT_FOR_PACKET', 'ABORTED', 'SPAWN_ERROR', 'DEADLINE_EXCEEDED',
+  'CHILD_SIGNALLED', 'CHILD_EXIT_NONZERO', 'EVIDENCE_OVERFLOW', 'EVIDENCE_REFUSED',
+  'BINARY_NOT_REGULAR_FILE', 'BINARY_TOO_LARGE', 'BINARY_DIGEST_MISMATCH',
+  'EVIDENCE_BYTES', 'EVIDENCE_SHAPE', 'EVIDENCE_SCHEMA', 'EVIDENCE_STATUS', 'EVIDENCE_CLASS',
+  'EVIDENCE_DIGESTS', 'EVIDENCE_ADVISORY', 'EVIDENCE_LIMITATIONS', 'ADVISORY_OVER_CAP',
+  'ADVISORY_DIGEST', 'MODEL_DID_NOT_PARTICIPATE', 'MODEL_IDENTITY', 'MODEL_NOT_QUIESCENT',
+  'ROUTE_REFUSED', 'BOUNDARY_VIOLATED', 'CONSENT_DIGEST_MISMATCH', 'CONTENT_DIGEST_MISMATCH',
+  'CONTENT_BYTES_MISMATCH', 'CONTENT_KIND_MISMATCH',
+]));
+
+const EVIDENCE_KEYS = ['schemaVersion', 'status', 'evidenceClass', 'consentDigest', 'contentSha256',
+  'contentBytes', 'kind', 'promptSha256', 'advisory', 'advisoryChars', 'advisorySha256',
+  'modelParticipation', 'modelIdentityStatus', 'route', 'quiescent', 'contentPersisted',
+  'transcriptPersisted', 'networkEgress', 'externalToolsEnabled', 'acceptanceAuthorityGranted',
+  'limitationCodes'];
+
+/** Closed reader over the content probe's evidence. Anything outside the declared
+ *  shape, or any claimed authority, is refused rather than interpreted. */
+function readEvidence(raw, admitted) {
+  if (!Buffer.isBuffer(raw) || raw.length < 2 || raw.length > MAX_EVIDENCE_BYTES) throw new Error('EVIDENCE_BYTES');
+  let value;
+  try { value = JSON.parse(raw.toString('utf8')); } catch { throw new Error('EVIDENCE_REFUSED'); }
+  if (value === null || typeof value !== 'object' || Array.isArray(value)) throw new Error('EVIDENCE_SHAPE');
+  if (Object.keys(value).sort().join('|') !== [...EVIDENCE_KEYS].sort().join('|')) throw new Error('EVIDENCE_SCHEMA');
+  if (value.schemaVersion !== 1 || value.status !== 'PASS') throw new Error('EVIDENCE_STATUS');
+  if (value.evidenceClass !== 'CONSENTED_CONTENT_ADVISORY_READING') throw new Error('EVIDENCE_CLASS');
+  if (value.modelParticipation !== 'PARTICIPATED') throw new Error('MODEL_DID_NOT_PARTICIPATE');
+  if (value.modelIdentityStatus !== 'MODEL_ID_NOT_EXPOSED_BY_API') throw new Error('MODEL_IDENTITY');
+  if (value.route !== 'system-on-device-requested') throw new Error('ROUTE_REFUSED');
+  if (value.quiescent !== true) throw new Error('MODEL_NOT_QUIESCENT');
+  // The boundary facts the grant asserts must come back false, every time.
+  for (const key of ['contentPersisted', 'transcriptPersisted', 'networkEgress',
+                     'externalToolsEnabled', 'acceptanceAuthorityGranted']) {
+    if (value[key] !== false) throw new Error('BOUNDARY_VIOLATED');
+  }
+  // The probe must have read exactly the item the grant admitted, under exactly
+  // the grant that admitted it.
+  if (value.consentDigest !== admitted.consentDigest) throw new Error('CONSENT_DIGEST_MISMATCH');
+  if (value.contentSha256 !== admitted.contentSha256) throw new Error('CONTENT_DIGEST_MISMATCH');
+  if (value.contentBytes !== admitted.contentBytes) throw new Error('CONTENT_BYTES_MISMATCH');
+  if (value.kind !== admitted.kind) throw new Error('CONTENT_KIND_MISMATCH');
+  if (!isHex64(value.promptSha256) || !isHex64(value.advisorySha256)) throw new Error('EVIDENCE_DIGESTS');
+  if (typeof value.advisory !== 'string') throw new Error('EVIDENCE_ADVISORY');
+  if (value.advisory.length !== value.advisoryChars) throw new Error('EVIDENCE_ADVISORY');
+  if (value.advisoryChars > admitted.maxAdvisoryChars) throw new Error('ADVISORY_OVER_CAP');
+  if (sha(Buffer.from(value.advisory, 'utf8')) !== value.advisorySha256) throw new Error('ADVISORY_DIGEST');
+  if (!Array.isArray(value.limitationCodes) || value.limitationCodes.length === 0) throw new Error('EVIDENCE_LIMITATIONS');
+  return Object.freeze(value);
+}
+
+function verifyBinary(binary, binarySHA256) {
+  const stat = fs.lstatSync(binary);
+  if (!stat.isFile()) throw new Error('BINARY_NOT_REGULAR_FILE');
+  if (stat.size > 64 * 1024 * 1024) throw new Error('BINARY_TOO_LARGE');
+  if (sha(fs.readFileSync(binary)) !== binarySHA256) throw new Error('BINARY_DIGEST_MISMATCH');
+}
+
+function runProbe(binary, input, timeoutMs, signal) {
+  return new Promise(resolve => {
+    let child = null, timer = null, settled = false, out = Buffer.alloc(0), overflow = false;
+    const finish = value => {
+      if (settled) return;
+      settled = true;
+      if (timer) clearTimeout(timer);
+      signal?.removeEventListener('abort', onAbort);
+      resolve(value);
+    };
+    const kill = () => { if (child && child.exitCode === null && child.signalCode === null) child.kill('SIGKILL'); };
+    const onAbort = () => { kill(); finish({ code: 'ABORTED' }); };
+    try {
+      child = spawn(binary, [], { cwd: path.dirname(binary), env: { PATH: '/usr/bin:/bin' },
+        stdio: ['pipe', 'pipe', 'ignore'] });
+    } catch { return finish({ code: 'SPAWN_ERROR' }); }
+    timer = setTimeout(() => { kill(); finish({ code: 'DEADLINE_EXCEEDED' }); }, timeoutMs);
+    signal?.addEventListener('abort', onAbort, { once: true });
+    child.on('error', () => { kill(); finish({ code: 'SPAWN_ERROR' }); });
+    child.stdin.on('error', () => { /* the child may exit before the write drains */ });
+    child.stdout.on('data', chunk => {
+      if (out.length + chunk.length > MAX_EVIDENCE_BYTES) { overflow = true; kill(); return; }
+      out = Buffer.concat([out, chunk]);
+    });
+    child.once('close', (exitCode, sig) => {
+      if (overflow) return finish({ code: 'EVIDENCE_OVERFLOW' });
+      if (sig) return finish({ code: 'CHILD_SIGNALLED' });
+      if (exitCode !== 0) return finish({ code: 'CHILD_EXIT_NONZERO' });
+      finish({ code: 'OK', raw: out });
+    });
+    child.stdin.end(input);
+  });
+}
+
+/** Binds a consent grant, a hash-pinned probe, and the per-packet content map.
+ *  `items` maps a courier taskId to the one file that packet is about. A packet
+ *  with no entry is refused before the grant is even consulted. */
+export function createAFMContentExecutor(options) {
+  try {
+    const config = options && typeof options === 'object' && !Array.isArray(options) ? options : null;
+    if (!config) return fail('CONFIGURATION_REFUSED');
+    const allowed = ['binary', 'binarySHA256', 'grant', 'items', 'timeoutMs'];
+    if (!Object.keys(config).every(k => allowed.includes(k))) return fail('CONFIGURATION_REFUSED');
+    const { binary, binarySHA256, grant, items, timeoutMs = 60000 } = config;
+    if (typeof binary !== 'string' || !path.isAbsolute(binary) || !isHex64(binarySHA256)) return fail('BINARY_ARGUMENTS');
+    if (!Number.isSafeInteger(timeoutMs) || timeoutMs < 50 || timeoutMs > 120000) return fail('DEADLINE_ARGUMENT');
+    if (!grant || typeof grant.admitContent !== 'function') return fail('CONSENT_REQUIRED');
+    if (items === null || typeof items !== 'object' || Array.isArray(items)) return fail('ITEMS_REFUSED');
+    if (Object.keys(items).length === 0) return fail('ITEMS_REFUSED');
+    if (process.platform !== 'darwin' || process.arch !== 'arm64') return fail('PLATFORM');
+    verifyBinary(binary, binarySHA256);
+
+    const refusals = [];
+    const readings = [];
+    const refuse = (rawCause, taskId) => {
+      // A grant's own refusal keeps its code, prefixed so its origin is legible.
+      const cause = KNOWN_CAUSES.has(rawCause) || rawCause.startsWith('CONSENT_') ? rawCause : 'EVIDENCE_REFUSED';
+      refusals.push(Object.freeze({ taskId: taskId ?? null, cause }));
+      return Object.freeze({ ok: false, code: 'AFM_PACKET_UNAVAILABLE',
+        payloadSha256: sha(Buffer.from(`veritas/afm-content-refusal/v1\0${cause}`, 'utf8')) });
+    };
+
+    const execute = async (packet, context = {}) => {
+      const taskId = context.taskId ?? null;
+      try {
+        if (!Buffer.isBuffer(packet) || packet.length === 0) return refuse('PACKET_BYTES', taskId);
+        if (typeof taskId !== 'string' || !Object.hasOwn(items, taskId)) return refuse('NO_CONTENT_FOR_PACKET', taskId);
+
+        // The gate runs first. Nothing is spawned, and no bytes leave this
+        // process, unless the grant admits this exact item right now.
+        const admitted = grant.admitContent(items[taskId]);
+        if (!admitted.ok) return refuse(`CONSENT_${admitted.code}`, taskId);
+
+        verifyBinary(binary, binarySHA256);
+        const header = JSON.stringify({
+          consentDigest: admitted.consentDigest,
+          contentSha256: admitted.contentSha256,
+          contentBytes: admitted.contentBytes,
+          maxAdvisoryChars: admitted.maxAdvisoryChars,
+          kind: admitted.kind,
+        });
+        const input = Buffer.concat([Buffer.from(header + '\n', 'utf8'), admitted.bytes]);
+        const run = await runProbe(binary, input, timeoutMs, context.signal);
+        if (run.code !== 'OK') return refuse(run.code, taskId);
+
+        const evidence = readEvidence(run.raw, admitted);
+        readings.push(Object.freeze({
+          taskId,
+          contentSha256: evidence.contentSha256,
+          advisory: evidence.advisory,
+          advisoryChars: evidence.advisoryChars,
+        }));
+        const payloadSha256 = sha(Buffer.from(
+          `veritas/afm-content-observation/v1\0${sha(packet)}\0${evidence.consentDigest}\0` +
+          `${evidence.contentSha256}\0${evidence.advisorySha256}`, 'utf8'));
+        return Object.freeze({ ok: true, code: 'AFM_PACKET_ANSWERED', payloadSha256 });
+      } catch (error) {
+        const cause = error instanceof Error && typeof error.message === 'string' ? error.message : 'EVIDENCE_REFUSED';
+        return refuse(cause, taskId);   // refuse() maps anything undeclared to EVIDENCE_REFUSED
+      }
+    };
+
+    return answer(true, 'READY_PRIVATE_AFM_CONTENT_EXECUTOR_ONLY', {
+      execute,
+      binarySHA256,
+      refusals: () => Object.freeze(refusals.map(r => Object.freeze({ ...r }))),
+      readings: () => Object.freeze(readings.map(r => Object.freeze({ ...r }))),
+    });
+  } catch (error) {
+    const known = ['BINARY_NOT_REGULAR_FILE', 'BINARY_TOO_LARGE', 'BINARY_DIGEST_MISMATCH'];
+    const code = error instanceof Error && known.includes(error.message) ? error.message : 'CONSTRUCTION_ERROR';
+    return fail(code);
+  }
+}

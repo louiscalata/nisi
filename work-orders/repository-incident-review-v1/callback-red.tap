@@ -1,0 +1,137 @@
+TAP version 13
+# Subtest: actual host performs exact two-step selection and stores one metadata observation
+ok 1 - actual host performs exact two-step selection and stores one metadata observation
+  ---
+  duration_ms: 76.228542
+  type: 'test'
+  ...
+# Subtest: selection prompt shows only eligible rows and requires full row id
+ok 2 - selection prompt shows only eligible rows and requires full row id
+  ---
+  duration_ms: 54.951666
+  type: 'test'
+  ...
+# Subtest: old history approval and normalized incident approvals cannot store
+ok 3 - old history approval and normalized incident approvals cannot store
+  ---
+  duration_ms: 56.886792
+  type: 'test'
+  ...
+# Subtest: second prompt binds row fingerprint plus preview digest and renders all warnings
+ok 4 - second prompt binds row fingerprint plus preview digest and renders all warnings
+  ---
+  duration_ms: 55.650833
+  type: 'test'
+  ...
+# Subtest: decline, EOF, no-TTY, signal, error and malformed prompt outcomes never open owner
+ok 5 - decline, EOF, no-TTY, signal, error and malformed prompt outcomes never open owner
+  ---
+  duration_ms: 55.923084
+  type: 'test'
+  ...
+# Subtest: hanging prompt is bounded by the overall timeout and aborts its owned signal
+ok 6 - hanging prompt is bounded by the overall timeout and aborts its owned signal
+  ---
+  duration_ms: 62.906209
+  type: 'test'
+  ...
+# Subtest: same-host overlap is busy and guard releases after completion
+ok 7 - same-host overlap is busy and guard releases after completion
+  ---
+  duration_ms: 54.429917
+  type: 'test'
+  ...
+# Subtest: genuine abort before and during prompt prevents owner open despite suppressed listeners
+ok 8 - genuine abort before and during prompt prevents owner open despite suppressed listeners
+  ---
+  duration_ms: 55.27025
+  type: 'test'
+  ...
+# Subtest: synthetic abort events and overridden signal instance members cannot forge cancellation
+ok 9 - synthetic abort events and overridden signal instance members cannot forge cancellation
+  ---
+  duration_ms: 55.515792
+  type: 'test'
+  ...
+# Subtest: preview identity change after selection refuses before owner open
+ok 10 - preview identity change after selection refuses before owner open
+  ---
+  duration_ms: 59.409166
+  type: 'test'
+  ...
+# Subtest: one post-clock preview mismatch cannot be erased by a later recovered callback
+not ok 11 - one post-clock preview mismatch cannot be erased by a later recovered callback
+  ---
+  duration_ms: 59.047
+  type: 'test'
+  location: '/Users/louiscalata/nisi-next-private/tests/repository-incident-review.test.mjs:39:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly equal:
+    + actual - expected
+    
+    + null
+    - 'PREVIEW_CHANGED'
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: 'PREVIEW_CHANGED'
+  actual: ~
+  operator: 'strictEqual'
+  stack: |-
+    assertResult (file:///Users/louiscalata/nisi-next-private/tests/repository-incident-review.test.mjs:16:201)
+    TestContext.<anonymous> (file:///Users/louiscalata/nisi-next-private/tests/repository-incident-review.test.mjs:39:590)
+    async Test.run (node:internal/test_runner/test:1332:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:911:7)
+  ...
+# Subtest: invalid wall clock refuses before owner and permit calls
+ok 12 - invalid wall clock refuses before owner and permit calls
+  ---
+  duration_ms: 53.666959
+  type: 'test'
+  ...
+# Subtest: cancellation after permit creation revokes the private handle before capture
+ok 13 - cancellation after permit creation revokes the private handle before capture
+  ---
+  duration_ms: 53.775333
+  type: 'test'
+  ...
+# Subtest: invalid or thrown capture after call is uncertain and handle cleanup remains explicit
+ok 14 - invalid or thrown capture after call is uncertain and handle cleanup remains explicit
+  ---
+  duration_ms: 54.34925
+  type: 'test'
+  ...
+# Subtest: late cancellation preserves exact valid capture and reports consumed cleanup
+ok 15 - late cancellation preserves exact valid capture and reports consumed cleanup
+  ---
+  duration_ms: 56.014875
+  type: 'test'
+  ...
+# Subtest: genuine issued failure rows page without dropping candidates and select only from the displayed page
+ok 16 - genuine issued failure rows page without dropping candidates and select only from the displayed page
+  ---
+  duration_ms: 17.310417
+  type: 'test'
+  ...
+# Subtest: out-of-range paging and the interaction cap refuse without opening the journal
+ok 17 - out-of-range paging and the interaction cap refuse without opening the journal
+  ---
+  duration_ms: 16.215375
+  type: 'test'
+  ...
+# Subtest: a real owner sealed after permit yields the accepted consumed journal refusal
+ok 18 - a real owner sealed after permit yields the accepted consumed journal refusal
+  ---
+  duration_ms: 57.861166
+  type: 'test'
+  ...
+1..18
+# tests 18
+# suites 0
+# pass 17
+# fail 1
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 1003.438916

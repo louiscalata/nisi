@@ -1,0 +1,24 @@
+✔ constants (0.8885ms)
+✔ every verdict has a valid shape and reads to an ordered, deep-frozen copy (2.532041ms)
+✔ reader never throws and refuses non-objects (0.133958ms)
+✔ unknown and missing members at every level (0.414458ms)
+✔ scalar members (0.586375ms)
+✔ source (0.707667ms)
+✔ checks (6.308541ms)
+✔ reviewer (0.382792ms)
+✔ consistency: source kind and id (0.103959ms)
+✔ consistency: REPLAY and APRON_STALE carry no judgement (0.169541ms)
+✔ consistency: PASS (0.448208ms)
+✔ consistency: VALIDITY_FAIL and QUALITY_FAIL (0.296917ms)
+✔ digest is pinned, order-independent, and refuses what the reader refuses (0.454958ms)
+✔ hostile inputs are refused, never thrown on (1.1605ms)
+✔ check order: the first-listed failure wins (0.281959ms)
+✔ nested accessors and proxies are refused; shared references are copied, not refused (1.106084ms)
+ℹ tests 16
+ℹ suites 0
+ℹ pass 16
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 48.12

@@ -1,0 +1,11 @@
+--- work-orders/run-journal-store/tests/run-journal-store.test.mjs
++++ tests/run-journal-store.test.mjs
+@@ -4,7 +4,7 @@
+ import { tmpdir } from 'node:os';
+ import { join, dirname } from 'node:path';
+ import { createHash } from 'node:crypto';
+-import { writeSerializedJournal as write, readSerializedJournal as read } from '../src/run-journal-store-v1.mjs';
++import { writeSerializedJournal as write, readSerializedJournal as read } from '../history/run-journal-store-v1.mjs';
+ 
+ const hash = value => createHash('sha256').update(value).digest('hex');
+ const canonical = value => Array.isArray(value) ? '[' + value.map(canonical).join(',') + ']'

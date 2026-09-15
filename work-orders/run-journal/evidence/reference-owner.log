@@ -1,0 +1,15 @@
+✔ owner: all footer and record damage seals the recovered journal (2.437417ms)
+✔ owner: reopened retry relationships are checked against earlier prefix (0.837917ms)
+✔ owner: persisted TTL, retention capacity and redaction markers each fail closed (0.679292ms)
+✔ owner: duplicate, conflict, refusals and exceptions never advance time (0.428958ms)
+✔ owner: parseable unterminated records are uncommitted and sealed (0.138125ms)
+✔ owner: accessor and cyclic intake is rejected without invocation or mutation (0.140084ms)
+✔ owner: lexical canonical keys and strict serialized field validation (0.133292ms)
+ℹ tests 7
+ℹ suites 0
+ℹ pass 7
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 7.104916

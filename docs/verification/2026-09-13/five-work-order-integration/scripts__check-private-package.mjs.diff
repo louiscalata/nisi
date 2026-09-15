@@ -1,0 +1,37 @@
+--- before/scripts/check-private-package.mjs
++++ scripts/check-private-package.mjs
+@@ -59,14 +59,14 @@
+   for(const[f,h]of Object.entries(record.archive.entries))assert.equal(hash(path.join(installed,f)),h,'installed '+f);
+   record.installed={path:installed,exactArchiveMatch:true};
+   const fixtures=path.join(root,'tests/private-consumer');
+-  const cases=fs.readdirSync(fixtures).sort();assert.equal(cases.length,7);
++  const cases=fs.readdirSync(fixtures).sort();assert.equal(cases.length,9);
+   for(const f of cases){const b=plainFile(path.join(fixtures,f));record.caseManifest[f]=sha(b);fs.writeFileSync(path.join(consumer,f),b,{flag:'wx'});}
+   const compiler=path.join(root,'node_modules/typescript/bin/tsc'),typeRoot=path.join(root,'node_modules/@types');
+   record.toolchain={compilerPath:compiler,compilerEntrySha256:hash(compiler),typescript:JSON.parse(fs.readFileSync(path.join(root,'node_modules/typescript/package.json'))).version,
+     nodeTypes:JSON.parse(fs.readFileSync(path.join(typeRoot,'node/package.json'))).version,lockSha256:hash(path.join(root,'package-lock.json')),typeRoots:[typeRoot]};
+   const flags=['--noEmit','--ignoreConfig','--strict','--exactOptionalPropertyTypes','--noUncheckedIndexedAccess','--module','NodeNext','--target','ES2022','--types','node','--typeRoots',typeRoot];
+-  const typeCases=cases.filter(f=>f.endsWith('.mts'));assert.equal(typeCases.length,5);
+-  run('five installed-package TypeScript consumers',process.execPath,[compiler,...flags,...typeCases]);
++  const typeCases=cases.filter(f=>f.endsWith('.mts'));assert.equal(typeCases.length,6);
++  run('six installed-package TypeScript consumers',process.execPath,[compiler,...flags,...typeCases]);
+   const expected=[];
+   for(const f of typeCases){
+     const lines=fs.readFileSync(path.join(consumer,f),'utf8').split('\n');
+@@ -74,13 +74,13 @@
+     lines.forEach((line,i)=>{if(line.includes('@ts-expect-error')){expected.push({file:name,line:i+2});lines[i]=line.replace('@ts-expect-error','expected diagnostic marker removed');}});
+     fs.writeFileSync(path.join(consumer,name),lines.join('\n'),{flag:'wx'});
+   }
+-  assert.equal(expected.length,29);
++  assert.equal(expected.length,39);
+   const diagnostics=run('negative controls without suppression must fail',process.execPath,[compiler,...flags,...typeCases.map(f=>'negative-'+f)],consumer,2);
+   const observed=[...diagnostics.matchAll(/(negative-[^\s(]+\.mts)\((\d+),\d+\): error TS\d+:/g)].map(m=>({file:m[1],line:Number(m[2])}));
+   for(const item of expected)assert(observed.some(o=>o.file===item.file&&o.line===item.line),'missing diagnostic '+JSON.stringify(item));
+   record.negativeControls={expected:expected.length,observed:observed.length,allExpectedLocationsDetected:true};
+-  const tap=run('seven fixed installed runtime checks',process.execPath,['--test','--test-reporter=tap',...cases.filter(f=>f.endsWith('.test.mjs'))]);
+-  for(const[k,v]of Object.entries({tests:7,pass:7,fail:0,cancelled:0,skipped:0,todo:0}))assert(new RegExp('^# '+k+' '+v+'$','m').test(tap),k);
++  const tap=run('eight fixed installed runtime checks',process.execPath,['--test','--test-reporter=tap',...cases.filter(f=>f.endsWith('.test.mjs'))]);
++  for(const[k,v]of Object.entries({tests:8,pass:8,fail:0,cancelled:0,skipped:0,todo:0}))assert(new RegExp('^# '+k+' '+v+'$','m').test(tap),k);
+   for(const[f,h]of Object.entries(record.sourceManifest))assert.equal(hash(path.join(root,f)),h,'final source '+f);
+   for(const[f,h]of Object.entries(record.archive.entries))assert.equal(hash(path.join(installed,f)),h,'final installed '+f);
+   for(const[f,h]of Object.entries(record.caseManifest)){assert.equal(hash(path.join(fixtures,f)),h);assert.equal(hash(path.join(consumer,f)),h);}

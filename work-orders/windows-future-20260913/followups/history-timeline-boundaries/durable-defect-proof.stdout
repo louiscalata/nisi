@@ -1,0 +1,31 @@
+✔ buildTimeline: exactly 200 events with bounded fields (1.232167ms)
+✔ buildTimeline: 128-char strings accepted unchanged (0.07075ms)
+✔ buildTimeline: MAX_SAFE attempt and createdAt (0.059125ms)
+✔ buildTimeline: large finite durations preserved (0.062083ms)
+✖ buildTimeline: out-of-order events sorted correctly (0.446459ms)
+ℹ tests 5
+ℹ suites 0
+ℹ pass 4
+ℹ fail 1
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 34.141042
+
+✖ failing tests:
+
+test at tests/windows-boundaries.test.mjs:97:1
+✖ buildTimeline: out-of-order events sorted correctly (0.446459ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly deep-equal:
+  + actual - expected
+  
+    [
+  -   'FAIL',
+      'INCONCLUSIVE',
+      'PASS',
+  +   'FAIL'
+    ]
+
+Actual: `['INCONCLUSIVE', 'PASS', 'FAIL']`
+Expected: `['FAIL', 'INCONCLUSIVE', 'PASS']`
+Exit 1.

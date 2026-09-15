@@ -1,0 +1,11 @@
+{
+  "name": "nisi-interrupted-run-decision-v1",
+  "private": true,
+  "type": "module",
+  "license": "UNLICENSED",
+  "scripts": {
+    "test": "node --test tests/interrupted-run-decision.test.mjs",
+    "test:baseline": "node --test tests/baseline.test.mjs",
+    "test:integration": "node --test tests/integration.test.mjs"
+  }
+}

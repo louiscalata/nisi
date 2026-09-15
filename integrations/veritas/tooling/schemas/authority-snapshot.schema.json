@@ -1,0 +1,67 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://veritas.invalid/private/schemas/stage5/authority-snapshot.v1.json",
+  "title": "Veritas Stage 5 self-administered authority snapshot fixture",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schemaVersion",
+    "mode",
+    "authorityDigest",
+    "policyDigest",
+    "verifierSetDigest",
+    "adapterSetDigest",
+    "hookSetDigest",
+    "trustedCommandSetDigest",
+    "baseRevisionDigest",
+    "frozenAtEventId",
+    "candidateMayModify",
+    "protectedAuthorityVerified"
+  ],
+  "properties": {
+    "schemaVersion": {
+      "const": 1
+    },
+    "mode": {
+      "const": "SELF_ADMINISTERED"
+    },
+    "authorityDigest": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{64}$"
+    },
+    "policyDigest": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{64}$"
+    },
+    "verifierSetDigest": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{64}$"
+    },
+    "adapterSetDigest": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{64}$"
+    },
+    "hookSetDigest": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{64}$"
+    },
+    "trustedCommandSetDigest": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{64}$"
+    },
+    "baseRevisionDigest": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{64}$"
+    },
+    "frozenAtEventId": {
+      "type": "string",
+      "pattern": "^evt-[a-z0-9-]{8,64}$"
+    },
+    "candidateMayModify": {
+      "const": false
+    },
+    "protectedAuthorityVerified": {
+      "const": false
+    }
+  }
+}

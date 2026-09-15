@@ -1,0 +1,599 @@
+TAP version 13
+# Subtest: NEW open publishes its accepted clock: a later record below it gets journal TIME
+ok 1 - NEW open publishes its accepted clock: a later record below it gets journal TIME
+  ---
+  duration_ms: 2.043125
+  type: 'test'
+  ...
+# Subtest: concurrent NEW owners: identical first bytes are UNCHANGED and non-durable, different bytes conflict
+ok 2 - concurrent NEW owners: identical first bytes are UNCHANGED and non-durable, different bytes conflict
+  ---
+  duration_ms: 1.5115
+  type: 'test'
+  ...
+# Subtest: ordered redactPaths binding refuses the same two paths in reversed order
+ok 3 - ordered redactPaths binding refuses the same two paths in reversed order
+  ---
+  duration_ms: 0.249792
+  type: 'test'
+  ...
+# Subtest: COMPLETE open-time pruning keeps raw disk CAS hash while staging the pruned memory serialization
+ok 4 - COMPLETE open-time pruning keeps raw disk CAS hash while staging the pruned memory serialization
+  ---
+  duration_ms: 0.529791
+  type: 'test'
+  ...
+# Subtest: damaged-prefix precedence is project, then config, then clock
+ok 5 - damaged-prefix precedence is project, then config, then clock
+  ---
+  duration_ms: 0.706583
+  type: 'test'
+  ...
+# Subtest: valid null-prototype outer envelopes are supported with a genuine private handle
+ok 6 - valid null-prototype outer envelopes are supported with a genuine private handle
+  ---
+  duration_ms: 0.266583
+  type: 'test'
+  ...
+# Subtest: NEW open returns an opaque unique owner and exact frozen empty snapshot
+ok 7 - NEW open returns an opaque unique owner and exact frozen empty snapshot
+  ---
+  duration_ms: 1.527959
+  type: 'test'
+  ...
+# Subtest: inspection is nonmutating and may return the same latest snapshot reference
+ok 8 - inspection is nonmutating and may return the same latest snapshot reference
+  ---
+  duration_ms: 0.16225
+  type: 'test'
+  ...
+# Subtest: request envelopes reject extra, hidden, symbol, accessor, array and exotic forms without invoking getters
+ok 9 - request envelopes reject extra, hidden, symbol, accessor, array and exotic forms without invoking getters
+  ---
+  duration_ms: 0.105833
+  type: 'test'
+  ...
+# Subtest: manufactured, copied and JSON-roundtripped handles are refused
+ok 10 - manufactured, copied and JSON-roundtripped handles are refused
+  ---
+  duration_ms: 0.205708
+  type: 'test'
+  ...
+# Subtest: open validates path, time, fs and exact config without throwing
+ok 11 - open validates path, time, fs and exact config without throwing
+  ---
+  duration_ms: 0.087792
+  type: 'test'
+  ...
+# Subtest: open copies configuration and is not changed by later caller mutation
+ok 12 - open copies configuration and is not changed by later caller mutation
+  ---
+  duration_ms: 0.847958
+  type: 'test'
+  ...
+# Subtest: read failures, non-Buffer reads, invalid UTF-8 and size limit refuse without owner exposure
+ok 13 - read failures, non-Buffer reads, invalid UTF-8 and size limit refuse without owner exposure
+  ---
+  duration_ms: 6.114209
+  type: 'test'
+  ...
+# Subtest: bad UTF-8 suffix after a valid prefix never exposes a lossy recovered row
+ok 14 - bad UTF-8 suffix after a valid prefix never exposes a lossy recovered row
+  ---
+  duration_ms: 0.308375
+  type: 'test'
+  ...
+# Subtest: wrong-project COMPLETE, INCOMPLETE and INVALID journals all refuse before prefix exposure
+ok 15 - wrong-project COMPLETE, INCOMPLETE and INVALID journals all refuse before prefix exposure
+  ---
+  duration_ms: 0.448792
+  type: 'test'
+  ...
+# Subtest: matching project with any other persisted config difference refuses policy drift
+ok 16 - matching project with any other persisted config difference refuses policy drift
+  ---
+  duration_ms: 0.437167
+  type: 'test'
+  ...
+# Subtest: open refuses a clock behind the persisted journal watermark
+ok 17 - open refuses a clock behind the persisted journal watermark
+  ---
+  duration_ms: 0.297208
+  type: 'test'
+  ...
+# Subtest: COMPLETE recovery binds exact raw digest and publishes historical entries
+ok 18 - COMPLETE recovery binds exact raw digest and publishes historical entries
+  ---
+  duration_ms: 0.549875
+  type: 'test'
+  ...
+# Subtest: matching damaged prefixes open SEALED with verified prefix only and cannot record
+ok 19 - matching damaged prefixes open SEALED with verified prefix only and cannot record
+  ---
+  duration_ms: 0.542292
+  type: 'test'
+  ...
+# Subtest: NEW record writes, publishes exact staged evidence, redacts payload and freezes all returned evidence
+ok 20 - NEW record writes, publishes exact staged evidence, redacts payload and freezes all returned evidence
+  ---
+  duration_ms: 0.355792
+  type: 'test'
+  ...
+# Subtest: current fixed-XPC projected observation is inert history payload, not authority
+ok 21 - current fixed-XPC projected observation is inert history payload, not authority
+  ---
+  duration_ms: 0.404208
+  type: 'test'
+  ...
+# Subtest: RUNNING stale observation is listed as interrupted only when UNKNOWN and active
+ok 22 - RUNNING stale observation is listed as interrupted only when UNKNOWN and active
+  ---
+  duration_ms: 0.219
+  type: 'test'
+  ...
+# Subtest: revocation removes an UNKNOWN RUNNING observation from interrupted without granting authority
+ok 23 - revocation removes an UNKNOWN RUNNING observation from interrupted without granting authority
+  ---
+  duration_ms: 0.400042
+  type: 'test'
+  ...
+# Subtest: duplicate returns original accepted snapshot and conflict performs no storage
+ok 24 - duplicate returns original accepted snapshot and conflict performs no storage
+  ---
+  duration_ms: 0.289542
+  type: 'test'
+  ...
+# Subtest: entry refusal and time failure preserve the accepted snapshot and do not escape
+ok 25 - entry refusal and time failure preserve the accepted snapshot and do not escape
+  ---
+  duration_ms: 0.248667
+  type: 'test'
+  ...
+# Subtest: malformed record envelopes and accessor entry fields refuse without getter execution
+ok 26 - malformed record envelopes and accessor entry fields refuse without getter execution
+  ---
+  duration_ms: 0.130792
+  type: 'test'
+  ...
+# Subtest: pre-rename store failure rolls back staged append and pruning exactly
+not ok 27 - pre-rename store failure rolls back staged append and pruning exactly
+  ---
+  duration_ms: 1.202375
+  type: 'test'
+  location: '/Users/louiscalata/nisi-next-private/work-orders/journal-owner-v2/evidence/owner-mutants-gCRgh1/publish-before-store-outcome/tests/owner.test.mjs:232:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected "actual" to be reference-equal to "expected":
+    + actual - expected
+    ... Skipped lines
+    
+      {
+        authorizing: false,
+    +   bytes: 1488,
+    -   bytes: 942,
+        entries: [
+          {
+            authorizing: false,
+            entry: {
+              attempt: 0,
+    ...
+              id: 'old',
+    +         payload: null,
+    +         projectId: 'project-a',
+    +         receiptId: 'receipt-a',
+    +         retryOf: null,
+    +         revokes: null,
+    +         runId: 'run-a',
+    +         stage: 'observe',
+    +         state: 'SUCCEEDED',
+    +         ttlMs: 12
+    +       },
+    +       expired: true,
+    +       historical: true,
+    +       liveness: 'SUCCEEDED',
+    +       retained: false,
+    +       revoked: false
+    +     },
+    +     {
+    +       authorizing: false,
+    +       entry: {
+    +         attempt: 0,
+    +         candidateId: 'candidate-a',
+    +         createdAt: 113,
+    +         heartbeatAt: null,
+    +         id: 'new',
+              payload: {
+                observation: {
+                  authorizing: false,
+                  schemaVersion: 'nisi-fixed-xpc-journal-observation/v1',
+                  status: 'OBSERVED'
+    ...
+              state: 'SUCCEEDED',
+    +         ttlMs: 1000
+    -         ttlMs: 12
+            },
+            expired: false,
+    +       historical: false,
+    -       historical: true,
+            liveness: 'SUCCEEDED',
+            retained: true,
+            revoked: false
+          }
+        ],
+    ...
+            'old',
+    +       'new'
+          ],
+          rejectedLine: null,
+          status: 'COMPLETE'
+        },
+        schemaVersion: 'nisi-journal-owner/v2',
+    +   sha256: '934ef8691f462a8e2c9baec822ce9fe6dfbf4d81e312534b68450e35c0d99187',
+    -   sha256: 'e210b54723c456d7d0b2c243b8169eba28097fa9bf95b5802531a5d798abd2d7',
+        state: 'OPEN'
+      }
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected:
+    schemaVersion: 'nisi-journal-owner/v2'
+    state: 'OPEN'
+    recovery:
+      status: 'COMPLETE'
+      recoveredIds:
+        0: 'old'
+      rejectedLine: ~
+      reason: ~
+      authorizing: false
+    sha256: 'e210b54723c456d7d0b2c243b8169eba28097fa9bf95b5802531a5d798abd2d7'
+    bytes: 942
+    entries:
+      0:
+        entry:
+          attempt: 0
+          candidateId: 'candidate-a'
+          createdAt: 100
+          heartbeatAt: ~
+          id: 'old'
+          payload:
+            observation:
+              authorizing: false
+              schemaVersion: 'nisi-fixed-xpc-journal-observation/v1'
+              status: 'OBSERVED'
+            secret: '[REDACTED]'
+          projectId: 'project-a'
+          receiptId: 'receipt-a'
+          retryOf: ~
+          revokes: ~
+          runId: 'run-a'
+          stage: 'observe'
+          state: 'SUCCEEDED'
+          ttlMs: 12
+        historical: true
+        retained: true
+        revoked: false
+        expired: false
+        liveness: 'SUCCEEDED'
+        authorizing: false
+    interrupted:
+    meaning: 'HISTORY_OBSERVATIONS_ONLY'
+    authorizing: false
+  actual:
+    schemaVersion: 'nisi-journal-owner/v2'
+    state: 'OPEN'
+    recovery:
+      status: 'COMPLETE'
+      recoveredIds:
+        0: 'old'
+        1: 'new'
+      rejectedLine: ~
+      reason: ~
+      authorizing: false
+    sha256: '934ef8691f462a8e2c9baec822ce9fe6dfbf4d81e312534b68450e35c0d99187'
+    bytes: 1488
+    entries:
+      0:
+        entry:
+          attempt: 0
+          candidateId: 'candidate-a'
+          createdAt: 100
+          heartbeatAt: ~
+          id: 'old'
+          payload: ~
+          projectId: 'project-a'
+          receiptId: 'receipt-a'
+          retryOf: ~
+          revokes: ~
+          runId: 'run-a'
+          stage: 'observe'
+          state: 'SUCCEEDED'
+          ttlMs: 12
+        historical: true
+        retained: false
+        revoked: false
+        expired: true
+        liveness: 'SUCCEEDED'
+        authorizing: false
+      1:
+        entry:
+          id: 'new'
+          projectId: 'project-a'
+          runId: 'run-a'
+          attempt: 0
+          candidateId: 'candidate-a'
+          stage: 'observe'
+          receiptId: 'receipt-a'
+          createdAt: 113
+          ttlMs: 1000
+          state: 'SUCCEEDED'
+          heartbeatAt: ~
+          retryOf: ~
+          revokes: ~
+          payload:
+            secret: '[REDACTED]'
+            observation:
+              schemaVersion: 'nisi-fixed-xpc-journal-observation/v1'
+              status: 'OBSERVED'
+              authorizing: false
+        historical: false
+        retained: true
+        revoked: false
+        expired: false
+        liveness: 'SUCCEEDED'
+        authorizing: false
+    interrupted:
+    meaning: 'HISTORY_OBSERVATIONS_ONLY'
+    authorizing: false
+  operator: 'strictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///Users/louiscalata/nisi-next-private/work-orders/journal-owner-v2/evidence/owner-mutants-gCRgh1/publish-before-store-outcome/tests/owner.test.mjs:239:10)
+    Test.runInAsyncScope (node:async_hooks:227:14)
+    Test.run (node:internal/test_runner/test:1325:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:911:18)
+    Test.postRun (node:internal/test_runner/test:1465:19)
+    Test.run (node:internal/test_runner/test:1390:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:911:7)
+  ...
+# Subtest: genuine stale owner detects STORE_CONFLICT despite public mutation attempts
+not ok 28 - genuine stale owner detects STORE_CONFLICT despite public mutation attempts
+  ---
+  duration_ms: 0.77925
+  type: 'test'
+  location: '/Users/louiscalata/nisi-next-private/work-orders/journal-owner-v2/evidence/owner-mutants-gCRgh1/publish-before-store-outcome/tests/owner.test.mjs:245:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected "actual" to be reference-equal to "expected":
+    + actual - expected
+    ... Skipped lines
+    
+      {
+        authorizing: false,
+    +   bytes: 1624,
+    -   bytes: 946,
+        entries: [
+          {
+            authorizing: false,
+            entry: {
+              attempt: 0,
+    ...
+            expired: false,
+    +       historical: true,
+    +       liveness: 'SUCCEEDED',
+    +       retained: true,
+    +       revoked: false
+    +     },
+    +     {
+    +       authorizing: false,
+    +       entry: {
+    +         attempt: 0,
+    +         candidateId: 'candidate-a',
+    +         createdAt: 100,
+    +         heartbeatAt: null,
+    +         id: 'stale',
+    +         payload: {
+    +           observation: {
+    +             authorizing: false,
+    +             schemaVersion: 'nisi-fixed-xpc-journal-observation/v1',
+    +             status: 'OBSERVED'
+    +           },
+    +           secret: '[REDACTED]'
+    +         },
+    +         projectId: 'project-a',
+    +         receiptId: 'receipt-a',
+    +         retryOf: null,
+    +         revokes: null,
+    +         runId: 'run-a',
+    +         stage: 'observe',
+    +         state: 'SUCCEEDED',
+    +         ttlMs: 1000
+    +       },
+    +       expired: false,
+            historical: false,
+            liveness: 'SUCCEEDED',
+            retained: true,
+            revoked: false
+          }
+    ...
+            'first',
+    +       'stale'
+          ],
+          rejectedLine: null,
+          status: 'COMPLETE'
+        },
+        schemaVersion: 'nisi-journal-owner/v2',
+    +   sha256: '1b024764146e0f20c9cc6628665195ea46dd7964426e19e23747d812c85924b7',
+    -   sha256: 'f1ea676a372e4eb5300581e66b6f6077d7746b0e7d4c7a28c51295d39816e859',
+        state: 'OPEN'
+      }
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected:
+    schemaVersion: 'nisi-journal-owner/v2'
+    state: 'OPEN'
+    recovery:
+      status: 'COMPLETE'
+      recoveredIds:
+        0: 'first'
+      rejectedLine: ~
+      reason: ~
+      authorizing: false
+    sha256: 'f1ea676a372e4eb5300581e66b6f6077d7746b0e7d4c7a28c51295d39816e859'
+    bytes: 946
+    entries:
+      0:
+        entry:
+          id: 'first'
+          projectId: 'project-a'
+          runId: 'run-a'
+          attempt: 0
+          candidateId: 'candidate-a'
+          stage: 'observe'
+          receiptId: 'receipt-a'
+          createdAt: 100
+          ttlMs: 1000
+          state: 'SUCCEEDED'
+          heartbeatAt: ~
+          retryOf: ~
+          revokes: ~
+          payload:
+            secret: '[REDACTED]'
+            observation:
+              schemaVersion: 'nisi-fixed-xpc-journal-observation/v1'
+              status: 'OBSERVED'
+              authorizing: false
+        historical: false
+        retained: true
+        revoked: false
+        expired: false
+        liveness: 'SUCCEEDED'
+        authorizing: false
+    interrupted:
+    meaning: 'HISTORY_OBSERVATIONS_ONLY'
+    authorizing: false
+  actual:
+    schemaVersion: 'nisi-journal-owner/v2'
+    state: 'OPEN'
+    recovery:
+      status: 'COMPLETE'
+      recoveredIds:
+        0: 'first'
+        1: 'stale'
+      rejectedLine: ~
+      reason: ~
+      authorizing: false
+    sha256: '1b024764146e0f20c9cc6628665195ea46dd7964426e19e23747d812c85924b7'
+    bytes: 1624
+    entries:
+      0:
+        entry:
+          attempt: 0
+          candidateId: 'candidate-a'
+          createdAt: 100
+          heartbeatAt: ~
+          id: 'first'
+          payload:
+            observation:
+              authorizing: false
+              schemaVersion: 'nisi-fixed-xpc-journal-observation/v1'
+              status: 'OBSERVED'
+            secret: '[REDACTED]'
+          projectId: 'project-a'
+          receiptId: 'receipt-a'
+          retryOf: ~
+          revokes: ~
+          runId: 'run-a'
+          stage: 'observe'
+          state: 'SUCCEEDED'
+          ttlMs: 1000
+        historical: true
+        retained: true
+        revoked: false
+        expired: false
+        liveness: 'SUCCEEDED'
+        authorizing: false
+      1:
+        entry:
+          id: 'stale'
+          projectId: 'project-a'
+          runId: 'run-a'
+          attempt: 0
+          candidateId: 'candidate-a'
+          stage: 'observe'
+          receiptId: 'receipt-a'
+          createdAt: 100
+          ttlMs: 1000
+          state: 'SUCCEEDED'
+          heartbeatAt: ~
+          retryOf: ~
+          revokes: ~
+          payload:
+            secret: '[REDACTED]'
+            observation:
+              schemaVersion: 'nisi-fixed-xpc-journal-observation/v1'
+              status: 'OBSERVED'
+              authorizing: false
+        historical: false
+        retained: true
+        revoked: false
+        expired: false
+        liveness: 'SUCCEEDED'
+        authorizing: false
+    interrupted:
+    meaning: 'HISTORY_OBSERVATIONS_ONLY'
+    authorizing: false
+  operator: 'strictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///Users/louiscalata/nisi-next-private/work-orders/journal-owner-v2/evidence/owner-mutants-gCRgh1/publish-before-store-outcome/tests/owner.test.mjs:255:10)
+    Test.runInAsyncScope (node:async_hooks:227:14)
+    Test.run (node:internal/test_runner/test:1325:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:911:18)
+    Test.postRun (node:internal/test_runner/test:1465:19)
+    Test.run (node:internal/test_runner/test:1390:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:911:7)
+  ...
+# Subtest: post-rename readback mismatch seals COMMIT_UNCERTAIN without stale publication
+ok 29 - post-rename readback mismatch seals COMMIT_UNCERTAIN without stale publication
+  ---
+  duration_ms: 0.38775
+  type: 'test'
+  ...
+# Subtest: post-rename final-read exception is reconciled as COMMIT_UNCERTAIN, not rollback
+ok 30 - post-rename final-read exception is reconciled as COMMIT_UNCERTAIN, not rollback
+  ---
+  duration_ms: 0.396292
+  type: 'test'
+  ...
+# Subtest: reentrant record is OWNER_BUSY and performs no nested filesystem IO
+ok 31 - reentrant record is OWNER_BUSY and performs no nested filesystem IO
+  ---
+  duration_ms: 0.29925
+  type: 'test'
+  ...
+# Subtest: successful write without fsync remains explicitly non-durable
+ok 32 - successful write without fsync remains explicitly non-durable
+  ---
+  duration_ms: 0.227959
+  type: 'test'
+  ...
+# Subtest: previous snapshots remain frozen historical values after later publication
+ok 33 - previous snapshots remain frozen historical values after later publication
+  ---
+  duration_ms: 0.300708
+  type: 'test'
+  ...
+# Subtest: real temporary filesystem bytes recover in a fresh Node process boundary
+ok 34 - real temporary filesystem bytes recover in a fresh Node process boundary
+  ---
+  duration_ms: 37.754334
+  type: 'test'
+  ...
+1..34
+# tests 34
+# suites 0
+# pass 32
+# fail 2
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 96.376625

@@ -1,0 +1,31 @@
+{
+  "schemaVersion": "nisi-fixed-run-summary/v1",
+  "identity": {
+    "childPid": null,
+    "servicePid": 20279,
+    "waitObservedPid": 20280
+  },
+  "lifecycle": {
+    "spawnReturn": 0,
+    "exitCode": 0,
+    "signal": null,
+    "rawWaitStatus": 0,
+    "stdoutEOF": true,
+    "stderrEOF": true,
+    "drainObserved": true,
+    "waitObserved": true,
+    "timeout": false,
+    "outputCapExceeded": false
+  },
+  "gate": "RUN_INCOMPLETE",
+  "reasons": [
+    "IDENTITY_UNAVAILABLE"
+  ],
+  "adaptation": null,
+  "adjudication": null,
+  "table": null,
+  "overall": "NOT_ACCEPTED",
+  "isolationAccepted": false,
+  "generatedCodeExecuted": false,
+  "authorizing": false
+}

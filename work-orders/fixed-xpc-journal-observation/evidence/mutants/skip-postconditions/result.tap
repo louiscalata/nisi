@@ -1,0 +1,185 @@
+TAP version 13
+# Subtest: all three faithful fixed cases produce exact non-authorizing SUCCEEDED entries
+ok 1 - all three faithful fixed cases produce exact non-authorizing SUCCEEDED entries
+  ---
+  duration_ms: 4.111709
+  type: 'test'
+  ...
+# Subtest: payload has the exact meaning, bindings, digest, and permanently false claims
+ok 2 - payload has the exact meaning, bindings, digest, and permanently false claims
+  ---
+  duration_ms: 0.447333
+  type: 'test'
+  ...
+# Subtest: runner, persistence, container and absent-client reasons are retained in fixed order
+ok 3 - runner, persistence, container and absent-client reasons are retained in fixed order
+  ---
+  duration_ms: 0.300375
+  type: 'test'
+  ...
+# Subtest: process and lifecycle faults cover their independent ordered reason classes
+ok 4 - process and lifecycle faults cover their independent ordered reason classes
+  ---
+  duration_ms: 0.335416
+  type: 'test'
+  ...
+# Subtest: nonnull child cause is SIGNAL_OR_ERROR and a missing observed PID is lifecycle-inconsistent
+ok 5 - nonnull child cause is SIGNAL_OR_ERROR and a missing observed PID is lifecycle-inconsistent
+  ---
+  duration_ms: 0.464708
+  type: 'test'
+  ...
+# Subtest: truncated, count, digest, and stderr faults remain distinct and prevent success
+ok 6 - truncated, count, digest, and stderr faults remain distinct and prevent success
+  ---
+  duration_ms: 0.787417
+  type: 'test'
+  ...
+# Subtest: unclean or contradictory streams are never parsed to restore success
+ok 7 - unclean or contradictory streams are never parsed to restore success
+  ---
+  duration_ms: 0.314291
+  type: 'test'
+  ...
+# Subtest: missing or unequal recorded validation cannot be silently replaced
+ok 8 - missing or unequal recorded validation cannot be silently replaced
+  ---
+  duration_ms: 0.244458
+  type: 'test'
+  ...
+# Subtest: case-matrix and valid-outcome assertion failures are distinguished
+ok 9 - case-matrix and valid-outcome assertion failures are distinguished
+  ---
+  duration_ms: 0.384834
+  type: 'test'
+  ...
+# Subtest: postconditions require exact ordered seventeen-byte LF evidence
+not ok 10 - postconditions require exact ordered seventeen-byte LF evidence
+  ---
+  duration_ms: 1.074833
+  type: 'test'
+  location: '/Users/louiscalata/nisi-next-private/work-orders/fixed-xpc-journal-observation/evidence/mutants/skip-postconditions/observation.test.mjs:164:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly deep-equal:
+    + actual - expected
+    
+    + []
+    - [
+    -   'POSTCONDITIONS_MISMATCH'
+    - ]
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected:
+    0: 'POSTCONDITIONS_MISMATCH'
+  actual:
+  operator: 'deepStrictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///Users/louiscalata/nisi-next-private/work-orders/fixed-xpc-journal-observation/evidence/mutants/skip-postconditions/observation.test.mjs:175:12)
+    Test.runInAsyncScope (node:async_hooks:227:14)
+    Test.run (node:internal/test_runner/test:1325:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:911:18)
+    Test.postRun (node:internal/test_runner/test:1465:19)
+    Test.run (node:internal/test_runner/test:1390:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:911:7)
+  ...
+# Subtest: all twenty-four reason classes are present once and in the contractual order
+ok 11 - all twenty-four reason classes are present once and in the contractual order
+  ---
+  duration_ms: 3.242084
+  type: 'test'
+  ...
+# Subtest: no-reply accepts exactly 5000 through 7999 milliseconds
+ok 12 - no-reply accepts exactly 5000 through 7999 milliseconds
+  ---
+  duration_ms: 0.972625
+  type: 'test'
+  ...
+# Subtest: closed root, request, fixture, container, child, result and nested shapes reject alterations
+ok 13 - closed root, request, fixture, container, child, result and nested shapes reject alterations
+  ---
+  duration_ms: 1.810333
+  type: 'test'
+  ...
+# Subtest: all supplied authority and acceptance flags must remain false
+ok 14 - all supplied authority and acceptance flags must remain false
+  ---
+  duration_ms: 0.973416
+  type: 'test'
+  ...
+# Subtest: opaque optional sections are bounded and never leak into the payload
+ok 15 - opaque optional sections are bounded and never leak into the payload
+  ---
+  duration_ms: 0.403708
+  type: 'test'
+  ...
+# Subtest: serialized data resource limits and malformed Unicode fail closed
+ok 16 - serialized data resource limits and malformed Unicode fail closed
+  ---
+  duration_ms: 1.831666
+  type: 'test'
+  ...
+# Subtest: outer accessors are rejected without invocation and input is not mutated
+ok 17 - outer accessors are rejected without invocation and input is not mutated
+  ---
+  duration_ms: 0.326333
+  type: 'test'
+  ...
+# Subtest: record digest binds exact whitespace while stable bytes and arguments are deterministic
+ok 18 - record digest binds exact whitespace while stable bytes and arguments are deterministic
+  ---
+  duration_ms: 0.318333
+  type: 'test'
+  ...
+# Subtest: payload, operations, source bindings, process and reasons are deeply frozen copies
+ok 19 - payload, operations, source bindings, process and reasons are deeply frozen copies
+  ---
+  duration_ms: 0.175667
+  type: 'test'
+  ...
+# Subtest: frozen journal accepts, deduplicates, conflicts, refuses wrong project and reopens exactly
+ok 20 - frozen journal accepts, deduplicates, conflicts, refuses wrong project and reopens exactly
+  ---
+  duration_ms: 2.303667
+  type: 'test'
+  ...
+# Subtest: an adverse observation cannot retain journal SUCCEEDED
+ok 21 - an adverse observation cannot retain journal SUCCEEDED
+  ---
+  duration_ms: 6.310083
+  type: 'test'
+  ...
+# Subtest: timestamp order, bound case/PID and safe argument overflow are refused
+ok 22 - timestamp order, bound case/PID and safe argument overflow are refused
+  ---
+  duration_ms: 0.931125
+  type: 'test'
+  ...
+# Subtest: no-reply fixture never substitutes an owner deadline or kill for a client timeout
+ok 23 - no-reply fixture never substitutes an owner deadline or kill for a client timeout
+  ---
+  duration_ms: 0.352084
+  type: 'test'
+  ...
+# Subtest: ordinary JSON depth and node budget are independent of encoded byte budget
+ok 24 - ordinary JSON depth and node budget are independent of encoded byte budget
+  ---
+  duration_ms: 1.553708
+  type: 'test'
+  ...
+# Subtest: root getters and hidden extra authority never execute or disappear
+ok 25 - root getters and hidden extra authority never execute or disappear
+  ---
+  duration_ms: 0.430791
+  type: 'test'
+  ...
+1..25
+# tests 25
+# suites 0
+# pass 24
+# fail 1
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 69.183166

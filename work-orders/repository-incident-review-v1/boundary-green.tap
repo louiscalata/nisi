@@ -1,0 +1,34 @@
+TAP version 13
+# Subtest: capture success cannot discard or contradict its journal outcome
+ok 1 - capture success cannot discard or contradict its journal outcome
+  ---
+  duration_ms: 313.784041
+  type: 'test'
+  ...
+# Subtest: abort from the capture clock refuses before journal admission, not uncertain storage
+ok 2 - abort from the capture clock refuses before journal admission, not uncertain storage
+  ---
+  duration_ms: 54.759625
+  type: 'test'
+  ...
+# Subtest: a genuine all-pass preview has no selectable failures and never prompts or opens
+ok 3 - a genuine all-pass preview has no selectable failures and never prompts or opens
+  ---
+  duration_ms: 30.102292
+  type: 'test'
+  ...
+# Subtest: invalid inputs and unissued previews cannot reach trusted storage callbacks
+ok 4 - invalid inputs and unissued previews cannot reach trusted storage callbacks
+  ---
+  duration_ms: 55.923333
+  type: 'test'
+  ...
+1..4
+# tests 4
+# suites 0
+# pass 4
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 503.106333
