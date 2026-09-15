@@ -154,3 +154,25 @@ refusals `$.writePlan` / `$.compile` / `$.manifestHash` / `$.sources.<name>` /
 `$.output` (INVOKE only).
 
 Status: rungs 1–4 are **DRAFT — not integrated**; acceptance authority stays with oracle/human accept commands.
+
+---
+
+## AFM 3 Core reverse-engineering lane (`afm-reverse-engineering-v1`) 🟢 ENDPOINT + CAPABILITIES PROVEN
+
+Reverse-engineered the on-device Apple Foundation Model surface on macOS 27.0
+(26A428) — no weight extraction (SIP-blocked assets), using Apple's public
+`FoundationModels.framework` + `/usr/bin/fm`. Full report in
+`work-orders/afm-reverse-engineering-v1/README.md`; zero installs, zero egress.
+
+| Artifact | Result |
+|---|---|
+| `fm respond` live inference | "OK" in 0.578 s total (greedy, no-stream) |
+| `fm serve` OpenAI-compatible endpoint | 127.0.0.1:1977 — `/v1/models` + streaming/non-streaming chat, real usage (probes in `evidence/endpoint-probes.txt`) |
+| opencode provider registration | `afm/system` (AFM 3 Core — On-Device, 8192 ctx) in `~/.config/opencode/opencode.jsonc`; needs opencode restart |
+| Benchmark vs pipeline default | AFM 3 Core 0.73 s vs gpt-oss-20b 7.26 s (same completion, ~10×) |
+| Capability report (`afm-bridge.swift`, public API) | toolCalling **true**, vision **true**, guidedGeneration **true**, reasoning false (Core tier), isAvailable true — `evidence/afm-capabilities.json` |
+| Tool-calling round-trip (v0.2 `afm-bridge-v2.swift`) | API surface mapped (session init with `tools`, `transcript`, `Response<Content>`, `Usage`); prompt/respond entry point = next increment (compile gap documented) |
+| Repository commit | `aab2fab` (branch `opencode-progress-20260914`) |
+
+v0.2 doc: section 10 "AFM on-device model lane" in
+`docs/nisi-v0.1-v0.2-before-after.md` (integrated / staged / not-claimed rows).
