@@ -72,8 +72,10 @@ default local model on this Mac.
   production footprint via ANE.
 - Developer tier: `SystemLanguageModel.default` (public Swift API) — observed
   on-device on iPhone (iOS 27) with contextSize 8192; `fm serve` is chat-only
-  (requests with a `tools` array are rejected), so agent frameworks must omit
-  tool definitions for this endpoint.
+  (probed live: requests with a `tools` array are **ignored** — the server
+  returns prose with no `tool_calls` field; see the gateway section below), so
+  agent frameworks must route tool use through the Swift bridge, never this
+  endpoint (evidence `evidence/afm-tools-fm-probe.json`).
 
 ## Capability proof — Swift bridge (public FoundationModels framework)
 
@@ -122,6 +124,38 @@ context (internal scaffolding) — default `.allowed` plus a clear instruction
 cues the call cheaply; the model may send non-format strings (`"time"`) so the
 tool falls back to `yyyy-MM-dd HH:mm:ss zzz`.
 
+### MCP + LSP tools — on-device bridges (v0.7, `adapters/afm/agent-tools`)
+
+The chat endpoint cannot emit `tool_calls`, but the Swift bridge can. The
+`adapters/afm/agent-tools` agent extends the proven v6 tool loop with **real
+MCP and LSP tool bridges** plus file ops and shell execution (six tools:
+`run_command`, `read_file`, `write_file`, `lsp_diagnostics`, `mcp_list_tools`,
+`mcp_call`). Auto-builds on first run; safe/read-only, no egress.
+
+- **MCP bridge** — newline-delimited JSON-RPC 2.0 over stdio: spawns the MCP
+  server subprocess, `initialize` handshake (protocol 2025-03-26), `tools/list`
+  to build the manifest, `tools/call` to invoke; result text mapped back into
+  `Transcript.ToolOutput`. Verified live against the codemode MCP server (7
+  tools discovered: pipeline_status, initiate_online_code_mode, ...; evidence
+  `evidence/afm-mcp-list.json`).
+- **LSP bridge** — Content-Length-framed JSON-RPC 2.0: spawns the language
+  server, `initialize`/`initialized`, `textDocument/didOpen`, then reads
+  `textDocument/publishDiagnostics` (push) with a 3 s deadline. Per-extension
+  routing: `.py` → basedpyright, `.swift` → sourcekit-lsp, `.ts/.js` →
+  typescript-language-server. Verified live: two real errors on a bad Python
+  file (evidence `evidence/afm-lsp-diag.json`).
+- **Full agent round** — a single response → tool-call round trip with the
+  follow-up prompt "Answer with the tool results." (the exact v6 pattern;
+  multi-round loops without an exit cue overflow the 8,192-token context).
+  Verified live: `run_command "date -u"` → grounded UTC answer (evidence
+  `evidence/afm-tools-agent-round.json`).
+
+Gateway note: making `afm/system` tool-capable *inside opencode* requires a
+local HTTP server that translates OpenAI `tools` into Swift `Tool` schemas and
+round-trips `.toolCalls`/`.toolOutput` back into OpenAI `tool_calls`/`tool`
+messages — the same one-round pattern above. Not yet built; the CLI agent is
+the working path today.
+
 ### Vision — capability true, composition boundary (v0.5)
 
 `capability.vision` reports **true** at runtime, and
@@ -140,6 +174,14 @@ workaround target.
 ```
 fm serve --host 127.0.0.1 --port 1977 &   # then any OpenAI client:
 curl http://127.0.0.1:1977/v1/models
+```
+
+Tool-augmented on-device agent (MCP + LSP + file + shell):
+
+```
+adapters/afm/agent-tools "Run the command 'date -u' and tell me the time."
+adapters/afm/agent-tools mcp-list "python3 /Users/louiscalata/bin/bionic-code-mode-mcp"
+adapters/afm/agent-tools lsp-diag path/to/file.py
 ```
 
 Restart after reboot is required (no launchd entry installed — see
