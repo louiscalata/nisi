@@ -122,6 +122,19 @@ context (internal scaffolding) — default `.allowed` plus a clear instruction
 cues the call cheaply; the model may send non-format strings (`"time"`) so the
 tool falls back to `yyyy-MM-dd HH:mm:ss zzz`.
 
+### Vision — capability true, composition boundary (v0.5)
+
+`capability.vision` reports **true** at runtime, and
+`Transcript.ImageAttachment(imageURL:)` / `AttachmentSegment` / `Segment.attachment`
+all construct and type-check. However, the public prompt-composition surface
+cannot express an image in this SDK build: the advertised
+`Transcript.Attachment : PromptRepresentable` conformance is rejected by the
+compiler (PromptBuilder `buildExpression`, `Prompt(some PromptRepresentable)`,
+and `Prompt([Segment])` all fail; `Segment` also lacks the conformance).
+Attached probe saved as `evidence/afm-vision-probe.swift`. This is a
+documented SDK boundary (likely an internal-gated conformance in 27.0), not a
+workaround target.
+
 ## How to run
 
 ```
