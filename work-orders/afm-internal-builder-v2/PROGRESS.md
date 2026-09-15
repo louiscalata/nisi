@@ -173,6 +173,7 @@ Reverse-engineered the on-device Apple Foundation Model surface on macOS 27.0
 | Capability report (`afm-bridge.swift`, public API) | toolCalling **true**, vision **true**, guidedGeneration **true**, reasoning false (Core tier), isAvailable true — `evidence/afm-capabilities.json` |
 | Tool-calling round-trip (v0.2 `afm-bridge-v2.swift`) | **SUCCEEDED** — `LanguageModelSession.respond(to:)` → "Acknowledged." on-device, usage 71/7 tokens (`evidence/afm-session-generation.json`); tools-capable API (toolCalling true) ready for the @Generable tool demo |
 | Tool demo (`afm-bridge-v3.swift`, @Generable `GetTimeTool`) | Schema accepted + drafted but **not auto-executed** by `respond(to:)` — execution loop (transcript `.toolCalls`/`.toolOutput` or `ToolCallingMode.required`) = next increment (`evidence/afm-tool-demo.json`) |
+| **Tool loop (`afm-bridge-v4.swift`)** | **PROVEN END-TO-END** — manual agent loop: respond → transcript `.toolCalls` → `arguments.value(GetTimeArgs.self)` decode → `Tool.call` → `.toolOutput` entry → new `transcript:`-backed session → final answer with the real host clock (`evidence/afm-tool-loop.json`) |
 | Repository commit | `aab2fab` (branch `opencode-progress-20260914`) |
 
 v0.2 doc: section 10 "AFM on-device model lane" in

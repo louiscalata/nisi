@@ -99,25 +99,28 @@ symbols compile (verified from the SDK swiftinterface). reasoning is false on
 AFM 3 Core (the 20B sparse AFM 3 Core Advanced tier carries it, per Apple's
 third-gen whitepaper). Evidence: `evidence/afm-capabilities.json`.
 
-### Tool calling — schema accepted, execution loop = next increment (v0.3)
+### Tool calling — FULL LOOP PROVEN ON-DEVICE (v0.4)
 
-`src/afm-bridge-v3.swift` implements a real `Tool` (the `@Generable`-arg
-`GetTimeTool`: name/description/schema/`call(arguments:)`) and attaches it via
-`LanguageModelSession(model:tools:instructions:)`. It compiles and runs
-against the public API; the model drafts a tool use but `respond(to:)` does
-**not auto-execute** the loop — content came back as a deferred use with a
-placeholder (`evidence/afm-tool-demo.json`):
+`src/afm-bridge-v4.swift` runs the complete manual agent loop through the
+public API, all symbols verified in the SDK swiftinterface:
 
-```json
-{ "demo": "get_time tool round-trip", "content": "The current time in UTC is [time_value].",
-  "usage.input": 190, "usage.output": 13 }
-```
+1. `LanguageModelSession(model:tools:instructions:)` + `respond(to:options:)`
+2. scan `session.transcript` for `Transcript.Entry.toolCalls` → `ToolCall`
+3. decode args: `call.arguments.value(GetTimeArgs.self)` (the `@Generable`
+   macro's `ConvertibleFromGeneratedContent` path — structured, no regex)
+4. execute `Tool.call(arguments:)`
+5. append `Transcript.Entry.toolOutput(ToolOutput(id:toolName:segments:.text(TextSegment(content:))))`
+6. new `LanguageModelSession(model:tools:transcript:)` with the extended
+   transcript → `respond` again
 
-The execution loop (observe `Transcript.Entry.toolCalls` → call the Tool →
-append `toolOutput` → re-respond, or force via `GenerationOptions.ToolCallingMode.required`)
-is the next increment. Everything else is proven: tool schema accepted by the
-on-device model, generation works, capabilities report toolCalling/vision/
-guidedGeneration true.
+Result (`evidence/afm-tool-loop.json`): the model calls `get_time` with real
+decoded arguments (`{"format":"time","timezone":"UTC"}`), the tool reports the
+host clock (`2026-09-15 06:13:00 GMT`), and both turns answer with the real
+time — a genuine tool-augmented generation, entirely on-device
+(usage 208/23). Notes: `ToolCallingMode.required` blew past the 8,192-token
+context (internal scaffolding) — default `.allowed` plus a clear instruction
+cues the call cheaply; the model may send non-format strings (`"time"`) so the
+tool falls back to `yyyy-MM-dd HH:mm:ss zzz`.
 
 ## How to run
 
