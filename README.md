@@ -1,20 +1,5 @@
 # Nisi v0.1
 
-> [!WARNING]
-> **Private next-version integration workspace — not the public 0.1.0 release.**
-> This working copy is preparing the Veritas-to-Nisi merger. Its development
-> identifier is `0.2.0-private.0`; package publication is disabled. The existing
-> Apache-2.0 license continues to accompany the original Nisi code; it does not
-> grant publication permission for newly staged private material. Do not publish
-> this tree, its designs, examples, tests or results without the existing exact
-> legal and engineering release approvals. See [the roadmap](roadmap.md).
->
-> **Why this matters:** A private working copy and a package flag reduce accidental
-> release risk; neither prevents a Git push or establishes legal clearance.
-
-The following documentation describes the retained Nisi foundation. Staging a
-Veritas component here does not make it an integrated or released Nisi feature.
-
 **A Node.js library for running AI-assisted coding workflows.**
 
 Use Nisi when your application needs to coordinate drafting, checks, tests,
