@@ -2,6 +2,7 @@
 # adapters/afm/agent-tools — on-device MCP + LSP tool-augmented answers via the AFM agent CLI.
 # Usage:
 #   adapters/afm/agent-tools "Fix the bug in main.py"
+#   adapters/afm/agent-tools --brain [<model-id>] "<question>"
 #   adapters/afm/agent-tools mcp-list "python3 /path/to/server.py"
 #   adapters/afm/agent-tools lsp-diag /path/to/file.py
 # First run compiles the bridge (public FoundationModels API); subsequent runs
@@ -15,5 +16,5 @@ if [ ! -x "$BIN" ] || [ "$SRC" -nt "$BIN" ]; then
   echo "building afm-agent-tools (one-time)..." >&2
   xcrun swiftc -parse-as-library -O -o "$BIN" "$SRC" || { echo "build failed" >&2; exit 1; }
 fi
-if [ $# -eq 0 ]; then echo "usage: agent-tools \"<question>\"" >&2; exit 2; fi
+if [ $# -eq 0 ]; then echo "usage: agent-tools \"<question>\" | --brain [<model>] \"<question>\" | mcp-list \"<cmd>\" | lsp-diag <file>" >&2; exit 2; fi
 "$BIN" "$@"

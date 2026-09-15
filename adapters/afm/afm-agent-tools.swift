@@ -240,7 +240,97 @@ final class LspClient {
     }
 }
 
-// MARK: - Tool Implementations
+// MARK: - Plain Tool Executors (shared by Tool structs and brain-loop executor)
+
+func runCommandSync(_ command: String) -> String {
+    let proc = Process()
+    proc.executableURL = URL(fileURLWithPath: "/bin/zsh")
+    proc.arguments = ["-c", command]
+    let pipe = Pipe()
+    proc.standardOutput = pipe
+    proc.standardError = pipe
+    do { try proc.run() } catch { return "error: \(error.localizedDescription)" }
+    proc.waitUntilExit()
+    let data = pipe.fileHandleForReading.readDataToEndOfFile()
+    let output = String(data: data, encoding: .utf8) ?? ""
+    let exit = proc.terminationStatus
+    return exit == 0 ? output : "\(output)\n[exit \(exit)]"
+}
+
+func readFileSync(_ path: String) -> String {
+    do { return try String(contentsOfFile: path, encoding: .utf8) }
+    catch { return "error: \(error.localizedDescription)" }
+}
+
+func writeFileSync(_ path: String, _ content: String) -> String {
+    do {
+        let url = URL(fileURLWithPath: path)
+        let dir = url.deletingLastPathComponent()
+        if !FileManager.default.fileExists(atPath: dir.path) {
+            try FileManager.default.createDirectory(at: dir, withIntermediateDirectories: true)
+        }
+        try content.write(to: url, atomically: true, encoding: .utf8)
+        return "Written \(content.count) bytes to \(path)"
+    } catch { return "error: \(error.localizedDescription)" }
+}
+
+func lspDiagSync(_ filePath: String) async throws -> String {
+    let ext = URL(fileURLWithPath: filePath).pathExtension
+    let server: (String, [String])
+    switch ext {
+    case "py":       server = ("/Users/louiscalata/.local/node_modules/.bin/basedpyright-langserver", ["--stdio"])
+    case "swift":    server = ("/Library/Developer/CommandLineTools/usr/bin/sourcekit-lsp", [])
+    case "ts", "js": server = ("/Users/louiscalata/.local/node_modules/.bin/typescript-language-server", ["--stdio"])
+    default: return "Unsupported file type: .\(ext). Supported: .py, .swift, .ts, .js"
+    }
+    let client = try LspClient(command: server.0, args: server.1)
+    defer { client.close() }
+    try client.initialize()
+    // Pause to let the LSP server start processing
+    try await Task.sleep(nanoseconds: 1_000_000_000) // 1.0s
+    return try client.getDiagnostics(for: filePath)
+}
+
+func mcpListSync(_ serverCommand: String) -> String {
+    let parts = serverCommand.split(separator: " ").map(String.init)
+    guard let cmd = parts.first else { return "No command provided" }
+    do {
+        let client = try McpClient(command: cmd, args: Array(parts.dropFirst()))
+        defer { client.close() }
+        try client.handshake()
+        let tools = try client.listTools()
+        let data = try JSONSerialization.data(withJSONObject: tools, options: [.prettyPrinted, .sortedKeys])
+        return String(data: data, encoding: .utf8) ?? "[]"
+    } catch { return "MCP error: \(error.localizedDescription)" }
+}
+
+func mcpCallSync(_ serverCommand: String, _ toolName: String, _ argsJSON: String) -> String {
+    let parts = serverCommand.split(separator: " ").map(String.init)
+    guard let cmd = parts.first else { return "No command provided" }
+    do {
+        let client = try McpClient(command: cmd, args: Array(parts.dropFirst()))
+        defer { client.close() }
+        try client.handshake()
+        let args = (try? JSONSerialization.jsonObject(with: Data(argsJSON.utf8))) as? [String: Any] ?? [:]
+        return try client.callTool(toolName, arguments: args)
+    } catch { return "MCP error: \(error.localizedDescription)" }
+}
+
+/// Dispatch an OpenAI-format tool call (name + JSON args) to the AFM executor layer.
+func executeTool(name: String, argsJSON: String) async throws -> String {
+    let dict = (try? JSONSerialization.jsonObject(with: Data(argsJSON.utf8))) as? [String: Any] ?? [:]
+    switch name {
+    case "run_command":      return runCommandSync(dict["command"] as? String ?? "")
+    case "read_file":        return readFileSync(dict["path"] as? String ?? "")
+    case "write_file":       return writeFileSync(dict["path"] as? String ?? "", dict["content"] as? String ?? "")
+    case "lsp_diagnostics":  return try await lspDiagSync(dict["filePath"] as? String ?? "")
+    case "mcp_list_tools":   return mcpListSync(dict["serverCommand"] as? String ?? "")
+    case "mcp_call":         return mcpCallSync(dict["serverCommand"] as? String ?? "", dict["toolName"] as? String ?? "", dict["arguments"] as? String ?? "")
+    default:                 return "unknown tool: \(name)"
+    }
+}
+
+// MARK: - Tool Implementations (AFM-native Tool structs over the shared executors)
 
 @Generable struct RunCommandArgs { let command: String }
 struct RunCommandTool: Tool {
@@ -250,18 +340,7 @@ struct RunCommandTool: Tool {
     var description: String { "Execute a shell command and return stdout+stderr. Use for build, test, git, search, etc." }
     var includesSchemaInInstructions: Bool { true }
     func call(arguments: RunCommandArgs) async throws -> String {
-        let proc = Process()
-        proc.executableURL = URL(fileURLWithPath: "/bin/zsh")
-        proc.arguments = ["-c", arguments.command]
-        let pipe = Pipe()
-        proc.standardOutput = pipe
-        proc.standardError = pipe
-        try proc.run()
-        proc.waitUntilExit()
-        let data = pipe.fileHandleForReading.readDataToEndOfFile()
-        let output = String(data: data, encoding: .utf8) ?? ""
-        let exit = proc.terminationStatus
-        return exit == 0 ? output : "\(output)\n[exit \(exit)]"
+        runCommandSync(arguments.command)
     }
 }
 
@@ -273,7 +352,7 @@ struct ReadFileTool: Tool {
     var description: String { "Read and return the contents of a file at the given path." }
     var includesSchemaInInstructions: Bool { true }
     func call(arguments: ReadFileArgs) async throws -> String {
-        try String(contentsOfFile: arguments.path, encoding: .utf8)
+        readFileSync(arguments.path)
     }
 }
 
@@ -285,13 +364,7 @@ struct WriteFileTool: Tool {
     var description: String { "Write content to a file, creating or overwriting it." }
     var includesSchemaInInstructions: Bool { true }
     func call(arguments: WriteFileArgs) async throws -> String {
-        let url = URL(fileURLWithPath: arguments.path)
-        let dir = url.deletingLastPathComponent()
-        if !FileManager.default.fileExists(atPath: dir.path) {
-            try FileManager.default.createDirectory(at: dir, withIntermediateDirectories: true)
-        }
-        try arguments.content.write(to: url, atomically: true, encoding: .utf8)
-        return "Written \(arguments.content.count) bytes to \(arguments.path)"
+        writeFileSync(arguments.path, arguments.content)
     }
 }
 
@@ -303,20 +376,7 @@ struct LspDiagTool: Tool {
     var description: String { "Get LSP diagnostics (errors, warnings) for a source file. Supports .py, .swift, .ts, .js." }
     var includesSchemaInInstructions: Bool { true }
     func call(arguments: LspDiagArgs) async throws -> String {
-        let ext = URL(fileURLWithPath: arguments.filePath).pathExtension
-        let server: (String, [String])
-        switch ext {
-        case "py":       server = ("/Users/louiscalata/.local/node_modules/.bin/basedpyright-langserver", ["--stdio"])
-        case "swift":    server = ("/Library/Developer/CommandLineTools/usr/bin/sourcekit-lsp", [])
-        case "ts", "js": server = ("/Users/louiscalata/.local/node_modules/.bin/typescript-language-server", ["--stdio"])
-        default: return "Unsupported file type: .\(ext). Supported: .py, .swift, .ts, .js"
-        }
-        let client = try LspClient(command: server.0, args: server.1)
-        defer { client.close() }
-        try client.initialize()
-        // Pause to let the LSP server start processing
-        try await Task.sleep(nanoseconds: 1_000_000_000) // 1.0s
-        return try client.getDiagnostics(for: arguments.filePath)
+        try await lspDiagSync(arguments.filePath)
     }
 }
 
@@ -328,14 +388,7 @@ struct McpListTool: Tool {
     var description: String { "List available tools from an MCP server. Pass the command as a string (e.g. 'python3 /path/to/server.py')." }
     var includesSchemaInInstructions: Bool { true }
     func call(arguments: McpListArgs) async throws -> String {
-        let parts = arguments.serverCommand.split(separator: " ").map(String.init)
-        guard let cmd = parts.first else { return "No command provided" }
-        let client = try McpClient(command: cmd, args: Array(parts.dropFirst()))
-        defer { client.close() }
-        try client.handshake()
-        let tools = try client.listTools()
-        let data = try JSONSerialization.data(withJSONObject: tools, options: [.prettyPrinted, .sortedKeys])
-        return String(data: data, encoding: .utf8) ?? "[]"
+        mcpListSync(arguments.serverCommand)
     }
 }
 
@@ -347,13 +400,7 @@ struct McpCallTool: Tool {
     var description: String { "Call a tool on an MCP server. Use mcp_list_tools first. arguments is a JSON object string." }
     var includesSchemaInInstructions: Bool { true }
     func call(arguments: McpCallArgs) async throws -> String {
-        let parts = arguments.serverCommand.split(separator: " ").map(String.init)
-        guard let cmd = parts.first else { return "No command provided" }
-        let client = try McpClient(command: cmd, args: Array(parts.dropFirst()))
-        defer { client.close() }
-        try client.handshake()
-        let args = (try? JSONSerialization.jsonObject(with: Data(arguments.arguments.utf8))) as? [String: Any] ?? [:]
-        return try client.callTool(arguments.toolName, arguments: args)
+        mcpCallSync(arguments.serverCommand, arguments.toolName, arguments.arguments)
     }
 }
 
@@ -414,6 +461,110 @@ func runToolLoop(
     return r1.content
 }
 
+// MARK: - Brain/Executor Mode (capable model plans, AFM tool layer executes)
+
+let brainSystemPrompt = """
+You are the planning brain of a local agent. You decide which tool calls are needed; a fast \
+on-device executor runs them and returns their exact output. Once you have the results, stop \
+calling tools and answer the user concisely and grounded in the tool output. Never invent or \
+paraphrase tool output. If a tool returns an error or exit code, say so.
+"""
+
+let brainToolSchemas: [[String: Any]] = [
+    ["type": "function", "function": [
+        "name": "run_command",
+        "description": "Run a shell command and return stdout+stderr. Use for build, test, git, search, etc.",
+        "parameters": ["type": "object", "properties": ["command": ["type": "string"]], "required": ["command"]]
+    ]],
+    ["type": "function", "function": [
+        "name": "read_file",
+        "description": "Read and return the contents of a file at the given path.",
+        "parameters": ["type": "object", "properties": ["path": ["type": "string"]], "required": ["path"]]
+    ]],
+    ["type": "function", "function": [
+        "name": "write_file",
+        "description": "Write content to a file, creating or overwriting it.",
+        "parameters": ["type": "object", "properties": [
+            "path": ["type": "string"],
+            "content": ["type": "string"]
+        ], "required": ["path", "content"]]
+    ]],
+    ["type": "function", "function": [
+        "name": "lsp_diagnostics",
+        "description": "Get LSP diagnostics (errors, warnings) for a source file. Supports .py, .swift, .ts, .js.",
+        "parameters": ["type": "object", "properties": ["filePath": ["type": "string"]], "required": ["filePath"]]
+    ]],
+    ["type": "function", "function": [
+        "name": "mcp_list_tools",
+        "description": "List available tools from an MCP server. Pass the command as a string (e.g. 'python3 /path/to/server.py').",
+        "parameters": ["type": "object", "properties": ["serverCommand": ["type": "string"]], "required": ["serverCommand"]]
+    ]],
+    ["type": "function", "function": [
+        "name": "mcp_call",
+        "description": "Call a tool on an MCP server. Use mcp_list_tools first. arguments is a JSON object string.",
+        "parameters": ["type": "object", "properties": [
+            "serverCommand": ["type": "string"],
+            "toolName": ["type": "string"],
+            "arguments": ["type": "string"]
+        ], "required": ["serverCommand", "toolName", "arguments"]]
+    ]]
+]
+
+func brainCall(model: String, messages: [[String: Any]], tools: [[String: Any]]) async throws -> [String: Any] {
+    var req = URLRequest(url: URL(string: "http://127.0.0.1:1234/v1/chat/completions")!)
+    req.httpMethod = "POST"
+    req.setValue("application/json", forHTTPHeaderField: "Content-Type")
+    let body: [String: Any] = [
+        "model": model, "messages": messages, "tools": tools,
+        "tool_choice": "auto", "max_tokens": 2048, "temperature": 0
+    ]
+    req.httpBody = try JSONSerialization.data(withJSONObject: body)
+    req.timeoutInterval = 120
+    let (data, resp) = try await URLSession.shared.data(for: req)
+    guard let http = resp as? HTTPURLResponse, http.statusCode == 200 else {
+        let snippet = String(data: data, encoding: .utf8) ?? "no body"
+        return ["error": "HTTP \((resp as? HTTPURLResponse)?.statusCode ?? -1): \(String(snippet.prefix(300)))"]
+    }
+    return (try? JSONSerialization.jsonObject(with: data) as? [String: Any]) ?? [:]
+}
+
+/// Planner/executor loop: capable model emits tool_calls, AFM tool layer executes them,
+/// results return as role:tool messages, until the brain produces a final answer.
+func runBrainLoop(model: String, prompt: String, maxRounds: Int = 10) async throws -> String {
+    var messages: [[String: Any]] = [
+        ["role": "system", "content": brainSystemPrompt],
+        ["role": "user", "content": prompt]
+    ]
+    for round in 1...maxRounds {
+        let resp = try await brainCall(model: model, messages: messages, tools: brainToolSchemas)
+        if let err = resp["error"] { return "Brain error: \(err)" }
+        guard let choice = (resp["choices"] as? [[String: Any]])?.first,
+              let msg = choice["message"] as? [String: Any] else {
+            return "Brain: malformed response \(String(describing: resp["error"] ?? resp))"
+        }
+        let content = msg["content"] as? String ?? ""
+        let toolCalls = (msg["tool_calls"] as? [[String: Any]]) ?? []
+        if toolCalls.isEmpty {
+            return content.isEmpty ? "(brain returned empty response)" : content
+        }
+        // Assistant message carrying the tool_calls (content may be absent — omit, JSON can't encode nil)
+        var assistantMsg: [String: Any] = ["role": "assistant", "tool_calls": toolCalls]
+        if !content.isEmpty { assistantMsg["content"] = content }
+        messages.append(assistantMsg)
+        for tc in toolCalls {
+            let fn = tc["function"] as? [String: Any] ?? [:]
+            let name = fn["name"] as? String ?? ""
+            let argsJSON = fn["arguments"] as? String ?? "{}"
+            FileHandle.standardError.write("  [round \(round)] brain -> \(name) \(argsJSON)\n".data(using: .utf8)!)
+            let result: String
+            do { result = try await executeTool(name: name, argsJSON: argsJSON) }
+            catch { result = "tool error: \(error.localizedDescription)" }
+            messages.append(["role": "tool", "tool_call_id": tc["id"] as? String ?? "", "content": result])
+        }
+    }
+    return "Brain: reached \(maxRounds) rounds without a final answer"
+}
+
 // MARK: - Main
 
 @main
@@ -422,10 +573,29 @@ struct AFMAgentTools {
         let args = CommandLine.arguments
         guard args.count > 1 else {
             print("usage: afm-agent-tools \"<question>\"")
+            print("       afm-agent-tools --brain [<model-id>] \"<question>\"")
             print("       afm-agent-tools mcp-list \"python3 /path/to/server.py\"")
             print("       afm-agent-tools lsp-diag /path/to/file.py")
             return
         }
+
+        // Brain/executor mode: capable model (e.g. qwen/qwen3.6-35b-a3b at 127.0.0.1:1234)
+        // plans tool calls; the AFM tool layer executes them. No AFM model inference needed.
+        if args[1] == "--brain" {
+            let second = args.count > 2 ? args[2] : ""
+            let hasModel = !second.isEmpty && !second.hasPrefix("-")
+            let modelId = hasModel ? second : "qwen/qwen3.6-35b-a3b"
+            let prompt = args.dropFirst(hasModel ? 3 : 2).joined(separator: " ")
+            guard !prompt.isEmpty else {
+                print("usage: afm-agent-tools --brain [<model-id>] \"<question>\"")
+                return
+            }
+            let answer = try await runBrainLoop(model: modelId, prompt: prompt)
+            print("[executor: afm (on-device tool layer) | brain: \(modelId)]")
+            print(answer)
+            return
+        }
+
         let model = SystemLanguageModel.default
         guard model.isAvailable else {
             print("SystemLanguageModel not available")

@@ -71,6 +71,30 @@ The tool output shows the current UTC time as **Tue Sep 15 07:21:49 UTC 2026**.
 Evidence: `evidence/afm-mcp-list.json`, `evidence/afm-lsp-diag.json`,
 `evidence/afm-tools-agent-round.json`, `evidence/afm-tools-fm-probe.json`.
 
+## Planner/executor mode (`--brain`)
+
+AFM is the executor; a capable local model plans. The Qwen 35B model served at
+`http://127.0.0.1:1234/v1` (Bionic/lmstudio, `qwen/qwen3.6-35b-a3b`) emits
+OpenAI-format `tool_calls`; this Swift layer executes them natively
+(bash/file/LSP/MCP — no LLM inference in the executor, so it is fast), feeds
+results back as `role:tool` messages, and repeats until the brain answers.
+Verifier `openai/gpt-oss-20b` and any other served model work as the brain too:
+
+```
+$ adapters/afm/agent-tools --brain [<model-id>] "<question>"
+$ adapters/afm/agent-tools --brain "Run 'date -u' and report the current UTC time."
+  [round 1] brain -> run_command {"command":"date -u"}
+[executor: afm (on-device tool layer) | brain: qwen/qwen3.6-35b-a3b]
+The current UTC time is:
+**Tue Sep 15 07:38:37 UTC 2026**
+```
+
+The brain reuses the same six tools (same executor + same schemas as the
+`LanguageModelSession` lane). Tool calls print to stderr as provenance; the
+header + final answer go to stdout. Evidence: `evidence/afm-brain-executor-round.json`,
+`evidence/afm-brain-mcp-round.json` (Qwen → `mcp_list_tools` → 7 codemode
+tools, grounded answer).
+
 ## Registered provider (opencode)
 
 - `~/.config/opencode/opencode.jsonc` — provider `afm` (OpenAI-compatible

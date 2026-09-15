@@ -153,8 +153,35 @@ MCP and LSP tool bridges** plus file ops and shell execution (six tools:
 Gateway note: making `afm/system` tool-capable *inside opencode* requires a
 local HTTP server that translates OpenAI `tools` into Swift `Tool` schemas and
 round-trips `.toolCalls`/`.toolOutput` back into OpenAI `tool_calls`/`tool`
-messages — the same one-round pattern above. Not yet built; the CLI agent is
-the working path today.
+messages — the same one-round pattern above. **Not built, by decision:** AFM's
+8,192-token context overflows with opencode's system prompts (3B tier), so an
+in-opencode gateway was abandoned as documented before; the CLI agent is the
+working path.
+
+### Planner/executor split (v0.8, `--brain`) — AFM as the fast executor
+
+Per operator direction, AFM's role is the executor (fast on-device terminal
+basher) and a capable local model plans: `adapters/afm/agent-tools --brain`
+runs a loop against the OpenAI-compatible endpoint at `127.0.0.1:1234`
+(default brain `qwen/qwen3.6-35b-a3b`; max_tokens 2048, temperature 0). The
+brain emits OpenAI-format `tool_calls`; this Swift layer executes them
+natively via the same six executors the `LanguageModelSession` lane uses (no
+LLM inference in the executor — it is just shell/file/LSP/MCP plumbing), feeds
+the exact output back as `role:tool` messages, and repeats until the brain
+answers.
+
+- Qwen 3.6-35B tool-calling probe: `finish: tool_calls`,
+  `get_time({"timezone":"UTC"})`, 200 in 2.55 s (with max_tokens 512 it hit
+  `finish: length` and empty `tool_calls` — reasoning budget starvation; 2048
+  is required).
+- Verified live (evidence `evidence/afm-brain-executor-round.json`):
+  "Run 'date -u'..." → round 1 `run_command` → grounded UTC answer.
+- Verified live MCP-through-brain (evidence `evidence/afm-brain-mcp-round.json`):
+  Qwen called `mcp_list_tools`, AFM executor hit the codemode MCP server, and
+  Qwen answered with the 7 tool names.
+- The `fm serve` chat endpoint still cannot emit `tool_calls` (Apple-side);
+  `--brain` does not need it — the executor is the Swift layer, and the brain
+  speaks the OpenAI format natively.
 
 ### Vision — capability true, composition boundary (v0.5)
 
@@ -182,6 +209,7 @@ Tool-augmented on-device agent (MCP + LSP + file + shell):
 adapters/afm/agent-tools "Run the command 'date -u' and tell me the time."
 adapters/afm/agent-tools mcp-list "python3 /Users/louiscalata/bin/bionic-code-mode-mcp"
 adapters/afm/agent-tools lsp-diag path/to/file.py
+adapters/afm/agent-tools --brain "Run 'date -u' and report the current UTC time."
 ```
 
 Restart after reboot is required (no launchd entry installed — see
