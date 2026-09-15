@@ -1,0 +1,121 @@
+{
+  "schemaVersion": 1,
+  "status": "ALL_TARGETED_VARIANTS_CAUGHT",
+  "baseSourceSha256": "54777f65338a36ca6c208fc880c8ca4013ffce675c7aede2afdc2d8fa85f4e49",
+  "protected": {
+    "src/index.mjs": "54777f65338a36ca6c208fc880c8ca4013ffce675c7aede2afdc2d8fa85f4e49",
+    "src/run-journal-v1.mjs": "dee9f490c091000b2560cd9464d945885e7f341091b87dde9ae4f2b7cdbd359e",
+    "src/run-journal-store-v1.mjs": "1356028b65f9f8b96e3b9ec8ba3bfbb4968092af53d00e8b5dfdb11b161f4792",
+    "tests/owner.test.mjs": "db64b647aa4fc955eca89a048791df81be8e5e935b74e1e5554ef9bed047bd6d",
+    "tests/helper.mjs": "67fc7262cc751d58000bb626cde33151c60f572329b4f52ca374821e8886b334",
+    "tests/adjudication-boundaries.test.mjs": "4b7571a789e47f1bd27f686291a9b6579fed1199ba9f720cbf628a9fd3b8afb5"
+  },
+  "variants": [
+    {
+      "id": "lossy-utf8",
+      "sourceSha256": "f665990d301a39b75515b7a0f2e36b5d572f5ec5d46ca16ac40fd5a70d14416a",
+      "exitCode": 1,
+      "signal": null,
+      "error": null,
+      "tests": 34,
+      "pass": 32,
+      "fail": 2,
+      "cancelled": 0,
+      "skipped": 0,
+      "todo": 0
+    },
+    {
+      "id": "foreign-invalid-prefix",
+      "sourceSha256": "bebd581124b688f391f14f6c7745f63a356756588b9ff1a11382b8552c688542",
+      "exitCode": 1,
+      "signal": null,
+      "error": null,
+      "tests": 34,
+      "pass": 32,
+      "fail": 2,
+      "cancelled": 0,
+      "skipped": 0,
+      "todo": 0
+    },
+    {
+      "id": "committed-refusal-stale-state",
+      "sourceSha256": "61347c0246369f686f5137a17b2219c5d1c52f54331219540a736377a68cdc10",
+      "exitCode": 1,
+      "signal": null,
+      "error": null,
+      "tests": 34,
+      "pass": 32,
+      "fail": 2,
+      "cancelled": 0,
+      "skipped": 0,
+      "todo": 0
+    },
+    {
+      "id": "fresh-disk-instead-of-private-cas",
+      "sourceSha256": "2ee58cc3859693631fa7e607dd195ed7a1a17175ff7ce1790717c9c6814d4dcb",
+      "exitCode": 1,
+      "signal": null,
+      "error": null,
+      "tests": 34,
+      "pass": 33,
+      "fail": 1,
+      "cancelled": 0,
+      "skipped": 0,
+      "todo": 0
+    },
+    {
+      "id": "mutable-public-handle",
+      "sourceSha256": "094bb8ab8aad21e8acb83ba3072d77f75a97df3bc319d5a40a2d14c77b1f712b",
+      "exitCode": 1,
+      "signal": null,
+      "error": null,
+      "tests": 34,
+      "pass": 32,
+      "fail": 2,
+      "cancelled": 0,
+      "skipped": 0,
+      "todo": 0
+    },
+    {
+      "id": "publish-before-store-outcome",
+      "sourceSha256": "31685d71cccf6b47c4625a3cafacdf2e42e2dc42c827ae5d9961b5c531c55989",
+      "exitCode": 1,
+      "signal": null,
+      "error": null,
+      "tests": 34,
+      "pass": 32,
+      "fail": 2,
+      "cancelled": 0,
+      "skipped": 0,
+      "todo": 0
+    },
+    {
+      "id": "accept-config-drift",
+      "sourceSha256": "8671794b389b0f68e94340037a6ff5c061cb3bde7202804e0a9745e8244c7462",
+      "exitCode": 1,
+      "signal": null,
+      "error": null,
+      "tests": 34,
+      "pass": 31,
+      "fail": 3,
+      "cancelled": 0,
+      "skipped": 0,
+      "todo": 0
+    },
+    {
+      "id": "missing-busy-guard",
+      "sourceSha256": "df9b669283626867f32434aa59e5b0fe88e04666094ea43dfa176b460634717f",
+      "exitCode": 1,
+      "signal": null,
+      "error": null,
+      "tests": 34,
+      "pass": 33,
+      "fail": 1,
+      "cancelled": 0,
+      "skipped": 0,
+      "todo": 0
+    }
+  ],
+  "scope": "Copied owner source only; no canonical or frozen dependency changes; not product acceptance",
+  "evidence": "/Users/louiscalata/nisi-next-private/work-orders/journal-owner-v2/evidence/owner-mutants-gCRgh1"
+}

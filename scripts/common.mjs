@@ -26,7 +26,9 @@ function canonicalize(value) {
     return value.map((item) => canonicalize(item));
   }
   if (typeof value === "object") {
-    const result = {};
+    // Internal accumulator only: preserve every own JSON key, including
+    // __proto__, without invoking Object.prototype's legacy setter.
+    const result = Object.create(null);
     for (const key of Object.keys(value).sort(compareCodePoints)) {
       if (value[key] === undefined) {
         throw new Error(`Canonical JSON rejects undefined at ${key}.`);

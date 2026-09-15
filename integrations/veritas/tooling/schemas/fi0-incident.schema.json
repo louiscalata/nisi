@@ -1,0 +1,96 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://veritas.invalid/private/schemas/stage5/fi0-incident.v1.json",
+  "title": "Veritas FI-0 inert failure incident",
+  "description": "Structural fixture shape only. Runtime validation additionally enforces source-frozen self-administered scope, project, access, retention, subject lineage, evidence-manifest, stream, observation-key, and incident-digest bindings. This schema does not prove capture, persistence, adjudication, import, durability, product integration, outage resilience, patentability, production, signing, or release readiness.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schemaVersion",
+    "recordType",
+    "profile",
+    "incidentId",
+    "scopeId",
+    "projectIdDigest",
+    "accessPolicyDigest",
+    "retentionPolicyDigest",
+    "subjectType",
+    "subjectIdDigest",
+    "subjectContentDigest",
+    "subjectLineageRootDigest",
+    "architectureVersionDigest",
+    "policyVersionDigest",
+    "dependencyGraphDigest",
+    "sourceStreamId",
+    "sourceStreamHeadDigest",
+    "evidenceManifestDigest",
+    "evidenceSetDigest",
+    "observationKey",
+    "failedInvariantIds",
+    "symptomCodes",
+    "occurrenceCount",
+    "adjudicationState",
+    "foundationOnly",
+    "authorizing",
+    "incidentDigest"
+  ],
+  "properties": {
+    "schemaVersion": { "const": 1 },
+    "recordType": { "const": "FI0_FAILURE_INCIDENT" },
+    "profile": { "const": "veritas-fi0-inert-incident-contract-v1" },
+    "incidentId": { "$ref": "#/$defs/fixtureId" },
+    "scopeId": { "$ref": "#/$defs/fixtureId" },
+    "projectIdDigest": { "$ref": "#/$defs/sha256" },
+    "accessPolicyDigest": { "$ref": "#/$defs/sha256" },
+    "retentionPolicyDigest": { "$ref": "#/$defs/sha256" },
+    "subjectType": { "const": "LLM_ARTIFACT" },
+    "subjectIdDigest": { "$ref": "#/$defs/sha256" },
+    "subjectContentDigest": { "$ref": "#/$defs/sha256" },
+    "subjectLineageRootDigest": { "$ref": "#/$defs/sha256" },
+    "architectureVersionDigest": { "$ref": "#/$defs/sha256" },
+    "policyVersionDigest": { "$ref": "#/$defs/sha256" },
+    "dependencyGraphDigest": { "$ref": "#/$defs/sha256" },
+    "sourceStreamId": { "$ref": "#/$defs/fixtureId" },
+    "sourceStreamHeadDigest": { "$ref": "#/$defs/sha256" },
+    "evidenceManifestDigest": { "$ref": "#/$defs/sha256" },
+    "evidenceSetDigest": { "$ref": "#/$defs/sha256" },
+    "observationKey": { "$ref": "#/$defs/sha256" },
+    "failedInvariantIds": {
+      "type": "array",
+      "minItems": 1,
+      "maxItems": 16,
+      "uniqueItems": true,
+      "items": { "$ref": "#/$defs/code" }
+    },
+    "symptomCodes": {
+      "type": "array",
+      "minItems": 1,
+      "maxItems": 32,
+      "uniqueItems": true,
+      "items": { "$ref": "#/$defs/code" }
+    },
+    "occurrenceCount": { "const": 1 },
+    "adjudicationState": { "const": "CANDIDATE" },
+    "foundationOnly": { "const": true },
+    "authorizing": { "const": false },
+    "incidentDigest": { "$ref": "#/$defs/sha256" }
+  },
+  "$defs": {
+    "sha256": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{64}$"
+    },
+    "fixtureId": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 128,
+      "pattern": "^[a-z][a-z0-9]*(?:[.-][a-z0-9]+)*(?:/[a-z][a-z0-9]*(?:[.-][a-z0-9]+)*)*$"
+    },
+    "code": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 128,
+      "pattern": "^[A-Z][A-Z0-9_]*$"
+    }
+  }
+}

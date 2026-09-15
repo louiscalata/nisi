@@ -1,0 +1,27 @@
+{
+  "runs": [
+    {
+      "check": "afm-v1-oracle",
+      "argv": [
+        "node",
+        "--test",
+        "afm-internal-builder-v1.test.mjs"
+      ]
+    },
+    {
+      "check": "bridge-contract",
+      "argv": [
+        "node",
+        "--test",
+        "windows-worker-contract.test.mjs"
+      ]
+    }
+  ],
+  "manifestHash": "fffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff0",
+  "packHash": "3b0138988a515999c695f556098de956f4ab5293c8df1958f7d294154e191a37",
+  "budget": {
+    "timeoutSeconds": 120,
+    "outputBytes": 262144
+  },
+  "planHash": "d3887b5510c46ec6971978ce3937f97c7a89f1f74f1cc54bb9188730857ca713"
+}

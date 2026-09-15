@@ -1,0 +1,81 @@
+TAP version 13
+# Subtest: accepted declaration is recursively frozen, copied, nonauthorizing, and makes no result claim
+ok 1 - accepted declaration is recursively frozen, copied, nonauthorizing, and makes no result claim
+  ---
+  duration_ms: 1.003041
+  type: 'test'
+  ...
+# Subtest: policy influence starts off and proposer cannot approve the plan
+ok 2 - policy influence starts off and proposer cannot approve the plan
+  ---
+  duration_ms: 0.196958
+  type: 'test'
+  ...
+# Subtest: training and held-out evaluation tasks are digest-disjoint and unique
+ok 3 - training and held-out evaluation tasks are digest-disjoint and unique
+  ---
+  duration_ms: 0.147167
+  type: 'test'
+  ...
+# Subtest: arm order is predeclared for every even repetition and exactly counterbalanced
+ok 4 - arm order is predeclared for every even repetition and exactly counterbalanced
+  ---
+  duration_ms: 0.110875
+  type: 'test'
+  ...
+# Subtest: exclusions and known budgets are predeclared while measurements remain unknown
+ok 5 - exclusions and known budgets are predeclared while measurements remain unknown
+  ---
+  duration_ms: 0.414333
+  type: 'test'
+  ...
+# Subtest: exact plain data descriptors reject accessors symbols hidden fields arrays and prototype surprises without invocation
+ok 6 - exact plain data descriptors reject accessors symbols hidden fields arrays and prototype surprises without invocation
+  ---
+  duration_ms: 0.140333
+  type: 'test'
+  ...
+# Subtest: caller mutation cannot change the plan hash and each experimental variable changes it
+ok 7 - caller mutation cannot change the plan hash and each experimental variable changes it
+  ---
+  duration_ms: 0.420458
+  type: 'test'
+  ...
+# Subtest: identifier digest schema and inventory bounds are strict
+ok 8 - identifier digest schema and inventory bounds are strict
+  ---
+  duration_ms: 0.073208
+  type: 'test'
+  ...
+# Subtest: all digests reject terminal newlines and repetitions have an explicit planning cap
+not ok 9 - all digests reject terminal newlines and repetitions have an explicit planning cap
+  ---
+  duration_ms: 0.484166
+  type: 'test'
+  location: '/Users/louiscalata/nisi-next-private/tests/prevention-experiment-plan.test.mjs:88:1'
+  failureType: 'testCodeFailure'
+  error: 'Missing expected exception.'
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected:
+    code: 'PLAN_REPETITION_LIMIT'
+  operator: 'throws'
+  stack: |-
+    refused (file:///Users/louiscalata/nisi-next-private/tests/prevention-experiment-plan.test.mjs:16:41)
+    TestContext.<anonymous> (file:///Users/louiscalata/nisi-next-private/tests/prevention-experiment-plan.test.mjs:95:3)
+    Test.runInAsyncScope (node:async_hooks:227:14)
+    Test.run (node:internal/test_runner/test:1325:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:911:18)
+    Test.postRun (node:internal/test_runner/test:1465:19)
+    Test.run (node:internal/test_runner/test:1390:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:911:7)
+  ...
+1..9
+# tests 9
+# suites 0
+# pass 8
+# fail 1
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 47.088334

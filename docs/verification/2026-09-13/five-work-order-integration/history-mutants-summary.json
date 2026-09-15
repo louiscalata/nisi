@@ -1,0 +1,96 @@
+{
+  "sourceSha256": "dee9f490c091000b2560cd9464d945885e7f341091b87dde9ae4f2b7cdbd359e",
+  "oracleSha256": "2d46da21f23b6d58156db162ca5dfd45ca78b095c383411f9ac858cb20aeb12a",
+  "scope": "One-site deliberate variants against the unchanged 18-test oracle; only import URL redirected in memory.",
+  "results": [
+    {
+      "id": "conflict-as-duplicate",
+      "sourceSha256": "a2285c28982fcc95678967cf2a10677c4b87d6a72223f7002a1f813b9c461b38",
+      "exit": 1,
+      "tests": 18,
+      "passed": 12,
+      "failed": 6,
+      "skipped": 0,
+      "cancelled": 0,
+      "status": "CAUGHT"
+    },
+    {
+      "id": "reopen-as-fresh",
+      "sourceSha256": "5ec05d11568af97c19fc0513c987292c763fb7a2ccb20e868ebf4dd66ffd1a4f",
+      "exit": 1,
+      "tests": 18,
+      "passed": 15,
+      "failed": 3,
+      "skipped": 0,
+      "cancelled": 0,
+      "status": "CAUGHT"
+    },
+    {
+      "id": "unseal-damaged-prefix",
+      "sourceSha256": "98cff59a56a384ec2d7be1b31f6aaafceee5b3988137dc494baffae386a94f5d",
+      "exit": 1,
+      "tests": 18,
+      "passed": 17,
+      "failed": 1,
+      "skipped": 0,
+      "cancelled": 0,
+      "status": "CAUGHT"
+    },
+    {
+      "id": "payload-only-identity",
+      "sourceSha256": "40631e0e55e0740d5d0dbd4e9ae9532d27efb73da0035164c14eb39fa45ebf60",
+      "exit": 1,
+      "tests": 18,
+      "passed": 13,
+      "failed": 5,
+      "skipped": 0,
+      "cancelled": 0,
+      "status": "CAUGHT"
+    },
+    {
+      "id": "forget-reopened-revocation",
+      "sourceSha256": "30c1444bdddcfa40b86119f4177c4cfd752997571eea23511e12f6383ebc9a8d",
+      "exit": 1,
+      "tests": 18,
+      "passed": 17,
+      "failed": 1,
+      "skipped": 0,
+      "cancelled": 0,
+      "status": "CAUGHT"
+    },
+    {
+      "id": "ignore-prefix-order",
+      "sourceSha256": "3d7eb1ec9b13d535bb5377c53e1d1ab06ea29752beb111dd753ba72b6aea9a9a",
+      "exit": 1,
+      "tests": 18,
+      "passed": 17,
+      "failed": 1,
+      "skipped": 0,
+      "cancelled": 0,
+      "status": "CAUGHT"
+    },
+    {
+      "id": "ignore-payload-expiry",
+      "sourceSha256": "d15c568af81bf7dac5508e57493c1cbe85ffd9325f372f4918901eb304c0a62c",
+      "exit": 1,
+      "tests": 18,
+      "passed": 17,
+      "failed": 1,
+      "skipped": 0,
+      "cancelled": 0,
+      "status": "CAUGHT"
+    },
+    {
+      "id": "stale-heartbeat-permits-retry",
+      "sourceSha256": "f214452d9cf645ff9c6de0fdcbff5c2546e3057046925004aec8140899d75db1",
+      "exit": 1,
+      "tests": 18,
+      "passed": 17,
+      "failed": 1,
+      "skipped": 0,
+      "cancelled": 0,
+      "status": "CAUGHT"
+    }
+  ],
+  "status": "PASS"
+}

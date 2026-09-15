@@ -1,0 +1,22 @@
+{
+  "status": "FAIL",
+  "command": "node --test --test-timeout=10000 tests/baseline.test.mjs tests/acceptance.test.mjs tests/owner-regressions.test.mjs",
+  "exitCode": 1,
+  "tests": 18,
+  "pass": 13,
+  "fail": 5,
+  "cancelled": 0,
+  "skipped": 0,
+  "todo": 0,
+  "durationMs": 43.71,
+  "scope": "Mac isolated implementation checks, not Windows native execution",
+  "findings": [
+    "duration sum above safe bound was numeric instead of null",
+    "unknown input skips independent subsequent columns",
+    "reasoning/output validation incorrectly depends on known input",
+    "combined token total can overflow",
+    "unknown reasoning skips later duration"
+  ],
+  "protectedOraclesChanged": false,
+  "ownerRegressionTestsAdded": 4
+}

@@ -1,0 +1,788 @@
+{
+  "schema": "nisi-repeatable-fixed-app-sandbox-checkpoint-v1",
+  "createdAt": "2026-09-13T06:26:49.432Z",
+  "status": "SCOPED_FIXED_NATIVE_AND_PORTABLE_ACCEPTANCE",
+  "overallMilestones": {
+    "completed": 3,
+    "total": 10,
+    "percentage": 30
+  },
+  "previousCheckpoint": {
+    "path": "/Users/louiscalata/nisi-next-private/docs/verification/2026-09-12/u02-app-sandbox-probe-checkpoint.json",
+    "byteLength": 28850,
+    "sha256": "8fb9743c12c399ccf073ab464fb982e3904c6c77fbc8a039bd531f13c12db6a7"
+  },
+  "sourceManifest": {
+    "adapters/apple-foundation-models.mjs": "311f4898c31b4e0693093361fc19c344086c1f24946909fe134c14d37e25d080",
+    "adapters/local-chat.mjs": "ca26b49502b27f494487f5da32edfc13a9d8b85cb02da43b58c4417babb3e842",
+    "adapters/native-chat-protocol-v1.mjs": "44468cb8b6ebc97e1821405a5add4916a97bf82b0ffeaa2076f85e79e12255f3",
+    "adapters/native-chat-v1.mjs": "45f8149f2f526cab75ba5758aed8b05aeea136fa4cb107a8a45196045ce205bd",
+    "canonical/canonical-json-v1.mjs": "d1049a26d2bea0d14e959c0af22af15b975345091c5fa5360e8bd685637f8e59",
+    "evaluation/fixtures/paired-example-v1.mjs": "2b3fd175c2408737ac8d646a19f576de7ec81a52e5fff61ab80b3fc530d58249",
+    "evaluation/intake-v1.mjs": "7c338bf7419c236bc8a8c912266f470e68ff3711848f777c56e68f0ef7c7912a",
+    "evaluation/metrics-v1.mjs": "a11f1247df37b89c661fe3033e8d88a0c347038114bd9192ac48620d52ba0e91",
+    "evaluation/paired-trial-v1.mjs": "cb75c8ac76deb31280fc356064e448b508e4fb8cc48cddaef03f461a70df943c",
+    "examples/repository-live-model.mjs": "dddb7d9d1235308ecf8a5f154cad3c02e5d5546f9bfa92822cab684321617f39",
+    "examples/repository-task/fixtures/baseline/README.md": "b6ce54912db6b4605d19e4e0fdce5cc1e680de4a57bb1af82ca7b737ff578011",
+    "examples/repository-task/fixtures/baseline/config.json": "fc2001f12401983fa2632ee17e9879b6a1595f0de616e6e1484083c0c3324f04",
+    "examples/repository-task/fixtures/baseline/retry-settings.mjs": "c4932fa2ce0c73c52d385d25aeab64bed602179abced3b38fd525a31fe47bb10",
+    "examples/repository-task/fixtures/harness/check-retry-settings.mjs": "e07a9bd6a63a52ac6977734c61ea0a210c71ec2c331951f4d94b44159c8245c5",
+    "examples/repository-task/fixtures/live-baseline/retry-settings.mjs": "65525edd21e81c5de1791c6f47fa404ffea10f7ea332545a8e295afdd6270254",
+    "examples/repository-task/fixtures/live-repair/retry-settings.mjs": "73369f8d0cc0cefbb082c65388c3652c7602254ab5b6fbab138e08078b568112",
+    "examples/repository-task/fixtures/repair/retry-settings.mjs": "7de9f6b2cd29489563930f9131a0e0b077070bb50b52df8b5bd27aaf24b55ffd",
+    "examples/repository-task/reviewed-live-fixture-v1.mjs": "292bd67a2e4132c9c5122f5d716e7eeb3cdd3a6ebf5362470d046b6d025add36",
+    "gate/afm-content-executor.mjs": "29955d7e80d7b7fdc0bdb88fbd24e782a317b4bdc78548b56f3b48598d21e74d",
+    "gate/content-consent.mjs": "a735eb35cb1373b3f3744dc7b3caa8b24ebbf394babba53d4f722136c72a0820",
+    "hosts/macos-sandbox/fixed-probe-parser.mjs": "9301d23fc4feac1a3b3df8eaa9275f3afa614bc246a15a0159b9f9bd82289d9a",
+    "hosts/macos-sandbox/fixed-probe-runner.mjs": "bf68eaded5421af9f18804714030352968d934e90163e7406a8c3d55e27b7c73",
+    "hosts/macos-sandbox/fixed-probe.m": "dd93459c4a66693e6f5a0e0294c93fe3ddc3bc5458c73fcc6e412b408e74bb29",
+    "hosts/repository/candidate-review-v1.mjs": "e8fc04224ec9bd9f9c455222557ad79d29df95c62722c08377899a969f7555de",
+    "hosts/repository/disk-capture.mjs": "972c8cd690a3f34253c9f4722c336b6e847dffe1b0c924aa8492384c800ae547",
+    "hosts/repository/generated-execution-approval-v1.mjs": "3b5a20f1a74eb126a2aca826286aa096fc2c1ed6fbb73f6805067e93d3bff161",
+    "hosts/repository/live-model-selection-v3.mjs": "22a242290248180f158974d7a733a368a82669c270b0171eae747ac18c638520",
+    "hosts/repository/node-adapter-v1.mjs": "6de05634f7cccd774c8072a000b556f49f111ccedfe1e37d19be37dbd036fa5d",
+    "hosts/repository/node-executor-v1.mjs": "cd999c0efe061c0706842cc06867f62dc59927553615db9e2f2af24523872258",
+    "hosts/repository/node-suite-v1.mjs": "5ed5cd9ca407b281379d6b67d93df60ab3b3a45676b6a4e82c7bfc474d29e2c2",
+    "hosts/repository/proposed-changes-v1.mjs": "045fe0d77b3b6d4d95c406964b603b09b2aeabe131cde267b41806114379f55d",
+    "hosts/repository/reviewed-live-model-v1.mjs": "741d7df962dccbba993481497779afd2bbd4253487532c5dd5bd51522be9247e",
+    "hosts/repository/reviewed-live-model-v3.mjs": "e9f7f810f2fab36a34b1486034128752ce0b4df5989998300e2f239829ff307e",
+    "hosts/repository/reviewed-workflow-v1.mjs": "6ecc49425ae28ec1923445c8fbe79df4478b6361a5e2799b82ded24acf74dc33",
+    "hosts/repository/snapshot-contract.mjs": "2b52c23bac3a817769b7892eed71baba79cb81954b6a63724d107a9c258ba13f",
+    "hosts/repository/task-workspace-v1.mjs": "08fdb59d15d21e94914d00390e8f73ee6245b0eabec64e7c052585f23638f963",
+    "hosts/swift-verifier/adapter.mjs": "c92c21fcbf7fe91d949f60bc51a96d4cb5f185be9172d0a214c4e87d2b649388",
+    "hosts/swift-verifier/build.mjs": "ae063b627e853fc0b651e3db103dd1af01c6815374d36781e79270b7d48934fb",
+    "hosts/swift-verifier/check-plan-v1.mjs": "a30ff5596e2bebc376cfa0da84be1c00eca8443cc2b37f5b1b7da42ef44b658a",
+    "hosts/swift-verifier/executor.mjs": "3b233203d7e9d2c2e1f5aa3c458685e86f15d40fc07b2542e7b6bb48a2555db4",
+    "hosts/swift-verifier/group-adapter-v1.mjs": "471ae91cfc78a82abcb425ed75cd16aec2a76d8123cdc9b3e4063c536382e774",
+    "hosts/swift-verifier/group-contract-utils.mjs": "8fc51ac107abd68adb1c72683ccfa2af9c74ac077c5506bf89525f972b14ac82",
+    "hosts/swift-verifier/main.swift": "0d4e15b22b3231d990cfd5e7de1c52f4fdfebf4f4ab6da15b0ae22c74cea910c",
+    "hosts/swift-verifier/owned-child.mjs": "ff9bbef97b3401afd394a98c8bff4fe273a4b6af3a1f852bdf5bf872fd4474df",
+    "hosts/swift-verifier/protocol.mjs": "7557d81836f263c13e06ac7613ebfa61ce7fbeeb7b0f7db98889473806f322cc",
+    "hosts/swift-verifier/reservation.mjs": "6d7573d23a3d2b0ecdb4b396cb58f4f9ae8e5997190616c08c1b93bd0ab376fd",
+    "index.mjs": "066c90d65209854cd6aeb838924ce28dca90d7dc75d0cd533d17fbba8e1c3db7",
+    "integrations/veritas/native/macos/CodenameVeritasFramework/Sources/VeritasCore/ArtifactSnapshot.swift": "013e796d11a844dda345f223894a8d76713b19b0f46f6a7f84019aa5b7bc0f22",
+    "integrations/veritas/native/macos/CodenameVeritasFramework/Sources/VeritasCore/DeterministicChecks.swift": "4d234fd389895cf0a55bf7daf0f5d082077ab3677880165f7d0e1236a88be474",
+    "integrations/veritas/native/macos/CodenameVeritasFramework/Sources/VeritasCore/StrictJSONDocumentValidator.swift": "bd6173e012890f2fde2e26be94c5e577cd9e098841bdad98a377b1c88dff1b2c",
+    "integrity/record-utils.mjs": "e46eb1a01170231bd6873771cd256740fd3dde6bcb01d418f6f7d7a75e6139ff",
+    "package-lock.json": "bb677e234c47798b323e8a9a4643ef64bc174729c950094b43d3b00c0dfc0233",
+    "package.json": "307e73e19199186cb33a346da92941d2feed4d64b43ebc86c678207c6a79e45c",
+    "policy/file-access.mjs": "92f9f60220e1869ad0d6571ae2b5a8ddc9259b2463c4cf617d4cecee6eacc1d3",
+    "receipts/host-run-bundle-v2.mjs": "406936e6523f58323634fab1c9f560d671d58e1c343d2082f081f8a7810061fe",
+    "receipts/live-usage-v1.mjs": "f015e2973567e21329d4e79de8abc6e1f664370eff3f2338aad31490fb4791a5",
+    "receipts/repository-execution-v1.mjs": "7317e06c094bdf33e51645ce39348fc9e2d5a11ad0921af87434e34c45828cc2",
+    "receipts/repository-live-model-run-v1.mjs": "7a17b15f5d649c9255da8b09c531f5192b7d6e14ba5db928c878e1ccd13dc293",
+    "receipts/repository-live-model-run-v3.mjs": "66f7598c6b3be393c65dbd92e1a3c58c52b7ca66c4e73f57a46c8556739614a4",
+    "receipts/repository-run-v1.mjs": "50c1e86cec48fc666aae64b3285f9acda8e20968d5f10f0d9313e0e22051d697",
+    "receipts/swift-static-group-v1.mjs": "e07e9a361ef808f8d652f1542fec54085d4f341fd093a582f2e86baf77e4cdbb",
+    "receipts/swift-static-run-v1.mjs": "454e8657a2a2aaf6a016de5d09c5d65512d53ffb9db2a6843e05471450f8c8ef",
+    "scripts/check-private-package.mjs": "80b384b406dbde63a65408c16cdb5634596c15bfcc19b60971b50b8e0580b841",
+    "scripts/private-package-contract.mjs": "52b73fad04e639475895261d5b982b1442ee5545a02ffaeaa9726e58bbd58288",
+    "serialization/canonical-json-v1.mjs": "1e5eb6222da2c7baae3cd45a5077ccc1e8ae25b5bc184646d9e55170dec53625",
+    "tests/candidate-review.test.mjs": "1c46af99fda3919dbb858de49f393cbff019b3e717b8e64961c65651301a6e4a",
+    "tests/fixed-app-sandbox.test.mjs": "e85dfc0e52ff67b1aebf0bef9fc4521b5e56f00d40c799b165526f59966d6b99",
+    "tests/fixtures/local-chat-response-cases.json": "c05bb7e645152cc485600085eb97c95225dcc4ad39fb571c15ff9d40bd983e1e",
+    "tests/fixtures/native-response-cases.json": "64b8cc5a2050d541d917b4b459392114debe1d374579bfe7a76c5ff0ce7a0efb",
+    "tests/fixtures/v3-cli-cases.json": "eb344b3ad7b1c63e55e9da944a11c569a517803b36ce4dd298989d7a0bc41c4a",
+    "tests/generated-execution-approval.test.mjs": "76b7ec9f47ed96ac72284eab120fef168ab101a06f5cb5c61b87eb493a07e442",
+    "tests/helpers/live-cli-side-effect-guard.mjs": "f1ed9b8f69c41c6027b9b8d7ed0149c1fee970d00109eaac0e7bb0714d08c00e",
+    "tests/helpers/live-model-v3-fixture.mjs": "29da9ad187efe09ee0a24e0e27b14737e9872de7035d4c96dac13da1930febd7",
+    "tests/helpers/local-chat-expected-cases.mjs": "1e1f3af35720944e447d60600487a7a9111da6911f82322c70a7750fa5a5e537",
+    "tests/helpers/native-chat-fixture.mjs": "3d5029a0d73880a055d8823d9ca629c40d40e55795d2abe1192345a8ecbb0b52",
+    "tests/helpers/native-response-expected.mjs": "76724d266bcbd2576079df1517ee8be7cd7b3e8ed17894a197e20b75660ed4af",
+    "tests/helpers/node-repository-fixture.mjs": "db034a91d1ad0bfcb2b22df9b598d3e276d260c493002319e9d191e10ce2cd85",
+    "tests/helpers/repository-live-run-fixture.mjs": "17e24de717f46a1b3844cf37c05cf1baf23f69d71f6f3f02f53f2c881d0f08ea",
+    "tests/helpers/repository-run-fixture.mjs": "2877df81895185e35c5e5dd419dbb161bde5f23529f6459ed5e0128b2780b121",
+    "tests/helpers/reviewed-live-model-fixture.mjs": "539eb8530170b9f85705cd20af45b9be01463343f7ddb1691860f2628d9b5cbb",
+    "tests/helpers/swift-group-fixture.mjs": "2f8e5b98fbf2fb1757fe25bc2d78b427e30cccbdaccb64d618922f925e077d60",
+    "tests/helpers/v3-cli-expected.mjs": "93c9606c00ecdfc1449336f9e53a75e4da76c2b985146d401c54457c8f71e6d9",
+    "tests/host-run-bundle-v2.test.mjs": "ba3f06af454abd31b2b7426aedc7b04b63e7efea19696df7c24a6ff187d112cb",
+    "tests/live-model-v3-cli.test.mjs": "54207c8bd4f081411f997b10fa9df749d8e6d26fa1b78ab7302f1de5b6e0ea80",
+    "tests/live-model-v3-receipt.test.mjs": "38ef7f69f1444952de9dcef39ace75487cd0ba38ab359097b7994d9a233264b8",
+    "tests/live-model-v3.test.mjs": "d4a5cf960819e0fdf8630a21e1743b13171aeb285ac780f1904135b758fef13d",
+    "tests/live-output-mode.test.mjs": "a573d477e7463f8f323079bc1ba72e1d775b2116da2ebaf6f159e097258d62b7",
+    "tests/live-usage.test.mjs": "3be9d19ee463641ea521179ff31874127c5e5654f48f0ab14ced6e1dcdf82ffd",
+    "tests/local-chat-output-mode.test.mjs": "21a36fc3c14dad1f080fc16293f20443b7f90f30ddb6c12941e46abdd15b1d2c",
+    "tests/local-chat-response-matrix.test.mjs": "c4d14ba74952876b2d07061ed60ca5948ac4d26ee2e0f908d228b406fdeafe4c",
+    "tests/native-chat.test.mjs": "0257a2622b19939de5da09b557167e7c49a425f41d109e42b91fd0f820712c37",
+    "tests/native-response-matrix.test.mjs": "c5563856227f4b2d387681b8a1943834ca514706d77ffd057b76c6ab0d8bef16",
+    "tests/native/repository-host.test.mjs": "3e449395b033bf5bfd51c4ce1f2ca847eb27c03b85467a2e24eb40b5ff3f8594",
+    "tests/native/swift-executor.test.mjs": "97f93d9bb32ebcc262c5d2f915eb549f3cc187feec9b2636b7ac617047176cc1",
+    "tests/native/swift-group.test.mjs": "980ad1fbb2dae8eb5394b300a547f41ed34d4ab6b20db4f4335c467f5ac6a5d9",
+    "tests/native/swift-kernel.test.mjs": "e6726c94a1b7359c2e3042a0e8ddb71973255088da82373f7988cd3bb6873699",
+    "tests/node-executor.test.mjs": "87bd39e1b48872de468477c8c8f6fa8f96884c632df58973b0ac1b89bb195e6d",
+    "tests/node-suite.test.mjs": "ca26dc4558ef17d2a9df982dfe1634053451580fcbf0228d06369121ff53143e",
+    "tests/paired-trial.test.mjs": "979dd5e1dfb7dcdc55f874fdf1e1232a8eea356d0fd856817583921d3d10441b",
+    "tests/private-consumer.test.mjs": "0a29cb423a2b11163864a5a6b63471e93ab042897cda601ecec40a9c34b2ec07",
+    "tests/private-consumer/adoption-reviewed.mts": "865dc54412789663a28a105970f390d7452a041272870edd7156fd09f24124aa",
+    "tests/private-consumer/baseline.mts": "6c99646cb0c846ee09cd70fd0c1d38ffa11514c2ba913aa690002da2d0090990",
+    "tests/private-consumer/declaration-regressions.mts": "6176b259f151c0dce32f17da6787a6fcfc6edaea40b86d5fdf60ba78ced4fcaf",
+    "tests/private-consumer/declaration-regressions.test.mjs": "8eb8c04e7b265021ec9dd3aa580da7088fb41c8c4da9f18bbcb5433e84eeefd2",
+    "tests/private-consumer/edge-cases.mts": "457ee56a0127e81703fb72eb2c943e6341dd1316d7fc1fadf3fe64ef5ef54af7",
+    "tests/private-consumer/output-mode-types.mts": "0eedf2ea1f7e4c30a71765129ef1ffcf4f2d9e69fdbbf02dc8685b8fcffea1ba",
+    "tests/private-consumer/runtime.test.mjs": "10a7eb74391501c754ad919d29af6a47c4823a3bb6cefe8a0462a9e7c82bc23c",
+    "tests/private-package-contract.test.mjs": "177193ffcf7ad6111a047c4beba718888c607b1710625655fc275606d558451f",
+    "tests/proposed-changes.test.mjs": "d938037e6f67749f5ef473eaf65a3c5fc054865fed504151c01b0fdfcd33bd39",
+    "tests/repository-execution-receipt.test.mjs": "1075990a6f96276df2057f525df9914bb56a5c1da43d7d544956c86567ad983d",
+    "tests/repository-fixture.test.mjs": "4febfb12c46f3bbcd5f26612475aef6103c6cba876b82ab26cdcb7b9ffe39b20",
+    "tests/repository-live-cli.test.mjs": "c15fcdaf6ea18fd477c1b32526d1416c56ad91005b23231b6c4406e1e2c5632d",
+    "tests/repository-live-model-run.test.mjs": "d0014f841de603e625b665f9526c0d75b324fa4bb28ee0c6672becdc171858ae",
+    "tests/repository-run.test.mjs": "e1c1f1a9407cfecce5b61359a1822fd542c72626d5969da8e679477c60cf176e",
+    "tests/repository-workflow.test.mjs": "ca455e66b4e97fc8530ef0b2a12d35cd1986d80ab409ef9449a977f047015359",
+    "tests/reviewed-live-fixture.test.mjs": "fcc1bd1d97383979ceca8437091624f4117aec5d0c5fba188c896c8998825b80",
+    "tests/reviewed-live-model.test.mjs": "9a6d5da731b16ba2602594561e54b2cde76a54d39a98b719b239874aa49b0e51",
+    "tests/swift-group-owner.test.mjs": "8c7c83e52873c0d6b9a76cda4746dd1ded3c09583ac1d5c34d681023e2a159d3",
+    "tests/swift-static-group.test.mjs": "9bf196d7f2ddad0d4968515e5413cfeb01f334f6d9ad90ec007234539b24015d",
+    "tests/swift-static-run.test.mjs": "d9f747a328e44966c5e88128c3b9edf2d07a1c6dc4e818a91d44164aac78a791",
+    "tests/task-workspace.test.mjs": "d9df1ee4dc36b5a239a5a70847c6d4c53abe2164cf484712666635f1be9a2ef1",
+    "tests/trial-intake.test.mjs": "42a93005ab3fc6b0f573cf413bbb03d5ba2a59d40d3280363b741ded813a6c92",
+    "types/afm-content-executor.d.ts": "05d4dc617ba58abc67f2469d912a0cc0a025a06bae784be263ea67b286504b94",
+    "types/apple-foundation-models.d.ts": "09086a14ea7e0441df3cbe4e414f00e6aa6d3d8e8a53dfb812d5c13d1d97a90d",
+    "types/canonical.d.ts": "8fb8a3a402d2f4e9a24ad945705d407ddde9f1a5555c23ae53db7075e0f101f4",
+    "types/content-consent.d.ts": "94b27ebef08df7e85a22ca8b1bf7d84d88fcc79e5145981e827bdc9aeb78f7c9",
+    "types/contracts.d.ts": "6ad05a1db5d18de910a22cc696257fb0b2d2b7a8cfe875090f0c3b6b70658c15",
+    "types/index.d.ts": "b12ba5fb5f8d15efd89ee8ca263d0ca8c97e228059ab98ee78a42446b101fab6",
+    "types/local-chat.d.ts": "8faccd51bef36c9a5380c5b4568f01d7c9afc20311d65e60dde2d87501c920ae",
+    "types/policy.d.ts": "843edb85c40728778e1a76763dd90b8b560e89cdd716d7ff8a5f8c19dc460f80",
+    "types/serialization.d.ts": "c699b39740237933ded4b7afea48fe20d9c0eb2f8bbcecdad472f9f0bca05084",
+    "types/workflow.d.ts": "92d155a41afa9734bdf333419fb8d1bc5c129d4d5724979c8f3dd82a09e7dd18",
+    "workflow/contracts.mjs": "c28a3ee3db6e9a936cd58fca8b8ee3f2744ca25c259e2ea278b3b09cdbb73d82",
+    "workflow/engine.mjs": "c67c63baeadc725a8487af7108b01d3a38dd50e64ff35f1be66471c81e5f979b"
+  },
+  "previousPinsUnchanged": 130,
+  "newSourceFiles": 4,
+  "portable": {
+    "passed": 972,
+    "failed": 0,
+    "skipped": 0
+  },
+  "newFocusedTests": 21,
+  "importedFreeze": {
+    "status": "PASS_SOURCE_FREEZE_ONLY",
+    "files": 225,
+    "totalBytes": 8027242,
+    "excluded": [],
+    "originRechecked": false,
+    "integrationVerified": false,
+    "legalClearance": false
+  },
+  "nativeExperiments": {
+    "completed": 2,
+    "fixturesLaunched": 4,
+    "observations": [
+      {
+        "root": "/Users/louiscalata/nisi-next-private/.build/fixed-app-sandbox-lBRu2l",
+        "runId": "b7e545b820ea64fa416cfd9c15be9c64",
+        "container": {
+          "path": "/Users/louiscalata/Library/Containers/local.nisi.fixedprobe.rb7e545b820ea64fa416cfd9c15be9c64",
+          "existedBefore": false,
+          "existsAfter": true,
+          "removed": false
+        },
+        "terminal": {
+          "path": "/Users/louiscalata/nisi-next-private/.build/fixed-app-sandbox-lBRu2l/terminal.json",
+          "byteLength": 23997,
+          "sha256": "20796a1d756b784eb026421bccbf5160e51e700e546dd95b44d4f5b592023b49"
+        },
+        "processObservations": [
+          {
+            "mode": "sandbox",
+            "pid": 26281,
+            "durationMs": 211,
+            "directCloseObserved": true
+          },
+          {
+            "mode": "control",
+            "pid": 26283,
+            "durationMs": 114,
+            "directCloseObserved": true
+          }
+        ],
+        "platform": {
+          "architecture": "arm64",
+          "osRelease": "27.0.0",
+          "node": "v24.18.0",
+          "macOS": "ProductName:\t\tmacOS\nProductVersion:\t\t27.0\nBuildVersion:\t\t26A428\n",
+          "developerDirectory": "/Applications/Xcode-27.0.app/Contents/Developer"
+        }
+      },
+      {
+        "root": "/Users/louiscalata/nisi-next-private/.build/fixed-app-sandbox-BozFEd",
+        "runId": "15c275f5f51910a526c51d956f4331f2",
+        "container": {
+          "path": "/Users/louiscalata/Library/Containers/local.nisi.fixedprobe.r15c275f5f51910a526c51d956f4331f2",
+          "existedBefore": false,
+          "existsAfter": true,
+          "removed": false
+        },
+        "terminal": {
+          "path": "/Users/louiscalata/nisi-next-private/.build/fixed-app-sandbox-BozFEd/terminal.json",
+          "byteLength": 23997,
+          "sha256": "04835a7d0c2c330b01da06877e1c11b8ae67dc3a698ac13fbc09ffdc3be1b9d1"
+        },
+        "processObservations": [
+          {
+            "mode": "sandbox",
+            "pid": 26321,
+            "durationMs": 193,
+            "directCloseObserved": true
+          },
+          {
+            "mode": "control",
+            "pid": 26323,
+            "durationMs": 118,
+            "directCloseObserved": true
+          }
+        ],
+        "platform": {
+          "architecture": "arm64",
+          "osRelease": "27.0.0",
+          "node": "v24.18.0",
+          "macOS": "ProductName:\t\tmacOS\nProductVersion:\t\t27.0\nBuildVersion:\t\t26A428\n",
+          "developerDirectory": "/Applications/Xcode-27.0.app/Contents/Developer"
+        }
+      }
+    ]
+  },
+  "mutation": {
+    "selectedFaultsDetected": 4,
+    "totalSelectedFaults": 4,
+    "controlPassed": 21,
+    "failedCounts": [
+      1,
+      1,
+      4,
+      1
+    ],
+    "readerAndTestsCurrent": true,
+    "copiedRunnerCurrent": false,
+    "earlierControlLogClaimCorrected": true,
+    "evidence": {
+      "path": "/Users/louiscalata/nisi-next-private/.build/repeatable-sandbox-owner-Ny1cvq/owner-mutants.json",
+      "byteLength": 1523,
+      "sha256": "ba76d93979fc27018c8b0e816bccf9dade2abe6cada85d0224a1a3e1e08b42c8"
+    }
+  },
+  "collaborators": {
+    "claude": {
+      "status": "NOT_RUN",
+      "requested": [
+        "fable",
+        "sonnet",
+        "opus"
+      ],
+      "totalCapSeconds": 120,
+      "usage": null
+    },
+    "sharedChami": {
+      "jobId": "mac-20260912-231443-a6295d469d8fa45f97e4ed2528252c0b",
+      "reportedModel": "Qwen3-Coder-Next 80B-A3B Q4_K_M",
+      "elapsedSeconds": 125.3,
+      "transportStatus": "success",
+      "draftStatus": "REJECTED_WITHOUT_COMPILATION",
+      "taskOnlyServer": "louisaurorar12"
+    },
+    "luna": "PARSER_DRAFT_REPAIRS_AND_SELECTED_MUTANTS; ORIGINAL_CONTROL_CLAIM_UNSUPPORTED_AND_CORRECTED",
+    "daybreak": "DESIGN_RUNNER_SOURCE_STATIC_REVIEW",
+    "codex": "INTEGRATION_NATIVE_SOURCE_IMPLEMENTATION_NATIVE_RUNS_AND_INDEPENDENT_MUTANT_RECHECK",
+    "openCode": "NO_NEW_PACKET; PREVIOUS_FORMATTER_BLOCKED"
+  },
+  "evidence": [
+    {
+      "path": "/Users/louiscalata/nisi-next-private/.build/repeatable-sandbox-owner-Ny1cvq/check.mjs",
+      "byteLength": 2448,
+      "sha256": "59988c5da5131e7a9c78d2bae36eafe7579ef1dad8d6f49d77b29cabb6d27ffa"
+    },
+    {
+      "path": "/Users/louiscalata/nisi-next-private/.build/repeatable-sandbox-owner-Ny1cvq/checkpoint.mjs",
+      "byteLength": 10093,
+      "sha256": "c56ebc43f9cff043c73f922e049814c2fdf6dd0108dc840e916e47f9ed428e2f"
+    },
+    {
+      "path": "/Users/louiscalata/nisi-next-private/.build/repeatable-sandbox-owner-Ny1cvq/portable.json",
+      "byteLength": 237518,
+      "sha256": "8086c94cbb8aec8cc0e95d954a830a0e2e758c001a845d59468ebf6405aed6ae"
+    },
+    {
+      "path": "/Users/louiscalata/nisi-next-private/.build/repeatable-sandbox-owner-Ny1cvq/native-first.json",
+      "byteLength": 30938,
+      "sha256": "0d15158f6afb611bbe95a210ad9053a67514a3cbe21e748891ebc03316e5ed80"
+    },
+    {
+      "path": "/Users/louiscalata/nisi-next-private/.build/repeatable-sandbox-owner-Ny1cvq/native-second.json",
+      "byteLength": 30938,
+      "sha256": "c8303f705578430248e8126a88e665f39a908ed60c0dc86562e1345eb8bbf053"
+    },
+    {
+      "path": "/Users/louiscalata/nisi-next-private/.build/repeatable-sandbox-owner-Ny1cvq/freeze.json",
+      "byteLength": 30713,
+      "sha256": "968b3d4f0f52aa42b6b4463a9f88dab2bf0ce837f65a42828822851a55fd6c73"
+    },
+    {
+      "path": "/Users/louiscalata/nisi-next-private/.build/repeatable-sandbox-owner-Ny1cvq/recheck-mutants.mjs",
+      "byteLength": 3628,
+      "sha256": "b311993b454f050e6fef5c7e28a5d9e93da759fa8dbcd1e391bd73b85e7cf793"
+    },
+    {
+      "path": "/Users/louiscalata/nisi-next-private/.build/repeatable-sandbox-owner-Ny1cvq/owner-mutants.json",
+      "byteLength": 1523,
+      "sha256": "ba76d93979fc27018c8b0e816bccf9dade2abe6cada85d0224a1a3e1e08b42c8"
+    },
+    {
+      "path": "/Users/louiscalata/nisi-next-private/.build/repeatable-sandbox-owner-Ny1cvq/owner-control.json",
+      "byteLength": 5343,
+      "sha256": "a5b922330ec5c55f2b8119c498817e048a2a624136e83d1524f6a4dd513a19ea"
+    },
+    {
+      "path": "/Users/louiscalata/nisi-next-private/.build/repeatable-sandbox-owner-Ny1cvq/owner-m01-deniederrno.json",
+      "byteLength": 6244,
+      "sha256": "fa0082319357dbbe06e15e8001d28020f0130b6d27096b28e358706e184c6e3b"
+    },
+    {
+      "path": "/Users/louiscalata/nisi-next-private/.build/repeatable-sandbox-owner-Ny1cvq/owner-m02-pidbind.json",
+      "byteLength": 6163,
+      "sha256": "a54ffae16b256315b0c4c5c01c324b2979f3f3f1908fc98c79db8b3b349b1d49"
+    },
+    {
+      "path": "/Users/louiscalata/nisi-next-private/.build/repeatable-sandbox-owner-Ny1cvq/owner-m03-dependency.json",
+      "byteLength": 8901,
+      "sha256": "fb92c4446a668c586a4e8be3f7097cf0da50bfe8f37a8be47ef33938f8405168"
+    },
+    {
+      "path": "/Users/louiscalata/nisi-next-private/.build/repeatable-sandbox-owner-Ny1cvq/owner-m04-duplicate.json",
+      "byteLength": 6168,
+      "sha256": "e73444b209c953893c72e01cd959053a6c7f084a9e316b38bbacd8be51360f58"
+    },
+    {
+      "path": "/Users/louiscalata/nisi-next-private/.build/fixed-app-sandbox-lBRu2l/terminal.json",
+      "byteLength": 23997,
+      "sha256": "20796a1d756b784eb026421bccbf5160e51e700e546dd95b44d4f5b592023b49"
+    },
+    {
+      "path": "/Users/louiscalata/nisi-next-private/.build/fixed-app-sandbox-lBRu2l/sandbox-run.json",
+      "byteLength": 6147,
+      "sha256": "7dadb1c67baeb41725d0c9962585916d0a497fd8fa599b1a92aac575214b95e7"
+    },
+    {
+      "path": "/Users/louiscalata/nisi-next-private/.build/fixed-app-sandbox-lBRu2l/control-run.json",
+      "byteLength": 5881,
+      "sha256": "333e44f369900f1c7c400a9500ae8c03781e4b523d720bd28eaeb328149ccc0b"
+    },
+    {
+      "path": "/Users/louiscalata/nisi-next-private/.build/fixed-app-sandbox-lBRu2l/probe.m",
+      "byteLength": 5579,
+      "sha256": "dd93459c4a66693e6f5a0e0294c93fe3ddc3bc5458c73fcc6e412b408e74bb29"
+    },
+    {
+      "path": "/Users/louiscalata/nisi-next-private/.build/fixed-app-sandbox-lBRu2l/probe-config.h",
+      "byteLength": 274,
+      "sha256": "7d42d2086f7f08e701f9ce315b71d0e2e183cf9593843af1c0a65d22fbbcf1e6"
+    },
+    {
+      "path": "/Users/louiscalata/nisi-next-private/.build/fixed-app-sandbox-lBRu2l/entitlements.plist",
+      "byteLength": 112,
+      "sha256": "1e5bb1deff393cc3cb2e5df6453d6b0d3ced694cbf075a73075dc504a03ef3c7"
+    },
+    {
+      "path": "/Users/louiscalata/nisi-next-private/.build/fixed-app-sandbox-lBRu2l/empty-entitlements.plist",
+      "byteLength": 58,
+      "sha256": "935aea21a07b80782cb050ee7e1f1d74735076fc353e8067ba5b6822f3514462"
+    },
+    {
+      "path": "/Users/louiscalata/nisi-next-private/.build/fixed-app-sandbox-lBRu2l/outside-canary.txt",
+      "byteLength": 17,
+      "sha256": "747966aeb8561fb5cee0765def4b539302b368883ac878e4ac2a78958aeed92e"
+    },
+    {
+      "path": "/Users/louiscalata/nisi-next-private/.build/fixed-app-sandbox-lBRu2l/outside-write.txt",
+      "byteLength": 17,
+      "sha256": "747966aeb8561fb5cee0765def4b539302b368883ac878e4ac2a78958aeed92e"
+    },
+    {
+      "path": "/Users/louiscalata/nisi-next-private/.build/fixed-app-sandbox-lBRu2l/own-control.txt",
+      "byteLength": 17,
+      "sha256": "747966aeb8561fb5cee0765def4b539302b368883ac878e4ac2a78958aeed92e"
+    },
+    {
+      "path": "/Users/louiscalata/nisi-next-private/.build/fixed-app-sandbox-lBRu2l/control",
+      "byteLength": 52480,
+      "sha256": "e28c7e678bf764dadf8b87def83d06221411c35c9f0752347887ae06bdfa1fb2"
+    },
+    {
+      "path": "/Users/louiscalata/nisi-next-private/.build/fixed-app-sandbox-lBRu2l/Probe.app/Contents/Info.plist",
+      "byteLength": 463,
+      "sha256": "6ab5b3395d8dc941268ea83b65190859957eb90a673a6b0843afd69be714a590"
+    },
+    {
+      "path": "/Users/louiscalata/nisi-next-private/.build/fixed-app-sandbox-lBRu2l/Probe.app/Contents/MacOS/NisiProbe",
+      "byteLength": 52624,
+      "sha256": "7f832be238d53682aac0f8bece137a87513a8b2103d2d1237fe326f0aafda4a3"
+    },
+    {
+      "path": "/Users/louiscalata/nisi-next-private/.build/fixed-app-sandbox-lBRu2l/Probe.app/Contents/_CodeSignature/CodeResources",
+      "byteLength": 2200,
+      "sha256": "6686de10a28a2fe11b36cbb86dcbacc827cfc4ea116b4dabf1845e5aee629e9b"
+    },
+    {
+      "path": "/Users/louiscalata/nisi-next-private/.build/fixed-app-sandbox-lBRu2l/command-1.json",
+      "byteLength": 432,
+      "sha256": "2680fda7698387bfd3ea60bdedf7dfffce295293865568e0690eeac47f5b969d"
+    },
+    {
+      "path": "/Users/louiscalata/nisi-next-private/.build/fixed-app-sandbox-lBRu2l/command-2.json",
+      "byteLength": 436,
+      "sha256": "7b80c97bfb6f3a8c0318c29c11e7a03ec6672e2179df0b0d96b6a1d8975393aa"
+    },
+    {
+      "path": "/Users/louiscalata/nisi-next-private/.build/fixed-app-sandbox-lBRu2l/command-3.json",
+      "byteLength": 544,
+      "sha256": "43800f41eb36450743af8e03e231a0683b034138e4d8c9540f9e61fa960ce0cd"
+    },
+    {
+      "path": "/Users/louiscalata/nisi-next-private/.build/fixed-app-sandbox-lBRu2l/command-4.json",
+      "byteLength": 514,
+      "sha256": "e35250c1f97dfe9c4fadc99d693fcfabe95db4eb6a9354adcf859f34a0a63fa4"
+    },
+    {
+      "path": "/Users/louiscalata/nisi-next-private/.build/fixed-app-sandbox-lBRu2l/command-5.json",
+      "byteLength": 671,
+      "sha256": "356809744e03112fcd569c682516fe9e9e881d377058a7cb7d8fb67c1a7d5753"
+    },
+    {
+      "path": "/Users/louiscalata/nisi-next-private/.build/fixed-app-sandbox-lBRu2l/command-6.json",
+      "byteLength": 278,
+      "sha256": "b64704133b180e1050f37fa5af1bdbd7e09ddc996e577e64b15065173f612fe5"
+    },
+    {
+      "path": "/Users/louiscalata/nisi-next-private/.build/fixed-app-sandbox-lBRu2l/command-7.json",
+      "byteLength": 550,
+      "sha256": "90eb64fca7e0c198bfe3a09dd2b6dae88fb8d46078815f81fbfb85c0748bb22b"
+    },
+    {
+      "path": "/Users/louiscalata/nisi-next-private/.build/fixed-app-sandbox-lBRu2l/command-8.json",
+      "byteLength": 512,
+      "sha256": "d11ebd49cdd58a0e7a363d661c286c9d29a44cd4d9dc8715e8bb5bc930854f8c"
+    },
+    {
+      "path": "/Users/louiscalata/nisi-next-private/.build/fixed-app-sandbox-lBRu2l/command-9.json",
+      "byteLength": 595,
+      "sha256": "9fd5be10c7c5e1d83eddc7c5650451aa6bc0d7b0a9dbc58dfe52a7ced8bb6894"
+    },
+    {
+      "path": "/Users/louiscalata/nisi-next-private/.build/fixed-app-sandbox-lBRu2l/command-10.json",
+      "byteLength": 240,
+      "sha256": "239d93aec93c745ef4a7774310083ba31f03c26c99bf0b6fdeede2ddfe713d91"
+    },
+    {
+      "path": "/Users/louiscalata/nisi-next-private/.build/fixed-app-sandbox-lBRu2l/command-11.json",
+      "byteLength": 231,
+      "sha256": "ae390a082722d86fcdfdc73246b67701285360c77a22998fc67b8e56ee9d919d"
+    },
+    {
+      "path": "/Users/louiscalata/nisi-next-private/.build/fixed-app-sandbox-lBRu2l/command-12.json",
+      "byteLength": 230,
+      "sha256": "16f8b47f50df5d060ec5b7f139de86290f60870f8c6c4c7861f37bab150106fa"
+    },
+    {
+      "path": "/Users/louiscalata/nisi-next-private/.build/fixed-app-sandbox-BozFEd/terminal.json",
+      "byteLength": 23997,
+      "sha256": "04835a7d0c2c330b01da06877e1c11b8ae67dc3a698ac13fbc09ffdc3be1b9d1"
+    },
+    {
+      "path": "/Users/louiscalata/nisi-next-private/.build/fixed-app-sandbox-BozFEd/sandbox-run.json",
+      "byteLength": 6147,
+      "sha256": "65491d7daa06fd45f075b1948b603be86f879d8a46268f095d6c6f5dd06ce5cb"
+    },
+    {
+      "path": "/Users/louiscalata/nisi-next-private/.build/fixed-app-sandbox-BozFEd/control-run.json",
+      "byteLength": 5881,
+      "sha256": "d7e984d351b745c1838ae04b3a2b818bb7ef1330f75e1711824e90e0b617333c"
+    },
+    {
+      "path": "/Users/louiscalata/nisi-next-private/.build/fixed-app-sandbox-BozFEd/probe.m",
+      "byteLength": 5579,
+      "sha256": "dd93459c4a66693e6f5a0e0294c93fe3ddc3bc5458c73fcc6e412b408e74bb29"
+    },
+    {
+      "path": "/Users/louiscalata/nisi-next-private/.build/fixed-app-sandbox-BozFEd/probe-config.h",
+      "byteLength": 274,
+      "sha256": "949332a9be648d4c2cde340cfe2f0c2c47e6d917e7abbceba45af06194a0b601"
+    },
+    {
+      "path": "/Users/louiscalata/nisi-next-private/.build/fixed-app-sandbox-BozFEd/entitlements.plist",
+      "byteLength": 112,
+      "sha256": "1e5bb1deff393cc3cb2e5df6453d6b0d3ced694cbf075a73075dc504a03ef3c7"
+    },
+    {
+      "path": "/Users/louiscalata/nisi-next-private/.build/fixed-app-sandbox-BozFEd/empty-entitlements.plist",
+      "byteLength": 58,
+      "sha256": "935aea21a07b80782cb050ee7e1f1d74735076fc353e8067ba5b6822f3514462"
+    },
+    {
+      "path": "/Users/louiscalata/nisi-next-private/.build/fixed-app-sandbox-BozFEd/outside-canary.txt",
+      "byteLength": 17,
+      "sha256": "747966aeb8561fb5cee0765def4b539302b368883ac878e4ac2a78958aeed92e"
+    },
+    {
+      "path": "/Users/louiscalata/nisi-next-private/.build/fixed-app-sandbox-BozFEd/outside-write.txt",
+      "byteLength": 17,
+      "sha256": "747966aeb8561fb5cee0765def4b539302b368883ac878e4ac2a78958aeed92e"
+    },
+    {
+      "path": "/Users/louiscalata/nisi-next-private/.build/fixed-app-sandbox-BozFEd/own-control.txt",
+      "byteLength": 17,
+      "sha256": "747966aeb8561fb5cee0765def4b539302b368883ac878e4ac2a78958aeed92e"
+    },
+    {
+      "path": "/Users/louiscalata/nisi-next-private/.build/fixed-app-sandbox-BozFEd/control",
+      "byteLength": 52480,
+      "sha256": "5e184de52fe30f8d22fc983dc037f2924e0fa90c2d0b05d5c312ca423251ac8f"
+    },
+    {
+      "path": "/Users/louiscalata/nisi-next-private/.build/fixed-app-sandbox-BozFEd/Probe.app/Contents/Info.plist",
+      "byteLength": 463,
+      "sha256": "781a1c4967ed04b3c251670ace8f2a72394661fc047e3e9ea41cff9af919d865"
+    },
+    {
+      "path": "/Users/louiscalata/nisi-next-private/.build/fixed-app-sandbox-BozFEd/Probe.app/Contents/MacOS/NisiProbe",
+      "byteLength": 52624,
+      "sha256": "6393253be53e560781e25b061cdb86f9800a9ed9ea6ae45e34552de0d4b55fd0"
+    },
+    {
+      "path": "/Users/louiscalata/nisi-next-private/.build/fixed-app-sandbox-BozFEd/Probe.app/Contents/_CodeSignature/CodeResources",
+      "byteLength": 2200,
+      "sha256": "6686de10a28a2fe11b36cbb86dcbacc827cfc4ea116b4dabf1845e5aee629e9b"
+    },
+    {
+      "path": "/Users/louiscalata/nisi-next-private/.build/fixed-app-sandbox-BozFEd/command-1.json",
+      "byteLength": 432,
+      "sha256": "eaeaae610fee8510a54a82d2bfca0f4cb0513e588bf65b00f613137b4036ef69"
+    },
+    {
+      "path": "/Users/louiscalata/nisi-next-private/.build/fixed-app-sandbox-BozFEd/command-2.json",
+      "byteLength": 436,
+      "sha256": "e32fc3295be05f8df26a7f7b1be0d5c5dd0429d71cabe8dec9884b2b7c41e7f4"
+    },
+    {
+      "path": "/Users/louiscalata/nisi-next-private/.build/fixed-app-sandbox-BozFEd/command-3.json",
+      "byteLength": 544,
+      "sha256": "0ef385e7beb3da694536d4d622487c407e62d7931c11a916308119dbdf77445b"
+    },
+    {
+      "path": "/Users/louiscalata/nisi-next-private/.build/fixed-app-sandbox-BozFEd/command-4.json",
+      "byteLength": 514,
+      "sha256": "fd0dcd177981e1d8f83dca1b209bd411d9d7e63c90d554259cb580de6f6a97a9"
+    },
+    {
+      "path": "/Users/louiscalata/nisi-next-private/.build/fixed-app-sandbox-BozFEd/command-5.json",
+      "byteLength": 671,
+      "sha256": "9b85a8497d9f54c7a01382b70e489ac914c1edefad81427fd701da3a0973d2b6"
+    },
+    {
+      "path": "/Users/louiscalata/nisi-next-private/.build/fixed-app-sandbox-BozFEd/command-6.json",
+      "byteLength": 278,
+      "sha256": "b64704133b180e1050f37fa5af1bdbd7e09ddc996e577e64b15065173f612fe5"
+    },
+    {
+      "path": "/Users/louiscalata/nisi-next-private/.build/fixed-app-sandbox-BozFEd/command-7.json",
+      "byteLength": 550,
+      "sha256": "478b701b3cf7f2366192f5c8b44c2334a54ec1a773bc5a33246dcf8c989c7bd5"
+    },
+    {
+      "path": "/Users/louiscalata/nisi-next-private/.build/fixed-app-sandbox-BozFEd/command-8.json",
+      "byteLength": 512,
+      "sha256": "825ea792342d4d0503b6a216f036482671aaaa71a387b257fd08489254116f6e"
+    },
+    {
+      "path": "/Users/louiscalata/nisi-next-private/.build/fixed-app-sandbox-BozFEd/command-9.json",
+      "byteLength": 595,
+      "sha256": "a8cb0f8282b2ce597b509114d0f8c83a160f5f6b6f7c120d4aa5fcdaf88eee96"
+    },
+    {
+      "path": "/Users/louiscalata/nisi-next-private/.build/fixed-app-sandbox-BozFEd/command-10.json",
+      "byteLength": 240,
+      "sha256": "239d93aec93c745ef4a7774310083ba31f03c26c99bf0b6fdeede2ddfe713d91"
+    },
+    {
+      "path": "/Users/louiscalata/nisi-next-private/.build/fixed-app-sandbox-BozFEd/command-11.json",
+      "byteLength": 231,
+      "sha256": "ae390a082722d86fcdfdc73246b67701285360c77a22998fc67b8e56ee9d919d"
+    },
+    {
+      "path": "/Users/louiscalata/nisi-next-private/.build/fixed-app-sandbox-BozFEd/command-12.json",
+      "byteLength": 230,
+      "sha256": "16f8b47f50df5d060ec5b7f139de86290f60870f8c6c4c7861f37bab150106fa"
+    },
+    {
+      "path": "/Users/louiscalata/nisi-next-private/.build/fixed-app-sandbox-mutants-P1EdKE/control.tap",
+      "byteLength": 1613,
+      "sha256": "f9307bf07bf8709ee2f32dcdefbb0163ca1db6ef50004e45269230204305acb5"
+    },
+    {
+      "path": "/Users/louiscalata/nisi-next-private/.build/fixed-app-sandbox-mutants-m01-deniederrno/mutation.patch",
+      "byteLength": 723,
+      "sha256": "6df7c435dfb369ee6b63d9f4c7d972106b67494e911c54867f4515b40d6dfb2e"
+    },
+    {
+      "path": "/Users/louiscalata/nisi-next-private/.build/fixed-app-sandbox-mutants-m01-deniederrno/hosts/macos-sandbox/fixed-probe-parser.mjs",
+      "byteLength": 5244,
+      "sha256": "0b4488dff35d29bf2afe6d937070b39f3d0c180762081d578f07018997e27169"
+    },
+    {
+      "path": "/Users/louiscalata/nisi-next-private/.build/fixed-app-sandbox-mutants-m01-deniederrno/mutant.tap",
+      "byteLength": 2658,
+      "sha256": "23b710d5feca11e0934ddb06c7f4c414186faa1f5669a7e78252d46021d03326"
+    },
+    {
+      "path": "/Users/louiscalata/nisi-next-private/.build/fixed-app-sandbox-mutants-m02-pidbind/mutation.patch",
+      "byteLength": 949,
+      "sha256": "53a54504f35d235a1c6ba2f11f4895a253cce2146b99f21668c420656bab33a3"
+    },
+    {
+      "path": "/Users/louiscalata/nisi-next-private/.build/fixed-app-sandbox-mutants-m02-pidbind/hosts/macos-sandbox/fixed-probe-parser.mjs",
+      "byteLength": 5276,
+      "sha256": "e731b842a048f822cb6a2256eacc8324b29f5e916a056ed48c5ba04b37d01438"
+    },
+    {
+      "path": "/Users/louiscalata/nisi-next-private/.build/fixed-app-sandbox-mutants-m02-pidbind/mutant.tap",
+      "byteLength": 2629,
+      "sha256": "1f2abaf745824882b0c413676b92b675f4fe412390a0941bb52cbbf1c438857f"
+    },
+    {
+      "path": "/Users/louiscalata/nisi-next-private/.build/fixed-app-sandbox-mutants-m03-dependency/mutation.patch",
+      "byteLength": 567,
+      "sha256": "bc07a1a808ea0fe31ac92041cc5d63dd212396cf592fbdf09eee3e2c1747bff3"
+    },
+    {
+      "path": "/Users/louiscalata/nisi-next-private/.build/fixed-app-sandbox-mutants-m03-dependency/hosts/macos-sandbox/fixed-probe-parser.mjs",
+      "byteLength": 5270,
+      "sha256": "dbb207633df66c8bc0b9d177f8b6a232016176636ae572ae17f64ead707e7e77"
+    },
+    {
+      "path": "/Users/louiscalata/nisi-next-private/.build/fixed-app-sandbox-mutants-m03-dependency/mutant.tap",
+      "byteLength": 5467,
+      "sha256": "7d37b47d0ef0fb41b268cb26002ed31a537bf35115e9014e7e4edb794135e10d"
+    },
+    {
+      "path": "/Users/louiscalata/nisi-next-private/.build/fixed-app-sandbox-mutants-m04-duplicate/mutation.patch",
+      "byteLength": 546,
+      "sha256": "107a36acd55a9809616c0d438d9bdb43ece1a2fbaebd60a95f63ae1ed09947a5"
+    },
+    {
+      "path": "/Users/louiscalata/nisi-next-private/.build/fixed-app-sandbox-mutants-m04-duplicate/hosts/macos-sandbox/fixed-probe-parser.mjs",
+      "byteLength": 5276,
+      "sha256": "ff457c9b9495a169fe61ba0edfd74c27e80eee258114b9985a6e4f2f4835efc7"
+    },
+    {
+      "path": "/Users/louiscalata/nisi-next-private/.build/fixed-app-sandbox-mutants-m04-duplicate/mutant.tap",
+      "byteLength": 2626,
+      "sha256": "20a3517d7ce373bcc614cb826d37b2aac1e8b0ddd19b00943d8630fd86a13fc3"
+    },
+    {
+      "path": "/Users/louiscalata/nisi-next-private/.build/fixed-probe-source-review-d9kdnt/REVIEW.md",
+      "byteLength": 7598,
+      "sha256": "b5d02587bec797b7de263b4f229c7214c04d78917c661eefb66981947c57efa0"
+    },
+    {
+      "path": "/Users/louiscalata/nisi-next-private/.build/fixed-probe-source-review-d9kdnt/FOLLOWUP.md",
+      "byteLength": 2211,
+      "sha256": "61c09481770046c645db623ad5ce330d9d26cfa951ad82e814f40a55254effff"
+    },
+    {
+      "path": "/Users/louiscalata/nisi-next-private/.build/fixed-probe-source-review-d9kdnt/NATIVE-SOURCE-GATE.md",
+      "byteLength": 3625,
+      "sha256": "1f8f0fd79de639db7692d58ab302273d1abc22bb9662b2cc2cdc372bdb7914ff"
+    },
+    {
+      "path": "/Users/louiscalata/nisi-next-private/.build/app-sandbox-repeat-review-UWcCKz/REVIEW.md",
+      "byteLength": 9958,
+      "sha256": "d78c2997b03f40863f066d92571da72ee5e20558917950d011c1658513852e22"
+    },
+    {
+      "path": "/Users/louiscalata/nisi-next-private/.build/fixed-probe-parser-mW8SoU/pre-fix-red.tap",
+      "byteLength": 16743,
+      "sha256": "e0614e72599d061fe8069aea0a561b0cf12ab9b6f139bd16ecf27bacf33928b1"
+    },
+    {
+      "path": "/Users/louiscalata/nisi-next-private/.build/fixed-probe-parser-mW8SoU/parser-fixed.tap",
+      "byteLength": 997,
+      "sha256": "e556bae0308ab8969c4b592441709e864e1b251a3aeb01e502d95ecd21334067"
+    },
+    {
+      "path": "/Users/louiscalata/nisi-next-private/.build/app-sandbox-protocol-claude-lm5vXd/claude-fixed-protocol-prompt.md",
+      "byteLength": 6355,
+      "sha256": "413bf32672ee32568aaee58966a749668d27499a64c8657ec604ea74a4543de3"
+    },
+    {
+      "path": "/Users/louiscalata/nisi-next-private/.build/app-sandbox-protocol-claude-lm5vXd/claude-fixed-protocol-result.json",
+      "byteLength": 639,
+      "sha256": "54673665f89d98c2bd659e1fd9b8acb8ce42700b78274e650c5375ac602a8d29"
+    },
+    {
+      "path": "/Users/louiscalata/nisi-next-private/.build/app-sandbox-protocol-claude-lm5vXd/claude-fixed-protocol-status.md",
+      "byteLength": 2396,
+      "sha256": "e9ad60e0b943ce1eda520f5ddf25c7300b56c8c3a06e667a639475e190fa11ce"
+    },
+    {
+      "path": "/Users/louiscalata/nisi-next-private/.build/app-sandbox-protocol-claude-lm5vXd/worker-fixed-protocol-prompt.md",
+      "byteLength": 5525,
+      "sha256": "4107fc7aeee6ff102c5397cd0f853a750bb4291a81bfbea26f7d1fb7145dd815"
+    },
+    {
+      "path": "/Users/louiscalata/nisi-next-private/.build/app-sandbox-protocol-claude-lm5vXd/worker-fixed-b72dce8d-ac6a-49c2-b01b-d0a47ec50e99-summary.json",
+      "byteLength": 17029,
+      "sha256": "20adac1040ca96f28c717eced5c1b945fc8098e0bd48ef5be511aeeaf4dc6b5d"
+    },
+    {
+      "path": "/Users/louiscalata/nisi-next-private/.build/app-sandbox-protocol-claude-lm5vXd/worker-fixed-b72dce8d-ac6a-49c2-b01b-d0a47ec50e99-receipt.raw.json",
+      "byteLength": 12339,
+      "sha256": "6403bceeff157097a54525e2bb0b95199deab5dda0e2452947fe184785395d3f"
+    },
+    {
+      "path": "/Users/louiscalata/nisi-next-private/.build/app-sandbox-protocol-claude-lm5vXd/worker-fixed-b72dce8d-ac6a-49c2-b01b-d0a47ec50e99-deliverable.raw.md",
+      "byteLength": 11552,
+      "sha256": "b6fe9cea28e50488bdda0ca2ba25471198d3db9c14e68ce92d1d8496284fae69"
+    },
+    {
+      "path": "/Users/louiscalata/nisi-next-private/.build/app-sandbox-protocol-claude-lm5vXd/worker-fixed-b72dce8d-ac6a-49c2-b01b-d0a47ec50e99-adjudication.md",
+      "byteLength": 6512,
+      "sha256": "ce172d51af16b3bbe341a425914b44570e5375574c35f1a5ce1094f6f92d196a"
+    }
+  ],
+  "documents": [
+    {
+      "path": "/Users/louiscalata/nisi-next-private/roadmap.md",
+      "byteLength": 306451,
+      "sha256": "59885aa09903f260346c72748a8488d3ea23a3d376ec0e135c402c77a8e13746"
+    },
+    {
+      "path": "/Volumes/SharedChami/Veritas Local Repository/SYSTEM-EQUATION.md",
+      "byteLength": 281806,
+      "sha256": "011c269d643bfee7be6e7276dfbc74a66f904dfb4bd0b30e0f8a5a10b4e3f859"
+    }
+  ],
+  "retainedEquationTailSha256": "703bfbd10ad108ac8b18f16e4f6864c69d29f4558794616b81dac7ab9522c4f3",
+  "completeIsolation": false,
+  "generatedCandidateExecuted": false,
+  "nativeProductAccepted": false,
+  "authorizing": false,
+  "developerIdUsed": false,
+  "publicationPerformed": false,
+  "savedTrustChanged": false,
+  "pending": [
+    "RUNNER_SETUP_PERSISTENCE_CANCELLATION_FAULT_TESTS",
+    "PRIVATE_EMBEDDED_XPC_SERVICE",
+    "RAW_CHILD_TELEMETRY_AND_INTERRUPTED_REAPING",
+    "ADVERSARIAL_DESCENDANT_RESOURCE_CLEANUP",
+    "ACTUAL_LIVE_OWNER_USER_ACTION",
+    "PROTECTED_CHECKER_AND_ISOLATED_RUNTIME",
+    "COMPLETE_FRESH_REPOSITORY_WORKFLOW",
+    "FULL_NATIVE_PRODUCT_ACCEPTANCE"
+  ],
+  "limits": [
+    "Fixture-adjudicated labels, not raw syscall counts/wait-status telemetry.",
+    "Two fresh runs on this Mac, not cross-platform repeatability.",
+    "Imported origin, private package/consumer and combined host were not rerun.",
+    "Sandbox/control differ by compile mode, bundle and signing/entitlements; not byte-identical.",
+    "Known containers/files retained; no broad scans or deletion."
+  ]
+}

@@ -1,0 +1,8 @@
+--- work-orders/fixed-run-journal-entry/roadmap.md (pre-state)
++++ work-orders/fixed-run-journal-entry/roadmap.md
+@@ -53,3 +53,5 @@
+ 
+ Only `src/fixed-run-journal-entry.mjs` is an executor edit target. This is an
+ evidence-composition exercise, not an execution, isolation, security or release gate.
++
++2026-09-13 — integrated (Astra; Louis “Autointegrate”, 2026-09-13 Claude session): `history/fixed-run-journal-entry.mjs` copied byte-for-byte, SHA256 `ba888a4f4d5b1b78f799045e44fbdfe79b75545847ab9b3ed2673fd7b353585c`; 11/11 migrated tests (8 functional + 3 baseline), product check 1230/1230 with zero failed/skipped/cancelled/todo, TypeScript PASS and PRIVATE_PACKAGE_FILES 27. Not closed: host wiring of the bundle to the XPC runner, real-filesystem durability, cross-process locking, crash qualification, or incident admission. Progress stays 30% — 3 of 10; no milestone closure. Receipt: `../../docs/verification/2026-09-13/evidence-chain-integration/receipt.json`.

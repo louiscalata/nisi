@@ -1,0 +1,27 @@
+✔ constants are frozen and complete (0.813916ms)
+✔ a valid leaf reads to a fresh, ordered, deep-frozen tile (1.002208ms)
+✔ a valid parent reads; children keep their order; apron keys come back sorted (integer-like keys enumerate first) (0.479959ms)
+✔ inputs may be empty and every role but assemble is a leaf role (0.66625ms)
+✔ reader never throws and refuses non-objects (0.149334ms)
+✔ hostile inputs are refused, never thrown on (64.124125ms)
+✔ unknown and missing members, at every level, before any value check (0.215041ms)
+✔ scalar members (0.396958ms)
+✔ inputs (1.593083ms)
+✔ recipe (0.388917ms)
+✔ params must sit inside the canonical codec grammar and the limits (12.014917ms)
+✔ neighbours and children (5.193792ms)
+✔ budget (0.204292ms)
+✔ apron keys must equal the neighbour set and values must be digests or null (0.164875ms)
+✔ identity is pinned to the reference vectors and ignores naming, budget, attempt and neighbour order (0.443708ms)
+✔ identity refuses what the reader refuses, and bad child outputs, with the code in the message (0.501375ms)
+✔ snapshot boundaries are exact: depth 160, 200,000 nodes, payload and key caps (81.239208ms)
+✔ unbounded payloads are refused, never thrown on, in bounded time and memory (652.064ms)
+✔ cross-level check order: root values before a later nested object's unknown or missing members (0.076542ms)
+ℹ tests 19
+ℹ suites 0
+ℹ pass 19
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 859.939208

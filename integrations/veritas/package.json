@@ -1,0 +1,17 @@
+{
+  "name": "veritas-private",
+  "version": "0.5.2-teaching",
+  "private": true,
+  "license": "UNLICENSED",
+  "type": "module",
+  "engines": {
+    "node": "24.18.0",
+    "npm": "11.16.0"
+  },
+  "packageManager": "npm@11.16.0",
+  "scripts": {
+    "check:syntax": "node --check veritas.ts",
+    "test": "node veritas.ts self-test",
+    "check": "npm run check:syntax && npm run test"
+  }
+}

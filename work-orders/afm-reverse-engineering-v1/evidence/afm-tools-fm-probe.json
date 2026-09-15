@@ -1,0 +1,1 @@
+{"fm_serve_probe":{"tools_param":"IGNORED","response":"prose, no tool_calls","conclusion":"fm serve is chat-only; tool calling only via Swift LanguageModelSession(tools:)"},"opencode_config":{"provider":"afm","model":"system","baseURL":"http://127.0.0.1:1977/v1","status":"registered but tool-dead over HTTP"}}

@@ -1,0 +1,5 @@
+exit 0
+
+> nisi-private-native-chat-types-draft@0.0.0-private test:types
+> ../../node_modules/.bin/tsc --noEmit --ignoreConfig --strict --exactOptionalPropertyTypes --noUncheckedIndexedAccess --module NodeNext --target ES2022 --types node tests/consumer/native-chat.mts
+

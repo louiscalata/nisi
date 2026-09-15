@@ -1,0 +1,109 @@
+Building for debugging...
+[2 / 7] Nisi-product
+error: SwiftCompile normal arm64 failed with a nonzero exit code. Command line:     cd /Users/louiscalata/nisi-next-private/native/macos
+    
+/Users/louiscalata/nisi-next-private/native/macos/Nisi/Sources/NisiApp/AppModel.swift:82:25: [1;31merror: [1;39mcannot find type 'ReferenceArtifactShadowRunOwner' in scope[0;0m
+  [0;36m80 |[0;0m     final class ReferenceRunReview: Identifiable {
+  [0;36m81 |[0;0m         let id = UUID()
+  [0;36m82 |[0;0m         let descriptor: [4;39mReferenceArtifactShadowRunOwner[0;0m.ReviewDescriptor
+     [0;36m|[0;0m                         `- [1;31merror: [1;39mcannot find type 'ReferenceArtifactShadowRunOwner' in scope[0;0m
+  [0;36m83 |[0;0m         let expiresAt: ContinuousClock.Instant
+  [0;36m84 |[0;0m         fileprivate let lease: ReferenceArtifactShadowRunOwner.HostLease
+
+/Users/louiscalata/nisi-next-private/native/macos/Nisi/Sources/NisiApp/AppModel.swift:84:32: [1;31merror: [1;39mcannot find type 'ReferenceArtifactShadowRunOwner' in scope[0;0m
+  [0;36m82 |[0;0m         let descriptor: ReferenceArtifactShadowRunOwner.ReviewDescriptor
+  [0;36m83 |[0;0m         let expiresAt: ContinuousClock.Instant
+  [0;36m84 |[0;0m         fileprivate let lease: [4;39mReferenceArtifactShadowRunOwner[0;0m.HostLease
+     [0;36m|[0;0m                                `- [1;31merror: [1;39mcannot find type 'ReferenceArtifactShadowRunOwner' in scope[0;0m
+  [0;36m85 |[0;0m         fileprivate let admission: ReferenceAdmission
+  [0;36m86 |[0;0m         fileprivate init(descriptor: ReferenceArtifactShadowRunOwner.ReviewDescriptor,
+
+/Users/louiscalata/nisi-next-private/native/macos/Nisi/Sources/NisiApp/AppModel.swift:86:38: [1;31merror: [1;39mcannot find type 'ReferenceArtifactShadowRunOwner' in scope[0;0m
+  [0;36m84 |[0;0m         fileprivate let lease: ReferenceArtifactShadowRunOwner.HostLease
+  [0;36m85 |[0;0m         fileprivate let admission: ReferenceAdmission
+  [0;36m86 |[0;0m         fileprivate init(descriptor: [4;39mReferenceArtifactShadowRunOwner[0;0m.ReviewDescriptor,
+     [0;36m|[0;0m                                      `- [1;31merror: [1;39mcannot find type 'ReferenceArtifactShadowRunOwner' in scope[0;0m
+  [0;36m87 |[0;0m                          lease: ReferenceArtifactShadowRunOwner.HostLease, admission: ReferenceAdmission,
+  [0;36m88 |[0;0m                          expiresAt: ContinuousClock.Instant) {
+
+/Users/louiscalata/nisi-next-private/native/macos/Nisi/Sources/NisiApp/AppModel.swift:87:33: [1;31merror: [1;39mcannot find type 'ReferenceArtifactShadowRunOwner' in scope[0;0m
+  [0;36m85 |[0;0m         fileprivate let admission: ReferenceAdmission
+  [0;36m86 |[0;0m         fileprivate init(descriptor: ReferenceArtifactShadowRunOwner.ReviewDescriptor,
+  [0;36m87 |[0;0m                          lease: [4;39mReferenceArtifactShadowRunOwner[0;0m.HostLease, admission: ReferenceAdmission,
+     [0;36m|[0;0m                                 `- [1;31merror: [1;39mcannot find type 'ReferenceArtifactShadowRunOwner' in scope[0;0m
+  [0;36m88 |[0;0m                          expiresAt: ContinuousClock.Instant) {
+  [0;36m89 |[0;0m             self.descriptor = descriptor; self.lease = lease; self.admission = admission; self.expiresAt = expiresAt
+
+/Users/louiscalata/nisi-next-private/native/macos/Nisi/Sources/NisiApp/AppModel.swift:94:36: [1;31merror: [1;39mcannot find type 'ReferenceArtifactShadowRunOwner' in scope[0;0m
+  [0;36m92 |[0;0m     private(set) var referenceRunReview: ReferenceRunReview?
+  [0;36m93 |[0;0m     private var referenceAdmission: ReferenceAdmission?
+  [0;36m94 |[0;0m     private var referenceRunOwner: [4;39mReferenceArtifactShadowRunOwner[0;0m?
+     [0;36m|[0;0m                                    `- [1;31merror: [1;39mcannot find type 'ReferenceArtifactShadowRunOwner' in scope[0;0m
+  [0;36m95 |[0;0m     private var referenceRunTask: Task<Void, Never>?
+  [0;36m96 |[0;0m     private var referenceRunTaskID: UUID?
+
+macro expansion @ObservationTracked:2:34: [1;31merror: [1;39mcannot find type 'ReferenceArtifactShadowRunOwner' in scope[0;0m
+`- /Users/louiscalata/nisi-next-private/native/macos/Nisi/Sources/NisiApp/AppModel.swift:94:68: [1;39mnote: [1;39mexpanded code originates here[0;0m
+  [0;36m92 |[0;0m     private(set) var referenceRunReview: ReferenceRunReview?
+  [0;36m93 |[0;0m     private var referenceAdmission: ReferenceAdmission?
+  [0;36m94 |[0;0m     private var referenceRunOwner: ReferenceArtifactShadowRunOwner?
+[0;36m     +--- [0;0mmacro expansion @ObservationTracked [0;36m--------------------------[0;0m
+[0;36m     |[0;0m[0;36m1 |[0;0m @ObservationIgnored
+[0;36m     |[0;0m[0;36m2 |[0;0m private  var _referenceRunOwner: [4;39mReferenceArtifactShadowRunOwner[0;0m?
+[0;36m     |[0;0m  [0;36m|[0;0m                                  `- [1;31merror: [1;39mcannot find type 'ReferenceArtifactShadowRunOwner' in scope[0;0m
+[0;36m     +----------------------------------------[0;0m[0;36m--------------------------[0;0m
+  [0;36m95 |[0;0m     private var referenceRunTask: Task<Void, Never>?
+  [0;36m96 |[0;0m     private var referenceRunTaskID: UUID?
+
+/Users/louiscalata/nisi-next-private/native/macos/Nisi/Sources/NisiApp/AppModel.swift:98:44: [1;31merror: [1;39mcannot find type 'ReferenceArtifactShadowRunOwner' in scope[0;0m
+  [0;36m96 |[0;0m     private var referenceRunTaskID: UUID?
+  [0;36m97 |[0;0m     private(set) var referenceRunState: ReferenceRunState = .unavailable
+  [0;36m98 |[0;0m     private(set) var referenceRunDelivery: [4;39mReferenceArtifactShadowRunOwner[0;0m.Delivery?
+     [0;36m|[0;0m                                            `- [1;31merror: [1;39mcannot find type 'ReferenceArtifactShadowRunOwner' in scope[0;0m
+  [0;36m99 |[0;0m     private(set) var referenceRunFailure: ReferenceArtifactShadowRunOwner.Failure?
+ [0;36m100 |[0;0m 
+
+macro expansion @ObservationTracked:2:37: [1;31merror: [1;39mcannot find type 'ReferenceArtifactShadowRunOwner' in scope[0;0m
+`- /Users/louiscalata/nisi-next-private/native/macos/Nisi/Sources/NisiApp/AppModel.swift:98:85: [1;39mnote: [1;39mexpanded code originates here[0;0m
+  [0;36m96 |[0;0m     private var referenceRunTaskID: UUID?
+  [0;36m97 |[0;0m     private(set) var referenceRunState: ReferenceRunState = .unavailable
+  [0;36m98 |[0;0m     private(set) var referenceRunDelivery: ReferenceArtifactShadowRunOwner.Delivery?
+[0;36m     +--- [0;0mmacro expansion @ObservationTracked [0;36m--------------------------[0;0m
+[0;36m     |[0;0m[0;36m1 |[0;0m @ObservationIgnored
+[0;36m     |[0;0m[0;36m2 |[0;0m private  var _referenceRunDelivery: [4;39mReferenceArtifactShadowRunOwner[0;0m.Delivery?
+[0;36m     |[0;0m  [0;36m|[0;0m                                     `- [1;31merror: [1;39mcannot find type 'ReferenceArtifactShadowRunOwner' in scope[0;0m
+[0;36m     +----------------------------------------[0;0m[0;36m--------------------------[0;0m
+  [0;36m99 |[0;0m     private(set) var referenceRunFailure: ReferenceArtifactShadowRunOwner.Failure?
+ [0;36m100 |[0;0m 
+
+/Users/louiscalata/nisi-next-private/native/macos/Nisi/Sources/NisiApp/AppModel.swift:99:43: [1;31merror: [1;39mcannot find type 'ReferenceArtifactShadowRunOwner' in scope[0;0m
+  [0;36m97 |[0;0m     private(set) var referenceRunState: ReferenceRunState = .unavailable
+  [0;36m98 |[0;0m     private(set) var referenceRunDelivery: ReferenceArtifactShadowRunOwner.Delivery?
+  [0;36m99 |[0;0m     private(set) var referenceRunFailure: [4;39mReferenceArtifactShadowRunOwner[0;0m.Failure?
+     [0;36m|[0;0m                                           `- [1;31merror: [1;39mcannot find type 'ReferenceArtifactShadowRunOwner' in scope[0;0m
+ [0;36m100 |[0;0m 
+ [0;36m101 |[0;0m #if DEBUG
+
+macro expansion @ObservationTracked:2:36: [1;31merror: [1;39mcannot find type 'ReferenceArtifactShadowRunOwner' in scope[0;0m
+`- /Users/louiscalata/nisi-next-private/native/macos/Nisi/Sources/NisiApp/AppModel.swift:99:83: [1;39mnote: [1;39mexpanded code originates here[0;0m
+  [0;36m97 |[0;0m     private(set) var referenceRunState: ReferenceRunState = .unavailable
+  [0;36m98 |[0;0m     private(set) var referenceRunDelivery: ReferenceArtifactShadowRunOwner.Delivery?
+  [0;36m99 |[0;0m     private(set) var referenceRunFailure: ReferenceArtifactShadowRunOwner.Failure?
+[0;36m     +--- [0;0mmacro expansion @ObservationTracked [0;36m--------------------------[0;0m
+[0;36m     |[0;0m[0;36m1 |[0;0m @ObservationIgnored
+[0;36m     |[0;0m[0;36m2 |[0;0m private  var _referenceRunFailure: [4;39mReferenceArtifactShadowRunOwner[0;0m.Failure?
+[0;36m     |[0;0m  [0;36m|[0;0m                                    `- [1;31merror: [1;39mcannot find type 'ReferenceArtifactShadowRunOwner' in scope[0;0m
+[0;36m     +----------------------------------------[0;0m[0;36m--------------------------[0;0m
+ [0;36m100 |[0;0m 
+ [0;36m101 |[0;0m #if DEBUG
+
+/Users/louiscalata/nisi-next-private/native/macos/Nisi/Sources/NisiApp/AppModel.swift:107:16: [1;31merror: [1;39mcannot find type 'ReferenceArtifactShadowRunOwner' in scope[0;0m
+ [0;36m105 |[0;0m     private var referenceReviewClockForTesting: (@MainActor () -> ContinuousClock.Instant)?
+ [0;36m106 |[0;0m     static func forReferenceRunTests(
+ [0;36m107 |[0;0m         owner: [4;39mReferenceArtifactShadowRunOwner[0;0m,
+     [0;36m|[0;0m                `- [1;31merror: [1;39mcannot find type 'ReferenceArtifactShadowRunOwner' in scope[0;0m
+ [0;36m108 |[0;0m         analyzer: any AdvisoryOrchestrator = DeterministicOnlyOrchestrator(),
+ [0;36m109 |[0;0m         platformAdmission: PlatformAdmission = PlatformRequirements.currentAdmission(),
+Failed frontend command:
+/Applications/Xcode-27.0.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/swift-frontend -frontend -emit-module -experimental-skip-non-inlinable-function-bodies-without-types /Users/louiscalata/nisi-next-private/native/macos/Nisi/Sources/NisiApp/AppModel.swift /Users/louiscalata/nisi-next-private/native/macos/Nisi/Sources/NisiApp/IncidentHistoryCoordinator.swift /Users/louiscalata/nisi-next-private/native/macos/Nisi/Sources/NisiApp/MenuBarView.swift /Users/louiscalata/nisi-next-private/native/macos/Nisi/Sources/NisiApp/NisiApp.swift /Users/louiscalata/nisi-next-private/native/macos/Nisi/Sources/NisiApp/PrivateVerifiedFileWriter.swift /Users/louiscalata/nisi-next-private/native/macos/Nisi/Sources/NisiApp/ShellTruthV1.swift -target arm64-apple-macos27.0 -disable-cross-import-overlay-search -swift-module-cross-import Darwin /Applications/Xcode-27.0.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/usr/include/Darwin.swiftcrossimport/xlocale.swiftoverlay -load-resolved-plugin /Applications/Xcode-27.0.app/Contents/Developer/Platforms/MacOSX.platform/Developer/usr/lib/swift/host/plugins/libFoundationMacros.dylib\#/Applications/Xcode-27.0.app/Contents/Developer/Platforms/MacOSX.platform/Developer/usr/bin/swift-plugin-server\#FoundationMacros -load-resolved-plugin /Applications/Xcode-27.0.app/Contents/Developer/Platforms/MacOSX.platform/Developer/usr/lib/swift/host/plugins/libFoundationModelsMacros.dylib\#/Applications/Xcode-27.0.app/Contents/Developer/Platforms/MacOSX.platform/Developer/usr/bin/swift-plugin-server\#FoundationModelsMacros -load-resolved-plugin /Applications/Xcode-27.0.app/Contents/Developer/Platforms/MacOSX.platform/Developer/usr/lib/swift/host/plugins/libObservationMacros.dylib\#/Applications/Xcode-27.0.app/Contents/Developer/Platforms/MacOSX.platform/Developer/usr/bin/swift-plugin-server\#ObservationMacros -load-resolved-plugin /Applications/Xcode-27.0.app/Contents/Developer/Platforms/MacOSX.platform/Developer/usr/lib/swift/host/plugins/libPreviewsMacros.dylib\#/Applications/Xcode-27.0.app/Contents/Developer/Platforms/MacOSX.platform/Developer/usr/bin/swift-plugin-server\#PreviewsMacros -load-resolved-plugin /Applications/Xcode-27.0.app/Contents/Developer/Platforms/MacOSX.platform/Developer/usr/lib/swift/host/plugins/libSwiftMacros.dylib\#/Applications/Xcode-27.0.app/Contents/Developer/Platforms/MacOSX.platform/Developer/usr/bin/swift-plugin-server\#SwiftMacros -load-resolved-plugin /Applications/Xcode-27.0.app/Contents/Developer/Platforms/MacOSX.platform/Developer/usr/lib/swift/host/plugins/libSwiftUIMacros.dylib\#/Applications/Xcode-27.0.app/Contents/Developer/Platforms/MacOSX.platform/Developer/usr/bin/swift-plugin-server\#SwiftUIMacros -disable-implicit-swift-modules -Xcc -fno-implicit-modules -Xcc -fno-implicit-module-maps -explicit-swift-module-map-file /Users/louiscalata/nisi-next-private/.build/nisi-overlay-probe-60520/out/Intermediates.noindex/Nisi.build/Debug/Nisi-p.build/Objects-normal/arm64/NisiApp-dependencies-1.json -Xllvm -aarch64-use-tbi -enable-objc-interop -stack-check -sdk /Applications/Xcode-27.0.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX27.0.sdk -I /Users/louiscalata/nisi-next-private/.build/nisi-overlay-probe-60520/out/Products/Debug -Isystem /Applications/Xcode-27.0.app/Contents/Developer/Platforms/MacOSX.platform/Developer/usr/lib -F /Users/louiscalata/nisi-next-private/.build/nisi-overlay-probe-60520/out/Products/Debug/PackageFrameworks -F /Users/louiscalata/nisi-next-private/.build/nisi-overlay-probe-60520/out/Products/Debug -F /Applications/Xcode-27.0.app/Contents/Developer/Platforms/MacOSX.platform/Developer/Library/Frameworks -module-cache-path /Users/louiscalata/nisi-next-private/.build/nisi-overlay-probe-60520/out/Intermediates.noindex/SwiftExplicitPrecompiledModules -color-diagnostics -Xcc -fcolor-diagnostics -enable-testing -g -debug-info-format\=dwarf -dwarf-version\=5 -swift-version 6 -Onone -D SWIFT_PACKAGE -D DEBUG -D Xcode -serialize-debugging-options -enable-experimental-feature DebugDescriptionMacro -empty-abi-descriptor -validate-clang-modules-once -clang-build-session-file /Users/louiscalata/nisi-next-private/.build/nisi-overlay-probe-60520/out/ModuleCache.noindex/Session.modulevalidation -Xcc -working-directory -Xcc /Users/louiscalata/nisi-next-private/native/macos -enable-anonymous-context-mangled-names -file-compilation-dir /Users/louiscalata/nisi-next-private/native/macos -Xcc -fmodule-map-file\=/Users/louiscalata/nisi-next-private/.build/nisi-overlay-probe-60520/out/Intermediates.noindex/GeneratedModuleMaps/VeritasSQLiteSupport.modulemap -Xcc -D_LIBCPP_HARDENING_MODE\=_LIBCPP_HARDENING_MODE_DEBUG -Xcc -ivfsstatcache -Xcc /Users/louiscalata/nisi-next-private/.build/nisi-overlay-probe-60520/out/SDKStatCaches.noindex/macosx27.0-26A5388f-a0facfad118c1a7a18f0aad9463f65492d179787c63bc85d063a36527673f623.sdkstatcache -Xcc -fmodules-prune-interval\=86400 -Xcc -fmodules-prune-after\=345600 -Xcc -I/Users/louiscalata/nisi-next-private/integrations/veritas/native/macos/CodenameVeritasFramework/Sources/VeritasSQLiteSupport/include -Xcc -I/Users/louiscalata/nisi-next-private/.build/nisi-overlay-probe-60520/out/Products/Debug/include -Xcc -I/Users/louiscalata/nisi-next-private/.build/nisi-overlay-probe-60520/out/Intermediates.noindex/Nisi.build/Debug/Nisi-p.build/DerivedSources-normal/arm64 -Xcc -I/Users/louiscalata/nisi-next-private/.build/nisi-overlay-probe-60520/out/Intermediates.noindex/Nisi.build/Debug/Nisi-p.build/DerivedSources/arm64 -Xcc -I/Users/louiscalata/nisi-next-private/.build/nisi-overlay-probe-60520/out/Intermediates.noindex/Nisi.build/Debug/Nisi-p.build/DerivedSources -Xcc -DSWIFT_PACKAGE -Xcc -DDEBUG\=1 -no-auto-bridging-header-chaining -module-name NisiApp -package-name nisi -const-gather-protocols-file /Users/louiscalata/nisi-next-private/.build/nisi-overlay-probe-60520/out/Intermediates.noindex/Nisi.build/Debug/Nisi-p.build/Objects-normal/arm64/Nisi_const_extract_protocols.json -disable-clang-spi -clang-target arm64-apple-macos27.0 -target-sdk-version 27.0 -target-sdk-name macosx27.0 -in-process-plugin-server-path /Applications/Xcode-27.0.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/host/libSwiftInProcPluginServer.dylib -emit-module-doc-path /Users/louiscalata/nisi-next-private/.build/nisi-overlay-probe-60520/out/Intermediates.noindex/Nisi.build/Debug/Nisi-p.build/Objects-normal/arm64/NisiApp.swiftdoc -emit-module-source-info-path /Users/louiscalata/nisi-next-private/.build/nisi-overlay-probe-60520/out/Intermediates.noindex/Nisi.build/Debug/Nisi-p.build/Objects-normal/arm64/NisiApp.swiftsourceinfo -serialize-diagnostics-path /Users/louiscalata/nisi-next-private/.build/nisi-overlay-probe-60520/out/Intermediates.noindex/Nisi.build/Debug/Nisi-p.build/Objects-normal/arm64/Nisi-primary-emit-module.dia -emit-dependencies-path /Users/louiscalata/nisi-next-private/.build/nisi-overlay-probe-60520/out/Intermediates.noindex/Nisi.build/Debug/Nisi-p.build/Objects-normal/arm64/Nisi-primary-emit-module.d -parse-as-library -o /Users/louiscalata/nisi-next-private/.build/nisi-overlay-probe-60520/out/Intermediates.noindex/Nisi.build/Debug/Nisi-p.build/Objects-normal/arm64/NisiApp.swiftmodule -emit-abi-descriptor-path /Users/louiscalata/nisi-next-private/.build/nisi-overlay-probe-60520/out/Intermediates.noindex/Nisi.build/Debug/Nisi-p.build/Objects-normal/arm64/NisiApp.abi.json
+error: Build failed

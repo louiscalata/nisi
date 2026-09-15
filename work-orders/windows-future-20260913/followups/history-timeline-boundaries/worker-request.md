@@ -1,0 +1,14 @@
+Private Windows future-code TEST packet. You have no file/test tools. Draft one new file tests/windows-boundaries.test.mjs only. Allowed imports: node:test, node:assert/strict, named function from ../src/index.mjs. No other imports, IO, process, network, timers, eval, dynamic code, dependencies, source edits or existing-test edits. Do not claim execution. Input domain ordinary JSON; exact object keys, unique bounded IDs, bounded strings length1..128, array cap200. Reject malformed via {status:'REFUSED',reason:'INVALID_INPUT',authorizing:false}; valid outputs copy rows, never mutate input. Full function-specific contract:
+Named export buildTimeline(input).
+Input {runId,events}; runId bounded string. Event exact {id,attempt,stage,status,createdAt,durationMs,receiptId}; id unique bounded string; attempt and createdAt nonnegative safe integers excluding -0; stage bounded string; status PASS|FAIL|NOT_RUN|ERROR|INCONCLUSIVE|CANCELLED|TIMED_OUT; durationMs null or finite>=0 excluding -0; receiptId null or bounded string. Output {schemaVersion:1,status:'READY',runId,events:[copied event fields then sequence starting1],attempts:[{attempt,eventIds,unknownDurations}],authorizing:false}. Sort events by attempt ascending then createdAt ascending then original input index. Attempts ascending; eventIds follow sorted event order; unknownDurations count null duration in each attempt. Duplicate stage/time observations with distinct ids remain separate. Preserve every status exactly. Empty events/attempts []. Do NOT infer success, outcome, completeness, recovery, authority or auto-resume.
+
+Independent boundary requirements:
+Write five test groups:
+1. Exactly200 events IDs e0..e199, same attempt2/createdAt10/stage check/status PASS/receiptId null; even zero-based indexes duration null, odd duration1.5. Exact input order, sequence1..200, one group attempt2 ordered eventIds and unknownDurations100.
+2. Strings exactly128 code units for runId,id,stage,receiptId accepted unchanged, attempt0/time0/status INCONCLUSIVE/duration0.
+3. attempt and createdAt each MAX_SAFE accepted unchanged.
+4. Two events duration Number.MAX_VALUE and1.5 copied unchanged and unknownDurations0; finite nonnegative durations are not safe-integer capped.
+5. Supply out of order: A attemptMAX_SAFE/timeMAX_SAFE; B attemptMAX_SAFE-1/timeMAX_SAFE; C attemptMAX_SAFE/timeMAX_SAFE-1. Expected IDs B,C,A, sequence1,2,3; two ordered groups. Preserve statuses chosen from contract; no inference.
+Assert authorizing:false; literal expected IDs/order, do not reuse production comparator.
+
+Return ONLY one closed JSON object {"schemaVersion":1,"files":[{"path":"tests/windows-boundaries.test.mjs","content":"complete test source"}],"notes":["static draft; owner must review and run"]}. No fences or repeated objects; notes top level. Keep tests compact, complete, <=130 lines. Expected results must be justified by the contract, not adapted to implementation.

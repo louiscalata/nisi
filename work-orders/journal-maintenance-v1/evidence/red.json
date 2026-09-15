@@ -1,0 +1,13 @@
+{
+  "status": "RED_OBSERVED",
+  "sourceSha256": "c1267ff9ad2716a038107af96e848d8bdf66391b2ba7d04fc479df25b7e3210a",
+  "exitCode": 1,
+  "signal": null,
+  "error": null,
+  "tests": 32,
+  "pass": 2,
+  "fail": 30,
+  "cancelled": 0,
+  "skipped": 0,
+  "todo": 0
+}

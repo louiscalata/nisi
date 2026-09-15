@@ -1,0 +1,62 @@
+{
+  "schemaVersion": 1,
+  "items": [
+    {
+      "id": "adoption-validation",
+      "title": "Developer adoption is now a separate, unrun validation step",
+      "queries": [
+        {
+          "id": "roadmap-adoption-tasks",
+          "source": {
+            "label": "Private Nisi roadmap",
+            "files": [
+              {
+                "label": "roadmap.md"
+              }
+            ],
+            "metricDefinitions": [
+              {
+                "label": "Unaided useful-task completion",
+                "definition": "The planned measure counts eligible started trials that finish a task, pass the fixed acceptance check and demonstrate report understanding without out-of-protocol help."
+              },
+              {
+                "label": "Setup and integration effort",
+                "definition": "The planned diagnostics record hands-on setup and debugging, end-to-end elapsed time, assistance and the integration work needed for an initial and second task."
+              }
+            ],
+            "caveats": [
+              "No developer trial or baseline measurement has been run; no numerical adoption or time-saving target is established.",
+              "Assisted, failed and timed-out eligible trials remain recorded. One tester does not establish broad demand.",
+              "An AI or author rehearsal is not independent human usability evidence."
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "private-trial-boundary",
+      "title": "External testing and public changes remain approval-gated",
+      "queries": [
+        {
+          "id": "roadmap-private-scope",
+          "summary": "The plan permits private trial preparation, not recruitment or transmission of the confidential merged implementation.",
+          "source": {
+            "label": "Private Nisi development boundaries",
+            "files": [
+              {
+                "label": "roadmap.md"
+              },
+              {
+                "label": "SYSTEM-EQUATION.md"
+              }
+            ],
+            "caveats": [
+              "The existing exact-artifact legal and engineering gates plus scoped disclosure approval still apply.",
+              "The description experimental developer library does not authorize publication of the private merger."
+            ]
+          }
+        }
+      ]
+    }
+  ]
+}

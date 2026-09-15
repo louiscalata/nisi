@@ -1,0 +1,123 @@
+✔ empty input returns the exact ready shape with zero totals (0.825042ms)
+✖ known zero counters and duration remain numeric zero (1.626958ms)
+✔ nullable metrics produce row and column unknowns without inventing zeros (0.157375ms)
+✔ reasoning tokens are reported as a subset and are not double-counted in totalTokens (0.085416ms)
+✔ multiple rows sum each known column and count unknown rows (0.099083ms)
+✖ input is exact and invalid ordinary values are refused (0.268875ms)
+✔ provider and model may be null but non-null labels must be bounded nonempty strings (0.115625ms)
+✔ negative, unsafe, negative-zero and invalid duration metrics are refused (0.088292ms)
+✔ known reasoning count with unknown output does not invent a contradiction (0.078042ms)
+✖ numeric overflow makes the affected totals null (0.113333ms)
+✔ output is cloned and does not mutate or alias the input (0.108666ms)
+✔ identical input is deterministic (0.064625ms)
+✔ private dependency-free ESM package (0.729792ms)
+✔ named synchronous API placeholder exists (0.059083ms)
+✔ unknown input on an earlier row cannot skip independent later columns (0.823333ms)
+✔ known reasoning/output contradiction is refused even when input tokens unknown (0.093125ms)
+✖ combined input and output overflow stays null although column sums individually fit (0.161666ms)
+✔ unknown reasoning on one row does not skip later duration sums (0.163541ms)
+ℹ tests 18
+ℹ suites 0
+ℹ pass 14
+ℹ fail 4
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 46.92275
+
+✖ failing tests:
+
+test at tests/acceptance.test.mjs:20:1
+✖ known zero counters and duration remain numeric zero (1.626958ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly deep-equal:
+  + actual - expected
+  
+  + undefined
+  - [
+  -   {
+  -     durationMs: 0,
+  -     id: 'r1',
+  -     inputTokens: 0,
+  -     model: 'model-a',
+  -     outputTokens: 0,
+  -     provider: 'local',
+  -     reasoningTokens: 0,
+  -     stage: 'draft',
+  -     totalTokens: 0
+  -   }
+  - ]
+  
+      at TestContext.<anonymous> (file:///Users/louiscalata/nisi-next-private/work-orders/windows-future-20260913/packs/usage-table/tests/acceptance.test.mjs:23:10)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1325:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:911:18)
+      at Test.postRun (node:internal/test_runner/test:1465:19)
+      at Test.run (node:internal/test_runner/test:1390:12)
+      at async startSubtestAfterBootstrap (node:internal/test_runner/harness:385:3) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: undefined,
+    expected: [ { id: 'r1', stage: 'draft', provider: 'local', model: 'model-a', inputTokens: 0, outputTokens: 0, reasoningTokens: 0, durationMs: 0, totalTokens: 0 } ],
+    operator: 'deepStrictEqual',
+    diff: 'simple'
+  }
+
+test at tests/acceptance.test.mjs:50:1
+✖ input is exact and invalid ordinary values are refused (0.268875ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly deep-equal:
+  + actual - expected
+  
+    {
+      authorizing: false,
+  +   rows: [],
+  +   runId: 'r',
+  +   schemaVersion: 1,
+  +   status: 'READY',
+  +   totals: {
+  +     durationMs: 0,
+  +     inputTokens: 0,
+  +     outputTokens: 0,
+  +     reasoningTokens: 0,
+  +     totalTokens: 0
+  +   },
+  +   unknownRows: 0
+  -   reason: 'INVALID_INPUT',
+  -   status: 'REFUSED'
+    }
+  
+      at TestContext.<anonymous> (file:///Users/louiscalata/nisi-next-private/work-orders/windows-future-20260913/packs/usage-table/tests/acceptance.test.mjs:56:12)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1325:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:911:18)
+      at Test.postRun (node:internal/test_runner/test:1465:19)
+      at Test.run (node:internal/test_runner/test:1390:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:911:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: { schemaVersion: 1, status: 'READY', runId: 'r', rows: [], totals: { inputTokens: 0, outputTokens: 0, reasoningTokens: 0, totalTokens: 0, durationMs: 0 }, unknownRows: 0, authorizing: false },
+    expected: { status: 'REFUSED', reason: 'INVALID_INPUT', authorizing: false },
+    operator: 'deepStrictEqual',
+    diff: 'simple'
+  }
+
+test at tests/acceptance.test.mjs:83:1
+✖ numeric overflow makes the affected totals null (0.113333ms)
+  TypeError: Cannot read properties of undefined (reading '0')
+      at TestContext.<anonymous> (file:///Users/louiscalata/nisi-next-private/work-orders/windows-future-20260913/packs/usage-table/tests/acceptance.test.mjs:88:24)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1325:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:911:18)
+      at Test.postRun (node:internal/test_runner/test:1465:19)
+      at Test.run (node:internal/test_runner/test:1390:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:911:7)
+
+test at tests/owner-regressions.test.mjs:7:1
+✖ combined input and output overflow stays null although column sums individually fit (0.161666ms)
+  TypeError: Cannot read properties of undefined (reading '0')
+      at TestContext.<anonymous> (file:///Users/louiscalata/nisi-next-private/work-orders/windows-future-20260913/packs/usage-table/tests/owner-regressions.test.mjs:7:226)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1325:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:911:18)
+      at Test.postRun (node:internal/test_runner/test:1465:19)
+      at Test.run (node:internal/test_runner/test:1390:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:911:7)

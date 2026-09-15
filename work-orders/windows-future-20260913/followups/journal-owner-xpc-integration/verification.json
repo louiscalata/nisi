@@ -1,0 +1,50 @@
+{
+  "schemaVersion": 1,
+  "checkedAt": "2026-09-14T00:37:18.875Z",
+  "status": "ACCEPTED_TEST_EXTENSION_ONLY",
+  "jobs": [
+    {
+      "phase": "current-xpc-integration-test-draft",
+      "id": "mac-20260913-172626-329122be7b136038214954d341002c9c",
+      "requestedModel": "qwen3-coder-next",
+      "status": "success_unusable_contract_and_envelope",
+      "submittedAt": "2026-09-14T00:26:26.527Z",
+      "evidence": "followups/journal-owner-xpc-integration/draft-1.json",
+      "reportedModel": "Qwen3-Coder-Next 80B-A3B Q4_K_M",
+      "elapsedSeconds": 76
+    },
+    {
+      "phase": "current-xpc-integration-test-revision-1",
+      "id": "mac-20260913-173003-70904eacea2a6790d78f16041988e609",
+      "requestedModel": "qwen3-coder-next",
+      "status": "success_source_required_owner_corrections",
+      "submittedAt": "2026-09-14T00:30:03.795Z",
+      "evidence": "followups/journal-owner-xpc-integration/revision-1.json",
+      "reportedModel": "Qwen3-Coder-Next 80B-A3B Q4_K_M",
+      "elapsedSeconds": 44.6
+    }
+  ],
+  "sourceSha256": "80347a4794d664a6d806d5e0494bb0f2f551644d546c7e5353e7933d147903ef",
+  "provenance": "QWEN_DRAFT_WITH_EXPLICIT_OWNER_TEST_CORRECTIONS",
+  "corrections": [
+    "Set INCONCLUSIVE on adverse synthetic input before projection",
+    "Read inspect result snapshot envelope correctly",
+    "Add omitted entryId, recovery, source-nonmutation and authority assertions; no expected outcome weakened"
+  ],
+  "checks": {
+    "workerRevisionPass": 0,
+    "workerRevisionFail": 4,
+    "ownerCorrectedPass": 4,
+    "ownerCorrectedFail": 0,
+    "mutantPass": 3,
+    "mutantFail": 1,
+    "total": 4
+  },
+  "originalProtected": {
+    "checked": 30,
+    "changed": []
+  },
+  "mutantEvidence": "/Users/louiscalata/nisi-next-private/work-orders/journal-owner-v2/evidence/xpc-mutant-8fqltN/verification.json",
+  "combinedOwnerEvidence": "/Users/louiscalata/nisi-next-private/work-orders/journal-owner-v2/evidence/owner-verification.json",
+  "scope": "Four synthetic current-XPC projector to owner successor tests; not module independent review or native acceptance"
+}

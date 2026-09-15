@@ -1,0 +1,959 @@
+{
+  "schemaVersion": "nisi-native-chat-checkpoint-v1",
+  "observedAt": "2026-09-13T03:31:03.085Z",
+  "status": "PASS_SCOPED",
+  "scope": "SEPARATE_NATIVE_ADAPTER_AND_ONE_OPERATION_OUTPUT; V3_HOST_AND_CANDIDATE_ADMISSION_PENDING",
+  "roadmapProgress": {
+    "percent": 30,
+    "closedMajorMilestones": 3,
+    "totalMajorMilestones": 10,
+    "basis": "equal-weight NX closure; not effort, accuracy, time or release readiness"
+  },
+  "sourceManifest": {
+    "adapters/local-chat.mjs": "ca26b49502b27f494487f5da32edfc13a9d8b85cb02da43b58c4417babb3e842",
+    "adapters/native-chat-protocol-v1.mjs": "44468cb8b6ebc97e1821405a5add4916a97bf82b0ffeaa2076f85e79e12255f3",
+    "adapters/native-chat-v1.mjs": "45f8149f2f526cab75ba5758aed8b05aeea136fa4cb107a8a45196045ce205bd",
+    "evaluation/fixtures/paired-example-v1.mjs": "2b3fd175c2408737ac8d646a19f576de7ec81a52e5fff61ab80b3fc530d58249",
+    "evaluation/intake-v1.mjs": "7c338bf7419c236bc8a8c912266f470e68ff3711848f777c56e68f0ef7c7912a",
+    "evaluation/metrics-v1.mjs": "a11f1247df37b89c661fe3033e8d88a0c347038114bd9192ac48620d52ba0e91",
+    "evaluation/paired-trial-v1.mjs": "cb75c8ac76deb31280fc356064e448b508e4fb8cc48cddaef03f461a70df943c",
+    "examples/repository-live-model.mjs": "d29cc2c86fb92e81ff785fa2a6e5736c85544edc94de4675b130e827f8196e07",
+    "examples/repository-task/fixtures/baseline/README.md": "b6ce54912db6b4605d19e4e0fdce5cc1e680de4a57bb1af82ca7b737ff578011",
+    "examples/repository-task/fixtures/baseline/config.json": "fc2001f12401983fa2632ee17e9879b6a1595f0de616e6e1484083c0c3324f04",
+    "examples/repository-task/fixtures/baseline/retry-settings.mjs": "c4932fa2ce0c73c52d385d25aeab64bed602179abced3b38fd525a31fe47bb10",
+    "examples/repository-task/fixtures/harness/check-retry-settings.mjs": "e07a9bd6a63a52ac6977734c61ea0a210c71ec2c331951f4d94b44159c8245c5",
+    "examples/repository-task/fixtures/live-baseline/retry-settings.mjs": "65525edd21e81c5de1791c6f47fa404ffea10f7ea332545a8e295afdd6270254",
+    "examples/repository-task/fixtures/live-repair/retry-settings.mjs": "73369f8d0cc0cefbb082c65388c3652c7602254ab5b6fbab138e08078b568112",
+    "examples/repository-task/fixtures/repair/retry-settings.mjs": "7de9f6b2cd29489563930f9131a0e0b077070bb50b52df8b5bd27aaf24b55ffd",
+    "examples/repository-task/reviewed-live-fixture-v1.mjs": "292bd67a2e4132c9c5122f5d716e7eeb3cdd3a6ebf5362470d046b6d025add36",
+    "hosts/repository/disk-capture.mjs": "972c8cd690a3f34253c9f4722c336b6e847dffe1b0c924aa8492384c800ae547",
+    "hosts/repository/node-adapter-v1.mjs": "6de05634f7cccd774c8072a000b556f49f111ccedfe1e37d19be37dbd036fa5d",
+    "hosts/repository/node-executor-v1.mjs": "cd999c0efe061c0706842cc06867f62dc59927553615db9e2f2af24523872258",
+    "hosts/repository/node-suite-v1.mjs": "5ed5cd9ca407b281379d6b67d93df60ab3b3a45676b6a4e82c7bfc474d29e2c2",
+    "hosts/repository/proposed-changes-v1.mjs": "045fe0d77b3b6d4d95c406964b603b09b2aeabe131cde267b41806114379f55d",
+    "hosts/repository/reviewed-live-model-v1.mjs": "741d7df962dccbba993481497779afd2bbd4253487532c5dd5bd51522be9247e",
+    "hosts/repository/reviewed-workflow-v1.mjs": "6ecc49425ae28ec1923445c8fbe79df4478b6361a5e2799b82ded24acf74dc33",
+    "hosts/repository/snapshot-contract.mjs": "2b52c23bac3a817769b7892eed71baba79cb81954b6a63724d107a9c258ba13f",
+    "hosts/repository/task-workspace-v1.mjs": "08fdb59d15d21e94914d00390e8f73ee6245b0eabec64e7c052585f23638f963",
+    "hosts/swift-verifier/adapter.mjs": "c92c21fcbf7fe91d949f60bc51a96d4cb5f185be9172d0a214c4e87d2b649388",
+    "hosts/swift-verifier/build.mjs": "ae063b627e853fc0b651e3db103dd1af01c6815374d36781e79270b7d48934fb",
+    "hosts/swift-verifier/check-plan-v1.mjs": "a30ff5596e2bebc376cfa0da84be1c00eca8443cc2b37f5b1b7da42ef44b658a",
+    "hosts/swift-verifier/executor.mjs": "3b233203d7e9d2c2e1f5aa3c458685e86f15d40fc07b2542e7b6bb48a2555db4",
+    "hosts/swift-verifier/group-adapter-v1.mjs": "471ae91cfc78a82abcb425ed75cd16aec2a76d8123cdc9b3e4063c536382e774",
+    "hosts/swift-verifier/group-contract-utils.mjs": "8fc51ac107abd68adb1c72683ccfa2af9c74ac077c5506bf89525f972b14ac82",
+    "hosts/swift-verifier/main.swift": "0d4e15b22b3231d990cfd5e7de1c52f4fdfebf4f4ab6da15b0ae22c74cea910c",
+    "hosts/swift-verifier/owned-child.mjs": "ff9bbef97b3401afd394a98c8bff4fe273a4b6af3a1f852bdf5bf872fd4474df",
+    "hosts/swift-verifier/protocol.mjs": "7557d81836f263c13e06ac7613ebfa61ce7fbeeb7b0f7db98889473806f322cc",
+    "hosts/swift-verifier/reservation.mjs": "6d7573d23a3d2b0ecdb4b396cb58f4f9ae8e5997190616c08c1b93bd0ab376fd",
+    "integrations/veritas/native/macos/CodenameVeritasFramework/Sources/VeritasCore/ArtifactSnapshot.swift": "013e796d11a844dda345f223894a8d76713b19b0f46f6a7f84019aa5b7bc0f22",
+    "integrations/veritas/native/macos/CodenameVeritasFramework/Sources/VeritasCore/DeterministicChecks.swift": "4d234fd389895cf0a55bf7daf0f5d082077ab3677880165f7d0e1236a88be474",
+    "integrations/veritas/native/macos/CodenameVeritasFramework/Sources/VeritasCore/StrictJSONDocumentValidator.swift": "bd6173e012890f2fde2e26be94c5e577cd9e098841bdad98a377b1c88dff1b2c",
+    "integrity/record-utils.mjs": "e46eb1a01170231bd6873771cd256740fd3dde6bcb01d418f6f7d7a75e6139ff",
+    "package-lock.json": "396284ceeb20491293a83094a9558cb32368bb9ccc71b75e0d10da52e86b0912",
+    "package.json": "6b5c0271f5ad95d62af409c9782a2abb0b18a9844356c01a2fcf469063f7897f",
+    "receipts/host-run-bundle-v2.mjs": "406936e6523f58323634fab1c9f560d671d58e1c343d2082f081f8a7810061fe",
+    "receipts/live-usage-v1.mjs": "f015e2973567e21329d4e79de8abc6e1f664370eff3f2338aad31490fb4791a5",
+    "receipts/repository-execution-v1.mjs": "7317e06c094bdf33e51645ce39348fc9e2d5a11ad0921af87434e34c45828cc2",
+    "receipts/repository-live-model-run-v1.mjs": "7a17b15f5d649c9255da8b09c531f5192b7d6e14ba5db928c878e1ccd13dc293",
+    "receipts/repository-run-v1.mjs": "50c1e86cec48fc666aae64b3285f9acda8e20968d5f10f0d9313e0e22051d697",
+    "receipts/swift-static-group-v1.mjs": "e07e9a361ef808f8d652f1542fec54085d4f341fd093a582f2e86baf77e4cdbb",
+    "receipts/swift-static-run-v1.mjs": "454e8657a2a2aaf6a016de5d09c5d65512d53ffb9db2a6843e05471450f8c8ef",
+    "tests/fixtures/local-chat-response-cases.json": "c05bb7e645152cc485600085eb97c95225dcc4ad39fb571c15ff9d40bd983e1e",
+    "tests/fixtures/native-response-cases.json": "64b8cc5a2050d541d917b4b459392114debe1d374579bfe7a76c5ff0ce7a0efb",
+    "tests/helpers/live-cli-side-effect-guard.mjs": "f1ed9b8f69c41c6027b9b8d7ed0149c1fee970d00109eaac0e7bb0714d08c00e",
+    "tests/helpers/local-chat-expected-cases.mjs": "1e1f3af35720944e447d60600487a7a9111da6911f82322c70a7750fa5a5e537",
+    "tests/helpers/native-chat-fixture.mjs": "3d5029a0d73880a055d8823d9ca629c40d40e55795d2abe1192345a8ecbb0b52",
+    "tests/helpers/native-response-expected.mjs": "76724d266bcbd2576079df1517ee8be7cd7b3e8ed17894a197e20b75660ed4af",
+    "tests/helpers/node-repository-fixture.mjs": "db034a91d1ad0bfcb2b22df9b598d3e276d260c493002319e9d191e10ce2cd85",
+    "tests/helpers/repository-live-run-fixture.mjs": "7d60a9a773bff178a4abc111e7cf679e71619d34b9b45417917f8be5a5dc657a",
+    "tests/helpers/repository-run-fixture.mjs": "2877df81895185e35c5e5dd419dbb161bde5f23529f6459ed5e0128b2780b121",
+    "tests/helpers/reviewed-live-model-fixture.mjs": "539eb8530170b9f85705cd20af45b9be01463343f7ddb1691860f2628d9b5cbb",
+    "tests/helpers/swift-group-fixture.mjs": "2f8e5b98fbf2fb1757fe25bc2d78b427e30cccbdaccb64d618922f925e077d60",
+    "tests/host-run-bundle-v2.test.mjs": "ba3f06af454abd31b2b7426aedc7b04b63e7efea19696df7c24a6ff187d112cb",
+    "tests/live-output-mode.test.mjs": "a573d477e7463f8f323079bc1ba72e1d775b2116da2ebaf6f159e097258d62b7",
+    "tests/live-usage.test.mjs": "3be9d19ee463641ea521179ff31874127c5e5654f48f0ab14ced6e1dcdf82ffd",
+    "tests/local-chat-output-mode.test.mjs": "21a36fc3c14dad1f080fc16293f20443b7f90f30ddb6c12941e46abdd15b1d2c",
+    "tests/local-chat-response-matrix.test.mjs": "c4d14ba74952876b2d07061ed60ca5948ac4d26ee2e0f908d228b406fdeafe4c",
+    "tests/native-chat.test.mjs": "0257a2622b19939de5da09b557167e7c49a425f41d109e42b91fd0f820712c37",
+    "tests/native-response-matrix.test.mjs": "c5563856227f4b2d387681b8a1943834ca514706d77ffd057b76c6ab0d8bef16",
+    "tests/native/repository-host.test.mjs": "3e449395b033bf5bfd51c4ce1f2ca847eb27c03b85467a2e24eb40b5ff3f8594",
+    "tests/native/swift-executor.test.mjs": "97f93d9bb32ebcc262c5d2f915eb549f3cc187feec9b2636b7ac617047176cc1",
+    "tests/native/swift-group.test.mjs": "980ad1fbb2dae8eb5394b300a547f41ed34d4ab6b20db4f4335c467f5ac6a5d9",
+    "tests/native/swift-kernel.test.mjs": "e6726c94a1b7359c2e3042a0e8ddb71973255088da82373f7988cd3bb6873699",
+    "tests/node-executor.test.mjs": "87bd39e1b48872de468477c8c8f6fa8f96884c632df58973b0ac1b89bb195e6d",
+    "tests/node-suite.test.mjs": "ca26dc4558ef17d2a9df982dfe1634053451580fcbf0228d06369121ff53143e",
+    "tests/paired-trial.test.mjs": "979dd5e1dfb7dcdc55f874fdf1e1232a8eea356d0fd856817583921d3d10441b",
+    "tests/proposed-changes.test.mjs": "d938037e6f67749f5ef473eaf65a3c5fc054865fed504151c01b0fdfcd33bd39",
+    "tests/repository-execution-receipt.test.mjs": "1075990a6f96276df2057f525df9914bb56a5c1da43d7d544956c86567ad983d",
+    "tests/repository-fixture.test.mjs": "4febfb12c46f3bbcd5f26612475aef6103c6cba876b82ab26cdcb7b9ffe39b20",
+    "tests/repository-live-cli.test.mjs": "c15fcdaf6ea18fd477c1b32526d1416c56ad91005b23231b6c4406e1e2c5632d",
+    "tests/repository-live-model-run.test.mjs": "d0014f841de603e625b665f9526c0d75b324fa4bb28ee0c6672becdc171858ae",
+    "tests/repository-run.test.mjs": "e1c1f1a9407cfecce5b61359a1822fd542c72626d5969da8e679477c60cf176e",
+    "tests/repository-workflow.test.mjs": "ca455e66b4e97fc8530ef0b2a12d35cd1986d80ab409ef9449a977f047015359",
+    "tests/reviewed-live-fixture.test.mjs": "fcc1bd1d97383979ceca8437091624f4117aec5d0c5fba188c896c8998825b80",
+    "tests/reviewed-live-model.test.mjs": "9a6d5da731b16ba2602594561e54b2cde76a54d39a98b719b239874aa49b0e51",
+    "tests/swift-group-owner.test.mjs": "8c7c83e52873c0d6b9a76cda4746dd1ded3c09583ac1d5c34d681023e2a159d3",
+    "tests/swift-static-group.test.mjs": "9bf196d7f2ddad0d4968515e5413cfeb01f334f6d9ad90ec007234539b24015d",
+    "tests/swift-static-run.test.mjs": "d9f747a328e44966c5e88128c3b9edf2d07a1c6dc4e818a91d44164aac78a791",
+    "tests/task-workspace.test.mjs": "d9df1ee4dc36b5a239a5a70847c6d4c53abe2164cf484712666635f1be9a2ef1",
+    "tests/trial-intake.test.mjs": "42a93005ab3fc6b0f573cf413bbb03d5ba2a59d40d3280363b741ded813a6c92",
+    "workflow/contracts.mjs": "c28a3ee3db6e9a936cd58fca8b8ee3f2744ca25c259e2ea278b3b09cdbb73d82",
+    "workflow/engine.mjs": "c67c63baeadc725a8487af7108b01d3a38dd50e64ff35f1be66471c81e5f979b"
+  },
+  "sourceFileCount": 89,
+  "previousCheckpoint": {
+    "path": "/Users/louiscalata/nisi-next-private/docs/verification/2026-09-12/u02-output-mode-checkpoint.json",
+    "byteLength": 35603,
+    "sha256": "58d469f6b6f3e5a581f99e888a01bf5eb4aad815e677f75fe7e19c1e0af925e9"
+  },
+  "retainedBeforeSources": {
+    "path": "/Users/louiscalata/nisi-next-private/.build/native-chat-uGeaKs/source-before.json",
+    "byteLength": 9254,
+    "sha256": "624377efc32c7ef0d35a2ad7f27382680e14414b9ae714047f5f5cfaaf235718"
+  },
+  "previous82CopiesVerified": true,
+  "previous82UnchangedCurrent": true,
+  "changedExistingSourceFiles": [],
+  "added": [
+    "adapters/native-chat-protocol-v1.mjs",
+    "adapters/native-chat-v1.mjs",
+    "tests/fixtures/native-response-cases.json",
+    "tests/helpers/native-chat-fixture.mjs",
+    "tests/helpers/native-response-expected.mjs",
+    "tests/native-chat.test.mjs",
+    "tests/native-response-matrix.test.mjs"
+  ],
+  "verification": {
+    "path": "/Users/louiscalata/nisi-next-private/.build/native-chat-uGeaKs/checks-MzvGTw/summary.json",
+    "byteLength": 14830,
+    "sha256": "f2a0596f305697c0281fdc8e03ef1aa29195a81bda14c8ed47677e95e6c6a6d7",
+    "results": [
+      {
+        "label": "focused",
+        "argv": [
+          "--test",
+          "--test-reporter=tap",
+          "tests/native-chat.test.mjs",
+          "tests/native-response-matrix.test.mjs"
+        ],
+        "exitCode": 0,
+        "signal": null,
+        "error": null,
+        "durationMs": 153,
+        "counts": {
+          "tests": 72,
+          "pass": 72,
+          "fail": 0,
+          "cancelled": 0,
+          "skipped": 0,
+          "todo": 0
+        },
+        "path": "/Users/louiscalata/nisi-next-private/.build/native-chat-uGeaKs/checks-MzvGTw/focused.json",
+        "sha256": "db2195a49c247461bf708cf5e1ed613f9b616bb1414f34fe05dd8ff79f2cd4bf"
+      },
+      {
+        "label": "portable",
+        "argv": [
+          "--test",
+          "--test-reporter=tap",
+          "tests/afm-content-executor.test.mjs",
+          "tests/afm-lifecycle.test.mjs",
+          "tests/benchmark-scripts.test.mjs",
+          "tests/canonical-json-v1.test.mjs",
+          "tests/component-hardening.test.mjs",
+          "tests/content-consent.test.mjs",
+          "tests/editor-input.test.mjs",
+          "tests/example.test.mjs",
+          "tests/host-run-bundle-v2.test.mjs",
+          "tests/integrity-successors.test.mjs",
+          "tests/live-output-mode.test.mjs",
+          "tests/live-usage.test.mjs",
+          "tests/local-chat-extra.test.mjs",
+          "tests/local-chat-gap-regression.test.mjs",
+          "tests/local-chat-lifecycle.test.mjs",
+          "tests/local-chat-output-mode.test.mjs",
+          "tests/local-chat-response-matrix.test.mjs",
+          "tests/local-chat.test.mjs",
+          "tests/local-model-discovery.test.mjs",
+          "tests/native-chat.test.mjs",
+          "tests/native-response-matrix.test.mjs",
+          "tests/node-executor.test.mjs",
+          "tests/node-suite.test.mjs",
+          "tests/onboarding.test.mjs",
+          "tests/owned-temp.test.mjs",
+          "tests/paired-trial.test.mjs",
+          "tests/proposed-changes.test.mjs",
+          "tests/public-api.test.mjs",
+          "tests/reporting-regressions.test.mjs",
+          "tests/repository-disk-capture.test.mjs",
+          "tests/repository-execution-receipt.test.mjs",
+          "tests/repository-fixture.test.mjs",
+          "tests/repository-live-cli.test.mjs",
+          "tests/repository-live-model-run.test.mjs",
+          "tests/repository-run.test.mjs",
+          "tests/repository-snapshot.test.mjs",
+          "tests/repository-workflow.test.mjs",
+          "tests/reviewed-live-fixture.test.mjs",
+          "tests/reviewed-live-model.test.mjs",
+          "tests/swift-group-owner.test.mjs",
+          "tests/swift-kernel-protocol.test.mjs",
+          "tests/swift-owned-child.test.mjs",
+          "tests/swift-reservation.test.mjs",
+          "tests/swift-static-group.test.mjs",
+          "tests/swift-static-run.test.mjs",
+          "tests/task-workspace.test.mjs",
+          "tests/trial-intake.test.mjs",
+          "tests/veritas-import-snapshot.test.mjs",
+          "tests/veritas-import.test.mjs",
+          "tests/workflow-example.test.mjs",
+          "tests/workflow.test.mjs"
+        ],
+        "exitCode": 0,
+        "signal": null,
+        "error": null,
+        "durationMs": 6499,
+        "counts": {
+          "tests": 746,
+          "pass": 746,
+          "fail": 0,
+          "cancelled": 0,
+          "skipped": 0,
+          "todo": 0
+        },
+        "path": "/Users/louiscalata/nisi-next-private/.build/native-chat-uGeaKs/checks-MzvGTw/portable.json",
+        "sha256": "3a30d1350200e00a0bd69ef2b13d32d3a393ec8552f6bdaa37b00ce11b20a767"
+      },
+      {
+        "label": "freeze",
+        "argv": [
+          "scripts/verify-veritas-import.mjs"
+        ],
+        "exitCode": 0,
+        "signal": null,
+        "error": null,
+        "durationMs": 34,
+        "path": "/Users/louiscalata/nisi-next-private/.build/native-chat-uGeaKs/checks-MzvGTw/freeze.json",
+        "sha256": "dfe45132a7f4adde99d4e1cf90488af5a97e45e332342c14ccba39238cede38d"
+      },
+      {
+        "label": "native-host",
+        "argv": [
+          "--test",
+          "--test-reporter=tap",
+          "tests/native/repository-host.test.mjs"
+        ],
+        "exitCode": 0,
+        "signal": null,
+        "error": null,
+        "durationMs": 3727,
+        "counts": {
+          "tests": 2,
+          "pass": 2,
+          "fail": 0,
+          "cancelled": 0,
+          "skipped": 0,
+          "todo": 0
+        },
+        "path": "/Users/louiscalata/nisi-next-private/.build/native-chat-uGeaKs/checks-MzvGTw/native-host.json",
+        "sha256": "a11b0091736e45b3bf9377b16f34849a0b8317eb30156fdeaca0c4708dd5a4e4"
+      }
+    ],
+    "focusedIsPortableSubset": true,
+    "portableAddedSincePriorCheckpoint": 72,
+    "entirePrior25NativeSelectionRerun": false,
+    "importedSourceFreezeFiles": 225,
+    "sourceFreezeIsNotOriginRecheckOrIntegration": true
+  },
+  "mutations": {
+    "path": "/Users/louiscalata/nisi-next-private/.build/native-chat-uGeaKs/mutants-sI5rL2/summary.json",
+    "byteLength": 4919,
+    "sha256": "1d6d883f04cd7522c846b4e8a89d025af9942f458ae0a18ad16623a3a0aef697",
+    "control": {
+      "path": "/Users/louiscalata/nisi-next-private/.build/native-chat-uGeaKs/mutants-sI5rL2/control.json",
+      "byteLength": 14214,
+      "sha256": "e082126c83f036b4f0f55ac4f31a8b4008a3e9d085831edf3a7948805cc8e2f9",
+      "counts": {
+        "tests": 72,
+        "pass": 72,
+        "fail": 0,
+        "cancelled": 0,
+        "skipped": 0,
+        "todo": 0
+      }
+    },
+    "detected": 8,
+    "total": 8,
+    "faults": [
+      {
+        "name": "wrong-instance",
+        "file": "adapters/native-chat-protocol-v1.mjs",
+        "originalSha256": "44468cb8b6ebc97e1821405a5add4916a97bf82b0ffeaa2076f85e79e12255f3",
+        "mutantSha256": "4173d3adfbc0aa373039cc3c071002c9e6a216527b454aff1f67a9f0a0fc7c94",
+        "detected": true,
+        "failedTests": 2,
+        "path": "/Users/louiscalata/nisi-next-private/.build/native-chat-uGeaKs/mutants-sI5rL2/wrong-instance.json",
+        "evidence": {
+          "path": "/Users/louiscalata/nisi-next-private/.build/native-chat-uGeaKs/mutants-sI5rL2/wrong-instance.json",
+          "byteLength": 15741,
+          "sha256": "8297dc1ca1846736636f0f96ef0f6aa810c0c9745159e83df14c535338013854"
+        },
+        "counts": {
+          "tests": 72,
+          "pass": 70,
+          "fail": 2,
+          "skipped": 0,
+          "cancelled": 0,
+          "todo": 0
+        }
+      },
+      {
+        "name": "allow-cap-equality",
+        "file": "adapters/native-chat-protocol-v1.mjs",
+        "originalSha256": "44468cb8b6ebc97e1821405a5add4916a97bf82b0ffeaa2076f85e79e12255f3",
+        "mutantSha256": "3e4dd525c1864420333aecec2b5cba049fdebce969f288963f9e2b3d4e706077",
+        "detected": true,
+        "failedTests": 2,
+        "path": "/Users/louiscalata/nisi-next-private/.build/native-chat-uGeaKs/mutants-sI5rL2/allow-cap-equality.json",
+        "evidence": {
+          "path": "/Users/louiscalata/nisi-next-private/.build/native-chat-uGeaKs/mutants-sI5rL2/allow-cap-equality.json",
+          "byteLength": 15760,
+          "sha256": "49a69f1b650fcae87c7da9818b33eb5165004f01bb48d599a8646f841a52ec1f"
+        },
+        "counts": {
+          "tests": 72,
+          "pass": 70,
+          "fail": 2,
+          "skipped": 0,
+          "cancelled": 0,
+          "todo": 0
+        }
+      },
+      {
+        "name": "negative-zero",
+        "file": "adapters/native-chat-protocol-v1.mjs",
+        "originalSha256": "44468cb8b6ebc97e1821405a5add4916a97bf82b0ffeaa2076f85e79e12255f3",
+        "mutantSha256": "adc39dde3bf035f66cccd8b65af45c5a2100a647e3c951bee0833f888debc47b",
+        "detected": true,
+        "failedTests": 1,
+        "path": "/Users/louiscalata/nisi-next-private/.build/native-chat-uGeaKs/mutants-sI5rL2/negative-zero.json",
+        "evidence": {
+          "path": "/Users/louiscalata/nisi-next-private/.build/native-chat-uGeaKs/mutants-sI5rL2/negative-zero.json",
+          "byteLength": 15111,
+          "sha256": "3d9d7af75e9ae34b40fad84faf88fbfe287c3598019111de8da2c0df657e1a31"
+        },
+        "counts": {
+          "tests": 72,
+          "pass": 71,
+          "fail": 1,
+          "skipped": 0,
+          "cancelled": 0,
+          "todo": 0
+        }
+      },
+      {
+        "name": "pretend-complete",
+        "file": "adapters/native-chat-protocol-v1.mjs",
+        "originalSha256": "44468cb8b6ebc97e1821405a5add4916a97bf82b0ffeaa2076f85e79e12255f3",
+        "mutantSha256": "af98505d4e49508037f65e6edddd6d33d5fb42d684cc38cdedb5c694fe219840",
+        "detected": true,
+        "failedTests": 1,
+        "path": "/Users/louiscalata/nisi-next-private/.build/native-chat-uGeaKs/mutants-sI5rL2/pretend-complete.json",
+        "evidence": {
+          "path": "/Users/louiscalata/nisi-next-private/.build/native-chat-uGeaKs/mutants-sI5rL2/pretend-complete.json",
+          "byteLength": 15230,
+          "sha256": "3c9096421b459b12a9ef108ca48f6840f5356ed36b46e58aa4f92222554cde13"
+        },
+        "counts": {
+          "tests": 72,
+          "pass": 71,
+          "fail": 1,
+          "skipped": 0,
+          "cancelled": 0,
+          "todo": 0
+        }
+      },
+      {
+        "name": "payload-reference",
+        "file": "adapters/native-chat-v1.mjs",
+        "originalSha256": "45f8149f2f526cab75ba5758aed8b05aeea136fa4cb107a8a45196045ce205bd",
+        "mutantSha256": "d7173c6bf8b6d73a99d03f993b6f34c72b8822b2f6edf4ec908fbd2c436550c1",
+        "detected": true,
+        "failedTests": 1,
+        "path": "/Users/louiscalata/nisi-next-private/.build/native-chat-uGeaKs/mutants-sI5rL2/payload-reference.json",
+        "evidence": {
+          "path": "/Users/louiscalata/nisi-next-private/.build/native-chat-uGeaKs/mutants-sI5rL2/payload-reference.json",
+          "byteLength": 14997,
+          "sha256": "e58fd9127e687f623923ae72be9d4c4f48c21bff1c151bd0a652e5432c50893a"
+        },
+        "counts": {
+          "tests": 72,
+          "pass": 71,
+          "fail": 1,
+          "skipped": 0,
+          "cancelled": 0,
+          "todo": 0
+        }
+      },
+      {
+        "name": "no-deadline-postcheck",
+        "file": "adapters/native-chat-v1.mjs",
+        "originalSha256": "45f8149f2f526cab75ba5758aed8b05aeea136fa4cb107a8a45196045ce205bd",
+        "mutantSha256": "c195e4c2f5349415dd4b66061bba104d5966f0449d62b6475f92193d11317c5d",
+        "detected": true,
+        "failedTests": 1,
+        "path": "/Users/louiscalata/nisi-next-private/.build/native-chat-uGeaKs/mutants-sI5rL2/no-deadline-postcheck.json",
+        "evidence": {
+          "path": "/Users/louiscalata/nisi-next-private/.build/native-chat-uGeaKs/mutants-sI5rL2/no-deadline-postcheck.json",
+          "byteLength": 14910,
+          "sha256": "b9410aec040f4dc4f3b29e66445d36b6cb77e28749419b4c1c11f5a19c139b32"
+        },
+        "counts": {
+          "tests": 72,
+          "pass": 71,
+          "fail": 1,
+          "skipped": 0,
+          "cancelled": 0,
+          "todo": 0
+        }
+      },
+      {
+        "name": "drop-quarantine-guard",
+        "file": "adapters/native-chat-v1.mjs",
+        "originalSha256": "45f8149f2f526cab75ba5758aed8b05aeea136fa4cb107a8a45196045ce205bd",
+        "mutantSha256": "bbc3e9203641444ad95646c2686898536cb24a48fe65f9288cd5ff79385b70d9",
+        "detected": true,
+        "failedTests": 1,
+        "path": "/Users/louiscalata/nisi-next-private/.build/native-chat-uGeaKs/mutants-sI5rL2/drop-quarantine-guard.json",
+        "evidence": {
+          "path": "/Users/louiscalata/nisi-next-private/.build/native-chat-uGeaKs/mutants-sI5rL2/drop-quarantine-guard.json",
+          "byteLength": 15879,
+          "sha256": "e92d2f9b24f8d73b0a8be5e32a56ce03962c2b10198e3ae3d8d5db57e4741ba6"
+        },
+        "counts": {
+          "tests": 72,
+          "pass": 71,
+          "fail": 1,
+          "skipped": 0,
+          "cancelled": 0,
+          "todo": 0
+        }
+      },
+      {
+        "name": "pretend-server-stopped",
+        "file": "adapters/native-chat-v1.mjs",
+        "originalSha256": "45f8149f2f526cab75ba5758aed8b05aeea136fa4cb107a8a45196045ce205bd",
+        "mutantSha256": "5019a8f6633b4abf2b71299a7a5b5b59ae6fb93ab324e1447488439a43e2acea",
+        "detected": true,
+        "failedTests": 3,
+        "path": "/Users/louiscalata/nisi-next-private/.build/native-chat-uGeaKs/mutants-sI5rL2/pretend-server-stopped.json",
+        "evidence": {
+          "path": "/Users/louiscalata/nisi-next-private/.build/native-chat-uGeaKs/mutants-sI5rL2/pretend-server-stopped.json",
+          "byteLength": 16530,
+          "sha256": "22a47eb423387b26e0be29618fdb625e90df038839ebbddad6387136eed9e0ec"
+        },
+        "counts": {
+          "tests": 72,
+          "pass": 69,
+          "fail": 3,
+          "skipped": 0,
+          "cancelled": 0,
+          "todo": 0
+        }
+      }
+    ],
+    "copiedClosuresVerified": true,
+    "exhaustive": false,
+    "earlierClassification": {
+      "path": "/Users/louiscalata/nisi-next-private/.build/native-chat-uGeaKs/mutants-sVgruc/summary.json",
+      "byteLength": 4828,
+      "sha256": "c4f8d7571c44a1850dafaec03d4b2358d5b86ffa6595f21bb536a39f03866653",
+      "detected": 6,
+      "total": 8,
+      "controlTests": 71,
+      "note": "Added missing post-settlement quarantine reuse and remote-stop non-attestation assertions; no production relaxation"
+    }
+  },
+  "regressions": [
+    {
+      "path": "/Users/louiscalata/nisi-next-private/.build/native-chat-uGeaKs/initial.json",
+      "byteLength": 15779,
+      "sha256": "4e26e5ec039033a36c9e7145bddd1526a93793bb76eb98dbc0c894f5511926a1",
+      "counts": {
+        "tests": 50,
+        "pass": 44,
+        "fail": 6,
+        "skipped": 0,
+        "cancelled": 0,
+        "todo": 0
+      },
+      "sourceManifest": {
+        "adapters/native-chat-v1.mjs": "ed1ebad686d1471f875b2389f3f82bd9cbae6ab115af0be23febc536c9502b74",
+        "adapters/native-chat-protocol-v1.mjs": "c038f67cae54ae987f983bb8bcfc14c96b4739e8f09708db4c8f692b97930011",
+        "tests/native-chat.test.mjs": "e14f01f456088fe066057563c3bc5c8949d01501fcf1e91e8d685121fb704cd6",
+        "tests/helpers/native-chat-fixture.mjs": "3d5029a0d73880a055d8823d9ca629c40d40e55795d2abe1192345a8ecbb0b52"
+      }
+    },
+    {
+      "path": "/Users/louiscalata/nisi-next-private/.build/native-chat-uGeaKs/corrected.json",
+      "byteLength": 10502,
+      "sha256": "f84ce145a783c3309280d53fc1c4d9bc89179c5fe746f2e838ff70e0e803e5c4",
+      "counts": {
+        "tests": 50,
+        "pass": 50,
+        "fail": 0,
+        "skipped": 0,
+        "cancelled": 0,
+        "todo": 0
+      },
+      "sourceManifest": {
+        "adapters/native-chat-v1.mjs": "45f8149f2f526cab75ba5758aed8b05aeea136fa4cb107a8a45196045ce205bd",
+        "adapters/native-chat-protocol-v1.mjs": "44468cb8b6ebc97e1821405a5add4916a97bf82b0ffeaa2076f85e79e12255f3",
+        "tests/native-chat.test.mjs": "75914948d6b49a4b33d899862cf88f1b2af6c41e7d4c5620dd3a13cfccaf9f6a",
+        "tests/helpers/native-chat-fixture.mjs": "3d5029a0d73880a055d8823d9ca629c40d40e55795d2abe1192345a8ecbb0b52"
+      }
+    },
+    {
+      "path": "/Users/louiscalata/nisi-next-private/.build/native-chat-uGeaKs/engine-integration.json",
+      "byteLength": 10763,
+      "sha256": "a5876c12380cfe0e42270faab4e15a28c74210425e52b416af77c860047a2a48",
+      "counts": {
+        "tests": 51,
+        "pass": 51,
+        "fail": 0,
+        "skipped": 0,
+        "cancelled": 0,
+        "todo": 0
+      },
+      "sourceManifest": {
+        "adapters/native-chat-v1.mjs": "45f8149f2f526cab75ba5758aed8b05aeea136fa4cb107a8a45196045ce205bd",
+        "adapters/native-chat-protocol-v1.mjs": "44468cb8b6ebc97e1821405a5add4916a97bf82b0ffeaa2076f85e79e12255f3",
+        "tests/native-chat.test.mjs": "0257a2622b19939de5da09b557167e7c49a425f41d109e42b91fd0f820712c37",
+        "tests/helpers/native-chat-fixture.mjs": "3d5029a0d73880a055d8823d9ca629c40d40e55795d2abe1192345a8ecbb0b52"
+      }
+    }
+  ],
+  "originalDrafts": [
+    {
+      "path": "/Users/louiscalata/nisi-next-private/.build/native-chat-uGeaKs/initial-native-chat-v1.mjs",
+      "byteLength": 15649,
+      "sha256": "ed1ebad686d1471f875b2389f3f82bd9cbae6ab115af0be23febc536c9502b74"
+    },
+    {
+      "path": "/Users/louiscalata/nisi-next-private/.build/native-chat-uGeaKs/initial-native-chat-protocol-v1.mjs",
+      "byteLength": 3762,
+      "sha256": "c038f67cae54ae987f983bb8bcfc14c96b4739e8f09708db4c8f692b97930011"
+    }
+  ],
+  "nativeOperation": {
+    "path": "/Users/louiscalata/nisi-next-private/.build/native-chat-uGeaKs/operation-lwyKbD/summary.json",
+    "byteLength": 1595,
+    "sha256": "3432e49a83dc754edec1c9923d5d2c6f0f6287c0450a1aea30d9f1fc089028af",
+    "observedSummary": {
+      "observedAt": "2026-09-13T03:17:49.222Z",
+      "directory": "/Users/louiscalata/nisi-next-private/.build/native-chat-uGeaKs/operation-lwyKbD",
+      "runId": "9d21cc3d-a741-4107-97c9-4d4c6f6d674b",
+      "status": "NATIVE_OPERATION_OUTPUT_VALIDATED",
+      "errorCode": null,
+      "durationMs": 12093,
+      "sourceManifest": {
+        "adapters/native-chat-v1.mjs": "45f8149f2f526cab75ba5758aed8b05aeea136fa4cb107a8a45196045ce205bd",
+        "adapters/native-chat-protocol-v1.mjs": "44468cb8b6ebc97e1821405a5add4916a97bf82b0ffeaa2076f85e79e12255f3",
+        "adapters/local-chat.mjs": "ca26b49502b27f494487f5da32edfc13a9d8b85cb02da43b58c4417babb3e842",
+        "workflow/contracts.mjs": "c28a3ee3db6e9a936cd58fca8b8ee3f2744ca25c259e2ea278b3b09cdbb73d82",
+        "examples/repository-task/reviewed-live-fixture-v1.mjs": "292bd67a2e4132c9c5122f5d716e7eeb3cdd3a6ebf5362470d046b6d025add36"
+      },
+      "changedSources": [],
+      "resultStatus": "REPAIRED",
+      "candidateFingerprint": "a3a713ec43002762c434692e43dff8aed858a5c8fba650d32b6352d0422580c4",
+      "matchesPreviouslyReviewedRepair": false,
+      "usage": {
+        "promptTokens": 748,
+        "completionTokens": 186,
+        "totalTokens": 934
+      },
+      "lifecycle": {
+        "schemaVersion": "nisi-native-chat-owner-v1",
+        "state": "IDLE",
+        "pendingTransports": 0,
+        "recoveryRequired": false,
+        "remoteInferenceStopped": "NOT_OBSERVED",
+        "scope": "THIS_OWNER_ONLY"
+      },
+      "returnedSourceExecuted": false,
+      "reviewerRun": false,
+      "wholeWorkflowAccepted": false,
+      "serverCompletionAttested": false,
+      "applied": false,
+      "comparativeBenefitMeasured": false,
+      "publicationAuthorized": false
+    },
+    "observedReceipt": {
+      "schemaVersion": "nisi-native-chat-receipt-v1",
+      "profile": "nisi-native-chat-content-v1",
+      "operation": "repair",
+      "adapterId": "author.native-model",
+      "requestedModel": "qwen/qwen3.8-27b",
+      "expectedModelInstance": "qwen/qwen3.8-27b",
+      "reasoning": "off",
+      "storeRequested": false,
+      "integrationsRequested": [],
+      "runId": "9d21cc3d-a741-4107-97c9-4d4c6f6d674b",
+      "taskFingerprint": "b8c2d4a25d44d8704c6651beb092f74e0cc3808ae00f620bd384a8ce3837d3f2",
+      "attempt": 1,
+      "inputCandidateFingerprint": "bf4986fd4f629fbb88a4191c24ce378948b8983a74dc231ea35d9f8166ca0afc",
+      "requestedMaxOutputTokens": 2048,
+      "requestSha256": "4240b3c1889a6ae89fbe4d5de89f6c13b175a604a1aee7add1294e64cfeb4615",
+      "elapsedMs": 12093,
+      "termination": "NOT_REPORTED",
+      "serverCompletionAttested": false,
+      "modelAuthenticityAttested": false,
+      "lifecycle": {
+        "transportSettlement": "CONFIRMED",
+        "remoteInferenceStopped": "NOT_OBSERVED",
+        "ownerState": "BUSY"
+      },
+      "status": "RESPONSE_VALIDATED",
+      "resultCandidateFingerprint": "a3a713ec43002762c434692e43dff8aed858a5c8fba650d32b6352d0422580c4",
+      "reportedModelInstance": "qwen/qwen3.8-27b",
+      "responseSha256": "9f0036c4a6ca190a22d512672580a32daefcd62e97e186ae197b4dfde732ae05",
+      "contentSha256": "3bbd6f1a2d7916b77c3eab64f85bc113969f74201392e8a22821dc5942a409d0",
+      "usage": {
+        "promptTokens": 748,
+        "completionTokens": 186,
+        "totalTokens": 934
+      },
+      "usageSource": {
+        "promptTokens": "REPORTED_INPUT_TOKENS",
+        "completionTokens": "REPORTED_TOTAL_OUTPUT_TOKENS",
+        "totalTokens": "DERIVED_SUM_OF_REPORTED_COUNTERS"
+      },
+      "reportedStats": {
+        "input_tokens": 748,
+        "total_output_tokens": 186,
+        "reasoning_output_tokens": 0,
+        "tokens_per_second": 18.118656377429147,
+        "time_to_first_token_seconds": 1.787
+      },
+      "truncationCheck": "BELOW_REPORTED_OUTPUT_CAP"
+    },
+    "retained": [
+      {
+        "path": "/Users/louiscalata/nisi-next-private/.build/native-chat-uGeaKs/operation-lwyKbD/preflight.json",
+        "byteLength": 1429,
+        "sha256": "355442f6fd4f6c87499f5086c1e0a36f02de87beecb1f20396b1f89d667ec839"
+      },
+      {
+        "path": "/Users/louiscalata/nisi-next-private/.build/native-chat-uGeaKs/operation-lwyKbD/adapter-result.json",
+        "byteLength": 1033,
+        "sha256": "d77bac0b245577f22e41dcd8951b6cd444a83e057a9acd5f9b1fe39145ff1152"
+      },
+      {
+        "path": "/Users/louiscalata/nisi-next-private/.build/native-chat-uGeaKs/operation-lwyKbD/adapter-receipts.json",
+        "byteLength": 1953,
+        "sha256": "c0a20bdd7cca65caae527f79432046342fd38199f6daf3c7e37ccbc6ea6f1de0"
+      },
+      {
+        "path": "/Users/louiscalata/nisi-next-private/.build/native-chat-uGeaKs/operation-lwyKbD/summary.json",
+        "byteLength": 1595,
+        "sha256": "3432e49a83dc754edec1c9923d5d2c6f0f6287c0450a1aea30d9f1fc089028af"
+      }
+    ],
+    "candidateFingerprintRecomputed": true,
+    "usageTotalIsDerived": true,
+    "rawResponseRetained": false,
+    "baselineExecutedThisProbe": false,
+    "acceptedRepair": false,
+    "syntheticStagesUsedAsFreshEvidence": false,
+    "executionAdmissionGranted": false,
+    "liveHostVersion3Integrated": false
+  },
+  "collaboration": {
+    "claude": {
+      "path": "/Users/louiscalata/nisi-next-private/.build/native-chat-uGeaKs/claude-native-contract.json",
+      "byteLength": 640,
+      "sha256": "debd43deec5b952e548cd0cdfacb68a8ed500ba7b77960fb7fb25ae469c79716",
+      "observedResult": {
+        "invocation_status": "failed",
+        "status": "NOT_RUN",
+        "attempts": 3,
+        "prior_attempts": [
+          {
+            "requested_model": "fable",
+            "status": "NOT_RUN",
+            "error": "Claude exceeded 45s cap"
+          },
+          {
+            "requested_model": "sonnet",
+            "status": "NOT_RUN",
+            "error": "Claude exceeded 45s cap"
+          },
+          {
+            "requested_model": "opus",
+            "status": "NOT_RUN",
+            "error": "Claude exceeded 29.897698292013956s cap"
+          }
+        ],
+        "error": "No usable Claude response within the bounded model ladder",
+        "model_usage": null,
+        "tools_enabled": false,
+        "session_persisted": false,
+        "write_owner": "codex"
+      },
+      "tokenUsage": null,
+      "measuredCostUSD": null,
+      "prompt": {
+        "path": "/Users/louiscalata/nisi-next-private/.build/native-chat-uGeaKs/claude-native-contract.md",
+        "byteLength": 3228,
+        "sha256": "db3c1829e9d2cc2bed79324b5fa603a0b87a7eff84c6ddfbec6be89f479f8832"
+      }
+    },
+    "sharedChami": {
+      "path": "/Users/louiscalata/nisi-next-private/.build/native-chat-uGeaKs/worker-0ccb704d-fe42-4463-a77f-6fc61d699882-summary.json",
+      "byteLength": 3640,
+      "sha256": "13f8827ab927c9529d553286b0220013e03db6188a84b0f111e5053cab380fb2",
+      "jobId": "mac-20260912-201206-8af22c417a1c665e335bb66ac77186e8",
+      "requestedModel": "qwen3-coder-next",
+      "reportedModel": "Qwen3-Coder-Next 80B-A3B Q4_K_M",
+      "reportedWorkerSeconds": 10.6,
+      "output": "NO_CONCRETE_ISSUES",
+      "tokenUsage": null,
+      "measuredCostUSD": null,
+      "earlyReviewedSourceSha256": "c038f67cae54ae987f983bb8bcfc14c96b4739e8f09708db4c8f692b97930011",
+      "finalSourceReview": false,
+      "evidence": [
+        {
+          "path": "/Users/louiscalata/nisi-next-private/.build/native-chat-uGeaKs/worker-0ccb704d-fe42-4463-a77f-6fc61d699882-source.mjs",
+          "sha256": "c038f67cae54ae987f983bb8bcfc14c96b4739e8f09708db4c8f692b97930011",
+          "byteLength": 3762
+        },
+        {
+          "path": "/Users/louiscalata/nisi-next-private/.build/native-chat-uGeaKs/worker-0ccb704d-fe42-4463-a77f-6fc61d699882-request.json",
+          "sha256": "09ce50bb648999904934b930ad99188a2e796eff92e2cf679f4153d2ad8bcd43",
+          "byteLength": 6007
+        },
+        {
+          "path": "/Users/louiscalata/nisi-next-private/.build/native-chat-uGeaKs/worker-0ccb704d-fe42-4463-a77f-6fc61d699882-status.stdout.txt",
+          "sha256": "d244b19e4abe8fad4e4a3407cf3328b291e7a1c1055fd1b24a4eae47760097d4",
+          "byteLength": 265
+        },
+        {
+          "path": "/Users/louiscalata/nisi-next-private/.build/native-chat-uGeaKs/worker-0ccb704d-fe42-4463-a77f-6fc61d699882-status.stderr.txt",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "byteLength": 0
+        },
+        {
+          "path": "/Users/louiscalata/nisi-next-private/.build/native-chat-uGeaKs/worker-0ccb704d-fe42-4463-a77f-6fc61d699882-status-process.json",
+          "sha256": "b603960fb5b6ec335df0157b967cb761ae95f82806fcaeb755d5a0cc588b84e2",
+          "byteLength": 106
+        },
+        {
+          "path": "/Users/louiscalata/nisi-next-private/.build/native-chat-uGeaKs/worker-0ccb704d-fe42-4463-a77f-6fc61d699882-request.stdout.txt",
+          "sha256": "76df399d9f06d6b5341b3dceb2ea64ba148aa4f89645165f6e806b1d929d3e22",
+          "byteLength": 206
+        },
+        {
+          "path": "/Users/louiscalata/nisi-next-private/.build/native-chat-uGeaKs/worker-0ccb704d-fe42-4463-a77f-6fc61d699882-request.stderr.txt",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "byteLength": 0
+        },
+        {
+          "path": "/Users/louiscalata/nisi-next-private/.build/native-chat-uGeaKs/worker-0ccb704d-fe42-4463-a77f-6fc61d699882-request-process.json",
+          "sha256": "d6c89e477ab1953d9915cd426bae35617ee5368d66082e0211a6f95c25e99573",
+          "byteLength": 109
+        },
+        {
+          "path": "/Users/louiscalata/nisi-next-private/.build/native-chat-uGeaKs/worker-0ccb704d-fe42-4463-a77f-6fc61d699882-job-handle.json",
+          "sha256": "396585a9479e7e0498a5afbf2599587b5bb9d2d61bd648dbd17f266b8fa20636",
+          "byteLength": 507
+        },
+        {
+          "path": "/Users/louiscalata/nisi-next-private/.build/native-chat-uGeaKs/worker-0ccb704d-fe42-4463-a77f-6fc61d699882-receipt.raw.json",
+          "sha256": "d26ccc91b8d7a11f1e85f27953c4a77e7cfd2e51575772306ea11c1d95911c76",
+          "byteLength": 220
+        }
+      ],
+      "taskOnlyServer": "louisaurorar12",
+      "persistentTrustSettingsChanged": false,
+      "nativeWindowsAcceptance": false
+    },
+    "daybreak": {
+      "provenance": "Owner summary of bounded subagent messages; not a provider receipt or attestation",
+      "requestedModel": "gpt-daybreak-blue-latest",
+      "scope": "Corrected production modules and subsequent test/data delta",
+      "sourceHashes": {
+        "adapters/native-chat-v1.mjs": "45f8149f2f526cab75ba5758aed8b05aeea136fa4cb107a8a45196045ce205bd",
+        "adapters/native-chat-protocol-v1.mjs": "44468cb8b6ebc97e1821405a5add4916a97bf82b0ffeaa2076f85e79e12255f3"
+      },
+      "initialSyntheticTestsReported": 50,
+      "finalDeltaReviewReranTests": false,
+      "finding": "No concrete defect found in bounded source/test review",
+      "matrixQualification": "Boolean accept/refuse oracle; does not assert exact refusal codes",
+      "tokenUsage": null,
+      "servedIdentityAttested": false
+    },
+    "independentContractReview": {
+      "provenance": "Owner summary of read-only subagent messages",
+      "incorporated": [
+        "negative-zero refusal",
+        "explicit non-attestation",
+        "frozen bindings",
+        "separate V3 contracts"
+      ],
+      "documentationReview": "No inconsistency found between current header/native sections and retained summaries",
+      "nextV3PlanRecordedInRoadmap": true,
+      "testsOrModelsRunForFinalReadOnlyReview": false
+    },
+    "opencode": {
+      "requestedRoute": "free",
+      "requestedModel": "opencode/big-pickle",
+      "attempts": 1,
+      "servedIdentity": null,
+      "tokenUsage": null,
+      "measuredCostUSD": null,
+      "wrapperElapsedMs": 47080,
+      "originalData": {
+        "path": "/Users/louiscalata/nisi-next-private/.build/native-response-fixtures-FmyMte/native-response-cases.json",
+        "byteLength": 6971,
+        "sha256": "a86e466ac819d60450994e54b1bb5b5fc31202e2815652b24f4cac72ebc6335b"
+      },
+      "integratedData": {
+        "path": "/Users/louiscalata/nisi-next-private/tests/fixtures/native-response-cases.json",
+        "byteLength": 6972,
+        "sha256": "64b8cc5a2050d541d917b4b459392114debe1d374579bfe7a76c5ff0ce7a0efb"
+      },
+      "semanticDataEqual": true,
+      "byteDataEqual": false,
+      "integrationByteChange": "One terminal LF only",
+      "isolatedFixtureTests": 21,
+      "canonicalActualReaderCases": 20,
+      "exactDatasetChecks": 1,
+      "protectedFilesUnchanged": 7,
+      "evidence": [
+        {
+          "path": "/Users/louiscalata/nisi-next-private/.build/native-response-fixtures-FmyMte/.packets/native-envelope-data.packet.md",
+          "byteLength": 5033,
+          "sha256": "49fddf0575d98c2e9d6c9601d06fbcc207af57dce6b4319d3d3cb0edb68a7ff1"
+        },
+        {
+          "path": "/Users/louiscalata/nisi-next-private/.build/native-response-fixtures-FmyMte/.packets/native-envelope-data.result.md",
+          "byteLength": 334,
+          "sha256": "c29bdcc47f50a002dc0116dc85bd093116242f0274c988514d0857a262ae4328"
+        },
+        {
+          "path": "/Users/louiscalata/nisi-next-private/.build/native-response-fixtures-FmyMte/evidence/packet.json",
+          "byteLength": 3540,
+          "sha256": "35c358a4700846f06f5561fe23e315c172ebafbb2f3919564a62567ce11106e5"
+        },
+        {
+          "path": "/Users/louiscalata/nisi-next-private/.build/native-response-fixtures-FmyMte/evidence/verify.json",
+          "byteLength": 4184,
+          "sha256": "b0714705148444f0127aeaec1a36439af896cb4b4e0734e1bf1d180f12ce5684"
+        },
+        {
+          "path": "/Users/louiscalata/nisi-next-private/.build/native-response-fixtures-FmyMte/evidence/baseline.json",
+          "byteLength": 3194,
+          "sha256": "99844a4dc19ef1c4c3a21b89f25bf76e8fb347f15337da12f00b54a7ad7cd706"
+        },
+        {
+          "path": "/Users/louiscalata/nisi-next-private/.build/native-response-fixtures-FmyMte/evidence/missing.json",
+          "byteLength": 25615,
+          "sha256": "14c6af7bce3e5286513f113091708c97ff1f787be4430d899ba32bceada5f488"
+        },
+        {
+          "path": "/Users/louiscalata/nisi-next-private/.build/native-response-fixtures-FmyMte/evidence/lint.json",
+          "byteLength": 2857,
+          "sha256": "d7118a6f5afdc9c6663fb8ee035f596f6e8ad98afad09e5c31c31992486bd057"
+        },
+        {
+          "path": "/Users/louiscalata/nisi-next-private/.build/native-response-fixtures-FmyMte/evidence/data-added.diff",
+          "byteLength": 7505,
+          "sha256": "28c3a9ab4a9ab732f423a7303f56c59ba1ec8460d19e1bd3738adab3861e321f"
+        },
+        {
+          "path": "/Users/louiscalata/nisi-next-private/.build/native-response-fixtures-FmyMte/tests/envelope-oracle.mjs",
+          "byteLength": 3933,
+          "sha256": "f7eee9c9203d96fa3124fe2048571b46c53d8298f310bc1fde571b48ffa7db3c"
+        },
+        {
+          "path": "/Users/louiscalata/nisi-next-private/.build/native-response-fixtures-FmyMte/tests/expected-cases.mjs",
+          "byteLength": 2368,
+          "sha256": "76724d266bcbd2576079df1517ee8be7cd7b3e8ed17894a197e20b75660ed4af"
+        },
+        {
+          "path": "/Users/louiscalata/nisi-next-private/.build/native-response-fixtures-FmyMte/tests/fixtures.test.mjs",
+          "byteLength": 1100,
+          "sha256": "11b515c3f79f627eb1e3efa6d746ed5e56b29907ded16fd54d6ca96dc8aab6d3"
+        },
+        {
+          "path": "/Users/louiscalata/nisi-next-private/.build/native-response-fixtures-FmyMte/RESULT.md",
+          "byteLength": 5640,
+          "sha256": "900bbf3a8faed3a6e71996951591014632a3b67cc22f8115f239dd39a9ab735f"
+        }
+      ],
+      "generatedSourceExecution": false
+    },
+    "completeTotalCostKnown": false,
+    "publicationPerformed": false
+  },
+  "documents": [
+    {
+      "path": "/Users/louiscalata/nisi-next-private/roadmap.md",
+      "byteLength": 252795,
+      "sha256": "0f2360be45b9d35b1218aebf15063a4bcc9ea180b6c22ac1668a2c5e6f7979d0"
+    },
+    {
+      "path": "/Volumes/SharedChami/Veritas Local Repository/SYSTEM-EQUATION.md",
+      "byteLength": 260893,
+      "sha256": "03e378974a185c3b0bc0df54cdf46b9351b6e6552b611f23af093e52565f59fe"
+    }
+  ],
+  "retainedEquationTailSha256": "703bfbd10ad108ac8b18f16e4f6864c69d29f4558794616b81dac7ab9522c4f3",
+  "documentationSource": "https://lmstudio.ai/docs/developer/rest/chat",
+  "verificationTools": [
+    {
+      "path": "/Users/louiscalata/nisi-next-private/.build/native-chat-uGeaKs/check.mjs",
+      "byteLength": 1681,
+      "sha256": "1c7fe1aabf32ce67de484bc77c8c07b86535755d45f75f046a23f42bb01da510"
+    },
+    {
+      "path": "/Users/louiscalata/nisi-next-private/.build/native-chat-uGeaKs/verify.mjs",
+      "byteLength": 3363,
+      "sha256": "62ad111aeeb37793375e477d4c6ebe3a797ab052fecbc3173ec5919c19784ad6"
+    },
+    {
+      "path": "/Users/louiscalata/nisi-next-private/.build/native-chat-uGeaKs/mutants.mjs",
+      "byteLength": 4526,
+      "sha256": "d1d4440ef4e12ee00295ffad55832aef1e3e062d15370eced619f174e9db1aae"
+    },
+    {
+      "path": "/Users/louiscalata/nisi-next-private/.build/native-chat-uGeaKs/probe-operation.mjs",
+      "byteLength": 3533,
+      "sha256": "7885f518f0ccd6d18cb54278c9d71dd15ac2433abff4fdcd1a16c3107176ba66"
+    },
+    {
+      "path": "/Users/louiscalata/nisi-next-private/.build/native-chat-uGeaKs/worker-native-review-20260912.mjs",
+      "byteLength": 8304,
+      "sha256": "0af37c7eef066d2e007ac16362f5d6554de760ff9c4f57e46dbf33ef15fb4abc"
+    },
+    {
+      "path": "/Users/louiscalata/nisi-next-private/.build/native-chat-uGeaKs/checkpoint.mjs",
+      "byteLength": 20002,
+      "sha256": "48b0bbe8e62e5b251cbfd403bbfbc05504a06da00f3f3606c71bc2dd93076055"
+    }
+  ],
+  "pending": [
+    "V3 per-role protocol lane, consent, receipt, usage and CLI contracts preserving V1/V2",
+    "Separate exact-candidate admission/isolation path before executing any new returned variant",
+    "Complete real combined Swift/Node author-test-review workflow",
+    "Main-command interruption and summary-storage fault injection",
+    "Refresh isolated package/types proposal against final source",
+    "History, evaluated prevention, native app, modular extensions and full product acceptance",
+    "Existing legal and exact-artifact publication gates"
+  ],
+  "nativeAppAccepted": false,
+  "nativeAppStatus": "NOT_RUN",
+  "fullMergerComplete": false,
+  "publicationAuthorized": false,
+  "comparativeBenefitMeasured": false,
+  "automaticLearningEstablished": false
+}

@@ -1,0 +1,28 @@
+
+> nisi-private-run-journal-store-work-order@0.0.0-private test:store
+> node --test --test-timeout=10000 tests/run-journal-store.test.mjs
+
+✔ raw UTF-8 round trip preserves bytes and records successful file and directory fsync (11.783125ms)
+✔ exclusive same-directory temp, file sync and temp verification precede rename; directory sync and final verification follow (9.511041ms)
+✔ short writes are completed; zero progress is refused and the owned temp is cleaned (12.810291ms)
+✔ file fsync failure is recorded, still writes and verifies, and cannot claim durability (4.812042ms)
+✔ directory fsync or directory-open failure records a committed but non-durable write (8.678958ms)
+✔ absent fsync support is recorded for both attempts and never upgraded to durable (0.758625ms)
+✔ different existing content needs exact previous sha256; conflicts preserve bytes without opening any file (9.31275ms)
+✔ same bytes are an explicit non-durable no-op; supplied stale expected hash still refuses (1.663375ms)
+✔ read refuses every truncated prefix, including complete-line boundaries, and never returns partial data (51.402083ms)
+✔ read refuses malformed UTF-8, corrupt chain/footer/schema, trailing data and noncanonical JSON (2.771375ms)
+✔ write validates strings, framing and expected hash before mutation; corrupt existing data stays intact (0.582416ms)
+✔ missing and unreadable files are refusals, and read never attempts mutations or sync (0.573667ms)
+✔ write and rename failures preserve old bytes, close descriptors and clean only the owned temp (4.956417ms)
+✔ temp read-back mismatch refuses before rename and final mismatch never reports durable success (23.630708ms)
+✔ destination is rechecked before rename and an observed concurrent change is preserved (4.983375ms)
+✔ file close failure refuses before rename, preserves destination and cannot claim durability (3.637375ms)
+ℹ tests 16
+ℹ suites 0
+ℹ pass 16
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 204.118584

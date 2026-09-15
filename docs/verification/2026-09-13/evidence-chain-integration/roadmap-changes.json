@@ -1,0 +1,42 @@
+[
+  {
+    "path": "roadmap.md",
+    "beforeSha256": "e9aa7539faa41a15d4a7c35bbef057d20d4cc127f3bd78e6ffdaa3b265dead29",
+    "afterSha256": "74fc1c1590c8af3eda1e779fdcb09a95b7c170c02a6b3a0ab2e6b20ee8e0edba",
+    "appendOnly": true,
+    "addedLines": 8,
+    "diff": "docs/verification/2026-09-13/evidence-chain-integration/roadmap.md.diff"
+  },
+  {
+    "path": "work-orders/native-canary-summary/roadmap.md",
+    "beforeSha256": "532994e96ffc4b538c35a975925f448c86dd4a0152ee91a369b0bb0a2c0439d7",
+    "afterSha256": "aa4daee191bdec8581b9ba7f4001ab7d62fffffa4a2c669c82c0ad7e230075c6",
+    "appendOnly": true,
+    "addedLines": 2,
+    "diff": "docs/verification/2026-09-13/evidence-chain-integration/work-orders__native-canary-summary__roadmap.md.diff"
+  },
+  {
+    "path": "work-orders/fixed-run-journal-entry/roadmap.md",
+    "beforeSha256": "471b6cfbe3ab77ff8e42a606fc60546c6fcad3427a18ff14bc4692435ce04a8b",
+    "afterSha256": "1aa2f53189ef4dc8ff8d927d1fbfde1047fa4a22d98bbda33902d641986105b3",
+    "appendOnly": true,
+    "addedLines": 2,
+    "diff": "docs/verification/2026-09-13/evidence-chain-integration/work-orders__fixed-run-journal-entry__roadmap.md.diff"
+  },
+  {
+    "path": "work-orders/run-journal-store/roadmap.md",
+    "beforeSha256": "6f227ea1dc7089f734681cf447d8b414e7ccf40dce9f6b7fd7d2b7d891dc0a32",
+    "afterSha256": "ccd10b5b66d80792cfdcee1581c0788f6cc858a402d7cd0d5a6090b53288e216",
+    "appendOnly": true,
+    "addedLines": 2,
+    "diff": "docs/verification/2026-09-13/evidence-chain-integration/work-orders__run-journal-store__roadmap.md.diff"
+  },
+  {
+    "path": "work-orders/host-journal-bundle/roadmap.md",
+    "beforeSha256": "1bb57934242a3e3ca0aaa12604fadf5411a2e953a797433955023be4f3197c79",
+    "afterSha256": "20ba30358414d43cb3455ad03ea6ec74445ffce000cd7dc896ef0dcd8d98ec1e",
+    "appendOnly": true,
+    "addedLines": 2,
+    "diff": "docs/verification/2026-09-13/evidence-chain-integration/work-orders__host-journal-bundle__roadmap.md.diff"
+  }
+]

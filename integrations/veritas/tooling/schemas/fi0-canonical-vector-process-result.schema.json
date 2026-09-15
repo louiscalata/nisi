@@ -1,0 +1,54 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://veritas.invalid/private/schemas/stage5/fi0-canonical-vector-process-result.v1.json",
+  "title": "Veritas FI0.3 cross-process canonical-vector fixture result",
+  "description": "Strict structural shape for one same-host, same-owner, separate-Node-process readback of frozen FI-0 vector 009. This is not independent-toolchain agreement, protected authority, product integration, patentability, production, signing, or release evidence.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schemaVersion",
+    "recordType",
+    "profile",
+    "workerVersion",
+    "status",
+    "vectorId",
+    "canonicalSha256",
+    "rawEnvelopeCanonical",
+    "canonicalMatches",
+    "digestMatches",
+    "frozenDigestMatches",
+    "processBoundaryObserved",
+    "independentToolchainVerified",
+    "authorizing",
+    "protectedAuthorityVerified",
+    "productIntegrationVerified",
+    "resultDigest"
+  ],
+  "properties": {
+    "schemaVersion": { "const": 1 },
+    "recordType": { "const": "FI03_CANONICAL_VECTOR_PROCESS_RESULT" },
+    "profile": { "const": "veritas-fi03-same-uid-cross-process-canonical-vector-v1" },
+    "workerVersion": { "const": "fi03-independent-canonicalizer-v1" },
+    "status": { "const": "PASS_PRIVATE_CROSS_PROCESS_CANONICAL_VECTOR_FIXTURE_ONLY" },
+    "vectorId": { "const": "CANON-S5-009-FI0-INERT-INCIDENT-CONTRACT" },
+    "canonicalSha256": {
+      "const": "a07ba231b9a725252b9467d196fa88c23d82f9f1e8fa2f3711af0fb0553d7898"
+    },
+    "rawEnvelopeCanonical": { "const": true },
+    "canonicalMatches": { "const": true },
+    "digestMatches": { "const": true },
+    "frozenDigestMatches": { "const": true },
+    "processBoundaryObserved": { "const": true },
+    "independentToolchainVerified": { "const": false },
+    "authorizing": { "const": false },
+    "protectedAuthorityVerified": { "const": false },
+    "productIntegrationVerified": { "const": false },
+    "resultDigest": { "$ref": "#/$defs/sha256" }
+  },
+  "$defs": {
+    "sha256": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{64}$"
+    }
+  }
+}

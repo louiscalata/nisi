@@ -1,0 +1,141 @@
+{
+  "status": "PASS_SCOPED",
+  "task1": {
+    "command": "npm run check",
+    "exit_code": 0,
+    "tests": 1163,
+    "pass": 1163,
+    "fail": 0,
+    "cancelled": 0,
+    "skipped": 0,
+    "todo": 0,
+    "moved_tests": 3,
+    "structural": {
+      "mutations_caught": 8,
+      "allowed_cases": 8,
+      "source_findings": 0
+    }
+  },
+  "task2": {
+    "protected_hashes_unchanged": true,
+    "actual_source_equals_reviewed_reference": true,
+    "owner_checks": {
+      "owner-store.log": {
+        "tests": 16,
+        "pass": 16,
+        "fail": 0,
+        "cancelled": 0,
+        "skipped": 0,
+        "todo": 0
+      },
+      "owner-baseline.log": {
+        "tests": 2,
+        "pass": 2,
+        "fail": 0,
+        "cancelled": 0,
+        "skipped": 0,
+        "todo": 0
+      }
+    },
+    "syntax_exit_code": 0,
+    "compatibility": {
+      "status": "PASS_SCOPED",
+      "observations": 3,
+      "retained": 2,
+      "reopened": "COMPLETE",
+      "byteMatch": true,
+      "historical": true,
+      "authorizing": false,
+      "writeDurableObserved": true,
+      "readDurable": false,
+      "sha256": "7f0f492fcb5bd292bfc548916b3db47ce4563f14689a6b0b87e0742b55526497",
+      "scope": "same-process product serializer/store/reopen compatibility; no host integration or crash acceptance"
+    },
+    "local_runs": [
+      {
+        "command": "CHAMI_PACKET_TIER=local ~/bin/packet-run /Users/louiscalata/nisi-next-private/work-orders/run-journal-store/.packets/nisi-run-journal-store-v1.packet.md",
+        "started": "2026-09-13T13:46:30.779314-07:00",
+        "finished": "2026-09-13T14:01:35.458181-07:00",
+        "elapsed_seconds": 904.678,
+        "exit_code": 1
+      },
+      {
+        "command": "CHAMI_PACKET_TIER=local ~/bin/packet-run /Users/louiscalata/nisi-next-private/work-orders/run-journal-store/.packets/nisi-run-journal-store-v1.packet.md",
+        "started": "2026-09-13T14:05:34.851878-07:00",
+        "finished": "2026-09-13T14:15:56.872495-07:00",
+        "elapsed_seconds": 622.019,
+        "exit_code": 0
+      }
+    ],
+    "pc_fallback": "NOT_RUN_NOT_NEEDED"
+  },
+  "sha256": {
+    "tests/run-journal-baseline.test.mjs": "17a8de142999f7ebdbe164336d81ce5c0a7ef27b00e105ff7bf7a1113ea37e7f",
+    "tests/native-probe-summary-baseline.test.mjs": "28756bd6d730045e0bb12c9d5de04ed79523ba33b319ef3dfe593a56856e71ed",
+    "docs/verification/2026-09-13/five-work-order-integration/closing-corrections.md": "7fc529af34663cc0be89301df78bd3e42118d94bf8ca7f4399217e2eed49b4f1",
+    "work-orders/run-journal-store/src/run-journal-store-v1.mjs": "fa1817d924471cbf6307f9583c5f513f6e6aa97eee61ce8445f9addc13c1163a",
+    "work-orders/run-journal-store/tests/run-journal-store.test.mjs": "7190d7d212f8c2012b8978057e6a5e2314ff2bbeee29e69a377ff9bdc36e4834",
+    "work-orders/run-journal-store/tests/baseline.test.mjs": "f20367b8eaec8ccb58736fb36eaee393b55c8d89c21a104c6d3161f6787d8f76",
+    "work-orders/run-journal-store/package.json": "42bed7239d3e46cf5f4952e03bd2295d63d3af1368c34f8b285ae77937c42e94",
+    "work-orders/run-journal-store/.packets/nisi-run-journal-store-v1.packet.md": "bd6ca91746d79384d06f779ff436f6cce95ac2d17ed7d54374f3efa054b556e2",
+    "work-orders/run-journal-store/.packets/nisi-run-journal-store-v1.result.md": "2fddff3475a56282bab1532d3268e8778ce16a1e6dd84d1b148195fc3707cbc7",
+    "work-orders/run-journal-store/roadmap.md": "b7557960fe757fdfa53f1003ae3f4df667ad4c9c466e0bd0cce7eb6366ecf33e"
+  },
+  "limits": [
+    "isolated work order; no host integration",
+    "caller-serialized writers in trusted directory; no cross-process CAS lock",
+    "framing/hash validation only; full semantic reopen remains product responsibility",
+    "fsync returns observed; no power-loss, reboot, Windows-native or fresh-process acceptance",
+    "no commit or push; no U02-04 closure"
+  ],
+  "collaboration": {
+    "claude": "design deliverable retained; requested fable, response reports claude-fable-5-1 and auxiliary Haiku",
+    "daybreak": "test review and source review retained; one diagnostic naming recommendation adjudicated nonblocking",
+    "luna": "baseline migration read-only review retained",
+    "extra_claude_attempt": "NOT_RUN/unavailable review evidence because collaborator discarded session capture; usage and outcome unknown",
+    "opencode": "first local attempt zero edits; second installed Astra-authored reviewed reference; both receipts and response metadata retained"
+  },
+  "post_fix_records": [
+    {
+      "date": "2026-09-13",
+      "status": "PASS_SCOPED",
+      "supersedes": "The historical task2.owner_checks store count of 16 and the four old sha256 values below are superseded by this current post-fix record; existing records and logs are retained unchanged. The source and tests were fixed before this bookkeeping pass.",
+      "previous_store_test_count": 16,
+      "verification": {
+        "cwd": "work-orders/run-journal-store",
+        "command": "node --test tests/run-journal-store.test.mjs",
+        "exit_code": 0,
+        "tests": 17,
+        "pass": 17,
+        "fail": 0,
+        "cancelled": 0,
+        "skipped": 0,
+        "todo": 0,
+        "duration_ms": 162.692417
+      },
+      "sha256_updates": {
+        "work-orders/run-journal-store/evidence/protected-sha256.json": {
+          "old": "41dbd70cfd777e1c55c97fc469aa8eba06a3558203aab30b5a4e430c78b24b60",
+          "new": "1a4d6ff43fe7b06d86fba965f8a1dcefa604279867f3260296bb60a823c59733"
+        },
+        "work-orders/run-journal-store/roadmap.md": {
+          "old": "b7557960fe757fdfa53f1003ae3f4df667ad4c9c466e0bd0cce7eb6366ecf33e",
+          "new": "6f227ea1dc7089f734681cf447d8b414e7ccf40dce9f6b7fd7d2b7d891dc0a32"
+        },
+        "work-orders/run-journal-store/src/run-journal-store-v1.mjs": {
+          "old": "fa1817d924471cbf6307f9583c5f513f6e6aa97eee61ce8445f9addc13c1163a",
+          "new": "1356028b65f9f8b96e3b9ec8ba3bfbb4968092af53d00e8b5dfdb11b161f4792"
+        },
+        "work-orders/run-journal-store/tests/run-journal-store.test.mjs": {
+          "old": "7190d7d212f8c2012b8978057e6a5e2314ff2bbeee29e69a377ff9bdc36e4834",
+          "new": "304909a7275e04fd1af8d38a5ec16a21027e415c4cb6c4422d86dc8ec246969a"
+        }
+      },
+      "cross_review": {
+        "path": "work-orders/run-journal-store/evidence/claude-crossreview-via-astra-20260913-1515.md",
+        "sha256": "0d28770c87a2e4bb844147cd10abbd587183f92fba4464332f1278dbaf3014f4"
+      },
+      "limits": "Bookkeeping reconciliation and isolated store test rerun only; no new product or host integration, durability, native or milestone acceptance."
+    }
+  ]
+}

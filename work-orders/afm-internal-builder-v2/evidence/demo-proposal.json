@@ -1,0 +1,13 @@
+{
+  "ok": true,
+  "profile": "nisi-afm-internal-builder-v1",
+  "proposal": {
+    "proposedStep": "document",
+    "testsToRun": [
+      "afm-v1-oracle",
+      "bridge-contract"
+    ],
+    "explanation": "Verify the builder against its verified oracle and the bridge contract.",
+    "packHash": "b55ad57c3884a27d613b656723ba95a1ee9b0f186f6f1da20f5ee8ea9c1ec2c3"
+  }
+}

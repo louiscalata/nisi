@@ -1,0 +1,87 @@
+{
+  "verdict": "PASS",
+  "issues": [],
+  "invocation_status": "succeeded",
+  "status": "PASS",
+  "model_usage": {
+    "claude-haiku-4-5-20251001": {
+      "inputTokens": 6192,
+      "outputTokens": 13,
+      "cacheReadInputTokens": 0,
+      "cacheCreationInputTokens": 0,
+      "webSearchRequests": 0,
+      "costUSD": 0.0062569999999999995,
+      "contextWindow": 200000,
+      "maxOutputTokens": 32000,
+      "thinkingTokens": 0,
+      "canonicalModel": "claude-haiku-4-5",
+      "provider": "firstParty",
+      "costBasis": "list"
+    },
+    "claude-opus-5": {
+      "inputTokens": 2,
+      "outputTokens": 4193,
+      "cacheReadInputTokens": 626,
+      "cacheCreationInputTokens": 8149,
+      "webSearchRequests": 0,
+      "costUSD": 0.18663799999999997,
+      "contextWindow": 1000000,
+      "maxOutputTokens": 64000,
+      "thinkingTokens": 2899,
+      "canonicalModel": "claude-opus-5",
+      "provider": "firstParty",
+      "costBasis": "list"
+    }
+  },
+  "reported_models": [
+    "claude-haiku-4-5-20251001",
+    "claude-opus-5"
+  ],
+  "usage": {
+    "input_tokens": 2,
+    "cache_creation_input_tokens": 8149,
+    "cache_read_input_tokens": 626,
+    "output_tokens": 4193,
+    "output_tokens_details": {
+      "thinking_tokens": 2899
+    },
+    "server_tool_use": {
+      "web_search_requests": 0,
+      "web_fetch_requests": 0
+    },
+    "service_tier": "standard",
+    "cache_creation": {
+      "ephemeral_1h_input_tokens": 8149,
+      "ephemeral_5m_input_tokens": 0
+    },
+    "inference_geo": "not_available",
+    "iterations": [
+      {
+        "input_tokens": 2,
+        "output_tokens": 4193,
+        "cache_read_input_tokens": 626,
+        "cache_creation_input_tokens": 8149,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 8149
+        },
+        "type": "message"
+      }
+    ],
+    "speed": "standard"
+  },
+  "total_cost_usd": 0.19289499999999998,
+  "duration_ms": 48538,
+  "tools_enabled": false,
+  "session_persisted": false,
+  "write_owner": "codex",
+  "requested_model": "opus",
+  "mode": "review",
+  "attempts": 1,
+  "wall_seconds": 49.658,
+  "created_at": "2026-09-14T01:27:22.757750+00:00",
+  "prior_attempts": [],
+  "total_wall_seconds": 49.659,
+  "prior_attempt_usage": [],
+  "total_usage_complete": true
+}

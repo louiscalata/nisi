@@ -1,0 +1,159 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://veritas.invalid/private/schemas/stage5/recovery-resolution.v1.json",
+  "title": "Veritas coordinator hold-recovery resolution fixture",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schemaVersion",
+    "recordType",
+    "profile",
+    "disposition",
+    "storeId",
+    "witnessId",
+    "witnessBindingDigest",
+    "withdrawnRecordDigest",
+    "withdrawalOperationId",
+    "highWatermark",
+    "recoveryIntentDigest",
+    "barrierId",
+    "barrierRecordDigest",
+    "recoveryRevision",
+    "recoveryStateDigest",
+    "recoveryCommitRecordDigest",
+    "recoveryHeadRecordDigest",
+    "observedReferenceDigest",
+    "observedReferenceTransactionId",
+    "authorizing",
+    "barrierActive"
+  ],
+  "properties": {
+    "schemaVersion": {
+      "const": 1
+    },
+    "recordType": {
+      "const": "COORDINATOR_RECOVERY_RESOLUTION"
+    },
+    "profile": {
+      "const": "veritas-coordinator-recovery-resolution-v1:hold-recovery-required"
+    },
+    "disposition": {
+      "const": "HOLD_RECOVERY_REQUIRED"
+    },
+    "storeId": {
+      "$ref": "#/$defs/uuidV4"
+    },
+    "witnessId": {
+      "$ref": "#/$defs/uuidV4"
+    },
+    "witnessBindingDigest": {
+      "$ref": "#/$defs/sha256"
+    },
+    "withdrawnRecordDigest": {
+      "$ref": "#/$defs/sha256"
+    },
+    "withdrawalOperationId": {
+      "type": "string",
+      "pattern": "^withdraw:v1:[0-9a-f]{64}$"
+    },
+    "highWatermark": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "storeId",
+        "revision",
+        "commitRecordDigest",
+        "previousCommitRecordDigest",
+        "stateDigest",
+        "headRecordDigest"
+      ],
+      "properties": {
+        "storeId": {
+          "$ref": "#/$defs/uuidV4"
+        },
+        "revision": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "commitRecordDigest": {
+          "$ref": "#/$defs/sha256"
+        },
+        "previousCommitRecordDigest": {
+          "oneOf": [
+            {
+              "$ref": "#/$defs/sha256"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "stateDigest": {
+          "$ref": "#/$defs/sha256"
+        },
+        "headRecordDigest": {
+          "$ref": "#/$defs/sha256"
+        }
+      }
+    },
+    "recoveryIntentDigest": {
+      "$ref": "#/$defs/sha256"
+    },
+    "barrierId": {
+      "type": "string",
+      "pattern": "^withdrawal-[0-9a-f]{64}$"
+    },
+    "barrierRecordDigest": {
+      "$ref": "#/$defs/sha256"
+    },
+    "recoveryRevision": {
+      "type": "integer",
+      "minimum": 1
+    },
+    "recoveryStateDigest": {
+      "$ref": "#/$defs/sha256"
+    },
+    "recoveryCommitRecordDigest": {
+      "$ref": "#/$defs/sha256"
+    },
+    "recoveryHeadRecordDigest": {
+      "$ref": "#/$defs/sha256"
+    },
+    "observedReferenceDigest": {
+      "oneOf": [
+        {
+          "$ref": "#/$defs/sha256"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "observedReferenceTransactionId": {
+      "oneOf": [
+        {
+          "$ref": "#/$defs/uuidV4"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "authorizing": {
+      "const": false
+    },
+    "barrierActive": {
+      "const": true
+    }
+  },
+  "$defs": {
+    "sha256": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{64}$"
+    },
+    "uuidV4": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$"
+    }
+  }
+}

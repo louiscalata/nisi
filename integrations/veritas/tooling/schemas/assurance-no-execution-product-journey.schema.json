@@ -1,0 +1,161 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://veritas.invalid/private/schemas/stage5/assurance-no-execution-product-journey.v1.json",
+  "title": "Veritas inert M4J no-execution composed product-journey result",
+  "description": "Structural fixture shape only. Runtime validation additionally re-derives all seven journey records -- stage, check, explain, promote/readback, dependency event, recall, and replay -- from one frozen M4.6 subject digest and one frozen M4.6 dependency-closure graph bound as external inputs, recomputes every digest under its own domain, proves each of the six adjacent joints load-bearing by seeded joint substitution so the composition and not merely each stage carries the result, and enforces from source bytes that the isolated replay region names no upstream journey record type, no upstream frozen digest, and no module-level mutable carrier, deriving instead from the validated recall record alone. This schema proves no real staging, checking, explaining, promotion, recall, or replay, no generated-artifact, verifier, model, or plugin execution, no real external event observation or authentication, no durable or rollback-resistant state, no active product receipt or actual consumption, no staging, decision, promotion, installation, or execution authority, and no M3, M4, E15, or official E16 credit.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schemaVersion",
+    "recordType",
+    "status",
+    "profile",
+    "subjectDigest",
+    "graphDigest",
+    "stageDigest",
+    "checkDigest",
+    "explainDigest",
+    "promoteDigest",
+    "dependencyEventDigest",
+    "recallDigest",
+    "replayDigest",
+    "trace",
+    "authorizing",
+    "mayConsume",
+    "mayCreateDecision",
+    "mayStage",
+    "mayRecall",
+    "mayReplay",
+    "mayPromote",
+    "mayInstall",
+    "mayExecute",
+    "filesystemMutated",
+    "networkRequested",
+    "subprocessStarted",
+    "dynamicLoadAttempted",
+    "coordinatorMutated",
+    "officialE15Credit",
+    "officialE16Credit",
+    "m4Credit",
+    "resultDigest"
+  ],
+  "properties": {
+    "schemaVersion": {
+      "const": 1
+    },
+    "recordType": {
+      "const": "M4J_JOURNEY_RESULT_FIXTURE"
+    },
+    "status": {
+      "$ref": "#/$defs/journeyStatus"
+    },
+    "profile": {
+      "const": "veritas-m4j-inert-no-execution-product-journey-v1"
+    },
+    "subjectDigest": {
+      "$ref": "#/$defs/sha256"
+    },
+    "graphDigest": {
+      "$ref": "#/$defs/sha256"
+    },
+    "stageDigest": {
+      "$ref": "#/$defs/sha256"
+    },
+    "checkDigest": {
+      "$ref": "#/$defs/sha256"
+    },
+    "explainDigest": {
+      "$ref": "#/$defs/sha256"
+    },
+    "promoteDigest": {
+      "$ref": "#/$defs/sha256"
+    },
+    "dependencyEventDigest": {
+      "$ref": "#/$defs/sha256"
+    },
+    "recallDigest": {
+      "$ref": "#/$defs/sha256"
+    },
+    "replayDigest": {
+      "$ref": "#/$defs/sha256"
+    },
+    "trace": {
+      "$ref": "#/$defs/journeyTrace"
+    },
+    "authorizing": {
+      "const": false
+    },
+    "mayConsume": {
+      "const": false
+    },
+    "mayCreateDecision": {
+      "const": false
+    },
+    "mayStage": {
+      "const": false
+    },
+    "mayRecall": {
+      "const": false
+    },
+    "mayReplay": {
+      "const": false
+    },
+    "mayPromote": {
+      "const": false
+    },
+    "mayInstall": {
+      "const": false
+    },
+    "mayExecute": {
+      "const": false
+    },
+    "filesystemMutated": {
+      "const": false
+    },
+    "networkRequested": {
+      "const": false
+    },
+    "subprocessStarted": {
+      "const": false
+    },
+    "dynamicLoadAttempted": {
+      "const": false
+    },
+    "coordinatorMutated": {
+      "const": false
+    },
+    "officialE15Credit": {
+      "const": false
+    },
+    "officialE16Credit": {
+      "const": false
+    },
+    "m4Credit": {
+      "const": false
+    },
+    "resultDigest": {
+      "$ref": "#/$defs/sha256"
+    }
+  },
+  "$defs": {
+    "sha256": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{64}$"
+    },
+    "journeyStatus": {
+      "const": "DERIVED_M4J_INERT_NO_EXECUTION_JOURNEY_ONLY"
+    },
+    "journeyTrace": {
+      "const": [
+        "VALIDATE_STAGE",
+        "VALIDATE_CHECK",
+        "VALIDATE_EXPLAIN",
+        "VALIDATE_PROMOTE",
+        "VALIDATE_DEPENDENCY_EVENT",
+        "VALIDATE_RECALL",
+        "VALIDATE_REPLAY",
+        "RETURN_INERT"
+      ]
+    }
+  }
+}

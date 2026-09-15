@@ -1,0 +1,6 @@
+{
+  "command": "npm run check:private-package",
+  "exitCode": 0,
+  "elapsedSeconds": 2.851,
+  "log": "/var/folders/mr/_s2_2c_n3dzcc1clncg5rwsh0000gn/T/nisi-five-integration-20260913-1zxoo_er/baseline-private-package.log"
+}

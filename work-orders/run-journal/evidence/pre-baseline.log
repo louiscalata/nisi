@@ -1,0 +1,14 @@
+
+> nisi-private-run-journal-work-order@0.0.0-private test
+> node --test --test-timeout=5000 tests/baseline.test.mjs
+
+✔ private dependency-free ESM package and declared exports (4.170542ms)
+✔ source uses no ambient effects and at most the declared deterministic hash import (0.939375ms)
+ℹ tests 2
+ℹ suites 0
+ℹ pass 2
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 53.551667

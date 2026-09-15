@@ -1,0 +1,11 @@
+{
+  "name": "nisi-private-native-summary-draft",
+  "version": "0.0.0-private",
+  "private": true,
+  "type": "module",
+  "license": "UNLICENSED",
+  "scripts": {
+    "test": "node --test --test-timeout=5000 tests/baseline.test.mjs",
+    "test:formatter": "node --test --test-timeout=5000 tests/native-probe-summary.test.mjs"
+  }
+}

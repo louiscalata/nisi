@@ -1,0 +1,134 @@
+{
+  "schemaVersion": 1,
+  "createdAt": "2026-09-12T19:51:38.953Z",
+  "product": "nisi",
+  "developmentVersion": "0.2.0-private.0",
+  "scope": "REGISTERED_RUNTIME_METADATA_DISCOVERY_ONLY",
+  "sourceHashes": {
+    "hosts/local-models/discovery.mjs": "888bfba806e3419f21a6d55248b13dca2055c8da19867eef14c5adbd69ccddfe",
+    "tests/local-model-discovery.test.mjs": "4f95b719e393dc51bfbeee7af0389db2b504aeb5571734ada3b11c6774068aa5",
+    "scripts/test-local-model-discovery-mutants.mjs": "835cf1b55b84a4c0949ae6d874c00d7c82242595edd8d83fdddf27c6fd5b8710",
+    "adapters/local-chat.mjs": "75dc8b128883fb14e524ceb05b4696e53406c2c8038ec4340b42f0ca471fe043",
+    "workflow/contracts.mjs": "c28a3ee3db6e9a936cd58fca8b8ee3f2744ca25c259e2ea278b3b09cdbb73d82",
+    "package.json": "6b5c0271f5ad95d62af409c9782a2abb0b18a9844356c01a2fcf469063f7897f",
+    "roadmap.md": "825ef9d02c5377d720bf821ae21bef956897cacdf0790ffbee8763be10614553",
+    "/Volumes/SharedChami/Veritas Local Repository/SYSTEM-EQUATION.md": "d01817a7dbf2475e6910213540229aad6be588d2befd0980341cbefe2d0224e3"
+  },
+  "evidenceHashes": {
+    ".build/local-model-discovery-checkpoint-EL2umh/baseline.json": "4c67bd2608cb8a8a01395fb372c9c8ab5783c660a6b8d54b4fca9123736dc41c",
+    ".build/local-model-discovery-checkpoint-EL2umh/commands.json": "16e2ffd6338ea93b333d7c7e2a22a5e2aad3c135ed678aa5364e52d35783dcfd",
+    ".build/local-model-discovery-checkpoint-EL2umh/fable-design.json": "9fee3caeca1c09161cf9727d14d4b35416f08231bc760a9fadce1a03ad825112",
+    ".build/local-model-discovery-checkpoint-EL2umh/fable-request.md": "5e080b0b98ffc0f0bb982d4066258352d2645fa11f1d9e960ed0f0666c38e957",
+    ".build/local-model-discovery-checkpoint-EL2umh/focused.stderr.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    ".build/local-model-discovery-checkpoint-EL2umh/focused.stdout.txt": "60386bb4b7560168aa6fd6d1ae259731e51d6700f7705903ecc2526f98e01bee",
+    ".build/local-model-discovery-checkpoint-EL2umh/full-check.stderr.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    ".build/local-model-discovery-checkpoint-EL2umh/full-check.stdout.txt": "ad50d5aa8f7424dfac98fcb7150cbff06ed3c5afbda860b5e5e4282358ae2e14",
+    ".build/local-model-discovery-checkpoint-EL2umh/import.stderr.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    ".build/local-model-discovery-checkpoint-EL2umh/import.stdout.txt": "9b750db4e7e12a26668805fcb9b760a2ea0e427ec9789a957b89fdcebeb25288",
+    ".build/local-model-discovery-mutants-NCgpe6/results.json": "dd7cd0f6a812d7cc0665f11605eb2b1782f99d49830d07dc273547ee5edd327c"
+  },
+  "commands": [
+    {
+      "name": "full-check",
+      "command": [
+        "npm",
+        "run",
+        "check"
+      ],
+      "exitCode": 0,
+      "elapsedMs": 3094
+    },
+    {
+      "name": "focused",
+      "command": [
+        "/usr/local/bin/node",
+        "--test",
+        "--test-reporter=tap",
+        "tests/local-model-discovery.test.mjs"
+      ],
+      "exitCode": 0,
+      "elapsedMs": 216
+    },
+    {
+      "name": "import",
+      "command": [
+        "/usr/local/bin/node",
+        "scripts/verify-veritas-import.mjs"
+      ],
+      "exitCode": 0,
+      "elapsedMs": 36
+    }
+  ],
+  "focusedTests": {
+    "total": 23,
+    "passed": 23,
+    "failed": 0
+  },
+  "portableTests": {
+    "total": 284,
+    "passed": 284,
+    "failed": 0
+  },
+  "structuralScope": "Existing canonical structural gate only; not a whole-host security proof",
+  "mutants": {
+    "directory": ".build/local-model-discovery-mutants-NCgpe6",
+    "caught": 6,
+    "total": 6,
+    "failedChecks": [
+      1,
+      3,
+      1,
+      2,
+      2,
+      1
+    ]
+  },
+  "reviewers": {
+    "fable": {
+      "role": "bounded design review; not source acceptance",
+      "status": "succeeded",
+      "reportedModels": [
+        "claude-haiku-4-5-20251001",
+        "claude-fable-5-1"
+      ],
+      "reportedCostUSD": 0.11420625000000001,
+      "toolsEnabled": false
+    },
+    "luna": {
+      "role": "read-only integration seam audit",
+      "status": "COMPLETED"
+    },
+    "daybreak": {
+      "role": "read-only defensive source review",
+      "initialFindings": [
+        "unsettled transport allowed later requests",
+        "deadline before final hashing/freezing",
+        "sparse runtime array validation"
+      ],
+      "resolution": "All three fixed; static follow-up reports no remaining findings in scope; tests executed by Codex"
+    },
+    "writeOwner": "Codex"
+  },
+  "boundaries": {
+    "runtimeRequestsInTests": "Deterministic transports plus one ephemeral localhost HTTP fixture; no installed model server queried",
+    "liveProviderCompatibility": "NOT_RUN",
+    "nativeUI": "NOT_RUN",
+    "modelInference": "NOT_RUN",
+    "modelLoadUnload": "NOT_IMPLEMENTED",
+    "modelDownloadsUpgrades": "NOT_IMPLEMENTED",
+    "localityLicenseCostAttestation": "NOT_IMPLEMENTED",
+    "globalHardwareGovernor": "NOT_IMPLEMENTED",
+    "newAuthorityFromInventory": false,
+    "publicReleaseAuthorized": false,
+    "modelOrRuntimeSettingsChanged": false,
+    "existingAdapterUnchanged": true,
+    "packageUnchanged": true,
+    "retainedEquationUnchanged": true
+  },
+  "sourcesReviewed": [
+    "https://lmstudio.ai/docs/developer/rest/list",
+    "https://lmstudio.ai/docs/developer/rest",
+    "https://docs.ollama.com/api/tags",
+    "https://docs.ollama.com/cloud"
+  ]
+}

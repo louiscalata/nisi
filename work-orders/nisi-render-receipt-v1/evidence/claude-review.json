@@ -1,0 +1,121 @@
+{
+ "verdict": "REJECT",
+ "summary": "The module implements CONTRACT.md faithfully and passes the 13-test protected oracle (13/13 reproduced on Node 24.18.0), but two blockers survived refutation: the read domain is wider than the canonical-json-v1 digest domain, so digestRenderReceiptV1 throws a foreign CanonicalJSONErrorV1 for contract-valid receipts (including the oracle's own accepted -1.5 fixture), and the copy phase calls input.checks.map, letting a hijacked array inject arbitrary content into an ok:true receipt or make the reader throw. The root causes are in the contract (MEASURE/model domain) and in the validate-then-re-read copy pattern, which the sibling render-tile-v1 shares; the fixes need an owner contract decision, a snapshot-first copy, and oracle vectors. Five semantic-soundness findings were refuted as contract-mandated design rather than defects and are recorded as schema limits.",
+ "confirmed_findings": [
+  {
+   "title": "digestRenderReceiptV1 throws a foreign CanonicalJSONErrorV1 for receipts the reader accepts (fractional/non-safe numbers, lone surrogates)",
+   "severity": "blocker",
+   "file": "/Users/louiscalata/nisi-next-private/work-orders/nisi-render-receipt-v1/src/render-receipt-v1.mjs",
+   "line": 408,
+   "claim": "CONTRACT.md line 40 defines MEASURE as any finite number and lines 39/55/61 admit any string for TEXT and model, but canonical-json-v1 accepts only safe-integer number tokens (lines 190-192) and refuses lone surrogates (lines 153-159). isMeasure (module line 63) therefore reads ok for measured/threshold of -1.5, 0.97, 2**53, 1e21 and for lone-surrogate TEXT/model, and digestRenderReceiptV1 then throws CanonicalJSONErrorV1 with INVALID_JSON_NUMBER or INVALID_JSON_STRING_SURROGATE, a code outside RENDER_RECEIPT_CODES_V1 and a third outcome CONTRACT.md lines 30-33 never describe. The oracle's own accepted fixture (tests line 136, measured -1.5) is undigestable and is never digested. Reproduced 6/6 cases under $TMPDIR; the sibling render-tile-v1 has the same gap via recipe.params finite numbers.",
+   "fix": "Owner contract decision first: narrow MEASURE numbers to the codec's domain (Number.isSafeInteger, not -0; fractional metrics as scaled integers or TEXT) and require well-formed strings for measured/threshold TEXT, source.model and reviewer.model (s.isWellFormed(), as run-journal-v1 copy() does), refused at member level with CHECKS/SOURCE/REVIEWER codes; or change line 31 to a digest serialisation that can carry floats. Then isMeasure and the model checks in the module, and the oracle: every ok() fixture must digest, plus refusals for 0.5, 2**53, -0 and a lone surrogate. Apply the same decision to render-tile-v1 recipe.params."
+  },
+  {
+   "title": "checks copy calls input.checks.map and for-of on the caller's array: a hijacked map, Array subclass or Symbol.species injects arbitrary content into an ok:true receipt, returns the caller's own array, or makes the reader throw",
+   "severity": "blocker",
+   "file": "/Users/louiscalata/nisi-next-private/work-orders/nisi-render-receipt-v1/src/render-receipt-v1.mjs",
+   "line": 379,
+   "claim": "Validation reads input.checks[i] by index, but line 379 dispatches input.checks.map and lines 316/332/346 use for-of, both resolved on the attacker's object after Array.isArray passed. A plain array with an own map data property yields ok:true with receipt.checks = [{anything:'at all'}] (deep-frozen, digest of that receipt throws RENDER_RECEIPT_UNKNOWN_MEMBER); an Array subclass yields checks ['not even an object']; a Symbol.species returning the input array makes receipt.checks === input.checks and freezes the caller's array; a null-prototype array or a poisoned species makes the reader throw TypeError. Violates CONTRACT.md line 29 (never throws) and lines 110-113 (fresh plain checks in schema order, no reference to the input survives). Reproduced under $TMPDIR.",
+   "fix": "Never call a method on the input: capture const n = input.checks.length once, iterate by index in the three consistency loops, and build the output checks array from the locals read during validation with push. Refuse arrays whose prototype is not Array.prototype and arrays with extra own keys (Object.getOwnPropertyNames(x).length !== x.length + 1) at $.checks, as run-journal-v1 copy() does. Add oracle vectors: own-map array, Array subclass, null-prototype array, each reading to a fresh Array.prototype array that re-reads ok. Same fix in render-tile-v1 (slice/map on neighbours, children, params)."
+  },
+  {
+   "title": "Members are re-read from the input at each use: accessor properties and Proxy traps can throw out of the reader or swap values between validation and copy",
+   "severity": "defect",
+   "file": "/Users/louiscalata/nisi-next-private/work-orders/nisi-render-receipt-v1/src/render-receipt-v1.mjs",
+   "line": 365,
+   "claim": "The reader never snapshots; input.x, input.source.x, c.x and input.reviewer.x are dereferenced during validation, again in the consistency phase, and again in the copy block at lines 365-394. plain() accepts an object literal with enumerable getters and a Proxy over a plain object. A throwing getter on verdict/elapsedMs/checks[0].measured, or a Proxy get/ownKeys/getPrototypeOf trap, propagates a raw Error out of readRenderReceiptV1 (CONTRACT.md line 29 says never throws for any input value; the oracle's never-throws test only feeds top-level non-objects). A two-phase getter yields deep-frozen ok:true receipts that violate the schema: elapsedMs -1, measured NaN, duplicate checkIds, an unvalidated reviewer, a PASS receipt with outcome 'fail' and code null; the returned receipt then fails re-read and its digest throws, or a lying-but-valid swap digests content that was never validated. The unused copy() at line 77 was never wired in. JSON.parse output cannot carry accessors or Proxies, so exposure is in-process hostile or buggy callers, which is why this is a defect rather than a blocker; it shares its fix with the checks.map blocker.",
+   "fix": "Snapshot once with a descriptor walk (Object.getOwnPropertyDescriptor per own key; refuse !('value' in d) or !d.enumerable; refuse Reflect.ownKeys(x).length !== Object.keys(x).length; plain-object/Array.prototype only; cycle guard), wrapped in try/catch mapping any throw to RENDER_RECEIPT_NOT_OBJECT at $; validate the snapshot and build the receipt from the snapshot. Delete the dead copy() or make it that snapshot. Oracle: a throwing getter refuses rather than throws; for every ok result assert readRenderReceiptV1(r.receipt).ok === true and digest equality. Apply to render-tile-v1, which has the identical pattern (attempt getter 0 then -1 yields an ok tile that fails re-read)."
+  },
+  {
+   "title": "Oracle does not pin the accept side of any length limit, any CODE length, non-string source.block, or the frozen-ness of four constants; 9 boundary mutants survive",
+   "severity": "defect",
+   "file": "/Users/louiscalata/nisi-next-private/work-orders/nisi-render-receipt-v1/tests/render-receipt-v1.test.mjs",
+   "line": 93,
+   "claim": "CONTRACT.md lines 21 and 37-39 fix idLength 128, modelLength 128, textLength 256 and CODE at 64 chars, and line 18 says all constants are frozen. The oracle only supplies over-limit negatives (129 at lines 93/111, 257 at line 129), no at-limit positive for any string field, no CODE-length vector at all, no reviewer.model over-length, no non-string source.block, and line 52 checks Object.isFrozen on only three of eight constants. Mutants ID_REGEX {0,126}, isText <, source.model >=, reviewer.model length check deleted, CODE_REGEX {0,62} and {0,}, source.block typeof guard, SOURCE_KINDS/SCOPES unfrozen all pass 13/13; a differential probe shows each diverges from the module on a concrete vector. The module is correct at every boundary; the protected oracle is the acceptance gate and cannot see these.",
+   "fix": "Add accept vectors at each limit (tileId/source.id/source.block/reviewer.id/checkId of 128; source.model and reviewer.model of 128; measured and threshold TEXT of 256; code of 64) and refuse vectors for code of 65, reviewer.model of 129 and source.block 7; extend the line-52 frozen loop to all eight exported constants."
+  },
+  {
+   "title": "Oracle does not pin any ordering clause: reorder mutants across the member walk and consistency rules 1-8 survive",
+   "severity": "defect",
+   "file": "/Users/louiscalata/nisi-next-private/work-orders/nisi-render-receipt-v1/tests/render-receipt-v1.test.mjs",
+   "line": 150,
+   "claim": "CONTRACT.md lines 69-72 fix the check order and line 97 says the eight consistency rules are evaluated in this order with explicit sub-orders (rules 3/4 $.checks then $.reviewer; rule 6 reviewer, reviewer.id, checks; rule 8 checks then reviewer). Apart from test line 79 no oracle input violates two clauses at once. Eleven non-equivalent reorder mutants pass 13/13: rule1-2-swap, rule3-rev-first, rule4-rev-first, rule5-after-6, rule6-checks-first, rule8-rev-first, cand-verdict-swap, src-missing-before-unknown, dup-after-kind, plus rule 1 vs rule 2 (worker with id null and verdict REPLAY) and rule 8 checks-vs-reviewer (QUALITY_FAIL with no fail and reviewer null). Each changes the reported path on a concrete two-fault input (e.g. journal+id 'x'+PASS: $.source.id vs $.source.kind; candidate 7 + verdict MAYBE: CANDIDATE vs VERDICT). The module conforms; a drafter that did not would pass.",
+   "fix": "Add one two-fault vector per ordering clause asserting the first-listed path wins: the eleven inputs above are ready-made. Consider adding 'then' to rules 6 and 8 in CONTRACT.md so the intra-rule sub-order is stated as explicitly as in rules 3/4."
+  },
+  {
+   "title": "Non-enumerable own required members count as present and non-enumerable or symbol-keyed extras pass the closed-schema check, against 'only own enumerable members count'",
+   "severity": "nit",
+   "file": "/Users/louiscalata/nisi-next-private/work-orders/nisi-render-receipt-v1/src/render-receipt-v1.mjs",
+   "line": 105,
+   "claim": "Presence is tested with own() = hasOwnProperty (lines 105, 146, 195, 241), true for non-enumerable properties, while unknown-member detection uses Object.keys (lines 97, 140, 189, 235), blind to non-enumerable and symbol keys. A receipt with tokens defined non-enumerable reads ok although CONTRACT.md line 42 says it does not count (expected MISSING_MEMBER $.tokens), and the same object is refused after a JSON round-trip; symbol-keyed and non-enumerable extras read ok. The returned copy is well-formed, hidden extras never reach it, and the digest is unchanged, so this stays a nit; JSON.parse can never produce such input.",
+   "fix": "Falls out of the snapshot fix (descriptor walk refuses non-enumerable and non-string keys). Otherwise test presence with Object.getOwnPropertyDescriptor(o, k)?.enumerable or against the Object.keys set already gathered for the unknown scan."
+  },
+  {
+   "title": "CONTRACT.md Definitions sentence on __proto__/prototype/constructor keys ('code of the enclosing member') is inherited tile wording that never fires in the receipt schema",
+   "severity": "nit",
+   "file": "/Users/louiscalata/nisi-next-private/work-orders/nisi-render-receipt-v1/CONTRACT.md",
+   "line": 43,
+   "claim": "Lines 42-44 are verbatim from the tile contract, where free-form inputs/params/apron maps make 'code of the enclosing member' meaningful (RENDER_TILE_PARAMS). Every receipt object has a fixed member set, so such a key is always an unknown member; the module and the oracle (lines 83, 135) report RENDER_RECEIPT_UNKNOWN_MEMBER, which the check order (lines 69-72) and the table (line 81) already require. One refuter reads the sentence as an empty special case and the PC draft did emit UNKNOWN_MEMBER from the contract alone, so the drafter risk is small; the sentence is still misleading editorial residue.",
+   "fix": "Reword to: 'The member names __proto__, prototype, constructor are never schema members; where present as keys they are refused as RENDER_RECEIPT_UNKNOWN_MEMBER with the path to that key.'"
+  }
+ ],
+ "refuted_findings": [
+  {
+   "title": "Unknown-member path reflects the attacker's key name unbounded and unescaped into the refusal result",
+   "why_refuted": "Behaviour reproduces but is contract-mandated: line 81 sets the UNKNOWN_MEMBER path to 'the member', line 72 defines the path grammar with no escaping or bound, and the protected oracle pins raw non-ID keys at $.__proto__ (lines 83, 135). Line 16 governs error messages; the digest's Error has an empty message and the {ok,code,path} result is a structured value. The sibling tile module does the identical thing; the reviewer's own text concedes the module is compliant and the fix is a contract decision. Recorded as an optional contract note, not a defect."
+  },
+  {
+   "title": "Author \u2260 reviewer rule is a structural no-op for source.kind 'assemble'",
+   "why_refuted": "Rule 1 mandates source.id null for journal and assemble, and rules 6/8 compare reviewer.id to source.id exactly as written; the protected oracle pins the accepted shape (line 176). In the reference model an assemble source is the deterministic composition step with no model actor, so there is no author id to compare, and the closed reader compares record strings for every kind. Capturing an assembler id would violate rule 1 and break the oracle. Recorded as a schema limit and a one-line contract clarification."
+  },
+  {
+   "title": "REPLAY receipts carry no link to the journal record they claim to replay",
+   "why_refuted": "The journal is keyed by tile identity (SPEC.md, unit-03 reference), and the receipt's required identity is the join key: journal[receipt.identity] reconciles a REPLAY's candidate, so of two REPLAY receipts disagreeing on candidate at most one matches the journal. Cross-record verification is by contract outside this pure reader (equally true of two PASS receipts with different candidates), and the house linkage direction is journal entry -> receipt via receiptId (run-journal-v1 ENTRY_KEYS). The proposed field is a contract change, not a module defect."
+  },
+  {
+   "title": "A check's outcome (pass or fail) needs no supporting measured/threshold value",
+   "why_refuted": "CONTRACT.md line 40 defines MEASURE as null | finite number | TEXT with no coupling to outcome; line 60 couples only code to 'fail'; rules 1-8 never mention measured/threshold. The owner's qfail() fixture (line 23, asserted ok at line 56) and the pinned PASS digest both use null/null on the quality check, since a reviewer rejection is categorical. Applying the proposed rule breaks 2 of the 13 protected tests and the pinned digest. Contract-design opinion, recorded as a schema limit."
+  },
+  {
+   "title": "reviewer.id \u2260 source.id is string-distinctness, not identity-independence",
+   "why_refuted": "Lines 104/106 state the rule as 'reviewer.id must differ from source.id' and nothing stronger; the normative contract never claims independent or accountable parties, and the PURE-REGION rule forbids consulting a roster. The finding concedes there is no in-module fix. Recorded as a schema limit."
+  }
+ ],
+ "required_before_integration": [
+  "Owner decision in CONTRACT.md on the digest domain: either narrow MEASURE numbers to safe integers (not -0) and require well-formed strings for measured/threshold TEXT, source.model and reviewer.model, refused at member level, or change line 31 to a serialisation that carries floats; then update isMeasure and the model checks, and make the read set equal the digestable set. Apply the same decision to render-tile-v1 recipe.params.",
+  "Replace the validate-then-re-read copy with a single descriptor-walk snapshot (refuse accessor, non-enumerable and symbol members; Array.prototype/Object.prototype/null only; extra own keys on arrays refused; cycle guard) wrapped so any throw maps to RENDER_RECEIPT_NOT_OBJECT at $; validate and build the receipt from the snapshot; never call map/for-of/slice on caller objects. Remove the dead copy() or make it this snapshot. Mirror in render-tile-v1.",
+  "Oracle additions before re-review: (a) every ok() fixture is digested and read->digest is idempotent for each verdict shape; refusals for measured 0.5, 2**53, -0 and a lone surrogate in TEXT/model; (b) own-map array, Array subclass, null-prototype array and Symbol.species array as checks read to a fresh Array.prototype array that re-reads ok; (c) throwing getter and two-phase getter on a root member, a source member, a check member and reviewer refuse or read to a receipt that re-reads ok, never throw; (d) accept vectors at every length limit (128/128/256/64) and refuse vectors for code 65, reviewer.model 129, source.block 7; (e) Object.isFrozen for all eight constants; (f) one two-fault vector per ordering clause (the eleven listed).",
+  "Re-run the mutation set with the new vectors and record the added mutants (idlen127, textlt, srcmodel127, revmodel-nolen, codelen63, code-nolen, block-nonstr, kinds/scopes-unfrozen, the nine reorders, rule1-2, rule8-sub) as caught in evidence/mutants.json; re-pin the PASS/REPLAY digests if the contract change alters the fixtures.",
+  "Update HANDOFF.md to state that the author \u2260 reviewer rule is a record-level string comparison that is vacuous for assemble sources, so the advertised feature matches the schema."
+ ],
+ "optional_improvements": [
+  "Reword CONTRACT.md lines 42-44 so __proto__/prototype/constructor keys are stated as RENDER_RECEIPT_UNKNOWN_MEMBER at the key path, dropping the inherited 'code of the enclosing member' phrase.",
+  "Add 'then' to consistency rules 6 and 8 so the intra-rule sub-order is explicit, matching rules 3/4.",
+  "Add a contract note that refusal paths reflect the offending key name verbatim and unbounded (as line 81 mandates), so callers that log refusal results know to treat path as input-derived, or decide to bound it (ID-shaped keys only, else the enclosing object's path) and update oracle lines 83/135.",
+  "Add a contract note that rule 6/8's reviewer-vs-source comparison is empty by design for assemble and journal sources (no actor id), and that reviewer independence for worker sources is only as strong as the upstream id-issuing discipline.",
+  "Test presence with the enumerable key set so hasOwnProperty and Object.keys agree on what a member is (subsumed by the snapshot fix).",
+  "Document the -0 collapse: the read receipt carries -0 (Object.is) but JSON.stringify emits 0, so digest(-0) equals digest(0); harmless, resolved if MEASURE is narrowed to exclude -0."
+ ],
+ "oracle_gaps": [
+  "No ok() fixture is ever digested; the accepted measured -1.5 fixture at line 136 is undigestable and the suite cannot see it.",
+  "The never-throws test (lines 73-75) feeds only top-level non-plain values; no plain object with an accessor, no Proxy, no exotic array as checks.",
+  "No at-limit accept vector for any bounded string (ID 128, model 128, TEXT 256, CODE 64); no CODE-length vector at all; no reviewer.model over-length; no non-string source.block.",
+  "Object.isFrozen checked for only LIMITS, VERDICTS, CODES (line 52), not SOURCE_KINDS, CHECK_KINDS, OUTCOMES, SCOPES.",
+  "Only one two-fault input (line 79); the member-walk order (unknown before missing inside source/checks/reviewer, candidate before verdict, duplicate checkId before kind) and consistency rules 1-8 with their sub-orders are unpinned, so eleven reorder mutants survive.",
+  "No vector asserts readRenderReceiptV1(r.receipt).ok for every ok result (read idempotence is pinned only for pass() at line 195).",
+  "No vector for a non-enumerable or symbol-keyed member at any level.",
+  "evidence/mutants.json covers seven semantic mutants only; no length-boundary, ordering, freezing, or input-shape mutant was tried."
+ ],
+ "schema_limits": [
+  "Fractional or non-safe-integer measured/threshold values and lone-surrogate strings are readable but not digestable under the current contract; this matters (SSIM-style metrics are the panel's stated use) and is the blocker above.",
+  "An assemble-sourced (and journal-sourced) receipt carries no actor id, so the reviewer-vs-source comparison in rules 6/8 is vacuous for those kinds; by design (the assembly step has no model actor), matters only if a downstream consumer assumes the house-wide author \u2260 reviewer principle holds per receipt for every kind, so it should be documented.",
+  "reviewer.id \u2260 source.id is string distinctness; the same real actor under two ids satisfies it. Inherent to a pure reader with no roster; matters for integrators, not for this module.",
+  "A REPLAY receipt names the journal record only through identity (the journal key) and candidate; there is no journal entry id or hash on the receipt. Reconciliation is journal-side and outside the reader by contract; does not matter for this profile.",
+  "A check's measured and threshold may both be null for any outcome, so a pass or fail can be categorical (code-only); by design for reviewer verdicts, matters only as a documentation clarification.",
+  "source.block is an ID|null with no consistency rule and no documented meaning elsewhere in the private tree; harmless, but its semantics should be stated.",
+  "A receipt has no supersedes or tombstone member (HANDOFF.md 'Not done, on purpose'); reopen is a journal event, so this does not matter for v1.",
+  "-0 in a MEASURE reads as -0 but digests as 0; harmless, disappears if MEASURE excludes -0."
+ ],
+ "reviewer": "claude-workflow review-render-receipt-v1",
+ "date": "2026-09-14"
+}

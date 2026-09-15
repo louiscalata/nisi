@@ -1,0 +1,78 @@
+✔ actual host performs exact two-step selection and stores one metadata observation (71.105292ms)
+✖ selection prompt shows only eligible rows and requires full row id (52.891167ms)
+✔ old history approval and normalized incident approvals cannot store (52.442959ms)
+✔ second prompt binds row fingerprint plus preview digest and renders all warnings (49.320291ms)
+✔ decline, EOF, no-TTY, signal, error and malformed prompt outcomes never open owner (49.414625ms)
+✔ hanging prompt is bounded by the overall timeout and aborts its owned signal (55.151625ms)
+✔ same-host overlap is busy and guard releases after completion (48.275ms)
+✔ genuine abort before and during prompt prevents owner open despite suppressed listeners (48.259042ms)
+✔ synthetic abort events and overridden signal instance members cannot forge cancellation (50.010334ms)
+✔ preview identity change after selection refuses before owner open (48.477792ms)
+✔ invalid wall clock refuses before owner and permit calls (48.583958ms)
+✔ cancellation after permit creation revokes the private handle before capture (48.019041ms)
+✔ invalid or thrown capture after call is uncertain and handle cleanup remains explicit (48.841459ms)
+✔ late cancellation preserves exact valid capture and reports consumed cleanup (47.281083ms)
+✖ genuine issued failure rows page without dropping candidates and select only from the displayed page (0.4535ms)
+✖ out-of-range paging and the interaction cap refuse without opening the journal (0.224ms)
+ℹ tests 16
+ℹ suites 0
+ℹ pass 13
+ℹ fail 3
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 767.006875
+
+✖ failing tests:
+
+test at tests/repository-incident-review.test.mjs:21:1
+✖ selection prompt shows only eligible rows and requires full row id (52.891167ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  + actual - expected
+  
+  + 'SELECTION_MISMATCH'
+  - 'INVALID_SELECTION'
+  
+      at assertResult (file:///Users/louiscalata/nisi-next-private/tests/repository-incident-review.test.mjs:16:201)
+      at TestContext.<anonymous> (file:///Users/louiscalata/nisi-next-private/tests/repository-incident-review.test.mjs:21:280)
+      at async Test.run (node:internal/test_runner/test:1332:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:911:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 'SELECTION_MISMATCH',
+    expected: 'INVALID_SELECTION',
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at tests/repository-incident-review.test.mjs:47:1
+✖ genuine issued failure rows page without dropping candidates and select only from the displayed page (0.4535ms)
+  Error: REPOSITORY_RUN_SCHEMA
+      at refuse (file:///Users/louiscalata/nisi-next-private/integrity/record-utils.mjs:6:53)
+      at exact (file:///Users/louiscalata/nisi-next-private/integrity/record-utils.mjs:15:63)
+      at Object.run (file:///Users/louiscalata/nisi-next-private/hosts/repository/reviewed-workflow-v1.mjs:145:5)
+      at createPagedIncidentHostFixture (file:///Users/louiscalata/nisi-next-private/tests/helpers/incident-review-fixture.mjs:42:14)
+      at TestContext.<anonymous> (file:///Users/louiscalata/nisi-next-private/tests/repository-incident-review.test.mjs:47:154)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1325:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:911:18)
+      at Test.postRun (node:internal/test_runner/test:1465:19)
+      at Test.run (node:internal/test_runner/test:1390:12) {
+    code: 'REPOSITORY_RUN_SCHEMA'
+  }
+
+test at tests/repository-incident-review.test.mjs:49:1
+✖ out-of-range paging and the interaction cap refuse without opening the journal (0.224ms)
+  Error: REPOSITORY_RUN_SCHEMA
+      at refuse (file:///Users/louiscalata/nisi-next-private/integrity/record-utils.mjs:6:53)
+      at exact (file:///Users/louiscalata/nisi-next-private/integrity/record-utils.mjs:15:63)
+      at Object.run (file:///Users/louiscalata/nisi-next-private/hosts/repository/reviewed-workflow-v1.mjs:145:5)
+      at createPagedIncidentHostFixture (file:///Users/louiscalata/nisi-next-private/tests/helpers/incident-review-fixture.mjs:42:14)
+      at TestContext.<anonymous> (file:///Users/louiscalata/nisi-next-private/tests/repository-incident-review.test.mjs:49:115)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1325:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:911:18)
+      at Test.postRun (node:internal/test_runner/test:1465:19)
+      at Test.run (node:internal/test_runner/test:1390:12) {
+    code: 'REPOSITORY_RUN_SCHEMA'
+  }

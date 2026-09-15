@@ -1,0 +1,204 @@
+{
+  "schemaVersion": "nisi-app-bundle-build/v2",
+  "status": "ASSEMBLED_UNSIGNED_BUNDLE",
+  "startedAt": "2026-09-14T08:13:38.328Z",
+  "command": {
+    "file": "/usr/bin/xcrun",
+    "args": [
+      "swift",
+      "build",
+      "--package-path",
+      "/Users/louiscalata/nisi-next-private/native/macos/Nisi",
+      "--product",
+      "Nisi",
+      "--configuration",
+      "debug",
+      "--scratch-path",
+      "/Users/louiscalata/nisi-next-private/.build/nisi-app-bundle-debug-srvl8J/swift-build"
+    ],
+    "cwd": "/Users/louiscalata/nisi-next-private",
+    "env": {
+      "DEVELOPER_DIR": "/Applications/Xcode-27.0.app/Contents/Developer",
+      "CODE_SIGNING_ALLOWED": "NO",
+      "CODE_SIGNING_REQUIRED": "NO"
+    }
+  },
+  "configuration": "debug",
+  "overlay": "/Users/louiscalata/nisi-next-private/native/macos/Nisi",
+  "frozenPackage": "/Users/louiscalata/nisi-next-private/integrations/veritas/native/macos/CodenameVeritasFramework",
+  "scratch": "/Users/louiscalata/nisi-next-private/.build/nisi-app-bundle-debug-srvl8J/swift-build",
+  "manifestSha256": "8207efbc465ec99f0c16a7a281c349bb7ce8819349dbbafe17534f72dd527bcb",
+  "sourceBefore": {
+    "status": "PASS_SOURCE_FREEZE_ONLY",
+    "files": 225,
+    "totalBytes": 8027242,
+    "excluded": [
+      "native/macos/CodenameVeritasFramework/.build"
+    ],
+    "originRechecked": false,
+    "integrationVerified": false,
+    "legalClearance": false
+  },
+  "sourceAfter": {
+    "status": "PASS_SOURCE_FREEZE_ONLY",
+    "files": 225,
+    "totalBytes": 8027242,
+    "excluded": [
+      "native/macos/CodenameVeritasFramework/.build"
+    ],
+    "originRechecked": false,
+    "integrationVerified": false,
+    "legalClearance": false
+  },
+  "hiddenBefore": [
+    {
+      "path": "native/macos/CodenameVeritasFramework/.build/.buildSystem_debug",
+      "kind": "file",
+      "bytes": 10,
+      "sha256": "cd1ba1c9604b794d71cd3cb482cc02e4c16bdea56c361333fabe801a74db2b90"
+    },
+    {
+      "path": "native/macos/CodenameVeritasFramework/.build/CACHEDIR.TAG",
+      "kind": "file",
+      "bytes": 209,
+      "sha256": "61833598201b8d9bb6a18003b6be9fd00ae014cfbd583253c1f23b746bf035d1"
+    }
+  ],
+  "hiddenAfter": [
+    {
+      "path": "native/macos/CodenameVeritasFramework/.build/.buildSystem_debug",
+      "kind": "file",
+      "bytes": 10,
+      "sha256": "cd1ba1c9604b794d71cd3cb482cc02e4c16bdea56c361333fabe801a74db2b90"
+    },
+    {
+      "path": "native/macos/CodenameVeritasFramework/.build/CACHEDIR.TAG",
+      "kind": "file",
+      "bytes": 209,
+      "sha256": "61833598201b8d9bb6a18003b6be9fd00ae014cfbd583253c1f23b746bf035d1"
+    }
+  ],
+  "overlayInventory": [
+    {
+      "path": "Info.plist",
+      "kind": "file",
+      "sha256": "15e1cdc49d57765fe024bc045d44db4fe55c07cd78a363e257be450d0d4eedfe",
+      "bytes": 856
+    },
+    {
+      "path": "Package.swift",
+      "kind": "file",
+      "sha256": "65b243d81a891abf7866921958f803e9e5625f620a384286e01d99fb96b34d1e",
+      "bytes": 1687
+    },
+    {
+      "path": "README.md",
+      "kind": "file",
+      "sha256": "32fa3d0dbe74a0840917e136c18fba029546faff5f669e113627af6beee7a122",
+      "bytes": 2196
+    },
+    {
+      "path": "Sources/NisiApp/AppModel.swift",
+      "kind": "symlink",
+      "frozen": "Sources/CodenameVeritasApp/AppModel.swift"
+    },
+    {
+      "path": "Sources/NisiApp/IncidentHistoryCoordinator.swift",
+      "kind": "symlink",
+      "frozen": "Sources/CodenameVeritasApp/IncidentHistoryCoordinator.swift"
+    },
+    {
+      "path": "Sources/NisiApp/MenuBarView.swift",
+      "kind": "file",
+      "sha256": "07dda541fe812d36a72990b3cd38722d692c48d2904c81827b601be44db9c32c",
+      "bytes": 21732
+    },
+    {
+      "path": "Sources/NisiApp/NisiApp.swift",
+      "kind": "file",
+      "sha256": "9ad2936e29c909b5fbe55ecdbe27e60d1b9f1a5d2e7ecf2980a6854ab351d8d0",
+      "bytes": 2294
+    },
+    {
+      "path": "Sources/NisiApp/PrivateVerifiedFileWriter.swift",
+      "kind": "symlink",
+      "frozen": "Sources/CodenameVeritasApp/PrivateVerifiedFileWriter.swift"
+    },
+    {
+      "path": "Sources/NisiApp/ShellTruthV1.swift",
+      "kind": "symlink",
+      "frozen": "Sources/CodenameVeritasApp/ShellTruthV1.swift"
+    },
+    {
+      "path": "Sources/VeritasAppleFoundation",
+      "kind": "symlink",
+      "frozen": "Sources/VeritasAppleFoundation"
+    },
+    {
+      "path": "Sources/VeritasCore",
+      "kind": "symlink",
+      "frozen": "Sources/VeritasCore"
+    },
+    {
+      "path": "Sources/VeritasSQLiteSupport",
+      "kind": "symlink",
+      "frozen": "Sources/VeritasSQLiteSupport"
+    }
+  ],
+  "toolchain": "Apple Swift version 6.4 (swiftlang-6.4.0.27.1 clang-2100.3.27.1)\nTarget: arm64-apple-macosx27.0.0",
+  "result": {
+    "exitCode": 0,
+    "signal": null,
+    "error": null
+  },
+  "binPath": "/Users/louiscalata/nisi-next-private/.build/nisi-app-bundle-debug-srvl8J/swift-build/out/Products/Debug",
+  "executable": {
+    "path": "/Users/louiscalata/nisi-next-private/.build/nisi-app-bundle-debug-srvl8J/swift-build/out/Products/Debug/Nisi",
+    "sha256": "a69ae90354a1be44083878e8de8cf11f565b0125f369dfa3cd2040726fbfcb40",
+    "bytes": 6605824
+  },
+  "bundle": {
+    "path": "/Users/louiscalata/nisi-next-private/.build/nisi-app-bundle-debug-srvl8J/Nisi.app",
+    "files": {
+      "Contents/Info.plist": {
+        "sha256": "15e1cdc49d57765fe024bc045d44db4fe55c07cd78a363e257be450d0d4eedfe",
+        "bytes": 856
+      },
+      "Contents/PkgInfo": {
+        "sha256": "82502191c9484b04d685374f9879a0066069c49b8acae7a04b01d38d07e8eca0",
+        "bytes": 8
+      },
+      "Contents/MacOS/Nisi": {
+        "sha256": "a69ae90354a1be44083878e8de8cf11f565b0125f369dfa3cd2040726fbfcb40",
+        "bytes": 6605824
+      }
+    },
+    "codesign": {
+      "exitCode": 0,
+      "signature": "adhoc",
+      "flags": "adhoc",
+      "linkerSigned": false,
+      "identifier": "Nisi-5555494483e72e8b05713f6f99f71b13934f734e",
+      "teamIdentifier": "not set",
+      "authority": null,
+      "entitlementKeys": [
+        "com.apple.application-identifier",
+        "com.apple.security.get-task-allow"
+      ]
+    }
+  },
+  "residualBrandStrings": {
+    "codenameVeritasFramework": 4,
+    "veritasWord": 6,
+    "nisiWord": 52
+  },
+  "embeddedRootPathStrings": 72,
+  "signedWithIdentity": false,
+  "notarized": false,
+  "appLaunched": false,
+  "modelCalled": false,
+  "installed": false,
+  "releaseAuthorized": false,
+  "authorizing": false,
+  "completedAt": "2026-09-14T08:13:46.891Z"
+}

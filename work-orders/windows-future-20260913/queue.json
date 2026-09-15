@@ -1,0 +1,544 @@
+{
+  "schemaVersion": 1,
+  "project": "Nisi private future implementation",
+  "overallMilestones": {
+    "closed": 3,
+    "total": 10,
+    "percent": 30
+  },
+  "startedAt": "2026-09-13T22:58:04.000Z",
+  "stopAt": "2026-09-14T04:58:04.000Z",
+  "dispatchCutoffAt": "2026-09-14T04:48:04.000Z",
+  "status": "WINDOW_CLOSED_REVIEW_HELD",
+  "maximumOutstandingJobs": 2,
+  "maximumPerModel": 1,
+  "maxRequestSeconds": 600,
+  "maxRepairsPerPack": 2,
+  "maximumRequests": 24,
+  "scope": "Windows chat-worker draft/review; Codex read/review/install/test in isolated pack directories plus the explicitly listed synthetic journal-owner-v2 test extension. Product relocation/acceptance is a separate Codex-owned slice; no Windows native or product acceptance is implied.",
+  "jobStopLimitation": "Existing schema-1 worker has no cancel/TTL; no new jobs after cutoff, inspect unresolved original IDs only.",
+  "tasks": [
+    {
+      "id": "usage-table",
+      "path": "packs/usage-table",
+      "function": "buildUsageTable",
+      "status": "TESTS_PASSED_REVIEW_PENDING",
+      "draftModel": "qwen3-coder-next",
+      "reviewModel": "openai/gpt-oss-20b",
+      "jobs": [
+        {
+          "phase": "draft",
+          "id": "mac-20260913-155804-bd9c2f736e1faa72fd2f9910a813b6e6",
+          "requestedModel": "qwen3-coder-next",
+          "status": "success_unusable",
+          "submittedAt": "2026-09-13T22:58:04.000Z",
+          "reportedModel": "Qwen3-Coder-Next 80B-A3B Q4_K_M",
+          "elapsedSeconds": 94.4,
+          "evidence": "packs/usage-table/evidence/draft-1.json"
+        },
+        {
+          "phase": "revision-1",
+          "id": "mac-20260913-160036-b1fe22b63ddf39b261e89e0e665dde64",
+          "requestedModel": "qwen3-coder-next",
+          "status": "success_candidate_failed_tests",
+          "submittedAt": "2026-09-13T23:00:36Z",
+          "evidence": "packs/usage-table/evidence/revision-1.json",
+          "reportedModel": "Qwen3-Coder-Next 80B-A3B Q4_K_M",
+          "elapsedSeconds": 113.8
+        },
+        {
+          "phase": "revision-2",
+          "id": "mac-20260913-160535-e930e257f345ef07f722bf4202bf0f2c",
+          "requestedModel": "qwen3-coder-next",
+          "status": "success_candidate_required_owner_correction",
+          "submittedAt": "2026-09-13T23:05:35Z",
+          "reportedModel": "Qwen3-Coder-Next 80B-A3B Q4_K_M",
+          "elapsedSeconds": 73.4,
+          "evidence": "packs/usage-table/evidence/revision-2.json"
+        },
+        {
+          "phase": "review-1",
+          "id": "mac-20260913-162358-a111078d79191daa77277215a4565ffc",
+          "requestedModel": "openai/gpt-oss-20b",
+          "status": "error",
+          "submittedAt": "2026-09-13T23:23:58Z",
+          "sourceSha256": "ecbd6327faa00afce3750ff69df87fcf3e342e47a341107548e9bb7226b86206",
+          "error": "The operation was aborted due to timeout",
+          "elapsedSeconds": 180,
+          "evidence": "packs/usage-table/evidence/review-1-error.json"
+        }
+      ],
+      "repairs": 2,
+      "sourceSha256": "ecbd6327faa00afce3750ff69df87fcf3e342e47a341107548e9bb7226b86206",
+      "ownerAccepted": false,
+      "blockers": [
+        "required distinct Windows review unavailable;180sactualreviewtimeout despite4.3shealthprobe;Daybreaksupplementalpassed"
+      ],
+      "checks": {
+        "pass": 18,
+        "fail": 0,
+        "total": 18
+      },
+      "additionalRequiredCommand": "node --test --test-timeout=10000 tests/owner-regressions.test.mjs",
+      "ownerCorrections": [
+        "exact top-level key validation",
+        "Object.is negative-zero validation"
+      ],
+      "supplementalReview": {
+        "reviewer": "Daybreak Blue",
+        "status": "NO_FINDINGS_SCOPED",
+        "sourceSha256": "ecbd6327faa00afce3750ff69df87fcf3e342e47a341107548e9bb7226b86206",
+        "evidence": "packs/usage-table/evidence/daybreak-review.json"
+      }
+    },
+    {
+      "id": "history-timeline",
+      "path": "packs/history-timeline",
+      "function": "buildTimeline",
+      "status": "TESTS_PASSED_REVIEW_PENDING",
+      "draftModel": "qwen3-coder-next",
+      "reviewModel": "openai/gpt-oss-20b",
+      "jobs": [
+        {
+          "phase": "draft",
+          "id": "mac-20260913-160930-dd9915b52af644cb90efb37edbc4cc54",
+          "requestedModel": "qwen3-coder-next",
+          "status": "success_unusable",
+          "submittedAt": "2026-09-13T23:09:30Z",
+          "reportedModel": "Qwen3-Coder-Next 80B-A3B Q4_K_M",
+          "elapsedSeconds": 65.7,
+          "evidence": "packs/history-timeline/evidence/draft-1.json"
+        },
+        {
+          "phase": "revision-1",
+          "id": "mac-20260913-161807-62a7203c192cc555448eb732092037d4",
+          "requestedModel": "qwen3-coder-next",
+          "status": "success_candidate_requires_owner_extraction_and_correction",
+          "submittedAt": "2026-09-13T23:18:07Z",
+          "reportedModel": "Qwen3-Coder-Next 80B-A3B Q4_K_M",
+          "elapsedSeconds": 47.6,
+          "evidence": "packs/history-timeline/evidence/revision-1.json"
+        }
+      ],
+      "repairs": 1,
+      "sourceSha256": "a3c770f6534c7b2243bca1288fd642627294bf54203f432df702a07173960f79",
+      "ownerAccepted": false,
+      "checks": {
+        "pass": 13,
+        "fail": 0,
+        "total": 13
+      },
+      "ownerCorrections": [
+        "Installed source is a broad owner refactor of the decoded Qwen draft, with exact root-key validation and negative-zero rejection added for attempt, createdAt AND durationMs. The returned duration validator used < 0 and did NOT reject negative zero. Earlier prose claiming otherwise is superseded."
+      ],
+      "evidence": "packs/history-timeline/evidence/verification.json",
+      "provenanceClassification": "QWEN_INFORMED_OWNER_REFACTOR"
+    },
+    {
+      "id": "model-catalog",
+      "path": "packs/model-catalog",
+      "function": "buildModelCatalog",
+      "status": "TESTS_PASSED_REVIEW_PENDING",
+      "draftModel": "qwen3-coder-next",
+      "reviewModel": "openai/gpt-oss-20b",
+      "jobs": [
+        {
+          "phase": "draft",
+          "id": "mac-20260913-155804-5e53eb52c06573201378feee97126ec1",
+          "requestedModel": "openai/gpt-oss-20b",
+          "status": "error",
+          "submittedAt": "2026-09-13T22:58:04.000Z",
+          "error": "fetch failed",
+          "elapsedSeconds": 303.1,
+          "evidence": "packs/model-catalog/evidence/draft-1-error.json",
+          "evidenceKind": "OWNER_ANNOTATED_TERMINAL_ERROR",
+          "rawByteExact": false,
+          "terminalErrorFieldsMatchRegisteredOutbox": true
+        },
+        {
+          "phase": "qwen-alternate-draft",
+          "id": "mac-20260913-162438-e33469ba65c783a7b684bff9003fa1f4",
+          "requestedModel": "qwen3-coder-next",
+          "status": "success_candidate_requires_owner_review",
+          "submittedAt": "2026-09-13T23:24:38Z",
+          "elapsedSeconds": 59.9,
+          "reportedModel": "Qwen3-Coder-Next 80B-A3B Q4_K_M",
+          "evidence": "packs/model-catalog/evidence/qwen-alternate-draft.json"
+        }
+      ],
+      "repairs": 0,
+      "sourceSha256": "383fea468bb42469e7abb6aaec7ef5a479bc995b3fb96237e32591985d608a65",
+      "ownerAccepted": false,
+      "notes": "Original GPT-OSS draft terminal fetch failure retained without resend. Explicit Qwen alternate completed; final owner-refactored source and tests are retained. GPT-OSS independent review remains on hold.",
+      "checks": {
+        "pass": 13,
+        "fail": 0,
+        "total": 13
+      },
+      "ownerCorrections": [
+        "Installed source is a broad owner formatting/helper refactor of the decoded Qwen draft, plus exact root-key validation. Root validation is the identified behavior correction, not the only byte-level change. It is not an exact extracted copy."
+      ],
+      "evidence": "packs/model-catalog/evidence/verification.json",
+      "provenanceClassification": "QWEN_INFORMED_OWNER_REFACTOR"
+    },
+    {
+      "id": "progress-checklist",
+      "path": "packs/progress-checklist",
+      "function": "buildProgressChecklist",
+      "status": "TESTS_PASSED_REVIEW_PENDING",
+      "draftModel": "qwen3-coder-next",
+      "reviewModel": "openai/gpt-oss-20b",
+      "jobs": [
+        {
+          "phase": "draft",
+          "id": "mac-20260913-163312-831a8a10c0f8b2f77f299d2ca313ef65",
+          "requestedModel": "qwen3-coder-next",
+          "status": "success_unusable",
+          "submittedAt": "2026-09-13T23:33:12Z",
+          "evidence": "packs/progress-checklist/evidence/draft-1.json",
+          "elapsedSeconds": 40.2,
+          "reportedModel": "Qwen3-Coder-Next 80B-A3B Q4_K_M"
+        },
+        {
+          "phase": "revision-1",
+          "id": "mac-20260913-163555-13c127f4ae9f6497c7469e53f7adec04",
+          "requestedModel": "qwen3-coder-next",
+          "status": "success_candidate_requires_owner_extraction",
+          "submittedAt": "2026-09-13T23:35:55Z",
+          "reportedModel": "Qwen3-Coder-Next 80B-A3B Q4_K_M",
+          "elapsedSeconds": 34.3,
+          "evidence": "packs/progress-checklist/evidence/revision-1.json"
+        },
+        {
+          "phase": "review-small-1",
+          "id": "mac-20260913-164634-fd8ca188b852cdba96be37e33b76ca02",
+          "requestedModel": "openai/gpt-oss-20b",
+          "status": "error",
+          "submittedAt": "2026-09-13T23:46:34Z",
+          "sourceSha256": "36b1439f433d5c7a2f8663e8aef412c3be9f6404e7c6578f8f2213d7d1d01984",
+          "elapsedSeconds": 180,
+          "error": "The operation was aborted due to timeout",
+          "evidence": "packs/progress-checklist/evidence/review-small-1.json"
+        }
+      ],
+      "repairs": 1,
+      "sourceSha256": "36b1439f433d5c7a2f8663e8aef412c3be9f6404e7c6578f8f2213d7d1d01984",
+      "ownerAccepted": false,
+      "checks": {
+        "pass": 13,
+        "fail": 0,
+        "total": 13
+      },
+      "evidence": "packs/progress-checklist/evidence/verification.json",
+      "ownerCorrections": [
+        "Installed source is a broad owner formatting/helper rewrite based on the decoded Qwen draft. No behavior difference was identified in this scoped static comparison, but the claim of no implementation changes was false. Treat this as a Qwen-informed owner rewrite, not direct extraction."
+      ],
+      "provenanceClassification": "QWEN_INFORMED_OWNER_REFACTOR"
+    },
+    {
+      "id": "comparison-table",
+      "path": "packs/comparison-table",
+      "function": "buildComparisonTable",
+      "status": "TESTS_PASSED_REVIEW_PENDING",
+      "draftModel": "qwen3-coder-next",
+      "reviewModel": "openai/gpt-oss-20b",
+      "jobs": [
+        {
+          "phase": "draft-with-lessons",
+          "id": "mac-20260913-163840-8be96945c22bb46f024b993f30cab87f",
+          "requestedModel": "qwen3-coder-next",
+          "status": "success_unusable",
+          "submittedAt": "2026-09-13T23:38:40Z",
+          "reportedModel": "Qwen3-Coder-Next 80B-A3B Q4_K_M",
+          "elapsedSeconds": 63.8,
+          "evidence": "packs/comparison-table/evidence/draft-1.json"
+        },
+        {
+          "phase": "revision-1",
+          "id": "mac-20260913-164436-faa7597a967a2529e46ca2475e8478f7",
+          "requestedModel": "qwen3-coder-next",
+          "status": "success_malformed_envelope_owner_extraction_review",
+          "submittedAt": "2026-09-13T23:44:36Z",
+          "reportedModel": "Qwen3-Coder-Next 80B-A3B Q4_K_M",
+          "elapsedSeconds": 117.6,
+          "evidence": "packs/comparison-table/evidence/revision-1.json"
+        }
+      ],
+      "repairs": 1,
+      "sourceSha256": "93de56c99a7b686695f57975c5777f7f8dbf80cb84a0c4a40e206af6befde1e4",
+      "ownerAccepted": false,
+      "checks": {
+        "pass": 12,
+        "fail": 0,
+        "total": 12
+      },
+      "evidence": "packs/comparison-table/evidence/verification.json",
+      "ownerCorrections": [
+        "The two recovered worker path/content pairs really are identical to each other, but the installed source is an owner formatting/helper rewrite of that source plus terminal LF. Pair-to-pair equality is not equality with the installed file. No behavior difference was identified in the scoped static comparison."
+      ],
+      "provenanceClassification": "QWEN_INFORMED_OWNER_REFACTOR"
+    },
+    {
+      "id": "markdown-status-card",
+      "path": "packs/markdown-status-card",
+      "function": "renderStatusCard",
+      "status": "TESTS_PASSED_REVIEW_PENDING",
+      "draftModel": "qwen3-coder-next",
+      "reviewModel": "openai/gpt-oss-20b",
+      "jobs": [
+        {
+          "phase": "draft-with-lessons",
+          "id": "mac-20260913-164721-4bd251b961d66501c5cc7dca1cadf776",
+          "requestedModel": "qwen3-coder-next",
+          "status": "success_candidate_requires_owner_review",
+          "submittedAt": "2026-09-13T23:47:21Z",
+          "reportedModel": "Qwen3-Coder-Next 80B-A3B Q4_K_M",
+          "elapsedSeconds": 73.4,
+          "evidence": "packs/markdown-status-card/evidence/draft-1.json"
+        }
+      ],
+      "repairs": 0,
+      "sourceSha256": "9ea91d273de854cead45fe91c7a5a4580b02419b14398ce3ff3e392943fef4ae",
+      "ownerAccepted": false,
+      "checks": {
+        "pass": 12,
+        "fail": 0,
+        "total": 12
+      },
+      "evidence": "packs/markdown-status-card/evidence/owner-verification-final.json",
+      "ownerCorrections": [
+        "Preserved reviewer rewrite and corrected misattributed provenance; restored exact decoded Windows source plus terminal LF; no worker logic fixes needed"
+      ]
+    }
+  ],
+  "requestsSubmitted": 20,
+  "automationId": "nisi-claude-parallel-work-watch",
+  "laneHolds": {
+    "openai/gpt-oss-20b": {
+      "reason": "Both full usage-table review and complete smaller progress-checklist review timed out after180s; minimal smoke is not review capacity",
+      "jobId": "mac-20260913-164634-fd8ca188b852cdba96be37e33b76ca02",
+      "allowNewRequests": false,
+      "releaseCondition": "New concrete diagnosis or explicit user direction; smaller review attempt exhausted; no more automatic probes or review retries",
+      "diagnosticException": {
+        "scope": "One complete small progress-checklist source review, not a health probe",
+        "promptCharacters": 3286,
+        "maxResponseCharacters": 1000,
+        "timeoutSeconds": 180,
+        "attempts": 1,
+        "rationale": "Reduce prompt from 8773 characters while retaining complete smaller source and all contract requirements; longer usage-table review remains unresolved",
+        "status": "error_timeout_exhausted",
+        "jobId": "mac-20260913-164634-fd8ca188b852cdba96be37e33b76ca02"
+      },
+      "historicalSmokeJobId": "mac-20260913-161950-bb509ac67905fc49c1677a95bc30177d",
+      "historicalSmokeScope": "Minimal inference returned READY in4.3s before BOTH actual review timeouts. It did not clear review capacity; the former one-review exception is exhausted. No recovery is currently established."
+    }
+  },
+  "notifiedWarnings": [
+    "usage-first-response-unusable",
+    "usage-revision-1-five-failures",
+    "gpt-oss-draft-fetch-failed",
+    "host-journal-four-findings",
+    "gpt-oss-review-180s-timeout",
+    "gpt-oss-small-review-180s-timeout",
+    "markdown-provenance-corrected",
+    "four-additional-provenance-records-corrected"
+  ],
+  "diagnostics": [
+    {
+      "id": "mac-20260913-161950-bb509ac67905fc49c1677a95bc30177d",
+      "model": "openai/gpt-oss-20b",
+      "submittedAt": "2026-09-13T23:19:50Z",
+      "status": "success",
+      "timeoutSeconds": 60,
+      "scope": "Single minimal inference-health request; original error retained; no reload or setting change; not review",
+      "reportedModel": "gpt-oss-20b",
+      "elapsedSeconds": 4.3,
+      "evidence": "evidence/gpt-oss-health-1.json",
+      "result": "READY; inference smoke only, not review or identity attestation"
+    }
+  ],
+  "followups": [
+    {
+      "id": "usage-table-boundaries",
+      "pack": "usage-table",
+      "path": "followups/usage-table-boundaries",
+      "request": "followups/usage-table-boundaries/worker-request.md",
+      "allowedFile": "packs/usage-table/tests/windows-boundaries.test.mjs",
+      "status": "ACCEPTED_TEST_EXTENSION_ONLY",
+      "model": "qwen3-coder-next",
+      "jobs": [
+        {
+          "phase": "boundary-test-draft",
+          "id": "mac-20260913-165551-a60094cb2c94a9a0049221109f09c52d",
+          "requestedModel": "qwen3-coder-next",
+          "status": "success_malformed_outer_requires_explicit_owner_extraction",
+          "submittedAt": "2026-09-13T23:55:51Z",
+          "reportedModel": "Qwen3-Coder-Next 80B-A3B Q4_K_M",
+          "elapsedSeconds": 61.3,
+          "evidence": "followups/usage-table-boundaries/draft-1.json"
+        }
+      ],
+      "repairs": 0,
+      "ownerAccepted": true,
+      "acceptanceScope": "Five new owner-reviewed test groups only; implementation independent review still missing",
+      "checks": {
+        "newPass": 5,
+        "newTotal": 5,
+        "existingPass": 18,
+        "existingTotal": 18,
+        "mutantPass": 0,
+        "mutantTotal": 1,
+        "mutantExpectedFail": 1
+      },
+      "testSha256": "0fab860cec66aec8d3901d183ddd5849dbac0c6bb9071b9842f653ce63b9a0a5",
+      "evidence": "followups/usage-table-boundaries/evidence/verification.md",
+      "requiredCommand": "node --test --test-timeout=10000 tests/windows-boundaries.test.mjs"
+    },
+    {
+      "id": "history-timeline-boundaries",
+      "pack": "history-timeline",
+      "path": "followups/history-timeline-boundaries",
+      "request": "followups/history-timeline-boundaries/worker-request.md",
+      "allowedFile": "packs/history-timeline/tests/windows-boundaries.test.mjs",
+      "status": "ACCEPTED_TEST_EXTENSION_ONLY",
+      "model": "qwen3-coder-next",
+      "jobs": [
+        {
+          "phase": "boundary-test-draft",
+          "id": "mac-20260913-165852-ff2b091cd3e186082c3e2724af00b991",
+          "requestedModel": "qwen3-coder-next",
+          "status": "success_malformed_outer_requires_explicit_owner_extraction",
+          "submittedAt": "2026-09-13T23:58:52Z",
+          "reportedModel": "Qwen3-Coder-Next 80B-A3B Q4_K_M",
+          "elapsedSeconds": 59.3,
+          "evidence": "followups/history-timeline-boundaries/draft-1.json"
+        }
+      ],
+      "repairs": 0,
+      "ownerAccepted": true,
+      "acceptanceScope": "Five new owner-reviewed test groups only; implementation independent review still missing",
+      "checks": {
+        "newPass": 5,
+        "newTotal": 5,
+        "existingPass": 13,
+        "existingTotal": 13,
+        "mutantPass": 4,
+        "mutantTotal": 5,
+        "mutantExpectedFail": 1
+      },
+      "testSha256": "2c22e9093c2d55fad816748a3332a19c488b6b7ff5d2181fea2186518ca2e8da",
+      "evidence": "followups/history-timeline-boundaries/verification.json",
+      "requiredCommand": "node --test --test-timeout=10000 tests/windows-boundaries.test.mjs"
+    },
+    {
+      "id": "model-catalog-boundaries",
+      "pack": "model-catalog",
+      "path": "followups/model-catalog-boundaries",
+      "request": "followups/model-catalog-boundaries/worker-request.md",
+      "allowedFile": "packs/model-catalog/tests/windows-boundaries.test.mjs",
+      "status": "ACCEPTED_TEST_EXTENSION_ONLY",
+      "model": "qwen3-coder-next",
+      "jobs": [
+        {
+          "phase": "boundary-test-draft",
+          "id": "mac-20260913-170034-7b7e75e10b1eb3411bc6ecd3107d7087",
+          "requestedModel": "qwen3-coder-next",
+          "status": "success_requires_owner_test_review",
+          "submittedAt": "2026-09-14T00:00:34Z",
+          "reportedModel": "Qwen3-Coder-Next 80B-A3B Q4_K_M",
+          "elapsedSeconds": 45,
+          "evidence": "followups/model-catalog-boundaries/draft-1.json"
+        }
+      ],
+      "repairs": 0,
+      "ownerAccepted": true,
+      "acceptanceScope": "Four new owner-reviewed test groups only; implementation independent review still missing",
+      "checks": {
+        "newPass": 4,
+        "newTotal": 4,
+        "existingPass": 13,
+        "existingTotal": 13,
+        "mutantPass": 0,
+        "mutantTotal": 1,
+        "mutantExpectedFail": 1
+      },
+      "testSha256": "d22771d230563a15af41466a4c84b86d0d6d275c018eeadfb595e1e017a30c89",
+      "evidence": "followups/model-catalog-boundaries/evidence/verification.md",
+      "requiredCommand": "node --test --test-timeout=10000 tests/windows-boundaries.test.mjs"
+    },
+    {
+      "id": "journal-owner-xpc-integration",
+      "path": "followups/journal-owner-xpc-integration",
+      "request": "followups/journal-owner-xpc-integration/worker-request.md",
+      "allowedFile": "work-orders/journal-owner-v2/tests/windows-xpc-integration.test.mjs",
+      "targetRoot": "/Users/louiscalata/nisi-next-private/work-orders/journal-owner-v2",
+      "status": "ACCEPTED_TEST_EXTENSION_ONLY",
+      "model": "qwen3-coder-next",
+      "jobs": [
+        {
+          "phase": "current-xpc-integration-test-draft",
+          "id": "mac-20260913-172626-329122be7b136038214954d341002c9c",
+          "requestedModel": "qwen3-coder-next",
+          "status": "success_unusable_contract_and_envelope",
+          "submittedAt": "2026-09-14T00:26:26.527Z",
+          "evidence": "followups/journal-owner-xpc-integration/draft-1.json",
+          "reportedModel": "Qwen3-Coder-Next 80B-A3B Q4_K_M",
+          "elapsedSeconds": 76
+        },
+        {
+          "phase": "current-xpc-integration-test-revision-1",
+          "id": "mac-20260913-173003-70904eacea2a6790d78f16041988e609",
+          "requestedModel": "qwen3-coder-next",
+          "status": "success_source_required_owner_corrections",
+          "submittedAt": "2026-09-14T00:30:03.795Z",
+          "evidence": "followups/journal-owner-xpc-integration/revision-1.json",
+          "reportedModel": "Qwen3-Coder-Next 80B-A3B Q4_K_M",
+          "elapsedSeconds": 44.6
+        }
+      ],
+      "repairs": 1,
+      "ownerAccepted": true,
+      "scope": "Four synthetic current-projector integration test groups only; no source or native execution",
+      "rationale": "New concrete owner-v2 recovery correction needs actual current XPC projection compatibility, not a fabricated payload.",
+      "requiredCommand": "node --test --test-timeout=10000 tests/windows-xpc-integration.test.mjs",
+      "acceptanceScope": "Four synthetic current-XPC projector to owner successor tests; not module independent review or native acceptance",
+      "checks": {
+        "workerRevisionPass": 0,
+        "workerRevisionFail": 4,
+        "ownerCorrectedPass": 4,
+        "ownerCorrectedFail": 0,
+        "mutantPass": 3,
+        "mutantFail": 1,
+        "total": 4
+      },
+      "testSha256": "80347a4794d664a6d806d5e0494bb0f2f551644d546c7e5353e7933d147903ef",
+      "provenanceClassification": "QWEN_DRAFT_WITH_EXPLICIT_OWNER_TEST_CORRECTIONS",
+      "ownerCorrections": [
+        "Set INCONCLUSIVE on adverse synthetic input before projection",
+        "Read inspect result snapshot envelope correctly",
+        "Add omitted entryId, recovery, source-nonmutation and authority assertions; no expected outcome weakened"
+      ],
+      "evidence": "followups/journal-owner-xpc-integration/verification.json"
+    }
+  ],
+  "workState": "SOURCE_AND_CONCRETE_EXTENSIONS_COMPLETE_REVIEW_HELD",
+  "summary": {
+    "baseModuleTestReady": 6,
+    "moduleCount": 6,
+    "independentlyAcceptedModules": 0,
+    "localChecksPassed": 95,
+    "localChecksTotal": 95,
+    "testExtensionsAccepted": 4,
+    "testExtensionCount": 4,
+    "originalProtectedPinsMatched": 30,
+    "outstandingRemoteJobs": 0,
+    "verification": "evidence/batch-verification-final.json",
+    "continuousSixHourComputationClaimed": false,
+    "additionalJournalOwnerIntegrationChecks": {
+      "pass": 4,
+      "total": 4,
+      "includedInOriginal95": false
+    },
+    "requestCount": 20
+  }
+}

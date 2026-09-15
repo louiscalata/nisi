@@ -1,0 +1,170 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://veritas.invalid/private/schemas/stage5/e16-implementation-environment-diagnostic.v1.json",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schemaVersion",
+    "recordType",
+    "profile",
+    "status",
+    "evidenceClass",
+    "contractSha256",
+    "successResultSchemaSha256",
+    "environmentDiagnosticSchemaSha256",
+    "sourceSha256",
+    "derivedHarnessSha256",
+    "officialE16ManifestSha256",
+    "officialE16ManifestStatus",
+    "officialE16CaseDenominator",
+    "officialE16NotRunCases",
+    "officialE16ExecutedCases",
+    "officialE16PassedCases",
+    "officialE16CreditedCases",
+    "officialE16Complete",
+    "localImplementationFixtureSelectedCaseIds",
+    "localImplementationFixtureSelectedUniqueCases",
+    "localImplementationFixtureExecutedUniqueCases",
+    "localImplementationFixturePassedUniqueCases",
+    "localImplementationFixturePlannedRunsPerCase",
+    "localImplementationFixtureExecutedRunsPerCase",
+    "localImplementationFixtureCaseRunExecutions",
+    "officialCaseIdentitiesNotSelectedForLocalFixture",
+    "localFixtureOfficialE16CreditCases",
+    "localFixturePreparedNegativeControlIds",
+    "localFixtureExecutedNegativeControls",
+    "localImplementationFixtureCaseOutcomes",
+    "limitationCode",
+    "sourceCode",
+    "limitations",
+    "credits",
+    "resultDigest"
+  ],
+  "properties": {
+    "schemaVersion": { "const": 1 },
+    "recordType": { "const": "E16_IMPLEMENTATION_ENVIRONMENT_DIAGNOSTIC_V1" },
+    "profile": { "const": "veritas-e16-local-apfs-process-subset-v1" },
+    "status": { "const": "UNSUPPORTED_E16_IMPLEMENTATION_ENVIRONMENT" },
+    "evidenceClass": { "const": "SELF_ADMINISTERED_IMPLEMENTATION_LOCAL_APFS_PROCESS_FIXTURE" },
+    "contractSha256": { "$ref": "#/$defs/sha256" },
+    "successResultSchemaSha256": { "$ref": "#/$defs/sha256" },
+    "environmentDiagnosticSchemaSha256": { "$ref": "#/$defs/sha256" },
+    "sourceSha256": { "$ref": "#/$defs/sha256" },
+    "derivedHarnessSha256": { "$ref": "#/$defs/sha256" },
+    "officialE16ManifestSha256": { "$ref": "#/$defs/sha256" },
+    "officialE16ManifestStatus": { "const": "NOT_RUN" },
+    "officialE16CaseDenominator": { "const": 24 },
+    "officialE16NotRunCases": { "const": 24 },
+    "officialE16ExecutedCases": { "const": 0 },
+    "officialE16PassedCases": { "const": 0 },
+    "officialE16CreditedCases": { "const": 0 },
+    "officialE16Complete": { "const": false },
+    "localImplementationFixtureSelectedCaseIds": {
+      "type": "array",
+      "minItems": 4,
+      "maxItems": 4,
+      "uniqueItems": true,
+      "items": { "$ref": "#/$defs/caseId" }
+    },
+    "localImplementationFixtureSelectedUniqueCases": { "const": 4 },
+    "localImplementationFixtureExecutedUniqueCases": { "const": 0 },
+    "localImplementationFixturePassedUniqueCases": { "const": 0 },
+    "localImplementationFixturePlannedRunsPerCase": { "const": 2 },
+    "localImplementationFixtureExecutedRunsPerCase": { "const": 0 },
+    "localImplementationFixtureCaseRunExecutions": { "const": 0 },
+    "officialCaseIdentitiesNotSelectedForLocalFixture": { "const": 20 },
+    "localFixtureOfficialE16CreditCases": { "const": 0 },
+    "localFixturePreparedNegativeControlIds": {
+      "type": "array",
+      "minItems": 2,
+      "maxItems": 2,
+      "uniqueItems": true,
+      "items": { "$ref": "#/$defs/controlId" }
+    },
+    "localFixtureExecutedNegativeControls": { "const": 0 },
+    "localImplementationFixtureCaseOutcomes": {
+      "type": "array",
+      "minItems": 4,
+      "maxItems": 4,
+      "items": { "$ref": "#/$defs/caseOutcome" }
+    },
+    "limitationCode": {
+      "enum": [
+        "DARWIN_PLATFORM_REQUIRED",
+        "PINNED_NODE_RUNTIME_REQUIRED",
+        "LOCAL_APFS_STORAGE_REQUIRED",
+        "DISKMANAGEMENT_FRAMEWORK_UNAVAILABLE"
+      ]
+    },
+    "sourceCode": {
+      "enum": [
+        "E16_IMPLEMENTATION_PLATFORM_UNSUPPORTED",
+        "TOOLCHAIN_RUNTIME_MISMATCH",
+        "STORAGE_FILESYSTEM_NOT_ADMITTED",
+        "STORAGE_HOST_ATTESTATION_FAILED"
+      ]
+    },
+    "limitations": {
+      "type": "array",
+      "minItems": 10,
+      "maxItems": 10,
+      "uniqueItems": true,
+      "items": { "type": "string", "minLength": 8 }
+    },
+    "credits": { "$ref": "#/$defs/credits" },
+    "resultDigest": { "$ref": "#/$defs/sha256" }
+  },
+  "$defs": {
+    "sha256": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{64}$"
+    },
+    "caseId": {
+      "enum": [
+        "E16-S5-PROMO-001",
+        "E16-S5-PROMO-002",
+        "E16-S5-DIGEST-004",
+        "E16-S5-PROMO-004"
+      ]
+    },
+    "controlId": {
+      "enum": [
+        "ACCEPTED_REFERENCE_UNKNOWN_FIELD_REJECTED",
+        "FULL_REFERENCE_BINDING_MISMATCH_REJECTED"
+      ]
+    },
+    "caseOutcome": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["caseId", "status"],
+      "properties": {
+        "caseId": { "$ref": "#/$defs/caseId" },
+        "status": { "const": "NOT_RUN_UNSUPPORTED_ENVIRONMENT" }
+      }
+    },
+    "credits": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "protectedAuthority",
+        "nativeRuntime",
+        "t164ThroughT183",
+        "m4",
+        "e16",
+        "patent",
+        "production",
+        "release"
+      ],
+      "properties": {
+        "protectedAuthority": { "const": false },
+        "nativeRuntime": { "const": false },
+        "t164ThroughT183": { "const": false },
+        "m4": { "const": false },
+        "e16": { "const": false },
+        "patent": { "const": false },
+        "production": { "const": false },
+        "release": { "const": false }
+      }
+    }
+  }
+}

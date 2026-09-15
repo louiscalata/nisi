@@ -1,0 +1,285 @@
+
+> nisi-private-run-journal-work-order@0.0.0-private test:journal
+> node --test --test-timeout=5000 tests/run-journal.test.mjs
+
+✖ 01 exact synchronous API, empty complete framing and non-authority (0.394959ms)
+✖ 02 closed configuration and entry schemas reject malformed data atomically (0.355042ms)
+✖ 03 full attribution retained and cross-project input refused (0.051375ms)
+✖ 04 canonical exact replay is idempotent across object key order and capacity (0.045417ms)
+✖ 05 same id with changed binding, lifecycle or redacted content is CONFLICT (0.04375ms)
+✖ 06 terminal replay never becomes new work; retries need new id and valid citation (0.044625ms)
+✖ 07 TTL boundary, irreversible payload retention and caller time validation (0.434125ms)
+✖ 08 stale heartbeat is UNKNOWN and never sufficient for retry (0.074041ms)
+✖ 09 maxEntries bounds retained payloads in insertion order but never forgets ids (0.074334ms)
+✖ 10 revocation cites an existing exact attempt and candidate without deleting it (0.11625ms)
+✖ 11 revocation survives tombstones, expiry, revoker revocation and reopen (0.069958ms)
+✖ 12 declared payload paths redact nested values and arrays before exposure (0.059ms)
+✖ 13 complete persisted reopen is historical through replay and serialization cycles (0.042459ms)
+✖ 14 truncation recovers only committed prefix and cannot be resealed or appended (0.064208ms)
+✖ 15 invalid line stops recovery; deletion or reordering cannot bless later entries (0.047334ms)
+✖ 16 footer mismatches and data after footer report uncertainty without losing recovered ids (0.0385ms)
+✖ 17 closed persisted schema rejects profiles, duplicate ids and semantically invalid records (0.047333ms)
+✖ 18 snapshots are deeply frozen, caller-independent and serialization is deterministic (0.058417ms)
+ℹ tests 18
+ℹ suites 0
+ℹ pass 0
+ℹ fail 18
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 37.863
+
+✖ failing tests:
+
+test at tests/run-journal.test.mjs:39:1
+✖ 01 exact synchronous API, empty complete framing and non-authority (0.394959ms)
+  Error: NOT_IMPLEMENTED
+      at createRunJournal (file:///Users/louiscalata/nisi-next-private/work-orders/run-journal/src/run-journal-v1.mjs:2:44)
+      at make (file:///Users/louiscalata/nisi-next-private/work-orders/run-journal/tests/run-journal.test.mjs:11:25)
+      at TestContext.<anonymous> (file:///Users/louiscalata/nisi-next-private/work-orders/run-journal/tests/run-journal.test.mjs:40:13)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1325:25)
+      at Test.start (node:internal/test_runner/test:1191:17)
+      at startSubtestAfterBootstrap (node:internal/test_runner/harness:385:17)
+
+test at tests/run-journal.test.mjs:51:1
+✖ 02 closed configuration and entry schemas reject malformed data atomically (0.355042ms)
+  AssertionError [ERR_ASSERTION]: The validation function is expected to return "true". Received false
+  
+  Caught error:
+  
+  Error: NOT_IMPLEMENTED
+      at TestContext.<anonymous> (file:///Users/louiscalata/nisi-next-private/work-orders/run-journal/tests/run-journal.test.mjs:54:56)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1325:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:911:18)
+      at Test.postRun (node:internal/test_runner/test:1465:19)
+      at Test.run (node:internal/test_runner/test:1390:12)
+      at async startSubtestAfterBootstrap (node:internal/test_runner/harness:385:3) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: Error: NOT_IMPLEMENTED
+        at createRunJournal (file:///Users/louiscalata/nisi-next-private/work-orders/run-journal/src/run-journal-v1.mjs:2:44)
+        at file:///Users/louiscalata/nisi-next-private/work-orders/run-journal/tests/run-journal.test.mjs:54:69
+        at getActual (node:assert:611:5)
+        at strict.throws (node:assert:759:24)
+        at TestContext.<anonymous> (file:///Users/louiscalata/nisi-next-private/work-orders/run-journal/tests/run-journal.test.mjs:54:56)
+        at Test.runInAsyncScope (node:async_hooks:227:14)
+        at Test.run (node:internal/test_runner/test:1325:25)
+        at Test.processPendingSubtests (node:internal/test_runner/test:911:18)
+        at Test.postRun (node:internal/test_runner/test:1465:19)
+        at Test.run (node:internal/test_runner/test:1390:12),
+    operator: 'throws',
+    diff: 'simple'
+  }
+
+test at tests/run-journal.test.mjs:66:1
+✖ 03 full attribution retained and cross-project input refused (0.051375ms)
+  Error: NOT_IMPLEMENTED
+      at createRunJournal (file:///Users/louiscalata/nisi-next-private/work-orders/run-journal/src/run-journal-v1.mjs:2:44)
+      at make (file:///Users/louiscalata/nisi-next-private/work-orders/run-journal/tests/run-journal.test.mjs:11:25)
+      at TestContext.<anonymous> (file:///Users/louiscalata/nisi-next-private/work-orders/run-journal/tests/run-journal.test.mjs:67:13)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1325:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:911:18)
+      at Test.postRun (node:internal/test_runner/test:1465:19)
+      at Test.run (node:internal/test_runner/test:1390:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:911:7)
+
+test at tests/run-journal.test.mjs:78:1
+✖ 04 canonical exact replay is idempotent across object key order and capacity (0.045417ms)
+  Error: NOT_IMPLEMENTED
+      at createRunJournal (file:///Users/louiscalata/nisi-next-private/work-orders/run-journal/src/run-journal-v1.mjs:2:44)
+      at make (file:///Users/louiscalata/nisi-next-private/work-orders/run-journal/tests/run-journal.test.mjs:11:25)
+      at TestContext.<anonymous> (file:///Users/louiscalata/nisi-next-private/work-orders/run-journal/tests/run-journal.test.mjs:79:13)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1325:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:911:18)
+      at Test.postRun (node:internal/test_runner/test:1465:19)
+      at Test.run (node:internal/test_runner/test:1390:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:911:7)
+
+test at tests/run-journal.test.mjs:90:1
+✖ 05 same id with changed binding, lifecycle or redacted content is CONFLICT (0.04375ms)
+  Error: NOT_IMPLEMENTED
+      at createRunJournal (file:///Users/louiscalata/nisi-next-private/work-orders/run-journal/src/run-journal-v1.mjs:2:44)
+      at make (file:///Users/louiscalata/nisi-next-private/work-orders/run-journal/tests/run-journal.test.mjs:11:25)
+      at TestContext.<anonymous> (file:///Users/louiscalata/nisi-next-private/work-orders/run-journal/tests/run-journal.test.mjs:91:13)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1325:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:911:18)
+      at Test.postRun (node:internal/test_runner/test:1465:19)
+      at Test.run (node:internal/test_runner/test:1390:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:911:7)
+
+test at tests/run-journal.test.mjs:102:1
+✖ 06 terminal replay never becomes new work; retries need new id and valid citation (0.044625ms)
+  Error: NOT_IMPLEMENTED
+      at createRunJournal (file:///Users/louiscalata/nisi-next-private/work-orders/run-journal/src/run-journal-v1.mjs:2:44)
+      at make (file:///Users/louiscalata/nisi-next-private/work-orders/run-journal/tests/run-journal.test.mjs:11:25)
+      at TestContext.<anonymous> (file:///Users/louiscalata/nisi-next-private/work-orders/run-journal/tests/run-journal.test.mjs:103:13)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1325:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:911:18)
+      at Test.postRun (node:internal/test_runner/test:1465:19)
+      at Test.run (node:internal/test_runner/test:1390:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:911:7)
+
+test at tests/run-journal.test.mjs:114:1
+✖ 07 TTL boundary, irreversible payload retention and caller time validation (0.434125ms)
+  Error: NOT_IMPLEMENTED
+      at createRunJournal (file:///Users/louiscalata/nisi-next-private/work-orders/run-journal/src/run-journal-v1.mjs:2:44)
+      at make (file:///Users/louiscalata/nisi-next-private/work-orders/run-journal/tests/run-journal.test.mjs:11:25)
+      at TestContext.<anonymous> (file:///Users/louiscalata/nisi-next-private/work-orders/run-journal/tests/run-journal.test.mjs:115:13)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1325:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:911:18)
+      at Test.postRun (node:internal/test_runner/test:1465:19)
+      at Test.run (node:internal/test_runner/test:1390:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:911:7)
+
+test at tests/run-journal.test.mjs:129:1
+✖ 08 stale heartbeat is UNKNOWN and never sufficient for retry (0.074041ms)
+  Error: NOT_IMPLEMENTED
+      at createRunJournal (file:///Users/louiscalata/nisi-next-private/work-orders/run-journal/src/run-journal-v1.mjs:2:44)
+      at make (file:///Users/louiscalata/nisi-next-private/work-orders/run-journal/tests/run-journal.test.mjs:11:25)
+      at TestContext.<anonymous> (file:///Users/louiscalata/nisi-next-private/work-orders/run-journal/tests/run-journal.test.mjs:130:13)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1325:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:911:18)
+      at Test.postRun (node:internal/test_runner/test:1465:19)
+      at Test.run (node:internal/test_runner/test:1390:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:911:7)
+
+test at tests/run-journal.test.mjs:143:1
+✖ 09 maxEntries bounds retained payloads in insertion order but never forgets ids (0.074334ms)
+  Error: NOT_IMPLEMENTED
+      at createRunJournal (file:///Users/louiscalata/nisi-next-private/work-orders/run-journal/src/run-journal-v1.mjs:2:44)
+      at make (file:///Users/louiscalata/nisi-next-private/work-orders/run-journal/tests/run-journal.test.mjs:11:25)
+      at TestContext.<anonymous> (file:///Users/louiscalata/nisi-next-private/work-orders/run-journal/tests/run-journal.test.mjs:144:13)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1325:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:911:18)
+      at Test.postRun (node:internal/test_runner/test:1465:19)
+      at Test.run (node:internal/test_runner/test:1390:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:911:7)
+
+test at tests/run-journal.test.mjs:156:1
+✖ 10 revocation cites an existing exact attempt and candidate without deleting it (0.11625ms)
+  Error: NOT_IMPLEMENTED
+      at createRunJournal (file:///Users/louiscalata/nisi-next-private/work-orders/run-journal/src/run-journal-v1.mjs:2:44)
+      at make (file:///Users/louiscalata/nisi-next-private/work-orders/run-journal/tests/run-journal.test.mjs:11:25)
+      at TestContext.<anonymous> (file:///Users/louiscalata/nisi-next-private/work-orders/run-journal/tests/run-journal.test.mjs:157:13)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1325:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:911:18)
+      at Test.postRun (node:internal/test_runner/test:1465:19)
+      at Test.run (node:internal/test_runner/test:1390:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:911:7)
+
+test at tests/run-journal.test.mjs:170:1
+✖ 11 revocation survives tombstones, expiry, revoker revocation and reopen (0.069958ms)
+  Error: NOT_IMPLEMENTED
+      at createRunJournal (file:///Users/louiscalata/nisi-next-private/work-orders/run-journal/src/run-journal-v1.mjs:2:44)
+      at make (file:///Users/louiscalata/nisi-next-private/work-orders/run-journal/tests/run-journal.test.mjs:11:25)
+      at TestContext.<anonymous> (file:///Users/louiscalata/nisi-next-private/work-orders/run-journal/tests/run-journal.test.mjs:171:13)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1325:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:911:18)
+      at Test.postRun (node:internal/test_runner/test:1465:19)
+      at Test.run (node:internal/test_runner/test:1390:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:911:7)
+
+test at tests/run-journal.test.mjs:182:1
+✖ 12 declared payload paths redact nested values and arrays before exposure (0.059ms)
+  Error: NOT_IMPLEMENTED
+      at createRunJournal (file:///Users/louiscalata/nisi-next-private/work-orders/run-journal/src/run-journal-v1.mjs:2:44)
+      at make (file:///Users/louiscalata/nisi-next-private/work-orders/run-journal/tests/run-journal.test.mjs:11:25)
+      at TestContext.<anonymous> (file:///Users/louiscalata/nisi-next-private/work-orders/run-journal/tests/run-journal.test.mjs:183:13)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1325:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:911:18)
+      at Test.postRun (node:internal/test_runner/test:1465:19)
+      at Test.run (node:internal/test_runner/test:1390:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:911:7)
+
+test at tests/run-journal.test.mjs:200:1
+✖ 13 complete persisted reopen is historical through replay and serialization cycles (0.042459ms)
+  Error: NOT_IMPLEMENTED
+      at createRunJournal (file:///Users/louiscalata/nisi-next-private/work-orders/run-journal/src/run-journal-v1.mjs:2:44)
+      at make (file:///Users/louiscalata/nisi-next-private/work-orders/run-journal/tests/run-journal.test.mjs:11:25)
+      at TestContext.<anonymous> (file:///Users/louiscalata/nisi-next-private/work-orders/run-journal/tests/run-journal.test.mjs:201:13)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1325:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:911:18)
+      at Test.postRun (node:internal/test_runner/test:1465:19)
+      at Test.run (node:internal/test_runner/test:1390:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:911:7)
+
+test at tests/run-journal.test.mjs:217:1
+✖ 14 truncation recovers only committed prefix and cannot be resealed or appended (0.064208ms)
+  Error: NOT_IMPLEMENTED
+      at createRunJournal (file:///Users/louiscalata/nisi-next-private/work-orders/run-journal/src/run-journal-v1.mjs:2:44)
+      at make (file:///Users/louiscalata/nisi-next-private/work-orders/run-journal/tests/run-journal.test.mjs:11:25)
+      at fixture (file:///Users/louiscalata/nisi-next-private/work-orders/run-journal/tests/run-journal.test.mjs:21:13)
+      at TestContext.<anonymous> (file:///Users/louiscalata/nisi-next-private/work-orders/run-journal/tests/run-journal.test.mjs:218:21)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1325:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:911:18)
+      at Test.postRun (node:internal/test_runner/test:1465:19)
+      at Test.run (node:internal/test_runner/test:1390:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:911:7)
+
+test at tests/run-journal.test.mjs:233:1
+✖ 15 invalid line stops recovery; deletion or reordering cannot bless later entries (0.047334ms)
+  Error: NOT_IMPLEMENTED
+      at createRunJournal (file:///Users/louiscalata/nisi-next-private/work-orders/run-journal/src/run-journal-v1.mjs:2:44)
+      at make (file:///Users/louiscalata/nisi-next-private/work-orders/run-journal/tests/run-journal.test.mjs:11:25)
+      at fixture (file:///Users/louiscalata/nisi-next-private/work-orders/run-journal/tests/run-journal.test.mjs:21:13)
+      at TestContext.<anonymous> (file:///Users/louiscalata/nisi-next-private/work-orders/run-journal/tests/run-journal.test.mjs:234:21)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1325:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:911:18)
+      at Test.postRun (node:internal/test_runner/test:1465:19)
+      at Test.run (node:internal/test_runner/test:1390:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:911:7)
+
+test at tests/run-journal.test.mjs:246:1
+✖ 16 footer mismatches and data after footer report uncertainty without losing recovered ids (0.0385ms)
+  Error: NOT_IMPLEMENTED
+      at createRunJournal (file:///Users/louiscalata/nisi-next-private/work-orders/run-journal/src/run-journal-v1.mjs:2:44)
+      at make (file:///Users/louiscalata/nisi-next-private/work-orders/run-journal/tests/run-journal.test.mjs:11:25)
+      at fixture (file:///Users/louiscalata/nisi-next-private/work-orders/run-journal/tests/run-journal.test.mjs:21:13)
+      at TestContext.<anonymous> (file:///Users/louiscalata/nisi-next-private/work-orders/run-journal/tests/run-journal.test.mjs:247:22)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1325:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:911:18)
+      at Test.postRun (node:internal/test_runner/test:1465:19)
+      at Test.run (node:internal/test_runner/test:1390:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:911:7)
+
+test at tests/run-journal.test.mjs:257:1
+✖ 17 closed persisted schema rejects profiles, duplicate ids and semantically invalid records (0.047333ms)
+  Error: NOT_IMPLEMENTED
+      at createRunJournal (file:///Users/louiscalata/nisi-next-private/work-orders/run-journal/src/run-journal-v1.mjs:2:44)
+      at make (file:///Users/louiscalata/nisi-next-private/work-orders/run-journal/tests/run-journal.test.mjs:11:25)
+      at fixture (file:///Users/louiscalata/nisi-next-private/work-orders/run-journal/tests/run-journal.test.mjs:21:13)
+      at TestContext.<anonymous> (file:///Users/louiscalata/nisi-next-private/work-orders/run-journal/tests/run-journal.test.mjs:258:36)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1325:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:911:18)
+      at Test.postRun (node:internal/test_runner/test:1465:19)
+      at Test.run (node:internal/test_runner/test:1390:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:911:7)
+
+test at tests/run-journal.test.mjs:274:1
+✖ 18 snapshots are deeply frozen, caller-independent and serialization is deterministic (0.058417ms)
+  Error: NOT_IMPLEMENTED
+      at createRunJournal (file:///Users/louiscalata/nisi-next-private/work-orders/run-journal/src/run-journal-v1.mjs:2:44)
+      at TestContext.<anonymous> (file:///Users/louiscalata/nisi-next-private/work-orders/run-journal/tests/run-journal.test.mjs:275:35)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1325:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:911:18)
+      at Test.postRun (node:internal/test_runner/test:1465:19)
+      at Test.run (node:internal/test_runner/test:1390:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:911:7)

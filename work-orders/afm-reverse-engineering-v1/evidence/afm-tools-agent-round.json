@@ -1,0 +1,1 @@
+{"test":"full-agent-round","prompt":"Run the command 'date -u' and tell me the current UTC time.","model":"SystemLanguageModel.default","tools":["run_command","read_file","write_file","lsp_diagnostics","mcp_list_tools","mcp_call"],"result":"The tool output shows the current UTC time as Tue Sep 15 07:21:49 UTC 2026.","status":"PASS"}

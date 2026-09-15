@@ -1,0 +1,15 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "nisi-release-readiness-input-v1",
+  "type": "object",
+  "required": ["schemaVersion", "artifact", "productReport", "platforms", "approvals"],
+  "additionalProperties": false,
+  "properties": {
+    "schemaVersion": {"const": "nisi-release-readiness-input/v1"},
+    "artifact": {"$ref": "#/$defs/file"},
+    "productReport": {"$ref": "#/$defs/file"},
+    "platforms": {"type": "array", "minItems": 4, "maxItems": 4, "items": {"type": "object", "required": ["id", "receipt"], "additionalProperties": false, "properties": {"id": {"enum": ["portable", "native", "windows", "install"]}, "receipt": {"$ref": "#/$defs/file"}}}},
+    "approvals": {"type": "object", "required": ["legal", "disclosure", "release", "signing", "notarization", "publication"], "additionalProperties": false, "properties": {"legal": {"type": "object"}, "disclosure": {"type": "object"}, "release": {"type": "object"}, "signing": {"type": "object"}, "notarization": {"type": "object"}, "publication": {"type": "object"}}}
+  },
+  "$defs": {"file": {"type": "object", "required": ["path", "sha256"], "additionalProperties": false, "properties": {"path": {"type": "string"}, "sha256": {"pattern": "^[a-f0-9]{64}$", "type": "string"}}}}
+}

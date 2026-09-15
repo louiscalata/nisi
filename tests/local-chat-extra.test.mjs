@@ -68,6 +68,67 @@ function reviewer(input = {}) {
   });
 }
 
+test('REPAIRED requires a candidate object before a validated receipt can be issued', async () => {
+  for (const candidate of [null, false, 0, '', [], 'not a candidate']) {
+    const adapter = createLocalChatAuthorAdapter({
+      destination: 'LOOPBACK_HTTP', endpoint: 'http://127.0.0.1/chat', model: 'author-model', id: 'extra.author',
+      fetch: async () => jsonResponse(envelope('author-model', {status: 'REPAIRED', candidate, note: 'claimed correction'})),
+    });
+    await rejectsCode(() => adapter.repair(payload({binding: {...binding, candidateFingerprint: 'b'.repeat(64)}})), 'LOCAL_CHAT_REPAIR_INVALID');
+    assert.equal(adapter.receipts().length, 1);
+    assert.equal(adapter.receipts()[0].status, 'UNAVAILABLE');
+    assert.equal(adapter.receipts()[0].resultCandidateFingerprint, null);
+    assert.equal(adapter.receipts()[0].code, 'LOCAL_CHAT_REPAIR_INVALID');
+  }
+});
+
+test('malformed repair cannot reach the reviewer or issue a repaired-candidate receipt', async () => {
+  const calls = [];
+  const result = await runLocalModelExample({
+    endpoint: 'http://127.0.0.1/chat', authorModel: 'author-model', reviewerModel: 'review-model', timeoutMs: 5000,
+    fetch: queuedFetch([
+      jsonResponse(envelope('author-model', {candidate: {files: [{path: 'retry-config.json', content: '{"backoff":"exponential","maxRetries":2,"retryDelayMs":250}'}]}, note: 'draft'})),
+      jsonResponse(envelope('author-model', {status: 'REPAIRED', candidate: null, note: 'invalid repair'})),
+    ], {calls}),
+  });
+  assert.equal(result.report.outcome, 'BLOCKED');
+  assert.equal(result.report.repairAttempts, 1);
+  assert.equal(calls.length, 2);
+  assert.equal(result.reviewerReceipts.length, 0);
+  assert.equal(result.authorReceipts[1].status, 'UNAVAILABLE');
+  assert.equal(result.authorReceipts[1].code, 'LOCAL_CHAT_REPAIR_INVALID');
+  assert.equal(result.report.stages.some(s => s.stage === 'repair' && s.status === 'REPAIRED'), false);
+});
+
+test('NO_CHANGE only admits null and preserves the base candidate identity', async () => {
+  const base = {...binding, candidateFingerprint: 'b'.repeat(64)};
+  for (const candidate of [null, false, 0, '', [], {}, {files: []}]) {
+    const adapter = createLocalChatAuthorAdapter({
+      destination: 'LOOPBACK_HTTP', endpoint: 'http://127.0.0.1/chat', model: 'author-model', id: 'extra.author',
+      fetch: async () => jsonResponse(envelope('author-model', {status: 'NO_CHANGE', candidate, note: 'no useful correction'})),
+    });
+    if (candidate === null) {
+      const result = await adapter.repair(payload({binding: base}));
+      assert.equal(result.status, 'NO_CHANGE'); assert.equal(result.candidate, null);
+      assert.equal(result.evidence.candidateFingerprint, base.candidateFingerprint);
+      assert.equal(result.evidence.baseCandidateFingerprint, base.candidateFingerprint);
+      assert.equal(adapter.receipts()[0].status, 'RESPONSE_VALIDATED');
+    } else await rejectsCode(() => adapter.repair(payload({binding: base})), 'LOCAL_CHAT_REPAIR_INVALID');
+  }
+});
+
+test('REPAIRED object still must pass the complete candidate schema', async () => {
+  for (const candidate of [{}, {files: []}, {files: [{path: '../escape.json',content:'{}'}]}, {files: [{path:'config.json',content:'{}'},{path:'config.json',content:'{}'}]}]) {
+    const adapter = createLocalChatAuthorAdapter({
+      destination: 'LOOPBACK_HTTP', endpoint: 'http://127.0.0.1/chat', model: 'author-model', id: 'extra.author',
+      fetch: async () => jsonResponse(envelope('author-model', {status:'REPAIRED', candidate, note:'malformed candidate object'})),
+    });
+    await assert.rejects(() => adapter.repair(payload()), error => typeof error.code === 'string');
+    assert.equal(adapter.receipts()[0].status,'UNAVAILABLE');
+    assert.equal(adapter.receipts()[0].resultCandidateFingerprint,null);
+  }
+});
+
 test('example repairs an acceptance failure, reruns checks/tests, and reviews with evidence', async () => {
   const calls = [];
   const values = [

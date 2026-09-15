@@ -1,0 +1,103 @@
+{
+  "summary": "Design is sound in direction (maintenance through the existing owner + same store boundary, no new registry). Five corrections: (1) define UNCHANGED precisely against disk hash, not memory, and expect it to be rare if the watermark is serialized; (2) missing-file creation needs an explicit create-exclusive CAS, not \"expected null = unconditional write\"; (3) verify the revocation linkage survives TTL/capacity stripping of the REVOKED entry itself \u2014 otherwise \"durable logical revocation\" is not established; (4) maintenance opens a new path into COMMIT_UNCERTAIN for callers who never record \u2014 keep the semantics but make the quarantine transition explicit and tested; (5) share an internal staged-commit core that returns a neutral outcome, and let record/maintain each own their frozen envelope so record's schema is untouched. Outline and priority adverse tests follow. Nothing here was executed or verified against source; items marked \"verify\" need a code check.",
+  "deliverable": "## A. Corrections (max five)\n\n**1. UNCHANGED is under-specified and may be unreachable.**\nretain(now)/list(now) advance the monotonic watermark; if the watermark is part of serialize() output, every maintenance call with a later `now` yields new bytes, so UNCHANGED would only occur for same-or-earlier `now`. Define it precisely: `prospectiveSha256 === state.sha256` (the last *disk* hash) AND the store's read-back of actual disk bytes matches that hash. Comparing to `state.serialized` is wrong (design already notes this: open may have pruned in memory). If the disk read mismatches `state.sha256` while prospective equals it, return STORE_CONFLICT, not UNCHANGED. The read-only check must still run inside the busy guard and through the store owner boundary, and its `store` field should report a truthful read-only verification result rather than `null` (`null` = \"store never entered\", which would be false).\n\n**2. Missing file + `state.sha256 === null` must not mean \"write unconditionally\".**\nRecord currently omits `expectedPreviousSha256` when sha256 is null. For maintenance on a new empty owner that writes header/footer, use an explicit \"expect absent\" (create-exclusive) mode so that a file appearing between open and maintain produces STORE_CONFLICT rather than a clobber. Also make file creation opt-in or clearly documented: today inspect/open of a new owner is side-effect-free on disk; maintenance changing that is a behavioral addition callers must expect. Verify whether the store already supports expect-absent; if not, this is the one small store change worth making (format unchanged).\n\n**3. Claim 5 depends on where `revokes` and `revoked:true` live \u2014 verify before proving.**\nretain/list strip expired/over-capacity payloads to null but keep identity metadata and fingerprints. If the REVOKED entry's `revokes` reference sits in its *payload* (not identity metadata), then once the REVOKED entry itself expires or is capacity-stripped, a fresh-process reopen can no longer derive `revoked:true`/liveness:REVOKED on the target \u2014 the target would silently un-revoke after its own tombstone survives. Durable logical revocation requires one of: (a) `revokes` is part of the tombstone identity metadata, (b) liveness is materialized onto the target record at append time and preserved in serialization, or (c) retain never strips a REVOKED entry before its target is fully expired. Test both TTL ordering (REVOKED TTL < target TTL) and capacity eviction ordering.\n\n**4. Maintenance creates a new route into COMMIT_UNCERTAIN and in-memory state loss.**\nReusing record's post-store-entry failure policy (seal, clear serialized/hash, entries=[]) is correct for consistency, but callers who only ever open+maintain now face quarantine and must reopen. Keep it, but: document it in the envelope `reason`, ensure the maintenance envelope's `snapshot` after sealing reflects the sealed state (serialized:null, sha256:null, phase COMMIT_UNCERTAIN) rather than the pre-attempt snapshot, and ensure a *precommit* failure (e.g., retain throws, serialize throws, hash fails) preserves the exact previous snapshot object identity, matching record.\n\n**5. Sharing commit logic: return a neutral internal outcome, not an envelope.**\nDo not have record delegate to a helper that builds any public envelope. Extract `commitStagedBytes(state, {bytes, sha256, expected, now})` returning a frozen internal result `{kind: 'COMMITTED'|'CONFLICT'|'PRECOMMIT_FAILED'|'UNCERTAIN', store, nextSnapshot}` with the existing state transitions applied inside. record and maintain each map that to their own frozen envelope. Lock record's schema with an exact-key/exact-value golden test (including `authorizing:false`, `meaning`, status names, and `store:null` before entry) so any drift from refactoring fails CI.\n\n## B. Compact implementation outline\n\n1. **Guards (shared, reused verbatim):** WeakMap handle lookup \u2192 malformed/unknown \u2192 `REFUSED`, snapshot:null. Phase SEALED/COMMIT_UNCERTAIN \u2192 `REFUSED`, snapshot = current sealed publication. busy \u2192 `REFUSED` (reentrancy). `now` non-finite or earlier than owner's last accepted `now` \u2192 `REFUSED` (verify what record's time guard does; mirror it, including whether backward time is refused or just watermark-ignored).\n2. **Stage (maintenance-specific, before store entry):** `j = reopen(state.serialized)`; `j.retain(now)`; `j.list(now)`; `bytes = j.serialize()`; `sha = sha256(bytes)`; build prospective snapshot (entries from list, watermark, sha, serialized=bytes). Any throw \u2192 `REFUSED` with reason `STAGE_FAILED`, previous snapshot preserved, store:null, busy cleared.\n3. **Decide:** if `sha === state.sha256` \u2192 read-only verification path through the store boundary (read + hash actual file); match \u2192 `UNCHANGED` (store = verification result); mismatch \u2192 `STORE_CONFLICT`. Else \u2192 commit path.\n4. **Commit (shared core):** expected = `state.sha256 ?? ABSENT`; store writes exact bytes, reads back, fsyncs file/dir. Outcomes map: committed \u2192 `MAINTAINED` (state.serialized/sha256/snapshot replaced); CAS mismatch before write \u2192 `STORE_CONFLICT` (state untouched); precommit throw \u2192 `STORE_FAILED` with previous snapshot; post-entry failure/invalid result \u2192 seal COMMIT_UNCERTAIN, envelope `STORE_FAILED` with sealed snapshot and reason indicating uncertainty.\n5. **Envelope:** frozen `{schemaVersion:'nisi-journal-maintenance/v1', status, reason, store, snapshot, meaning:'HISTORY_OBSERVATIONS_ONLY', authorizing:false}`. No counters of \"deleted\" items; if a diagnostic is wanted, expose only `retainedCount`/`tombstoneCount` derived from list(now), never \"erased\".\n6. **No change** to run-journal-v1 format, store format, or record's public shape. Record's internals move to call the shared core; its tests must pass unchanged.\n\n## C. Answers to the questions\n\n**Incorrect assumptions:** the two at risk are (i) that UNCHANGED is a meaningful common state (it is likely rare/unreachable with a serialized watermark \u2014 see #1), and (ii) that revocation is durable across TTL/capacity stripping of the REVOKED entry without checking where `revokes` lives (#3). Also verify the assumption that `retain(now)` is safe to call *before* `list(now)` \u2014 if list already performs retention, the extra call is harmless but should be idempotent under identical `now`.\n\n**Avoiding record regression:** neutral internal outcome (#5), golden tests for record's envelope and snapshot identity (same frozen object returned by inspect after precommit failure), and a test that record and maintain never share mutable staging objects (fresh reopen per call). Keep ownership: the shared core takes `state`, never the handle, and never re-enters the WeakMap.\n\n**Adverse tests that matter most (ordered):**\n1. Foreign disk change between open and maintain \u2192 STORE_CONFLICT, snapshot and memory untouched, subsequent record also conflicts (proves maintenance doesn't mask drift).\n2. Read-back mismatch / fsync throw after write \u2192 COMMIT_UNCERTAIN; both maintain and record then REFUSED; reopen from disk recovers a valid journal.\n3. REVOKED entry expires or is capacity-evicted before target \u2192 fresh-process reopen still shows target revoked (the #3 test); if it fails, the durability claim in item 5 must be retracted.\n4. Open \u2192 maintain (tombstones stripped on disk) \u2192 fresh process reopen \u2192 replay original input \u2192 DUPLICATE; same identity different content \u2192 CONFLICT (fingerprint conservation through disk).\n5. Missing file: maintain creates header/footer; race where file appears first \u2192 STORE_CONFLICT, not overwrite.\n6. Reentrancy: fs callback invokes maintain/record while busy \u2192 REFUSED, no state corruption.\n7. Time: `now` earlier than watermark, NaN, non-number \u2192 REFUSED or watermark-ignored consistently with record; repeated maintain with identical `now` \u2192 second call UNCHANGED.\n8. Expiration boundary: entry with expiry exactly equal to `now` \u2014 retained or stripped, pinned by test to match run-journal's existing comparison.\n9. Unknown/foreign/frozen-object handle \u2192 REFUSED, snapshot:null, no throw.\n\n## D. Scope statement for the record\nThis establishes durable *logical* revocation and removal of revoked payload bytes from the current journal file. It does not provide authenticated revocation, secure erasure, or removal from backups, filesystem snapshots, or prior file versions; the envelope must not imply otherwise.",
+  "risks": [
+    "The revocation-linkage location (payload vs identity metadata) was not confirmed from source; if `revokes` is payload-only, item 5's durability claim is currently false after the REVOKED entry expires.",
+    "If the watermark is serialized, UNCHANGED may be effectively unreachable; callers expecting idle maintenance to be a no-op will see a disk write on every call.",
+    "Creating a file on maintenance for a new empty owner is a side-effect change relative to open/inspect; without expect-absent CAS it can clobber a foreign file.",
+    "Maintenance adds a new route into COMMIT_UNCERTAIN and in-memory state loss for callers that never record; must be documented and tested.",
+    "Refactoring record to a shared core risks subtle envelope/snapshot-identity drift unless golden tests exist before the refactor.",
+    "Analysis is based only on the supplied description; no source was read and nothing was executed."
+  ],
+  "verification": [
+    "Confirm in run-journal-v1 whether `revokes` and revoked/liveness state survive payload stripping of the REVOKED entry (identity metadata vs payload).",
+    "Confirm whether serialize() includes the watermark; if so, document that UNCHANGED occurs only with same-or-earlier `now`.",
+    "Confirm the store supports an expect-absent/create-exclusive mode; add it if not, without changing on-disk format.",
+    "Add golden exact-envelope tests for recordJournalObservation and inspectJournalOwner before extracting the shared commit core; run them unchanged after.",
+    "Run the nine adverse tests listed, in particular tests 1\u20134 (foreign disk change, post-write failure quarantine, REVOKED-expires-before-target, fresh-process DUPLICATE/CONFLICT after maintenance).",
+    "Verify record's time guard behavior (refuse vs ignore backward `now`) and mirror it exactly in maintenance."
+  ],
+  "invocation_status": "succeeded",
+  "status": "succeeded",
+  "model_usage": {
+    "claude-haiku-4-5-20251001": {
+      "inputTokens": 2065,
+      "outputTokens": 13,
+      "cacheReadInputTokens": 0,
+      "cacheCreationInputTokens": 0,
+      "webSearchRequests": 0,
+      "costUSD": 0.00213,
+      "contextWindow": 200000,
+      "maxOutputTokens": 32000,
+      "thinkingTokens": 0,
+      "canonicalModel": "claude-haiku-4-5",
+      "provider": "firstParty",
+      "costBasis": "list"
+    },
+    "claude-opus-5": {
+      "inputTokens": 2,
+      "outputTokens": 5929,
+      "cacheReadInputTokens": 737,
+      "cacheCreationInputTokens": 2256,
+      "webSearchRequests": 0,
+      "costUSD": 0.1711635,
+      "contextWindow": 1000000,
+      "maxOutputTokens": 64000,
+      "thinkingTokens": 1766,
+      "canonicalModel": "claude-opus-5",
+      "provider": "firstParty",
+      "costBasis": "list"
+    }
+  },
+  "reported_models": [
+    "claude-haiku-4-5-20251001",
+    "claude-opus-5"
+  ],
+  "usage": {
+    "input_tokens": 2,
+    "cache_creation_input_tokens": 2256,
+    "cache_read_input_tokens": 737,
+    "output_tokens": 5929,
+    "output_tokens_details": {
+      "thinking_tokens": 1766
+    },
+    "server_tool_use": {
+      "web_search_requests": 0,
+      "web_fetch_requests": 0
+    },
+    "service_tier": "standard",
+    "cache_creation": {
+      "ephemeral_1h_input_tokens": 2256,
+      "ephemeral_5m_input_tokens": 0
+    },
+    "inference_geo": "not_available",
+    "iterations": [
+      {
+        "input_tokens": 2,
+        "output_tokens": 5929,
+        "cache_read_input_tokens": 737,
+        "cache_creation_input_tokens": 2256,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 2256
+        },
+        "type": "message"
+      }
+    ],
+    "speed": "standard"
+  },
+  "total_cost_usd": 0.1732935,
+  "duration_ms": 83299,
+  "tools_enabled": false,
+  "session_persisted": false,
+  "write_owner": "codex",
+  "requested_model": "opus",
+  "mode": "delegate",
+  "attempts": 1,
+  "wall_seconds": 84.573,
+  "created_at": "2026-09-14T02:01:47.936308+00:00",
+  "prior_attempts": [],
+  "total_wall_seconds": 84.574,
+  "prior_attempt_usage": [],
+  "total_usage_complete": true
+}

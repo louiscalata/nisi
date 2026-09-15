@@ -7,3 +7,8 @@ probes/afm-concurrency-probe
 DerivedData/
 *.o
 .DS_Store
+# built AFM agent binaries: rebuilt on demand by the launcher, never committed
+adapters/afm/.afm-agent-bin
+adapters/afm/.afm-agent-tools-bin
+# owned temp roots of the restart demo/recovery tests; the product suites clean theirs per run, never evidence
+.scratch/

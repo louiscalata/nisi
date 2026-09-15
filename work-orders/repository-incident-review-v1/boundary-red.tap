@@ -1,0 +1,40 @@
+TAP version 13
+# Subtest: capture success cannot discard or contradict its journal outcome
+not ok 1 - capture success cannot discard or contradict its journal outcome
+  ---
+  duration_ms: 86.976209
+  type: 'test'
+  location: '/Users/louiscalata/nisi-next-private/tests/repository-incident-review-boundaries.test.mjs:18:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly equal:
+    + actual - expected
+    
+    + 'STORED'
+    - 'UNCERTAIN'
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: 'UNCERTAIN'
+  actual: 'STORED'
+  operator: 'strictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///Users/louiscalata/nisi-next-private/tests/repository-incident-review-boundaries.test.mjs:26:12)
+    async Test.run (node:internal/test_runner/test:1332:7)
+    async startSubtestAfterBootstrap (node:internal/test_runner/harness:385:3)
+  ...
+# Subtest: abort from the capture clock refuses before journal admission, not uncertain storage
+ok 2 - abort from the capture clock refuses before journal admission, not uncertain storage
+  ---
+  duration_ms: 59.4695
+  type: 'test'
+  ...
+1..2
+# tests 2
+# suites 0
+# pass 1
+# fail 1
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 193.941875

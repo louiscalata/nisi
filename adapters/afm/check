@@ -1,0 +1,48 @@
+#!/bin/zsh
+# adapters/afm/check — AFM 3 Core lane health + capability probe (read-only).
+# Exits 0 when the lane is serving and usable; prints a status report.
+# Usage: adapters/afm/check [--bridge]   (--bridge also builds+runs the v2 bridge)
+set -u
+BASE="http://127.0.0.1:1977/v1"
+SRC="${0:A:h}/../../work-orders/afm-reverse-engineering-v1/src"
+FAIL=0
+
+echo "== AFM lane check =="
+if launchctl list 2>/dev/null | rg -q "com.louiscalata.afm.serve"; then
+  PID=$(launchctl list 2>/dev/null | rg "com.louiscalata.afm.serve" | awk '{print $1}')
+  echo "1. LaunchAgent  : running${PID:+, uid pid $PID}"
+else
+  echo "1. LaunchAgent  : NOT_REGISTERED (manual serve or outage)"; FAIL=1
+fi
+
+if MODELS=$(curl -s -m 5 "$BASE/models"); then
+  if echo "$MODELS" | rg -q "system"; then
+    echo "2. /v1/models   : OK -> $(echo "$MODELS" | rg -o '"id":"[^"]*"')"
+  else
+    echo "2. /v1/models   : RESPONDING but unexpected payload"; FAIL=1
+  fi
+else
+  echo "2. /v1/models   : DOWN"; FAIL=1
+fi
+
+COMPL=$(curl -s -m 30 "$BASE/chat/completions" -H "Content-Type: application/json" \
+  -d '{"model":"system","messages":[{"role":"user","content":"Reply with exactly one word: OK"}]}')
+if echo "$COMPL" | rg -q '"content"'; then
+  CONTENT=$(echo "$COMPL" | rg -o '"content"\s*:\s*"[^"]*"' | head -1)
+  echo "3. completion   : OK -> $CONTENT"
+else
+  echo "3. completion   : FAILED -> $COMPL"; FAIL=1
+fi
+
+if [ "${1:-}" = "--bridge" ] && [ -x /usr/bin/xcrun ]; then
+  echo "4. swift bridge : building v2..."
+  if ( cd "$SRC" && xcrun swiftc -parse-as-library -O -o /tmp/afm-check-bridge afm-bridge-v2.swift ) 2>/dev/null; then
+    CAPS=$(/tmp/afm-check-bridge 2>/dev/null | tr -d '\n')
+    echo "   v2 run       : $CAPS"
+  else
+    echo "4. swift bridge : BUILD FAILED"; FAIL=1
+  fi
+fi
+
+echo "== result: $([ $FAIL -eq 0 ] && echo OK || echo DEGRADED) =="
+exit $FAIL

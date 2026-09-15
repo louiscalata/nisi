@@ -1,0 +1,64 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://veritas.invalid/private/schemas/stage5/fi0-historical-import-envelope.v1.json",
+  "title": "Veritas FI-0 inert historical provenance envelope",
+  "description": "Structural fixture shape only. Runtime validation additionally binds exact source-record digest, row ordinal, batch, parser, canonicalizer, incident, event-chain head, provenance digest, and source-frozen self-administered envelope digest. The envelope performs no import and verifies no historical fact.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schemaVersion",
+    "recordType",
+    "profile",
+    "envelopeId",
+    "scopeId",
+    "projectIdDigest",
+    "batchId",
+    "sourceRecordDigest",
+    "sourceRowOrdinal",
+    "parserVersionDigest",
+    "canonicalizerVersionDigest",
+    "provenanceDigest",
+    "expectedRecordCount",
+    "incidentDigest",
+    "eventChainHeadDigest",
+    "inert",
+    "importPerformed",
+    "historicalFactsVerified",
+    "mayImport",
+    "envelopeDigest"
+  ],
+  "properties": {
+    "schemaVersion": { "const": 1 },
+    "recordType": { "const": "FI0_HISTORICAL_IMPORT_ENVELOPE" },
+    "profile": { "const": "veritas-fi0-inert-incident-contract-v1" },
+    "envelopeId": { "$ref": "#/$defs/fixtureId" },
+    "scopeId": { "$ref": "#/$defs/fixtureId" },
+    "projectIdDigest": { "$ref": "#/$defs/sha256" },
+    "batchId": { "$ref": "#/$defs/fixtureId" },
+    "sourceRecordDigest": { "$ref": "#/$defs/sha256" },
+    "sourceRowOrdinal": { "const": 17 },
+    "parserVersionDigest": { "$ref": "#/$defs/sha256" },
+    "canonicalizerVersionDigest": { "$ref": "#/$defs/sha256" },
+    "provenanceDigest": { "$ref": "#/$defs/sha256" },
+    "expectedRecordCount": { "const": 1 },
+    "incidentDigest": { "$ref": "#/$defs/sha256" },
+    "eventChainHeadDigest": { "$ref": "#/$defs/sha256" },
+    "inert": { "const": true },
+    "importPerformed": { "const": false },
+    "historicalFactsVerified": { "const": false },
+    "mayImport": { "const": false },
+    "envelopeDigest": { "$ref": "#/$defs/sha256" }
+  },
+  "$defs": {
+    "sha256": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{64}$"
+    },
+    "fixtureId": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 128,
+      "pattern": "^[a-z][a-z0-9]*(?:[.-][a-z0-9]+)*(?:/[a-z][a-z0-9]*(?:[.-][a-z0-9]+)*)*$"
+    }
+  }
+}

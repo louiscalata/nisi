@@ -1,0 +1,70 @@
+{
+  "originalFilesModified": [
+    {
+      "path": "scripts/check-private-package.mjs",
+      "beforeSha256": "80b384b406dbde63a65408c16cdb5634596c15bfcc19b60971b50b8e0580b841",
+      "afterSha256": "55a476c062b535a6e3df8b071bedad8c57a5acadbac04c006f40f3e4f4ede740"
+    },
+    {
+      "path": "scripts/private-package-contract.mjs",
+      "beforeSha256": "52b73fad04e639475895261d5b982b1442ee5545a02ffaeaa9726e58bbd58288",
+      "afterSha256": "188a8a51191b3e1d268ad9c336458770494b7b8237866e9a9084e7bdf265a623"
+    },
+    {
+      "path": "tests/private-consumer.test.mjs",
+      "beforeSha256": "0a29cb423a2b11163864a5a6b63471e93ab042897cda601ecec40a9c34b2ec07",
+      "afterSha256": "fa38d22d43c32753c48c3509bc1c700b82de1395d1d61550775e59608ebd75f2"
+    },
+    {
+      "path": "work-orders/native-canary-adapter/roadmap.md",
+      "beforeSha256": "b5e45cdca14353b72cc659fc3cf61a090cb4775749981e612fcc350558834b81",
+      "afterSha256": "5c7753446f65ce664b098e575759813c31426c5625ba55d6f22127bb4544aeff"
+    },
+    {
+      "path": "work-orders/native-canary-adjudicator/roadmap.md",
+      "beforeSha256": "afd8d2b35e92df3a73343166e093ef3d21f2b2697eac583838675620b37b33ed",
+      "afterSha256": "f9b8fe5c760c5f0b917c78e9d41b1c9fc79f34d29f89cb4c52e6180f58da625e"
+    },
+    {
+      "path": "work-orders/native-chat-types/roadmap.md",
+      "beforeSha256": "4b26a55f4f6483c8354d043596835c2a6edd19fc39eb4a762e8a002de907c2c8",
+      "afterSha256": "c843ca091e3d6f50432b166fcf1b93bbb3ce848c351bd4e1d98e588b3cef4c84"
+    },
+    {
+      "path": "work-orders/native-probe-summary/roadmap.md",
+      "beforeSha256": "0db33d2b2d59701d31e2a65848dff2af7ec5c619b7c849d81dbc515938e20ef5",
+      "afterSha256": "7aeab937ece2393738198129800a74da2fe20445a0288699875dd4a8f8ade5f3"
+    },
+    {
+      "path": "work-orders/run-journal/roadmap.md",
+      "beforeSha256": "5f98a7231d2ceb738583a0477dfcd9349acaaf9151c42f9669efe0e69f3142e7",
+      "afterSha256": "e7f3b6b203e1708d0dcc0a9c1477689619493ccc6fa928daffb28c0c70537db8"
+    },
+    {
+      "path": "package.json",
+      "beforeSha256": "307e73e19199186cb33a346da92941d2feed4d64b43ebc86c678207c6a79e45c",
+      "afterSha256": "82a8a5c67103920f8615a9ded2e263ad4091efa238b1ba5cf59acc5071386553"
+    },
+    {
+      "path": "roadmap.md",
+      "beforeSha256": "440b0b17aa034a66ca32dc234d06372ca69d3809f47707d117ec838990cb6780",
+      "afterSha256": "536545e0b5402d7af6de786325869080804875452aabe9ec8ea23ff6ebf81cb9"
+    }
+  ],
+  "placementVerification": {
+    "files": 16,
+    "exactTransforms": true,
+    "originalSourcesAndAssertionsUnchanged": true
+  },
+  "roadmapSectionsChanged": [
+    "# Nisi roadmap",
+    "#### U02-02 \u2014 make one repository change end to end",
+    "#### U02-03 \u2014 make the implemented library usable and packageable privately",
+    "#### U02-04 \u2014 persist trustworthy history and recover honestly",
+    "#### U02-08 \u2014 acceptance, blockers and handoff discipline"
+  ],
+  "roadmapSectionsUnchanged": 98,
+  "progressLineUnchanged": true,
+  "baselineTestNamesRetained": true,
+  "baselineFiles": 657
+}

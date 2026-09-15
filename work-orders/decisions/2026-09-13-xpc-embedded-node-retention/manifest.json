@@ -1,0 +1,625 @@
+{
+  "schemaVersion": "nisi-retention-pass-manifest-v1",
+  "date": "2026-09-13",
+  "owner": "Astra (Codex)",
+  "acceptance": {
+    "status": "ACCEPTED_AS_MEASURED_2026-09-13",
+    "owner": "Louis",
+    "date": "2026-09-13",
+    "approximateTime": "11:10 PDT",
+    "session": "Claude",
+    "quote": "Approve both, have Astra run the retention pass",
+    "provenance": "Verbatim decision supplied by Louis in the current Astra retention instruction; both refers to items 1 and 2 of Claude Fable's verification record.",
+    "acceptedMeasurement": "FIXED_EMBEDDED_NODE_OBSERVED",
+    "nodeEntitlements": {
+      "com.apple.security.app-sandbox": true,
+      "com.apple.security.inherit": true
+    },
+    "hostEntitlements": {
+      "com.apple.security.app-sandbox": true
+    },
+    "serviceEntitlements": {
+      "com.apple.security.app-sandbox": true
+    },
+    "acceptedScope": "September 13 fixed embedded-Node prerequisite as measured; no-launch evidence retention and documentation correction pass approved.",
+    "generatedCodeExecuted": false,
+    "completeIsolation": false,
+    "authorizing": false,
+    "isolationAcceptance": "OPEN_SEPARATE_DECISION",
+    "milestoneClosure": false,
+    "laterIsolationReviewItem": {
+      "time": "2026-09-13 10:41:58.473 PDT",
+      "pid": 20280,
+      "observation": "mach-lookup / XPC mach connection activation named com.apple.SystemConfiguration.DNSConfiguration; loopback listen itself was EPERM.",
+      "source": ".build/xpc-embedded-node-9u2lavy_/logs/inherit-run-unified-log-20280.txt"
+    },
+    "forbidden": [
+      "Third fixture launch",
+      "Build",
+      "Signing",
+      "Entitlement change",
+      "Generated-code execution",
+      "Isolation acceptance",
+      "Git commit",
+      "Git push",
+      "Deletion",
+      "Edits to work-orders/native-canary-adjudicator",
+      "Edits to work-orders/run-journal"
+    ]
+  },
+  "status": "RETENTION_AND_DOCUMENTATION_RECORDED_WITH_ONE_CAPTURE_BLOCKED",
+  "modifiedFiles": [
+    {
+      "path": "docs/verification/2026-09-13/u02-xpc-embedded-node-checkpoint.json",
+      "beforeSha256": "67eee39307cf31cf5cb190108e06d5915ebf66feacf84540b1f40a154d1723d5",
+      "afterSha256": "747185185b5c08b1746bcd2af76091b7ef932282173805436dd5b554478c88e7"
+    },
+    {
+      "path": "docs/verification/2026-09-13/u02-xpc-embedded-node-inherit-checkpoint.json",
+      "beforeSha256": "9d6f973fd921a335340f0519d838277d04b28a15ca505768ece659b49471ced3",
+      "afterSha256": "bb249661d70e95a9cf93ead8605c088c2811ece6a0f5003a5d4b7bc5b0254838"
+    },
+    {
+      "path": "roadmap.md",
+      "beforeSha256": "a2e1c201521e8d2d60fa17ee4da5e543cd9c9d9d80777a9925afc6b05426bd22",
+      "afterSha256": "440b0b17aa034a66ca32dc234d06372ca69d3809f47707d117ec838990cb6780"
+    },
+    {
+      "path": "work-orders/decisions/2026-09-13-xpc-embedded-node.md",
+      "beforeSha256": "ffbfa23cc9cbc39e7cc4f5e797042ead882f2d9c0d838d9874e5f592d39ba2f0",
+      "afterSha256": "31be2767cb80efdbc8e0f8321000cf665e54fbb92abdf35bb894432e4d5024f4"
+    },
+    {
+      "path": "work-orders/decisions/2026-09-13-xpc-embedded-node.fable-verification.md",
+      "beforeSha256": "2af3d2ef8030a2ece7fd1d8826a13a7465ebc3db3bf9a03e21f44728f67f8e4b",
+      "afterSha256": "45463e24a5d4bcd262d613d1b91591b0a39672b316db566ca1c0a985a45743a9"
+    }
+  ],
+  "addedFiles": [
+    {
+      "path": ".build/xpc-embedded-node-69qhvao1/README.corrections.md",
+      "beforeSha256": null,
+      "beforeState": "ABSENT",
+      "afterSha256": "a92b95b84266a388e720de296e2e7502baf48262ee900b12dc47fee38d1f6b98",
+      "purpose": "New correction addendum; original retained evidence file unchanged."
+    },
+    {
+      "path": ".build/xpc-embedded-node-69qhvao1/logs/retention-unified-log-local-window.stderr",
+      "beforeSha256": null,
+      "beforeState": "ABSENT",
+      "afterSha256": "3d1bfc20628becabc4bda68e57c58ad567d3a8aa0c8aa281f68b58bb28a3d0e5",
+      "purpose": "Exact authorized local-window log show attempt and its read-only capture metadata; exit 64 BLOCKED_SANDBOX, no excerpt."
+    },
+    {
+      "path": ".build/xpc-embedded-node-69qhvao1/logs/node-2026-09-13-101227.ips",
+      "beforeSha256": null,
+      "beforeState": "ABSENT",
+      "afterSha256": "c0516e6c752d39a7c0cdb5956afef7b18e7e36c8d900911ebedc59a8416305bb",
+      "purpose": "Verbatim cp -n from ~/Library/Logs/DiagnosticReports; SHA-256 + cmp verified."
+    },
+    {
+      "path": ".build/xpc-embedded-node-69qhvao1/logs/retention-unified-log-local-window.capture.json",
+      "beforeSha256": null,
+      "beforeState": "ABSENT",
+      "afterSha256": "252a841c2a5159f2817b04ab73ca724b3221a40397238d2f8f421ed95b8c26f9",
+      "purpose": "Exact authorized local-window log show attempt and its read-only capture metadata; exit 64 BLOCKED_SANDBOX, no excerpt."
+    },
+    {
+      "path": ".build/xpc-embedded-node-69qhvao1/logs/retention-unified-log-local-window.stdout",
+      "beforeSha256": null,
+      "beforeState": "ABSENT",
+      "afterSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "purpose": "Exact authorized local-window log show attempt and its read-only capture metadata; exit 64 BLOCKED_SANDBOX, no excerpt."
+    },
+    {
+      "path": ".build/xpc-embedded-node-69qhvao1/logs/retention-unified-log-local-window.started-at.txt",
+      "beforeSha256": null,
+      "beforeState": "ABSENT",
+      "afterSha256": "70f7d6e9c6a8f3cf3a07f218a921ec224d89547422c9022939f9c999f22a04f9",
+      "purpose": "Exact authorized local-window log show attempt and its read-only capture metadata; exit 64 BLOCKED_SANDBOX, no excerpt."
+    },
+    {
+      "path": ".build/xpc-embedded-node-69qhvao1/logs/retention-unified-log-local-window.exit-code.txt",
+      "beforeSha256": null,
+      "beforeState": "ABSENT",
+      "afterSha256": "913f5d1da2feaf4deeccc9e55cbb350a20f12b3f507e87be85dbb77fdd3cb9bc",
+      "purpose": "Exact authorized local-window log show attempt and its read-only capture metadata; exit 64 BLOCKED_SANDBOX, no excerpt."
+    },
+    {
+      "path": ".build/xpc-embedded-node-69qhvao1/owner-adjudication.corrections.json",
+      "beforeSha256": null,
+      "beforeState": "ABSENT",
+      "afterSha256": "f149496b59c8c5e4869ae549e7ae4ff6420d580a0cd303c1c840d7ae0d353299",
+      "purpose": "New correction addendum; original retained evidence file unchanged."
+    },
+    {
+      "path": ".build/xpc-embedded-node-9u2lavy_/README.corrections.md",
+      "beforeSha256": null,
+      "beforeState": "ABSENT",
+      "afterSha256": "d792984f3db5b5b3844f50b8fb7b8b192a3860ceda6d467fc899b13b4a51bcf4",
+      "purpose": "New correction addendum; original retained evidence file unchanged."
+    },
+    {
+      "path": ".build/xpc-embedded-node-9u2lavy_/logs/retention-filesystem-measurement.started-at.txt",
+      "beforeSha256": null,
+      "beforeState": "ABSENT",
+      "afterSha256": "22f67c4978e5cfa673de2b5a640af8007d3d59b95851d46ee4dd37c4a9d2ba81",
+      "purpose": "Current read-only find listings, exit codes/stderr, timestamp and interpreted measurement receipt."
+    },
+    {
+      "path": ".build/xpc-embedded-node-9u2lavy_/logs/retention-node-containers.stderr",
+      "beforeSha256": null,
+      "beforeState": "ABSENT",
+      "afterSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "purpose": "Current read-only find listings, exit codes/stderr, timestamp and interpreted measurement receipt."
+    },
+    {
+      "path": ".build/xpc-embedded-node-9u2lavy_/logs/retention-node-containers.stdout",
+      "beforeSha256": null,
+      "beforeState": "ABSENT",
+      "afterSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "purpose": "Current read-only find listings, exit codes/stderr, timestamp and interpreted measurement receipt."
+    },
+    {
+      "path": ".build/xpc-embedded-node-9u2lavy_/logs/retention-node-containers.exit-code.txt",
+      "beforeSha256": null,
+      "beforeState": "ABSENT",
+      "afterSha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa",
+      "purpose": "Current read-only find listings, exit codes/stderr, timestamp and interpreted measurement receipt."
+    },
+    {
+      "path": ".build/xpc-embedded-node-9u2lavy_/logs/retention-node-crash-reports.exit-code.txt",
+      "beforeSha256": null,
+      "beforeState": "ABSENT",
+      "afterSha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa",
+      "purpose": "Current read-only find listings, exit codes/stderr, timestamp and interpreted measurement receipt."
+    },
+    {
+      "path": ".build/xpc-embedded-node-9u2lavy_/logs/retention-filesystem-measurement.json",
+      "beforeSha256": null,
+      "beforeState": "ABSENT",
+      "afterSha256": "bedab84252ddd6d898245f12edea11814b44a7eb40ae452cd0bb809d52856909",
+      "purpose": "Current read-only find listings, exit codes/stderr, timestamp and interpreted measurement receipt."
+    },
+    {
+      "path": ".build/xpc-embedded-node-9u2lavy_/logs/retention-node-crash-reports.stderr",
+      "beforeSha256": null,
+      "beforeState": "ABSENT",
+      "afterSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "purpose": "Current read-only find listings, exit codes/stderr, timestamp and interpreted measurement receipt."
+    },
+    {
+      "path": ".build/xpc-embedded-node-9u2lavy_/logs/inherit-run-unified-log-20280.txt",
+      "beforeSha256": null,
+      "beforeState": "ABSENT",
+      "afterSha256": "3fae005fe14cdaf35af092ba38d6ac1aa613e1b84c15f1a4588ee246fd13cf5e",
+      "purpose": "Verbatim cp -n from Claude's preserved decision excerpt; expected full hash + cmp + 58 lines verified."
+    },
+    {
+      "path": ".build/xpc-embedded-node-9u2lavy_/logs/retention-node-crash-reports.stdout",
+      "beforeSha256": null,
+      "beforeState": "ABSENT",
+      "afterSha256": "2d3b0392b74e0b2cedaf5b692b00001dfeca03d5fdfbe2a8a0adc6d00029ae77",
+      "purpose": "Current read-only find listings, exit codes/stderr, timestamp and interpreted measurement receipt."
+    },
+    {
+      "path": "work-orders/decisions/2026-09-13-xpc-embedded-node-retention/preexisting-evidence-verification.txt",
+      "beforeSha256": null,
+      "beforeState": "ABSENT",
+      "afterSha256": "03e4cdb5091dcc0452970fcb9fdb716632500d7515f81c745e0a6b9478f455b8",
+      "purpose": "New explicit-scope retention audit inventory/check record."
+    },
+    {
+      "path": "work-orders/decisions/2026-09-13-xpc-embedded-node-retention/preexisting-evidence-modes-flags.txt",
+      "beforeSha256": null,
+      "beforeState": "ABSENT",
+      "afterSha256": "05ac3fc27ce574f2f6443b5a9a00269ebe6e8160301684eeb93ad88f1140405b",
+      "purpose": "New explicit-scope retention audit inventory/check record."
+    },
+    {
+      "path": "work-orders/decisions/2026-09-13-xpc-embedded-node-retention/preexisting-evidence.sha256",
+      "beforeSha256": null,
+      "beforeState": "ABSENT",
+      "afterSha256": "09dc782cf5f396d3f09ed72773f15ca478b95d2216a235500a69c836beb0410d",
+      "purpose": "New explicit-scope retention audit inventory/check record."
+    },
+    {
+      "path": "work-orders/decisions/2026-09-13-xpc-embedded-node-retention/preexisting-evidence-modes-flags-after.txt",
+      "beforeSha256": null,
+      "beforeState": "ABSENT",
+      "afterSha256": "05ac3fc27ce574f2f6443b5a9a00269ebe6e8160301684eeb93ad88f1140405b",
+      "purpose": "New explicit-scope retention audit inventory/check record."
+    },
+    {
+      "path": "work-orders/decisions/2026-09-13-xpc-embedded-node-retention/preexisting-evidence-verification.exit-code.txt",
+      "beforeSha256": null,
+      "beforeState": "ABSENT",
+      "afterSha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa",
+      "purpose": "New explicit-scope retention audit inventory/check record."
+    },
+    {
+      "path": "work-orders/decisions/2026-09-13-xpc-embedded-node-retention/changed-files-before.sha256",
+      "beforeSha256": null,
+      "beforeState": "ABSENT",
+      "afterSha256": "e90c48152e886c68c82389f20935684fd1113430f4657e8ed46880ef954f3726",
+      "purpose": "New explicit-scope retention audit inventory/check record."
+    },
+    {
+      "path": "work-orders/decisions/2026-09-13-xpc-embedded-node-retention/validation.json",
+      "beforeSha256": null,
+      "beforeState": "ABSENT",
+      "afterSha256": "3738563d00cedfb43f910a19f45816cc23afe45261c1ac7199a93f266533e6fa",
+      "purpose": "Recorded file/hash/metadata/document-invariant checks, not runtime tests."
+    },
+    {
+      "path": "work-orders/decisions/2026-09-13-xpc-embedded-node-retention/before/u02-xpc-embedded-node-checkpoint.json",
+      "beforeSha256": null,
+      "beforeState": "ABSENT",
+      "afterSha256": "67eee39307cf31cf5cb190108e06d5915ebf66feacf84540b1f40a154d1723d5",
+      "purpose": "Verbatim before snapshot of one explicitly authorized mutable document/checkpoint."
+    },
+    {
+      "path": "work-orders/decisions/2026-09-13-xpc-embedded-node-retention/before/2026-09-13-xpc-embedded-node.fable-verification.md",
+      "beforeSha256": null,
+      "beforeState": "ABSENT",
+      "afterSha256": "2af3d2ef8030a2ece7fd1d8826a13a7465ebc3db3bf9a03e21f44728f67f8e4b",
+      "purpose": "Verbatim before snapshot of one explicitly authorized mutable document/checkpoint."
+    },
+    {
+      "path": "work-orders/decisions/2026-09-13-xpc-embedded-node-retention/before/u02-xpc-embedded-node-inherit-checkpoint.json",
+      "beforeSha256": null,
+      "beforeState": "ABSENT",
+      "afterSha256": "9d6f973fd921a335340f0519d838277d04b28a15ca505768ece659b49471ced3",
+      "purpose": "Verbatim before snapshot of one explicitly authorized mutable document/checkpoint."
+    },
+    {
+      "path": "work-orders/decisions/2026-09-13-xpc-embedded-node-retention/before/2026-09-13-xpc-embedded-node.md",
+      "beforeSha256": null,
+      "beforeState": "ABSENT",
+      "afterSha256": "ffbfa23cc9cbc39e7cc4f5e797042ead882f2d9c0d838d9874e5f592d39ba2f0",
+      "purpose": "Verbatim before snapshot of one explicitly authorized mutable document/checkpoint."
+    },
+    {
+      "path": "work-orders/decisions/2026-09-13-xpc-embedded-node-retention/before/roadmap.md",
+      "beforeSha256": null,
+      "beforeState": "ABSENT",
+      "afterSha256": "a2e1c201521e8d2d60fa17ee4da5e543cd9c9d9d80777a9925afc6b05426bd22",
+      "purpose": "Verbatim before snapshot of one explicitly authorized mutable document/checkpoint."
+    },
+    {
+      "path": "work-orders/decisions/2026-09-13-xpc-embedded-node-retention/retention-corrections.json",
+      "beforeSha256": null,
+      "beforeState": "ABSENT",
+      "afterSha256": "13fd194985e0acdac65a512241126d041fb53e7a890617cadfb4c4550a4aeb8d",
+      "purpose": "New standalone corrections/acceptance record mirrored additively in both checkpoints."
+    }
+  ],
+  "corrections": {
+    "D1": {
+      "files": [
+        {
+          "path": "docs/verification/2026-09-13/u02-xpc-embedded-node-checkpoint.json",
+          "beforeSha256": "67eee39307cf31cf5cb190108e06d5915ebf66feacf84540b1f40a154d1723d5",
+          "afterSha256": "747185185b5c08b1746bcd2af76091b7ef932282173805436dd5b554478c88e7"
+        },
+        {
+          "path": "roadmap.md",
+          "beforeSha256": "a2e1c201521e8d2d60fa17ee4da5e543cd9c9d9d80777a9925afc6b05426bd22",
+          "afterSha256": "440b0b17aa034a66ca32dc234d06372ca69d3809f47707d117ec838990cb6780"
+        },
+        {
+          "path": ".build/xpc-embedded-node-69qhvao1/owner-adjudication.corrections.json",
+          "beforeSha256": null,
+          "afterSha256": "f149496b59c8c5e4869ae549e7ae4ff6420d580a0cd303c1c840d7ae0d353299"
+        },
+        {
+          "path": ".build/xpc-embedded-node-69qhvao1/README.corrections.md",
+          "beforeSha256": null,
+          "afterSha256": "a92b95b84266a388e720de296e2e7502baf48262ee900b12dc47fee38d1f6b98"
+        },
+        {
+          "path": ".build/xpc-embedded-node-69qhvao1/logs/retention-unified-log-local-window.capture.json",
+          "beforeSha256": null,
+          "afterSha256": "252a841c2a5159f2817b04ab73ca724b3221a40397238d2f8f421ed95b8c26f9"
+        },
+        {
+          "path": "work-orders/decisions/2026-09-13-xpc-embedded-node-retention/retention-corrections.json",
+          "beforeSha256": null,
+          "afterSha256": "13fd194985e0acdac65a512241126d041fb53e7a890617cadfb4c4550a4aeb8d"
+        },
+        {
+          "path": "work-orders/decisions/2026-09-13-xpc-embedded-node.fable-verification.md",
+          "beforeSha256": "2af3d2ef8030a2ece7fd1d8826a13a7465ebc3db3bf9a03e21f44728f67f8e4b",
+          "afterSha256": "45463e24a5d4bcd262d613d1b91591b0a39672b316db566ca1c0a985a45743a9"
+        }
+      ],
+      "status": "CORRECTION_RECORDED; FRESH_FIRST_ATTEMPT_LOG_CAPTURE_BLOCKED_AND_PRIOR_LOG_FINDINGS_ATTRIBUTED"
+    },
+    "D2": {
+      "files": [
+        {
+          "path": "docs/verification/2026-09-13/u02-xpc-embedded-node-checkpoint.json",
+          "beforeSha256": "67eee39307cf31cf5cb190108e06d5915ebf66feacf84540b1f40a154d1723d5",
+          "afterSha256": "747185185b5c08b1746bcd2af76091b7ef932282173805436dd5b554478c88e7"
+        },
+        {
+          "path": "roadmap.md",
+          "beforeSha256": "a2e1c201521e8d2d60fa17ee4da5e543cd9c9d9d80777a9925afc6b05426bd22",
+          "afterSha256": "440b0b17aa034a66ca32dc234d06372ca69d3809f47707d117ec838990cb6780"
+        },
+        {
+          "path": ".build/xpc-embedded-node-69qhvao1/owner-adjudication.corrections.json",
+          "beforeSha256": null,
+          "afterSha256": "f149496b59c8c5e4869ae549e7ae4ff6420d580a0cd303c1c840d7ae0d353299"
+        },
+        {
+          "path": ".build/xpc-embedded-node-69qhvao1/README.corrections.md",
+          "beforeSha256": null,
+          "afterSha256": "a92b95b84266a388e720de296e2e7502baf48262ee900b12dc47fee38d1f6b98"
+        },
+        {
+          "path": ".build/xpc-embedded-node-69qhvao1/logs/node-2026-09-13-101227.ips",
+          "beforeSha256": null,
+          "afterSha256": "c0516e6c752d39a7c0cdb5956afef7b18e7e36c8d900911ebedc59a8416305bb"
+        },
+        {
+          "path": "work-orders/decisions/2026-09-13-xpc-embedded-node-retention/retention-corrections.json",
+          "beforeSha256": null,
+          "afterSha256": "13fd194985e0acdac65a512241126d041fb53e7a890617cadfb4c4550a4aeb8d"
+        },
+        {
+          "path": "work-orders/decisions/2026-09-13-xpc-embedded-node.fable-verification.md",
+          "beforeSha256": "2af3d2ef8030a2ece7fd1d8826a13a7465ebc3db3bf9a03e21f44728f67f8e4b",
+          "afterSha256": "45463e24a5d4bcd262d613d1b91591b0a39672b316db566ca1c0a985a45743a9"
+        }
+      ],
+      "status": "CORRECTION_RECORDED; FRESH_FIRST_ATTEMPT_LOG_CAPTURE_BLOCKED_AND_PRIOR_LOG_FINDINGS_ATTRIBUTED"
+    },
+    "D3": {
+      "files": [
+        {
+          "path": "docs/verification/2026-09-13/u02-xpc-embedded-node-checkpoint.json",
+          "beforeSha256": "67eee39307cf31cf5cb190108e06d5915ebf66feacf84540b1f40a154d1723d5",
+          "afterSha256": "747185185b5c08b1746bcd2af76091b7ef932282173805436dd5b554478c88e7"
+        },
+        {
+          "path": "docs/verification/2026-09-13/u02-xpc-embedded-node-inherit-checkpoint.json",
+          "beforeSha256": "9d6f973fd921a335340f0519d838277d04b28a15ca505768ece659b49471ced3",
+          "afterSha256": "bb249661d70e95a9cf93ead8605c088c2811ece6a0f5003a5d4b7bc5b0254838"
+        },
+        {
+          "path": "roadmap.md",
+          "beforeSha256": "a2e1c201521e8d2d60fa17ee4da5e543cd9c9d9d80777a9925afc6b05426bd22",
+          "afterSha256": "440b0b17aa034a66ca32dc234d06372ca69d3809f47707d117ec838990cb6780"
+        },
+        {
+          "path": ".build/xpc-embedded-node-69qhvao1/owner-adjudication.corrections.json",
+          "beforeSha256": null,
+          "afterSha256": "f149496b59c8c5e4869ae549e7ae4ff6420d580a0cd303c1c840d7ae0d353299"
+        },
+        {
+          "path": ".build/xpc-embedded-node-69qhvao1/README.corrections.md",
+          "beforeSha256": null,
+          "afterSha256": "a92b95b84266a388e720de296e2e7502baf48262ee900b12dc47fee38d1f6b98"
+        },
+        {
+          "path": ".build/xpc-embedded-node-9u2lavy_/README.corrections.md",
+          "beforeSha256": null,
+          "afterSha256": "d792984f3db5b5b3844f50b8fb7b8b192a3860ceda6d467fc899b13b4a51bcf4"
+        },
+        {
+          "path": "work-orders/decisions/2026-09-13-xpc-embedded-node-retention/retention-corrections.json",
+          "beforeSha256": null,
+          "afterSha256": "13fd194985e0acdac65a512241126d041fb53e7a890617cadfb4c4550a4aeb8d"
+        },
+        {
+          "path": "work-orders/decisions/2026-09-13-xpc-embedded-node.fable-verification.md",
+          "beforeSha256": "2af3d2ef8030a2ece7fd1d8826a13a7465ebc3db3bf9a03e21f44728f67f8e4b",
+          "afterSha256": "45463e24a5d4bcd262d613d1b91591b0a39672b316db566ca1c0a985a45743a9"
+        }
+      ],
+      "status": "RECORDED"
+    },
+    "D4": {
+      "files": [
+        {
+          "path": "docs/verification/2026-09-13/u02-xpc-embedded-node-checkpoint.json",
+          "beforeSha256": "67eee39307cf31cf5cb190108e06d5915ebf66feacf84540b1f40a154d1723d5",
+          "afterSha256": "747185185b5c08b1746bcd2af76091b7ef932282173805436dd5b554478c88e7"
+        },
+        {
+          "path": "docs/verification/2026-09-13/u02-xpc-embedded-node-inherit-checkpoint.json",
+          "beforeSha256": "9d6f973fd921a335340f0519d838277d04b28a15ca505768ece659b49471ced3",
+          "afterSha256": "bb249661d70e95a9cf93ead8605c088c2811ece6a0f5003a5d4b7bc5b0254838"
+        },
+        {
+          "path": "roadmap.md",
+          "beforeSha256": "a2e1c201521e8d2d60fa17ee4da5e543cd9c9d9d80777a9925afc6b05426bd22",
+          "afterSha256": "440b0b17aa034a66ca32dc234d06372ca69d3809f47707d117ec838990cb6780"
+        },
+        {
+          "path": ".build/xpc-embedded-node-69qhvao1/owner-adjudication.corrections.json",
+          "beforeSha256": null,
+          "afterSha256": "f149496b59c8c5e4869ae549e7ae4ff6420d580a0cd303c1c840d7ae0d353299"
+        },
+        {
+          "path": ".build/xpc-embedded-node-69qhvao1/README.corrections.md",
+          "beforeSha256": null,
+          "afterSha256": "a92b95b84266a388e720de296e2e7502baf48262ee900b12dc47fee38d1f6b98"
+        },
+        {
+          "path": ".build/xpc-embedded-node-9u2lavy_/README.corrections.md",
+          "beforeSha256": null,
+          "afterSha256": "d792984f3db5b5b3844f50b8fb7b8b192a3860ceda6d467fc899b13b4a51bcf4"
+        },
+        {
+          "path": "work-orders/decisions/2026-09-13-xpc-embedded-node-retention/retention-corrections.json",
+          "beforeSha256": null,
+          "afterSha256": "13fd194985e0acdac65a512241126d041fb53e7a890617cadfb4c4550a4aeb8d"
+        },
+        {
+          "path": "work-orders/decisions/2026-09-13-xpc-embedded-node.fable-verification.md",
+          "beforeSha256": "2af3d2ef8030a2ece7fd1d8826a13a7465ebc3db3bf9a03e21f44728f67f8e4b",
+          "afterSha256": "45463e24a5d4bcd262d613d1b91591b0a39672b316db566ca1c0a985a45743a9"
+        }
+      ],
+      "status": "RECORDED"
+    },
+    "D5": {
+      "files": [
+        {
+          "path": "docs/verification/2026-09-13/u02-xpc-embedded-node-inherit-checkpoint.json",
+          "beforeSha256": "9d6f973fd921a335340f0519d838277d04b28a15ca505768ece659b49471ced3",
+          "afterSha256": "bb249661d70e95a9cf93ead8605c088c2811ece6a0f5003a5d4b7bc5b0254838"
+        },
+        {
+          "path": "roadmap.md",
+          "beforeSha256": "a2e1c201521e8d2d60fa17ee4da5e543cd9c9d9d80777a9925afc6b05426bd22",
+          "afterSha256": "440b0b17aa034a66ca32dc234d06372ca69d3809f47707d117ec838990cb6780"
+        },
+        {
+          "path": ".build/xpc-embedded-node-9u2lavy_/README.corrections.md",
+          "beforeSha256": null,
+          "afterSha256": "d792984f3db5b5b3844f50b8fb7b8b192a3860ceda6d467fc899b13b4a51bcf4"
+        },
+        {
+          "path": ".build/xpc-embedded-node-9u2lavy_/logs/retention-filesystem-measurement.json",
+          "beforeSha256": null,
+          "afterSha256": "bedab84252ddd6d898245f12edea11814b44a7eb40ae452cd0bb809d52856909"
+        },
+        {
+          "path": ".build/xpc-embedded-node-9u2lavy_/logs/inherit-run-unified-log-20280.txt",
+          "beforeSha256": null,
+          "afterSha256": "3fae005fe14cdaf35af092ba38d6ac1aa613e1b84c15f1a4588ee246fd13cf5e"
+        },
+        {
+          "path": "work-orders/decisions/2026-09-13-xpc-embedded-node-retention/retention-corrections.json",
+          "beforeSha256": null,
+          "afterSha256": "13fd194985e0acdac65a512241126d041fb53e7a890617cadfb4c4550a4aeb8d"
+        },
+        {
+          "path": "work-orders/decisions/2026-09-13-xpc-embedded-node.fable-verification.md",
+          "beforeSha256": "2af3d2ef8030a2ece7fd1d8826a13a7465ebc3db3bf9a03e21f44728f67f8e4b",
+          "afterSha256": "45463e24a5d4bcd262d613d1b91591b0a39672b316db566ca1c0a985a45743a9"
+        }
+      ],
+      "status": "RECORDED"
+    },
+    "D6": {
+      "files": [
+        {
+          "path": "docs/verification/2026-09-13/u02-xpc-embedded-node-inherit-checkpoint.json",
+          "beforeSha256": "9d6f973fd921a335340f0519d838277d04b28a15ca505768ece659b49471ced3",
+          "afterSha256": "bb249661d70e95a9cf93ead8605c088c2811ece6a0f5003a5d4b7bc5b0254838"
+        },
+        {
+          "path": "roadmap.md",
+          "beforeSha256": "a2e1c201521e8d2d60fa17ee4da5e543cd9c9d9d80777a9925afc6b05426bd22",
+          "afterSha256": "440b0b17aa034a66ca32dc234d06372ca69d3809f47707d117ec838990cb6780"
+        },
+        {
+          "path": "work-orders/decisions/2026-09-13-xpc-embedded-node.md",
+          "beforeSha256": "ffbfa23cc9cbc39e7cc4f5e797042ead882f2d9c0d838d9874e5f592d39ba2f0",
+          "afterSha256": "31be2767cb80efdbc8e0f8321000cf665e54fbb92abdf35bb894432e4d5024f4"
+        },
+        {
+          "path": ".build/xpc-embedded-node-9u2lavy_/README.corrections.md",
+          "beforeSha256": null,
+          "afterSha256": "d792984f3db5b5b3844f50b8fb7b8b192a3860ceda6d467fc899b13b4a51bcf4"
+        },
+        {
+          "path": "work-orders/decisions/2026-09-13-xpc-embedded-node-retention/retention-corrections.json",
+          "beforeSha256": null,
+          "afterSha256": "13fd194985e0acdac65a512241126d041fb53e7a890617cadfb4c4550a4aeb8d"
+        },
+        {
+          "path": "work-orders/decisions/2026-09-13-xpc-embedded-node.fable-verification.md",
+          "beforeSha256": "2af3d2ef8030a2ece7fd1d8826a13a7465ebc3db3bf9a03e21f44728f67f8e4b",
+          "afterSha256": "45463e24a5d4bcd262d613d1b91591b0a39672b316db566ca1c0a985a45743a9"
+        }
+      ],
+      "status": "RECORDED"
+    },
+    "D7": {
+      "files": [
+        {
+          "path": "docs/verification/2026-09-13/u02-xpc-embedded-node-checkpoint.json",
+          "beforeSha256": "67eee39307cf31cf5cb190108e06d5915ebf66feacf84540b1f40a154d1723d5",
+          "afterSha256": "747185185b5c08b1746bcd2af76091b7ef932282173805436dd5b554478c88e7"
+        },
+        {
+          "path": "docs/verification/2026-09-13/u02-xpc-embedded-node-inherit-checkpoint.json",
+          "beforeSha256": "9d6f973fd921a335340f0519d838277d04b28a15ca505768ece659b49471ced3",
+          "afterSha256": "bb249661d70e95a9cf93ead8605c088c2811ece6a0f5003a5d4b7bc5b0254838"
+        },
+        {
+          "path": "roadmap.md",
+          "beforeSha256": "a2e1c201521e8d2d60fa17ee4da5e543cd9c9d9d80777a9925afc6b05426bd22",
+          "afterSha256": "440b0b17aa034a66ca32dc234d06372ca69d3809f47707d117ec838990cb6780"
+        },
+        {
+          "path": ".build/xpc-embedded-node-69qhvao1/owner-adjudication.corrections.json",
+          "beforeSha256": null,
+          "afterSha256": "f149496b59c8c5e4869ae549e7ae4ff6420d580a0cd303c1c840d7ae0d353299"
+        },
+        {
+          "path": ".build/xpc-embedded-node-69qhvao1/README.corrections.md",
+          "beforeSha256": null,
+          "afterSha256": "a92b95b84266a388e720de296e2e7502baf48262ee900b12dc47fee38d1f6b98"
+        },
+        {
+          "path": ".build/xpc-embedded-node-9u2lavy_/README.corrections.md",
+          "beforeSha256": null,
+          "afterSha256": "d792984f3db5b5b3844f50b8fb7b8b192a3860ceda6d467fc899b13b4a51bcf4"
+        },
+        {
+          "path": "work-orders/decisions/2026-09-13-xpc-embedded-node-retention/retention-corrections.json",
+          "beforeSha256": null,
+          "afterSha256": "13fd194985e0acdac65a512241126d041fb53e7a890617cadfb4c4550a4aeb8d"
+        },
+        {
+          "path": "work-orders/decisions/2026-09-13-xpc-embedded-node.fable-verification.md",
+          "beforeSha256": "2af3d2ef8030a2ece7fd1d8826a13a7465ebc3db3bf9a03e21f44728f67f8e4b",
+          "afterSha256": "45463e24a5d4bcd262d613d1b91591b0a39672b316db566ca1c0a985a45743a9"
+        }
+      ],
+      "status": "CORRECTION_RECORDED; FRESH_FIRST_ATTEMPT_LOG_CAPTURE_BLOCKED_AND_PRIOR_LOG_FINDINGS_ATTRIBUTED"
+    }
+  },
+  "preservation": {
+    "preexistingEvidenceFiles": 357,
+    "allSha256Matched": true,
+    "allOriginalModesAndFlagsMatched": true,
+    "originalCheckpointValuesAllPreserved": true,
+    "originalFableRecordBytesPreservedAsPrefix": true,
+    "immutableReceiptsChanged": 0,
+    "deletedFiles": 0,
+    "roadmapCheckboxesChanged": 0,
+    "productProgressLineUnchanged": true,
+    "validation": "work-orders/decisions/2026-09-13-xpc-embedded-node-retention/validation.json"
+  },
+  "advisoryReview": {
+    "first": "Claude Fable 5.1 original verification read in full; existing source of requested D1-D7",
+    "coverage": [
+      "Astra bounded read-only evidence reviewer",
+      "gpt-5.6-luna bounded read-only coverage reviewer"
+    ],
+    "final": "gpt-daybreak-blue-latest: no blocking factual/provenance defect in final retention corrections; partial capture limitation explicit",
+    "spark": "NOT_INVOKED; unavailable"
+  },
+  "outstanding": {
+    "capture": "Fresh first-attempt unified-log excerpt for 2026-09-13 10:12:26–10:12:28 PDT",
+    "commandReceipt": ".build/xpc-embedded-node-69qhvao1/logs/retention-unified-log-local-window.capture.json",
+    "exitCode": 64,
+    "reason": "log: Cannot run while sandboxed",
+    "approval": "Already authorized read-only capture; current session does not permit sandbox escalation.",
+    "isolation": "Separate later Louis decision; DNSConfiguration lookup and lifecycle/descendant limits remain open."
+  },
+  "manifestSelf": {
+    "path": "work-orders/decisions/2026-09-13-xpc-embedded-node-retention/manifest.json",
+    "beforeState": "ABSENT",
+    "beforeSha256": null,
+    "afterSha256Location": "Astra final response; a whole-file digest cannot be embedded in the same file without circular self-reference."
+  },
+  "inventoryScope": "Only explicitly written retention paths. This does not attribute or summarize concurrent changes elsewhere in the shared workspace."
+}

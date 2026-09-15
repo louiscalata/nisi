@@ -1,0 +1,155 @@
+✖ actual settled host binds an original static failure source without exposing content (45.324875ms)
+✔ source plan is gated before settlement, while draining, and when quarantined (155.598959ms)
+✔ invalid row input and Node-stage rows refuse without changing incident/history APIs (83.622208ms)
+✖ accessor accepts only the original issued plan and rejects clones or altered plans (27.860333ms)
+✔ original issued static failure binds exact source bytes without exposing them publicly (23.543541ms)
+✖ private accessor returns the frozen original artifact and prior native report (12.16025ms)
+✔ source plan identity and private input are stable for the same original inputs (14.3055ms)
+✔ serialized or cloned plans never retain private source authority (13.371625ms)
+✔ accessor input is exact and rejects getters before invoking them (0.5355ms)
+✖ cloned preview is not source authority even when bytes and hashes match (11.871834ms)
+✔ a different original preview cannot be substituted across original contexts (19.076291ms)
+✔ missing, partial, malformed and noncanonical row ids refuse without fallback selection (17.085875ms)
+✔ recorded static PASS is not a native incident source (69.3705ms)
+✔ recorded Node failure remains unsupported because no file transcript can be invented (51.924666ms)
+✔ operational static failures are not reconstructed as deterministic incidents (8.575ms)
+✔ interrupted evidence cannot become a source-bound native incident (35.744042ms)
+✖ bundle/context clones and cross-context pairs cannot recreate issued evidence (15.752708ms)
+✔ public selection metadata is copied and deeply frozen against later mutation (9.47075ms)
+✔ real settled host exposes source planning while unsettled host refuses (29.530209ms)
+✔ host method requires an exact full row-id request and never returns raw content (18.838292ms)
+ℹ tests 20
+ℹ suites 0
+ℹ pass 15
+ℹ fail 5
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 415.361375
+
+✖ failing tests:
+
+test at tests/native-incident-source-host.test.mjs:13:1
+✖ actual settled host binds an original static failure source without exposing content (45.324875ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly deep-equal:
+  + actual - expected
+  
+    [
+  -   'artifactByteLength',
+      'authorizing',
+  +   'executionVerified',
+  -   'binding',
+  -   'emptyArtifact',
+      'freshness',
+      'learningEligible',
+      'nativeRerun',
+      'persistable',
+  -   'previewSha256',
+  -   'priorTranscriptDigest',
+  -   'profile',
+      'rawContentIncluded',
+      'reason',
+      'requiresSeparateAdmission',
+  -   'rowFingerprint',
+  -   'rowId',
+      'schemaVersion',
+  +   'selection',
+  -   'source',
+      'sourcePlanDigest',
+      'status'
+    ]
+  
+      at TestContext.<anonymous> (file:///Users/louiscalata/nisi-next-private/tests/native-incident-source-host.test.mjs:16:55)
+      at async Test.run (node:internal/test_runner/test:1332:7)
+      at async startSubtestAfterBootstrap (node:internal/test_runner/harness:385:3) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: [ 'authorizing', 'executionVerified', 'freshness', 'learningEligible', 'nativeRerun', 'persistable', 'rawContentIncluded', 'reason', 'requiresSeparateAdmission', 'schemaVersion', 'selection', 'sourcePlanDigest', 'status' ],
+    expected: [ 'artifactByteLength', 'authorizing', 'binding', 'emptyArtifact', 'freshness', 'learningEligible', 'nativeRerun', 'persistable', 'previewSha256', 'priorTranscriptDigest', 'profile', 'rawContentIncluded', 'reason', 'requiresSeparateAdmission', 'rowFingerprint', 'rowId', 'schemaVersion', 'source', 'sourcePlanDigest', 'status' ],
+    operator: 'deepStrictEqual',
+    diff: 'simple'
+  }
+
+test at tests/native-incident-source-host.test.mjs:47:1
+✖ accessor accepts only the original issued plan and rejects clones or altered plans (27.860333ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly deep-equal:
+  + actual - expected
+  
+    Comparison {
+  +   code: 'NATIVE_SOURCE_INPUT_SCHEMA'
+  -   code: 'NATIVE_SOURCE_NOT_ISSUED'
+    }
+  
+      at TestContext.<anonymous> (file:///Users/louiscalata/nisi-next-private/tests/native-incident-source-host.test.mjs:53:10)
+      at async Test.run (node:internal/test_runner/test:1332:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:911:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: Error: NATIVE_SOURCE_INPUT_SCHEMA
+        at refuse (file:///Users/louiscalata/nisi-next-private/integrity/record-utils.mjs:6:53)
+        at exact (file:///Users/louiscalata/nisi-next-private/integrity/record-utils.mjs:15:63)
+        at readNativeIncidentSourceInputV1 (file:///Users/louiscalata/nisi-next-private/hosts/repository/native-incident-source-v1.mjs:83:3)
+        at assert.throws.code (file:///Users/louiscalata/nisi-next-private/tests/native-incident-source-host.test.mjs:53:23)
+        at getActual (node:assert:611:5)
+        at strict.throws (node:assert:759:24)
+        at TestContext.<anonymous> (file:///Users/louiscalata/nisi-next-private/tests/native-incident-source-host.test.mjs:53:10)
+        at async Test.run (node:internal/test_runner/test:1332:7)
+        at async Test.processPendingSubtests (node:internal/test_runner/test:911:7),
+    expected: { code: 'NATIVE_SOURCE_NOT_ISSUED' },
+    operator: 'throws',
+    diff: 'simple'
+  }
+
+test at tests/native-incident-source.test.mjs:24:1
+✖ private accessor returns the frozen original artifact and prior native report (12.16025ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  
+  false !== true
+  
+      at TestContext.<anonymous> (file:///Users/louiscalata/nisi-next-private/tests/native-incident-source.test.mjs:24:849)
+      at async Test.run (node:internal/test_runner/test:1332:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:911:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: false,
+    expected: true,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at tests/native-incident-source.test.mjs:32:1
+✖ cloned preview is not source authority even when bytes and hashes match (11.871834ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  
+  false !== true
+  
+      at TestContext.<anonymous> (file:///Users/louiscalata/nisi-next-private/tests/native-incident-source.test.mjs:32:435)
+      at async Test.run (node:internal/test_runner/test:1332:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:911:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: false,
+    expected: true,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at tests/native-incident-source.test.mjs:46:1
+✖ bundle/context clones and cross-context pairs cannot recreate issued evidence (15.752708ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  + actual - expected
+  
+  + 'SOURCE_BOUND'
+  - 'REFUSED'
+  
+      at assertClosed (file:///Users/louiscalata/nisi-next-private/tests/native-incident-source.test.mjs:18:172)
+      at TestContext.<anonymous> (file:///Users/louiscalata/nisi-next-private/tests/native-incident-source.test.mjs:46:486)
+      at async Test.run (node:internal/test_runner/test:1332:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:911:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 'SOURCE_BOUND',
+    expected: 'REFUSED',
+    operator: 'strictEqual',
+    diff: 'simple'
+  }

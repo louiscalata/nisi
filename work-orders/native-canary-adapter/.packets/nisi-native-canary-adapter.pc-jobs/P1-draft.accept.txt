@@ -1,0 +1,471 @@
+exit 1
+
+> nisi-private-native-canary-adapter-draft@0.0.0-private test:adapter
+> node --test --test-timeout=5000 tests/adapter.test.mjs
+
+✔ mappingV1 is a fresh, exact, versioned mapping (0.690958ms)
+✖ adapt maps the real inherit-run stdout to exact adjudicator lines, preserving line count (1.011291ms)
+✖ adapt end to end: real stdout + trusted runtime identities adjudicate to ALL_MATCHED (0.468458ms)
+✔ adapt end to end: wrong runtime identities are a MISMATCH, not a match (0.290458ms)
+✖ adapt treats error as DENIED only on the exact per-operation denial signature (0.1335ms)
+✖ adapt copies errno verbatim and maps or passes outcomes exactly (0.43725ms)
+✔ adapt identity lines carry pid and ppid verbatim and only when present (0.767167ms)
+✔ adapt passes unmapped operations through with op verbatim so the adjudicator reports them (0.198584ms)
+✖ adapt passes invalid JSON, non-objects and operation-less objects through unchanged with line numbers kept (0.201292ms)
+✖ adapt rejects a line with a duplicate member name in any single object, before parsing (0.186667ms)
+✖ adapt rejects an invalid mapping with TypeError before reading stdout (0.429459ms)
+✖ expectedMatrixFor builds the exact five-row matrix from trusted identities and rejects bad input (0.208791ms)
+✔ adapt does not mutate frozen inputs and returns fresh objects (1.003708ms)
+✖ adapter module is pure: no I/O, process, clock or randomness in the source (3.22625ms)
+ℹ tests 14
+ℹ suites 0
+ℹ pass 5
+ℹ fail 9
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 52.280333
+
+✖ failing tests:
+
+test at tests/adapter.test.mjs:50:1
+✖ adapt maps the real inherit-run stdout to exact adjudicator lines, preserving line count (1.011291ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  + actual - expected
+  
+    '{"op":"self-report","pid":20280,"ppid":20279}\n' +
+  +   '{"op":"own-write","outcome":"allowed","errno":0}\n' +
+  +   '{"op":"own-read","outcome":"allowed","errno":0}\n' +
+  +   '{"op":"outside-read","outcome":"error","errno":1}\n' +
+  +   '{"op":"loopback-bind","outcome":"error","errno":1}\n'
+  -   '{"op":"own-write","outcome":"ALLOWED","errno":0}\n' +
+  -   '{"op":"own-read","outcome":"ALLOWED","errno":0}\n' +
+  -   '{"op":"outside-read","outcome":"DENIED","errno":1}\n' +
+  -   '{"op":"loopback-bind","outcome":"DENIED","errno":1}\n'
+  
+      at TestContext.<anonymous> (file:///Users/louiscalata/nisi-next-private/work-orders/native-canary-adapter/tests/adapter.test.mjs:53:10)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1325:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:911:18)
+      at Test.postRun (node:internal/test_runner/test:1465:19)
+      at Test.run (node:internal/test_runner/test:1390:12)
+      at async startSubtestAfterBootstrap (node:internal/test_runner/harness:385:3) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: '{"op":"self-report","pid":20280,"ppid":20279}\n{"op":"own-write","outcome":"allowed","errno":0}\n{"op":"own-read","outcome":"allowed","errno":0}\n{"op":"outside-read","outcome":"error","errno":1}\n{"op":"loopback-bind","outcome":"error","errno":1}\n',
+    expected: '{"op":"self-report","pid":20280,"ppid":20279}\n{"op":"own-write","outcome":"ALLOWED","errno":0}\n{"op":"own-read","outcome":"ALLOWED","errno":0}\n{"op":"outside-read","outcome":"DENIED","errno":1}\n{"op":"loopback-bind","outcome":"DENIED","errno":1}\n',
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at tests/adapter.test.mjs:66:1
+✖ adapt end to end: real stdout + trusted runtime identities adjudicate to ALL_MATCHED (0.468458ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  + actual - expected
+  
+  + 'NOT_ACCEPTED'
+  - 'ALL_MATCHED'
+  
+      at TestContext.<anonymous> (file:///Users/louiscalata/nisi-next-private/work-orders/native-canary-adapter/tests/adapter.test.mjs:69:10)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1325:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:911:18)
+      at Test.postRun (node:internal/test_runner/test:1465:19)
+      at Test.run (node:internal/test_runner/test:1390:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:911:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 'NOT_ACCEPTED',
+    expected: 'ALL_MATCHED',
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at tests/adapter.test.mjs:95:1
+✖ adapt treats error as DENIED only on the exact per-operation denial signature (0.1335ms)
+  AssertionError [ERR_ASSERTION]: {"operation":"outside_read","outcome":"error","errno":1,"code":"EPERM","syscall":"open"}
+  
+  'error' !== 'DENIED'
+  
+      at TestContext.<anonymous> (file:///Users/louiscalata/nisi-next-private/work-orders/native-canary-adapter/tests/adapter.test.mjs:113:12)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1325:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:911:18)
+      at Test.postRun (node:internal/test_runner/test:1465:19)
+      at Test.run (node:internal/test_runner/test:1390:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:911:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: 'error',
+    expected: 'DENIED',
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at tests/adapter.test.mjs:123:1
+✖ adapt copies errno verbatim and maps or passes outcomes exactly (0.43725ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  + actual - expected
+  
+  + '{"op":"own-write","outcome":"allowed","errno":0}'
+  - '{"op":"own-write","outcome":"ALLOWED","errno":0}'
+  
+      at TestContext.<anonymous> (file:///Users/louiscalata/nisi-next-private/work-orders/native-canary-adapter/tests/adapter.test.mjs:125:10)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1325:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:911:18)
+      at Test.postRun (node:internal/test_runner/test:1465:19)
+      at Test.run (node:internal/test_runner/test:1390:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:911:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: '{"op":"own-write","outcome":"allowed","errno":0}',
+    expected: '{"op":"own-write","outcome":"ALLOWED","errno":0}',
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at tests/adapter.test.mjs:173:1
+✖ adapt passes invalid JSON, non-objects and operation-less objects through unchanged with line numbers kept (0.201292ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  + actual - expected
+  
+    'garbage\n' +
+      '[1]\n' +
+      '\n' +
+      '{"outcome":"allowed"}\n' +
+      '{"operation":"","outcome":"allowed"}\n' +
+  +   '{"op":"own-read","outcome":"allowed","errno":0}'
+  -   '{"op":"own-read","outcome":"ALLOWED","errno":0}'
+  
+      at TestContext.<anonymous> (file:///Users/louiscalata/nisi-next-private/work-orders/native-canary-adapter/tests/adapter.test.mjs:176:10)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1325:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:911:18)
+      at Test.postRun (node:internal/test_runner/test:1465:19)
+      at Test.run (node:internal/test_runner/test:1390:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:911:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 'garbage\n[1]\n\n{"outcome":"allowed"}\n{"operation":"","outcome":"allowed"}\n{"op":"own-read","outcome":"allowed","errno":0}',
+    expected: 'garbage\n[1]\n\n{"outcome":"allowed"}\n{"operation":"","outcome":"allowed"}\n{"op":"own-read","outcome":"ALLOWED","errno":0}',
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at tests/adapter.test.mjs:193:1
+✖ adapt rejects a line with a duplicate member name in any single object, before parsing (0.186667ms)
+  AssertionError [ERR_ASSERTION]: {"operation":"own_container_write","operation":"outside_read","outcome":"allowed","errno":0}
+  + actual - expected
+  
+  + '{"op":"outside-read","outcome":"allowed","errno":0}'
+  - '{"op":"","reason":"DUPLICATE_KEY"}'
+  
+      at TestContext.<anonymous> (file:///Users/louiscalata/nisi-next-private/work-orders/native-canary-adapter/tests/adapter.test.mjs:208:12)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1325:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:911:18)
+      at Test.postRun (node:internal/test_runner/test:1465:19)
+      at Test.run (node:internal/test_runner/test:1390:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:911:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: '{"op":"outside-read","outcome":"allowed","errno":0}',
+    expected: '{"op":"","reason":"DUPLICATE_KEY"}',
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at tests/adapter.test.mjs:236:1
+✖ adapt rejects an invalid mapping with TypeError before reading stdout (0.429459ms)
+  AssertionError [ERR_ASSERTION]: Missing expected exception (TypeError).
+      at TestContext.<anonymous> (file:///Users/louiscalata/nisi-next-private/work-orders/native-canary-adapter/tests/adapter.test.mjs:247:31)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1325:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:911:18)
+      at Test.postRun (node:internal/test_runner/test:1465:19)
+      at Test.run (node:internal/test_runner/test:1390:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:911:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: undefined,
+    operator: 'throws',
+    diff: 'simple'
+  }
+
+test at tests/adapter.test.mjs:261:1
+✖ expectedMatrixFor builds the exact five-row matrix from trusted identities and rejects bad input (0.208791ms)
+  AssertionError [ERR_ASSERTION]: Missing expected exception (TypeError).
+      at TestContext.<anonymous> (file:///Users/louiscalata/nisi-next-private/work-orders/native-canary-adapter/tests/adapter.test.mjs:275:12)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1325:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:911:18)
+      at Test.postRun (node:internal/test_runner/test:1465:19)
+      at Test.run (node:internal/test_runner/test:1390:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:911:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: undefined,
+    operator: 'throws',
+    diff: 'simple'
+  }
+
+test at tests/adapter.test.mjs:292:1
+✖ adapter module is pure: no I/O, process, clock or randomness in the source (3.22625ms)
+  AssertionError [ERR_ASSERTION]: The input was expected to not match the regular expression /\b(?:import|require|process|fetch|XMLHttpRequest|eval|Function|setTimeout|setInterval)\b/. Input:
+  
+  'export function fixedCanaryMappingV1() {\n' +
+    '  return {\n' +
+    "    version: 'nisi-fixed-canary-mapping/v1',\n" +
+    '    operations: {\n' +
+    "      own_container_write: 'own-write',\n" +
+    "      own_container_read: 'own-read',\n" +
+    "      outside_read: 'outside-read',\n" +
+    "      ipv4_loopback_bind: 'loopback-bind',\n" +
+    "      self_report: 'self-report'\n" +
+    '    },\n' +
+    '    outcomes: {\n' +
+    "      allowed: 'ALLOWED'\n" +
+    '    },\n' +
+    '    denialSignatures: {\n' +
+    "      outside_read: { errno: 1, code: 'EPERM', syscall: 'open' },\n" +
+    "      ipv4_loopback_bind: { errno: 1, code: 'EPERM', syscall: 'listen' }\n" +
+    '    },\n' +
+    "    identityOperation: 'self_report'\n" +
+    '  };\n' +
+    '}\n' +
+    '\n' +
+    'export function adaptFixedCanaryOutput(rawStdout, mapping) {\n' +
+    '  // Validate mapping first\n' +
+    "  if (mapping === null || typeof mapping !== 'object' || Array.isArray(mapping)) {\n" +
+    "    throw new TypeError('mapping must be a non-null object');\n" +
+    '  }\n' +
+    '\n' +
+    "  if (typeof mapping.version !== 'string') {\n" +
+    "    throw new TypeError('mapping.version must be a string');\n" +
+    '  }\n' +
+    '\n' +
+    '  const operations = mapping.operations;\n' +
+    "  if (operations === null || typeof operations !== 'object' || Array.isArray(operations)) {\n" +
+    "    throw new TypeError('mapping.operations must be a non-null object');\n" +
+    '  }\n' +
+    '\n' +
+    '  for (const key in operations) {\n' +
+    '    if (Object.prototype.hasOwnProperty.call(operations, key)) {\n' +
+    '      const val = operations[key];\n' +
+    "      if (typeof val !== 'string' || val === '') {\n" +
+    "        throw new TypeError('mapping.operations values must be nonempty strings');\n" +
+    '      }\n' +
+    '    }\n' +
+    '  }\n' +
+    '\n' +
+    '  const outcomes = mapping.outcomes;\n' +
+    "  if (outcomes === null || typeof outcomes !== 'object' || Array.isArray(outcomes)) {\n" +
+    "    throw new TypeError('mapping.outcomes must be a non-null object');\n" +
+    '  }\n' +
+    '\n' +
+    '  const denialSignatures = mapping.denialSignatures;\n' +
+    "  if (denialSignatures === null || typeof denialSignatures !== 'object' || Array.isArray(denialSignatures)) {\n" +
+    "    throw new TypeError('mapping.denialSignatures must be a non-null object');\n" +
+    '  }\n' +
+    '\n' +
+    '  for (const key in denialSignatures) {\n' +
+    '    if (Object.prototype.hasOwnProperty.call(denialSignatures, key)) {\n' +
+    '      const sig = denialSignatures[key];\n' +
+    "      if (sig === null || typeof sig !== 'object' || Array.isArray(sig)) {\n" +
+    "        throw new TypeError('mapping.denialSignatures values must be non-null objects');\n" +
+    '      }\n' +
+    '      if (!Number.isSafeInteger(sig.errno)) {\n' +
+    "        throw new TypeError('mapping.denialSignatures values must have safe integer errno');\n" +
+    '      }\n' +
+    "      if (typeof sig.code !== 'string') {\n" +
+    "        throw new TypeError('mapping.denialSignatures values must have string code');\n" +
+    '      }\n' +
+    "      if (typeof sig.syscall !== 'string') {\n" +
+    "        throw new TypeError('mapping.denialSignatures values must have string syscall');\n" +
+    '      }\n' +
+    '    }\n' +
+    '  }\n' +
+    '\n' +
+    '  const identityOperation = mapping.identityOperation;\n' +
+    "  if (typeof identityOperation !== 'string' || identityOperation === '') {\n" +
+    "    throw new TypeError('mapping.identityOperation must be a nonempty string');\n" +
+    '  }\n' +
+    '\n' +
+    '  // Validate rawStdout\n' +
+    '  if (rawStdout === null || rawStdout === undefined) {\n' +
+    "    rawStdout = '';\n" +
+    "  } else if (typeof rawStdout !== 'string') {\n" +
+    "    throw new TypeError('rawStdout must be a string, null, or undefined');\n" +
+    '  }\n' +
+    '\n' +
+    '  // Split lines and process\n' +
+    "  const lines = rawStdout.split('\\n');\n" +
+    '  const adaptedOutputLines = [];\n' +
+    '  const report = [];\n' +
+    '  const counts = { mapped: 0, passthrough: 0, rejected: 0, blank: 0 };\n' +
+    '\n' +
+    '  for (let i = 0; i < lines.length; i++) {\n' +
+    '    const line = lines[i];\n' +
+    '    const lineNum = i + 1;\n' +
+    '\n' +
+    '    // Handle blank lines\n' +
+    "    if (line.trim() === '') {\n" +
+    "      adaptedOutputLines.push('');\n" +
+    "      report.push({ line: lineNum, action: 'BLANK', operation: null, op: null, outcome: null, mappedOutcome: null });\n" +
+    '      counts.blank++;\n' +
+    '      continue;\n' +
+    '    }\n' +
+    '\n' +
+    '    // Strip trailing \\r if present\n' +
+    '    let processedLine = line;\n' +
+    "    if (processedLine.length > 0 && processedLine[processedLine.length - 1] === '\\r') {\n" +
+    '      processedLine = processedLine.slice(0, -1);\n' +
+    '    }\n' +
+    '\n' +
+    '    // Check for duplicate member names\n' +
+    '    const duplicateResult = checkDuplicateKeys(processedLine);\n' +
+    '    if (duplicateResult.hasDuplicate) {\n' +
+    "      const outputObj = { op: '', reason: 'DUPLICATE_KEY' };\n" +
+    '      adaptedOutputLines.push(JSON.stringify(outputObj));\n' +
+    "      report.push({ line: lineNum, action: 'REJECTED_DUPLICATE_KEY', operation: null, op: null, outcome: null, mappedOutcome: null });\n" +
+    '      counts.rejected++;\n' +
+    '      continue;\n' +
+    '    }\n' +
+    '\n' +
+    '    // Try to parse JSON\n' +
+    '    let rec;\n' +
+    '    try {\n' +
+    '      rec = JSON.parse(processedLine);\n' +
+    '    } catch (e) {\n' +
+    '      adaptedOutputLines.push(processedLine);\n' +
+    "      report.push({ line: lineNum, action: 'PASSTHROUGH_INVALID', operation: null, op: null, outcome: null, mappedOutcome: null });\n" +
+    '      counts.passthrough++;\n' +
+    '      continue;\n' +
+    '    }\n' +
+    '\n' +
+    '    // Check if rec is a plain object\n' +
+    "    if (rec === null || typeof rec !== 'object' || Array.isArray(rec)) {\n" +
+    '      adaptedOutputLines.push(processedLine);\n' +
+    "      report.push({ line: lineNum, action: 'PASSTHROUGH_INVALID', operation: null, op: null, outcome: null, mappedOutcome: null });\n" +
+    '      counts.passthrough++;\n' +
+    '      continue;\n' +
+    '    }\n' +
+    '\n' +
+    "    // Reject if rec has 'op' key (already-adjudicator or mixed vocabulary)\n" +
+    "    if (Object.prototype.hasOwnProperty.call(rec, 'op')) {\n" +
+    "      const outputObj = { op: '', reason: 'UNTRUSTED_VOCABULARY' };\n" +
+    '      adaptedOutputLines.push(JSON.stringify(outputObj));\n' +
+    "      report.push({ line: lineNum, action: 'REJECTED_UNTRUSTED_VOCABULARY', operation: null, op: null, outcome: null, mappedOutcome: null });\n" +
+    '      counts.rejected++;\n' +
+    '      continue;\n' +
+    '    }\n' +
+    '\n' +
+    '    // Get operation from rec\n' +
+    '    const operation = rec.operation;\n' +
+    "    if (typeof operation !== 'string' || operation === '') {\n" +
+    '      adaptedOutputLines.push(processedLine);\n' +
+    "      report.push({ line: lineNum, action: 'PASSTHROUGH_NO_OPERATION', operation: null, op: null, outcome: null, mappedOutcome: null });\n" +
+    '      counts.passthrough++;\n' +
+    '      continue;\n' +
+    '    }\n' +
+    '\n' +
+    '    // Check if operation is an unmapped name colliding with output op\n' +
+    '    const opValues = Object.values(mapping.operations);\n' +
+    '    if (!Object.prototype.hasOwnProperty.call(mapping.operations, operation) && opValues.includes(operation)) {\n' +
+    "      const outputObj = { op: '', reason: 'UNTRUSTED_VOCABULARY' };\n" +
+    '      adaptedOutputLines.push(JSON.stringify(outputObj));\n' +
+    "      report.push({ line: lineNum, action: 'REJECTED_UNTRUSTED_VOCABULARY', operation: null, op: null, outcome: null, mappedOutcome: null });\n" +
+    '      counts.rejected++;\n' +
+    '      continue;\n' +
+    '    }\n' +
+    '\n' +
+    '    // Check identity operation conditions\n' +
+    '    const isIdentity = operation === identityOperation;\n' +
+    '    if (isIdentity) {\n' +
+    "      // Reject if outcome present and not 'observed'\n" +
+    "      if (Object.prototype.hasOwnProperty.call(rec, 'outcome') && rec.outcome !== 'observed') {\n" +
+    "        const outputObj = { op: '', reason: 'UNTRUSTED_VOCABULARY' };\n" +
+    '        adaptedOutputLines.push(JSON.stringify(outputObj));\n' +
+    "        report.push({ line: lineNum, action: 'REJECTED_UNTRUSTED_VOCABULARY', operation: null, op: null, outcome: null, mappedOutcome: null });\n" +
+    '        counts.rejected++;\n' +
+    '        continue;\n' +
+    '      }\n' +
+    '      // Reject if errno present and not 0\n' +
+    "      if (Object.prototype.hasOwnProperty.call(rec, 'errno') && rec.errno !== 0) {\n" +
+    "        const outputObj = { op: '', reason: 'UNTRUSTED_VOCABULARY' };\n" +
+    '        adaptedOutputLines.push(JSON.stringify(outputObj));\n' +
+    "        report.push({ line: lineNum, action: 'REJECTED_UNTRUSTED_VOCABULARY', operation: null, op: null, outcome: null, mappedOutcome: null });\n" +
+    '        counts.rejected++;\n' +
+    '        continue;\n' +
+    '      }\n' +
+    '      // Reject if code or syscall present\n' +
+    "      if (Object.prototype.hasOwnProperty.call(rec, 'code') || Object.prototype.hasOwnProperty.call(rec, 'syscall')) {\n" +
+    "        const outputObj = { op: '', reason: 'UNTRUSTED_VOCABULARY' };\n" +
+    '        adaptedOutputLines.push(JSON.stringify(outputObj));\n' +
+    "        report.push({ line: lineNum, action: 'REJECTED_UNTRUSTED_VOCABULARY', operation: null, op: null, outcome: null, mappedOutcome: null });\n" +
+    '        counts.rejected++;\n' +
+    '        continue;\n' +
+    '      }\n' +
+    '    } else {\n' +
+    '      // Non-identity operation checks\n' +
+    '      const outcome = rec.outcome;\n' +
+    "      if (typeof outcome === 'string' && (outcome === 'ALLOWED' || outcome === 'DENIED')) {\n" +
+    '        if (!Object.prototype.hasOwnProperty.call(mapping.outcomes, outcome)) {\n' +
+    "          const outputObj = { op: '', reason: 'UNTRUSTED_VOCABULARY' };\n" +
+    '          adaptedOutputLines.push(JSON.stringify(outputObj));\n' +
+    "          report.push({ line: lineNum, action: 'REJECTED_UNTRUSTED_VOCABULARY', operation: null, op: null, outcome: null, mappedOutcome: null });\n" +
+    '          counts.rejected++;\n' +
+    '          continue;\n' +
+    '        }\n' +
+    '      }\n' +
+    '\n' +
+    "      // Reject if outcome !== 'error' and code/syscall present\n" +
+    "      if (outcome !== 'error' && (Object.prototype.hasOwnProperty.call(rec, 'code') || Object.prototype.hasOwnProperty.call(rec, 'syscall'))) {\n" +
+    "        const outputObj = { op: '', reason: 'UNTRUSTED_VOCABULARY' };\n" +
+    '        adaptedOutputLines.push(JSON.stringify(outputObj));\n' +
+    "        report.push({ line: lineNum, action: 'REJECTED_UNTRUSTED_VOCABULARY', operation: null, op: null, outcome: null, mappedOutcome: null });\n" +
+    '        counts.rejected++;\n' +
+    '        continue;\n' +
+    '      }\n' +
+    '    }\n' +
+    '\n' +
+    '    // Get mapped operation name\n' +
+    '    let mappedOp = null;\n' +
+    '    if (Object.prototype.hasOwnProperty.call(mapping.operations, operation)) {\n' +
+    '      mappedOp = mapping.operations[operation];\n' +
+    '    }\n' +
+    '\n' +
+    '    // Identity operation mapping\n' +
+    '    if (isIdentity) {\n' +
+    '      const outputObj = { op: mappedOp };\n' +
+    "      if (Object.prototype.hasOwnProperty.call(rec, 'pid')) {\n" +
+    '        outputObj.pid = rec.pid;\n' +
+    '      }\n' +
+    "      if (Object.prototype.hasOwnProperty.call(rec, 'ppid')) {\n" +
+    '        outputObj.ppid = rec.ppid;\n' +
+    '      }\n' +
+    '      adaptedOutputLines.push(JSON.stringify(outputObj));\n' +
+    "      report.push({ line: lineNum, action: 'MAPPED_IDENTITY', operation: operation, op: mappedOp, outcome: null, mappedOutcome: null });\n" +
+    '      counts.mapped++;\n' +
+    '      continue;\n' +
+    '    }\n' +
+    '\n' +
+    '    // Non-identity operation mapping\n' +
+    '    if (mappedOp !== null) {\n' +
+    '      const outputObj = { op: mappedOp };\n' +
+    "      if (Object.prototype.hasOwnProperty.call(rec, 'outcome')) {\n" +
+    '        outputObj.outcome = rec.outcome;\n' +
+    '      }\n' +
+    '      if (Object.prototype.hasOwnP'... 4939 more characters
+  
+      at TestContext.<anonymous> (file:///Users/louiscalata/nisi-next-private/work-orders/native-canary-adapter/tests/adapter.test.mjs:294:10)
+      at async Test.run (node:internal/test_runner/test:1332:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:911:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: "export function fixedCanaryMappingV1() {\n  return {\n    version: 'nisi-fixed-canary-mapping/v1',\n    operations: {\n      own_container_write: 'own-write',\n      own_container_read: 'own-read',\n      outside_read: 'outside-read',\n      ipv4_loopback_bind: 'loopback-bind',\n      self_report: 'self-report'\n    },\n    outcomes: {\n      allowed: 'ALLOWED'\n    },\n    denialSignatures: {\n      outside_read: { errno: 1, code: 'EPERM', syscall: 'open' },\n      ipv4_loopback_bind: { errno: 1, code: 'EPERM', syscall: 'listen' }\n    },\n    identityOperation: 'self_report'\n  };\n}\n\nexport function adaptFixedCanaryOutput(rawStdout, mapping) {\n  // Validate mapping first\n  if (mapping === null || typeof mapping !== 'object' || Array.isArray(mapping)) {\n    throw new TypeError('mapping must be a non-null object');\n  }\n\n  if (typeof mapping.version !== 'string') {\n    throw new TypeError('mapping.version must be a string');\n  }\n\n  const operations = mapping.operations;\n  if (operations === null || typeof operations !== 'object' || Array.isArray(operations)) {\n    throw new TypeError('mapping.operations must be a non-null object');\n  }\n\n  for (const key in operations) {\n    if (Object.prototype.hasOwnProperty.call(operations, key)) {\n      const val = operations[key];\n      if (typeof val !== 'string' || val === '') {\n        throw new TypeError('mapping.operations values must be nonempty strings');\n      }\n    }\n  }\n\n  const outcomes = mapping.outcomes;\n  if (outcomes === null || typeof outcomes !== 'object' || Array.isArray(outcomes)) {\n    throw new TypeError('mapping.outcomes must be a non-null object');\n  }\n\n  const denialSignatures = mapping.denialSignatures;\n  if (denialSignatures === null || typeof denialSignatures !== 'object' || Array.isArray(denialSignatures)) {\n    throw new TypeError('mapping.denialSignatures must be a non-null object');\n  }\n\n  for (const key in denialSignatures) {\n    if (Object.prototype.hasOwnProperty.call(denialSignatures, key)) {\n      const sig = denialSignatures[key];\n      if (sig === null || typeof sig !== 'object' || Array.isArray(sig)) {\n        throw new TypeError('mapping.denialSignatures values must be non-null objects');\n      }\n      if (!Number.isSafeInteger(sig.errno)) {\n        throw new TypeError('mapping.denialSignatures values must have safe integer errno');\n      }\n      if (typeof sig.code !== 'string') {\n        throw new TypeError('mapping.denialSignatures values must have string code');\n      }\n      if (typeof sig.syscall !== 'string') {\n        throw new TypeError('mapping.denialSignatures values must have string syscall');\n      }\n    }\n  }\n\n  const identityOperation = mapping.identityOperation;\n  if (typeof identityOperation !== 'string' || identityOperation === '') {\n    throw new TypeError('mapping.identityOperation must be a nonempty string');\n  }\n\n  // Validate rawStdout\n  if (rawStdout === null || rawStdout === undefined) {\n    rawStdout = '';\n  } else if (typeof rawStdout !== 'string') {\n    throw new TypeError('rawStdout must be a string, null, or undefined');\n  }\n\n  // Split lines and process\n  const lines = rawStdout.split('\\n');\n  const adaptedOutputLines = [];\n  const report = [];\n  const counts = { mapped: 0, passthrough: 0, rejected: 0, blank: 0 };\n\n  for (let i = 0; i < lines.length; i++) {\n    const line = lines[i];\n    const lineNum = i + 1;\n\n    // Handle blank lines\n    if (line.trim() === '') {\n      adaptedOutputLines.push('');\n      report.push({ line: lineNum, action: 'BLANK', operation: null, op: null, outcome: null, mappedOutcome: null });\n      counts.blank++;\n      continue;\n    }\n\n    // Strip trailing \\r if present\n    let processedLine = line;\n    if (processedLine.length > 0 && processedLine[processedLine.length - 1] === '\\r') {\n      processedLine = processedLine.slice(0, -1);\n    }\n\n    // Check for duplicate member names\n    const duplicateResult = checkDuplicateKeys(processedLine);\n    if (duplicateResult.hasDuplicate) {\n      const outputObj = { op: '', reason: 'DUPLICATE_KEY' };\n      adaptedOutputLines.push(JSON.stringify(outputObj));\n      report.push({ line: lineNum, action: 'REJECTED_DUPLICATE_KEY', operation: null, op: null, outcome: null, mappedOutcome: null });\n      counts.rejected++;\n      continue;\n    }\n\n    // Try to parse JSON\n    let rec;\n    try {\n      rec = JSON.parse(processedLine);\n    } catch (e) {\n      adaptedOutputLines.push(processedLine);\n      report.push({ line: lineNum, action: 'PASSTHROUGH_INVALID', operation: null, op: null, outcome: null, mappedOutcome: null });\n      counts.passthrough++;\n      continue;\n    }\n\n    // Check if rec is a plain object\n    if (rec === null || typeof rec !== 'object' || Array.isArray(rec)) {\n      adaptedOutputLines.push(processedLine);\n      report.push({ line: lineNum, action: 'PASSTHROUGH_INVALID', operation: null, op: null, outcome: null, mappedOutcome: null });\n      counts.passthrough++;\n      continue;\n    }\n\n    // Reject if rec has 'op' key (already-adjudicator or mixed vocabulary)\n    if (Object.prototype.hasOwnProperty.call(rec, 'op')) {\n      const outputObj = { op: '', reason: 'UNTRUSTED_VOCABULARY' };\n      adaptedOutputLines.push(JSON.stringify(outputObj));\n      report.push({ line: lineNum, action: 'REJECTED_UNTRUSTED_VOCABULARY', operation: null, op: null, outcome: null, mappedOutcome: null });\n      counts.rejected++;\n      continue;\n    }\n\n    // Get operation from rec\n    const operation = rec.operation;\n    if (typeof operation !== 'string' || operation === '') {\n      adaptedOutputLines.push(processedLine);\n      report.push({ line: lineNum, action: 'PASSTHROUGH_NO_OPERATION', operation: null, op: null, outcome: null, mappedOutcome: null });\n      counts.passthrough++;\n      continue;\n    }\n\n    // Check if operation is an unmapped name colliding with output op\n    const opValues = Object.values(mapping.operations);\n    if (!Object.prototype.hasOwnProperty.call(mapping.operations, operation) && opValues.includes(operation)) {\n      const outputObj = { op: '', reason: 'UNTRUSTED_VOCABULARY' };\n      adaptedOutputLines.push(JSON.stringify(outputObj));\n      report.push({ line: lineNum, action: 'REJECTED_UNTRUSTED_VOCABULARY', operation: null, op: null, outcome: null, mappedOutcome: null });\n      counts.rejected++;\n      continue;\n    }\n\n    // Check identity operation conditions\n    const isIdentity = operation === identityOperation;\n    if (isIdentity) {\n      // Reject if outcome present and not 'observed'\n      if (Object.prototype.hasOwnProperty.call(rec, 'outcome') && rec.outcome !== 'observed') {\n        const outputObj = { op: '', reason: 'UNTRUSTED_VOCABULARY' };\n        adaptedOutputLines.push(JSON.stringify(outputObj));\n        report.push({ line: lineNum, action: 'REJECTED_UNTRUSTED_VOCABULARY', operation: null, op: null, outcome: null, mappedOutcome: null });\n        counts.rejected++;\n        continue;\n      }\n      // Reject if errno present and not 0\n      if (Object.prototype.hasOwnProperty.call(rec, 'errno') && rec.errno !== 0) {\n        const outputObj = { op: '', reason: 'UNTRUSTED_VOCABULARY' };\n        adaptedOutputLines.push(JSON.stringify(outputObj));\n        report.push({ line: lineNum, action: 'REJECTED_UNTRUSTED_VOCABULARY', operation: null, op: null, outcome: null, mappedOutcome: null });\n        counts.rejected++;\n        continue;\n      }\n      // Reject if code or syscall present\n      if (Object.prototype.hasOwnProperty.call(rec, 'code') || Object.prototype.hasOwnProperty.call(rec, 'syscall')) {\n        const outputObj = { op: '', reason: 'UNTRUSTED_VOCABULARY' };\n        adaptedOutputLines.push(JSON.stringify(outputObj));\n        report.push({ line: lineNum, action: 'REJECTED_UNTRUSTED_VOCABULARY', operation: null, op: null, outcome: null, mappedOutcome: null });\n        counts.rejected++;\n        continue;\n      }\n    } else {\n      // Non-identity operation checks\n      const outcome = rec.outcome;\n      if (typeof outcome === 'string' && (outcome === 'ALLOWED' || outcome === 'DENIED')) {\n        if (!Object.prototype.hasOwnProperty.call(mapping.outcomes, outcome)) {\n          const outputObj = { op: '', reason: 'UNTRUSTED_VOCABULARY' };\n          adaptedOutputLines.push(JSON.stringify(outputObj));\n          report.push({ line: lineNum, action: 'REJECTED_UNTRUSTED_VOCABULARY', operation: null, op: null, outcome: null, mappedOutcome: null });\n          counts.rejected++;\n          continue;\n        }\n      }\n\n      // Reject if outcome !== 'error' and code/syscall present\n      if (outcome !== 'error' && (Object.prototype.hasOwnProperty.call(rec, 'code') || Object.prototype.hasOwnProperty.call(rec, 'syscall'))) {\n        const outputObj = { op: '', reason: 'UNTRUSTED_VOCABULARY' };\n        adaptedOutputLines.push(JSON.stringify(outputObj));\n        report.push({ line: lineNum, action: 'REJECTED_UNTRUSTED_VOCABULARY', operation: null, op: null, outcome: null, mappedOutcome: null });\n        counts.rejected++;\n        continue;\n      }\n    }\n\n    // Get mapped operation name\n    let mappedOp = null;\n    if (Object.prototype.hasOwnProperty.call(mapping.operations, operation)) {\n      mappedOp = mapping.operations[operation];\n    }\n\n    // Identity operation mapping\n    if (isIdentity) {\n      const outputObj = { op: mappedOp };\n      if (Object.prototype.hasOwnProperty.call(rec, 'pid')) {\n        outputObj.pid = rec.pid;\n      }\n      if (Object.prototype.hasOwnProperty.call(rec, 'ppid')) {\n        outputObj.ppid = rec.ppid;\n      }\n      adaptedOutputLines.push(JSON.stringify(outputObj));\n      report.push({ line: lineNum, action: 'MAPPED_IDENTITY', operation: operation, op: mappedOp, outcome: null, mappedOutcome: null });\n      counts.mapped++;\n      continue;\n    }\n\n    // Non-identity operation mapping\n    if (mappedOp !== null) {\n      const outputObj = { op: mappedOp };\n      if (Object.prototype.hasOwnProperty.call(rec, 'outcome')) {\n        outputObj.outcome = rec.outcome;\n      }\n      if (Object.prototype.hasOwnP"... 4939 more characters,
+    expected: /\b(?:import|require|process|fetch|XMLHttpRequest|eval|Function|setTimeout|setInterval)\b/,
+    operator: 'doesNotMatch',
+    diff: 'simple'
+  }

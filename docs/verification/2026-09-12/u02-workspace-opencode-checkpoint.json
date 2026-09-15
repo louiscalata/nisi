@@ -1,0 +1,69 @@
+{
+  "schemaVersion": 1,
+  "date": "2026-09-12",
+  "status": "PASS_SCOPED",
+  "scope": "STATIC_LOCAL_WORKSPACE_AND_SOURCE_REVIEWED_FIXED_NODE_FIXTURE",
+  "canonicalRoot": "/Users/louiscalata/nisi-next-private",
+  "acceptance": ".build/repository-host-V5Taf5/verified-oP6vgX/final-receipt.json",
+  "sourceManifest": ".build/repository-host-V5Taf5/verified-oP6vgX/source-after.json",
+  "portable": { "tests": 399, "pass": 399, "durationMs": 7806 },
+  "focused": { "workspace": 26, "fixture": 2, "pass": 28, "includedInPortable": true, "durationMs": 485 },
+  "selectedMutations": { "attempted": 19, "detected": 19, "results": ".build/repository-host-V5Taf5/verified-oP6vgX/mutations.json" },
+  "fixtureExecution": {
+    "basis": "SOURCE_REVIEWED_TEST_ASSERTIONS_AND_TERMINAL_TEST_OUTPUT_NOT_GENERAL_HOST_RECEIPTS",
+    "baseline": { "exitCode": 0, "status": "FAIL", "assertionsExecuted": 10, "assertionsPassed": 8 },
+    "correction": { "exitCode": 0, "status": "PASS", "assertionsExecuted": 10, "assertionsPassed": 10 },
+    "setupError": { "exitCode": 2, "status": "ERROR", "assertionsExecuted": 0, "assertionsPassed": 0 },
+    "separateOwnedRoots": true,
+    "protectedHarnessUnchangedAtCheckpoints": true,
+    "generalAsyncHost": false
+  },
+  "opencode": {
+    "canonicalWriteOwner": "Codex",
+    "isolatedCopy": ".build/opencode-fixture-MgiuEj",
+    "localRequestedRoute": "local/lmstudio/qwen/qwen3.8-27b",
+    "localOutcome": "BLOCKED_EDIT_TIMEOUT_NO_FIXTURE_SOURCE_CHANGES",
+    "localReceipt": ".build/repository-host-V5Taf5/local-attempt.result.md",
+    "completedRequestedRoute": "free/opencode/big-pickle",
+    "completedItems": 4,
+    "fixtureFiles": 5,
+    "completedReceipt": ".build/opencode-fixture-MgiuEj/.packets/retry-repository-fixture.result.md",
+    "diffInventory": ".build/repository-host-V5Taf5/opencode-after.json",
+    "servedModelIdentity": null,
+    "tokenUsage": null,
+    "integrationCorrections": ["Correct description of two baseline failures", "Require exported function and handle outer setup errors", "Normalize fixture formatting"],
+    "packetPackageAndAcceptanceScriptIntegrated": false
+  },
+  "reviews": {
+    "fable": {
+      "scope": "PLANNING_AND_STATIC_LOCAL_SCOPE_NOT_SOURCE_ACCEPTANCE",
+      "successfulCalls": 2,
+      "reportedModel": "claude-fable-5-1",
+      "reportedCostUsdIncludingAuxiliaryHaiku": 0.22443150,
+      "receipts": [".build/repository-host-V5Taf5/fable-plan.json", ".build/repository-host-V5Taf5/fable-scope-resolution.json"]
+    },
+    "daybreak": {
+      "scope": "FINAL_WORKSPACE_SOURCE_REVIEW",
+      "concreteBlockersFound": 0,
+      "sourceSha256": "08fdb59d15d21e94914d00390e8f73ee6245b0eabec64e7c052585f23638f963",
+      "focusedPass": 26,
+      "evidenceSource": "CURRENT_TASK_SUBAGENT_FINAL_MESSAGE"
+    },
+    "luna": { "scope": "FIVE_CANONICAL_FIXTURE_FILES_STATIC_REVIEW", "concreteBlockersFound": 0, "fixtureExecutedByReviewer": false }
+  },
+  "adverseVerification": {
+    "directory": ".build/repository-host-V5Taf5/verified-M8nO5A",
+    "status": "INCOMPLETE_HARNESS_ERROR",
+    "cause": "MUTATION_NOT_UNIQUE:parent-final-identity",
+    "resolution": "Restricted mutation to the final identity check and reran complete acceptance in a new directory"
+  },
+  "nativeSwift": "NOT_RERUN_PRIOR_ACCEPTED_SOURCE_UNCHANGED",
+  "nativeApplication": "NOT_RUN",
+  "linuxAcceptance": "NOT_RUN",
+  "windowsWorkerUsed": false,
+  "frozenImport": { "files": 225, "bytes": 8027242, "unchanged": true, "originRechecked": false },
+  "limits": ["Non-root operator-controlled static local POSIX parent", "No hostile-tree or same-account race containment", "Not a sandbox or dirfd/openat admission", "No production cleanup or apply-back", "No general asynchronous test host or complete engine behavior report binding", "No live-model-authored repair execution", "No durable recovery or certification"],
+  "fullMergerComplete": false,
+  "publicationAuthorized": false,
+  "published": false
+}

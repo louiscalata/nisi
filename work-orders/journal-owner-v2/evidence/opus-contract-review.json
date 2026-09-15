@@ -1,0 +1,102 @@
+{
+  "summary": "Critique of the Journal owner v2 successor contract (Opus, no Fable participation, no tools run). Five concrete ambiguities with exact suggested edits, covering time/watermark semantics, the undefined \"proven pre-store\" boundary, CONFIG_MISMATCH dependence on unverified header contents, response aliasing/freezing and DUPLICATE snapshot meaning, and the unreachable-UNCHANGED / NEW-owner CAS gap. Plus a list of what these seams cannot prove.",
+  "deliverable": "Five flaws / ambiguities (each with an exact edit). No code; nothing executed.\n\n1. Time: which `now` mutates the journal, and precedence of CLOCK_BEHIND_JOURNAL.\nProblem: list(now) MUTATES the watermark and prunes. The contract calls list(now) at open (COMPLETE), at publication, and implicitly for SEALED \"verified prefix\", but never says (a) how \"persisted journal watermark\" is detected (header field? list() throwing?), (b) whether a record whose `now` is below the OPEN `now` (already applied to the memory basis) is CLOCK_BEHIND_JOURNAL, INVALID_INPUT, or the journal's own append code, (c) whether SEALED opens call list(now) at all (pruning expired rows out of the \"verified prefix\" and possibly throwing).\nEdit (replace the CLOCK_BEHIND sentence): \"The persisted watermark is the value the frozen v1 journal exposes after reopen (name the field/API); if v1 exposes none, CLOCK_BEHIND_JOURNAL is detected solely by catching the v1 list/append error for a lower `now` and its code is preserved in `reason`. Precedence at open: READ_FAILED > SIZE_LIMIT > INVALID_UTF8 > INVALID_JOURNAL > PROJECT_MISMATCH > CONFIG_MISMATCH > CLOCK_BEHIND_JOURNAL. list(now) is invoked at most once per request (open or record), only with that request's `now`, only on the staged/reconstructed instance; SEALED opens call list(now) once on the reopened prefix for display only and refuse CLOCK_BEHIND_JOURNAL if it throws. A record `now` lower than the last published watermark is refused with the v1 append code, never an escaped exception.\"\n\n2. \"Proven pre-store\" is undefined; mutation/response ordering for retained bug 1 is unspecified.\nProblem: \"COMMIT_UNCERTAIN unless proven pre-store\" leaves the implementer to infer commit stage from error text, which the same paragraph forbids. Also bug 1 (post-rename mismatch AND exception) can recur if the owner seals only after building the frozen response and the copy/freeze step throws. Malformed store responses (missing/non-boolean `committed`) are unaddressed.\nEdit: \"Pre-store means: the throw occurred before a local `storeEntered=true` flag set as the last statement before calling writeSerializedJournal (serialize, cap check, argument assembly are pre-store \u2192 STORE_FAILED, state unchanged). Any throw with storeEntered=true \u2192 COMMIT_UNCERTAIN. A store response that is not a plain object with boolean `committed` and a known `status` \u2192 COMMIT_UNCERTAIN. Sealing order: write the new owner phase/hash/entries into the WeakMap record BEFORE constructing the response snapshot; response construction failures leave the sealed state in place and surface as STORE_FAILED with reason RESPONSE_BUILD_FAILED.\"\n\n3. CONFIG_MISMATCH assumes header fields that may not be persisted; \"ordered redactPaths\" may be wrong canonicalization.\nProblem: The supplied dependency description only guarantees reopen(serialized) and a project check; it does not establish that maxEntries, heartbeatTtlMs or redactPaths are in the header. If absent, \"prevent policy drift\" is an unprovable promise. If v1 sorts/dedups redactPaths, an ordered raw compare yields false CONFIG_MISMATCH on a legitimate reopen.\nEdit: \"Canonical config compare = compare the header of createRunJournal(config).serialize() (fresh empty journal) against the header parsed from raw bytes, field by field, for exactly the fields v1 persists (enumerate them in the test after inspecting the frozen copy). Fields v1 does not persist are NOT checked and the contract must say so explicitly; redactPaths compare uses v1's own canonical form, not the caller's array order.\"\n\n4. Response aliasing: \"frozen actual\" append/store responses and \"Duplicate returns original accepted snapshot\" are ambiguous and can throw or leak.\nProblem: Object.freeze on the actual v1 objects (a) may freeze internals the staged journal still references, (b) throws TypeError on Buffers/typed arrays with elements (fsync diagnostics or sha bytes could be Buffers), (c) can share mutable nested objects across two record results. \"Original accepted snapshot\" could mean the owner's live snapshot or the entry snapshot inside v1's DUPLICATE response\u2014these differ (owner snapshot has entries/interrupted; v1's has one row).\nEdit: \"append and store are deep structural copies (plain objects/arrays/primitives only; Buffers rendered as {hex,length}; functions/symbols/accessors dropped) then deeply frozen; never the v1 objects themselves. For DUPLICATE: `snapshot` is the unchanged current live owner snapshot; `append` is the copied v1 DUPLICATE response (which may include v1's original entry snapshot); `entryId` is the originally accepted id. No staged list(now) is published.\"\n\n5. UNCHANGED after APPENDED is contradictory; NEW-owner CAS semantics under-specified (retained bug 4 / staleness).\nProblem: After an APPENDED stage, staged bytes \u2260 prior bytes, so with expectedPreviousSha256 set, UNCHANGED should be unreachable (disk == staged would fail the CAS as \u2260 prior). Treating UNCHANGED as RECORDED with \"new stored digest\" silently accepts a store anomaly or a non-injective serializer. For NEW owners \"refuses a different existing file\" leaves open whether an identical existing file returns UNCHANGED (someone else wrote our exact bytes) and whether that then sets the private prior digest.\nEdit: \"With a prior digest, UNCHANGED is treated as RECORDED only if store.sha256 equals the staged serialization digest; otherwise COMMIT_UNCERTAIN with reason STORE_STATUS_INCONSISTENT. For NEW owners, expectedPreviousSha256 is omitted; any refusal with committed:false \u2192 STORE_CONFLICT; on WRITTEN/UNCHANGED the private prior digest becomes store.sha256 and the owner leaves NEW. Add test: two NEW owners on one path \u2014 second write is STORE_CONFLICT, first owner's later write succeeds, and the reverse order.\"\n\nWhat cannot be proved with these seams\n- Crash/power-loss atomicity, real fsync semantics, and that `durable:true` reflects media state (fs is injected; no native evidence).\n- Absence of cross-process races: no lock exists, so readFileSync\u2192rename TOCTOU between two processes is only detected, not prevented; STORE_CONFLICT detection depends on the store's CAS being correct.\n- Truth of `committed` on refusals; the owner can only trust the store's flag.\n- Any guarantee against hostile injected fs or Proxy handles (explicitly out of scope).\n- That the header persists the config fields needed for CONFIG_MISMATCH (must be confirmed against the frozen v1 copy; I cannot verify it here).\n- That the fixed-XPC projector's current output matches the v1 entry schema (one test connects them; it is evidence, not proof).\n- Exactly-once semantics or that a SUCCEEDED observation corresponds to a real successful execution.\n- Whether prior v1 tests remain unweakened\u2014requires diffing baseline hashes, which was not done.",
+  "risks": [
+    "Item 3 depends on unverified header contents of the frozen run-journal-v1 copy; if config fields are not persisted, CONFIG_MISMATCH must be narrowed or dropped.",
+    "Item 1 assumes v1 has no watermark accessor; if it does, the catch-based detection edit should be replaced by a direct compare.",
+    "Item 5's UNCHANGED reasoning assumes the store's CAS compares disk digest to expectedPreviousSha256 before writing; if it compares to the new bytes instead, semantics differ.",
+    "Deep-copy of store/append responses (item 4) could drop diagnostics the tests expect verbatim; tests must be updated to compare copied shapes.",
+    "No Fable participation or fresh testing occurred; all findings are from the supplied contract text and dependency summary only."
+  ],
+  "verification": [
+    "Inspect frozen run-journal-v1.mjs header serialization to enumerate exactly which config fields are persisted and whether redactPaths is canonicalized; adjust item 3 text.",
+    "Check whether v1 exposes a watermark after reopen and what error code list/append throw for a lower `now`; confirm item 1 precedence in a test with now below open-now.",
+    "Write a test where the injected store response has committed:true plus a subsequent thrown error during response construction; assert owner state is COMMIT_UNCERTAIN and no old snapshot is returned (retained bug 1).",
+    "Attempt Object.freeze on a sample store response containing a Buffer to confirm the TypeError motivating item 4.",
+    "Test two NEW owners on the same temp path in both write orders to validate item 5's STORE_CONFLICT expectations and prior-digest transition.",
+    "Run a fresh-process reopen after a committed:true readback refusal and confirm the NEW open yields the staged bytes (or sealed/refused), never a rollback assumption."
+  ],
+  "invocation_status": "succeeded",
+  "status": "succeeded",
+  "model_usage": {
+    "claude-haiku-4-5-20251001": {
+      "inputTokens": 3551,
+      "outputTokens": 15,
+      "cacheReadInputTokens": 0,
+      "cacheCreationInputTokens": 0,
+      "webSearchRequests": 0,
+      "costUSD": 0.003626,
+      "contextWindow": 200000,
+      "maxOutputTokens": 32000,
+      "thinkingTokens": 0,
+      "canonicalModel": "claude-haiku-4-5",
+      "provider": "firstParty",
+      "costBasis": "list"
+    },
+    "claude-opus-5": {
+      "inputTokens": 2,
+      "outputTokens": 7300,
+      "cacheReadInputTokens": 737,
+      "cacheCreationInputTokens": 4664,
+      "webSearchRequests": 0,
+      "costUSD": 0.22951850000000001,
+      "contextWindow": 1000000,
+      "maxOutputTokens": 64000,
+      "thinkingTokens": 3824,
+      "canonicalModel": "claude-opus-5",
+      "provider": "firstParty",
+      "costBasis": "list"
+    }
+  },
+  "reported_models": [
+    "claude-haiku-4-5-20251001",
+    "claude-opus-5"
+  ],
+  "usage": {
+    "input_tokens": 2,
+    "cache_creation_input_tokens": 4664,
+    "cache_read_input_tokens": 737,
+    "output_tokens": 7300,
+    "output_tokens_details": {
+      "thinking_tokens": 3824
+    },
+    "server_tool_use": {
+      "web_search_requests": 0,
+      "web_fetch_requests": 0
+    },
+    "service_tier": "standard",
+    "cache_creation": {
+      "ephemeral_1h_input_tokens": 4664,
+      "ephemeral_5m_input_tokens": 0
+    },
+    "inference_geo": "not_available",
+    "iterations": [
+      {
+        "input_tokens": 2,
+        "output_tokens": 7300,
+        "cache_read_input_tokens": 737,
+        "cache_creation_input_tokens": 4664,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 4664
+        },
+        "type": "message"
+      }
+    ],
+    "speed": "standard"
+  },
+  "total_cost_usd": 0.2331445,
+  "duration_ms": 98543,
+  "tools_enabled": false,
+  "session_persisted": false,
+  "write_owner": "codex",
+  "requested_model": "opus",
+  "mode": "delegate",
+  "attempts": 1,
+  "wall_seconds": 99.599,
+  "created_at": "2026-09-14T00:15:52.340119+00:00",
+  "prior_attempts": [],
+  "total_wall_seconds": 99.6,
+  "prior_attempt_usage": [],
+  "total_usage_complete": true
+}

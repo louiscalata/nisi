@@ -1,0 +1,125 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://veritas.invalid/private/schemas/stage5/assurance-recall-before-reuse.v1.json",
+  "title": "Veritas inert synthetic recall-before-reuse transition result",
+  "description": "Structural fixture shape only. Runtime validation additionally recomputes receipt scopes, event, before/barrier/after state, exact affected and unrelated complements, post-state admission dispositions, domain-separated digests, and source-external expectations. This schema does not prove runtime dependency completeness, real event observation, protected or durable recall, actual receipt consumption, replay sufficiency, authority, execution, patentability, production, signing, or release readiness.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schemaVersion",
+    "recordType",
+    "status",
+    "profile",
+    "graphDigest",
+    "beforeStateDigest",
+    "barrierStateDigest",
+    "afterStateDigest",
+    "receiptSetDigest",
+    "eventDigest",
+    "affectedReceiptIds",
+    "unaffectedReceiptIds",
+    "admissions",
+    "trace",
+    "authorizing",
+    "mayConsume",
+    "mayRecall",
+    "actualRecallPerformed",
+    "receiptConsumed",
+    "mayCreateDecision",
+    "mayPromote",
+    "mayReplay",
+    "mayInstall",
+    "mayExecute",
+    "filesystemMutated",
+    "networkRequested",
+    "subprocessStarted",
+    "dynamicLoadAttempted",
+    "coordinatorMutated",
+    "resultDigest"
+  ],
+  "properties": {
+    "schemaVersion": { "const": 1 },
+    "recordType": { "const": "M46_RECALL_TRANSITION_RESULT_FIXTURE" },
+    "status": { "const": "DERIVED_INERT" },
+    "profile": { "const": "veritas-m46-inert-scoped-recall-v1" },
+    "graphDigest": { "$ref": "#/$defs/sha256" },
+    "beforeStateDigest": { "$ref": "#/$defs/sha256" },
+    "barrierStateDigest": { "$ref": "#/$defs/sha256" },
+    "afterStateDigest": { "$ref": "#/$defs/sha256" },
+    "receiptSetDigest": { "$ref": "#/$defs/sha256" },
+    "eventDigest": { "$ref": "#/$defs/sha256" },
+    "affectedReceiptIds": {
+      "type": "array",
+      "minItems": 1,
+      "maxItems": 32,
+      "uniqueItems": true,
+      "items": { "$ref": "#/$defs/fixtureId" }
+    },
+    "unaffectedReceiptIds": {
+      "type": "array",
+      "minItems": 1,
+      "maxItems": 32,
+      "uniqueItems": true,
+      "items": { "$ref": "#/$defs/fixtureId" }
+    },
+    "admissions": {
+      "type": "array",
+      "minItems": 2,
+      "maxItems": 32,
+      "items": { "$ref": "#/$defs/admission" }
+    },
+    "trace": {
+      "const": [
+        "VALIDATE_PRIOR",
+        "VALIDATE_EVENT",
+        "ADVANCE_AFFECTED_BARRIER",
+        "EVALUATE_AFTER_STATE",
+        "RETURN_INERT"
+      ]
+    },
+    "authorizing": { "const": false },
+    "mayConsume": { "const": false },
+    "mayRecall": { "const": false },
+    "actualRecallPerformed": { "const": false },
+    "receiptConsumed": { "const": false },
+    "mayCreateDecision": { "const": false },
+    "mayPromote": { "const": false },
+    "mayReplay": { "const": false },
+    "mayInstall": { "const": false },
+    "mayExecute": { "const": false },
+    "filesystemMutated": { "const": false },
+    "networkRequested": { "const": false },
+    "subprocessStarted": { "const": false },
+    "dynamicLoadAttempted": { "const": false },
+    "coordinatorMutated": { "const": false },
+    "resultDigest": { "$ref": "#/$defs/sha256" }
+  },
+  "$defs": {
+    "sha256": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{64}$"
+    },
+    "fixtureId": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 128,
+      "pattern": "^[a-z][a-z0-9]*(?:[.-][a-z0-9]+)*(?:/[a-z][a-z0-9]*(?:[.-][a-z0-9]+)*)*$"
+    },
+    "admission": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["receiptId", "evaluatedStateDigest", "disposition"],
+      "properties": {
+        "receiptId": { "$ref": "#/$defs/fixtureId" },
+        "evaluatedStateDigest": { "$ref": "#/$defs/sha256" },
+        "disposition": {
+          "enum": [
+            "MEASURED_CURRENT_NONAUTHORIZING",
+            "MEASURED_UNAFFECTED_NONAUTHORIZING",
+            "REFUSED_RECALL_REQUIRED"
+          ]
+        }
+      }
+    }
+  }
+}

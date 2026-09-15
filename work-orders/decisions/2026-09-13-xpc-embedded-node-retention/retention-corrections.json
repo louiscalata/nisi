@@ -1,0 +1,545 @@
+{
+  "schemaVersion": "nisi-retention-pass-v1",
+  "recordedAt": "2026-09-13T18:13:19Z",
+  "acceptance": {
+    "status": "ACCEPTED_AS_MEASURED_2026-09-13",
+    "owner": "Louis",
+    "date": "2026-09-13",
+    "approximateTime": "11:10 PDT",
+    "session": "Claude",
+    "quote": "Approve both, have Astra run the retention pass",
+    "provenance": "Verbatim decision supplied by Louis in the current Astra retention instruction; both refers to items 1 and 2 of Claude Fable's verification record.",
+    "acceptedMeasurement": "FIXED_EMBEDDED_NODE_OBSERVED",
+    "nodeEntitlements": {
+      "com.apple.security.app-sandbox": true,
+      "com.apple.security.inherit": true
+    },
+    "hostEntitlements": {
+      "com.apple.security.app-sandbox": true
+    },
+    "serviceEntitlements": {
+      "com.apple.security.app-sandbox": true
+    },
+    "acceptedScope": "September 13 fixed embedded-Node prerequisite as measured; no-launch evidence retention and documentation correction pass approved.",
+    "generatedCodeExecuted": false,
+    "completeIsolation": false,
+    "authorizing": false,
+    "isolationAcceptance": "OPEN_SEPARATE_DECISION",
+    "milestoneClosure": false,
+    "laterIsolationReviewItem": {
+      "time": "2026-09-13 10:41:58.473 PDT",
+      "pid": 20280,
+      "observation": "mach-lookup / XPC mach connection activation named com.apple.SystemConfiguration.DNSConfiguration; loopback listen itself was EPERM.",
+      "source": ".build/xpc-embedded-node-9u2lavy_/logs/inherit-run-unified-log-20280.txt"
+    },
+    "forbidden": [
+      "Third fixture launch",
+      "Build",
+      "Signing",
+      "Entitlement change",
+      "Generated-code execution",
+      "Isolation acceptance",
+      "Git commit",
+      "Git push",
+      "Deletion",
+      "Edits to work-orders/native-canary-adjudicator",
+      "Edits to work-orders/run-journal"
+    ]
+  },
+  "attempt1": {
+    "supersededBy": {
+      "/diagnosticLogs": "#/corrections/D1/diagnosticLogs",
+      "/exec/exactCause": "#/corrections/D2/exec/exactCause",
+      "/notClaimed": "#/corrections/D2/notClaimed",
+      "/protectedChecker/failureMode": "#/corrections/D3",
+      "/nativeContext/nestedSandboxConfoundingExcluded": "#/corrections/D7",
+      "/nativeContext/basis": "#/corrections/D7",
+      "/review": "#/corrections/review"
+    },
+    "corrections": {
+      "schemaVersion": "nisi-retention-corrections-v1",
+      "recordedAt": "2026-09-13T18:13:19Z",
+      "authority": {
+        "status": "ACCEPTED_AS_MEASURED_2026-09-13",
+        "owner": "Louis",
+        "date": "2026-09-13",
+        "approximateTime": "11:10 PDT",
+        "session": "Claude",
+        "quote": "Approve both, have Astra run the retention pass",
+        "provenance": "Verbatim decision supplied by Louis in the current Astra retention instruction; both refers to items 1 and 2 of Claude Fable's verification record.",
+        "acceptedMeasurement": "FIXED_EMBEDDED_NODE_OBSERVED",
+        "nodeEntitlements": {
+          "com.apple.security.app-sandbox": true,
+          "com.apple.security.inherit": true
+        },
+        "hostEntitlements": {
+          "com.apple.security.app-sandbox": true
+        },
+        "serviceEntitlements": {
+          "com.apple.security.app-sandbox": true
+        },
+        "acceptedScope": "September 13 fixed embedded-Node prerequisite as measured; no-launch evidence retention and documentation correction pass approved.",
+        "generatedCodeExecuted": false,
+        "completeIsolation": false,
+        "authorizing": false,
+        "isolationAcceptance": "OPEN_SEPARATE_DECISION",
+        "milestoneClosure": false,
+        "laterIsolationReviewItem": {
+          "time": "2026-09-13 10:41:58.473 PDT",
+          "pid": 20280,
+          "observation": "mach-lookup / XPC mach connection activation named com.apple.SystemConfiguration.DNSConfiguration; loopback listen itself was EPERM.",
+          "source": ".build/xpc-embedded-node-9u2lavy_/logs/inherit-run-unified-log-20280.txt"
+        },
+        "forbidden": [
+          "Third fixture launch",
+          "Build",
+          "Signing",
+          "Entitlement change",
+          "Generated-code execution",
+          "Isolation acceptance",
+          "Git commit",
+          "Git push",
+          "Deletion",
+          "Edits to work-orders/native-canary-adjudicator",
+          "Edits to work-orders/run-journal"
+        ]
+      },
+      "precedence": "Original checkpoint statements remain unchanged. Root supersededBy maps historical JSON pointers to authoritative corrections below; corrected notClaimed arrays apply only as additive effective replacements.",
+      "retentionStatus": "DOCUMENTATION_AND_COPIES_COMPLETE_FRESH_FIRST_ATTEMPT_LOG_CAPTURE_BLOCKED",
+      "D1": {
+        "issue": "Harness log-window bug, not evidence that the attempt had no diagnostic events.",
+        "evidence": ".build/xpc-embedded-node-69qhvao1/experiment.py:146",
+        "diagnosticLogs": {
+          "stdoutPath": "/Users/louiscalata/nisi-next-private/.build/xpc-embedded-node-69qhvao1/logs/node.stdout",
+          "stderrPath": "/Users/louiscalata/nisi-next-private/.build/xpc-embedded-node-69qhvao1/logs/node.stderr",
+          "unifiedImmediatePath": "/Users/louiscalata/nisi-next-private/.build/xpc-embedded-node-69qhvao1/logs/native-unified-log.stdout",
+          "unifiedDelayedPath": "/Users/louiscalata/nisi-next-private/.build/xpc-embedded-node-69qhvao1/logs/native-unified-log-delayed.stdout",
+          "unifiedRawOutput": "[]",
+          "logExcerptAvailable": false,
+          "reason": "The original queries returned [] because experiment.py:146 converted a UTC-labelled start into a timezone-less --start that log show parsed as local time, selecting a window seven hours in the future. Claude Fable's verification reports that the corrected local window contains the secinitd failure. Astra's authorized fresh local-window command failed with exit 64, 'log: Cannot run while sandboxed'; its empty stdout is not event-absence evidence. The causal OS crash report is now retained.",
+          "causalOSReportAvailable": true,
+          "retentionCapture": ".build/xpc-embedded-node-69qhvao1/logs/retention-unified-log-local-window.capture.json"
+        },
+        "originalQueriesPreserved": true,
+        "harnessChanged": false,
+        "freshCaptureStatus": "BLOCKED_SANDBOX",
+        "priorLogFindingSource": "work-orders/decisions/2026-09-13-xpc-embedded-node.fable-verification.md"
+      },
+      "D2": {
+        "exec": {
+          "exactCause": "Unable to get bundle identifier for container id node-55554944aee6b0f8c39f3f8cbec396e3a1e42bb4: Unable to get bundle identifier because Info.plist from code signature information has no value for kCFBundleIdentifierKey. secinitd reported \"registration request failed: (0x10, 0x0)\" (Claude Fable verification record; fresh unified-log capture blocked). Crash report: EXC_BREAKPOINT/SIGTRAP, '(Breakpoint) brk 1', at _libsecinit_appsandbox.cold.6 + 60 -> _libsecinit_appsandbox + 1968 -> _os_activity_initiate_impl + 64 -> _libsecinit_initializer + 196 -> libSystem_initializer + 280 -> dyld initializer traversal through start; failure during libSystem/App Sandbox initialization before main.",
+          "nodeStartupCompletionObserved": false,
+          "scriptEntryObserved": false
+        },
+        "directEvidence": {
+          "path": ".build/xpc-embedded-node-69qhvao1/logs/node-2026-09-13-101227.ips",
+          "sha256": "c0516e6c752d39a7c0cdb5956afef7b18e7e36c8d900911ebedc59a8416305bb",
+          "pid": 9917,
+          "parentPid": 9916,
+          "asiSignatures": [
+            "Unable to get bundle identifier for container id node-55554944aee6b0f8c39f3f8cbec396e3a1e42bb4: Unable to get bundle identifier because Info.plist from code signature information has no value for kCFBundleIdentifierKey."
+          ],
+          "exception": {
+            "codes": "0x0000000000000001, 0x00000001a8a4b160",
+            "rawCodes": [
+              1,
+              7124332896
+            ],
+            "type": "EXC_BREAKPOINT",
+            "signal": "SIGTRAP"
+          },
+          "breakpoint": "(Breakpoint) brk 1",
+          "frameChainCrashOrder": [
+            {
+              "symbol": "_libsecinit_appsandbox.cold.6",
+              "symbolLocation": 60
+            },
+            {
+              "symbol": "_libsecinit_appsandbox",
+              "symbolLocation": 1968
+            },
+            {
+              "symbol": "_os_activity_initiate_impl",
+              "symbolLocation": 64
+            },
+            {
+              "symbol": "_libsecinit_initializer",
+              "symbolLocation": 196
+            },
+            {
+              "symbol": "libSystem_initializer",
+              "symbolLocation": 280
+            },
+            {
+              "symbol": "invocation function for block in dyld4::Loader::findAndRunAllInitializers(dyld4::RuntimeState&) const::$_0::operator()() const",
+              "symbolLocation": 360
+            },
+            {
+              "symbol": "invocation function for block in mach_o::Image::forEachInitializer(void (unsigned int) block_pointer) const",
+              "symbolLocation": 84
+            },
+            {
+              "symbol": "mach_o::Header::SegmentInfo mach_o::Header::parse_segment_command<true>(mach_o::Header::LoadCommandInfo const&, unsigned short, void (mach_o::Header::SegmentInfo const&, mach_o::Header::SectionInfo const&) block_pointer, mach_o::Error*) const",
+              "symbolLocation": 580
+            },
+            {
+              "symbol": "invocation function for block in mach_o::Header::forEachSection(void (mach_o::Header::SectionInfo const&, bool&) block_pointer) const",
+              "symbolLocation": 156
+            },
+            {
+              "symbol": "mach_o::Header::forEachLoadCommand(void (mach_o::Header::LoadCommandInfo const&, bool&) block_pointer, mach_o::Error*) const",
+              "symbolLocation": 228
+            },
+            {
+              "symbol": "mach_o::Header::forEachSection(void (mach_o::Header::SectionInfo const&, bool&) block_pointer) const",
+              "symbolLocation": 128
+            },
+            {
+              "symbol": "mach_o::Image::forEachInitializer(void (unsigned int) block_pointer) const",
+              "symbolLocation": 244
+            },
+            {
+              "symbol": "dyld4::Loader::findAndRunAllInitializers(dyld4::RuntimeState&) const",
+              "symbolLocation": 680
+            },
+            {
+              "symbol": "dyld4::PrebuiltLoader::runInitializers(dyld4::RuntimeState&) const",
+              "symbolLocation": 44
+            },
+            {
+              "symbol": "dyld4::APIs::runAllInitializersForMain()",
+              "symbolLocation": 100
+            },
+            {
+              "symbol": "dyld4::prepare(dyld4::APIs&, mach_o::UnsafeHeader const*)",
+              "symbolLocation": 4724
+            },
+            {
+              "symbol": "dyld4::start(dyld4::KernelArgs*, void*, void*, unsigned long long)::$_1::operator()() const",
+              "symbolLocation": 320
+            },
+            {
+              "symbol": "start",
+              "symbolLocation": 6596
+            }
+          ]
+        },
+        "secinitd": {
+          "text": "registration request failed: (0x10, 0x0)",
+          "provenance": "work-orders/decisions/2026-09-13-xpc-embedded-node.fable-verification.md",
+          "verifiedHere": "Quoted from Claude Fable's verification; fresh local-window capture blocked with exit 64. Not represented as newly captured raw log evidence."
+        },
+        "notClaimed": [
+          "Generated-candidate execution",
+          "Complete isolation or isolation acceptance",
+          "Entitlement widening",
+          "Protected checker acceptance",
+          "Service lifecycle settlement",
+          "v0.2 milestone completion",
+          "Git commit or push",
+          "Bionic inference, model loading, or Windows dispatch"
+        ],
+        "limitation": "Fresh first-attempt unified-log excerpt remains unretained because this session's sandbox prevents log show; retained crash report directly supports the initializer failure."
+      },
+      "D3": {
+        "fields": [
+          "waitObserved",
+          "drainObserved",
+          "cleanupUncertain",
+          "coreDumped"
+        ],
+        "firstAttemptRawValues": {
+          "waitObserved": 1,
+          "drainObserved": 1,
+          "cleanupUncertain": 0,
+          "coreDumped": 0
+        },
+        "cause": "All four derived C/Objective-C boxed-int fields belong in the checker-defect enumeration. Numeric wait/drain 1 failed Python identity comparison with True; cleanupUncertain and coreDumped were numeric 0. The rerun's existing harness-correction.diff already normalizes all four non-null values using NSNumber numberWithBool; normal-exit coreDumped null remains null.",
+        "existingFix": ".build/xpc-embedded-node-9u2lavy_/harness-correction.diff",
+        "sourceChangedInRetention": false,
+        "firstFrozenCheckerPatched": false,
+        "firstFrozenCheckerRerun": false
+      },
+      "D4": {
+        "status": "KNOWN_LIMITATION",
+        "issue": "The pre-freeze build retry overwrote container-before.json and native-context.json because save(name, data) writes R/name without an attempt suffix.",
+        "source": ".build/xpc-embedded-node-69qhvao1/experiment.py:10-11",
+        "overwrittenPaths": [
+          ".build/xpc-embedded-node-69qhvao1/container-before.json",
+          ".build/xpc-embedded-node-69qhvao1/native-context.json"
+        ],
+        "retainedBuildReceipts": [
+          ".build/xpc-embedded-node-69qhvao1/logs/compile-service.json",
+          ".build/xpc-embedded-node-69qhvao1/logs/compile-service-attempt2.json"
+        ],
+        "failedCompileAt": "2026-09-13T17:08:11.223890+00:00",
+        "successfulCompileRetryAt": "2026-09-13T17:08:56.962230+00:00",
+        "interpretation": "This is a pre-freeze snapshot provenance gap. Command logs retain the failed compile and successful build retry. Original overwritten snapshot contents are not reconstructed. It is not another fixture launch or a retention-time build; frozen files remain unchanged."
+      },
+      "D7": {
+        "replacesBareAssertion": "nativeContext.nestedSandboxConfoundingExcluded and nativeContext.basis",
+        "measuredBasis": {
+          "firstAttemptHostPid": 9910,
+          "firstAttemptServicePid": 9916,
+          "hostAndService": "Each received its own App Sandbox per secinitd lines observed in Claude Fable's verification.",
+          "secinitdSource": "work-orders/decisions/2026-09-13-xpc-embedded-node.fable-verification.md",
+          "secinitdEvidenceLimit": "The first-attempt raw excerpt could not be freshly retained in this sandbox; the secinitd basis here is attributed to Claude's prior verification.",
+          "harnessPid": 8972,
+          "codexParentPid": 6148,
+          "ancestryPath": ".build/xpc-embedded-node-69qhvao1/logs/ancestry-attempt2.stdout",
+          "parentExecutable": "/Applications/ChatGPT.app/Contents/Resources/codex"
+        },
+        "interpretation": "The no-nested-Claude-seatbelt finding is supported by independent host/service App Sandbox initialization plus the measured Codex ancestry. It is not complete-isolation or general sandbox-composition acceptance."
+      },
+      "review": {
+        "claudeFable51": "RECEIPTS_ACCEPT_WITH_DEFECTS",
+        "source": "work-orders/decisions/2026-09-13-xpc-embedded-node.fable-verification.md"
+      }
+    }
+  },
+  "attempt2": {
+    "supersededBy": {
+      "/decisionProvenance/relocationApprovalSource": "#/corrections/D6/relocationRelay",
+      "/decisionProvenance/relocationApprovalQuote": "#/corrections/D6/relocationRelay",
+      "/decisionProvenance/approximateTime": "#/corrections/D6/checkpointTimeDiscrepancy",
+      "/relocation/decisionProvenance": "#/corrections/D6",
+      "/nativeContext/basis": "#/corrections/D7",
+      "/reviews/claudeFable51Verification": "#/corrections/review/claudeFable51Verification",
+      "/notClaimed": "#/corrections/review/notClaimed"
+    },
+    "corrections": {
+      "schemaVersion": "nisi-retention-corrections-v1",
+      "recordedAt": "2026-09-13T18:13:19Z",
+      "authority": {
+        "status": "ACCEPTED_AS_MEASURED_2026-09-13",
+        "owner": "Louis",
+        "date": "2026-09-13",
+        "approximateTime": "11:10 PDT",
+        "session": "Claude",
+        "quote": "Approve both, have Astra run the retention pass",
+        "provenance": "Verbatim decision supplied by Louis in the current Astra retention instruction; both refers to items 1 and 2 of Claude Fable's verification record.",
+        "acceptedMeasurement": "FIXED_EMBEDDED_NODE_OBSERVED",
+        "nodeEntitlements": {
+          "com.apple.security.app-sandbox": true,
+          "com.apple.security.inherit": true
+        },
+        "hostEntitlements": {
+          "com.apple.security.app-sandbox": true
+        },
+        "serviceEntitlements": {
+          "com.apple.security.app-sandbox": true
+        },
+        "acceptedScope": "September 13 fixed embedded-Node prerequisite as measured; no-launch evidence retention and documentation correction pass approved.",
+        "generatedCodeExecuted": false,
+        "completeIsolation": false,
+        "authorizing": false,
+        "isolationAcceptance": "OPEN_SEPARATE_DECISION",
+        "milestoneClosure": false,
+        "laterIsolationReviewItem": {
+          "time": "2026-09-13 10:41:58.473 PDT",
+          "pid": 20280,
+          "observation": "mach-lookup / XPC mach connection activation named com.apple.SystemConfiguration.DNSConfiguration; loopback listen itself was EPERM.",
+          "source": ".build/xpc-embedded-node-9u2lavy_/logs/inherit-run-unified-log-20280.txt"
+        },
+        "forbidden": [
+          "Third fixture launch",
+          "Build",
+          "Signing",
+          "Entitlement change",
+          "Generated-code execution",
+          "Isolation acceptance",
+          "Git commit",
+          "Git push",
+          "Deletion",
+          "Edits to work-orders/native-canary-adjudicator",
+          "Edits to work-orders/run-journal"
+        ]
+      },
+      "precedence": "Original checkpoint statements remain unchanged. Root supersededBy maps historical JSON pointers to authoritative corrections below; corrected notClaimed arrays apply only as additive effective replacements.",
+      "retentionStatus": "DOCUMENTATION_AND_COPIES_COMPLETE_FRESH_FIRST_ATTEMPT_LOG_CAPTURE_BLOCKED",
+      "D3": {
+        "fields": [
+          "waitObserved",
+          "drainObserved",
+          "cleanupUncertain",
+          "coreDumped"
+        ],
+        "firstAttemptRawValues": {
+          "waitObserved": 1,
+          "drainObserved": 1,
+          "cleanupUncertain": 0,
+          "coreDumped": 0
+        },
+        "cause": "All four derived C/Objective-C boxed-int fields belong in the checker-defect enumeration. Numeric wait/drain 1 failed Python identity comparison with True; cleanupUncertain and coreDumped were numeric 0. The rerun's existing harness-correction.diff already normalizes all four non-null values using NSNumber numberWithBool; normal-exit coreDumped null remains null.",
+        "existingFix": ".build/xpc-embedded-node-9u2lavy_/harness-correction.diff",
+        "sourceChangedInRetention": false,
+        "firstFrozenCheckerPatched": false,
+        "firstFrozenCheckerRerun": false
+      },
+      "D4": {
+        "status": "KNOWN_FIRST_ATTEMPT_LIMITATION",
+        "source": ".build/xpc-embedded-node-69qhvao1/owner-adjudication.corrections.json",
+        "details": {
+          "status": "KNOWN_LIMITATION",
+          "issue": "The pre-freeze build retry overwrote container-before.json and native-context.json because save(name, data) writes R/name without an attempt suffix.",
+          "source": ".build/xpc-embedded-node-69qhvao1/experiment.py:10-11",
+          "overwrittenPaths": [
+            ".build/xpc-embedded-node-69qhvao1/container-before.json",
+            ".build/xpc-embedded-node-69qhvao1/native-context.json"
+          ],
+          "retainedBuildReceipts": [
+            ".build/xpc-embedded-node-69qhvao1/logs/compile-service.json",
+            ".build/xpc-embedded-node-69qhvao1/logs/compile-service-attempt2.json"
+          ],
+          "failedCompileAt": "2026-09-13T17:08:11.223890+00:00",
+          "successfulCompileRetryAt": "2026-09-13T17:08:56.962230+00:00",
+          "interpretation": "This is a pre-freeze snapshot provenance gap. Command logs retain the failed compile and successful build retry. Original overwritten snapshot contents are not reconstructed. It is not another fixture launch or a retention-time build; frozen files remain unchanged."
+        }
+      },
+      "D5": {
+        "schemaVersion": "nisi-retention-filesystem-measurement-v1",
+        "measuredAt": "2026-09-13T18:12:31Z",
+        "readOnly": true,
+        "crashReports": {
+          "command": "find /Users/louiscalata/Library/Logs/DiagnosticReports -maxdepth 1 -type f -name 'node-*.ips' -print",
+          "exitCode": 0,
+          "stderr": "",
+          "matches": [
+            "/Users/louiscalata/Library/Logs/DiagnosticReports/node-2026-09-13-101227.ips"
+          ],
+          "headerCommand": "jq -s '.[0] | {timestamp,app_name}' .build/xpc-embedded-node-69qhvao1/logs/node-2026-09-13-101227.ips",
+          "reportHeaderTimestamp": "2026-09-13 10:12:27.00 -0700",
+          "reportCaptureTime": "2026-09-13 10:12:27.3480 -0700",
+          "statement": "At this measurement, ~/Library/Logs/DiagnosticReports contains no node-*.ips newer than 10:12:27 on 2026-09-13, by report filename/header time at second precision. Its only matching file is node-2026-09-13-101227.ips.",
+          "scope": "Current top-level regular-file listing and report timestamps, not filesystem mtime or proof of historical absence.",
+          "stdoutPath": ".build/xpc-embedded-node-9u2lavy_/logs/retention-node-crash-reports.stdout"
+        },
+        "nodeContainers": {
+          "command": "find /Users/louiscalata/Library/Containers -maxdepth 1 -name 'node-*' -print",
+          "exitCode": 0,
+          "stderr": "",
+          "matches": [],
+          "statement": "At this measurement, ~/Library/Containers has no node-* entry.",
+          "scope": "Current top-level names; does not prove no such entry ever existed.",
+          "stdoutPath": ".build/xpc-embedded-node-9u2lavy_/logs/retention-node-containers.stdout"
+        },
+        "preservedExcerpt": {
+          "source": "work-orders/decisions/2026-09-13-xpc-embedded-node.inherit-run-unified-log-20280.txt",
+          "copy": ".build/xpc-embedded-node-9u2lavy_/logs/inherit-run-unified-log-20280.txt",
+          "sha256": "3fae005fe14cdaf35af092ba38d6ac1aa613e1b84c15f1a4588ee246fd13cf5e",
+          "lines": 58,
+          "capturedBy": "Claude Fable 5.1 during prior read-only verification",
+          "sourceCommand": "log show --start '2026-09-13 10:41:57' --end '2026-09-13 10:41:59' --info --debug",
+          "retentionMethod": "Verbatim cp -n; source/destination SHA-256 match full hash from verification record; cmp verified. This is a preserved excerpt, not a new successful log capture by Astra."
+        },
+        "rerunHarnessOmission": "The rerun harness omitted unified-log capture instead of correcting the --start conversion. This pass preserves Claude's existing excerpt and makes only current filesystem absence measurements."
+      },
+      "D6": {
+        "inheritApproval": {
+          "owner": "Louis",
+          "quote": "Approve the inherit entitlement, have Astra rerun it",
+          "approximateTime": "10:40 PDT",
+          "timeSource": "Claude session log, as relayed in Louis's retention instruction"
+        },
+        "checkpointTimeDiscrepancy": {
+          "firstCreatedAt": "2026-09-13T17:32:37.898145+00:00",
+          "firstCreatedAtLocal": "2026-09-13 10:32:37.898145 PDT",
+          "source": ".build/xpc-embedded-node-9u2lavy_/prior-preparation/u02-xpc-embedded-node-inherit-checkpoint.json",
+          "currentOriginalCreatedAt": "2026-09-13T17:46:06.693436+00:00",
+          "limitation": "The first checkpoint creation timestamp precedes the approximate 10:40 PDT approval time. Both are retained; the exact authorization timeline is not reconstructed or silently reconciled."
+        },
+        "relocationRelay": {
+          "speaker": "Claude, relaying the inherit approval",
+          "quote": "YES. The relocation is a mechanical consequence of that approval, not a scope change.",
+          "longerQuotePreservedInOriginal": "YES. The relocation is a mechanical consequence of that approval, not a scope change. Apply your prepared relocation patch exactly as staged",
+          "meaning": "Relay of the inherit approval, not an independently attributed verbatim Louis relocation quote."
+        },
+        "acceptance": {
+          "status": "ACCEPTED_AS_MEASURED_2026-09-13",
+          "owner": "Louis",
+          "date": "2026-09-13",
+          "approximateTime": "11:10 PDT",
+          "session": "Claude",
+          "quote": "Approve both, have Astra run the retention pass",
+          "provenance": "Verbatim decision supplied by Louis in the current Astra retention instruction; both refers to items 1 and 2 of Claude Fable's verification record.",
+          "acceptedMeasurement": "FIXED_EMBEDDED_NODE_OBSERVED",
+          "nodeEntitlements": {
+            "com.apple.security.app-sandbox": true,
+            "com.apple.security.inherit": true
+          },
+          "hostEntitlements": {
+            "com.apple.security.app-sandbox": true
+          },
+          "serviceEntitlements": {
+            "com.apple.security.app-sandbox": true
+          },
+          "acceptedScope": "September 13 fixed embedded-Node prerequisite as measured; no-launch evidence retention and documentation correction pass approved.",
+          "generatedCodeExecuted": false,
+          "completeIsolation": false,
+          "authorizing": false,
+          "isolationAcceptance": "OPEN_SEPARATE_DECISION",
+          "milestoneClosure": false,
+          "laterIsolationReviewItem": {
+            "time": "2026-09-13 10:41:58.473 PDT",
+            "pid": 20280,
+            "observation": "mach-lookup / XPC mach connection activation named com.apple.SystemConfiguration.DNSConfiguration; loopback listen itself was EPERM.",
+            "source": ".build/xpc-embedded-node-9u2lavy_/logs/inherit-run-unified-log-20280.txt"
+          },
+          "forbidden": [
+            "Third fixture launch",
+            "Build",
+            "Signing",
+            "Entitlement change",
+            "Generated-code execution",
+            "Isolation acceptance",
+            "Git commit",
+            "Git push",
+            "Deletion",
+            "Edits to work-orders/native-canary-adjudicator",
+            "Edits to work-orders/run-journal"
+          ]
+        }
+      },
+      "D7": {
+        "measuredBasis": {
+          "host": {
+            "pid": 20276,
+            "requestLocal": "10:41:58.247",
+            "ownContainerInitializationLocal": "10:41:58.260",
+            "successfulLocal": "10:41:58.332"
+          },
+          "service": {
+            "pid": 20279,
+            "requestLocal": "10:41:58.346",
+            "ownContainerInitializationLocal": "10:41:58.357",
+            "successfulLocal": "10:41:58.425"
+          },
+          "node": {
+            "pid": 20280,
+            "requestLocal": "10:41:58.444",
+            "successfulLocal": "10:41:58.445"
+          },
+          "source": ".build/xpc-embedded-node-9u2lavy_/logs/inherit-run-unified-log-20280.txt",
+          "harnessPid": 19791,
+          "codexParentPid": 18588,
+          "ancestryPath": ".build/xpc-embedded-node-9u2lavy_/logs/relocated-native-ancestry.stdout"
+        },
+        "interpretation": "Host and service each received their own App Sandbox per secinitd; Node's AppSandbox request succeeded under inherit. Rerun Codex parent is 18588. Parent 6148 belongs only to attempt 1. This is the measured basis for excluding nested Claude-shell confounding, not complete isolation."
+      },
+      "review": {
+        "claudeFable51Verification": "COMPLETED; RECEIPTS ACCEPT WITH DEFECTS (documentation and retention gaps); see original Fable record.",
+        "source": "work-orders/decisions/2026-09-13-xpc-embedded-node.fable-verification.md",
+        "notClaimed": [
+          "Generated-code execution",
+          "Complete isolation",
+          "Isolation acceptance",
+          "Arbitrary Node/script behavior",
+          "Independent XPC lifecycle settlement",
+          "Absence of escaped/reparented descendants",
+          "Product milestone completion",
+          "Git commit or push"
+        ]
+      }
+    }
+  }
+}

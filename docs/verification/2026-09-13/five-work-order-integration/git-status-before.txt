@@ -1,0 +1,152 @@
+ M README.md
+ M adapters/local-chat.mjs
+ M docs/editor/build-editor.py
+ M docs/editor/editor.js
+ M gate/afm-content-executor.mjs
+ M package-lock.json
+ M package.json
+ M roadmap.md
+ M scripts/ab-purity.mjs
+ M scripts/bench.mjs
+ M scripts/common.mjs
+ M tests/afm-content-executor.test.mjs
+ M tests/canonical-json-v1.test.mjs
+ M tests/content-consent.test.mjs
+ M tests/local-chat-extra.test.mjs
+ M tests/workflow.test.mjs
+ M workflow/engine.mjs
+?? adapters/native-chat-protocol-v1.mjs
+?? adapters/native-chat-v1.mjs
+?? control.tap
+?? docs/nisi-v0.1-v0.2-before-after.md
+?? docs/verification/2026-09-12/adoption-validation-sources.json
+?? docs/verification/2026-09-12/comparison-feedback-sources.json
+?? docs/verification/2026-09-12/local-model-discovery-checkpoint.json
+?? docs/verification/2026-09-12/nisi-upstream-deadline-port.json
+?? docs/verification/2026-09-12/u02-admission-fable-draft.json
+?? docs/verification/2026-09-12/u02-admission-fable-focused-request.txt
+?? docs/verification/2026-09-12/u02-admission-fable-focused-review.json
+?? docs/verification/2026-09-12/u02-admission-fable-request.txt
+?? docs/verification/2026-09-12/u02-app-sandbox-probe-checkpoint.json
+?? docs/verification/2026-09-12/u02-candidate-review-checkpoint.json
+?? docs/verification/2026-09-12/u02-combined-host-checkpoint.json
+?? docs/verification/2026-09-12/u02-disk-capture-checkpoint.json
+?? docs/verification/2026-09-12/u02-disk-capture-fable-request.txt
+?? docs/verification/2026-09-12/u02-disk-capture-fable-review.json
+?? docs/verification/2026-09-12/u02-disk-capture-fable-source-review.json
+?? docs/verification/2026-09-12/u02-generated-approval-checkpoint.json
+?? docs/verification/2026-09-12/u02-live-contract-checkpoint.json
+?? docs/verification/2026-09-12/u02-live-v3-checkpoint.json
+?? docs/verification/2026-09-12/u02-native-chat-checkpoint.json
+?? docs/verification/2026-09-12/u02-node-behavior-checkpoint.json
+?? docs/verification/2026-09-12/u02-output-mode-checkpoint.json
+?? docs/verification/2026-09-12/u02-paired-accounting-checkpoint.json
+?? docs/verification/2026-09-12/u02-private-package-checkpoint.json
+?? docs/verification/2026-09-12/u02-private-xpc-prototype-checkpoint.json
+?? docs/verification/2026-09-12/u02-process-owner-fable-clarification-request.txt
+?? docs/verification/2026-09-12/u02-process-owner-fable-clarification-review.json
+?? docs/verification/2026-09-12/u02-process-owner-fable-request.txt
+?? docs/verification/2026-09-12/u02-process-owner-fable-resolution-request.txt
+?? docs/verification/2026-09-12/u02-process-owner-fable-resolution-review.json
+?? docs/verification/2026-09-12/u02-process-owner-fable-review.json
+?? docs/verification/2026-09-12/u02-receipt-checkpoint.json
+?? docs/verification/2026-09-12/u02-receipt-fable-focused-request.txt
+?? docs/verification/2026-09-12/u02-receipt-fable-focused-review.json
+?? docs/verification/2026-09-12/u02-receipt-fable-request.txt
+?? docs/verification/2026-09-12/u02-receipt-fable-resolution-request.txt
+?? docs/verification/2026-09-12/u02-receipt-fable-resolution-review.json
+?? docs/verification/2026-09-12/u02-receipt-fable-review.json
+?? docs/verification/2026-09-12/u02-repeatable-app-sandbox-checkpoint.json
+?? docs/verification/2026-09-12/u02-repository-transition-checkpoint.json
+?? docs/verification/2026-09-12/u02-snapshot-checkpoint.json
+?? docs/verification/2026-09-12/u02-snapshot-claude-review.json
+?? docs/verification/2026-09-12/u02-snapshot-fable-after-login-request.txt
+?? docs/verification/2026-09-12/u02-snapshot-fable-after-login-review.json
+?? docs/verification/2026-09-12/u02-snapshot-fable-bounded-request.txt
+?? docs/verification/2026-09-12/u02-snapshot-fable-bounded-review.json
+?? docs/verification/2026-09-12/u02-snapshot-fable-request.txt
+?? docs/verification/2026-09-12/u02-swift-kernel-checkpoint.json
+?? docs/verification/2026-09-12/u02-swift-kernel-fable-draft.json
+?? docs/verification/2026-09-12/u02-swift-kernel-fable-focused-draft.json
+?? docs/verification/2026-09-12/u02-swift-kernel-fable-focused-request.txt
+?? docs/verification/2026-09-12/u02-swift-kernel-fable-request.txt
+?? docs/verification/2026-09-12/u02-swift-owner-checkpoint.json
+?? docs/verification/2026-09-12/u02-workspace-opencode-checkpoint.json
+?? docs/verification/2026-09-12/v02-adoption-plan-update.json
+?? docs/verification/2026-09-12/v02-upgrade-plan-update.json
+?? docs/verification/2026-09-12/veritas-import-receipt.json
+?? docs/verification/2026-09-12/veritas-import-review.md
+?? docs/verification/2026-09-13/
+?? evaluation/
+?? examples/repository-live-model.mjs
+?? examples/repository-task/
+?? hosts/
+?? integrations/
+?? integrity/
+?? receipts/
+?? scripts/check-private-package.mjs
+?? scripts/private-package-contract.mjs
+?? scripts/test-local-model-discovery-mutants.mjs
+?? scripts/test-repository-disk-mutants.mjs
+?? scripts/test-repository-receipt-mutants.mjs
+?? scripts/test-repository-snapshot-mutants.mjs
+?? scripts/test-swift-kernel-mutants.mjs
+?? scripts/test-swift-owner-mutants.mjs
+?? scripts/test-veritas-import-mutants.mjs
+?? scripts/verify-veritas-import.mjs
+?? tests/afm-lifecycle.test.mjs
+?? tests/benchmark-scripts.test.mjs
+?? tests/candidate-review.test.mjs
+?? tests/editor-input.test.mjs
+?? tests/fixed-app-sandbox.test.mjs
+?? tests/fixed-xpc-protocol.test.mjs
+?? tests/fixtures/
+?? tests/generated-execution-approval.test.mjs
+?? tests/helpers/
+?? tests/host-run-bundle-v2.test.mjs
+?? tests/integrity-successors.test.mjs
+?? tests/live-model-v3-cli.test.mjs
+?? tests/live-model-v3-receipt.test.mjs
+?? tests/live-model-v3.test.mjs
+?? tests/live-output-mode.test.mjs
+?? tests/live-usage.test.mjs
+?? tests/local-chat-gap-regression.test.mjs
+?? tests/local-chat-lifecycle.test.mjs
+?? tests/local-chat-output-mode.test.mjs
+?? tests/local-chat-response-matrix.test.mjs
+?? tests/local-model-discovery.test.mjs
+?? tests/native-chat.test.mjs
+?? tests/native-response-matrix.test.mjs
+?? tests/native/
+?? tests/node-executor.test.mjs
+?? tests/node-suite.test.mjs
+?? tests/owned-child-exit-code.test.mjs
+?? tests/owned-temp.test.mjs
+?? tests/paired-trial.test.mjs
+?? tests/private-consumer.test.mjs
+?? tests/private-consumer/
+?? tests/private-package-contract.test.mjs
+?? tests/proposed-changes.test.mjs
+?? tests/reporting-regressions.test.mjs
+?? tests/repository-disk-capture.test.mjs
+?? tests/repository-execution-receipt.test.mjs
+?? tests/repository-fixture.test.mjs
+?? tests/repository-live-cli.test.mjs
+?? tests/repository-live-model-run.test.mjs
+?? tests/repository-run.test.mjs
+?? tests/repository-snapshot.test.mjs
+?? tests/repository-workflow.test.mjs
+?? tests/reviewed-live-fixture.test.mjs
+?? tests/reviewed-live-model.test.mjs
+?? tests/swift-group-owner.test.mjs
+?? tests/swift-kernel-protocol.test.mjs
+?? tests/swift-owned-child.test.mjs
+?? tests/swift-reservation.test.mjs
+?? tests/swift-static-group.test.mjs
+?? tests/swift-static-run.test.mjs
+?? tests/task-workspace.test.mjs
+?? tests/trial-intake.test.mjs
+?? tests/veritas-import-snapshot.test.mjs
+?? tests/veritas-import.test.mjs
+?? types/
+?? work-orders/

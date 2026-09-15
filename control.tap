@@ -1,0 +1,29 @@
+✔ parses all-success data, preserves order, and freezes the result (0.897583ms)
+✔ accepts sandbox denials and operational errors without deriving status (0.123833ms)
+✔ requires dependent rows to be NOT_RUN after open/create/spawn refusal (0.287666ms)
+✔ requires close after a read/write/bind failure when open/create succeeded (0.118875ms)
+✔ rejects malformed or contradictory frame (0.069791ms)
+✔ rejects malformed or contradictory frame (0.055667ms)
+✔ rejects malformed or contradictory frame (0.082416ms)
+✔ rejects malformed or contradictory frame (0.048709ms)
+✔ rejects malformed or contradictory frame (0.062959ms)
+✔ rejects malformed or contradictory frame (0.088167ms)
+✔ rejects malformed or contradictory frame (0.099959ms)
+✔ rejects oversized, invalid UTF-8, unknown outcome, and wrong mode (0.15475ms)
+✔ first syscalls cannot be skipped without a prerequisite (0.540625ms)
+✔ every opened resource must attempt closure even when I/O succeeded (0.57225ms)
+✔ strict frames reject duplicate escaped keys and expose typed JSON errors (0.22375ms)
+✔ string values resembling object keys do not create duplicate keys (0.089417ms)
+✔ incorrect errno values never qualify as a permission denial (0.473625ms)
+✔ pure adjudication distinguishes socket creation denial from bind denial (0.197958ms)
+✔ unexpected success and operational failures cannot satisfy expected sandbox matrix (0.650625ms)
+✔ fixed control requires every recorded operation to succeed (0.287625ms)
+✔ exact opt-in is mandatory; absence/extra input refuses before native side effects (76.803625ms)
+ℹ tests 21
+ℹ suites 0
+ℹ pass 21
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 115.840375

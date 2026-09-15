@@ -1,0 +1,33 @@
+{
+  "demo" : "two-tool agent round",
+  "model" : "SystemLanguageModel.default",
+  "toolCalls" : [
+    "get_time",
+    "count_words"
+  ],
+  "toolResults" : {
+    "count_words" : {
+      "args" : {
+        "text" : "one two three four five"
+      },
+      "result" : "5"
+    },
+    "get_time" : {
+      "args" : {
+        "format" : "time",
+        "timezone" : "UTC"
+      },
+      "result" : "2026-09-15 06:24:14 GMT"
+    }
+  },
+  "turn1.response" : "The current time in UTC is 2026-09-15 06:24:13 GMT, and there are 5 words in 'one two three four five'.",
+  "turn1.usage" : {
+    "input" : 314,
+    "output" : 45
+  },
+  "turn2.response" : "The current time in UTC is 2026-09-15 06:24:14 GMT, and there are 5 words in 'one two three four five'.",
+  "turn2.usage" : {
+    "input" : 429,
+    "output" : 45
+  }
+}

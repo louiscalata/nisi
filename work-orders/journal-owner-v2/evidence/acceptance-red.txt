@@ -1,0 +1,699 @@
+
+> nisi-private-journal-owner-v2@0.0.0-private test:acceptance
+> node --test --test-timeout=10000 tests/owner.test.mjs
+
+✖ NEW open returns an opaque unique owner and exact frozen empty snapshot (1.047167ms)
+✖ inspection is nonmutating and may return the same latest snapshot reference (0.25675ms)
+✖ request envelopes reject extra, hidden, symbol, accessor, array and exotic forms without invoking getters (0.180458ms)
+✖ manufactured, copied and JSON-roundtripped handles are refused (0.072583ms)
+✖ open validates path, time, fs and exact config without throwing (0.103417ms)
+✖ open copies configuration and is not changed by later caller mutation (0.14775ms)
+✖ read failures, non-Buffer reads, invalid UTF-8 and size limit refuse without owner exposure (0.095708ms)
+✖ bad UTF-8 suffix after a valid prefix never exposes a lossy recovered row (0.800625ms)
+✖ wrong-project COMPLETE, INCOMPLETE and INVALID journals all refuse before prefix exposure (0.202875ms)
+✖ matching project with any other persisted config difference refuses policy drift (0.168042ms)
+✖ open refuses a clock behind the persisted journal watermark (0.131042ms)
+✖ COMPLETE recovery binds exact raw digest and publishes historical entries (0.125083ms)
+✖ matching damaged prefixes open SEALED with verified prefix only and cannot record (0.200667ms)
+✖ NEW record writes, publishes exact staged evidence, redacts payload and freezes all returned evidence (0.078958ms)
+✖ current fixed-XPC projected observation is inert history payload, not authority (0.055708ms)
+✖ RUNNING stale observation is listed as interrupted only when UNKNOWN and active (0.052666ms)
+✖ revocation removes an UNKNOWN RUNNING observation from interrupted without granting authority (0.040792ms)
+✖ duplicate returns original accepted snapshot and conflict performs no storage (0.051125ms)
+✖ entry refusal and time failure preserve the accepted snapshot and do not escape (0.049041ms)
+✖ malformed record envelopes and accessor entry fields refuse without getter execution (0.069416ms)
+✖ pre-rename store failure rolls back staged append and pruning exactly (0.1315ms)
+✖ genuine stale owner detects STORE_CONFLICT despite public mutation attempts (0.05775ms)
+✖ post-rename readback mismatch seals COMMIT_UNCERTAIN without stale publication (0.075417ms)
+✖ post-rename final-read exception is reconciled as COMMIT_UNCERTAIN, not rollback (0.050042ms)
+✖ reentrant record is OWNER_BUSY and performs no nested filesystem IO (0.0455ms)
+✖ successful write without fsync remains explicitly non-durable (0.044042ms)
+✖ previous snapshots remain frozen historical values after later publication (0.048667ms)
+✖ real temporary filesystem bytes recover in a fresh Node process boundary (26.198792ms)
+ℹ tests 28
+ℹ suites 0
+ℹ pass 0
+ℹ fail 28
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 73.728583
+
+✖ failing tests:
+
+test at tests/owner.test.mjs:16:1
+✖ NEW open returns an opaque unique owner and exact frozen empty snapshot (1.047167ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly deep-equal:
+  + actual - expected
+  
+    [
+      'authorizing',
+  +   'reason',
+  -   'owner',
+      'schemaVersion',
+  -   'snapshot',
+      'status'
+    ]
+  
+      at TestContext.<anonymous> (file:///Users/louiscalata/nisi-next-private/work-orders/journal-owner-v2/tests/owner.test.mjs:19:10)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1325:25)
+      at Test.start (node:internal/test_runner/test:1191:17)
+      at startSubtestAfterBootstrap (node:internal/test_runner/harness:385:17) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: [ 'authorizing', 'reason', 'schemaVersion', 'status' ],
+    expected: [ 'authorizing', 'owner', 'schemaVersion', 'snapshot', 'status' ],
+    operator: 'deepStrictEqual',
+    diff: 'simple'
+  }
+
+test at tests/owner.test.mjs:33:1
+✖ inspection is nonmutating and may return the same latest snapshot reference (0.25675ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly deep-equal:
+  + actual - expected
+  
+    [
+      'authorizing',
+  +   'reason',
+      'schemaVersion',
+  -   'snapshot',
+      'status'
+    ]
+  
+      at TestContext.<anonymous> (file:///Users/louiscalata/nisi-next-private/work-orders/journal-owner-v2/tests/owner.test.mjs:37:10)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1325:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:911:18)
+      at Test.postRun (node:internal/test_runner/test:1465:19)
+      at Test.run (node:internal/test_runner/test:1390:12)
+      at async startSubtestAfterBootstrap (node:internal/test_runner/harness:385:3) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: [ 'authorizing', 'reason', 'schemaVersion', 'status' ],
+    expected: [ 'authorizing', 'schemaVersion', 'snapshot', 'status' ],
+    operator: 'deepStrictEqual',
+    diff: 'simple'
+  }
+
+test at tests/owner.test.mjs:44:1
+✖ request envelopes reject extra, hidden, symbol, accessor, array and exotic forms without invoking getters (0.180458ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly deep-equal:
+  + actual - expected
+  
+    {
+      authorizing: false,
+  +   reason: 'UNIMPLEMENTED',
+  -   reason: 'INVALID_INPUT',
+      schemaVersion: 'nisi-journal-owner/v2',
+      status: 'REFUSED'
+    }
+  
+      at TestContext.<anonymous> (file:///Users/louiscalata/nisi-next-private/work-orders/journal-owner-v2/tests/owner.test.mjs:50:37)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1325:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:911:18)
+      at Test.postRun (node:internal/test_runner/test:1465:19)
+      at Test.run (node:internal/test_runner/test:1390:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:911:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: { schemaVersion: 'nisi-journal-owner/v2', status: 'REFUSED', reason: 'UNIMPLEMENTED', authorizing: false },
+    expected: { schemaVersion: 'nisi-journal-owner/v2', status: 'REFUSED', reason: 'INVALID_INPUT', authorizing: false },
+    operator: 'deepStrictEqual',
+    diff: 'simple'
+  }
+
+test at tests/owner.test.mjs:54:1
+✖ manufactured, copied and JSON-roundtripped handles are refused (0.072583ms)
+  SyntaxError: "undefined" is not valid JSON
+      at JSON.parse (<anonymous>)
+      at TestContext.<anonymous> (file:///Users/louiscalata/nisi-next-private/work-orders/journal-owner-v2/tests/owner.test.mjs:56:54)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1325:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:911:18)
+      at Test.postRun (node:internal/test_runner/test:1465:19)
+      at Test.run (node:internal/test_runner/test:1390:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:911:7)
+
+test at tests/owner.test.mjs:62:1
+✖ open validates path, time, fs and exact config without throwing (0.103417ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly deep-equal:
+  + actual - expected
+  
+    {
+      authorizing: false,
+  +   reason: 'UNIMPLEMENTED',
+  -   reason: 'INVALID_INPUT',
+      schemaVersion: 'nisi-journal-owner/v2',
+      status: 'REFUSED'
+    }
+  
+      at TestContext.<anonymous> (file:///Users/louiscalata/nisi-next-private/work-orders/journal-owner-v2/tests/owner.test.mjs:65:12)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1325:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:911:18)
+      at Test.postRun (node:internal/test_runner/test:1465:19)
+      at Test.run (node:internal/test_runner/test:1390:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:911:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: { schemaVersion: 'nisi-journal-owner/v2', status: 'REFUSED', reason: 'UNIMPLEMENTED', authorizing: false },
+    expected: { schemaVersion: 'nisi-journal-owner/v2', status: 'REFUSED', reason: 'INVALID_INPUT', authorizing: false },
+    operator: 'deepStrictEqual',
+    diff: 'simple'
+  }
+
+test at tests/owner.test.mjs:69:1
+✖ open copies configuration and is not changed by later caller mutation (0.14775ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  + actual - expected
+  
+  + 'REFUSED'
+  - 'RECORDED'
+       ^
+  
+      at TestContext.<anonymous> (file:///Users/louiscalata/nisi-next-private/work-orders/journal-owner-v2/tests/owner.test.mjs:75:10)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1325:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:911:18)
+      at Test.postRun (node:internal/test_runner/test:1465:19)
+      at Test.run (node:internal/test_runner/test:1390:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:911:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 'REFUSED',
+    expected: 'RECORDED',
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at tests/owner.test.mjs:80:1
+✖ read failures, non-Buffer reads, invalid UTF-8 and size limit refuse without owner exposure (0.095708ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly deep-equal:
+  + actual - expected
+  
+    {
+      authorizing: false,
+  +   reason: 'UNIMPLEMENTED',
+  -   reason: 'READ_FAILED',
+      schemaVersion: 'nisi-journal-owner/v2',
+      status: 'REFUSED'
+    }
+  
+      at TestContext.<anonymous> (file:///Users/louiscalata/nisi-next-private/work-orders/journal-owner-v2/tests/owner.test.mjs:82:10)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1325:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:911:18)
+      at Test.postRun (node:internal/test_runner/test:1465:19)
+      at Test.run (node:internal/test_runner/test:1390:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:911:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: { schemaVersion: 'nisi-journal-owner/v2', status: 'REFUSED', reason: 'UNIMPLEMENTED', authorizing: false },
+    expected: { schemaVersion: 'nisi-journal-owner/v2', status: 'REFUSED', reason: 'READ_FAILED', authorizing: false },
+    operator: 'deepStrictEqual',
+    diff: 'simple'
+  }
+
+test at tests/owner.test.mjs:93:1
+✖ bad UTF-8 suffix after a valid prefix never exposes a lossy recovered row (0.800625ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly deep-equal:
+  + actual - expected
+  
+    {
+      authorizing: false,
+  +   reason: 'UNIMPLEMENTED',
+  -   reason: 'INVALID_UTF8',
+      schemaVersion: 'nisi-journal-owner/v2',
+      status: 'REFUSED'
+    }
+  
+      at TestContext.<anonymous> (file:///Users/louiscalata/nisi-next-private/work-orders/journal-owner-v2/tests/owner.test.mjs:96:10)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1325:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:911:18)
+      at Test.postRun (node:internal/test_runner/test:1465:19)
+      at Test.run (node:internal/test_runner/test:1390:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:911:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: { schemaVersion: 'nisi-journal-owner/v2', status: 'REFUSED', reason: 'UNIMPLEMENTED', authorizing: false },
+    expected: { schemaVersion: 'nisi-journal-owner/v2', status: 'REFUSED', reason: 'INVALID_UTF8', authorizing: false },
+    operator: 'deepStrictEqual',
+    diff: 'simple'
+  }
+
+test at tests/owner.test.mjs:99:1
+✖ wrong-project COMPLETE, INCOMPLETE and INVALID journals all refuse before prefix exposure (0.202875ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly deep-equal:
+  + actual - expected
+  
+    {
+      authorizing: false,
+  +   reason: 'UNIMPLEMENTED',
+  -   reason: 'PROJECT_MISMATCH',
+      schemaVersion: 'nisi-journal-owner/v2',
+      status: 'REFUSED'
+    }
+  
+      at TestContext.<anonymous> (file:///Users/louiscalata/nisi-next-private/work-orders/journal-owner-v2/tests/owner.test.mjs:104:12)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1325:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:911:18)
+      at Test.postRun (node:internal/test_runner/test:1465:19)
+      at Test.run (node:internal/test_runner/test:1390:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:911:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: { schemaVersion: 'nisi-journal-owner/v2', status: 'REFUSED', reason: 'UNIMPLEMENTED', authorizing: false },
+    expected: { schemaVersion: 'nisi-journal-owner/v2', status: 'REFUSED', reason: 'PROJECT_MISMATCH', authorizing: false },
+    operator: 'deepStrictEqual',
+    diff: 'simple'
+  }
+
+test at tests/owner.test.mjs:108:1
+✖ matching project with any other persisted config difference refuses policy drift (0.168042ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly deep-equal:
+  + actual - expected
+  
+    {
+      authorizing: false,
+  +   reason: 'UNIMPLEMENTED',
+  -   reason: 'CONFIG_MISMATCH',
+      schemaVersion: 'nisi-journal-owner/v2',
+      status: 'REFUSED'
+    }
+  
+      at TestContext.<anonymous> (file:///Users/louiscalata/nisi-next-private/work-orders/journal-owner-v2/tests/owner.test.mjs:115:12)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1325:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:911:18)
+      at Test.postRun (node:internal/test_runner/test:1465:19)
+      at Test.run (node:internal/test_runner/test:1390:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:911:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: { schemaVersion: 'nisi-journal-owner/v2', status: 'REFUSED', reason: 'UNIMPLEMENTED', authorizing: false },
+    expected: { schemaVersion: 'nisi-journal-owner/v2', status: 'REFUSED', reason: 'CONFIG_MISMATCH', authorizing: false },
+    operator: 'deepStrictEqual',
+    diff: 'simple'
+  }
+
+test at tests/owner.test.mjs:119:1
+✖ open refuses a clock behind the persisted journal watermark (0.131042ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly deep-equal:
+  + actual - expected
+  
+    {
+      authorizing: false,
+  +   reason: 'UNIMPLEMENTED',
+  -   reason: 'CLOCK_BEHIND_JOURNAL',
+      schemaVersion: 'nisi-journal-owner/v2',
+      status: 'REFUSED'
+    }
+  
+      at TestContext.<anonymous> (file:///Users/louiscalata/nisi-next-private/work-orders/journal-owner-v2/tests/owner.test.mjs:121:10)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1325:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:911:18)
+      at Test.postRun (node:internal/test_runner/test:1465:19)
+      at Test.run (node:internal/test_runner/test:1390:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:911:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: { schemaVersion: 'nisi-journal-owner/v2', status: 'REFUSED', reason: 'UNIMPLEMENTED', authorizing: false },
+    expected: { schemaVersion: 'nisi-journal-owner/v2', status: 'REFUSED', reason: 'CLOCK_BEHIND_JOURNAL', authorizing: false },
+    operator: 'deepStrictEqual',
+    diff: 'simple'
+  }
+
+test at tests/owner.test.mjs:124:1
+✖ COMPLETE recovery binds exact raw digest and publishes historical entries (0.125083ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  + actual - expected
+  
+  + 'REFUSED'
+  - 'OPENED'
+  
+      at TestContext.<anonymous> (file:///Users/louiscalata/nisi-next-private/work-orders/journal-owner-v2/tests/owner.test.mjs:127:10)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1325:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:911:18)
+      at Test.postRun (node:internal/test_runner/test:1465:19)
+      at Test.run (node:internal/test_runner/test:1390:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:911:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 'REFUSED',
+    expected: 'OPENED',
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at tests/owner.test.mjs:136:1
+✖ matching damaged prefixes open SEALED with verified prefix only and cannot record (0.200667ms)
+  TypeError: Cannot convert undefined or null to object
+      at Object.keys (<anonymous>)
+      at assertSnapshotShape (file:///Users/louiscalata/nisi-next-private/work-orders/journal-owner-v2/tests/helper.mjs:31:27)
+      at TestContext.<anonymous> (file:///Users/louiscalata/nisi-next-private/work-orders/journal-owner-v2/tests/owner.test.mjs:140:5)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1325:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:911:18)
+      at Test.postRun (node:internal/test_runner/test:1465:19)
+      at Test.run (node:internal/test_runner/test:1390:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:911:7)
+
+test at tests/owner.test.mjs:148:1
+✖ NEW record writes, publishes exact staged evidence, redacts payload and freezes all returned evidence (0.078958ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly deep-equal:
+  + actual - expected
+  
+    [
+  -   'append',
+      'authorizing',
+  -   'entryId',
+      'reason',
+      'schemaVersion',
+  -   'snapshot',
+      'status',
+  -   'store'
+    ]
+  
+      at TestContext.<anonymous> (file:///Users/louiscalata/nisi-next-private/work-orders/journal-owner-v2/tests/owner.test.mjs:151:10)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1325:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:911:18)
+      at Test.postRun (node:internal/test_runner/test:1465:19)
+      at Test.run (node:internal/test_runner/test:1390:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:911:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: [ 'authorizing', 'reason', 'schemaVersion', 'status' ],
+    expected: [ 'append', 'authorizing', 'entryId', 'reason', 'schemaVersion', 'snapshot', 'status', 'store' ],
+    operator: 'deepStrictEqual',
+    diff: 'simple'
+  }
+
+test at tests/owner.test.mjs:167:1
+✖ current fixed-XPC projected observation is inert history payload, not authority (0.055708ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  + actual - expected
+  
+  + 'REFUSED'
+  - 'RECORDED'
+       ^
+  
+      at TestContext.<anonymous> (file:///Users/louiscalata/nisi-next-private/work-orders/journal-owner-v2/tests/owner.test.mjs:174:10)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1325:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:911:18)
+      at Test.postRun (node:internal/test_runner/test:1465:19)
+      at Test.run (node:internal/test_runner/test:1390:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:911:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 'REFUSED',
+    expected: 'RECORDED',
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at tests/owner.test.mjs:180:1
+✖ RUNNING stale observation is listed as interrupted only when UNKNOWN and active (0.052666ms)
+  TypeError: Cannot read properties of undefined (reading 'interrupted')
+      at TestContext.<anonymous> (file:///Users/louiscalata/nisi-next-private/work-orders/journal-owner-v2/tests/owner.test.mjs:184:36)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1325:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:911:18)
+      at Test.postRun (node:internal/test_runner/test:1465:19)
+      at Test.run (node:internal/test_runner/test:1390:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:911:7)
+
+test at tests/owner.test.mjs:187:1
+✖ revocation removes an UNKNOWN RUNNING observation from interrupted without granting authority (0.040792ms)
+  TypeError: Cannot read properties of undefined (reading 'interrupted')
+      at TestContext.<anonymous> (file:///Users/louiscalata/nisi-next-private/work-orders/journal-owner-v2/tests/owner.test.mjs:190:59)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1325:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:911:18)
+      at Test.postRun (node:internal/test_runner/test:1465:19)
+      at Test.run (node:internal/test_runner/test:1390:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:911:7)
+
+test at tests/owner.test.mjs:198:1
+✖ duplicate returns original accepted snapshot and conflict performs no storage (0.051125ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  + actual - expected
+  
+  + 'REFUSED'
+  - 'DUPLICATE'
+  
+      at TestContext.<anonymous> (file:///Users/louiscalata/nisi-next-private/work-orders/journal-owner-v2/tests/owner.test.mjs:202:10)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1325:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:911:18)
+      at Test.postRun (node:internal/test_runner/test:1465:19)
+      at Test.run (node:internal/test_runner/test:1390:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:911:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 'REFUSED',
+    expected: 'DUPLICATE',
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at tests/owner.test.mjs:214:1
+✖ entry refusal and time failure preserve the accepted snapshot and do not escape (0.049041ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  + actual - expected
+  
+  + 'UNIMPLEMENTED'
+  - 'PROJECT'
+  
+      at TestContext.<anonymous> (file:///Users/louiscalata/nisi-next-private/work-orders/journal-owner-v2/tests/owner.test.mjs:217:49)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1325:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:911:18)
+      at Test.postRun (node:internal/test_runner/test:1465:19)
+      at Test.run (node:internal/test_runner/test:1390:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:911:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 'UNIMPLEMENTED',
+    expected: 'PROJECT',
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at tests/owner.test.mjs:222:1
+✖ malformed record envelopes and accessor entry fields refuse without getter execution (0.069416ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  + actual - expected
+  
+  + 'UNIMPLEMENTED'
+  - 'ENTRY'
+  
+      at TestContext.<anonymous> (file:///Users/louiscalata/nisi-next-private/work-orders/journal-owner-v2/tests/owner.test.mjs:225:10)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1325:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:911:18)
+      at Test.postRun (node:internal/test_runner/test:1465:19)
+      at Test.run (node:internal/test_runner/test:1390:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:911:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 'UNIMPLEMENTED',
+    expected: 'ENTRY',
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at tests/owner.test.mjs:232:1
+✖ pre-rename store failure rolls back staged append and pruning exactly (0.1315ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  + actual - expected
+  
+  + 'REFUSED'
+  - 'STORE_FAILED'
+  
+      at TestContext.<anonymous> (file:///Users/louiscalata/nisi-next-private/work-orders/journal-owner-v2/tests/owner.test.mjs:237:10)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1325:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:911:18)
+      at Test.postRun (node:internal/test_runner/test:1465:19)
+      at Test.run (node:internal/test_runner/test:1390:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:911:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 'REFUSED',
+    expected: 'STORE_FAILED',
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at tests/owner.test.mjs:245:1
+✖ genuine stale owner detects STORE_CONFLICT despite public mutation attempts (0.05775ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  + actual - expected
+  
+  + 'REFUSED'
+  - 'RECORDED'
+       ^
+  
+      at TestContext.<anonymous> (file:///Users/louiscalata/nisi-next-private/work-orders/journal-owner-v2/tests/owner.test.mjs:246:52)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1325:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:911:18)
+      at Test.postRun (node:internal/test_runner/test:1465:19)
+      at Test.run (node:internal/test_runner/test:1390:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:911:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 'REFUSED',
+    expected: 'RECORDED',
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at tests/owner.test.mjs:259:1
+✖ post-rename readback mismatch seals COMMIT_UNCERTAIN without stale publication (0.075417ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  + actual - expected
+  
+  + 'REFUSED'
+  - 'STORE_FAILED'
+  
+      at TestContext.<anonymous> (file:///Users/louiscalata/nisi-next-private/work-orders/journal-owner-v2/tests/owner.test.mjs:265:10)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1325:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:911:18)
+      at Test.postRun (node:internal/test_runner/test:1465:19)
+      at Test.run (node:internal/test_runner/test:1390:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:911:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 'REFUSED',
+    expected: 'STORE_FAILED',
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at tests/owner.test.mjs:282:1
+✖ post-rename final-read exception is reconciled as COMMIT_UNCERTAIN, not rollback (0.050042ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  + actual - expected
+  
+  + 'REFUSED'
+  - 'STORE_FAILED'
+  
+      at TestContext.<anonymous> (file:///Users/louiscalata/nisi-next-private/work-orders/journal-owner-v2/tests/owner.test.mjs:291:10)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1325:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:911:18)
+      at Test.postRun (node:internal/test_runner/test:1465:19)
+      at Test.run (node:internal/test_runner/test:1390:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:911:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 'REFUSED',
+    expected: 'STORE_FAILED',
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at tests/owner.test.mjs:300:1
+✖ reentrant record is OWNER_BUSY and performs no nested filesystem IO (0.0455ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  + actual - expected
+  
+  + 'REFUSED'
+  - 'RECORDED'
+       ^
+  
+      at TestContext.<anonymous> (file:///Users/louiscalata/nisi-next-private/work-orders/journal-owner-v2/tests/owner.test.mjs:308:10)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1325:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:911:18)
+      at Test.postRun (node:internal/test_runner/test:1465:19)
+      at Test.run (node:internal/test_runner/test:1390:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:911:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 'REFUSED',
+    expected: 'RECORDED',
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at tests/owner.test.mjs:313:1
+✖ successful write without fsync remains explicitly non-durable (0.044042ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  + actual - expected
+  
+  + 'REFUSED'
+  - 'RECORDED'
+       ^
+  
+      at TestContext.<anonymous> (file:///Users/louiscalata/nisi-next-private/work-orders/journal-owner-v2/tests/owner.test.mjs:317:10)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1325:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:911:18)
+      at Test.postRun (node:internal/test_runner/test:1465:19)
+      at Test.run (node:internal/test_runner/test:1390:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:911:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 'REFUSED',
+    expected: 'RECORDED',
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at tests/owner.test.mjs:324:1
+✖ previous snapshots remain frozen historical values after later publication (0.048667ms)
+  AssertionError [ERR_ASSERTION]: Expected "actual" to be strictly unequal to:
+  
+  undefined
+      at TestContext.<anonymous> (file:///Users/louiscalata/nisi-next-private/work-orders/journal-owner-v2/tests/owner.test.mjs:327:10)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1325:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:911:18)
+      at Test.postRun (node:internal/test_runner/test:1465:19)
+      at Test.run (node:internal/test_runner/test:1390:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:911:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: undefined,
+    expected: undefined,
+    operator: 'notStrictEqual',
+    diff: 'simple'
+  }
+
+test at tests/owner.test.mjs:335:1
+✖ real temporary filesystem bytes recover in a fresh Node process boundary (26.198792ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly deep-equal:
+  + actual - expected
+  
+    {
+      authorizing: false,
+  +   status: 'REFUSED'
+  -   status: 'RECORDED'
+    }
+  
+      at TestContext.<anonymous> (file:///Users/louiscalata/nisi-next-private/work-orders/journal-owner-v2/tests/owner.test.mjs:351:12)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1325:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:911:18)
+      at Test.postRun (node:internal/test_runner/test:1465:19)
+      at Test.run (node:internal/test_runner/test:1390:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:911:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: { status: 'REFUSED', authorizing: false },
+    expected: { status: 'RECORDED', authorizing: false },
+    operator: 'deepStrictEqual',
+    diff: 'simple'
+  }
+

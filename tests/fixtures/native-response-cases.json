@@ -1,0 +1,102 @@
+[
+  {
+    "id": "baseline-single-message",
+    "responseText": "{\"model_instance_id\":\"synthetic.instance\",\"output\":[{\"type\":\"message\",\"content\":\"{\\\"ready\\\":true}\"}],\"stats\":{\"input_tokens\":10,\"total_output_tokens\":5,\"reasoning_output_tokens\":0,\"tokens_per_second\":10,\"time_to_first_token_seconds\":0.1}}",
+    "expectEnvelopeAccepted": true
+  },
+  {
+    "id": "wrong-instance",
+    "responseText": "{\"model_instance_id\":\"different.instance\",\"output\":[{\"type\":\"message\",\"content\":\"{\\\"ready\\\":true}\"}],\"stats\":{\"input_tokens\":10,\"total_output_tokens\":5,\"reasoning_output_tokens\":0,\"tokens_per_second\":10,\"time_to_first_token_seconds\":0.1}}",
+    "expectEnvelopeAccepted": false
+  },
+  {
+    "id": "response-id-forbidden",
+    "responseText": "{\"model_instance_id\":\"synthetic.instance\",\"output\":[{\"type\":\"message\",\"content\":\"{\\\"ready\\\":true}\"}],\"stats\":{\"input_tokens\":10,\"total_output_tokens\":5,\"reasoning_output_tokens\":0,\"tokens_per_second\":10,\"time_to_first_token_seconds\":0.1},\"response_id\":\"stored.response\"}",
+    "expectEnvelopeAccepted": false
+  },
+  {
+    "id": "empty-outer",
+    "responseText": "",
+    "expectEnvelopeAccepted": false
+  },
+  {
+    "id": "duplicate-outer-key",
+    "responseText": "{\"model_instance_id\":\"synthetic.instance\",\"model_instance_id\":\"synthetic.instance\",\"output\":[{\"type\":\"message\",\"content\":\"{\\\"ready\\\":true}\"}],\"stats\":{\"input_tokens\":10,\"total_output_tokens\":5,\"reasoning_output_tokens\":0,\"tokens_per_second\":10,\"time_to_first_token_seconds\":0.1}}",
+    "expectEnvelopeAccepted": false
+  },
+  {
+    "id": "malformed-outer",
+    "responseText": "{",
+    "expectEnvelopeAccepted": false
+  },
+  {
+    "id": "unknown-envelope-field",
+    "responseText": "{\"model_instance_id\":\"synthetic.instance\",\"output\":[{\"type\":\"message\",\"content\":\"{\\\"ready\\\":true}\"}],\"stats\":{\"input_tokens\":10,\"total_output_tokens\":5,\"reasoning_output_tokens\":0,\"tokens_per_second\":10,\"time_to_first_token_seconds\":0.1},\"finish_reason\":\"stop\"}",
+    "expectEnvelopeAccepted": false
+  },
+  {
+    "id": "multiple-messages",
+    "responseText": "{\"model_instance_id\":\"synthetic.instance\",\"output\":[{\"type\":\"message\",\"content\":\"{\\\"ready\\\":true}\"},{\"type\":\"message\",\"content\":\"{\\\"ready\\\":true}\"}],\"stats\":{\"input_tokens\":10,\"total_output_tokens\":5,\"reasoning_output_tokens\":0,\"tokens_per_second\":10,\"time_to_first_token_seconds\":0.1}}",
+    "expectEnvelopeAccepted": false
+  },
+  {
+    "id": "reasoning-item",
+    "responseText": "{\"model_instance_id\":\"synthetic.instance\",\"output\":[{\"type\":\"reasoning\",\"content\":\"synthetic reasoning\"}],\"stats\":{\"input_tokens\":10,\"total_output_tokens\":5,\"reasoning_output_tokens\":0,\"tokens_per_second\":10,\"time_to_first_token_seconds\":0.1}}",
+    "expectEnvelopeAccepted": false
+  },
+  {
+    "id": "tool-call-item",
+    "responseText": "{\"model_instance_id\":\"synthetic.instance\",\"output\":[{\"type\":\"tool_call\"}],\"stats\":{\"input_tokens\":10,\"total_output_tokens\":5,\"reasoning_output_tokens\":0,\"tokens_per_second\":10,\"time_to_first_token_seconds\":0.1}}",
+    "expectEnvelopeAccepted": false
+  },
+  {
+    "id": "invalid-tool-call-item",
+    "responseText": "{\"model_instance_id\":\"synthetic.instance\",\"output\":[{\"type\":\"invalid_tool_call\"}],\"stats\":{\"input_tokens\":10,\"total_output_tokens\":5,\"reasoning_output_tokens\":0,\"tokens_per_second\":10,\"time_to_first_token_seconds\":0.1}}",
+    "expectEnvelopeAccepted": false
+  },
+  {
+    "id": "bad-performance-stats",
+    "responseText": "{\"model_instance_id\":\"synthetic.instance\",\"output\":[{\"type\":\"message\",\"content\":\"{\\\"ready\\\":true}\"}],\"stats\":{\"input_tokens\":10,\"total_output_tokens\":5,\"reasoning_output_tokens\":0,\"tokens_per_second\":-1,\"time_to_first_token_seconds\":0.1}}",
+    "expectEnvelopeAccepted": false
+  },
+  {
+    "id": "unknown-stats-field",
+    "responseText": "{\"model_instance_id\":\"synthetic.instance\",\"output\":[{\"type\":\"message\",\"content\":\"{\\\"ready\\\":true}\"}],\"stats\":{\"input_tokens\":10,\"total_output_tokens\":5,\"reasoning_output_tokens\":0,\"tokens_per_second\":10,\"time_to_first_token_seconds\":0.1,\"total_tokens\":15}}",
+    "expectEnvelopeAccepted": false
+  },
+  {
+    "id": "output-cap-equality",
+    "responseText": "{\"model_instance_id\":\"synthetic.instance\",\"output\":[{\"type\":\"message\",\"content\":\"{\\\"ready\\\":true}\"}],\"stats\":{\"input_tokens\":10,\"total_output_tokens\":128,\"reasoning_output_tokens\":0,\"tokens_per_second\":10,\"time_to_first_token_seconds\":0.1}}",
+    "expectEnvelopeAccepted": false
+  },
+  {
+    "id": "output-over-cap",
+    "responseText": "{\"model_instance_id\":\"synthetic.instance\",\"output\":[{\"type\":\"message\",\"content\":\"{\\\"ready\\\":true}\"}],\"stats\":{\"input_tokens\":10,\"total_output_tokens\":129,\"reasoning_output_tokens\":0,\"tokens_per_second\":10,\"time_to_first_token_seconds\":0.1}}",
+    "expectEnvelopeAccepted": false
+  },
+  {
+    "id": "fractional-token-count",
+    "responseText": "{\"model_instance_id\":\"synthetic.instance\",\"output\":[{\"type\":\"message\",\"content\":\"{\\\"ready\\\":true}\"}],\"stats\":{\"input_tokens\":10.5,\"total_output_tokens\":5,\"reasoning_output_tokens\":0,\"tokens_per_second\":10,\"time_to_first_token_seconds\":0.1}}",
+    "expectEnvelopeAccepted": false
+  },
+  {
+    "id": "negative-token-count",
+    "responseText": "{\"model_instance_id\":\"synthetic.instance\",\"output\":[{\"type\":\"message\",\"content\":\"{\\\"ready\\\":true}\"}],\"stats\":{\"input_tokens\":-1,\"total_output_tokens\":5,\"reasoning_output_tokens\":0,\"tokens_per_second\":10,\"time_to_first_token_seconds\":0.1}}",
+    "expectEnvelopeAccepted": false
+  },
+  {
+    "id": "overflow-token-count",
+    "responseText": "{\"model_instance_id\":\"synthetic.instance\",\"output\":[{\"type\":\"message\",\"content\":\"{\\\"ready\\\":true}\"}],\"stats\":{\"input_tokens\":9007199254740992,\"total_output_tokens\":5,\"reasoning_output_tokens\":0,\"tokens_per_second\":10,\"time_to_first_token_seconds\":0.1}}",
+    "expectEnvelopeAccepted": false
+  },
+  {
+    "id": "reasoning-tokens-nonzero",
+    "responseText": "{\"model_instance_id\":\"synthetic.instance\",\"output\":[{\"type\":\"message\",\"content\":\"{\\\"ready\\\":true}\"}],\"stats\":{\"input_tokens\":10,\"total_output_tokens\":5,\"reasoning_output_tokens\":1,\"tokens_per_second\":10,\"time_to_first_token_seconds\":0.1}}",
+    "expectEnvelopeAccepted": false
+  },
+  {
+    "id": "message-missing-content",
+    "responseText": "{\"model_instance_id\":\"synthetic.instance\",\"output\":[{\"type\":\"message\"}],\"stats\":{\"input_tokens\":10,\"total_output_tokens\":5,\"reasoning_output_tokens\":0,\"tokens_per_second\":10,\"time_to_first_token_seconds\":0.1}}",
+    "expectEnvelopeAccepted": false
+  }
+]

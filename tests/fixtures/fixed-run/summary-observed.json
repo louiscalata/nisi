@@ -1,0 +1,151 @@
+{
+  "schemaVersion": "nisi-fixed-run-summary/v1",
+  "identity": {
+    "childPid": 20280,
+    "servicePid": 20279,
+    "waitObservedPid": 20280
+  },
+  "lifecycle": {
+    "spawnReturn": 0,
+    "exitCode": 0,
+    "signal": null,
+    "rawWaitStatus": 0,
+    "stdoutEOF": true,
+    "stderrEOF": true,
+    "drainObserved": true,
+    "waitObserved": true,
+    "timeout": false,
+    "outputCapExceeded": false
+  },
+  "gate": "RUN_COMPLETE",
+  "reasons": [],
+  "adaptation": {
+    "version": "nisi-fixed-canary-mapping/v1",
+    "adaptedOutput": "{\"op\":\"self-report\",\"pid\":20280,\"ppid\":20279}\n{\"op\":\"own-write\",\"outcome\":\"ALLOWED\",\"errno\":0}\n{\"op\":\"own-read\",\"outcome\":\"ALLOWED\",\"errno\":0}\n{\"op\":\"outside-read\",\"outcome\":\"DENIED\",\"errno\":1}\n{\"op\":\"loopback-bind\",\"outcome\":\"DENIED\",\"errno\":1}\n",
+    "report": [
+      {
+        "line": 1,
+        "action": "MAPPED_IDENTITY",
+        "operation": "self_report",
+        "op": "self-report",
+        "outcome": "observed",
+        "mappedOutcome": null
+      },
+      {
+        "line": 2,
+        "action": "MAPPED",
+        "operation": "own_container_write",
+        "op": "own-write",
+        "outcome": "allowed",
+        "mappedOutcome": "ALLOWED"
+      },
+      {
+        "line": 3,
+        "action": "MAPPED",
+        "operation": "own_container_read",
+        "op": "own-read",
+        "outcome": "allowed",
+        "mappedOutcome": "ALLOWED"
+      },
+      {
+        "line": 4,
+        "action": "MAPPED_DENIAL",
+        "operation": "outside_read",
+        "op": "outside-read",
+        "outcome": "error",
+        "mappedOutcome": "DENIED"
+      },
+      {
+        "line": 5,
+        "action": "MAPPED_DENIAL",
+        "operation": "ipv4_loopback_bind",
+        "op": "loopback-bind",
+        "outcome": "error",
+        "mappedOutcome": "DENIED"
+      },
+      {
+        "line": 6,
+        "action": "BLANK",
+        "operation": null,
+        "op": null,
+        "outcome": null,
+        "mappedOutcome": null
+      }
+    ],
+    "counts": {
+      "mapped": 5,
+      "passthrough": 0,
+      "rejected": 0,
+      "blank": 1
+    }
+  },
+  "adjudication": {
+    "rows": [
+      {
+        "operation": "own-write",
+        "expectedOutcome": "ALLOWED",
+        "expectedErrno": 0,
+        "observedOutcome": "ALLOWED",
+        "observedErrno": 0,
+        "observedPid": null,
+        "observedPpid": null,
+        "verdict": "MATCH"
+      },
+      {
+        "operation": "own-read",
+        "expectedOutcome": "ALLOWED",
+        "expectedErrno": 0,
+        "observedOutcome": "ALLOWED",
+        "observedErrno": 0,
+        "observedPid": null,
+        "observedPpid": null,
+        "verdict": "MATCH"
+      },
+      {
+        "operation": "outside-read",
+        "expectedOutcome": "DENIED",
+        "expectedErrno": 1,
+        "observedOutcome": "DENIED",
+        "observedErrno": 1,
+        "observedPid": null,
+        "observedPpid": null,
+        "verdict": "MATCH"
+      },
+      {
+        "operation": "loopback-bind",
+        "expectedOutcome": "DENIED",
+        "expectedErrno": 1,
+        "observedOutcome": "DENIED",
+        "observedErrno": 1,
+        "observedPid": null,
+        "observedPpid": null,
+        "verdict": "MATCH"
+      },
+      {
+        "operation": "self-report",
+        "expectedOutcome": "SELF_REPORT",
+        "expectedErrno": null,
+        "observedOutcome": null,
+        "observedErrno": null,
+        "observedPid": 20280,
+        "observedPpid": 20279,
+        "verdict": "MATCH"
+      }
+    ],
+    "malformedLines": [],
+    "unexpectedOperations": [],
+    "counts": {
+      "matched": 5,
+      "mismatched": 0,
+      "notObserved": 0,
+      "ambiguous": 0
+    },
+    "overall": "ALL_MATCHED",
+    "isolationAccepted": false
+  },
+  "table": "Fixed canary adjudication\nOverall: ALL_MATCHED\nRows:\n- own-write: expected ALLOWED errno 0, observed ALLOWED (errno 0) -> MATCH\n- own-read: expected ALLOWED errno 0, observed ALLOWED (errno 0) -> MATCH\n- outside-read: expected DENIED errno 1, observed DENIED (errno 1) -> MATCH\n- loopback-bind: expected DENIED errno 1, observed DENIED (errno 1) -> MATCH\n- self-report: expected SELF_REPORT, observed pid 20280 ppid 20279 -> MATCH\nMalformed lines: 0\nUnexpected operations: none\n\nIsolation acceptance is not established by this table.\n",
+  "overall": "OBSERVED",
+  "isolationAccepted": false,
+  "generatedCodeExecuted": false,
+  "authorizing": false
+}

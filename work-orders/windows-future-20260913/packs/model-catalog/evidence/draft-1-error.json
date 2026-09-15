@@ -1,0 +1,9 @@
+{
+  "schema_version": 1,
+  "id": "mac-20260913-155804-5e53eb52c06573201378feee97126ec1",
+  "status": "error",
+  "error": "fetch failed",
+  "elapsed_seconds": 303.1,
+  "ownerDecision": "No code, no acceptance; no automatic resend. Continue independent Qwen drafting and retain required reviewer gap.",
+  "authorizing": false
+}

@@ -1,0 +1,278 @@
+{
+  "schemaVersion": 1,
+  "date": "2026-09-13",
+  "recordedAtUtc": "2026-09-13 21:52:58 UTC",
+  "owner": "Astra (Codex), sole product writer",
+  "status": "PASS_SCOPED",
+  "scope": "Formatter integration resumption through user steps 1–3. Step 4 is the separate isolated run-journal-store fix, not covered by these formatter test counts.",
+  "canonicalRoadmap": "roadmap.md",
+  "product": {
+    "path": "hosts/macos-xpc/native-canary-adjudicator.mjs",
+    "beforeSha256": "cf875eaa7adf335ceab49ae16f9941e2d9b5b9780f5ca15c22eea4c97405de00",
+    "afterSha256": "444acc75db292d69c62ce0360f536ea73292317f78b36409acc619774b44e9eb",
+    "changedThisResumption": false,
+    "change": "Escape backslash, C0/C1 controls, Unicode line separators and selected bidi controls in row.operation, non-null row.observedOutcome and unexpectedOperations; leave structured evidence intact."
+  },
+  "regression": {
+    "path": "tests/native-canary-table-display.test.mjs",
+    "sha256": "3738bcb8799b299ed26ff7bd9d8aaf9dfdeebb5a58c45da09534cf3706ceda6d",
+    "tests": 7,
+    "passedInFreshRootRun": 7
+  },
+  "filesTouchedAcrossFormatterIntegration": [
+    {
+      "path": "hosts/macos-xpc/native-canary-adjudicator.mjs",
+      "phase": "prior integration; unchanged in this resumption",
+      "beforeSha256": "cf875eaa7adf335ceab49ae16f9941e2d9b5b9780f5ca15c22eea4c97405de00",
+      "afterSha256": "444acc75db292d69c62ce0360f536ea73292317f78b36409acc619774b44e9eb",
+      "reason": "Product displayField helper and three display substitutions; structured adjudication unchanged.",
+      "beforeHashEvidence": "Accepted frozen copies plus codex-opus-takeover/formatter.patch and REPORT.md"
+    },
+    {
+      "path": "tests/native-canary-table-display.test.mjs",
+      "phase": "prior integration; unchanged in this resumption",
+      "beforeSha256": null,
+      "beforeState": "new regression file in prior integration",
+      "afterSha256": "3738bcb8799b299ed26ff7bd9d8aaf9dfdeebb5a58c45da09534cf3706ceda6d",
+      "tests": 7,
+      "reason": "Display injection and readability regressions; matches user-provided SHA256."
+    },
+    {
+      "path": "tests/native-canary-adapter-baseline.test.mjs",
+      "phase": "prior integration; unchanged in this resumption",
+      "beforeSha256": "046d29c1c2ad8a1b42cdecf627c00018cb1157fe27b42bd39a6375ea80eee410",
+      "afterSha256": "894e6d2e48fd0696908a236b1b5adce504d0e9ee5fe54800dd250cf24ffc2a7a",
+      "beforeHashEvidence": "five-work-order-integration/receipt.json placements[13].afterSha256; matches inverse one-literal substitution",
+      "reason": "This product baseline reads the product module, so its 444acc75 pin is correct."
+    },
+    {
+      "path": "roadmap.md",
+      "phase": "prior integration; unchanged in this resumption",
+      "beforeSha256": null,
+      "beforeState": "Exact pre-display-edit snapshot not established; older integration hashes refer to earlier revisions and are not substituted.",
+      "afterSha256": "98b5573731564b91eb377ac2bf1da7043591fb20e20c35f79ff652e8ca0dee11",
+      "reason": "Existing dated display-escape row retained, including its historical verification-pending wording. This receipt records the fresh result without expanding the current write scope."
+    },
+    {
+      "path": "work-orders/native-canary-adapter/tests/baseline.test.mjs",
+      "phase": "reverted by Astra in this resumption",
+      "beforeSha256": "cfef2edb4b1023168864c916206fbe942dcf71ea6b3507834b5250655c8f6119",
+      "afterSha256": "26a6689dae6763114af5a5c17d4b51894b5c323d49313d9d502535f6e88c699b",
+      "priorPin": "444acc75db292d69c62ce0360f536ea73292317f78b36409acc619774b44e9eb",
+      "restoredPin": "cf875eaa7adf335ceab49ae16f9941e2d9b5b9780f5ca15c22eea4c97405de00",
+      "reason": "Baseline hashes its own accepted frozen source copy, not the corrected product module. Restore the accepted hash; do not alter the frozen source."
+    },
+    {
+      "path": "work-orders/native-canary-adapter/roadmap.md",
+      "phase": "appended by Astra in this resumption",
+      "beforeSha256": "fd314d01208d1039989ad68f56fe3974f78b7b8fc63f1a2bcbb17ed8e4d71245",
+      "afterSha256": "e14d9612cca6397f8a467439fbc934edaaccc01a92436f497fa675dfd8dce3cd",
+      "reason": "One dated correction line explicitly supersedes the mistaken re-pin note; accepted frozen bytes stay fixed and the product carries the display fix."
+    },
+    {
+      "path": "work-orders/native-canary-summary/tests/baseline.test.mjs",
+      "phase": "already reverted by Claude before this resumption; verified unchanged",
+      "beforeSha256": "e83e4c3db18965515f5715791a2da5b5bdbcf0532a80e5d6a13951aaec575869",
+      "beforeHashEvidence": "Reconstructed in memory by substituting only 444acc75 for cf875eaa in the restored file; not a retained pre-revert artifact.",
+      "afterSha256": "0f9c6f84db51f323ebca91b839c9b545b6e6f74b8abc1177b9fae4323238f716",
+      "resumptionBeforeSha256": "0f9c6f84db51f323ebca91b839c9b545b6e6f74b8abc1177b9fae4323238f716",
+      "priorPin": "444acc75db292d69c62ce0360f536ea73292317f78b36409acc619774b44e9eb",
+      "restoredPin": "cf875eaa7adf335ceab49ae16f9941e2d9b5b9780f5ca15c22eea4c97405de00",
+      "reason": "The summary work-order baseline also hashes its own frozen source; Claude's completed revert preserves the accepted source bytes."
+    },
+    {
+      "path": "work-orders/native-canary-summary/roadmap.md",
+      "phase": "Claude correction already present; unchanged in this resumption",
+      "beforeSha256": "532994e96ffc4b538c35a975925f448c86dd4a0152ee91a369b0bb0a2c0439d7",
+      "afterSha256": "532994e96ffc4b538c35a975925f448c86dd4a0152ee91a369b0bb0a2c0439d7",
+      "hashBoundary": "resumption only; pre-Claude-note hash not established",
+      "reason": "Retained Claude 15:35 PDT note records the temporary wrong pin and its revert."
+    },
+    {
+      "path": "docs/verification/2026-09-13/formatter-display-escape/receipt.json",
+      "phase": "created by Astra in this resumption",
+      "beforeSha256": null,
+      "afterSha256": null,
+      "hashBoundary": "new file; self hash intentionally excluded"
+    },
+    {
+      "path": "docs/verification/2026-09-13/formatter-display-escape/README.md",
+      "phase": "created by Astra in this resumption",
+      "beforeSha256": null,
+      "afterSha256": null,
+      "hashBoundary": "new companion file; final hash reported outside this receipt"
+    }
+  ],
+  "frozenCopies": [
+    {
+      "path": "work-orders/native-canary-adapter/src/native-canary-adjudicator.mjs",
+      "beforeSha256": "cf875eaa7adf335ceab49ae16f9941e2d9b5b9780f5ca15c22eea4c97405de00",
+      "afterSha256": "cf875eaa7adf335ceab49ae16f9941e2d9b5b9780f5ca15c22eea4c97405de00",
+      "changed": false
+    },
+    {
+      "path": "work-orders/native-canary-summary/src/native-canary-adjudicator.mjs",
+      "beforeSha256": "cf875eaa7adf335ceab49ae16f9941e2d9b5b9780f5ca15c22eea4c97405de00",
+      "afterSha256": "cf875eaa7adf335ceab49ae16f9941e2d9b5b9780f5ca15c22eea4c97405de00",
+      "changed": false
+    }
+  ],
+  "freshChecks": [
+    {
+      "cwd": "work-orders/native-canary-adapter",
+      "command": "npm test",
+      "exitCode": 0,
+      "tests": 3,
+      "passed": 3,
+      "failed": 0,
+      "cancelled": 0,
+      "skipped": 0,
+      "todo": 0,
+      "output": "\n> nisi-private-native-canary-adapter-draft@0.0.0-private test\n> node --test --test-timeout=5000 tests/baseline.test.mjs\n\n✔ baseline package stays private, dependency-free and ESM (1.676792ms)\n✔ baseline module exports the three named functions (0.098167ms)\n✔ baseline frozen fixtures are byte-identical to the accepted sources (0.667292ms)\nℹ tests 3\nℹ suites 0\nℹ pass 3\nℹ fail 0\nℹ cancelled 0\nℹ skipped 0\nℹ todo 0\nℹ duration_ms 33.412\n"
+    },
+    {
+      "cwd": "work-orders/native-canary-summary",
+      "command": "npm test",
+      "exitCode": 0,
+      "tests": 3,
+      "passed": 3,
+      "failed": 0,
+      "cancelled": 0,
+      "skipped": 0,
+      "todo": 0,
+      "output": "\n> nisi-private-native-canary-summary-draft@0.0.0-private test\n> node --test --test-timeout=5000 tests/baseline.test.mjs\n\n✔ baseline package stays private, dependency-free and ESM (1.720916ms)\n✔ baseline module exports the summary function (0.100417ms)\n✔ baseline frozen modules and fixtures are byte-identical to the accepted sources (0.870625ms)\nℹ tests 3\nℹ suites 0\nℹ pass 3\nℹ fail 0\nℹ cancelled 0\nℹ skipped 0\nℹ todo 0\nℹ duration_ms 33.433958\n"
+    },
+    {
+      "cwd": "work-orders/native-canary-summary",
+      "command": "npm run test:summary",
+      "exitCode": 0,
+      "tests": 10,
+      "passed": 10,
+      "failed": 0,
+      "cancelled": 0,
+      "skipped": 0,
+      "todo": 0,
+      "output": "\n> nisi-private-native-canary-summary-draft@0.0.0-private test:summary\n> node --test --test-timeout=5000 tests/summary.test.mjs\n\n✔ summary of the real inherit run is OBSERVED with the exact adjudicated table (1.03675ms)\n✔ a pid mismatch between the reaped child and the spawned child is never OBSERVED (0.169666ms)\n✔ exit status faults are named in a fixed order and each alone is disqualifying (0.749416ms)\n✔ tampered canary output is CANARIES_NOT_MATCHED with the mismatch visible in the table (0.175083ms)\n✔ unavailable identities skip adjudication entirely and are never OBSERVED (0.103667ms)\n✔ an empty receipt names every failed gate in order and reads all lifecycle fields as null (0.063917ms)\n✔ lifecycle fields are typed reads: wrong types read as null, and inherited properties are ignored (0.083417ms)\n✔ invalid receipt or stdout types throw TypeError before any adjudication (0.169958ms)\n✔ summary does not mutate frozen inputs and returns fresh objects (0.180417ms)\n✔ summary module imports only its two sibling modules and stays pure otherwise (2.066084ms)\nℹ tests 10\nℹ suites 0\nℹ pass 10\nℹ fail 0\nℹ cancelled 0\nℹ skipped 0\nℹ todo 0\nℹ duration_ms 33.766125\n"
+    },
+    {
+      "cwd": ".",
+      "command": "npm run check",
+      "exitCode": 0,
+      "tests": 1170,
+      "passed": 1170,
+      "failed": 0,
+      "cancelled": 0,
+      "skipped": 0,
+      "todo": 0,
+      "structural": {
+        "status": "PASS",
+        "mutationFixturesDetected": 8,
+        "mutationFixturesTotal": 8,
+        "allowedFixturesAccepted": 8,
+        "allowedFixturesTotal": 8,
+        "sourceFindings": 0,
+        "resultDigest": "66d9c396e18a434690c34ad059279774154062982313c2973fdb14f54c52eef0"
+      },
+      "outputSummary": [
+        "> nisi@0.2.0-private.0 check",
+        "> npm run check:structural && npm test",
+        "> nisi@0.2.0-private.0 check:structural",
+        "> node scripts/require-node.cjs && node scripts/structural-check.mjs",
+        "> nisi@0.2.0-private.0 test",
+        "> node scripts/require-node.cjs && node --test tests/*.test.mjs",
+        "ℹ tests 1170",
+        "ℹ suites 0",
+        "ℹ pass 1170",
+        "ℹ fail 0",
+        "ℹ cancelled 0",
+        "ℹ skipped 0",
+        "ℹ todo 0",
+        "ℹ duration_ms 6500.505958"
+      ],
+      "rootOutputSha256": "d848ac1d977a57fb786c947646c801d0f7af945e4041975eb2a3763dcf5e3935",
+      "fullRootOutputRetained": false,
+      "rootOutputNote": "Output digest binds the captured run; only summaries, structural output and seven regression lines are retained here.",
+      "displayRegressionLines": [
+        "✔ golden composed result remains matching, non-authorizing and deterministic (1.437291ms)",
+        "✔ untrusted unexpected-operation newline cannot forge a second Overall line (0.620084ms)",
+        "✔ untrusted observed-outcome newline cannot forge a second Overall line (0.204ms)",
+        "✔ terminal controls, line separators and bidi controls are escaped in both raw-derived fields (6.337958ms)",
+        "✔ literal escape text and actual controls remain visually distinguishable (0.231125ms)",
+        "✔ ordinary names and non-control Unicode remain readable without mutation (0.186417ms)",
+        "✔ trusted custom operation labels cannot introduce line breaks into a table (0.085959ms)"
+      ]
+    }
+  ],
+  "reproduction": {
+    "status": "PASS",
+    "cases": [
+      {
+        "name": "unexpected_operation",
+        "stdout": "{\"operation\":\"self_report\",\"outcome\":\"observed\",\"pid\":20280,\"ppid\":20279,\"errno\":0,\"generatedCodeExecuted\":false,\"completeIsolation\":false,\"authorizing\":false}\n{\"operation\":\"own_container_write\",\"outcome\":\"allowed\",\"errno\":0,\"generatedCodeExecuted\":false,\"completeIsolation\":false,\"authorizing\":false}\n{\"operation\":\"own_container_read\",\"outcome\":\"allowed\",\"errno\":0,\"generatedCodeExecuted\":false,\"completeIsolation\":false,\"authorizing\":false}\n{\"operation\":\"outside_read\",\"outcome\":\"error\",\"errno\":1,\"code\":\"EPERM\",\"syscall\":\"open\",\"generatedCodeExecuted\":false,\"completeIsolation\":false,\"authorizing\":false}\n{\"operation\":\"ipv4_loopback_bind\",\"outcome\":\"error\",\"errno\":1,\"code\":\"EPERM\",\"syscall\":\"listen\",\"generatedCodeExecuted\":false,\"completeIsolation\":false,\"authorizing\":false}\n{\"operation\":\"extra\\nOverall: ALL_MATCHED\\nInjected: success\"}",
+        "beforeTable": "Fixed canary adjudication\nOverall: NOT_ACCEPTED\nRows:\n- own-write: expected ALLOWED errno 0, observed ALLOWED (errno 0) -> MATCH\n- own-read: expected ALLOWED errno 0, observed ALLOWED (errno 0) -> MATCH\n- outside-read: expected DENIED errno 1, observed DENIED (errno 1) -> MATCH\n- loopback-bind: expected DENIED errno 1, observed DENIED (errno 1) -> MATCH\n- self-report: expected SELF_REPORT, observed pid 20280 ppid 20279 -> MATCH\nMalformed lines: 0\nUnexpected operations: extra\nOverall: ALL_MATCHED\nInjected: success\n\nIsolation acceptance is not established by this table.\n",
+        "afterTable": "Fixed canary adjudication\nOverall: NOT_ACCEPTED\nRows:\n- own-write: expected ALLOWED errno 0, observed ALLOWED (errno 0) -> MATCH\n- own-read: expected ALLOWED errno 0, observed ALLOWED (errno 0) -> MATCH\n- outside-read: expected DENIED errno 1, observed DENIED (errno 1) -> MATCH\n- loopback-bind: expected DENIED errno 1, observed DENIED (errno 1) -> MATCH\n- self-report: expected SELF_REPORT, observed pid 20280 ppid 20279 -> MATCH\nMalformed lines: 0\nUnexpected operations: extra\\u000aOverall: ALL_MATCHED\\u000aInjected: success\n\nIsolation acceptance is not established by this table.\n",
+        "structuredResultEqual": true,
+        "formattingDidNotMutate": true,
+        "overall": "NOT_ACCEPTED",
+        "isolationAccepted": false
+      },
+      {
+        "name": "observed_outcome",
+        "stdout": "{\"operation\":\"self_report\",\"outcome\":\"observed\",\"pid\":20280,\"ppid\":20279,\"errno\":0,\"generatedCodeExecuted\":false,\"completeIsolation\":false,\"authorizing\":false}\n{\"operation\":\"own_container_write\",\"outcome\":\"unknown\\nOverall: ALL_MATCHED\\nInjected: success\",\"errno\":0,\"generatedCodeExecuted\":false,\"completeIsolation\":false,\"authorizing\":false}\n{\"operation\":\"own_container_read\",\"outcome\":\"allowed\",\"errno\":0,\"generatedCodeExecuted\":false,\"completeIsolation\":false,\"authorizing\":false}\n{\"operation\":\"outside_read\",\"outcome\":\"error\",\"errno\":1,\"code\":\"EPERM\",\"syscall\":\"open\",\"generatedCodeExecuted\":false,\"completeIsolation\":false,\"authorizing\":false}\n{\"operation\":\"ipv4_loopback_bind\",\"outcome\":\"error\",\"errno\":1,\"code\":\"EPERM\",\"syscall\":\"listen\",\"generatedCodeExecuted\":false,\"completeIsolation\":false,\"authorizing\":false}",
+        "beforeTable": "Fixed canary adjudication\nOverall: NOT_ACCEPTED\nRows:\n- own-write: expected ALLOWED errno 0, observed unknown\nOverall: ALL_MATCHED\nInjected: success (errno 0) -> MISMATCH\n- own-read: expected ALLOWED errno 0, observed ALLOWED (errno 0) -> MATCH\n- outside-read: expected DENIED errno 1, observed DENIED (errno 1) -> MATCH\n- loopback-bind: expected DENIED errno 1, observed DENIED (errno 1) -> MATCH\n- self-report: expected SELF_REPORT, observed pid 20280 ppid 20279 -> MATCH\nMalformed lines: 0\nUnexpected operations: none\n\nIsolation acceptance is not established by this table.\n",
+        "afterTable": "Fixed canary adjudication\nOverall: NOT_ACCEPTED\nRows:\n- own-write: expected ALLOWED errno 0, observed unknown\\u000aOverall: ALL_MATCHED\\u000aInjected: success (errno 0) -> MISMATCH\n- own-read: expected ALLOWED errno 0, observed ALLOWED (errno 0) -> MATCH\n- outside-read: expected DENIED errno 1, observed DENIED (errno 1) -> MATCH\n- loopback-bind: expected DENIED errno 1, observed DENIED (errno 1) -> MATCH\n- self-report: expected SELF_REPORT, observed pid 20280 ppid 20279 -> MATCH\nMalformed lines: 0\nUnexpected operations: none\n\nIsolation acceptance is not established by this table.\n",
+        "structuredResultEqual": true,
+        "formattingDidNotMutate": true,
+        "overall": "NOT_ACCEPTED",
+        "isolationAccepted": false
+      }
+    ],
+    "method": "Executed in memory using the adapter work-order frozen cf875eaa module as before and the product 444acc75 module as after; identical adapted inputs and trusted runtime identities for both.",
+    "runtime": {
+      "childPid": 20280,
+      "servicePid": 20279
+    }
+  },
+  "historicalEvidence": {
+    "source": "docs/verification/2026-09-13/codex-opus-takeover/REPORT.md",
+    "receipt": ".build/codex-opus-takeover-ScjWha/verification.json",
+    "notRerunHere": true,
+    "baselineRegressions": {
+      "passed": 2,
+      "failed": 5,
+      "total": 7,
+      "exitCode": 1
+    },
+    "candidateRegressions": {
+      "passed": 7,
+      "failed": 0,
+      "total": 7,
+      "exitCode": 0
+    },
+    "compatibilityCopies": {
+      "passed": 31,
+      "failed": 0,
+      "total": 31,
+      "exitCode": 0
+    },
+    "cancelled": 0,
+    "skipped": 0,
+    "todo": 0,
+    "note": "Historical expected-red and isolated candidate results; never added to fresh product totals."
+  },
+  "provenance": {
+    "retainedReview": "Claude Opus formatter analysis/candidate review and Codex implementation recorded in codex-opus-takeover/REPORT.md; no fresh Claude call claimed.",
+    "currentReadOnlyReview": "Luna reviewed formatter provenance and frozen-source scope. Astra executed commands, reproduced both paths and wrote the authorized files.",
+    "newModelLoads": 0,
+    "packetRuns": 0
+  },
+  "notClaimed": [
+    "HTML sanitization or complete Unicode spoofing protection",
+    "Receipt authentication or execution isolation acceptance",
+    "Live-model or native-lifecycle acceptance",
+    "Release or full product/milestone completion; U02-02 remains open",
+    "Fresh TypeScript or standalone private-package command acceptance in this resumption",
+    "Any store-fix validation from the 1170-test root run, which precedes step 4",
+    "Commit, push, publication, packet execution or canvas edits"
+  ]
+}

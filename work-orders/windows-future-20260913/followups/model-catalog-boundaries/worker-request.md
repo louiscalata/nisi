@@ -1,0 +1,13 @@
+Private Windows future-code TEST packet. You have no file/test tools. Draft one new file tests/windows-boundaries.test.mjs only. Allowed imports: node:test, node:assert/strict, named function from ../src/index.mjs. No other imports, IO, process, network, timers, eval, dynamic code, dependencies, source edits or existing-test edits. Do not claim execution. Input domain ordinary JSON; exact object keys, unique bounded IDs, bounded strings length1..128, array cap200. Reject malformed via {status:'REFUSED',reason:'INVALID_INPUT',authorizing:false}; valid outputs copy rows, never mutate input. Full function-specific contract:
+Named export buildModelCatalog(input).
+Input exact {models}; each row exact {id,provider,label,availability,location}. id/provider/label bounded nonempty string; ids unique. availability AVAILABLE|UNAVAILABLE|UNKNOWN. location LOCAL|REMOTE|UNKNOWN. Output exact {schemaVersion:1,status:'READY',rows:[copied models in original order],counts:{total,available,unavailable,unknown,local,remote,unknownLocation},authorizing:false}. Counts correspond exactly to enum values. Empty zero counts. Names including Unicode, '<', '__proto__' as string values remain literal. Extra keys such as '__proto__' on an object refused. No probing, model loading, inferred inference health, recommendation, costs or hardware claim. Do not sort by model label or merge different providers.
+
+Independent boundary requirements:
+Write four test groups:
+1. Exactly200 rows, unique IDs m0..m199, provider p/label model. availability cycle AVAILABLE,UNAVAILABLE,UNKNOWN and location cycle LOCAL,REMOTE,UNKNOWN by index%3. Exact counts literal {total:200,available:67,unavailable:67,unknown:66,local:67,remote:67,unknownLocation:66}; preserve order and show both enum axes sum to200.
+2. One row id/provider/label strings exactly128 code units accepted unchanged.
+3. Two rows: availability UNKNOWN/location LOCAL; availability AVAILABLE/location UNKNOWN. Exact counts {total:2,available:1,unavailable:0,unknown:1,local:1,remote:0,unknownLocation:1}. Axes independent.
+4. Maximum200-row input mutation after result cannot alter result rows/counts: retain independent expected snapshot before mutation, mutate first/middle/last input row fields and array order/length. Assert original output preserved; no aliasing.
+Assert authorizing:false; no probing or inference-health claims.
+
+Return ONLY one closed JSON object {"schemaVersion":1,"files":[{"path":"tests/windows-boundaries.test.mjs","content":"complete test source"}],"notes":["static draft; owner must review and run"]}. No fences or repeated objects; notes top level. Keep tests compact, complete, <=130 lines. Expected results must be justified by the contract, not adapted to implementation.

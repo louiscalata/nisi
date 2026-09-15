@@ -1,0 +1,15 @@
+{
+  "sessionId": "ses_f6413a815ffeOkyBrXsat6E9Z4",
+  "declaredProviderModel": "lmstudio/qwen/qwen3.8-27b",
+  "messages": 4,
+  "reportedTokens": {
+    "total": 46471,
+    "input": 38054,
+    "output": 291,
+    "reasoning": 8126
+  },
+  "lastFinish": "length",
+  "writesObserved": 0,
+  "servedModelAuthenticated": false,
+  "exportNote": "run-01-session-live.json was a truncated pipe export; run-01-session-snapshot.json is the valid file-backed export."
+}

@@ -11,6 +11,23 @@ const MAX_TIMEOUT = 86_400_000;
 const isRecord = value => value !== null && typeof value === 'object' && !Array.isArray(value);
 const fail = (code, message = code) => { const error = new Error(message); error.code = code; throw error; };
 
+const transportOwners = new WeakMap();
+// Local ownership only, shared explicitly by adapters using the same runtime.
+// After interrupted or failed transport, this owner cannot resume automatically:
+// even settled local HTTP cannot attest that server-side inference stopped.
+export function createLocalChatTransportOwner() {
+  const state = {active:false, stopped:false, quarantine:false, pending:new Set(), stop:null};
+  const owner = Object.freeze({
+    status: () => Object.freeze({schemaVersion:1,
+      state:state.stopped ? (state.active || state.pending.size ? 'STOPPED_DRAINING':'STOPPED')
+        : state.quarantine ? 'QUARANTINED' : state.active ? 'BUSY' : state.pending.size ? 'DRAINING':'IDLE',
+      pendingTransports:state.pending.size, recoveryRequired:state.quarantine,
+      remoteInferenceStopped:'NOT_OBSERVED', scope:'THIS_OWNER_ONLY'}),
+    stop() { state.stopped=true; state.stop?.(); }
+  });
+  transportOwners.set(owner,state);return owner;
+}
+
 function validateEndpoint(value) {
   if (typeof value !== 'string' || value.length > 2048) fail('LOCAL_CHAT_ENDPOINT_INVALID');
   let url;
@@ -24,7 +41,7 @@ function validateEndpoint(value) {
 
 function config(input, role) {
   if (!isRecord(input)) fail('LOCAL_CHAT_CONFIG_INVALID');
-  const keys = ['endpoint', 'destination', 'model', 'id', 'maxResponseBytes', 'maxRequestBytes', 'maxOutputTokens', 'timeoutMs', 'fetch'];
+  const keys = ['endpoint', 'destination', 'model', 'id', 'maxResponseBytes', 'maxRequestBytes', 'maxOutputTokens', 'timeoutMs', 'fetch', 'transportOwner', 'outputMode'];
   if (Reflect.ownKeys(input).some(key => !keys.includes(key))) fail('LOCAL_CHAT_CONFIG_INVALID');
   if (input.destination !== 'LOOPBACK_HTTP') fail('LOCAL_CHAT_DESTINATION_REQUIRED');
   const endpoint = validateEndpoint(input.endpoint);
@@ -38,8 +55,14 @@ function config(input, role) {
   if (!Number.isSafeInteger(maxOutputTokens) || maxOutputTokens < 1 || maxOutputTokens > 32768) fail('LOCAL_CHAT_TOKEN_CAP_INVALID');
   if (input.timeoutMs !== undefined && (!Number.isSafeInteger(input.timeoutMs) || input.timeoutMs < 1 || input.timeoutMs > MAX_TIMEOUT)) fail('LOCAL_CHAT_TIMEOUT_INVALID');
   if (input.fetch !== undefined && typeof input.fetch !== 'function') fail('LOCAL_CHAT_FETCH_INVALID');
+  if (input.transportOwner !== undefined && !transportOwners.has(input.transportOwner)) fail('LOCAL_CHAT_OWNER_INVALID');
+  const requestedOutputMode = input.outputMode;
+  const outputMode = requestedOutputMode === undefined ? 'json_schema' : requestedOutputMode;
+  if (!['json_schema', 'json_instruction'].includes(outputMode)) fail('LOCAL_CHAT_OUTPUT_MODE_INVALID');
   return Object.freeze({ endpoint, model: input.model, id: input.id, maxResponseBytes, maxRequestBytes, maxOutputTokens,
-    timeoutMs: input.timeoutMs ?? 120000, fetch: input.fetch ?? globalThis.fetch, role });
+    outputMode, modeAware: requestedOutputMode !== undefined,
+    timeoutMs: input.timeoutMs ?? 120000, fetch: input.fetch ?? globalThis.fetch, role,
+    transportOwner:input.transportOwner ?? createLocalChatTransportOwner() });
 }
 
 // JSON.parse accepts duplicate names. This small recursive codec rejects them first,
@@ -85,11 +108,12 @@ function strictJSON(source) {
 
 async function readBounded(response, cap, signal) {
   if (!response || !response.ok || !response.body?.getReader) {
-    try { Promise.resolve(response?.body?.cancel()).catch(() => {}); } catch { /* preserve response refusal */ }
+    try { await response?.body?.cancel(); } catch { /* preserve response refusal */ }
     fail('LOCAL_CHAT_RESPONSE_UNAVAILABLE');
   }
   const reader = response.body.getReader(); const chunks = []; let total = 0;
-  const cancel = () => { try { Promise.resolve(reader.cancel()).catch(() => {}); } catch { /* preserve original cause */ } };
+  let cancellation = null;
+  const cancel = () => { if (!cancellation) cancellation = Promise.resolve().then(() => reader.cancel()).catch(() => {}); };
   signal.addEventListener('abort', cancel, { once: true });
   try {
     while (true) {
@@ -102,7 +126,7 @@ async function readBounded(response, cap, signal) {
       chunks.push(part.value);
     }
   } catch (error) { cancel(); throw error; }
-  finally { signal.removeEventListener('abort', cancel); try { reader.releaseLock(); } catch {} }
+  finally { signal.removeEventListener('abort', cancel); if (cancellation) await cancellation; try { reader.releaseLock(); } catch {} }
   const bytes = new Uint8Array(total); let offset = 0; for (const part of chunks) { bytes.set(part, offset); offset += part.byteLength; }
   try { return new TextDecoder('utf-8', { fatal: true }).decode(bytes); } catch { fail('LOCAL_CHAT_RESPONSE_UTF8_INVALID'); }
 }
@@ -137,32 +161,45 @@ async function call(state, payload, operation, receipts, transform) {
   if (typeof state.fetch !== 'function') fail('LOCAL_CHAT_UNAVAILABLE');
   const controller = new AbortController();
   const started = performance.now();
+  const owner = transportOwners.get(state.transportOwner);
+  let acquired = false, sent = false, transportSettled = false;
   let stopCode = null, requestSha256 = null;
-  const stop = code => { if (stopCode === null) { stopCode = code; controller.abort(); } };
+  const stop = code => { if (stopCode === null) { stopCode = code; if(sent) owner.quarantine=true; controller.abort(); } };
   const timer = setTimeout(() => stop('LOCAL_CHAT_TIMEOUT'), state.timeoutMs);
   const upstream = payload.signal;
   const abort = () => stop('ABORTED');
-  const metadata = () => ({schemaVersion: 1, operation, adapterId: state.id,
+  // Omitted mode preserves the legacy v1 receipt contract. Explicit selection,
+  // including json_schema, opts into v2 evidence; never upgrade archived records.
+  const metadata = () => ({schemaVersion: state.modeAware ? 2 : 1,
+    ...(state.modeAware ? { outputMode: state.outputMode } : {}), operation, adapterId: state.id,
     requestedModel: state.model, runId: payload.binding?.runId ?? null,
     taskFingerprint: payload.binding?.taskFingerprint ?? null, attempt: payload.binding?.attempt ?? null,
     inputCandidateFingerprint: payload.binding?.candidateFingerprint ?? null, requestedMaxOutputTokens: state.maxOutputTokens,
-    requestSha256, elapsedMs: Math.round(performance.now() - started)});
+    requestSha256, elapsedMs: Math.round(performance.now() - started),
+    lifecycle:{transportSettlement:!sent?'NOT_STARTED':transportSettled?'CONFIRMED':'UNKNOWN',
+      remoteInferenceStopped:'NOT_OBSERVED',ownerState:state.transportOwner.status().state}});
   try {
     if (upstream !== undefined && !(upstream instanceof AbortSignal)) fail('LOCAL_CHAT_SIGNAL_INVALID');
     upstream?.addEventListener('abort', abort, { once: true });
     if (upstream?.aborted) abort();
     if (stopCode) fail(stopCode);
+    if(owner.stopped)fail('LOCAL_CHAT_OWNER_STOPPED');
+    if(owner.quarantine)fail('LOCAL_CHAT_TRANSPORT_QUARANTINED');
+    if(owner.active)fail('LOCAL_CHAT_TRANSPORT_BUSY');
+    if(owner.pending.size)fail('LOCAL_CHAT_TRANSPORT_QUARANTINED');
+    owner.active=true; acquired=true; owner.stop=()=>stop('LOCAL_CHAT_OWNER_STOPPED');
     const body = JSON.stringify({ model: state.model, stream: false, temperature: 0, max_tokens: state.maxOutputTokens,
-      response_format: responseFormat(payload, operation),
+      ...(state.outputMode === 'json_schema' ? { response_format: responseFormat(payload, operation) } : {}),
       messages: [{ role: 'system', content: INSTRUCTIONS[operation] }, {role: 'user', content: promptFor(payload, operation)}] });
     if (Buffer.byteLength(body, 'utf8') > state.maxRequestBytes) fail('LOCAL_CHAT_REQUEST_TOO_LARGE');
     requestSha256 = sha256Text(body);
     const request = async () => {
       if (controller.signal.aborted) fail(stopCode);
+      sent=true;
       const response = await state.fetch(state.endpoint, { method: 'POST', redirect: 'error', signal: controller.signal,
       headers: { 'content-type': 'application/json', accept: 'application/json' },
       body });
-      if (controller.signal.aborted) { await response.body?.cancel(); fail(stopCode); }
+      if (controller.signal.aborted) { await response?.body?.cancel(); fail(stopCode); }
       return readBounded(response, state.maxResponseBytes, controller.signal);
     };
     let onStop;
@@ -171,7 +208,11 @@ async function call(state, payload, operation, receipts, transform) {
       controller.signal.addEventListener('abort', onStop, {once: true});
     });
     let raw;
-    try { raw = await Promise.race([request(), interrupted]); }
+    const transport = request();
+    owner.pending.add(transport);
+    transport.then(() => {transportSettled=true;owner.pending.delete(transport);},
+      () => {transportSettled=true;owner.pending.delete(transport);if(sent)owner.quarantine=true;});
+    try { raw = await Promise.race([transport, interrupted]); }
     finally { controller.signal.removeEventListener('abort', onStop); }
     const envelope = strictJSON(raw);
     if (!Array.isArray(envelope.choices) || envelope.choices.length !== 1) fail('LOCAL_CHAT_CHOICES_INVALID');
@@ -198,7 +239,9 @@ async function call(state, payload, operation, receipts, transform) {
     const code = stopCode ?? (typeof error?.code === 'string' ? error.code : 'LOCAL_CHAT_UNAVAILABLE');
     receipts.push(cloneFreeze({...metadata(), status: 'UNAVAILABLE', code, reportedModel: null, resultCandidateFingerprint: null, usage: null}));
     fail(code);
-  } finally { clearTimeout(timer); try { upstream?.removeEventListener('abort', abort); } catch {} }
+  } finally { clearTimeout(timer); try { upstream?.removeEventListener('abort', abort); } catch {}
+    if(acquired){owner.active=false;owner.stop=null;}
+  }
 }
 
 function bindingEvidence(payload, extra) { return { ...payload.binding, ...extra }; }
@@ -213,6 +256,8 @@ export function createLocalChatAuthorAdapter(input) {
   const receipts = [];
   return Object.freeze({ id: state.id,
     receipts: () => cloneFreeze(receipts),
+    lifecycle: state.transportOwner.status,
+    stop: state.transportOwner.stop,
     async draft(payload) { return call(state, payload, 'draft', receipts, output => {
       exact(output, ['candidate', 'note']); if (!isRecord(output.candidate)) fail('LOCAL_CHAT_DRAFT_INVALID');
       const normalized = createCandidate(output.candidate, { authorId: state.id });
@@ -220,7 +265,9 @@ export function createLocalChatAuthorAdapter(input) {
     async repair(payload) { return call(state, payload, 'repair', receipts, output => {
       exact(output, ['status', 'candidate', 'note']); if (!['REPAIRED', 'NO_CHANGE'].includes(output.status)) fail('LOCAL_CHAT_REPAIR_INVALID');
       if (output.status === 'NO_CHANGE' && output.candidate !== null) fail('LOCAL_CHAT_REPAIR_INVALID');
-      const candidate = output.status === 'REPAIRED' ? output.candidate : null; const normalized = candidate ? createCandidate(candidate, { authorId: state.id }) : null;
+      if (output.status === 'REPAIRED' && !isRecord(output.candidate)) fail('LOCAL_CHAT_REPAIR_INVALID');
+      const candidate = output.status === 'REPAIRED' ? output.candidate : null;
+      const normalized = output.status === 'REPAIRED' ? createCandidate(candidate, { authorId: state.id }) : null;
       return { status: output.status, candidate, evidence: bindingEvidence(payload, { candidateFingerprint: normalized?.fingerprint ?? payload.binding.candidateFingerprint, baseCandidateFingerprint: payload.binding.candidateFingerprint, note: note(output.note) }) }; }); }
   });
 }
@@ -230,6 +277,8 @@ export function createLocalChatReviewerAdapter(input) {
   const receipts = [];
   return Object.freeze({ id: state.id,
     receipts: () => cloneFreeze(receipts),
+    lifecycle: state.transportOwner.status,
+    stop: state.transportOwner.stop,
     async review(payload) { return call(state, payload, 'review', receipts, output => {
       exact(output, ['findings', 'summary']); const findings = findingList(output.findings); validateFindings(findings, 'LOCAL_CHAT'); const summary = note(output.summary);
       return { status: findings.length === 0 ? 'PASS' : 'FAIL', evidence: bindingEvidence(payload, { reviewerId: state.id, findings, summary, reason: findings.length === 0 ? '' : summary }) }; }); }

@@ -1,0 +1,7 @@
+{
+  "content" : "I couldn't retrieve the current time in UTC.",
+  "demo" : "get_time tool round-trip",
+  "model" : "SystemLanguageModel.default",
+  "usage.input" : 190,
+  "usage.output" : 13
+}

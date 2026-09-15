@@ -1,0 +1,180 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:veritas:bn01:offline-contract:1",
+  "title": "BN-01 bounded declarative neural contract, not runtime admission",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schemaVersion", "profile", "plugins", "predecessors", "graph", "run"],
+  "properties": {
+    "schemaVersion": {"const": 1},
+    "profile": {"const": "veritas-bn01-offline-contract-v1"},
+    "plugins": {"type": "array", "minItems": 1, "maxItems": 16, "items": {"$ref": "#/$defs/pluginEnvelope"}},
+    "predecessors": {"type": "array", "maxItems": 32, "items": {"$ref": "#/$defs/pluginEnvelope"}},
+    "graph": {"$ref": "#/$defs/graphEnvelope"},
+    "run": {"$ref": "#/$defs/runEnvelope"}
+  },
+  "$defs": {
+    "id": {"type": "string", "minLength": 1, "maxLength": 96, "pattern": "^[a-z][a-z0-9_.-]*(?![\\s\\S])"},
+    "sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$", "minLength": 64, "maxLength": 64},
+    "optionalDigest": {"anyOf": [{"$ref": "#/$defs/sha256"}, {"type": "null"}]},
+    "authority": {
+      "type": "object", "additionalProperties": false,
+      "required": ["accept", "execute", "promote", "certify"],
+      "properties": {"accept": {"const": false}, "execute": {"const": false}, "promote": {"const": false}, "certify": {"const": false}}
+    },
+    "tensor": {
+      "type": "object", "additionalProperties": false,
+      "required": ["dtype", "width", "spaceSha256"],
+      "properties": {
+        "dtype": {"const": "f32"},
+        "width": {"type": "integer", "minimum": 1, "maximum": 4096},
+        "spaceSha256": {"$ref": "#/$defs/sha256"}
+      }
+    },
+    "resources": {
+      "type": "object", "additionalProperties": false,
+      "required": ["residentBytes", "operations", "maxInferenceMs", "maxOutputBytes"],
+      "properties": {
+        "residentBytes": {"type": "integer", "minimum": 1, "maximum": 67108864},
+        "operations": {"type": "integer", "minimum": 1, "maximum": 100000000},
+        "maxInferenceMs": {"type": "integer", "minimum": 1, "maximum": 10000},
+        "maxOutputBytes": {"type": "integer", "minimum": 1, "maximum": 16384}
+      }
+    },
+    "plugin": {
+      "type": "object", "additionalProperties": false,
+      "required": ["kind", "pluginId", "revision", "scopeId", "family", "specialty", "lifecycle", "parentSha256", "packageSha256", "weightsSha256", "featureSchemaSha256", "preprocessingSha256", "training", "admittedQualitySha256", "input", "output", "operator", "resources", "capabilities", "authority"],
+      "properties": {
+        "kind": {"const": "neural-plugin-v1"},
+        "pluginId": {"$ref": "#/$defs/id"},
+        "revision": {"type": "integer", "minimum": 1, "maximum": 2147483647},
+        "scopeId": {"$ref": "#/$defs/id"},
+        "family": {"enum": ["REFERENCE_MLP", "JEPA_INSPIRED"]},
+        "specialty": {"enum": ["INTENT", "CHANGE", "EVIDENCE"]},
+        "lifecycle": {"enum": ["CANDIDATE", "EVALUATED", "ADMITTED", "QUARANTINED", "REVOKED", "RETIRED"]},
+        "parentSha256": {"$ref": "#/$defs/optionalDigest"},
+        "packageSha256": {"$ref": "#/$defs/sha256"},
+        "weightsSha256": {"$ref": "#/$defs/sha256"},
+        "featureSchemaSha256": {"$ref": "#/$defs/sha256"},
+        "preprocessingSha256": {"$ref": "#/$defs/sha256"},
+        "training": {
+          "type": "object", "additionalProperties": false,
+          "required": ["objective", "recipeSha256", "datasetManifestSha256", "labelProvenanceSha256", "holdoutManifestSha256", "consentScopeSha256"],
+          "properties": {
+            "objective": {"enum": ["FIXED_REFERENCE", "JEPA_REPRESENTATION_PREDICTION"]},
+            "recipeSha256": {"$ref": "#/$defs/sha256"},
+            "datasetManifestSha256": {"$ref": "#/$defs/optionalDigest"},
+            "labelProvenanceSha256": {"$ref": "#/$defs/optionalDigest"},
+            "holdoutManifestSha256": {"$ref": "#/$defs/optionalDigest"},
+            "consentScopeSha256": {"$ref": "#/$defs/optionalDigest"}
+          }
+        },
+        "admittedQualitySha256": {"$ref": "#/$defs/optionalDigest"},
+        "input": {"$ref": "#/$defs/tensor"},
+        "output": {"$ref": "#/$defs/tensor"},
+        "operator": {
+          "type": "object", "additionalProperties": false,
+          "required": ["kind", "hiddenWidth"],
+          "properties": {"kind": {"const": "dense-relu-dense-v1"}, "hiddenWidth": {"type": "integer", "minimum": 1, "maximum": 4096}}
+        },
+        "resources": {"$ref": "#/$defs/resources"},
+        "capabilities": {
+          "type": "object", "additionalProperties": false,
+          "required": ["filesystem", "network", "subprocess"],
+          "properties": {"filesystem": {"const": "none"}, "network": {"const": "none"}, "subprocess": {"const": "none"}}
+        },
+        "authority": {"$ref": "#/$defs/authority"}
+      }
+    },
+    "pluginEnvelope": {
+      "type": "object", "additionalProperties": false,
+      "required": ["sha256", "record"],
+      "properties": {"sha256": {"$ref": "#/$defs/sha256"}, "record": {"$ref": "#/$defs/plugin"}}
+    },
+    "graph": {
+      "type": "object", "additionalProperties": false,
+      "required": ["kind", "scopeId", "mode", "router", "nodes", "edges", "executionOrder", "budgets", "authority"],
+      "properties": {
+        "kind": {"const": "neural-graph-v1"},
+        "scopeId": {"$ref": "#/$defs/id"},
+        "mode": {"enum": ["SHADOW", "ASSIST"]},
+        "router": {
+          "type": "object", "additionalProperties": false,
+          "required": ["kind", "codeSha256", "configSha256"],
+          "properties": {"kind": {"const": "rules-v1"}, "codeSha256": {"$ref": "#/$defs/sha256"}, "configSha256": {"$ref": "#/$defs/sha256"}}
+        },
+        "nodes": {
+          "type": "array", "minItems": 1, "maxItems": 16,
+          "items": {
+            "type": "object", "additionalProperties": false,
+            "required": ["nodeId", "pluginId", "revisionSha256"],
+            "properties": {"nodeId": {"$ref": "#/$defs/id"}, "pluginId": {"$ref": "#/$defs/id"}, "revisionSha256": {"$ref": "#/$defs/sha256"}}
+          }
+        },
+        "edges": {
+          "type": "array", "maxItems": 32,
+          "items": {
+            "type": "object", "additionalProperties": false,
+            "required": ["from", "to"],
+            "properties": {"from": {"$ref": "#/$defs/id"}, "to": {"$ref": "#/$defs/id"}}
+          }
+        },
+        "executionOrder": {"type": "array", "minItems": 1, "maxItems": 16, "items": {"$ref": "#/$defs/id"}},
+        "budgets": {
+          "type": "object", "additionalProperties": false,
+          "required": ["maxResidentBytes", "maxOperations", "maxInferenceMs", "maxOutputBytes"],
+          "properties": {
+            "maxResidentBytes": {"type": "integer", "minimum": 1, "maximum": 268435456},
+            "maxOperations": {"type": "integer", "minimum": 1, "maximum": 1000000000},
+            "maxInferenceMs": {"type": "integer", "minimum": 1, "maximum": 30000},
+            "maxOutputBytes": {"type": "integer", "minimum": 1, "maximum": 65536}
+          }
+        },
+        "authority": {"$ref": "#/$defs/authority"}
+      }
+    },
+    "graphEnvelope": {
+      "type": "object", "additionalProperties": false,
+      "required": ["sha256", "record"],
+      "properties": {"sha256": {"$ref": "#/$defs/sha256"}, "record": {"$ref": "#/$defs/graph"}}
+    },
+    "run": {
+      "type": "object", "additionalProperties": false,
+      "required": ["kind", "runId", "scopeId", "graphSha256", "subjectSha256", "evidenceSha256", "policySha256", "featureCutoffEvent", "inputBindings", "requiredCheckIds", "runtime", "authority"],
+      "properties": {
+        "kind": {"const": "neural-run-v1"},
+        "runId": {"$ref": "#/$defs/id"},
+        "scopeId": {"$ref": "#/$defs/id"},
+        "graphSha256": {"$ref": "#/$defs/sha256"},
+        "subjectSha256": {"$ref": "#/$defs/sha256"},
+        "evidenceSha256": {"$ref": "#/$defs/sha256"},
+        "policySha256": {"$ref": "#/$defs/sha256"},
+        "featureCutoffEvent": {"type": "integer", "minimum": 0, "maximum": 2147483647},
+        "inputBindings": {
+          "type": "array", "minItems": 1, "maxItems": 16,
+          "items": {
+            "type": "object", "additionalProperties": false,
+            "required": ["nodeId", "featureSha256", "featureSchemaSha256", "preprocessingSha256", "observedThroughEvent"],
+            "properties": {
+              "nodeId": {"$ref": "#/$defs/id"}, "featureSha256": {"$ref": "#/$defs/sha256"},
+              "featureSchemaSha256": {"$ref": "#/$defs/sha256"}, "preprocessingSha256": {"$ref": "#/$defs/sha256"},
+              "observedThroughEvent": {"type": "integer", "minimum": 0, "maximum": 2147483647}
+            }
+          }
+        },
+        "requiredCheckIds": {"type": "array", "minItems": 1, "maxItems": 32, "items": {"$ref": "#/$defs/id"}},
+        "runtime": {
+          "type": "object", "additionalProperties": false,
+          "required": ["backend", "binarySha256", "numericPolicySha256", "seed"],
+          "properties": {"backend": {"const": "swift-reference-f32-v1"}, "binarySha256": {"$ref": "#/$defs/sha256"}, "numericPolicySha256": {"$ref": "#/$defs/sha256"}, "seed": {"type": "integer", "minimum": 0, "maximum": 4294967295}}
+        },
+        "authority": {"$ref": "#/$defs/authority"}
+      }
+    },
+    "runEnvelope": {
+      "type": "object", "additionalProperties": false,
+      "required": ["sha256", "record"],
+      "properties": {"sha256": {"$ref": "#/$defs/sha256"}, "record": {"$ref": "#/$defs/run"}}
+    }
+  }
+}

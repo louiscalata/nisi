@@ -1,0 +1,12 @@
+92afd964d6ff675b9b675253751ca1f19a579a220e3a2353e493d1c5632be923  .packets/nisi-native-canary-adapter.pc-jobs/P1-draft.job.json
+a8188e90ea656e7b21e182c52f7dc16c63dc63354ded67126693e354b2bfaf32  .packets/nisi-native-canary-adapter.pc-jobs/P1-draft.result.json
+71947081c470d37dbed64a187aa70019cdeaf9a2fac389c231539599ef8aa9d7  .packets/nisi-native-canary-adapter.pc-jobs/P1-repair.job.json
+7d0d9a766f39d35f80c98a56e010c5623a48f4ff43375a123f9864eaa70089a3  .packets/nisi-native-canary-adapter.pc-jobs/P1-repair.result.json
+adb76dca0106d5ab5cd5f5e049a8fb8954e3c02127ab8f47b44c45fecbce506b  src/native-canary-adapter.mjs
+cf875eaa7adf335ceab49ae16f9941e2d9b5b9780f5ca15c22eea4c97405de00  src/native-canary-adjudicator.mjs
+51612e7ba818bfe7dd2a42d46e8c0cf8e84332d63f2562132842e9879bc3dddc  fixtures/inherit-run-node.stdout
+21c383e51d0fb156b170bae87cc26d860680299c60c9e149477f16598b20b9af  tests/adapter.test.mjs
+26a6689dae6763114af5a5c17d4b51894b5c323d49313d9d502535f6e88c699b  tests/baseline.test.mjs
+76c4da320ab687b303eb33c288e344fbed2fc7a929437ea8048e5c4f8832a823  package.json
+cad1b488a51d8be4139f0f668c2d3370eceff429c29ea9d58951749e1afd5cf4  .packets/nisi-native-canary-adapter.packet.md
+# 2026-09-13: The src/native-canary-adapter.mjs entry adb76dca0106d5ab5cd5f5e049a8fb8954e3c02127ab8f47b44c45fecbce506b above is superseded by accepted SHA256 ac9c9cfaacfad91a27f08d2daee461b1f0580892509dc76693ccd36bd35a5c8f (Astra's whitespace fix); the original entry is retained.

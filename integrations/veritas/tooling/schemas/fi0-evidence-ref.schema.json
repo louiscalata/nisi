@@ -1,0 +1,54 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://veritas.invalid/private/schemas/stage5/fi0-evidence-ref.v1.json",
+  "title": "Veritas FI-0 inert evidence reference",
+  "description": "Structural fixture shape only. Runtime validation additionally enforces source-frozen scope and subject bindings, domain-separated digests, canonical ordering, and semantic de-duplication. It proves no capture, retrieval, independence, anonymity, authority, or product effect.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schemaVersion",
+    "recordType",
+    "profile",
+    "refId",
+    "scopeId",
+    "projectIdDigest",
+    "issuerIdDigest",
+    "subjectType",
+    "subjectIdDigest",
+    "subjectContentDigest",
+    "evidenceKind",
+    "evidenceOutcome",
+    "locatorDigest",
+    "contentDigest",
+    "refDigest"
+  ],
+  "properties": {
+    "schemaVersion": { "const": 1 },
+    "recordType": { "const": "FI0_EVIDENCE_REF" },
+    "profile": { "const": "veritas-fi0-inert-incident-contract-v1" },
+    "refId": { "$ref": "#/$defs/fixtureId" },
+    "scopeId": { "$ref": "#/$defs/fixtureId" },
+    "projectIdDigest": { "$ref": "#/$defs/sha256" },
+    "issuerIdDigest": { "$ref": "#/$defs/sha256" },
+    "subjectType": { "const": "LLM_ARTIFACT" },
+    "subjectIdDigest": { "$ref": "#/$defs/sha256" },
+    "subjectContentDigest": { "$ref": "#/$defs/sha256" },
+    "evidenceKind": { "enum": ["DETERMINISTIC_GATE", "ANALYSIS"] },
+    "evidenceOutcome": { "const": "FAIL" },
+    "locatorDigest": { "$ref": "#/$defs/sha256" },
+    "contentDigest": { "$ref": "#/$defs/sha256" },
+    "refDigest": { "$ref": "#/$defs/sha256" }
+  },
+  "$defs": {
+    "sha256": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{64}$"
+    },
+    "fixtureId": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 128,
+      "pattern": "^[a-z][a-z0-9]*(?:[.-][a-z0-9]+)*(?:/[a-z][a-z0-9]*(?:[.-][a-z0-9]+)*)*$"
+    }
+  }
+}

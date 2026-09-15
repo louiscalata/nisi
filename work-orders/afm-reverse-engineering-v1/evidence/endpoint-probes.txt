@@ -1,0 +1,35 @@
+# Live endpoint probes — 2026-09-14, macOS 27.0 (26A428)
+# fm serve --host 127.0.0.1 --port 1977
+
+## GET /v1/models
+$ curl -s http://127.0.0.1:1977/v1/models
+{"data":[{"id":"system","object":"model","created":1789450561,"owned_by":"Apple"}],"object":"list"}
+
+## POST /v1/chat/completions (streaming, SSE) — prompt: "Say exactly: AFM SERVED"
+data: {"choices":[{"delta":{"role":"assistant"},"index":0}],...}
+data: {"choices":[{"delta":{"content":"AF"}...}]
+data: {"choices":[{"delta":{"content":"M"}...}]
+data: {"choices":[{"delta":{"content":" SERVED"}...}]
+data: {"choices":[{"delta":{},"index":0,"finish_reason":"stop"}...] }
+data: [DONE]
+
+## POST /v1/chat/completions (non-streaming) — prompt: "Count from one to three."
+{"object":"chat.completion","usage":{"prompt_tokens":61,"total_tokens":76,
+ "prompt_tokens_details":{"cached_tokens":0},"completion_tokens":15,
+ "completion_tokens_details":{"reasoning_tokens":0}},
+ "created":1789450589,"model":"system","id":"chatcmpl-6A4B00BF-...",
+ "choices":[{"index":0,"finish_reason":"stop",
+   "message":{"role":"assistant","refusal":null,"content":"1, 2, 3"}}]}
+
+## CLI proof
+$ fm available
+System model available
+$ fm count-tokens "hello world this is a token count test"
+9
+$ time fm respond -g --no-stream "Reply with exactly one word: OK"
+OK
+(0.02s user 0.01s system 5% cpu 0.578 total)
+
+## Latency comparison (same prompt, max_tokens 24, wall "real" time)
+AFM 3 Core (1977):        real 0.73
+openai/gpt-oss-20b (1234): real 7.26

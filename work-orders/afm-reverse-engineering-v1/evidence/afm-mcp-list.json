@@ -1,0 +1,1 @@
+{"test":"mcp-list","server":"python3 /Users/louiscalata/bin/bionic-code-mode-mcp","result":"listed 7 tools: pipeline_status, initiate_online_code_mode, initiate_offline_code_mode, online_code_mode_readiness, verify_golden, adjudication_report, adjudication_set","status":"PASS"}
