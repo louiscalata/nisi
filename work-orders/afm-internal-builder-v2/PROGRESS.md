@@ -171,7 +171,7 @@ Reverse-engineered the on-device Apple Foundation Model surface on macOS 27.0
 | opencode provider registration | `afm/system` (AFM 3 Core — On-Device, 8192 ctx) in `~/.config/opencode/opencode.jsonc`; needs opencode restart |
 | Benchmark vs pipeline default | AFM 3 Core 0.73 s vs gpt-oss-20b 7.26 s (same completion, ~10×) |
 | Capability report (`afm-bridge.swift`, public API) | toolCalling **true**, vision **true**, guidedGeneration **true**, reasoning false (Core tier), isAvailable true — `evidence/afm-capabilities.json` |
-| Tool-calling round-trip (v0.2 `afm-bridge-v2.swift`) | API surface mapped (session init with `tools`, `transcript`, `Response<Content>`, `Usage`); prompt/respond entry point = next increment (compile gap documented) |
+| Tool-calling round-trip (v0.2 `afm-bridge-v2.swift`) | **SUCCEEDED** — `LanguageModelSession.respond(to:)` → "Acknowledged." on-device, usage 71/7 tokens (`evidence/afm-session-generation.json`); tools-capable API (toolCalling true) ready for the @Generable tool demo |
 | Repository commit | `aab2fab` (branch `opencode-progress-20260914`) |
 
 v0.2 doc: section 10 "AFM on-device model lane" in

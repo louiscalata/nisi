@@ -1,7 +1,9 @@
-// AFM bridge v0.2 — one-shot generation attempt via LanguageModelSession
-// with an instructions string (public FoundationModels, macOS 27).
-// If this compiles and runs, it proves the generation path; if the model
-// service refuses, we keep v0.1 (capability report) as the delivered proof.
+// AFM bridge v0.2 — one-shot generation via LanguageModelSession.respond
+// Public FoundationModels framework (macOS 27). Real symbols verified from
+// the SDK swiftinterface:
+//   func respond(to prompt: Swift::String, options: GenerationOptions = GenerationOptions())
+//     async throws -> Response<Swift::String>
+// Compile: xcrun swiftc -parse-as-library -O -o afm-bridge-v2 afm-bridge-v2.swift
 import Foundation
 import FoundationModels
 
@@ -18,12 +20,13 @@ struct AFMBridgeV2 {
             tools: [],
             instructions: "You are a terse assistant. Reply with exactly one word."
         )
-        session.transcript.append(.text("Say OK."))
-        let response = try await session.explanation // Response<String>
-        if let value = try? await response.value {
-            print(value)
-        } else {
-            print("{\"error\":\"no explanation value\"}")
+        let response = try await session.respond(to: "Say OK.")
+        var out: [String: Any] = ["model": "SystemLanguageModel.default", "content": response.content]
+        out["usage.input"] = response.usage.input.totalTokenCount
+        out["usage.output"] = response.usage.output.totalTokenCount
+        if let data = try? JSONSerialization.data(withJSONObject: out, options: [.prettyPrinted, .sortedKeys]),
+           let s = String(data: data, encoding: .utf8) {
+            print(s)
         }
     }
 }
