@@ -32,6 +32,18 @@ lane's capabilities; the lanes share only the on-device model tier.
 `/v1/models`, a live completion, and (with `--bridge`) the v2 Swift bridge.
 Exit 0 only when the lane serves.
 
+## Tool agent CLI
+
+`adapters/afm/agent "<question>"` — on-device tool-augmented answer
+(get_time + count_words), manifest loop identical to the proven v6 bridge;
+auto-builds on first run. Example
+(`evidence/afm-agent-demo.txt` in the work order):
+
+```
+$ adapters/afm/agent "What time is it in UTC and how many words are in 'hello world this is a test'?"
+The current time in UTC is 2026-09-15 06:57:53 GMT. The text 'hello world this is a test' contains 6 words.
+```
+
 ## Registered provider (opencode)
 
 - `~/.config/opencode/opencode.jsonc` — provider `afm` (OpenAI-compatible
