@@ -44,6 +44,33 @@ $ adapters/afm/agent "What time is it in UTC and how many words are in 'hello wo
 The current time in UTC is 2026-09-15 06:57:53 GMT. The text 'hello world this is a test' contains 6 words.
 ```
 
+## Tool agent with MCP + LSP
+
+`adapters/afm/agent-tools "<question>"` — extended agent with real MCP and LSP
+tool bridges, plus file operations and shell execution. Auto-builds on first
+run. Six tools: `run_command`, `read_file`, `write_file`, `lsp_diagnostics`,
+`mcp_list_tools`, `mcp_call`.
+
+**Standalone modes:**
+
+```
+$ adapters/afm/agent-tools mcp-list "python3 /Users/louiscalata/bin/bionic-code-mode-mcp"
+# Lists all tools from the codemode MCP server (pipeline_status, initiate_online_code_mode, etc.)
+
+$ adapters/afm/agent-tools lsp-diag /path/to/file.py
+# Returns LSP diagnostics from basedpyright (errors, warnings with line numbers)
+```
+
+**Full agent round** (AFM calls tools via `LanguageModelSession(tools:)`):
+
+```
+$ adapters/afm/agent-tools "Run the command 'date -u' and tell me the current UTC time."
+The tool output shows the current UTC time as **Tue Sep 15 07:21:49 UTC 2026**.
+```
+
+Evidence: `evidence/afm-mcp-list.json`, `evidence/afm-lsp-diag.json`,
+`evidence/afm-tools-agent-round.json`, `evidence/afm-tools-fm-probe.json`.
+
 ## Registered provider (opencode)
 
 - `~/.config/opencode/opencode.jsonc` — provider `afm` (OpenAI-compatible
