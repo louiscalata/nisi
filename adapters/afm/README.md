@@ -49,6 +49,9 @@ xcrun swiftc -parse-as-library -O -o afm-bridge-v4 afm-bridge-v4.swift   # tool-
   arg decode (`GeneratedContent.value(_:)`) → `Tool.call` → `.toolOutput`
   entry → transcript-back session → final answer (evidence
   `evidence/afm-tool-loop.json`).
+- v6: two-tool agent round in one turn (get_time + count_words both called,
+  decoded, executed, results grounded in the final answer —
+  `evidence/afm-two-tool.json`).
 
 ## Use from Nisi / opencode
 

@@ -301,8 +301,8 @@ Evidence lives in the work order
 | **Integrated (this Mac)** | opencode provider registration `afm/system` (AFM 3 Core — On-Device, context 8192) in `~/.config/opencode/opencode.jsonc` | Registered; needs opencode restart to activate |
 | **Integrated (this Mac)** | Latency benchmark vs pipeline default | AFM 3 Core **0.73 s** vs gpt-oss-20b **7.26 s** (same completion) |
 | **Integrated (this Mac)** | Swift bridge `src/afm-bridge.swift` — runtime capability report over the public `FoundationModels` framework | `toolCalling: true`, `vision: true`, `guidedGeneration: true`, `reasoning: false` (Core, not Core Advanced), `isAvailable: true` — `evidence/afm-capabilities.json` |
-| **Staged** | Tool-calling round-trip via `LanguageModelSession(model:.default, tools:[any Tool])` (public API) | Compile-proved symbols; full loop not yet built |
-| **Staged** | Launchd autostart for `fm serve` | Manual wrapper `scripts/afm-serve.sh` only |
+| **Integrated (this Mac)** | Tool-calling round-trip via `LanguageModelSession(model:.default, tools:[any Tool])` (public API) | Full manual loop proven on-device: respond → transcript `.toolCalls` → `arguments.value(_:)` decode → `Tool.call` → `.toolOutput` → transcript-back session → final answer (`evidence/afm-tool-loop.json`, bridge v4); `ToolCallingMode.required` overflows the 8,192-token context — use default mode + instruction cues |
+| **Integrated (this Mac)** | Launchd autostart for `fm serve` | LaunchAgent `com.louiscalata.afm.serve` installed and launchd-owned (`state = running`, KeepAlive + RunAtLoad); `fm` ignores SIGTERM — recycle with `kill -9` + `launchctl kickstart -k` |
 | **Not claimed** | Weight extraction (SIP-protected assets, `Operation not permitted`), AFM 3 Core Advanced reasoning (not present on this model tier), `tools` arrays through `fm serve` (chat-only, rejected) | Recorded limits |
 
 No installs, no network egress, no weight extraction; everything runs on-device
