@@ -1,6 +1,7 @@
 {
   "name": "nisi",
-  "version": "0.1.0",
+  "version": "0.2.0-rc.1",
+  "private": false,
   "description": "A Node.js workflow orchestrator for AI-assisted coding, with bounded repairs and validated run reports.",
   "license": "Apache-2.0",
   "author": "Louis Calata",
@@ -30,6 +31,19 @@
   "devDependencies": {
     "typescript": "^6.0.3"
   },
+  "files": [
+    "README.md",
+    "LICENSE",
+    "index.mjs",
+    "adapters/*.mjs",
+    "canonical/*.mjs",
+    "gate/*.mjs",
+    "history/run-journal-v1.mjs",
+    "history/run-journal-store-v1.mjs",
+    "policy/*.mjs",
+    "serialization/*.mjs",
+    "workflow/*.mjs"
+  ],
   "keywords": [
     "canonical-json",
     "capability-security",
@@ -45,7 +59,21 @@
     "./serialization": "./serialization/canonical-json-v1.mjs",
     "./adapters/apple-foundation-models": "./adapters/apple-foundation-models.mjs",
     "./adapters/local-chat": "./adapters/local-chat.mjs",
-    "./*": "./*"
+    "./history/run-journal": "./history/run-journal-v1.mjs",
+    "./history/run-journal-store": "./history/run-journal-store-v1.mjs",
+    "./index.mjs": "./index.mjs",
+    "./package.json": "./package.json",
+    "./workflow/engine.mjs": "./workflow/engine.mjs",
+    "./workflow/contracts.mjs": "./workflow/contracts.mjs",
+    "./policy/file-access.mjs": "./policy/file-access.mjs",
+    "./serialization/canonical-json-v1.mjs": "./serialization/canonical-json-v1.mjs",
+    "./adapters/apple-foundation-models.mjs": "./adapters/apple-foundation-models.mjs",
+    "./adapters/local-chat.mjs": "./adapters/local-chat.mjs",
+    "./canonical/canonical-json-v1.mjs": "./canonical/canonical-json-v1.mjs",
+    "./gate/content-consent.mjs": "./gate/content-consent.mjs",
+    "./gate/afm-content-executor.mjs": "./gate/afm-content-executor.mjs",
+    "./history/run-journal-v1.mjs": "./history/run-journal-v1.mjs",
+    "./history/run-journal-store-v1.mjs": "./history/run-journal-store-v1.mjs"
   },
   "devEngines": {
     "runtime": {

@@ -1,13 +1,24 @@
 # Security
 
+## Scope
+
+Nisi v0.2 public security scope covers the run journal and journal store in
+`history/`. The v0.1 workflow and its local-chat adapters remain part of the
+package but are outside the v0.2 journal-specific evidence record. No model
+service, external worker process, package registry, or production deployment
+is operated by these journal/store modules.
+
 ## What this code claims
 
 Each module enforces a specific, written boundary and refuses across it with an
 exact named code. `contracts/canonical-json-v1-profile.md` states what the codec
 guarantees and, more importantly, what it does not.
 
-The Workflow Orchestrator validates scoped task/candidate records, adapter-result
-schemas and run/task/attempt/candidate bindings. It derives a completion status
+The run journal validates its documented entry schema and hash-chain structure;
+the store validates serialized journals before writing and refuses malformed or
+incomplete journal files when reading. The Workflow Orchestrator validates
+scoped task/candidate records, adapter-result schemas and
+run/task/attempt/candidate bindings. It derives a completion status
 from configured required stages. That status describes those checks; it is not
 a security certification or permission to release software.
 
@@ -46,12 +57,20 @@ Two limits are worth stating plainly because they are easy to misread:
   uncooperative callback stopped. Hosts must implement isolation and cleanup.
 - The scoped static checker recognizes configured direct syntax patterns in
   one marked source region. It is not a general purity or dependency analysis.
+- Journal hashes detect accidental or unauthorized content changes relative to
+  the checked chain; they do not authenticate an author or provide a signature.
+  A valid chain does not prove that recorded events happened as described.
+- Journal-store durability depends on the filesystem and operating system
+  honoring the requested sync and rename behavior. The API reports confirmed
+  commit and durability separately; it cannot prove hardware persistence.
 - Generic report storage is a trusted callback acknowledgement. Its receipt
   identifies the preliminary report; it does not establish retention or
   durable storage independently of the host.
 
 ## Reporting
 
-Open a GitHub issue. This is a personal project, so please do not expect a
-commercial response time. If you believe an issue should not be public, say so
-in the issue without the details and I will follow up.
+Open a GitHub issue for public reports. Do not put sensitive exploit details
+in a public issue. If GitHub private vulnerability reporting is enabled for
+this repository, use that channel; otherwise open a minimal issue asking for a
+private contact route. This personal project has no security bounty, promised
+response time or service-level agreement.
