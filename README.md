@@ -1,6 +1,6 @@
 # Nisi v0.2
 
-**A Node.js library for running AI-assisted coding workflows.**
+**A Node.js command-line tool and library for AI-assisted coding workflows.**
 
 Use Nisi when your application needs to coordinate drafting, checks, tests,
 review, and a limited repair cycle. You supply the task and tool integrations;
@@ -8,20 +8,22 @@ Nisi returns proposed file contents and a report showing what passed, what
 failed, and why the run stopped. Fixed criteria and repair limits keep each
 attempt tied to the original request.
 
-**Status: working prototype.** Run it from a source checkout. The
-[v0.1 verification record](https://github.com/louiscalata/nisi/blob/main/docs/verification.md)
+**v0.2.0 is the first public CLI release.** Its command runs a fixed workflow
+demonstration or a fixed local-model JSON demonstration. Applications can use
+the workflow, journal, and store APIs directly. This release does not run
+arbitrary repositories from the command line. The [v0.1 verification
+record](https://github.com/louiscalata/nisi/blob/main/docs/verification.md)
 describes the earlier release. The [v0.2 verification record](https://github.com/louiscalata/nisi/blob/main/docs/verification-v0.2.md)
-records checks for this candidate and their limits.
+records the checks for this release and their limits.
 
 ## Quick start
 
-Install Node.js 22 or newer, then run:
+Install Node.js 22 or newer, then run the fixed, model-free demonstration:
 
 ```bash
-git clone https://github.com/louiscalata/nisi.git
+git clone --branch v0.2.0 --depth 1 https://github.com/louiscalata/nisi.git
 cd nisi
-npm ci
-npm run example:workflow
+node bin/nisi.mjs demo
 ```
 
 The example drafts an intentionally incorrect JavaScript module, runs a syntax
@@ -37,14 +39,33 @@ The output includes:
 }
 ```
 
-Run `npm run check` to check the codec and run the test suite. npm 11 checks the
-Node requirement before install and run commands; the check and example scripts
-also validate Node directly.
+Run `npm ci` followed by `npm run check` to check the codec and run the test
+suite. The package declares Node.js 22 or newer, and the check script validates
+it directly. The [GitHub release](https://github.com/louiscalata/nisi/releases/tag/v0.2.0)
+also provides an npm-format archive for local installation; Nisi v0.2.0 is not
+published to the npm registry.
+
+## Command line
+
+From a source checkout, run `node bin/nisi.mjs --help` to see the supported
+commands. An installed release archive provides the `nisi` executable.
+`nisi demo` runs the same fixed workflow shown above, with no model call.
+`nisi local-model` runs a fixed JSON-configuration task against a configured
+loopback chat server. It does not execute model-generated programs or apply
+changes to a repository. The host application remains responsible for any
+broader coding task and for deciding whether to apply proposed files.
+
+To use the downloadable `nisi-0.2.0.tgz` archive without cloning the source,
+install it into a new project folder with
+`npm install /path/to/nisi-0.2.0.tgz --ignore-scripts`. Run
+`./node_modules/.bin/nisi demo` on macOS or Linux, or
+`.\node_modules\.bin\nisi.cmd demo` in Windows PowerShell. The archive does not
+install models or start a model server.
 
 ## What is new in v0.2
 
-v0.2 adds a **run journal** and a disk store for it. The journal is an
-append-only, hash-chained record of what a run observed. A host can write it,
+v0.2 adds the public `nisi` command, a **run journal**, and a disk store for it.
+The journal is an append-only, hash-chained record of what a run observed. A host can write it,
 reopen it after a process restart, and check it before relying on its rows.
 These modules live under `history/`. The v0.1 workflow and local-model adapter
 are unchanged; results measured with a separate private adapter do not apply
@@ -126,7 +147,7 @@ with JSON-schema output support. Replace both placeholders with different
 configured model names:
 
 ```bash
-npm run example:local-model -- \
+node bin/nisi.mjs local-model \
   http://127.0.0.1:1234/v1/chat/completions AUTHOR_MODEL REVIEWER_MODEL
 ```
 
