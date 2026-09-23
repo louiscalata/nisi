@@ -21,6 +21,7 @@
     "test": "node scripts/require-node.cjs && node --test tests/*.test.mjs",
     "check:structural": "node scripts/require-node.cjs && node scripts/structural-check.mjs",
     "check": "npm run check:structural && npm test",
+    "check:cli-package": "node scripts/require-node.cjs && node scripts/check-cli-package.mjs",
     "bench": "node scripts/bench.mjs",
     "ab:purity": "node scripts/ab-purity.mjs contracts/structural-fixtures.json ${AFM:-afm}",
     "check:static": "node scripts/require-node.cjs && node tools/check-side-effects.mjs",
@@ -34,6 +35,9 @@
   "files": [
     "README.md",
     "LICENSE",
+    "bin/nisi.mjs",
+    "examples/workflow.mjs",
+    "examples/local-model-workflow.mjs",
     "index.mjs",
     "adapters/*.mjs",
     "canonical/*.mjs",
@@ -52,6 +56,9 @@
     "foundation-models"
   ],
   "main": "./index.mjs",
+  "bin": {
+    "nisi": "./bin/nisi.mjs"
+  },
   "exports": {
     ".": "./index.mjs",
     "./workflow": "./workflow/engine.mjs",
