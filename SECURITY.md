@@ -2,11 +2,12 @@
 
 ## Scope
 
-Nisi v0.2 public security scope covers the run journal and journal store in
-`history/`. The v0.1 workflow and its local-chat adapters remain part of the
-package but are outside the v0.2 journal-specific evidence record. No model
-service, external worker process, package registry, or production deployment
-is operated by these journal/store modules.
+Nisi v0.2 adds a public command line for fixed workflow and local-model
+demonstrations, plus the run journal and journal store in `history/`. The v0.1
+workflow and its local-chat adapters remain part of the package. The CLI does
+not execute arbitrary repository tasks or manage a model server. The v0.2
+journal-specific evidence record does not establish new security properties
+for every older API or external model service.
 
 ## What this code claims
 

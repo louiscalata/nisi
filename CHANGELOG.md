@@ -3,6 +3,17 @@
 Changes to the public Nisi package are recorded here. This file describes the
 public source tree and does not include private experiments.
 
+## 0.2.0
+
+- Add an installable `nisi` command for help, version, a fixed deterministic
+  workflow demonstration, and an opt-in fixed local-model JSON demonstration.
+  The CLI does not apply changes to a repository or execute model-generated code.
+- Retain the public workflow and local-chat APIs. Add the run journal and journal
+  store introduced in the release candidates, including rc.2's retained-entry
+  fingerprint check during reopen.
+- Distribute source and an npm-format archive through the GitHub release. No
+  npm registry publication or native application is included.
+
 ## 0.2.0-rc.2
 
 - Reject a retained run-journal entry on reopen when its recorded fingerprint
