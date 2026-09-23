@@ -47,10 +47,12 @@ cap, rechecks the opened file, and validates UTF-8. Where available, the open
 uses `O_NOFOLLOW` and `O_NONBLOCK`. The successful record contains copied bytes,
 content digest/length, consent digest, kind and advisory cap.
 
-The opened-object checks reduce replacement and mutation races, including the
-covered symlink replacement and same-size in-place mutation cases. The parent
-directories must remain stable and trusted: this is not a directory-descriptor
-sandbox or proof against every concurrent filesystem change.
+The opened-object checks reduce replacement and mutation races. A same-size
+in-place write is detected when the filesystem reports changed metadata; a
+write that leaves the compared metadata unchanged can escape that check. The
+parent directories and file writers must remain trusted and stable: this is
+not a directory-descriptor sandbox or proof against every concurrent filesystem
+change.
 
 `grant.revoke()` is terminal and prevents future admissions. It does not retract
 returned bytes or cancel a model already running. `grant.status()` reports the
