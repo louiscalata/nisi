@@ -18,6 +18,9 @@ import { createHash } from 'node:crypto';
 import { canonicalizeJSONV1 } from '../canonical/canonical-json-v1.mjs';
 import { createContentConsent } from '../gate/content-consent.mjs';
 import { createAFMContentExecutor } from '../gate/afm-content-executor.mjs';
+import { afmStubLaunches, registerAFMStub, restoreAFMStubLauncher } from './afm-stub-launcher.mjs';
+
+test.after(restoreAFMStubLauncher);
 
 const sha = b => createHash('sha256').update(b).digest('hex');
 const packet = Buffer.from('{"kind":"nisi-request-v1"}', 'utf8');
@@ -48,7 +51,7 @@ function consent(scopeRoot, overrides) {
 /** A stand-in for the probe: same framing, same evidence shape. `mutate` is a
  *  JavaScript expression applied to the evidence object before it is emitted,
  *  which is how the negative cases forge dishonest evidence. */
-function stubProbe(mutate = '', { marker = null, extra = '', output = 'JSON.stringify(evidence)' } = {}) {
+function stubProbe(mutate = '', { marker = null, extra = '', output = 'JSON.stringify(evidence)', register = true } = {}) {
   const dir = fs.mkdtempSync(path.join(os.tmpdir(), 'afm-stub-'));
   const file = path.join(dir, 'stub');
   const body = `#!${process.execPath}
@@ -78,13 +81,16 @@ ${mutate}
 process.stdout.write(${output});
 `;
   fs.writeFileSync(file, body, { mode: 0o755 });
+  if (register) registerAFMStub(file);
   return { file, sha: sha(fs.readFileSync(file)), dir };
 }
 
-function shellProbe(script) {
+function childFailureProbe(script) {
   const dir = fs.mkdtempSync(path.join(os.tmpdir(), 'afm-stub-'));
   const file = path.join(dir, 'stub');
-  fs.writeFileSync(file, `#!/bin/sh\ncat >/dev/null\n${script}\n`, { mode: 0o755 });
+  fs.writeFileSync(file, `#!${process.execPath}\nprocess.stdin.resume();\nprocess.stdin.on('end', () => { ${script} });\n`,
+    { mode: 0o755 });
+  registerAFMStub(file);
   return { file, sha: sha(fs.readFileSync(file)), dir };
 }
 
@@ -131,7 +137,8 @@ test('no grant is refusal, not a permissive default', () => {
 test('a consented item is read and answered, and only digests come back', async () => {
   const root = tempRoot();
   const { grant, consentDigest } = consent(root);
-  const stub = stubProbe();
+  const marker = path.join(root, 'spawned.marker');
+  const stub = stubProbe('', { marker });
   const file = write(root, 'a.json', '{"hello":"world"}');
   const made = build(stub, grant, { 't.1': { filePath: file, kind: 'json' } });
   assert.equal(made.ok, true);
@@ -140,6 +147,8 @@ test('a consented item is read and answered, and only digests come back', async 
   const out = await made.execute(packet, { taskId: 't.1' });
   assert.equal(out.ok, true);
   assert.equal(out.code, 'AFM_PACKET_ANSWERED');
+  assert.equal(fs.readFileSync(marker, 'utf8'), 'spawned');
+  if (process.platform === 'win32') assert.deepEqual(afmStubLaunches(stub.file), { redirected: 1, passedThrough: 0 });
   // The answer is exactly three fields, and no more; content must not ride back
   // inside it.
   assert.deepEqual(Object.keys(out).sort(), ['code', 'ok', 'payloadSha256']);
@@ -153,6 +162,21 @@ test('a consented item is read and answered, and only digests come back', async 
   assert.equal(grant.status().admittedItems, 1);
   assert.equal(grant.status().consentDigest, consentDigest);
 });
+
+test('an unregistered script still reports a real Windows spawn refusal',
+  { skip: process.platform !== 'win32' }, async () => {
+    const root = tempRoot();
+    const { grant } = consent(root);
+    stubProbe(); // Install the shim so this test exercises its pass-through branch.
+    const stub = stubProbe('', { register: false });
+    const made = build(stub, grant, { 't.1': { filePath: write(root, 'a.json', '{}'), kind: 'json' } });
+    assert.equal(made.ok, true, made.code);
+    const out = await made.execute(packet, { taskId: 't.1' });
+    assert.equal(out.ok, false);
+    assert.equal(made.refusals()[0].cause, 'SPAWN_ERROR');
+    assert.deepEqual(made.readings(), []);
+    assert.deepEqual(afmStubLaunches(stub.file), { redirected: 0, passedThrough: 1 });
+  });
 
 test('the same content under the same grant answers with the same digest', async () => {
   const root = tempRoot();
@@ -313,10 +337,10 @@ test('child failures are refused with their own causes, never as evidence', asyn
   const root = tempRoot();
   const file = write(root, 'a.json', '{}');
   const cases = [
-    [shellProbe('exit 3'), 10000, 'CHILD_EXIT_NONZERO'],
-    [shellProbe('echo not-json'), 10000, 'EVIDENCE_REFUSED'],
-    [shellProbe('exec sleep 30'), 150, 'DEADLINE_EXCEEDED'],
-    [shellProbe('yes 0123456789abcdef | head -c 40000'), 10000, 'EVIDENCE_OVERFLOW'],
+    [childFailureProbe('process.exit(3);'), 10000, 'CHILD_EXIT_NONZERO'],
+    [childFailureProbe("process.stdout.write('not-json');"), 10000, 'EVIDENCE_REFUSED'],
+    [childFailureProbe('setTimeout(() => {}, 30000);'), 150, 'DEADLINE_EXCEEDED'],
+    [childFailureProbe("process.stdout.write('0123456789abcdef'.repeat(2500));"), 10000, 'EVIDENCE_OVERFLOW'],
   ];
   for (const [stub, timeoutMs, cause] of cases) {
     const { grant } = consent(root);
@@ -329,7 +353,7 @@ test('child failures are refused with their own causes, never as evidence', asyn
 test('an aborted run is refused and leaves no reading behind', async () => {
   const root = tempRoot();
   const { grant } = consent(root);
-  const stub = shellProbe('exec sleep 30');
+  const stub = childFailureProbe('setTimeout(() => {}, 30000);');
   const made = build(stub, grant, { 't.1': { filePath: write(root, 'a.json', '{}'), kind: 'json' } });
   const controller = new AbortController();
   const running = made.execute(packet, { taskId: 't.1', signal: controller.signal });

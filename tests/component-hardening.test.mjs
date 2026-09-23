@@ -9,11 +9,13 @@ import { createHash } from 'node:crypto';
 import { canonicalizeJSONV1 } from '../canonical/canonical-json-v1.mjs';
 import { createContentConsent } from '../gate/content-consent.mjs';
 import { createAFMContentExecutor, APPLE_CONTENT_PROMPT_VERSION } from '../gate/afm-content-executor.mjs';
+import { registerAFMStub, restoreAFMStubLauncher } from './afm-stub-launcher.mjs';
 
 const sha = bytes => createHash('sha256').update(bytes).digest('hex');
 const directories = [];
 const temporary = prefix => { const dir = fs.realpathSync(fs.mkdtempSync(path.join(os.tmpdir(), prefix))); directories.push(dir); return dir; };
 test.afterEach(() => { for (const dir of directories.splice(0)) fs.rmSync(dir, { recursive: true, force: true }); });
+test.after(restoreAFMStubLauncher);
 const tempRoot = () => temporary('nisi-component-');
 
 function grantBytes(scopeRoot, overrides = {}) {
@@ -63,6 +65,7 @@ const evidence = {
 process.stdout.write(JSON.stringify(evidence));
 `;
   fs.writeFileSync(file, body, { mode: 0o755 });
+  registerAFMStub(file);
   return { file, sha: sha(fs.readFileSync(file)) };
 }
 
