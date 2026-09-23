@@ -1,7 +1,10 @@
 # Nisi roadmap
 
 Canonical project roadmap. Updated September 23, 2026. Product name: Nisi.
-Public v0.1 package version: 0.1.0. Current candidate: Nisi v0.2.0-rc.1. The September 12 documentation and onboarding revision started from public commit `fc8bf1b`; its GitHub update and package registry publication were separate release actions.
+Public v0.1 package version: 0.1.0. GitHub prerelease: Nisi v0.2.0-rc.1
+(tagged at `004b728`). Package registry publication is a separate action.
+The September 12 documentation and onboarding revision started from public
+commit `fc8bf1b`.
 
 ## Public v0.2 journal and store candidate
 
@@ -15,7 +18,9 @@ Public v0.1 package version: 0.1.0. Current candidate: Nisi v0.2.0-rc.1. The Sep
 - [x] Obtain hosted Windows Node 22/24 results for the public v0.2 code at
   `d2eaf44`; both jobs passed 198/198 tests. Native Windows application and
   separate PC handoff results remain open.
-- [ ] Recheck CI against the exact published commit.
+- [x] Recheck CI against the exact GitHub prerelease tag commit
+  `004b728959f70b379333137e66fd0d1aadac1807`;
+  [all four hosted jobs passed](https://github.com/louiscalata/nisi/actions/runs/35897477859).
 
 ## Nisi v0.1 follow-up
 
