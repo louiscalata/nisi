@@ -29,15 +29,24 @@ Run both focused public test files from the repository root:
 node --test tests/run-journal.test.mjs tests/run-journal-store.test.mjs
 ```
 
-For this candidate snapshot, all 24 focused tests passed on Node v22.23.2 and
-Node v24.18.0 on macOS arm64: 5 direct journal tests and 19 journal-store tests.
-The full public `npm run check` passed 197 tests on each version. The scoped
-static check also passed. The package archive contained 15 declared runtime
-files with no worker or private artifacts, and an installed consumer imported
-the declared entrypoints successfully. Native Windows results for this exact
-candidate, hosted CI, live provider behavior, performance, and production
-readiness remain unverified. Hosted CI must be checked against the exact commit
-that runs it.
+For the public code at `d2eaf44`, all 24 focused tests passed on macOS arm64
+with Node v24.18.0. The full `npm run check` passed 197 tests and skipped one
+Windows-only launcher control; the scoped static check and all 12 editable
+README checks passed. The package archive contained 15 declared files
+with no worker or private artifacts, and an installed consumer imported the
+declared entrypoints successfully. The earlier `a3319d1` candidate also passed
+the full 197-test Mac suite on Node v22.23.2.
+
+[GitHub CI run 35897012299](https://github.com/louiscalata/nisi/actions/runs/35897012299)
+passed on `d2eaf44`: hosted Windows Node 22 and 24 each passed 198/198 Node
+tests; hosted Linux Node 22 and 24 each passed 197 with the Windows-only control
+skipped. Every job also passed the 24 focused journal/store tests, scoped static
+check and 12 editable README checks. The Windows launcher runs registered
+stand-in probes through Node; this does not exercise an Apple model or a native
+Windows Nisi application. The separate Windows PC handoff has no exact result.
+Live provider behavior, performance, signed native distribution, and production
+readiness remain unverified for this public candidate. The final GitHub commit
+must be checked independently after publication.
 
 The prior v0.1 workflow, local-chat and platform evidence remains in the
 [version-scoped v0.1 verification record](verification.md); it is not evidence
