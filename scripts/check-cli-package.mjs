@@ -68,6 +68,38 @@ try {
   requireSuccess(version, 'installed version');
   assert.equal(version.stdout.trim(), packageJson.version);
 
+  const installedEntry = path.join(consumerDir, 'node_modules', 'nisi', 'bin', 'nisi.mjs');
+  const npmBin = path.join(consumerDir, 'node_modules', '.bin', process.platform === 'win32' ? 'nisi.cmd' : 'nisi');
+  const preservedLink = path.join(tempRoot, 'nisi-preserved-link.mjs');
+  let preservedLinkCheck = 'PASS';
+  try {
+    fs.symlinkSync(process.platform === 'win32' ? installedEntry : npmBin, preservedLink, 'file');
+  } catch (error) {
+    if (process.platform === 'win32' && ['EPERM', 'EACCES'].includes(error.code)) preservedLinkCheck = `SKIP_${error.code}`;
+    else throw error;
+  }
+  if (preservedLinkCheck === 'PASS') {
+    const preserved = spawnSync(process.execPath, ['--preserve-symlinks-main', preservedLink, '--version'], {
+      cwd: consumerDir,
+      encoding: 'utf8',
+      timeout: 15_000,
+      maxBuffer: 128 * 1024,
+    });
+    assert.equal(preserved.status, 0, preserved.stderr || preserved.stdout);
+    assert.equal(preserved.stdout.trim(), packageJson.version);
+    assert.equal(preserved.stderr, '');
+    const preservedDemo = spawnSync(process.execPath, ['--preserve-symlinks-main', preservedLink, 'demo'], {
+      cwd: consumerDir,
+      encoding: 'utf8',
+      timeout: 15_000,
+      maxBuffer: 128 * 1024,
+    });
+    assert.equal(preservedDemo.status, 0, preservedDemo.stderr || preservedDemo.stdout);
+    const preservedSummary = JSON.parse(preservedDemo.stdout);
+    assert.equal(preservedSummary.outcome, 'COMPLETED');
+    assert.equal(preservedSummary.reportStored, true);
+  }
+
   const demo = cli(['demo']);
   requireSuccess(demo, 'installed deterministic demo');
   const summary = JSON.parse(demo.stdout);
@@ -86,7 +118,9 @@ try {
     status: 'PASS',
     package: `${packageJson.name}@${packageJson.version}`,
     archiveFiles: packedPaths.size,
-    checks: ['packed public contents', 'offline install', 'installed help', 'installed version', 'installed demo', 'malformed model args refuse without inference'],
+    checks: ['packed public contents', 'offline install', 'installed help', 'installed version',
+      `installed npm-bin preserved symlink and demo import (${preservedLinkCheck})`, 'installed demo',
+      'malformed model args refuse without inference'],
   }, null, 2));
 } finally {
   fs.rmSync(tempRoot, { recursive: true, force: true });
