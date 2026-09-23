@@ -11,13 +11,14 @@ on:
 
 jobs:
   test:
-    # Every Node test runs here, including the executor suite, which uses
-    # POSIX stand-in probes. The Swift probes under probes/ are deliberately not
-    # built: this Linux job cannot exercise Apple Intelligence availability.
-    runs-on: ubuntu-latest
+    # Every Node test runs on Linux and Windows, including the executor suite,
+    # which uses stand-in probes. The Swift probes under probes/ need a separate
+    # Apple environment and are not built here.
+    runs-on: ${{ matrix.os }}
     strategy:
       fail-fast: false
       matrix:
+        os: [ubuntu-latest, windows-latest]
         node: ['22', '24']
     steps:
       - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4.4.0
