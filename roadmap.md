@@ -1,13 +1,26 @@
 # Nisi roadmap
 
 Canonical project roadmap. Updated September 23, 2026. Product name: Nisi.
-Public v0.1 package version: 0.1.0. GitHub prerelease: Nisi v0.2.0-rc.1
-(tagged at `004b728`). The rc.2 source candidate corrects retained journal
-fingerprint validation. Package registry publication is a separate action.
+Public v0.2.0 scope: a Node.js CLI and library with the existing workflow APIs,
+the run journal, and its store. The CLI exposes fixed demonstrations; the private
+native repository workflow and other private features remain outside this
+public release. GitHub rc.1 and rc.2 remain historical prereleases. Package
+registry publication is a separate action.
 The September 12 documentation and onboarding revision started from public
 commit `fc8bf1b`.
 
-## Public v0.2 journal and store candidate
+## Public v0.2.0 CLI release
+
+- [x] Add an installable `nisi` command for help, version, fixed workflow demo,
+  and opt-in fixed local-model JSON demo without private/native assets.
+- [x] Run direct and installed-archive CLI checks on the release candidate.
+
+Release gates: pass the hosted Windows/Linux Node 22/24 matrix on the final
+public commit, then publish the GitHub stable tag and archive against that
+tested commit. Verify the tag, archive, and repository landing page after
+publication. npm registry publication remains separate.
+
+## Public v0.2 journal and store prereleases
 
 - [x] Document only public journal/store behavior and retained v0.1 boundaries.
 - [x] Add a version-scoped verification record and changelog.
@@ -62,8 +75,8 @@ remains operating instructions; the library can run without installing it.
 
 Use the kitchen brigade to explain the process, with conventional developer
 terms alongside each role. Louis owns the editorial voice and release decisions.
-The editable draft is the current README manuscript. The current authorized update includes the September 12 review changes.
-Later unrequested editorial work remains local until publication is requested.
+The standalone editable draft retains the v0.1 README manuscript; the public
+v0.2 README is maintained at the repository root.
 
 ## September 11 implementation record
 

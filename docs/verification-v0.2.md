@@ -1,8 +1,18 @@
 # Nisi v0.2 verification record
 
-This record is limited to the public run journal and journal store in
-`history/`. It does not carry forward v0.1 integration results or private
-experiments.
+This record covers the public v0.2 command line, run journal, and journal store.
+It does not carry forward v0.1 integration results or private experiments.
+
+## Stable CLI scope
+
+The public `nisi` command exposes help, version, a fixed deterministic workflow
+demonstration, and an opt-in local-model demonstration for a fixed JSON task.
+The latter requires an explicitly configured loopback endpoint and two distinct
+model names. Neither command applies changes to an arbitrary repository, and
+the fixed workflow demonstration makes no model call. CLI tests and installed
+archive checks cover command parsing, error exits, packaging, and the fixed
+demonstration. They do not establish live-model accuracy or native application
+readiness.
 
 ## Scope
 
@@ -23,7 +33,35 @@ not authenticate a writer.
 
 ## Reproduction
 
-Run both focused public test files from the repository root:
+From the repository root on Node.js 22 or newer, run the public source and
+installed-package checks:
+
+```sh
+npm ci
+npm run check:static
+npm run check
+npm run check:cli-package
+```
+
+The last command packs the declared files, installs the archive in a fresh
+temporary consumer with scripts disabled, and invokes the installed `nisi`
+command. It uses a fixed demonstration and malformed model arguments; it does
+not contact a model server.
+
+For the September 23 stable CLI candidate on macOS arm64 with Node v24.18.0,
+`npm run check:static` passed its eight forbidden and eight allowed structural
+fixtures. `npm run check` passed the structural check and 207 Node tests, with
+one Windows-only launcher control skipped. The installed-package check passed
+with 18 declared archive files, offline installation, help, version, the fixed
+demo, a preserved-symlink entrypoint, and refusal of malformed local-model
+arguments before inference. The fixed demo returned `COMPLETED`, one repair,
+`reportStored: true`, and `modelCalls: 0`. The editable v0.1 README consistency
+check passed 12/12. Hosted Windows/Linux results for the stable CLI commit
+must be checked separately; these Mac results do not establish live provider
+behavior.
+
+Run both focused journal and store test files separately when investigating
+those APIs:
 
 ```sh
 node --test tests/run-journal.test.mjs tests/run-journal-store.test.mjs
@@ -51,7 +89,7 @@ GitHub prerelease tag `v0.2.0-rc.1` was verified at
 [CI run 35897477859](https://github.com/louiscalata/nisi/actions/runs/35897477859)
 passed all four hosted Windows/Linux Node 22/24 jobs on that exact commit.
 
-## rc.2 correction candidate
+## rc.2 correction and release baseline
 
 The rc.2 source candidate checks that every retained entry's stored fingerprint
 matches its validated, redacted entry during reopen. A regression builds a
@@ -65,7 +103,11 @@ On macOS arm64 with Node v24.18.0, the focused journal/store tests passed
 with one Windows-only control skipped. The package dry run contained 15
 declared files, and `npm audit --omit=dev` found zero production dependency
 vulnerabilities. These checks do not verify native Windows operation or live
-provider behavior.
+provider behavior. The published rc.2 tag targets
+`17d6178e15ea0cd40a277c19ba8a26bcb3813597`; its
+[four-job Windows/Linux Node 22/24 CI run](https://github.com/louiscalata/nisi/actions/runs/35901126815)
+passed on that exact commit. The CLI added for stable v0.2.0 requires fresh
+checks on the final stable commit.
 
 The prior v0.1 workflow, local-chat and platform evidence remains in the
 [version-scoped v0.1 verification record](verification.md); it is not evidence

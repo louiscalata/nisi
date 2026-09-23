@@ -1,8 +1,8 @@
 {
   "name": "nisi",
-  "version": "0.2.0-rc.2",
+  "version": "0.2.0",
   "private": false,
-  "description": "A Node.js workflow orchestrator for AI-assisted coding, with bounded repairs and validated run reports.",
+  "description": "A Node.js CLI and library for bounded AI-assisted coding workflows and validated run reports.",
   "license": "Apache-2.0",
   "author": "Louis Calata",
   "repository": {
