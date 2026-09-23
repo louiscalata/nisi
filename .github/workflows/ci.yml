@@ -32,6 +32,8 @@ jobs:
         run: npm run check:static
       - name: Structural check and tests
         run: npm run check
+      - name: Installed public CLI package
+        run: npm run check:cli-package
       - name: Public journal and store tests
         run: node --test tests/run-journal.test.mjs tests/run-journal-store.test.mjs
       - name: Editable README consistency
