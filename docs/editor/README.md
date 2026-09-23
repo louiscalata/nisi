@@ -1,4 +1,4 @@
-# Editable README manuscript
+# Nisi v0.1 editable README manuscript
 
 Open `index.html` or `index-typing-revision.html` in a browser. Both contain the
 same standalone editor: 10 section text boxes, an About text box, a limited
@@ -36,3 +36,10 @@ appears as code. The exported Markdown preserves the user's source text.
 
 The About field is exported in the editable HTML, not in the README Markdown.
 Updating GitHub's repository description is a separate publishing action.
+
+
+This standalone editor and its manuscript preserve the v0.1 README text. They do
+not represent the v0.2 README. Version-specific implementation and verification
+records for the public v0.2 journal and store are maintained in the repository
+root README, `docs/verification-v0.2.md`, and `CHANGELOG.md`. The v0.1 local-chat
+documentation remains scoped to that workflow surface.

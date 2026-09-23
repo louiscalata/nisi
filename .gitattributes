@@ -1,0 +1,3 @@
+docs/README-draft.md text eol=lf
+docs/editor/editor.js text eol=lf
+docs/editor/*.html text eol=lf

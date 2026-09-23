@@ -9,11 +9,13 @@ import { createHash } from 'node:crypto';
 import { canonicalizeJSONV1 } from '../canonical/canonical-json-v1.mjs';
 import { createContentConsent } from '../gate/content-consent.mjs';
 import { createAFMContentExecutor, APPLE_CONTENT_PROMPT_VERSION } from '../gate/afm-content-executor.mjs';
+import { registerAFMStub, restoreAFMStubLauncher } from './afm-stub-launcher.mjs';
 
 const sha = bytes => createHash('sha256').update(bytes).digest('hex');
 const directories = [];
 const temporary = prefix => { const dir = fs.realpathSync(fs.mkdtempSync(path.join(os.tmpdir(), prefix))); directories.push(dir); return dir; };
 test.afterEach(() => { for (const dir of directories.splice(0)) fs.rmSync(dir, { recursive: true, force: true }); });
+test.after(restoreAFMStubLauncher);
 const tempRoot = () => temporary('nisi-component-');
 
 function grantBytes(scopeRoot, overrides = {}) {
@@ -63,6 +65,7 @@ const evidence = {
 process.stdout.write(JSON.stringify(evidence));
 `;
   fs.writeFileSync(file, body, { mode: 0o755 });
+  registerAFMStub(file);
   return { file, sha: sha(fs.readFileSync(file)) };
 }
 
@@ -100,17 +103,30 @@ test('same-size in-place mutation between read and final identity check is CONTE
   const { grant } = consent(root);
   const originalReadSync = fs.readSync;
   let mutated = false;
+  let beforeMutation, afterMutation;
   fs.readSync = (...args) => {
     const count = originalReadSync(...args);
     if (!mutated) {
       mutated = true;
+      beforeMutation = fs.fstatSync(args[0]);
       const writer = fs.openSync(file, fs.constants.O_WRONLY);
-      try { fs.writeSync(writer, Buffer.from('abcdefghij'), 0, 10, 0); } finally { fs.closeSync(writer); }
+      try {
+        fs.writeSync(writer, Buffer.from('abcdefghij'), 0, 10, 0);
+        // A same-size write can retain the reported mtime on Windows when it
+        // occurs within one timestamp tick. Force a distinct mtime so the
+        // final fstat must observe the in-place mutation on every platform.
+        fs.futimesSync(writer, beforeMutation.atime, new Date(beforeMutation.mtimeMs + 86_400_000));
+      } finally { fs.closeSync(writer); }
+      afterMutation = fs.fstatSync(args[0]);
     }
     return count;
   };
   try {
     const result = grant.admitContent({ filePath: file, kind: 'text' });
+    assert.equal(mutated, true);
+    assert.equal(afterMutation.size, beforeMutation.size);
+    assert.notEqual(afterMutation.mtimeMs, beforeMutation.mtimeMs);
+    assert.equal(fs.readFileSync(file, 'utf8'), 'abcdefghij');
     assert.equal(result.ok, false);
     assert.equal(result.code, 'CONTENT_CHANGED_DURING_READ');
     assert.equal(grant.status().admittedItems, 0);

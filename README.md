@@ -1,4 +1,4 @@
-# Nisi v0.1
+# Nisi v0.2
 
 **A Node.js library for running AI-assisted coding workflows.**
 
@@ -9,8 +9,9 @@ failed, and why the run stopped. Fixed criteria and repair limits keep each
 attempt tied to the original request.
 
 **Status: working prototype.** Run it from a source checkout. The
-[verification record](https://github.com/louiscalata/nisi/blob/main/docs/verification.md)
-identifies the tested versions and environments.
+[v0.1 verification record](https://github.com/louiscalata/nisi/blob/main/docs/verification.md)
+describes the earlier release. The [v0.2 verification record](https://github.com/louiscalata/nisi/blob/main/docs/verification-v0.2.md)
+records checks for this candidate and their limits.
 
 ## Quick start
 
@@ -39,6 +40,55 @@ The output includes:
 Run `npm run check` to check the codec and run the test suite. npm 11 checks the
 Node requirement before install and run commands; the check and example scripts
 also validate Node directly.
+
+## What is new in v0.2
+
+v0.2 adds a **run journal** and a disk store for it. The journal is an
+append-only, hash-chained record of what a run observed. A host can write it,
+reopen it after a process restart, and check it before relying on its rows.
+These modules live under `history/`. The v0.1 workflow and local-model adapter
+are unchanged; results measured with a separate private adapter do not apply
+to this public package.
+
+- **Run journal** (`history/run-journal-v1.mjs`, import `nisi/history/run-journal`).
+  `createRunJournal(config)` validates every entry (fixed keys, identifier
+  formats, safe integers, one of six states), reports duplicate and conflicting
+  re-appends, refuses invalid retries, revocations, and project mismatches,
+  applies the configured payload redaction before anything is stored, and
+  retires entries past their TTL or beyond the configured maximum by clearing
+  their payloads while keeping their place in the chain. `list(now)` reports
+  each entry's liveness: `RUNNING` with a fresh heartbeat, `UNKNOWN` once the
+  heartbeat is stale, `EXPIRED` after its TTL, or `REVOKED`. `serialize()`
+  produces canonical JSON lines with a header, a SHA-256 chain, and a footer;
+  `reopen(serialized)` rebuilds the journal and returns a recovery report
+  (`COMPLETE`, `INCOMPLETE` for truncated input, or `INVALID`). A journal
+  reopened from damaged input is sealed and refuses further appends. The
+  module imports only `node:crypto` and `node:util`.
+  Fingerprints and duplicate detection use the redacted entry. Changes only to
+  redacted values therefore compare as duplicates; the original values cannot
+  be reconstructed from the journal.
+- **Journal store** (`history/run-journal-store-v1.mjs`, import `nisi/history/run-journal-store`).
+  `writeSerializedJournal` and `readSerializedJournal` move a serialized
+  journal to and from disk through a caller-supplied `fs`. A write validates
+  the chain first, goes through an exclusive temp file in the same directory,
+  syncs the file and its directory, verifies by reading back, and renames into
+  place. Each write attempt uses its own temporary filename, so an orphaned
+  temporary file from a stopped process does not block an identical retry.
+  `expectedPreviousSha256` detects stale **sequential** writes; it is not an
+  atomic guard for concurrent writers. Use one writer per journal and
+  serialize writes in the host. The store reports `committed` and `durable`
+  separately, so a write that landed without confirmed file and directory
+  sync is never reported as durable. A read refuses truncated, non-canonical,
+  malformed-UTF-8, or chain-broken files instead of returning partial data.
+
+The public package does not include a recovery worker. Package exports are
+limited to the declared runtime modules; old undocumented deep imports may no
+longer resolve. A host owns the journal
+location outside the package and can call `readSerializedJournal` followed by
+`reopen` after a restart. A stopped write may leave a file named
+`journal.jsonl.<sha256>.<uuid>.tmp` beside the journal. Inspect the owner and
+destination before removing an orphan. Journal views and recovery reports carry
+`authorizing: false`; they record observations and grant no authority.
 
 ## Use it in an application
 
@@ -143,6 +193,8 @@ defines workflow, pipeline, run, state, stage status, and final outcome.
 | JSON Canonicalizer | Produce stable bytes and digests under Nisi's restricted integer-only JSON profile |
 | Apple Foundation Models Adapter | Run and validate a native advisory helper in a compatible Apple environment |
 | Static Analysis Check | Check selected direct call patterns in the JSON codec |
+| Run Journal | Keep an append-only, hash-chained record of run observations with redaction, liveness, and verified reopen |
+| Journal Store | Write and read a serialized journal through a temp file, sync, read-back, and rename, reporting durability honestly |
 
 Nisi validates what adapters report. `COMPLETED` means the required stages
 returned valid passing evidence; callback honesty and actual file access remain
@@ -153,8 +205,9 @@ host responsibilities. The host also owns applying changes and release decisions
 - [Workflow API reference](https://github.com/louiscalata/nisi/blob/main/docs/workflow-api.md) — task, candidate, callback, and report contracts.
 - [Architecture](https://github.com/louiscalata/nisi/blob/main/docs/architecture.md) — components, terminology, and trust boundaries.
 - [Local models](https://github.com/louiscalata/nisi/blob/main/docs/local-models.md), [file access](https://github.com/louiscalata/nisi/blob/main/docs/file-policy.md), and [Apple integration](https://github.com/louiscalata/nisi/blob/main/docs/apple-foundation-models.md) — integration setup and limits.
-- [Verification](https://github.com/louiscalata/nisi/blob/main/docs/verification.md) — retained test and integration results.
-- [Editable README](https://github.com/louiscalata/nisi/tree/main/docs/editor) — download the HTML to edit every section locally.
+- [v0.1 verification](https://github.com/louiscalata/nisi/blob/main/docs/verification.md) and [v0.2 verification](https://github.com/louiscalata/nisi/blob/main/docs/verification-v0.2.md) — version-scoped results and limits.
+- [Changelog](https://github.com/louiscalata/nisi/blob/main/CHANGELOG.md) — public changes by version.
+- [v0.1 editable README manuscript](https://github.com/louiscalata/nisi/tree/main/docs/editor) — a standalone editor for the earlier README text.
 
 ## Support and license
 
