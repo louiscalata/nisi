@@ -266,6 +266,24 @@ test('store refuses a self-consistent chain with an invalid journal entry', t =>
   refused(write({ ...f, serialized: invalid }), 'INVALID_JOURNAL');
 });
 
+test('store refuses a rehashed chain with the wrong retained entry fingerprint', t => {
+  const f = fixture(t);
+  const lines = journal().trimEnd().split('\n').map(JSON.parse);
+  lines[1].record.fingerprint = lines[1].record.fingerprint === '0'.repeat(64) ? '1'.repeat(64) : '0'.repeat(64);
+  lines[1].hash = hash('nisi-run-journal/record/v1\n' + canonical({
+    seq: lines[1].seq, previousHash: lines[1].previousHash, record: lines[1].record,
+  }));
+  lines[2].lastHash = lines[1].hash;
+  const invalid = lines.map(canonical).join('\n') + '\n';
+
+  realFs.writeFileSync(f.path, invalid);
+  refused(read(f), 'INVALID_JOURNAL');
+  f.events.length = 0;
+  refused(write({ ...f, serialized: invalid }), 'INVALID_JOURNAL');
+  assert.deepEqual(f.events, []);
+  assert.equal(realFs.readFileSync(f.path, 'utf8'), invalid);
+});
+
 test('write validates strings, framing and expected hash before mutation; corrupt existing data stays intact', t => {
   const f = fixture(t);
   for (const serialized of [null, 4, Buffer.from(journal()), '', journal().slice(0, -1), journal() + '\ud800', '{}\n{}\n']) {

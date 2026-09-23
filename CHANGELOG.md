@@ -3,6 +3,12 @@
 Changes to the public Nisi package are recorded here. This file describes the
 public source tree and does not include private experiments.
 
+## 0.2.0-rc.2
+
+- Reject a retained run-journal entry on reopen when its recorded fingerprint
+  differs from the validated, redacted entry. This prevents a crafted, rehashed
+  journal from reversing duplicate and conflict classification for that ID.
+
 ## 0.2.0-rc.1
 
 - Add the append-only run journal with entry validation, configured payload
