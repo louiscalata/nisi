@@ -2,7 +2,8 @@
 
 Canonical project roadmap. Updated September 23, 2026. Product name: Nisi.
 Public v0.1 package version: 0.1.0. GitHub prerelease: Nisi v0.2.0-rc.1
-(tagged at `004b728`). Package registry publication is a separate action.
+(tagged at `004b728`). The rc.2 source candidate corrects retained journal
+fingerprint validation. Package registry publication is a separate action.
 The September 12 documentation and onboarding revision started from public
 commit `fc8bf1b`.
 
