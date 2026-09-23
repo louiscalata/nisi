@@ -11,9 +11,9 @@ on:
 
 jobs:
   test:
-    # Every Node test runs on Linux and Windows, including the executor suite,
-    # which uses stand-in probes. The Swift probes under probes/ need a separate
-    # Apple environment and are not built here.
+    # Every Node test runs on Linux and Windows. The Apple executor tests use
+    # stand-in probes; their Windows fixture launcher does not run Apple models.
+    # Swift probes under probes/ need a separate Apple environment.
     runs-on: ${{ matrix.os }}
     strategy:
       fail-fast: false
@@ -30,7 +30,9 @@ jobs:
       - run: npm ci
       - name: Scoped static analysis check on the codec
         run: npm run check:static
-      - name: Tests
-        run: npm test
+      - name: Structural check and tests
+        run: npm run check
+      - name: Public journal and store tests
+        run: node --test tests/run-journal.test.mjs tests/run-journal-store.test.mjs
       - name: Editable README consistency
         run: node docs/editor/check-editor.mjs ./index-typing-revision.html
