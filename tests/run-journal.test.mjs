@@ -2,7 +2,13 @@
 // SPDX-License-Identifier: Apache-2.0
 import test from 'node:test';
 import assert from 'node:assert/strict';
+import { createHash } from 'node:crypto';
 import { createRunJournal, reopen } from '../history/run-journal-v1.mjs';
+
+const hash = value => createHash('sha256').update(value).digest('hex');
+const canonical = value => Array.isArray(value) ? '[' + value.map(canonical).join(',') + ']'
+  : value && typeof value === 'object' ? '{' + Object.keys(value).sort().map(k => JSON.stringify(k) + ':' + canonical(value[k])).join(',') + '}'
+    : JSON.stringify(value);
 
 const config = patch => ({
   projectId: 'project-a',
@@ -135,4 +141,41 @@ test('malformed records and broken record hashes reopen as invalid', () => {
       status: 'REFUSED', id: 'new-entry', reason: 'SEALED',
     });
   }
+});
+
+test('retained entry fingerprint must match its payload even when the chain is rehashed', () => {
+  const journal = createRunJournal(config());
+  assert.equal(journal.append(entry(), 100).status, 'APPENDED');
+  const lines = journal.serialize().trimEnd().split('\n').map(JSON.parse);
+  lines[1].record.fingerprint = lines[1].record.fingerprint === '0'.repeat(64) ? '1'.repeat(64) : '0'.repeat(64);
+  lines[1].hash = hash('nisi-run-journal/record/v1\n' + canonical({
+    seq: lines[1].seq, previousHash: lines[1].previousHash, record: lines[1].record,
+  }));
+  lines[2].lastHash = lines[1].hash;
+  const recovered = reopen(lines.map(canonical).join('\n') + '\n');
+
+  assert.equal(recovered.report.status, 'INVALID');
+  assert.equal(recovered.report.rejectedLine, 2);
+  assert.equal(recovered.report.reason, 'RECORD');
+  assert.deepEqual(recovered.report.recoveredIds, []);
+  assert.deepEqual(recovered.journal.append(entry(), 100), {
+    status: 'REFUSED', id: 'entry-a', reason: 'SEALED',
+  });
+  assert.throws(() => recovered.journal.serialize(), { code: 'SEALED' });
+});
+
+test('pruned entry reopens with its original fingerprint and no retained payload', () => {
+  const journal = createRunJournal(config());
+  assert.equal(journal.append(entry(), 100).status, 'APPENDED');
+  assert.deepEqual(journal.retain(1100), ['entry-a']);
+  const recovered = reopen(journal.serialize());
+
+  assert.equal(recovered.report.status, 'COMPLETE');
+  const [row] = recovered.journal.list(1100);
+  assert.equal(row.retained, false);
+  assert.equal(row.entry.payload, null);
+  assert.equal(recovered.journal.append(entry(), 1100).status, 'DUPLICATE');
+  assert.deepEqual(recovered.journal.append(entry('entry-a', { payload: { note: 'changed' } }), 1100), {
+    status: 'CONFLICT', id: 'entry-a', reason: 'ID_CONTENT_MISMATCH',
+  });
 });
