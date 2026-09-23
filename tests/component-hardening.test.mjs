@@ -103,17 +103,30 @@ test('same-size in-place mutation between read and final identity check is CONTE
   const { grant } = consent(root);
   const originalReadSync = fs.readSync;
   let mutated = false;
+  let beforeMutation, afterMutation;
   fs.readSync = (...args) => {
     const count = originalReadSync(...args);
     if (!mutated) {
       mutated = true;
+      beforeMutation = fs.fstatSync(args[0]);
       const writer = fs.openSync(file, fs.constants.O_WRONLY);
-      try { fs.writeSync(writer, Buffer.from('abcdefghij'), 0, 10, 0); } finally { fs.closeSync(writer); }
+      try {
+        fs.writeSync(writer, Buffer.from('abcdefghij'), 0, 10, 0);
+        // A same-size write can retain the reported mtime on Windows when it
+        // occurs within one timestamp tick. Force a distinct mtime so the
+        // final fstat must observe the in-place mutation on every platform.
+        fs.futimesSync(writer, beforeMutation.atime, new Date(beforeMutation.mtimeMs + 86_400_000));
+      } finally { fs.closeSync(writer); }
+      afterMutation = fs.fstatSync(args[0]);
     }
     return count;
   };
   try {
     const result = grant.admitContent({ filePath: file, kind: 'text' });
+    assert.equal(mutated, true);
+    assert.equal(afterMutation.size, beforeMutation.size);
+    assert.notEqual(afterMutation.mtimeMs, beforeMutation.mtimeMs);
+    assert.equal(fs.readFileSync(file, 'utf8'), 'abcdefghij');
     assert.equal(result.ok, false);
     assert.equal(result.code, 'CONTENT_CHANGED_DURING_READ');
     assert.equal(grant.status().admittedItems, 0);
