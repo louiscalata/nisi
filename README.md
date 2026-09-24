@@ -235,6 +235,10 @@ both a handwritten checked loop and Nisi matched all 12 after six structural
 repairs each. The checked arms tied and used the same draft and repair request
 bytes per task.
 
+The same 12 tasks had appeared in earlier exploratory runs, and server cache
+behavior was not measured. Treat these counts as an integration check, not a
+general accuracy estimate.
+
 ![Exact answer matches across the three pilot arms](benchmarks/value/charts/exact-match.svg)
 
 ![Model calls and reported tokens across the three pilot arms](benchmarks/value/charts/calls-and-tokens.svg)
