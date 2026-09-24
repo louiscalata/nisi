@@ -190,9 +190,10 @@ network-share routing and automatic model selection remain host responsibilities
 - [x] Run one exploratory 12-task structured-output pilot through a configured
   local Gemma endpoint with the released author adapter. Retain candidate text,
   full reports, request/usage receipts, source hashes and an external exact
-  oracle. The one-shot arm got 6/12; a handwritten checked loop and Nisi each
-  got 12/12 with six structural repairs. Their author request bytes matched,
-  and this pilot shows no Nisi advantage over the checked loop.
+  oracle. The one-shot arm met the output contract in 6/12; its other six
+  unwrapped values equaled the expected answers. A handwritten checked loop
+  and Nisi each got 12/12 with six structural repairs. Their author request
+  bytes matched, and this pilot shows no Nisi advantage over the checked loop.
 - [ ] Run a fresh confirmatory study with independent tasks, equal budgets,
   provider/cache controls and independent acceptance before claiming general
   quality, speed, token or cost gains.

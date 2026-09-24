@@ -1,14 +1,14 @@
 <?xml version='1.0' encoding='utf-8'?>
 <svg xmlns="http://www.w3.org/2000/svg" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:ns2="http://creativecommons.org/ns#" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" width="741.6pt" height="417.6pt" viewBox="0 0 741.6 417.6" version="1.1" role="img" aria-labelledby="chart-title chart-desc">
- <title id="chart-title">Exact answers by synthetic task family</title><desc id="chart-desc">On four JSON configuration tasks A matched 1, B matched 4, C matched 4. On four classification tasks all arms matched 4. On four text extraction tasks A matched 1, B matched 4, C matched 4. A had no repair opportunity; B and C had one. Result SHA-256 17c117821d347bf4ad248b70b319d8847bbedc2647edebf6b0a2e8edf996b10a; frozen dataset SHA-256 cef0921e2104650b4c7f1f5f0612379d35bbe393c6152811f9236543a8a20a40.</desc><metadata>
+ <title id="chart-title">Output-contract matches by synthetic task family</title><desc id="chart-desc">On four JSON configuration tasks one-shot draft met the output contract once; checked loop and Nisi each met it four times. On four classification tasks all arms met the contract four times. On four text extraction tasks one-shot draft met it once; checked loop and Nisi each met it four times. All six one-shot contract misses had the correct value but omitted the required answer wrapper. One-shot had no repair opportunity; checked loop and Nisi had one. Result SHA-256 17c117821d347bf4ad248b70b319d8847bbedc2647edebf6b0a2e8edf996b10a; frozen dataset SHA-256 cef0921e2104650b4c7f1f5f0612379d35bbe393c6152811f9236543a8a20a40.</desc><metadata>
   <rdf:RDF>
    <ns2:Work>
     <dc:type rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
-    <dc:date>2026-09-24T01:33:27.526718</dc:date>
+    <dc:date>2026-09-24</dc:date>
     <dc:format>image/svg+xml</dc:format>
     <dc:creator>
      <ns2:Agent>
-      <dc:title>Matplotlib v3.11.2, https://matplotlib.org/</dc:title>
+      <dc:title>Nisi benchmark chart renderer</dc:title>
      </ns2:Agent>
     </dc:creator>
    </ns2:Work>
@@ -26,31 +26,31 @@
     <path d="M 185.4 304.848  L 697.104 304.848  L 697.104 91.872  L 185.4 91.872  z " style="fill: #ffffff" />
    </g>
    <g id="patch_3">
-    <path d="M 210.159871 102.86431  L 342.212516 102.86431  L 342.212516 156.451819  L 210.159871 156.451819  z " clip-path="url(#p19792dfaec)" style="fill: #ebaa91; stroke: #ffffff; stroke-width: 2; stroke-linejoin: miter" />
+    <path d="M 210.159871 102.86431  L 342.212516 102.86431  L 342.212516 156.451819  L 210.159871 156.451819  z " clip-path="url(#p044dd72cf5)" style="fill: #ebaa91; stroke: #ffffff; stroke-width: 2; stroke-linejoin: miter" />
    </g>
    <g id="patch_4">
-    <path d="M 375.225677 102.86431  L 507.278323 102.86431  L 507.278323 156.451819  L 375.225677 156.451819  z " clip-path="url(#p19792dfaec)" style="fill: #078a78; stroke: #ffffff; stroke-width: 2; stroke-linejoin: miter" />
+    <path d="M 375.225677 102.86431  L 507.278323 102.86431  L 507.278323 156.451819  L 375.225677 156.451819  z " clip-path="url(#p044dd72cf5)" style="fill: #007466; stroke: #ffffff; stroke-width: 2; stroke-linejoin: miter" />
    </g>
    <g id="patch_5">
-    <path d="M 540.291484 102.86431  L 672.344129 102.86431  L 672.344129 156.451819  L 540.291484 156.451819  z " clip-path="url(#p19792dfaec)" style="fill: #078a78; stroke: #ffffff; stroke-width: 2; stroke-linejoin: miter" />
+    <path d="M 540.291484 102.86431  L 672.344129 102.86431  L 672.344129 156.451819  L 540.291484 156.451819  z " clip-path="url(#p044dd72cf5)" style="fill: #007466; stroke: #ffffff; stroke-width: 2; stroke-linejoin: miter" />
    </g>
    <g id="patch_6">
-    <path d="M 210.159871 171.566245  L 342.212516 171.566245  L 342.212516 225.153755  L 210.159871 225.153755  z " clip-path="url(#p19792dfaec)" style="fill: #078a78; stroke: #ffffff; stroke-width: 2; stroke-linejoin: miter" />
+    <path d="M 210.159871 171.566245  L 342.212516 171.566245  L 342.212516 225.153755  L 210.159871 225.153755  z " clip-path="url(#p044dd72cf5)" style="fill: #007466; stroke: #ffffff; stroke-width: 2; stroke-linejoin: miter" />
    </g>
    <g id="patch_7">
-    <path d="M 375.225677 171.566245  L 507.278323 171.566245  L 507.278323 225.153755  L 375.225677 225.153755  z " clip-path="url(#p19792dfaec)" style="fill: #078a78; stroke: #ffffff; stroke-width: 2; stroke-linejoin: miter" />
+    <path d="M 375.225677 171.566245  L 507.278323 171.566245  L 507.278323 225.153755  L 375.225677 225.153755  z " clip-path="url(#p044dd72cf5)" style="fill: #007466; stroke: #ffffff; stroke-width: 2; stroke-linejoin: miter" />
    </g>
    <g id="patch_8">
-    <path d="M 540.291484 171.566245  L 672.344129 171.566245  L 672.344129 225.153755  L 540.291484 225.153755  z " clip-path="url(#p19792dfaec)" style="fill: #078a78; stroke: #ffffff; stroke-width: 2; stroke-linejoin: miter" />
+    <path d="M 540.291484 171.566245  L 672.344129 171.566245  L 672.344129 225.153755  L 540.291484 225.153755  z " clip-path="url(#p044dd72cf5)" style="fill: #007466; stroke: #ffffff; stroke-width: 2; stroke-linejoin: miter" />
    </g>
    <g id="patch_9">
-    <path d="M 210.159871 240.268181  L 342.212516 240.268181  L 342.212516 293.85569  L 210.159871 293.85569  z " clip-path="url(#p19792dfaec)" style="fill: #ebaa91; stroke: #ffffff; stroke-width: 2; stroke-linejoin: miter" />
+    <path d="M 210.159871 240.268181  L 342.212516 240.268181  L 342.212516 293.85569  L 210.159871 293.85569  z " clip-path="url(#p044dd72cf5)" style="fill: #ebaa91; stroke: #ffffff; stroke-width: 2; stroke-linejoin: miter" />
    </g>
    <g id="patch_10">
-    <path d="M 375.225677 240.268181  L 507.278323 240.268181  L 507.278323 293.85569  L 375.225677 293.85569  z " clip-path="url(#p19792dfaec)" style="fill: #078a78; stroke: #ffffff; stroke-width: 2; stroke-linejoin: miter" />
+    <path d="M 375.225677 240.268181  L 507.278323 240.268181  L 507.278323 293.85569  L 375.225677 293.85569  z " clip-path="url(#p044dd72cf5)" style="fill: #007466; stroke: #ffffff; stroke-width: 2; stroke-linejoin: miter" />
    </g>
    <g id="patch_11">
-    <path d="M 540.291484 240.268181  L 672.344129 240.268181  L 672.344129 293.85569  L 540.291484 293.85569  z " clip-path="url(#p19792dfaec)" style="fill: #078a78; stroke: #ffffff; stroke-width: 2; stroke-linejoin: miter" />
+    <path d="M 540.291484 240.268181  L 672.344129 240.268181  L 672.344129 293.85569  L 540.291484 293.85569  z " clip-path="url(#p044dd72cf5)" style="fill: #007466; stroke: #ffffff; stroke-width: 2; stroke-linejoin: miter" />
    </g>
    <g id="matplotlib.axis_1">
     <g id="xtick_1">
@@ -121,20 +121,20 @@
    </g>
   </g>
   <g id="text_16">
-   <text style="font-weight: 700; font-size: 18px; font-family: 'DejaVu Sans'; text-anchor: start; fill: #152a3a" x="74.16" y="22.029188" transform="rotate(-0 74.16 22.029188)">Where the one-shot answers missed</text>
+   <text style="font-weight: 700; font-size: 18px; font-family: 'DejaVu Sans'; text-anchor: start; fill: #152a3a" x="74.16" y="22.029188" transform="rotate(-0 74.16 22.029188)">Output contract by task family</text>
   </g>
   <g id="text_17">
-   <text style="font-size: 10px; font-family: 'DejaVu Sans'; text-anchor: start; fill: #556775" x="74.16" y="54.288" transform="rotate(-0 74.16 54.288)">Exact answer matches by task family · four synthetic tasks per family</text>
+   <text style="font-size: 10px; font-family: 'DejaVu Sans'; text-anchor: start; fill: #556775" x="74.16" y="54.288" transform="rotate(-0 74.16 54.288)">Strict contract matches · four synthetic tasks per family</text>
   </g>
   <g id="text_18">
-   <text style="font-size: 10px; font-family: 'DejaVu Sans'; text-anchor: start; fill: #556775" x="74.16" y="363.312" transform="rotate(-0 74.16 363.312)">All six A misses lacked the required answer key; each checked arm repaired those shapes once.</text>
+   <text style="font-size: 10px; font-family: 'DejaVu Sans'; text-anchor: start; fill: #556775" x="74.16" y="363.312" transform="rotate(-0 74.16 363.312)">All six one-shot misses had correct values but omitted the answer wrapper; both checked arms repaired them.</text>
   </g>
   <g id="text_19">
    <text style="font-size: 9px; font-family: 'DejaVu Sans'; text-anchor: start; fill: #556775" x="74.16" y="390.456" transform="rotate(-0 74.16 390.456)">One local Gemma endpoint · exploratory repeated-task pilot · result SHA-256 17c117821d347bf4…</text>
   </g>
  </g>
  <defs>
-  <clipPath id="p19792dfaec">
+  <clipPath id="p044dd72cf5">
    <rect x="185.4" y="91.872" width="511.704" height="212.976" />
   </clipPath>
  </defs>
