@@ -1,4 +1,5 @@
 node_modules/
+__pycache__/
 # built probe binaries: rebuilt and re-pinned locally, never committed
 probes/afm-content-probe
 probes/afm-concurrency-probe

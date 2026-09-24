@@ -3,6 +3,17 @@
 Changes to the public Nisi package are recorded here. This file describes the
 public source tree and does not include private experiments.
 
+## Unreleased source update
+
+- Add source-checkout workflow-control, mocked-interface, and inert-overhead
+  benchmarks, plus a 12-task exploratory pilot against one configured local
+  Gemma chat endpoint. Retain raw pilot candidates, reports, and request
+  receipts so the exact-match results can be rescored.
+- Add GitHub-readable benchmark graphs and a study plan that separates this
+  single local integration from untested providers and production outcomes.
+  The released v0.2.0 runtime modules, public API, and package file allowlist
+  are unchanged.
+
 ## 0.2.0
 
 - Add an installable `nisi` command for help, version, a fixed deterministic

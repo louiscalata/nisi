@@ -1,0 +1,12 @@
+{
+  "scope": "public synthetic local Gemma exploratory pilot, repaired equal B/C feedback",
+  "sourceSha256": {
+    "adapters/local-chat.mjs": "75dc8b128883fb14e524ceb05b4696e53406c2c8038ec4340b42f0ca471fe043",
+    "benchmarks/value/checked-loop.mjs": "37d5bf071097292e35359971ff1b23cb38696287f2f12d8077ed270cbf4ca045",
+    "benchmarks/value/fixtures/live-pilot-v1.json": "cef0921e2104650b4c7f1f5f0612379d35bbe393c6152811f9236543a8a20a40",
+    "benchmarks/value/live-pilot.mjs": "843e0050a5fc4395b0e03004ffdb4953ef5b820605d06ea528a944cdb7433ccd",
+    "tests/value-live-pilot.test.mjs": "20788f9561c6fd1419a01f1a418d407d6ae82a6ca03754614fefc06631e8e57d",
+    "workflow/contracts.mjs": "c28a3ee3db6e9a936cd58fca8b8ee3f2744ca25c259e2ea278b3b09cdbb73d82",
+    "workflow/engine.mjs": "c67c63baeadc725a8487af7108b01d3a38dd50e64ff35f1be66471c81e5f979b"
+  }
+}
