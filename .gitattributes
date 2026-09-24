@@ -1,3 +1,8 @@
 docs/README-draft.md text eol=lf
 docs/editor/editor.js text eol=lf
 docs/editor/*.html text eol=lf
+benchmarks/value/** text eol=lf
+tests/value-live-pilot.test.mjs text eol=lf
+adapters/local-chat.mjs text eol=lf
+workflow/contracts.mjs text eol=lf
+workflow/engine.mjs text eol=lf
