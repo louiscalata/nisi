@@ -194,9 +194,9 @@ network-share routing and automatic model selection remain host responsibilities
   unwrapped values equaled the expected answers. A handwritten checked loop
   and Nisi each got 12/12 with six structural repairs. Their author request
   bytes matched, and this pilot shows no Nisi advantage over the checked loop.
-- [ ] Run a fresh confirmatory study with independent tasks, equal budgets,
-  provider/cache controls and independent acceptance before claiming general
-  quality, speed, token or cost gains.
+- [ ] Run a fresh confirmatory study with independent repository tasks, measured
+  project/context sizes, equal budgets, provider/cache controls, and independent
+  acceptance before claiming general quality, speed, token or cost gains.
 - [ ] Validate additional providers and native platforms in their actual hosts.
 
 The reproducible entry point is [benchmarks/value/README.md](benchmarks/value/README.md).
