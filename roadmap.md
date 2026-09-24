@@ -172,3 +172,24 @@ and cannot forcibly interrupt synchronous JavaScript or undo external effects.
 
 Machine paths, credentials, model-service setup, private project architecture,
 network-share routing and automatic model selection remain host responsibilities.
+
+## September 23 benchmark development
+
+- [x] Add reproducible benchmarks of the unchanged v0.2.0 workflow: 25 authored
+  control specimens, checked one-shot and competent checked-loop references,
+  independent semantic/trace scoring and explicit dishonest-callback coverage.
+- [x] Exercise four synthetic inference interface shapes, first-pass and repair
+  paths, and malformed/truncated JSON refusals. Real provider compatibility is
+  not established by those mocked transports.
+- [x] Measure warm inert-callback overhead with matched traces, three payload
+  sizes, 30 warmup pairs and 200 measured pairs per condition. Keep this distinct
+  from inference time, token use, money and development effort.
+- [x] Address independent review findings: callback-trace validation, report/actual
+  repair consistency, cancellation cleanup and symmetric timing summaries.
+- [x] Document the live integration/quality study needed for stronger claims.
+- [ ] Run that study with frozen tasks, real adapter receipts, equal comparison
+  budgets and independent acceptance oracles before claiming general gains.
+- [ ] Validate additional providers and native platforms in their actual hosts.
+
+The reproducible entry point is [benchmarks/value/README.md](benchmarks/value/README.md).
+These are development benchmarks, not a new release or a provider certification.
