@@ -123,6 +123,14 @@ prices must be pinned by date, and local hardware energy/amortization must be
 explicit if estimating local cost. Quality, latency and cost remain separate
 trade-offs; combine them only under a predeclared user utility function.
 
+For a project-size or context-efficiency claim, predeclare fresh target
+repositories across measured size bands. Record tracked source files and bytes,
+task-touched files, and the actual context bytes and tokens sent in every model
+request. Separate input, output, cached, reviewer, and repair tokens; include
+failed and incomplete runs in total usage. Pair arms on the same repository task
+with matched model, context-selection policy, call/repair limits, and acceptance
+tests. A smaller framework package alone is not evidence of fewer model tokens.
+
 ## Broader task benchmarks
 
 [SWE-bench](https://www.swebench.com/) evaluates repository issue resolution;
