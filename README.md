@@ -229,25 +229,32 @@ archive predate this source update.
 The [source-checkout benchmarks](benchmarks/value/README.md) exercise workflow
 controls, mocked inference interfaces, and orchestration overhead. A separate
 [exploratory local pilot](benchmarks/value/results/README.md) used one already
-loaded Gemma model through Nisi's released loopback chat adapter. On 12
-synthetic structured-output tasks, a direct one-shot draft matched 6 answers;
-both a handwritten checked loop and Nisi matched all 12 after six structural
-repairs each. The checked arms tied and used the same draft and repair request
-bytes per task.
+loaded Gemma model through Nisi's released loopback chat adapter. A match
+required exactly one `answer.json` file whose JSON object had only an `answer`
+key holding the expected value. All six one-shot outputs that failed this
+contract contained the expected value without that wrapper. A handwritten
+checked loop and Nisi each repaired those six shapes once and tied on all 12
+tasks; their draft and repair request bytes matched per task.
 
 The same 12 tasks had appeared in earlier exploratory runs, and server cache
 behavior was not measured. Treat these counts as an integration check, not a
 general accuracy estimate.
 
-![Exact answer matches across the three pilot arms](benchmarks/value/charts/exact-match.svg)
+| Arm | Contract matches | Model calls (repairs) | Reported tokens |
+|---|---:|---:|---:|
+| Direct one-shot | 6 / 12 | 12 (0) | 4,803 |
+| Handwritten checked loop | 12 / 12 | 18 (6) | 8,295 |
+| Nisi workflow | 12 / 12 | 18 (6) | 8,291 |
 
-![Model calls and reported tokens across the three pilot arms](benchmarks/value/charts/calls-and-tokens.svg)
+![Required output-contract matches across 12 tasks: one-shot 6 matches and 6 correct values without the required wrapper; checked loop and Nisi 12 matches each](benchmarks/value/charts/exact-match.svg)
+
+![Model work across 12 tasks: one-shot 12 calls and 4,803 reported tokens; checked loop 18 calls and 8,295 tokens; Nisi 18 calls and 8,291 tokens](benchmarks/value/charts/calls-and-tokens.svg)
 
 The direct arm had no repair opportunity, while each checked arm could repair
 once. These graphs show one local integration and the extra model work used by
 checking and repair; they do not establish that Nisi outperforms the checked
 loop or works with arbitrary inference systems. See the
-[task-family graph](benchmarks/value/charts/task-families.svg),
+[contract matches by task family](benchmarks/value/charts/task-families.svg),
 [raw candidate and receipt rows](benchmarks/value/results/pilot-local-gemma-20260924.json),
 and [study plan](benchmarks/value/LIVE-STUDY.md) for scope and next tests.
 
