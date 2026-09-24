@@ -1,0 +1,56 @@
+{
+  "schemaVersion": 1,
+  "capturedOn": "2026-09-24",
+  "metric": "compressedArchiveBytes",
+  "axis": {
+    "minimumBytes": 10000,
+    "maximumBytes": 20000000
+  },
+  "scope": "One package archive per row. Transitive dependency archives and installed size are excluded. Package size is not model token usage.",
+  "packages": [
+    {
+      "id": "nisi",
+      "product": "Nisi",
+      "package": "nisi@0.2.0",
+      "compressedArchiveBytes": 42439,
+      "unpackedBytes": 145018,
+      "entries": 18,
+      "sourceKind": "GitHub npm-format release archive",
+      "sourceUrl": "https://github.com/louiscalata/nisi/releases/download/v0.2.0/nisi-0.2.0.tgz",
+      "sha256": "aa46147005814c4e72aaa87099894552122ebe2bed91dad89a61b61388be3737",
+      "measurementCommands": [
+        "curl -fL --output nisi-0.2.0.tgz https://github.com/louiscalata/nisi/releases/download/v0.2.0/nisi-0.2.0.tgz",
+        "shasum -a 256 nisi-0.2.0.tgz",
+        "wc -c < nisi-0.2.0.tgz"
+      ]
+    },
+    {
+      "id": "langgraph",
+      "product": "LangGraph",
+      "package": "@langchain/langgraph@1.4.17",
+      "compressedArchiveBytes": 1001919,
+      "unpackedBytes": 4388647,
+      "entries": 632,
+      "sourceKind": "npm pack --dry-run --json",
+      "sourceUrl": "https://www.npmjs.com/package/@langchain/langgraph/v/1.4.17",
+      "integrity": "sha512-gkd34M42D5SdRaaHS6NSD+zTuZBgmEqecld3BenVlql11WshvarKH/2ZQbNmQQ0knbHgtaQEg3VeH0bUFt2B1Q==",
+      "measurementCommands": [
+        "npm pack --dry-run --json '@langchain/langgraph@1.4.17'"
+      ]
+    },
+    {
+      "id": "mastra",
+      "product": "Mastra",
+      "package": "@mastra/core@1.69.0",
+      "compressedArchiveBytes": 14587291,
+      "unpackedBytes": 67851547,
+      "entries": 3285,
+      "sourceKind": "npm pack --dry-run --json",
+      "sourceUrl": "https://www.npmjs.com/package/@mastra/core/v/1.69.0",
+      "integrity": "sha512-W/kwQnOe8MSVoNW7w3BkRMfyjOFPe/N/o1CVhW5mHt85m27UBAUVKHEcpVNyPJw+tk0xgde1mUbP6HunUxPVFA==",
+      "measurementCommands": [
+        "npm pack --dry-run --json '@mastra/core@1.69.0'"
+      ]
+    }
+  ]
+}

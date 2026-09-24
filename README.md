@@ -226,6 +226,8 @@ host responsibilities. The host also owns applying changes and release decisions
 The benchmark tooling and graphs are on `main`; the v0.2.0 tag and release
 archive predate this source update.
 
+### Token use in one local pilot
+
 The [source-checkout benchmarks](benchmarks/value/README.md) exercise workflow
 controls, mocked inference interfaces, and orchestration overhead. A separate
 [exploratory local pilot](benchmarks/value/results/README.md) used one already
@@ -257,6 +259,23 @@ loop or works with arbitrary inference systems. See the
 [contract matches by task family](benchmarks/value/charts/task-families.svg),
 [raw candidate and receipt rows](benchmarks/value/results/pilot-local-gemma-20260924.json),
 and [study plan](benchmarks/value/LIVE-STUDY.md) for scope and next tests.
+
+### Package footprint
+
+The published v0.2.0 npm-format archive is **42,439 bytes with 18 files**.
+At public `main` commit `3cfe3ae`, the source checkout had 118 tracked files
+totaling 1,194,053 bytes, including tests, docs, and benchmark evidence. The
+chart compares pinned Node package archives, excluding dependency packages;
+LangGraph.js and Mastra offer broader capabilities and use different packaging.
+Package size is not the amount of context sent to a model and cannot establish
+token savings. In the pilot above, Nisi reported just four fewer tokens than
+the equally successful checked loop (0.048%), which is not a meaningful saving.
+
+![Compressed package archive size on a logarithmic scale: Nisi v0.2.0 42,439 bytes; LangGraph.js 1.4.17 1,001,919 bytes; Mastra core 1.69.0 14,587,291 bytes. Package size is not model-token use.](benchmarks/value/charts/package-footprint.svg)
+
+See the [measurement method and product comparison](benchmarks/value/COMPARISON.md)
+for pinned sources, capabilities, and the paired study needed before any token
+savings claim.
 
 ## Documentation
 
