@@ -61,6 +61,11 @@ The charts are calculated from the retained candidates and frozen answer key.
 To regenerate them from the repository root with Python, `uv`, and Matplotlib,
 run `uv run --with matplotlib --no-project python benchmarks/value/charts/render.py`.
 
+The separate [package-footprint and product comparison](COMPARISON.md) measures
+Nisi's published archive and compares pinned archives from broader Node
+frameworks. It explains why project/package size and this exploratory pilot do
+not establish model-token savings.
+
 ## Adapt an existing inference system
 
 ```mermaid
