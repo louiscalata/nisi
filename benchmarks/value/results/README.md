@@ -20,12 +20,13 @@ author adapter, temperature 0, the same 1,024-token output cap and identical
 draft request bytes per task. The two checked arms also used identical repair
 request bytes per task, deterministic structural checks and reviewer, and at
 most one repair. No independent reviewer model judged answer meaning. The
-external exact-match oracle was applied after each arm, using the frozen answer
-key rather than the workflow report. The candidate file contents and full
-workflow reports are retained in the raw result, so those oracle verdicts can
-be recalculated.
+external strict-match oracle required one `answer.json` file whose JSON object
+had only an `answer` key holding the expected value. It ran after each arm,
+using the frozen answer key rather than the workflow report. The candidate
+file contents and full workflow reports are retained in the raw result, so
+those oracle verdicts can be recalculated.
 
-| Arm | Exact matches | Model calls | Repairs | Reported tokens |
+| Arm | Output-contract matches | Model calls | Repairs | Reported tokens |
 |---|---:|---:|---:|---:|
 | A · direct one-shot draft | 6 / 12 | 12 | 0 | 4,803 |
 | B · handwritten checked loop | 12 / 12 | 18 | 6 | 8,295 |
@@ -33,8 +34,10 @@ be recalculated.
 
 Every one of the 48 model-call receipts reports `RESPONSE_VALIDATED` and the
 requested model identity. The six one-shot misses were structurally malformed
-answers lacking the required `answer` key. Each checked arm detected those
-shapes and repaired them once. **Nisi and the checked loop tied on these tasks.**
+outputs lacking the required `answer` key. Each unwrapped JSON value equaled
+the frozen expected answer; the strict oracle still correctly scored those
+outputs as contract failures. Each checked arm detected those shapes and
+repaired them once. **Nisi and the checked loop tied on these tasks.**
 The one-shot arm had no repair opportunity, so this comparison shows the effect
 of the added checking and repair path under this setup, not an advantage unique
 to Nisi. A structurally complete workflow still cannot prove the answer is

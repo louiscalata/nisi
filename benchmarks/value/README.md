@@ -32,7 +32,7 @@ roadmap is `roadmap.md` at the repository root.
 | Are the checks and repair rules useful? | 25 authored control scenarios across a checked one-shot, a competent checked loop, and Nisi | Which specified control paths accept, repair or refuse; no production accuracy estimate |
 | Can an existing inference interface be wrapped? | Synchronous callback, Promise text, host-aggregated async text, and the shipped chat adapter with fake HTTP transport | Four synthetic adaptation examples with the workflow unchanged; live provider compatibility remains unverified |
 | How much does orchestration cost? | Trace-matched first-pass and one-repair paths, three file payload sizes, 1,200 measured pairs | Warm inert-callback runtime overhead on the measured host; no model speed or dollar-cost claim |
-| Can the released local adapter carry one existing model? | A 12-task exploratory run against one local Gemma endpoint, using direct one-shot, checked-loop, and Nisi arms | This one integration worked; both checked arms tied at 12/12 exact matches after six structural repairs each |
+| Can the released local adapter carry one existing model? | A 12-task exploratory run against one local Gemma endpoint, using direct one-shot, checked-loop, and Nisi arms | This one integration worked; both checked arms tied at 12/12 output-contract matches after six structural repairs each |
 | Does it improve real-world outcomes over another workflow? | A proposed confirmatory paired study | Not established; see the study plan |
 
 The handwritten scheduler shares Nisi task/candidate validation and hashing. It
@@ -48,13 +48,14 @@ one-shot arm had no repair budget, while the handwritten loop and Nisi each had
 one repair and identical author request bytes at the corresponding stages. The
 pilot was iterated on the same synthetic tasks, and cache behavior was not
 measured. Treat it as a feasibility check, not a general accuracy or speed
-estimate.
+estimate. All six one-shot outputs that missed the strict contract contained
+the expected value but omitted the required `{"answer": ...}` wrapper.
 
-![Exact answer matches for one-shot, checked loop, and Nisi](charts/exact-match.svg)
+![Required output-contract matches: one-shot 6 of 12, with six correct values missing the wrapper; checked loop and Nisi 12 of 12 each](charts/exact-match.svg)
 
-![Model calls and reported tokens for the same three arms](charts/calls-and-tokens.svg)
+![Model work: one-shot 12 calls and 4,803 reported tokens; checked loop 18 calls and 8,295 tokens; Nisi 18 calls and 8,291 tokens](charts/calls-and-tokens.svg)
 
-![Exact answer matches by synthetic task family](charts/task-families.svg)
+![Output-contract matches by task family: one-shot 1 of 4 JSON config, 4 of 4 classification, 1 of 4 extraction; checked loop and Nisi 4 of 4 in each family](charts/task-families.svg)
 
 The charts are calculated from the retained candidates and frozen answer key.
 To regenerate them from the repository root with Python, `uv`, and Matplotlib,
