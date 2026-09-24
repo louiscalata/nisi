@@ -1,0 +1,141 @@
+<?xml version='1.0' encoding='utf-8'?>
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:ns2="http://creativecommons.org/ns#" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" width="763.2pt" height="396pt" viewBox="0 0 763.2 396" version="1.1" role="img" aria-labelledby="chart-title chart-desc">
+ <title id="chart-title">Exact answers across 12 synthetic tasks</title><desc id="chart-desc">A one-shot draft matched 6 and missed 6. B checked loop and C Nisi workflow each matched all 12. A had zero repairs; B and C could repair once. One local Gemma endpoint; exploratory repeated-task pilot. Result SHA-256 17c117821d347bf4ad248b70b319d8847bbedc2647edebf6b0a2e8edf996b10a; frozen dataset SHA-256 cef0921e2104650b4c7f1f5f0612379d35bbe393c6152811f9236543a8a20a40.</desc><metadata>
+  <rdf:RDF>
+   <ns2:Work>
+    <dc:type rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+    <dc:date>2026-09-24T01:33:27.482203</dc:date>
+    <dc:format>image/svg+xml</dc:format>
+    <dc:creator>
+     <ns2:Agent>
+      <dc:title>Matplotlib v3.11.2, https://matplotlib.org/</dc:title>
+     </ns2:Agent>
+    </dc:creator>
+   </ns2:Work>
+  </rdf:RDF>
+ </metadata>
+ <defs>
+  <style type="text/css">*{stroke-linejoin: round; stroke-linecap: butt}</style>
+ </defs>
+ <g id="figure_1">
+  <g id="patch_1">
+   <path d="M 0 396  L 763.2 396  L 763.2 0  L 0 0  z " style="fill: #ffffff" />
+  </g>
+  <g id="axes_1">
+   <g id="patch_2">
+    <path d="M 175.536 289.08  L 717.408 289.08  L 717.408 87.12  L 175.536 87.12  z " style="fill: #ffffff" />
+   </g>
+   <g id="matplotlib.axis_1">
+    <g id="xtick_1">
+     <g id="line2d_1">
+      <path d="M 175.536 289.08  L 175.536 87.12  " clip-path="url(#p1b9c74c9b7)" style="fill: none; stroke: #dbe5e9; stroke-width: 0.8; stroke-linecap: square" />
+     </g>
+     <g id="line2d_2" />
+     <g id="text_1">
+      <text style="font-size: 11px; font-family: 'DejaVu Sans'; text-anchor: middle; fill: #556775" x="175.536" y="305.437422" transform="rotate(-0 175.536 305.437422)">0</text>
+     </g>
+    </g>
+    <g id="xtick_2">
+     <g id="line2d_3">
+      <path d="M 311.004 289.08  L 311.004 87.12  " clip-path="url(#p1b9c74c9b7)" style="fill: none; stroke: #dbe5e9; stroke-width: 0.8; stroke-linecap: square" />
+     </g>
+     <g id="line2d_4" />
+     <g id="text_2">
+      <text style="font-size: 11px; font-family: 'DejaVu Sans'; text-anchor: middle; fill: #556775" x="311.004" y="305.437422" transform="rotate(-0 311.004 305.437422)">3</text>
+     </g>
+    </g>
+    <g id="xtick_3">
+     <g id="line2d_5">
+      <path d="M 446.472 289.08  L 446.472 87.12  " clip-path="url(#p1b9c74c9b7)" style="fill: none; stroke: #dbe5e9; stroke-width: 0.8; stroke-linecap: square" />
+     </g>
+     <g id="line2d_6" />
+     <g id="text_3">
+      <text style="font-size: 11px; font-family: 'DejaVu Sans'; text-anchor: middle; fill: #556775" x="446.472" y="305.437422" transform="rotate(-0 446.472 305.437422)">6</text>
+     </g>
+    </g>
+    <g id="xtick_4">
+     <g id="line2d_7">
+      <path d="M 581.94 289.08  L 581.94 87.12  " clip-path="url(#p1b9c74c9b7)" style="fill: none; stroke: #dbe5e9; stroke-width: 0.8; stroke-linecap: square" />
+     </g>
+     <g id="line2d_8" />
+     <g id="text_4">
+      <text style="font-size: 11px; font-family: 'DejaVu Sans'; text-anchor: middle; fill: #556775" x="581.94" y="305.437422" transform="rotate(-0 581.94 305.437422)">9</text>
+     </g>
+    </g>
+    <g id="xtick_5">
+     <g id="line2d_9">
+      <path d="M 717.408 289.08  L 717.408 87.12  " clip-path="url(#p1b9c74c9b7)" style="fill: none; stroke: #dbe5e9; stroke-width: 0.8; stroke-linecap: square" />
+     </g>
+     <g id="line2d_10" />
+     <g id="text_5">
+      <text style="font-size: 11px; font-family: 'DejaVu Sans'; text-anchor: middle; fill: #556775" x="717.408" y="305.437422" transform="rotate(-0 717.408 305.437422)">12</text>
+     </g>
+    </g>
+    <g id="text_6">
+     <text style="font-size: 11px; font-family: 'DejaVu Sans'; text-anchor: middle; fill: #152a3a" x="446.472" y="320.438281" transform="rotate(-0 446.472 320.438281)">Tasks with exact answer match (of 12)</text>
+    </g>
+   </g>
+   <g id="matplotlib.axis_2">
+    <g id="ytick_1">
+     <g id="line2d_11" />
+     <g id="text_7">
+      <text style="font-size: 11px; font-family: 'DejaVu Sans'; text-anchor: end; fill: #152a3a" x="167.536" y="120.839452" transform="rotate(-0 167.536 120.839452)">A · one-shot draft</text>
+     </g>
+    </g>
+    <g id="ytick_2">
+     <g id="line2d_12" />
+     <g id="text_8">
+      <text style="font-size: 11px; font-family: 'DejaVu Sans'; text-anchor: end; fill: #152a3a" x="167.536" y="192.279141" transform="rotate(-0 167.536 192.279141)">B · checked loop</text>
+     </g>
+    </g>
+    <g id="ytick_3">
+     <g id="line2d_13" />
+     <g id="text_9">
+      <text style="font-size: 11px; font-family: 'DejaVu Sans'; text-anchor: end; fill: #152a3a" x="167.536" y="263.718829" transform="rotate(-0 167.536 263.718829)">C · Nisi workflow</text>
+     </g>
+    </g>
+   </g>
+   <g id="patch_3">
+    <path d="M 175.536 137.020623  L 446.472 137.020623  L 446.472 96.3  L 175.536 96.3  z " clip-path="url(#p1b9c74c9b7)" style="fill: #078a78" />
+   </g>
+   <g id="patch_4">
+    <path d="M 446.472 137.020623  L 717.408 137.020623  L 717.408 96.3  L 446.472 96.3  z " clip-path="url(#p1b9c74c9b7)" style="fill: #d97660" />
+   </g>
+   <g id="patch_5">
+    <path d="M 175.536 208.460311  L 717.408 208.460311  L 717.408 167.739689  L 175.536 167.739689  z " clip-path="url(#p1b9c74c9b7)" style="fill: #078a78" />
+   </g>
+   <g id="patch_6">
+    <path d="M 175.536 279.9  L 717.408 279.9  L 717.408 239.179377  L 175.536 239.179377  z " clip-path="url(#p1b9c74c9b7)" style="fill: #078a78" />
+   </g>
+   <g id="text_10">
+    <text style="font-weight: 700; font-size: 11px; font-family: 'DejaVu Sans'; text-anchor: middle; fill: #ffffff" x="311.004" y="119.518163" transform="rotate(-0 311.004 119.518163)">6 matched</text>
+   </g>
+   <g id="text_11">
+    <text style="font-weight: 700; font-size: 11px; font-family: 'DejaVu Sans'; text-anchor: middle; fill: #ffffff" x="581.94" y="119.518163" transform="rotate(-0 581.94 119.518163)">6 missed</text>
+   </g>
+   <g id="text_12">
+    <text style="font-weight: 700; font-size: 11px; font-family: 'DejaVu Sans'; text-anchor: middle; fill: #ffffff" x="446.472" y="190.957852" transform="rotate(-0 446.472 190.957852)">12 matched</text>
+   </g>
+   <g id="text_13">
+    <text style="font-weight: 700; font-size: 11px; font-family: 'DejaVu Sans'; text-anchor: middle; fill: #ffffff" x="446.472" y="262.39754" transform="rotate(-0 446.472 262.39754)">12 matched</text>
+   </g>
+  </g>
+  <g id="text_14">
+   <text style="font-weight: 700; font-size: 18px; font-family: 'DejaVu Sans'; text-anchor: start; fill: #152a3a" x="61.056" y="21.597188" transform="rotate(-0 61.056 21.597188)">Exact answers across 12 synthetic tasks</text>
+  </g>
+  <g id="text_15">
+   <text style="font-size: 10px; font-family: 'DejaVu Sans'; text-anchor: start; fill: #556775" x="61.056" y="51.48" transform="rotate(-0 61.056 51.48)">One local Gemma endpoint · external exact-match oracle</text>
+  </g>
+  <g id="text_16">
+   <text style="font-size: 10px; font-family: 'DejaVu Sans'; text-anchor: start; fill: #556775" x="61.056" y="344.52" transform="rotate(-0 61.056 344.52)">A had no repair. B and C had one repair available and tied at 12/12.</text>
+  </g>
+  <g id="text_17">
+   <text style="font-size: 9px; font-family: 'DejaVu Sans'; text-anchor: start; fill: #556775" x="61.056" y="370.26" transform="rotate(-0 61.056 370.26)">Exploratory repeated-task pilot · result SHA-256 17c117821d347bf4…</text>
+  </g>
+ </g>
+ <defs>
+  <clipPath id="p1b9c74c9b7">
+   <rect x="175.536" y="87.12" width="541.872" height="201.96" />
+  </clipPath>
+ </defs>
+</svg>
