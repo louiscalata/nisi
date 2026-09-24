@@ -221,6 +221,29 @@ Nisi validates what adapters report. `COMPLETED` means the required stages
 returned valid passing evidence; callback honesty and actual file access remain
 host responsibilities. The host also owns applying changes and release decisions.
 
+## Benchmarks
+
+The [source-checkout benchmarks](benchmarks/value/README.md) exercise workflow
+controls, mocked inference interfaces, and orchestration overhead. A separate
+[exploratory local pilot](benchmarks/value/results/README.md) used one already
+loaded Gemma model through Nisi's released loopback chat adapter. On 12
+synthetic structured-output tasks, a direct one-shot draft matched 6 answers;
+both a handwritten checked loop and Nisi matched all 12 after six structural
+repairs each. The checked arms tied and used the same draft and repair request
+bytes per task.
+
+![Exact answer matches across the three pilot arms](benchmarks/value/charts/exact-match.svg)
+
+![Model calls and reported tokens across the three pilot arms](benchmarks/value/charts/calls-and-tokens.svg)
+
+The direct arm had no repair opportunity, while each checked arm could repair
+once. These graphs show one local integration and the extra model work used by
+checking and repair; they do not establish that Nisi outperforms the checked
+loop or works with arbitrary inference systems. See the
+[task-family graph](benchmarks/value/charts/task-families.svg),
+[raw candidate and receipt rows](benchmarks/value/results/pilot-local-gemma-20260924.json),
+and [study plan](benchmarks/value/LIVE-STUDY.md) for scope and next tests.
+
 ## Documentation
 
 - [Workflow API reference](https://github.com/louiscalata/nisi/blob/main/docs/workflow-api.md) — task, candidate, callback, and report contracts.

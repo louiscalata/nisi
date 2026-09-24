@@ -1,7 +1,48 @@
 # Proposed live inference and integration study
 
-Status: **NOT RUN**. This is a protocol proposal, not evidence of provider
-compatibility, performance, task accuracy, productivity, or cost savings.
+Status: the 12-task **exploratory local pilot was run** on one configured Gemma
+endpoint; [raw rows and scope](results/README.md) are retained. The broader
+multi-backend integration and confirmatory quality studies below are **NOT RUN**.
+The pilot does not establish general provider compatibility, productivity, or
+cost savings.
+
+## Frozen exploratory pilot runner
+
+`fixtures/live-pilot-v1.json` contains 12 synthetic tasks and an external exact
+answer key. Its byte digest is pinned in `live-pilot.mjs`. The runner is opt-in:
+
+```sh
+node benchmarks/value/live-pilot.mjs --allow-live \
+  http://127.0.0.1:1234/v1/chat/completions MODEL_ID output.json all
+```
+
+`MODEL_ID` must be the exact identity reported by an already resident local
+loopback chat server. The runner never loads or swaps a model. On hosts using
+the separate online-code-mode router, set `NISI_ROUTER_COMMAND` to that
+executable's path. The runner then checks its status before starting and before
+every arm; an active run or unavailable status stops the pilot. Other hosts do
+not need Louis's private router. The output file must not exist: the runner
+reserves it before inference and appends each completed arm to a `.rows.jsonl`
+sidecar. If interrupted, the output records `PARTIAL` and the remaining row
+count, while the sidecar retains completed rows. Use a single task ID in place
+of `all` for a canary.
+Fake-fetch unit tests make no live inference request. The completed live pilot
+used the earlier runner revision pinned in its source manifest; the current
+runner adds output and router-gate safeguards. Earlier smoke and exploratory
+runs saw the same tasks, so the completed result is not a fresh confirmatory
+sample.
+
+Each task rotates A/B/C order. A calls the shipped author adapter once. B uses
+the handwritten checked loop. C uses the released workflow engine. All use the
+same task text, model, author adapter, temperature zero, output-token cap, and
+loopback transport. B/C share deterministic file-shape checks, a structural
+reviewer, and one repair attempt. Their reviewer is not a second model and does
+not verify answer meaning. The frozen exact-answer key is applied after each
+arm, independently of its report. Thus `COMPLETED` can coexist with an
+incorrect answer; such rows must remain visible. A has no checks or repair, so
+its outcome is `DRAFTED`, not a workflow completion. The runner records per-call
+adapter receipts and usage when reported; missing usage remains unknown. This
+small pilot measures feasibility for one server configuration only.
 
 ## Start with integration portability
 
@@ -17,13 +58,13 @@ and whether the response is real, replayed, cached, or mocked. Keep Apple adviso
 helpers separate from coding author/reviewer adapters. Hosted APIs need separate
 host adapters and authorized data handling; they are not built into local-chat.
 
-Use 12 fresh structured-output tasks (four configuration transformations, four
-classification-to-JSON tasks, four bounded text-extraction tasks) as an exploratory
-integration pilot. These are new host task contracts, with file snapshots used as
-the transport-neutral result representation. Have a second author write frozen
-input/expected-output pairs before running the adapters. Success requires both a
-valid workflow report and an external oracle. Human label adjudication is required
-where there is no unambiguous programmatic answer. Report each family separately.
+The completed first pilot used 12 frozen structured-output tasks (four
+configuration transformations, four classifications, four bounded text
+extractions), authored before model calls. File snapshots served as the
+transport-neutral result representation. A valid workflow report and an
+external oracle were separate checks. For the next backend, freeze new tasks
+and expected outputs before calls; adjudicate labels with humans where there
+is no unambiguous programmatic answer. Report each family separately.
 
 For each backend record:
 
@@ -41,8 +82,10 @@ For each backend record:
 - Provider-reported usage and any missing usage. A missing number is unknown,
   never zero. Local inference is not automatically cost-free.
 
-Run the same one-shot and two-repair policies, with identical prompts and request
-parameters per provider. This is feasibility evidence; 12 tasks do not establish
+For the next study, predeclare equal checked-arm repair budgets and identical
+prompts and request parameters per provider. The current pilot allowed one
+repair in each checked arm and none in the direct arm. This is feasibility
+evidence; 12 tasks do not establish
 superiority. Preserve failures and all planned rows. Do not silently switch models
 after observing a disappointing result.
 
