@@ -223,6 +223,9 @@ host responsibilities. The host also owns applying changes and release decisions
 
 ## Benchmarks
 
+The benchmark tooling and graphs are on `main`; the v0.2.0 tag and release
+archive predate this source update.
+
 The [source-checkout benchmarks](benchmarks/value/README.md) exercise workflow
 controls, mocked inference interfaces, and orchestration overhead. A separate
 [exploratory local pilot](benchmarks/value/results/README.md) used one already
