@@ -172,3 +172,31 @@ and cannot forcibly interrupt synchronous JavaScript or undo external effects.
 
 Machine paths, credentials, model-service setup, private project architecture,
 network-share routing and automatic model selection remain host responsibilities.
+
+## September 23 benchmark development
+
+- [x] Add reproducible benchmarks of the unchanged v0.2.0 workflow: 25 authored
+  control specimens, checked one-shot and competent checked-loop references,
+  independent semantic/trace scoring and explicit dishonest-callback coverage.
+- [x] Exercise four synthetic inference interface shapes, first-pass and repair
+  paths, and malformed/truncated JSON refusals. Real provider compatibility is
+  not established by those mocked transports.
+- [x] Measure warm inert-callback overhead with matched traces, three payload
+  sizes, 30 warmup pairs and 200 measured pairs per condition. Keep this distinct
+  from inference time, token use, money and development effort.
+- [x] Address independent review findings: callback-trace validation, report/actual
+  repair consistency, cancellation cleanup and symmetric timing summaries.
+- [x] Document the live integration/quality study needed for stronger claims.
+- [x] Run one exploratory 12-task structured-output pilot through a configured
+  local Gemma endpoint with the released author adapter. Retain candidate text,
+  full reports, request/usage receipts, source hashes and an external exact
+  oracle. The one-shot arm got 6/12; a handwritten checked loop and Nisi each
+  got 12/12 with six structural repairs. Their author request bytes matched,
+  and this pilot shows no Nisi advantage over the checked loop.
+- [ ] Run a fresh confirmatory study with independent tasks, equal budgets,
+  provider/cache controls and independent acceptance before claiming general
+  quality, speed, token or cost gains.
+- [ ] Validate additional providers and native platforms in their actual hosts.
+
+The reproducible entry point is [benchmarks/value/README.md](benchmarks/value/README.md).
+These are development benchmarks, not a new release or a provider certification.

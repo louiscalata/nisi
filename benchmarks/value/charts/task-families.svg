@@ -1,0 +1,141 @@
+<?xml version='1.0' encoding='utf-8'?>
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:ns2="http://creativecommons.org/ns#" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" width="741.6pt" height="417.6pt" viewBox="0 0 741.6 417.6" version="1.1" role="img" aria-labelledby="chart-title chart-desc">
+ <title id="chart-title">Exact answers by synthetic task family</title><desc id="chart-desc">On four JSON configuration tasks A matched 1, B matched 4, C matched 4. On four classification tasks all arms matched 4. On four text extraction tasks A matched 1, B matched 4, C matched 4. A had no repair opportunity; B and C had one. Result SHA-256 17c117821d347bf4ad248b70b319d8847bbedc2647edebf6b0a2e8edf996b10a; frozen dataset SHA-256 cef0921e2104650b4c7f1f5f0612379d35bbe393c6152811f9236543a8a20a40.</desc><metadata>
+  <rdf:RDF>
+   <ns2:Work>
+    <dc:type rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+    <dc:date>2026-09-24T01:33:27.526718</dc:date>
+    <dc:format>image/svg+xml</dc:format>
+    <dc:creator>
+     <ns2:Agent>
+      <dc:title>Matplotlib v3.11.2, https://matplotlib.org/</dc:title>
+     </ns2:Agent>
+    </dc:creator>
+   </ns2:Work>
+  </rdf:RDF>
+ </metadata>
+ <defs>
+  <style type="text/css">*{stroke-linejoin: round; stroke-linecap: butt}</style>
+ </defs>
+ <g id="figure_1">
+  <g id="patch_1">
+   <path d="M 0 417.6  L 741.6 417.6  L 741.6 0  L 0 0  z " style="fill: #ffffff" />
+  </g>
+  <g id="axes_1">
+   <g id="patch_2">
+    <path d="M 185.4 304.848  L 697.104 304.848  L 697.104 91.872  L 185.4 91.872  z " style="fill: #ffffff" />
+   </g>
+   <g id="patch_3">
+    <path d="M 210.159871 102.86431  L 342.212516 102.86431  L 342.212516 156.451819  L 210.159871 156.451819  z " clip-path="url(#p19792dfaec)" style="fill: #ebaa91; stroke: #ffffff; stroke-width: 2; stroke-linejoin: miter" />
+   </g>
+   <g id="patch_4">
+    <path d="M 375.225677 102.86431  L 507.278323 102.86431  L 507.278323 156.451819  L 375.225677 156.451819  z " clip-path="url(#p19792dfaec)" style="fill: #078a78; stroke: #ffffff; stroke-width: 2; stroke-linejoin: miter" />
+   </g>
+   <g id="patch_5">
+    <path d="M 540.291484 102.86431  L 672.344129 102.86431  L 672.344129 156.451819  L 540.291484 156.451819  z " clip-path="url(#p19792dfaec)" style="fill: #078a78; stroke: #ffffff; stroke-width: 2; stroke-linejoin: miter" />
+   </g>
+   <g id="patch_6">
+    <path d="M 210.159871 171.566245  L 342.212516 171.566245  L 342.212516 225.153755  L 210.159871 225.153755  z " clip-path="url(#p19792dfaec)" style="fill: #078a78; stroke: #ffffff; stroke-width: 2; stroke-linejoin: miter" />
+   </g>
+   <g id="patch_7">
+    <path d="M 375.225677 171.566245  L 507.278323 171.566245  L 507.278323 225.153755  L 375.225677 225.153755  z " clip-path="url(#p19792dfaec)" style="fill: #078a78; stroke: #ffffff; stroke-width: 2; stroke-linejoin: miter" />
+   </g>
+   <g id="patch_8">
+    <path d="M 540.291484 171.566245  L 672.344129 171.566245  L 672.344129 225.153755  L 540.291484 225.153755  z " clip-path="url(#p19792dfaec)" style="fill: #078a78; stroke: #ffffff; stroke-width: 2; stroke-linejoin: miter" />
+   </g>
+   <g id="patch_9">
+    <path d="M 210.159871 240.268181  L 342.212516 240.268181  L 342.212516 293.85569  L 210.159871 293.85569  z " clip-path="url(#p19792dfaec)" style="fill: #ebaa91; stroke: #ffffff; stroke-width: 2; stroke-linejoin: miter" />
+   </g>
+   <g id="patch_10">
+    <path d="M 375.225677 240.268181  L 507.278323 240.268181  L 507.278323 293.85569  L 375.225677 293.85569  z " clip-path="url(#p19792dfaec)" style="fill: #078a78; stroke: #ffffff; stroke-width: 2; stroke-linejoin: miter" />
+   </g>
+   <g id="patch_11">
+    <path d="M 540.291484 240.268181  L 672.344129 240.268181  L 672.344129 293.85569  L 540.291484 293.85569  z " clip-path="url(#p19792dfaec)" style="fill: #078a78; stroke: #ffffff; stroke-width: 2; stroke-linejoin: miter" />
+   </g>
+   <g id="matplotlib.axis_1">
+    <g id="xtick_1">
+     <g id="line2d_1" />
+     <g id="text_1">
+      <text style="font-size: 11px; font-family: 'DejaVu Sans'; text-anchor: middle; fill: #556775" x="276.186194" y="322.206281" transform="rotate(-0 276.186194 322.206281)">A · one-shot draft</text>
+     </g>
+    </g>
+    <g id="xtick_2">
+     <g id="line2d_2" />
+     <g id="text_2">
+      <text style="font-size: 11px; font-family: 'DejaVu Sans'; text-anchor: middle; fill: #556775" x="441.252" y="322.206281" transform="rotate(-0 441.252 322.206281)">B · checked loop</text>
+     </g>
+    </g>
+    <g id="xtick_3">
+     <g id="line2d_3" />
+     <g id="text_3">
+      <text style="font-size: 11px; font-family: 'DejaVu Sans'; text-anchor: middle; fill: #556775" x="606.317806" y="322.206281" transform="rotate(-0 606.317806 322.206281)">C · Nisi workflow</text>
+     </g>
+    </g>
+   </g>
+   <g id="matplotlib.axis_2">
+    <g id="ytick_1">
+     <g id="line2d_4" />
+     <g id="text_4">
+      <text style="font-size: 11px; font-family: 'DejaVu Sans'; text-anchor: end; fill: #152a3a" x="176.4" y="133.837205" transform="rotate(-0 176.4 133.837205)">JSON config</text>
+     </g>
+    </g>
+    <g id="ytick_2">
+     <g id="line2d_5" />
+     <g id="text_5">
+      <text style="font-size: 11px; font-family: 'DejaVu Sans'; text-anchor: end; fill: #152a3a" x="176.4" y="202.539141" transform="rotate(-0 176.4 202.539141)">Classification</text>
+     </g>
+    </g>
+    <g id="ytick_3">
+     <g id="line2d_6" />
+     <g id="text_6">
+      <text style="font-size: 11px; font-family: 'DejaVu Sans'; text-anchor: end; fill: #152a3a" x="176.4" y="271.241076" transform="rotate(-0 176.4 271.241076)">Text extraction</text>
+     </g>
+    </g>
+   </g>
+   <g id="text_7">
+    <text style="font-weight: 700; font-size: 16px; font-family: 'DejaVu Sans'; text-anchor: middle; fill: #152a3a" x="276.186194" y="133.814315" transform="rotate(-0 276.186194 133.814315)">1/4</text>
+   </g>
+   <g id="text_8">
+    <text style="font-weight: 700; font-size: 16px; font-family: 'DejaVu Sans'; text-anchor: middle; fill: #ffffff" x="441.252" y="133.814315" transform="rotate(-0 441.252 133.814315)">4/4</text>
+   </g>
+   <g id="text_9">
+    <text style="font-weight: 700; font-size: 16px; font-family: 'DejaVu Sans'; text-anchor: middle; fill: #ffffff" x="606.317806" y="133.814315" transform="rotate(-0 606.317806 133.814315)">4/4</text>
+   </g>
+   <g id="text_10">
+    <text style="font-weight: 700; font-size: 16px; font-family: 'DejaVu Sans'; text-anchor: middle; fill: #ffffff" x="276.186194" y="202.51625" transform="rotate(-0 276.186194 202.51625)">4/4</text>
+   </g>
+   <g id="text_11">
+    <text style="font-weight: 700; font-size: 16px; font-family: 'DejaVu Sans'; text-anchor: middle; fill: #ffffff" x="441.252" y="202.51625" transform="rotate(-0 441.252 202.51625)">4/4</text>
+   </g>
+   <g id="text_12">
+    <text style="font-weight: 700; font-size: 16px; font-family: 'DejaVu Sans'; text-anchor: middle; fill: #ffffff" x="606.317806" y="202.51625" transform="rotate(-0 606.317806 202.51625)">4/4</text>
+   </g>
+   <g id="text_13">
+    <text style="font-weight: 700; font-size: 16px; font-family: 'DejaVu Sans'; text-anchor: middle; fill: #152a3a" x="276.186194" y="271.218185" transform="rotate(-0 276.186194 271.218185)">1/4</text>
+   </g>
+   <g id="text_14">
+    <text style="font-weight: 700; font-size: 16px; font-family: 'DejaVu Sans'; text-anchor: middle; fill: #ffffff" x="441.252" y="271.218185" transform="rotate(-0 441.252 271.218185)">4/4</text>
+   </g>
+   <g id="text_15">
+    <text style="font-weight: 700; font-size: 16px; font-family: 'DejaVu Sans'; text-anchor: middle; fill: #ffffff" x="606.317806" y="271.218185" transform="rotate(-0 606.317806 271.218185)">4/4</text>
+   </g>
+  </g>
+  <g id="text_16">
+   <text style="font-weight: 700; font-size: 18px; font-family: 'DejaVu Sans'; text-anchor: start; fill: #152a3a" x="74.16" y="22.029188" transform="rotate(-0 74.16 22.029188)">Where the one-shot answers missed</text>
+  </g>
+  <g id="text_17">
+   <text style="font-size: 10px; font-family: 'DejaVu Sans'; text-anchor: start; fill: #556775" x="74.16" y="54.288" transform="rotate(-0 74.16 54.288)">Exact answer matches by task family · four synthetic tasks per family</text>
+  </g>
+  <g id="text_18">
+   <text style="font-size: 10px; font-family: 'DejaVu Sans'; text-anchor: start; fill: #556775" x="74.16" y="363.312" transform="rotate(-0 74.16 363.312)">All six A misses lacked the required answer key; each checked arm repaired those shapes once.</text>
+  </g>
+  <g id="text_19">
+   <text style="font-size: 9px; font-family: 'DejaVu Sans'; text-anchor: start; fill: #556775" x="74.16" y="390.456" transform="rotate(-0 74.16 390.456)">One local Gemma endpoint · exploratory repeated-task pilot · result SHA-256 17c117821d347bf4…</text>
+  </g>
+ </g>
+ <defs>
+  <clipPath id="p19792dfaec">
+   <rect x="185.4" y="91.872" width="511.704" height="212.976" />
+  </clipPath>
+ </defs>
+</svg>

@@ -1,0 +1,84 @@
+{
+  "datasetId": "nisi-public-synthetic-structured-v1",
+  "freezeNote": "Designed before any benchmark author model call. Public/synthetic fixtures only; excludes the Windows route canary.",
+  "candidateContract": "Produce exactly one answer.json file containing a JSON object of the form {\"answer\": <value>}, with no additional fields or prose.",
+  "tasks": [
+    {
+      "id": "config-01",
+      "category": "json_config_transform",
+      "prompt": "Input config: {\"service\":{\"name\":\"quartz\",\"port\":8087,\"tls\":true},\"retry\":{\"max\":3},\"debug\":false}. Return answer as an object with exactly these keys: service_name copied from service.name; endpoint formed as scheme://service.name:service.port where scheme is https when tls is true and http otherwise; retries copied from retry.max; debug copied unchanged.",
+      "expectedAnswer": { "service_name": "quartz", "endpoint": "https://quartz:8087", "retries": 3, "debug": false }
+    },
+    {
+      "id": "config-02",
+      "category": "json_config_transform",
+      "prompt": "Input config: {\"timeouts\":{\"connect_ms\":250,\"read_ms\":900},\"retry_count\":2}. Return answer as an object with exactly these keys: timeout_seconds, an object mapping connect and read to their respective millisecond values divided by 1000; and retries copied from retry_count.",
+      "expectedAnswer": { "timeout_seconds": { "connect": 0.25, "read": 0.9 }, "retries": 2 }
+    },
+    {
+      "id": "config-03",
+      "category": "json_config_transform",
+      "prompt": "Input config: {\"services\":[{\"name\":\"willow\",\"enabled\":true,\"priority\":2},{\"name\":\"amber\",\"enabled\":false,\"priority\":1},{\"name\":\"birch\",\"enabled\":true,\"priority\":1},{\"name\":\"cedar\",\"enabled\":true,\"priority\":1}]}. Keep only enabled services, sort by priority ascending and then name in ascending alphabetical order, and return answer as the resulting array of names.",
+      "expectedAnswer": [ "birch", "cedar", "willow" ]
+    },
+    {
+      "id": "config-04",
+      "category": "json_config_transform",
+      "prompt": "Input config: {\"workers\":\"4\",\"queue\":\"cedar\",\"paused\":\"false\",\"region\":\"test-1\"}. Return answer as an object with exactly these keys: workers as a base-10 integer, queue copied unchanged, paused converted to a JSON boolean, and region converted to uppercase.",
+      "expectedAnswer": { "workers": 4, "queue": "cedar", "paused": false, "region": "TEST-1" }
+    },
+    {
+      "id": "class-01",
+      "category": "classification",
+      "prompt": "Classify the input {\"attempts\":2}. Return answer as one string using these exact rules: attempts equal to 0 means \"none\"; attempts from 1 through 2 means \"few\"; attempts of 3 or more means \"many\".",
+      "expectedAnswer": "few"
+    },
+    {
+      "id": "class-02",
+      "category": "classification",
+      "prompt": "Classify the input {\"kind\":\"K2\"}. Return answer as one string using this exact mapping: K1 maps to \"alpha\", K2 maps to \"beta\", K3 maps to \"gamma\". No other mappings are needed.",
+      "expectedAnswer": "beta"
+    },
+    {
+      "id": "class-03",
+      "category": "classification",
+      "prompt": "Classify the input {\"urgent\":false,\"component\":\"billing\"}. Return answer as one string using these ordered rules: if urgent is true, return \"page\"; otherwise, if component is \"billing\", return \"billing_queue\"; otherwise return \"general\".",
+      "expectedAnswer": "billing_queue"
+    },
+    {
+      "id": "class-04",
+      "category": "classification",
+      "prompt": "Classify the input {\"temperature_c\":10}. Return answer as one string using these exact intervals: below 0 is \"frozen\"; 0 through 9 is \"cool\"; 10 through 29 is \"mild\"; 30 or above is \"hot\".",
+      "expectedAnswer": "mild"
+    },
+    {
+      "id": "extract-01",
+      "category": "information_extraction",
+      "prompt": "From the text \"Order Q-17 | owner=Rin | qty=6 units\", extract the order id, owner, and quantity. Return answer as an object with exactly the keys id, owner, and quantity; quantity must be a JSON number.",
+      "expectedAnswer": { "id": "Q-17", "owner": "Rin", "quantity": 6 }
+    },
+    {
+      "id": "extract-02",
+      "category": "information_extraction",
+      "prompt": "From the text \"batch=BX-204; state=queued; zone=west-2\", extract batch, state, and zone. Return answer as an object with exactly those three keys and their string values.",
+      "expectedAnswer": { "batch": "BX-204", "state": "queued", "zone": "west-2" }
+    },
+    {
+      "id": "extract-03",
+      "category": "information_extraction",
+      "prompt": "From the text \"labels: [maple, indigo, 7]\", extract the listed labels in order. Return answer as an array of strings; do not include the brackets or the word labels.",
+      "expectedAnswer": [ "maple", "indigo", "7" ]
+    },
+    {
+      "id": "extract-04",
+      "category": "information_extraction",
+      "prompt": "From the text \"sensor=SN-8; reading=12.5; unit=units\", extract the sensor id, reading, and unit. Return answer as an object with exactly the keys sensor, reading, and unit; reading must be a JSON number.",
+      "expectedAnswer": { "sensor": "SN-8", "reading": 12.5, "unit": "units" }
+    }
+  ],
+  "limits": [
+    "Small synthetic smoke set, not a representative production sample.",
+    "Exact parsing and equality establish only these task outcomes under the tested configuration.",
+    "No claim about external knowledge, broad reasoning, streaming, model quality, or provider interoperability."
+  ]
+}
