@@ -5,7 +5,15 @@ and execution overhead. They use the unchanged released v0.2.0 orchestrator.
 The control, interface, and overhead commands do not call a model. A separate
 opt-in local pilot does; neither establishes that Nisi improves model reasoning.
 
-From a source checkout with Node.js 22 or newer, use new output directories:
+Use Node.js 22 or newer and clone `main`; the v0.2.0 release tag predates these
+benchmark files:
+
+```bash
+git clone --branch main --depth 1 https://github.com/louiscalata/nisi.git
+cd nisi
+```
+
+Then use new output directories:
 
 ```bash
 node benchmarks/value/run.mjs ./control-results
