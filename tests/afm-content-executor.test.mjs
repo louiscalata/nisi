@@ -350,6 +350,52 @@ test('child failures are refused with their own causes, never as evidence', asyn
   }
 });
 
+test("the helper's own refusal code rides beside CHILD_EXIT_NONZERO, and nothing else from stderr does", async () => {
+  const root = tempRoot();
+  const file = write(root, 'a.json', '{}');
+  const codes = ['PLATFORM', 'MODEL_UNAVAILABLE', 'MODEL_REFUSED', 'STDIN_BYTES', 'STDIN_FRAMING',
+    'HEADER_INVALID', 'HEADER_BOUNDS', 'CONTENT_DIGEST_MISMATCH', 'CONTENT_NOT_UTF8'];
+  const cases = [
+    ...codes.map(code => [`process.stderr.write('${code}\\n'); process.exitCode = 65;`, code]),
+    // An unknown code, another exit status, a missing newline, a second line,
+    // extra bytes or silence leave only the exit status.
+    ["process.stderr.write('SOMETHING_ELSE\\n'); process.exitCode = 65;", null],
+    ["process.stderr.write('MODEL_UNAVAILABLE\\n'); process.exitCode = 3;", null],
+    ["process.stderr.write('MODEL_UNAVAILABLE'); process.exitCode = 65;", null],
+    ["process.stderr.write('MODEL_UNAVAILABLE\\nMODEL_REFUSED\\n'); process.exitCode = 65;", null],
+    ["process.stderr.write('MODEL_UNAVAILABLE\\n' + 'x'.repeat(100)); process.exitCode = 65;", null],
+    ['process.exitCode = 65;', null],
+  ];
+  const refusalDigest = sha(Buffer.from('nisi/content-refusal/v1\0CHILD_EXIT_NONZERO', 'utf8'));
+  for (const [script, helperCode] of cases) {
+    const { grant } = consent(root);
+    const made = build(childFailureProbe(script), grant, { 't.1': { filePath: file, kind: 'json' } });
+    const out = await made.execute(packet, { taskId: 't.1' });
+    assert.equal(out.code, 'AFM_PACKET_UNAVAILABLE', script);
+    assert.equal(out.payloadSha256, refusalDigest, script);
+    assert.deepEqual(made.refusals(),
+      [{ taskId: 't.1', cause: 'CHILD_EXIT_NONZERO', ...(helperCode ? { helperCode } : {}) }], script);
+  }
+});
+
+test('a missing helper binary is BINARY_UNREADABLE at construction and before any launch', async () => {
+  const root = tempRoot();
+  const { grant } = consent(root);
+  const stub = stubProbe();
+  const items = { 't.1': { filePath: write(root, 'a.json', '{}'), kind: 'json' } };
+  const unbuilt = path.join(stub.dir, 'not-built');
+  assert.equal(createAFMContentExecutor({ binary: unbuilt, binarySHA256: stub.sha, grant, items }).code,
+    'BINARY_UNREADABLE');
+  const made = build(stub, grant, items);
+  assert.equal(made.ok, true, made.code);
+  fs.rmSync(stub.file);
+  const out = await made.execute(packet, { taskId: 't.1' });
+  assert.equal(out.code, 'AFM_PACKET_UNAVAILABLE');
+  assert.equal(out.payloadSha256, sha(Buffer.from('nisi/content-refusal/v1\0BINARY_UNREADABLE', 'utf8')));
+  assert.deepEqual(made.refusals(), [{ taskId: 't.1', cause: 'BINARY_UNREADABLE' }]);
+  assert.deepEqual(made.readings(), []);
+});
+
 test('an aborted run is refused and leaves no reading behind', async () => {
   const root = tempRoot();
   const { grant } = consent(root);

@@ -15,7 +15,8 @@
 //
 // The probe binary is hash-pinned and re-verified before every launch, takes no
 // argv, receives only a fixed PATH environment and the artifact on stdin. The
-// native helper reports digests, counts and a length-capped advisory string.
+// native helper reports digests, counts and a length-capped advisory string;
+// its stderr is read only for one of its own fixed refusal codes.
 // Its persistence and network flags are validated self-reports, not independent
 // observations. Binary validation/launch requires a stable trusted directory.
 import fs from 'node:fs';
@@ -41,7 +42,7 @@ const LIMITATION_CODES = Object.freeze(['ADVISORY_READING_NON_AUTHORIZING', 'NO_
 const KNOWN_CAUSES = Object.freeze(new Set([
   'REQUEST_BYTES', 'NO_CONTENT_FOR_REQUEST', 'ABORTED', 'SPAWN_ERROR', 'DEADLINE_EXCEEDED',
   'CHILD_SIGNALLED', 'CHILD_EXIT_NONZERO', 'EVIDENCE_OVERFLOW', 'EVIDENCE_REFUSED',
-  'BINARY_NOT_REGULAR_FILE', 'BINARY_TOO_LARGE', 'BINARY_DIGEST_MISMATCH',
+  'BINARY_UNREADABLE', 'BINARY_NOT_REGULAR_FILE', 'BINARY_TOO_LARGE', 'BINARY_DIGEST_MISMATCH',
   'EVIDENCE_BYTES', 'EVIDENCE_SHAPE', 'EVIDENCE_SCHEMA', 'EVIDENCE_STATUS', 'EVIDENCE_CLASS',
   'EVIDENCE_DIGESTS', 'EVIDENCE_ADVISORY', 'EVIDENCE_LIMITATIONS', 'ADVISORY_OVER_CAP',
   'ADVISORY_DIGEST', 'MODEL_DID_NOT_PARTICIPATE', 'MODEL_IDENTITY', 'MODEL_NOT_QUIESCENT',
@@ -49,6 +50,19 @@ const KNOWN_CAUSES = Object.freeze(new Set([
   'CONTENT_BYTES_MISMATCH', 'CONTENT_KIND_MISMATCH',
   'CONTEXT_INVALID', 'PROMPT_DIGEST_MISMATCH',
 ]));
+
+/** The native helper's own refusals: each writes exactly one of these codes and
+ *  a newline to stderr, then exits 65. A CHILD_EXIT_NONZERO refusal carries the
+ *  code as `helperCode` only when that is all stderr held; nothing else from
+ *  stderr is kept, and at most 64 bytes of it are buffered. */
+const HELPER_EXIT_REFUSED = 65;
+const HELPER_REFUSAL_CODES = Object.freeze(['PLATFORM', 'MODEL_UNAVAILABLE', 'MODEL_REFUSED',
+  'STDIN_BYTES', 'STDIN_FRAMING', 'HEADER_INVALID', 'HEADER_BOUNDS', 'CONTENT_DIGEST_MISMATCH',
+  'CONTENT_NOT_UTF8']);
+const helperCodeOf = (exitCode, stderr) => {
+  const line = exitCode === HELPER_EXIT_REFUSED ? /^([A-Z0-9_]{1,32})\n$/.exec(stderr.toString('latin1')) : null;
+  return line && HELPER_REFUSAL_CODES.includes(line[1]) ? line[1] : null;
+};
 
 const EVIDENCE_KEYS = ['schemaVersion', 'status', 'evidenceClass', 'consentDigest', 'contentSha256',
   'contentBytes', 'kind', 'promptSha256', 'advisory', 'advisoryChars', 'advisorySha256',
@@ -98,15 +112,19 @@ function readEvidence(raw, admitted) {
 }
 
 function verifyBinary(binary, binarySHA256) {
-  const stat = fs.lstatSync(binary);
+  // A helper that is missing or cannot be read is named as such: nothing ran,
+  // so no evidence refusal may stand in for it.
+  let stat, bytes;
+  try { stat = fs.lstatSync(binary); } catch { throw new Error('BINARY_UNREADABLE'); }
   if (!stat.isFile()) throw new Error('BINARY_NOT_REGULAR_FILE');
   if (stat.size > 64 * 1024 * 1024) throw new Error('BINARY_TOO_LARGE');
-  if (sha(fs.readFileSync(binary)) !== binarySHA256) throw new Error('BINARY_DIGEST_MISMATCH');
+  try { bytes = fs.readFileSync(binary); } catch { throw new Error('BINARY_UNREADABLE'); }
+  if (sha(bytes) !== binarySHA256) throw new Error('BINARY_DIGEST_MISMATCH');
 }
 
 function runProbe(binary, input, timeoutMs, signal) {
   return new Promise(resolve => {
-    let child = null, timer = null, settled = false, out = Buffer.alloc(0), overflow = false;
+    let child = null, timer = null, settled = false, out = Buffer.alloc(0), err = Buffer.alloc(0), overflow = false;
     const finish = value => {
       if (settled) return;
       settled = true;
@@ -120,7 +138,7 @@ function runProbe(binary, input, timeoutMs, signal) {
     if (signal?.aborted || settled) { onAbort(); return; }
     try {
       child = spawn(binary, [], { cwd: path.dirname(binary), env: { PATH: '/usr/bin:/bin' },
-        stdio: ['pipe', 'pipe', 'ignore'] });
+        stdio: ['pipe', 'pipe', 'pipe'] });
     } catch { return finish({ code: 'SPAWN_ERROR' }); }
     timer = setTimeout(() => { kill(); finish({ code: 'DEADLINE_EXCEEDED' }); }, timeoutMs);
     child.on('error', () => { kill(); finish({ code: 'SPAWN_ERROR' }); });
@@ -129,10 +147,12 @@ function runProbe(binary, input, timeoutMs, signal) {
       if (out.length + chunk.length > MAX_EVIDENCE_BYTES) { overflow = true; kill(); return; }
       out = Buffer.concat([out, chunk]);
     });
+    // Drained always, kept only up to 64 bytes: longer than any helper code line.
+    child.stderr.on('data', chunk => { if (err.length < 64) err = Buffer.concat([err, chunk]).subarray(0, 64); });
     child.once('close', (exitCode, sig) => {
       if (overflow) return finish({ code: 'EVIDENCE_OVERFLOW' });
       if (sig) return finish({ code: 'CHILD_SIGNALLED' });
-      if (exitCode !== 0) return finish({ code: 'CHILD_EXIT_NONZERO' });
+      if (exitCode !== 0) return finish({ code: 'CHILD_EXIT_NONZERO', helperCode: helperCodeOf(exitCode, err) });
       finish({ code: 'OK', raw: out });
     });
     child.stdin.end(input);
@@ -169,10 +189,13 @@ export function createAFMContentExecutor(options) {
 
     const refusals = [];
     const readings = [];
-    const refuse = (rawCause, taskId) => {
+    const refuse = (rawCause, taskId, helperCode = null) => {
       // A grant's own refusal keeps its code, prefixed so its origin is legible.
       const cause = KNOWN_CAUSES.has(rawCause) || rawCause.startsWith('CONSENT_') ? rawCause : 'EVIDENCE_REFUSED';
-      refusals.push(Object.freeze({ taskId: typeof taskId === 'string' ? taskId : null, cause }));
+      // The helper's named refusal rides beside the cause; the cause, and so
+      // the refusal digest, stays CHILD_EXIT_NONZERO.
+      const helper = cause === 'CHILD_EXIT_NONZERO' && helperCode ? { helperCode } : {};
+      refusals.push(Object.freeze({ taskId: typeof taskId === 'string' ? taskId : null, cause, ...helper }));
       return Object.freeze({ ok: false, code: 'AFM_PACKET_UNAVAILABLE',
         payloadSha256: sha(Buffer.from(`nisi/content-refusal/v1\0${cause}`, 'utf8')) });
     };
@@ -205,7 +228,7 @@ export function createAFMContentExecutor(options) {
         });
         const input = Buffer.concat([Buffer.from(header + '\n', 'utf8'), admitted.bytes]);
         const run = await runProbe(binary, input, timeoutMs, signal);
-        if (run.code !== 'OK') return refuse(run.code, taskId);
+        if (run.code !== 'OK') return refuse(run.code, taskId, run.helperCode);
 
         const evidence = readEvidence(run.raw, admitted);
         const executionSha256 = sha(Buffer.from(`nisi/content-execution/v1\0${APPLE_CONTENT_PROMPT_VERSION}\0` +
@@ -238,7 +261,8 @@ export function createAFMContentExecutor(options) {
       readings: () => Object.freeze(readings.map(r => Object.freeze({ ...r }))),
     });
   } catch (error) {
-    const known = ['BINARY_NOT_REGULAR_FILE', 'BINARY_TOO_LARGE', 'BINARY_DIGEST_MISMATCH', 'ITEMS_REFUSED'];
+    const known = ['BINARY_UNREADABLE', 'BINARY_NOT_REGULAR_FILE', 'BINARY_TOO_LARGE', 'BINARY_DIGEST_MISMATCH',
+      'ITEMS_REFUSED'];
     const code = error instanceof Error && known.includes(error.message) ? error.message : 'CONSTRUCTION_ERROR';
     return fail(code);
   }
