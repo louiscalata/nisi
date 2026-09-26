@@ -8,9 +8,13 @@ Input is an ordinary, non-shared `Uint8Array` (including Node Buffer), captured
 once. Objects/strings/proxies, shared-memory views and detached or resized-out-of-
 bounds views are refused. Current in-bounds resizable views are supported; limits
 apply to the captured view, not unused backing bytes. Output is an
-immutable profile/string/SHA-256 tuple. No file, network, queue, or model action
-is performed by the codec — `scripts/structural-check.mjs` checks that
-statically, and is itself mutation-tested.
+immutable profile/string/SHA-256 tuple. The codec performs no file, network,
+queue, or model action. `scripts/structural-check.mjs` scans its marked region
+for configured direct call patterns (process spawn, filesystem write, network,
+dynamic code or import, module load, process mutation) and is itself
+mutation-tested against `contracts/structural-fixtures.json`. The scan is
+supporting evidence, not a purity proof: aliased or computed calls, assignments
+and the imports above the region are outside it.
 
 The host JavaScript realm and its built-ins are trusted. Refusing proxy inputs
 does not make this a sandbox, and it does not protect against malicious
