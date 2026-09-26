@@ -67,6 +67,19 @@ requested as that address. Redirects are errors.
 No tools or streaming generation are requested. Response-body reads are bounded
 and cancelled on overflow or abort. First-observed timeout/cancellation wins.
 
+Without an injected `fetch`, each request uses `node:http` with a private
+connection agent, not the global `fetch`, its dispatcher or `http.globalAgent`.
+Node's environment proxy (`NODE_USE_ENV_PROXY=1` or `--use-env-proxy` with
+`HTTP_PROXY`) and a host-installed dispatcher therefore do not reroute it. This
+transport asks for an uncompressed response, never follows redirects and has no
+timeout of its own, so `timeoutMs`, the payload's `signal` and the engine deadline
+bound the whole call across the full 1–86,400,000 ms range. A status outside
+2xx, or 204 or 205, is `LOCAL_CHAT_RESPONSE_UNAVAILABLE`; a refused, reset or
+truncated connection is `LOCAL_CHAT_UNAVAILABLE`. An injected `fetch` receives
+`redirect: "error"` and brings its own routing, proxy and timeout behavior. Node's
+global `fetch`, for example, follows its dispatcher's proxy settings and default
+300-second response-header timeout.
+
 This restricts the client's destination, not the server's behavior. Nisi does
 not authenticate the listening process or independently establish that it runs
 inference locally, avoids logging, or forwards nothing. The host must choose a

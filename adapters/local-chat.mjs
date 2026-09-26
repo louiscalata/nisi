@@ -3,12 +3,14 @@
 // Local OpenAI-compatible chat adapter.
 // This adapter is deliberately separate from the Apple Foundation Models consent path.
 
+import { Agent, request as httpRequest } from 'node:http';
 import { createCandidate, cloneFreeze, sha256Text, validateFindings } from '../workflow/contracts.mjs';
 
 const DEFAULT_MAX_BYTES = 1_048_576;
 const DEFAULT_MAX_TOKENS = 4096;
 const MAX_TIMEOUT = 86_400_000;
 const isRecord = value => value !== null && typeof value === 'object' && !Array.isArray(value);
+const coded = code => Object.assign(new Error(code), { code });
 const fail = (code, message = code) => { const error = new Error(message); error.code = code; throw error; };
 
 function validateEndpoint(value) {
@@ -20,6 +22,41 @@ function validateEndpoint(value) {
     fail('LOCAL_CHAT_DESTINATION_REFUSED');
   }
   return url.href;
+}
+
+// Default transport. A private node:http Agent has no proxy configuration, so Node's
+// environment proxy, a replaced http.globalAgent or a host-installed fetch dispatcher
+// cannot reroute the loopback request. Redirects are never followed, and the caller's
+// timer and signal are its only deadline. Only a 2xx response with content exposes a
+// body. Connection and stream errors become LOCAL_CHAT_UNAVAILABLE, never a Node code.
+function loopbackFetch(endpoint, { method, headers, body, signal }) {
+  return new Promise((resolve, reject) => {
+    const request = httpRequest(endpoint, { method, signal, agent: new Agent(),
+      headers: { ...headers, 'accept-encoding': 'identity', 'content-length': Buffer.byteLength(body, 'utf8') } });
+    request.on('error', () => reject(coded('LOCAL_CHAT_UNAVAILABLE')));
+    request.on('close', () => reject(coded('LOCAL_CHAT_UNAVAILABLE')));
+    request.on('response', response => {
+      const status = response.statusCode;
+      response.on('error', () => { /* surfaced through 'close' */ });
+      if (status < 200 || status > 299 || status === 204 || status === 205) {
+        response.destroy();
+        try { resolve(new Response(null, { status })); } catch { reject(coded('LOCAL_CHAT_RESPONSE_UNAVAILABLE')); }
+        return;
+      }
+      let settled = false;
+      const settle = action => { if (!settled) { settled = true; action(); } };
+      resolve(new Response(new ReadableStream({
+        start(controller) {
+          response.on('data', chunk => { if (settled) return; controller.enqueue(chunk); if (controller.desiredSize <= 0) response.pause(); });
+          response.on('end', () => settle(() => controller.close()));
+          response.on('close', () => settle(() => controller.error(coded('LOCAL_CHAT_UNAVAILABLE'))));
+        },
+        pull() { response.resume(); },
+        cancel() { settled = true; response.destroy(); },
+      }), { status }));
+    });
+    request.end(body);
+  });
 }
 
 function config(input, role) {
@@ -39,7 +76,7 @@ function config(input, role) {
   if (input.timeoutMs !== undefined && (!Number.isSafeInteger(input.timeoutMs) || input.timeoutMs < 1 || input.timeoutMs > MAX_TIMEOUT)) fail('LOCAL_CHAT_TIMEOUT_INVALID');
   if (input.fetch !== undefined && typeof input.fetch !== 'function') fail('LOCAL_CHAT_FETCH_INVALID');
   return Object.freeze({ endpoint, model: input.model, id: input.id, maxResponseBytes, maxRequestBytes, maxOutputTokens,
-    timeoutMs: input.timeoutMs ?? 120000, fetch: input.fetch ?? globalThis.fetch, role });
+    timeoutMs: input.timeoutMs ?? 120000, fetch: input.fetch ?? loopbackFetch, role });
 }
 
 // JSON.parse accepts duplicate names. This small recursive codec rejects them first,
