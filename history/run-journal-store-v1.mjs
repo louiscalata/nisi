@@ -1,7 +1,8 @@
 // Copyright 2026 Louis Calata
 // SPDX-License-Identifier: Apache-2.0
+import { constants } from 'node:buffer';
 import { createHash, randomUUID } from 'node:crypto';
-import { dirname, sep } from 'node:path';
+import { basename, dirname, sep } from 'node:path';
 import { reopen } from './run-journal-v1.mjs';
 
 const digest = bytes => createHash('sha256').update(bytes).digest('hex');
@@ -16,9 +17,14 @@ const validPath = path => typeof path === 'string' && path.length > 0 && !path.i
 const hasMethods = (fs, names) => fs != null && names.every(name => typeof fs[name] === 'function');
 const initial = () => ({ durable: false, committed: false, fsync: { file: false, directory: false }, fsyncErrors: { file: null, directory: null } });
 const refusal = (state, reason) => ({ ...state, status: 'REFUSED', reason, durable: false });
+// A lookup refusal also carries the code of the fs error that caused it, if any.
+const refusalOf = (state, found) => refusal(found.code === undefined ? state : { ...state, error: found.code }, found.error);
 // Windows needs a write-access directory handle for its flush; POSIX directories
 // reject a read/write open. A failed sync still reports durable: false.
 const directoryFlags = sep === '\\' ? 'r+' : 'r';
+// The temp name adds '.<sha256>.<uuid>.tmp' (106 bytes) to the journal's file name,
+// and filesystems commonly cap one name at 255 bytes.
+const MAX_NAME_BYTES = 255 - 106;
 
 function validJournal(serialized) {
   try {
@@ -55,8 +61,13 @@ function validJournal(serialized) {
 
 function decode(bytes) {
   if (!Buffer.isBuffer(bytes)) return null;
-  const serialized = bytes.toString('utf8');
-  return Buffer.from(serialized, 'utf8').equals(bytes) && validJournal(serialized) ? serialized : null;
+  try {
+    // toString throws ERR_STRING_TOO_LONG above buffer.constants.MAX_STRING_LENGTH bytes.
+    const serialized = bytes.toString('utf8');
+    return Buffer.from(serialized, 'utf8').equals(bytes) && validJournal(serialized) ? serialized : null;
+  } catch {
+    return null;
+  }
 }
 
 function existingBytes(fs, path) {
@@ -64,7 +75,16 @@ function existingBytes(fs, path) {
     const bytes = fs.readFileSync(path);
     return { bytes, absent: false };
   } catch (error) {
-    return error?.code === 'ENOENT' ? { bytes: null, absent: true } : { error: 'READ_FAILED' };
+    return error?.code === 'ENOENT' ? { bytes: null, absent: true } : { error: 'READ_FAILED', code: errorCode(error) };
+  }
+}
+
+// A rename replaces a symlink itself and leaves its target stale, so a link is refused.
+function linkCheck(fs, path) {
+  try {
+    return fs.lstatSync(path).isSymbolicLink() ? { error: 'SYMLINK' } : {};
+  } catch (error) {
+    return error?.code === 'ENOENT' ? {} : { error: 'READ_FAILED', code: errorCode(error) };
   }
 }
 
@@ -81,7 +101,7 @@ export function readSerializedJournal(options) {
   const state = initial();
   if (!options || !validPath(options.path) || !hasMethods(options.fs, ['readFileSync'])) return refusal(state, 'INVALID_INPUT');
   const found = existingBytes(options.fs, options.path);
-  if (found.error) return refusal(state, found.error);
+  if (found.error) return refusalOf(state, found);
   if (found.absent) return refusal(state, 'NOT_FOUND');
   const serialized = decode(found.bytes);
   if (serialized === null) return refusal(state, 'INVALID_JOURNAL');
@@ -90,14 +110,18 @@ export function readSerializedJournal(options) {
 
 export function writeSerializedJournal(options) {
   const state = initial();
-  if (!options || !validPath(options.path) || !hasMethods(options.fs, ['readFileSync', 'openSync', 'writeSync', 'closeSync', 'renameSync', 'unlinkSync'])) return refusal(state, 'INVALID_INPUT');
+  if (!options || !validPath(options.path) || !hasMethods(options.fs, ['readFileSync', 'lstatSync', 'openSync', 'writeSync', 'closeSync', 'renameSync', 'unlinkSync'])) return refusal(state, 'INVALID_INPUT');
   const { path, serialized, fs, expectedPreviousSha256 } = options;
+  if (Buffer.byteLength(basename(path)) > MAX_NAME_BYTES) return refusal(state, 'PATH_TOO_LONG');
+  // Bytes that decode() could never turn back into a string are not written.
+  if (typeof serialized === 'string' && Buffer.byteLength(serialized) > constants.MAX_STRING_LENGTH) return refusal(state, 'TOO_LARGE');
   if (!validJournal(serialized)) return refusal(state, 'INVALID_JOURNAL');
   if (expectedPreviousSha256 !== undefined && !hex(expectedPreviousSha256)) return refusal(state, 'INVALID_INPUT');
   const bytes = Buffer.from(serialized, 'utf8');
   const sha256 = digest(bytes);
-  const before = existingBytes(fs, path);
-  if (before.error) return refusal(state, before.error);
+  const link = linkCheck(fs, path);
+  const before = link.error ? link : existingBytes(fs, path);
+  if (before.error) return refusalOf(state, before);
   if (!before.absent && decode(before.bytes) === null) return refusal(state, 'EXISTING_INVALID');
   if (expectedPreviousSha256 !== undefined && (before.absent || digest(before.bytes) !== expectedPreviousSha256)) return refusal(state, 'CONFLICT');
   if (!before.absent) {
@@ -138,10 +162,11 @@ export function writeSerializedJournal(options) {
     const closing = fd;
     fd = null;
     try { fs.closeSync(closing); } catch (error) {
-      state.cleanupError = errorCode(error);
+      state.cleanupError = state.error = errorCode(error);
       return fail('WRITE_FAILED');
     }
-  } catch {
+  } catch (error) {
+    state.error = errorCode(error);
     return fail('WRITE_FAILED');
   }
 
@@ -149,13 +174,23 @@ export function writeSerializedJournal(options) {
     try {
       const actual = fs.readFileSync(target);
       return Buffer.isBuffer(actual) && actual.equals(bytes);
-    } catch { return false; }
+    } catch (error) {
+      state.error = errorCode(error);
+      return false;
+    }
   };
   if (!matches(temp)) return fail('READBACK_MISMATCH');
-  const current = existingBytes(fs, path);
-  if (current.error) return fail(current.error);
+  const relinked = linkCheck(fs, path);
+  const current = relinked.error ? relinked : existingBytes(fs, path);
+  if (current.error) {
+    if (current.code !== undefined) state.error = current.code;
+    return fail(current.error);
+  }
   if (current.absent !== before.absent || !current.absent && (!Buffer.isBuffer(current.bytes) || !current.bytes.equals(before.bytes))) return fail('CONFLICT');
-  try { fs.renameSync(temp, path); } catch { return fail('RENAME_FAILED'); }
+  try { fs.renameSync(temp, path); } catch (error) {
+    state.error = errorCode(error);
+    return fail('RENAME_FAILED');
+  }
   state.committed = true;
   ownedTemp = false;
 
