@@ -434,3 +434,31 @@ test('cloneFreeze copies a shared reference once, keeps cycles refused and the d
     assert.equal(result([chain('leaf', 10), chain(chain('leaf', 10), levels)]), expected, `unshared ${levels}`);
   }
 });
+
+test('the reviewer plan, author and adapter IDs are read once and the validated snapshot runs', async () => {
+  const reviews = report => report.stages.filter(stage => stage.stage === 'review').map(stage => stage.evidence.reviewerId);
+  const shrinking = adapters();
+  const [reviewer] = shrinking.reviewers;
+  let planReads = 0;
+  Object.defineProperty(shrinking, 'reviewers', { enumerable: true, get() { planReads += 1; return planReads === 1 ? [reviewer] : []; } });
+  const planned = await runWorkflow(makeTask(), { adapters: shrinking });
+  assert.equal(planned.outcome, 'COMPLETED');
+  assert.deepEqual(reviews(planned), ['reviewer.one']);
+  assert.equal(planReads, 1);
+
+  const renamed = adapters();
+  let idReads = 0;
+  renamed.reviewers = [{ get id() { idReads += 1; return idReads === 1 ? 'reviewer.one' : 'NOT A VALID ID'; }, review: renamed.reviewers[0].review }];
+  const identified = await runWorkflow(makeTask(), { adapters: renamed });
+  assert.equal(identified.outcome, 'COMPLETED');
+  assert.deepEqual(reviews(identified), ['reviewer.one']);
+  assert.equal(idReads, 1);
+
+  const swapped = adapters();
+  const { author } = swapped;
+  let authorReads = 0;
+  Object.defineProperty(swapped, 'author', { enumerable: true, get() { authorReads += 1; return authorReads === 1 ? author : { id: 'reviewer.one' }; } });
+  const authored = await runWorkflow(makeTask(), { adapters: swapped });
+  assert.equal(authored.outcome, 'COMPLETED');
+  assert.equal(authorReads, 1);
+});

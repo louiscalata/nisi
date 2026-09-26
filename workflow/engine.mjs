@@ -37,18 +37,22 @@ function snapshotAdapters(task, source) {
   const authorize = method(source.authorizeContext, 'authorize', 'AUTHORIZATION_ADAPTER_REQUIRED');
   const check = method(source.staticChecks, 'check', 'STATIC_CHECK_ADAPTER_REQUIRED');
   const tests = method(source.tests, 'run', 'TEST_ADAPTER_REQUIRED');
-  if (!Array.isArray(source.reviewers) || source.reviewers.length !== task.policy.requiredReviewers) reject('REVIEW_ADAPTER_COUNT');
-  const reviewers = Object.freeze(source.reviewers.map(reviewer => Object.freeze({
+  // Each source is read once: the plan that is validated is the plan that runs.
+  const listed = source.reviewers, count = task.policy.requiredReviewers;
+  if (!Array.isArray(listed) || listed.length !== count) reject('REVIEW_ADAPTER_COUNT');
+  const plan = Array.from({ length: count }, (_, index) => listed[index]);
+  const reviewers = Object.freeze(plan.map(reviewer => Object.freeze({
     id: validateAdapterIdentity(reviewer, 'reviewer'),
     review: method(reviewer, 'review', 'REVIEW_ADAPTER_REQUIRED'),
   })));
   if (new Set(reviewers.map(reviewer => reviewer.id)).size !== reviewers.length) reject('DUPLICATE_REVIEWER');
   let author = null;
   if (task.mode === 'edit') {
+    const supplied = source.author;
     author = Object.freeze({
-      id: validateAdapterIdentity(source.author, 'author'),
-      draft: method(source.author, 'draft', 'AUTHOR_ADAPTER_REQUIRED'),
-      repair: task.policy.repairBudget > 0 ? method(source.author, 'repair', 'REPAIR_ADAPTER_REQUIRED') : null,
+      id: validateAdapterIdentity(supplied, 'author'),
+      draft: method(supplied, 'draft', 'AUTHOR_ADAPTER_REQUIRED'),
+      repair: task.policy.repairBudget > 0 ? method(supplied, 'repair', 'REPAIR_ADAPTER_REQUIRED') : null,
     });
     if (reviewers.some(reviewer => reviewer.id === author.id)) reject('AUTHOR_REVIEWER_NOT_INDEPENDENT');
   }
@@ -167,12 +171,13 @@ export async function runWorkflow(taskInput, options = {}) {
     if (typeof clock !== 'function') reject('CLOCK_INVALID');
     invoker = createInvoker(signal, clock, task.policy.totalDeadlineMs);
     if (task.mode === 'review') {
-      if (!options.candidate || !options.candidateAuthorId) reject('REVIEW_CANDIDATE_REQUIRED');
-      candidate = validateCandidateForTask(options.candidate, task, options.candidateAuthorId);
+      const { candidate: supplied, candidateAuthorId } = options;
+      if (!supplied || !candidateAuthorId) reject('REVIEW_CANDIDATE_REQUIRED');
+      candidate = validateCandidateForTask(supplied, task, candidateAuthorId);
       if (adapters.reviewers.some(reviewer => reviewer.id === candidate.authorId)) reject('AUTHOR_REVIEWER_NOT_INDEPENDENT');
     }
-    if (options.reportStore !== undefined) {
-      const object = options.reportStore;
+    const object = options.reportStore;
+    if (object !== undefined) {
       const method = object?.store;
       if (typeof method === 'function') store = method.bind(object);
       else storeInvalid = true;

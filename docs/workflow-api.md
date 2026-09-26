@@ -92,10 +92,14 @@ const report = await runWorkflow(task, {
 ```
 
 Callbacks are provided by the application. Methods and IDs are captured once,
-and the reviewer plan is fixed before execution. There must be exactly the
-configured number of reviewers, with unique IDs distinct from the author ID.
-This checks declared separation; the host decides what independent review means
-and prevents an author from controlling its reviewers or acceptance tools.
+and the reviewer plan is fixed before execution: each adapter entry, the
+`reviewers` array and every `id` is read once, and the validated snapshot is
+the one that runs. Methods are bound to their adapter object. There must be
+exactly the configured number of reviewers (`REVIEW_ADAPTER_COUNT`), with
+unique IDs (`DUPLICATE_REVIEWER`) distinct from the author ID
+(`AUTHOR_REVIEWER_NOT_INDEPENDENT`). This checks declared separation; the host
+decides what independent review means and prevents an author from controlling
+its reviewers or acceptance tools.
 
 Review mode additionally supplies `candidate` and `candidateAuthorId` in options.
 It does not require an author adapter and never calls draft or repair. It still
