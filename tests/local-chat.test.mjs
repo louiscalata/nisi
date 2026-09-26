@@ -14,12 +14,40 @@ function fetchFor(content, options = {}) { return async (_url, request) => { opt
 test('strict codec rejects duplicate object keys and accepts one JSON fence', () => {
   assert.throws(() => strictJSON('{"a":1,"a":2}'), error => error.code === 'LOCAL_CHAT_JSON_DUPLICATE_KEY');
   assert.equal(strictJSON('```json\n{"a":1}\n```').a, 1);
-  for (const text of ['"\\x"', '"\\u12xz"', '```json\u00a0{"a":1}\u00a0```']) {
+  for (const text of ['"\\x"', '"\\u12xz"', '```json\u00a0{"a":1}\u00a0```', '"abc', `${'['.repeat(66)}${']'.repeat(66)}`]) {
     assert.throws(() => strictJSON(text), error => error.code === 'LOCAL_CHAT_JSON_INVALID');
   }
+  assert.equal(strictJSON(`${'['.repeat(65)}${']'.repeat(65)}`).length, 1);
   const proto = strictJSON('{"__proto__":{"x":1}}');
   assert.equal(Object.getPrototypeOf(proto), null);
   assert.ok(Object.hasOwn(proto, '__proto__'));
+});
+
+test('codec trims only JSON whitespace and removes at most one fence, as before the linear rewrite', () => {
+  for (const [text, expected] of [
+    [' \t\r\n{"a":1}\r\n\t ', {a: 1}], ['```JSON {"a":1} ```', {a: 1}], ['``` {"a":2}\n```', {a: 2}],
+    ['```jsonfoo```', 'LOCAL_CHAT_JSON_INVALID'], ['``````', 'LOCAL_CHAT_JSON_INVALID'], ['`````', 'LOCAL_CHAT_JSON_INVALID'],
+    ['```json```json {"a":1}``````', 'LOCAL_CHAT_JSON_INVALID'], [' {"a":1}', 'LOCAL_CHAT_JSON_INVALID'],
+    ['{"a":1} ', 'LOCAL_CHAT_JSON_INVALID'], ['\f{"a":1}', 'LOCAL_CHAT_JSON_INVALID'],
+  ]) {
+    if (typeof expected === 'string') assert.throws(() => strictJSON(text), error => error.code === expected, JSON.stringify(text));
+    else assert.deepEqual({...strictJSON(text)}, expected, JSON.stringify(text));
+  }
+});
+
+test('codec stays linear on long whitespace runs inside strings and fences', () => {
+  // The former end-anchored global regexes were quadratic and cannot be preempted: the first
+  // input took about half a minute and a 1 MiB run about eight minutes. Budgets are generous.
+  const quick = (text, check) => {
+    const started = performance.now(); check(text); const elapsed = performance.now() - started;
+    assert.ok(elapsed < 3000, `strict JSON took ${Math.round(elapsed)} ms for ${text.length} characters`);
+  };
+  quick(`{"a":"x${' '.repeat(250_000)}y"}`, text => assert.equal(strictJSON(text).a.length, 250_002));
+  quick(`\`\`\`json${' '.repeat(100_000)}{"a":1}${' '.repeat(100_000)}\`\`\``, text => assert.equal(strictJSON(text).a, 1));
+  quick(`[${' '.repeat(250_000)}1]`, text => assert.equal(strictJSON(text)[0], 1));
+  quick(`{"a":"x${' '.repeat(1_000_000)}y"}`, text => assert.equal(strictJSON(text).a.length, 1_000_002));
+  quick(`${' '.repeat(1_000_000)}x${' '.repeat(1_000_000)}`,
+    text => assert.throws(() => strictJSON(text), error => error.code === 'LOCAL_CHAT_JSON_INVALID'));
 });
 
 test('factory requires literal loopback HTTP destination and rejects redirects by request policy', () => {

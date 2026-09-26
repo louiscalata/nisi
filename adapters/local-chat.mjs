@@ -44,13 +44,21 @@ function config(input, role) {
 
 // JSON.parse accepts duplicate names. This small recursive codec rejects them first,
 // while retaining JSON's number/string grammar and supporting one explicit code fence.
+// Trimming and fence removal are index scans: an end-anchored global regex is
+// quadratic on a long interior whitespace run and cannot be preempted by a timer.
 function strictJSON(source) {
   if (typeof source !== 'string' || source.length === 0 || source.length > 16 * 1024 * 1024) fail('LOCAL_CHAT_JSON_INVALID');
-  let text = source.replace(/^[ \t\r\n]+|[ \t\r\n]+$/gu, '');
-  const fence = /^```(?:json)?[ \t\r\n]*([\s\S]*?)[ \t\r\n]*```$/iu.exec(text);
-  if (fence) text = fence[1];
+  const space = c => c === ' ' || c === '\t' || c === '\r' || c === '\n';
+  const trim = value => { let start = 0, end = value.length;
+    while (start < end && space(value[start])) start += 1;
+    while (end > start && space(value[end - 1])) end -= 1;
+    return value.slice(start, end); };
+  let text = trim(source);
+  if (text.length >= 6 && text.startsWith('```') && text.endsWith('```')) {
+    const inner = text.slice(3, -3); text = trim(/^json/iu.test(inner) ? inner.slice(4) : inner);
+  }
   let index = 0;
-  const ws = () => { while ([' ', '\t', '\r', '\n'].includes(text[index])) index += 1; };
+  const ws = () => { while (space(text[index])) index += 1; };
   const string = () => {
     const start = index;
     if (text[index++] !== '"') fail('LOCAL_CHAT_JSON_INVALID');
