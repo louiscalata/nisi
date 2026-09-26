@@ -7,9 +7,11 @@ admission/refusal cases without model execution.
 
 ## Declaration
 
-The factory takes UTF-8 **canonical JSON bytes**, not a JavaScript object. Build
-those bytes with `canonicalizeJsonV1(Buffer.from(JSON.stringify(declaration)))`.
-Every declaration has exactly these fields:
+The factory takes UTF-8 **canonical JSON bytes** in a Buffer, not a JavaScript
+object. `canonicalizeJsonV1` returns a `{ profile, canonical, sha256 }` record,
+so wrap its `canonical` string. Build those bytes with `Buffer.from(canonicalizeJsonV1(Buffer.from(JSON.stringify(declaration))).canonical, 'utf8')`.
+Passing the record itself is refused with `CONSENT_BYTES_REFUSED`. Every
+declaration has exactly these fields:
 
 | Field | Accepted value |
 |---|---|
@@ -40,19 +42,24 @@ path must be absolute and the kind must be permitted by the declaration. Kind
 is a caller-provided label: labeling arbitrary UTF-8 text `json` does not parse
 or validate its JSON structure.
 
-The policy checks liveness, resolves the file and root, enforces directory
-scope, checks a regular nonempty file and its size, opens the resolved file,
-compares descriptor identity and nanosecond metadata, reads with a hard byte
-cap, rechecks the opened file, and validates UTF-8. Where available, the open
-uses `O_NOFOLLOW` and `O_NONBLOCK`. The successful record contains copied bytes,
-content digest/length, consent digest, kind and advisory cap.
+The policy checks liveness, resolves the file and root with the operating
+system's `realpath`, enforces directory scope, checks a regular nonempty file
+and its size, opens the resolved file, compares descriptor identity and
+nanosecond metadata, reads with a hard byte cap, rechecks the opened file, and
+validates UTF-8. Where available, the open uses `O_NOFOLLOW` and `O_NONBLOCK`.
+The successful record contains copied bytes, content digest/length, consent
+digest, kind and advisory cap. Because the OS resolves the paths, a `..` after
+a linked directory means what it means when the OS opens the path: on POSIX
+systems, the parent of the link's target, not the directory holding the link.
 
-The opened-object checks reduce replacement and mutation races. A same-size
-in-place write is detected when the filesystem reports changed metadata; a
-write that leaves the compared metadata unchanged can escape that check. The
-parent directories and file writers must remain trusted and stable: this is
-not a directory-descriptor sandbox or proof against every concurrent filesystem
-change.
+The opened-object checks reduce replacement and mutation races. A link, another
+file or a torn read detected there is `CONTENT_CHANGED_DURING_READ`, a non-file
+opened in its place is `CONTENT_NOT_REGULAR_FILE`, and growth past the cap
+during the read is `CONTENT_BYTE_LIMIT`. A same-size in-place write is detected
+when the filesystem reports changed metadata; a write that leaves the compared
+metadata unchanged can escape that check. The parent directories and file
+writers must remain trusted and stable: this is not a directory-descriptor
+sandbox or proof against every concurrent filesystem change.
 
 `grant.revoke()` is terminal and prevents future admissions. It does not retract
 returned bytes or cancel a model already running. `grant.status()` reports the
