@@ -5,7 +5,8 @@ import fs from 'node:fs/promises';
 import path from 'node:path';
 import os from 'node:os';
 import { createHash } from 'node:crypto';
-import { fileURLToPath, pathToFileURL } from 'node:url';
+import { realpathSync } from 'node:fs';
+import { fileURLToPath } from 'node:url';
 import { runWorkflow } from '../../workflow/engine.mjs';
 import { createCandidate } from '../../workflow/contracts.mjs';
 import { createLocalChatAuthorAdapter, createLocalChatReviewerAdapter } from '../../adapters/local-chat.mjs';
@@ -240,4 +241,7 @@ export async function main(output) {
   return result;
 }
 
-if (process.argv[1] && import.meta.url === pathToFileURL(path.resolve(process.argv[1])).href) await main(process.argv[2]);
+// Real paths on both sides: Node names the entry module by its physical path, even through a symlink.
+let invokedAsMain = false;
+try { invokedAsMain = Boolean(process.argv[1]) && realpathSync(process.argv[1]) === realpathSync(fileURLToPath(import.meta.url)); } catch { /* imported */ }
+if (invokedAsMain) await main(process.argv[2]);

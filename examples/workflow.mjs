@@ -5,10 +5,11 @@
 // Only the fixed source below is executed. This is not an untrusted-code sandbox.
 import assert from 'node:assert/strict';
 import { spawnSync } from 'node:child_process';
+import { realpathSync } from 'node:fs';
 import fs from 'node:fs/promises';
 import os from 'node:os';
 import path from 'node:path';
-import { pathToFileURL } from 'node:url';
+import { fileURLToPath } from 'node:url';
 import { createCandidate, runWorkflow } from '../workflow/engine.mjs';
 import { sha256Text, stableStringify } from '../workflow/contracts.mjs';
 
@@ -87,7 +88,12 @@ export async function runExample() {
   return { report, reportPath, directory };
 }
 
-if (process.argv[1] && import.meta.url === pathToFileURL(path.resolve(process.argv[1])).href) {
+// Node gives the entry module its physical path; compare real paths so a
+// symlinked checkout or node_modules/nisi still runs the example.
+let invokedAsMain = false;
+try { invokedAsMain = Boolean(process.argv[1]) && realpathSync(process.argv[1]) === realpathSync(fileURLToPath(import.meta.url)); }
+catch { /* An unresolvable argv path means this module was imported. */ }
+if (invokedAsMain) {
   const { report, reportPath } = await runExample();
   console.log(JSON.stringify({ outcome: report.outcome, code: report.code, repairAttempts: report.repairAttempts,
     stages: report.stages.map(({ stage, status }) => ({ stage, status })), reportStored: report.reportStored,

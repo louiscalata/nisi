@@ -2,6 +2,7 @@
 // SPDX-License-Identifier: Apache-2.0
 // Exploratory, opt-in local inference pilot. The frozen oracle is outside the workflow.
 import fs from 'node:fs/promises';
+import { realpathSync } from 'node:fs';
 import { execFileSync } from 'node:child_process';
 import { createHash, randomUUID } from 'node:crypto';
 import { performance } from 'node:perf_hooks';
@@ -200,7 +201,10 @@ export async function main(argv = process.argv.slice(2), { fetch, routerCommand 
   }
 }
 
-if (process.argv[1] && fileURLToPath(import.meta.url) === process.argv[1]) {
+// Real paths on both sides: Node names the entry module by its physical path, even through a symlink.
+let invokedAsMain = false;
+try { invokedAsMain = Boolean(process.argv[1]) && realpathSync(process.argv[1]) === realpathSync(fileURLToPath(import.meta.url)); } catch { /* imported */ }
+if (invokedAsMain) {
   main().then(result => console.log(JSON.stringify({ rows: result.rows.length, model: result.model })),
     error => { console.error(error.message); process.exitCode = 1; });
 }

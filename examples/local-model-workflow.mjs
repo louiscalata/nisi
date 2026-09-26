@@ -3,8 +3,8 @@
 // Opt-in local inference example. The task generates JSON configuration, which
 // is parsed and tested as data. Model-generated programs are never executed.
 import assert from 'node:assert/strict';
-import path from 'node:path';
-import { pathToFileURL } from 'node:url';
+import { realpathSync } from 'node:fs';
+import { fileURLToPath } from 'node:url';
 import { createLocalChatAuthorAdapter, createLocalChatReviewerAdapter } from '../adapters/local-chat.mjs';
 import { canonicalizeJSONV1 } from '../serialization/canonical-json-v1.mjs';
 import { runWorkflow } from '../workflow/engine.mjs';
@@ -72,7 +72,12 @@ export async function runLocalModelExample({ endpoint, authorModel, reviewerMode
   return { report, authorReceipts: author.receipts(), reviewerReceipts: reviewer.receipts() };
 }
 
-if (process.argv[1] && import.meta.url === pathToFileURL(path.resolve(process.argv[1])).href) {
+// Node gives the entry module its physical path; compare real paths so a
+// symlinked checkout or node_modules/nisi still runs the example.
+let invokedAsMain = false;
+try { invokedAsMain = Boolean(process.argv[1]) && realpathSync(process.argv[1]) === realpathSync(fileURLToPath(import.meta.url)); }
+catch { /* An unresolvable argv path means this module was imported. */ }
+if (invokedAsMain) {
   let cli;
   try { cli = parseLocalModelCLI(process.argv.slice(2)); } catch (error) {
     console.error(error.message);
