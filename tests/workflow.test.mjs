@@ -1,9 +1,10 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { createCandidate, createTaskSpecification, runWorkflow } from '../workflow/engine.mjs';
-import { sha256Text, stableStringify } from '../workflow/contracts.mjs';
+import { cloneFreeze, sha256Text, stableStringify } from '../workflow/contracts.mjs';
 
 const BASE_TEXT = 'export const answer = 42;\n';
+const refuses = (fn, code) => assert.throws(fn, { name: 'WorkflowInputError', code });
 const file = content => ({ path: 'src/app.js', content });
 const makeTask = (mode = 'edit', overrides = {}) => ({
   taskId: 'task.one', mode, language: 'javascript', allowedFiles: ['src/app.js', 'test/app.test.js'],
@@ -384,5 +385,52 @@ test('valid store refusals, invalid receipts, exceptions, timeout and cancellati
     assert.equal(timed.workflowOutcome, 'COMPLETED');
     assert.equal(timed.outcome, 'TIMED_OUT');
     assert.equal(timed.reportStored, false);
+  }
+});
+
+test('cloneFreeze refuses non-data objects before listing their properties', async () => {
+  let listed = 0;
+  const trap = { ownKeys(target) { listed += 1; return Reflect.ownKeys(target); },
+    getOwnPropertyDescriptor(target, key) { listed += 1; return Reflect.getOwnPropertyDescriptor(target, key); } };
+  for (const value of [new Uint8Array(4), Buffer.from('x'), new Map([[1, 2]]), new (class Box { constructor() { this.x = 1; } })()]) {
+    refuses(() => cloneFreeze(new Proxy(value, trap)), 'INPUT_OBJECT_INVALID');
+  }
+  assert.equal(listed, 0);
+  for (const [value, code] of [[() => {}, 'INPUT_VALUE_INVALID'], [NaN, 'INPUT_NUMBER_INVALID'],
+    [Object.defineProperty({}, 'x', { enumerable: true, get: () => 1 }), 'INPUT_PROPERTY_INVALID'],
+    [{ [Symbol('x')]: 1 }, 'INPUT_PROPERTY_INVALID'], [Object.defineProperty({}, 'x', { value: 1 }), 'INPUT_PROPERTY_INVALID'],
+    [Object.assign([1], { extra: true }), 'INPUT_ARRAY_INVALID'], [[1, , 3], 'INPUT_ARRAY_INVALID']]) {
+    refuses(() => cloneFreeze(value), code);
+  }
+  const report = await runWorkflow(makeTask(), { adapters: adapters({ checks: () => new Map() }) });
+  assert.equal(report.outcome, 'BLOCKED'); assert.equal(report.code, 'INPUT_OBJECT_INVALID');
+});
+
+test('cloneFreeze copies a shared reference once, keeps cycles refused and the depth limit exact', () => {
+  let listings = 0;
+  const shared = new Proxy({ answer: 42 }, { ownKeys(target) { listings += 1; return Reflect.ownKeys(target); } });
+  let dag = [shared];
+  for (let level = 0; level < 10; level += 1) dag = [dag, dag];
+  const copy = cloneFreeze(dag);
+  assert.equal(listings, 1);
+  assert.equal(copy[0], copy[1]);
+  assert.equal(Object.isFrozen(copy[0]), true);
+  let leaf = copy;
+  while (Array.isArray(leaf)) leaf = leaf.at(-1);
+  assert.deepEqual({ ...leaf }, { answer: 42 });
+
+  const loop = []; loop.push([loop]);
+  refuses(() => cloneFreeze(loop), 'INPUT_CYCLE');
+  const node = { name: 'node' }; node.children = [{ parent: node }];
+  refuses(() => cloneFreeze([node, node]), 'INPUT_CYCLE');
+
+  // A reused copy must be refused wherever an unshared copy would exceed 64 levels.
+  const chain = (inner, levels) => { let value = inner; for (let index = 0; index < levels; index += 1) value = [value]; return value; };
+  const result = value => { try { cloneFreeze(value); return 'ok'; } catch (error) { return error.code; } };
+  for (let levels = 50; levels <= 56; levels += 1) {
+    const expected = 1 + levels + 10 <= 64 ? 'ok' : 'INPUT_DEPTH_LIMIT';
+    const reused = chain('leaf', 10);
+    assert.equal(result([reused, chain(reused, levels)]), expected, `shared ${levels}`);
+    assert.equal(result([chain('leaf', 10), chain(chain('leaf', 10), levels)]), expected, `unshared ${levels}`);
   }
 });

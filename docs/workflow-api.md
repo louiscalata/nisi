@@ -39,10 +39,22 @@ each must have a matching digest entry. Paths are case-sensitive logical names.
 The host must resolve them under its project root using its platform's rules.
 They do not grant filesystem access or prevent another process writing files.
 
-The task and candidate are copied and frozen. Accessor properties, symbol
-properties, cycles and non-data objects are refused. The complete normalized
-task is hashed under `nisi/workflow-task/v1`. Criteria, scope and policy are
-therefore part of the evidence identity.
+The task and candidate are copied and frozen. Only arrays and plain objects
+(prototype `Object.prototype` or `null`) are copied; any other object, such as
+a Buffer, typed array, Map or class instance, is refused as
+`INPUT_OBJECT_INVALID` before its properties are read. Also refused are
+accessor or symbol properties and non-enumerable object properties
+(`INPUT_PROPERTY_INVALID`), sparse or extended arrays (`INPUT_ARRAY_INVALID`),
+non-finite numbers (`INPUT_NUMBER_INVALID`), functions and other non-data
+values (`INPUT_VALUE_INVALID`), cycles (`INPUT_CYCLE`) and nesting deeper than
+64 levels (`INPUT_DEPTH_LIMIT`). An object reached more than once is copied
+once and its frozen copy shared; the depth limit still applies to every path
+through it. Adapter results are copied under the same rules before they are
+validated; a stage result that cannot be copied blocks the run with that code
+(a check returning a Map gives `INPUT_OBJECT_INVALID`).
+
+The complete normalized task is hashed under `nisi/workflow-task/v1`. Criteria,
+scope and policy are therefore part of the evidence identity.
 
 ## Candidate
 
