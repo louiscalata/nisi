@@ -21,7 +21,7 @@ const exact = (value, keys, code) => {
 const emptyReport = (code, task = null) => freezeReport({
   schemaVersion: 1, runId: null, taskId: task?.taskId ?? null,
   taskFingerprint: task ? fingerprintTask(task) : null, mode: task?.mode ?? null,
-  outcome: 'BLOCKED', workflowOutcome: 'BLOCKED', code, candidate: null,
+  outcome: 'BLOCKED', workflowOutcome: 'BLOCKED', code, workflowCode: code, candidate: null,
   candidateFingerprint: null, repairAttempts: 0, stages: [],
   reportStored: false, reportStoreCode: null, storedReportSha256: null, reportStoreEvidence: null,
 });
@@ -280,7 +280,7 @@ export async function runWorkflow(taskInput, options = {}) {
 
   const report = {
     schemaVersion: 1, runId, taskId: task.taskId, taskFingerprint, mode: task.mode,
-    outcome, workflowOutcome: outcome, code, candidate, candidateFingerprint: candidate?.fingerprint ?? null,
+    outcome, workflowOutcome: outcome, code, workflowCode: code, candidate, candidateFingerprint: candidate?.fingerprint ?? null,
     repairAttempts, stages, reportStored: false,
     reportStoreCode: storeInvalid ? 'REPORT_STORE_UNAVAILABLE' : null, storedReportSha256: null, reportStoreEvidence: null,
   };

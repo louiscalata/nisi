@@ -32,6 +32,10 @@ function passReview(binding, reviewerId) {
   return { status: 'PASS', evidence: { ...binding, reviewerId, findings: [], summary: 'accepted', reason: '' } };
 }
 
+function failTests(failures = [{ code: 'X', message: 'x' }], reason = 'failed') {
+  return binding => ({ status: 'FAIL', evidence: { ...binding, assertionsExecuted: 2, assertionsPassed: 1, failures, reason } });
+}
+
 function adapters({ authorId = 'author.one', source = BASE_TEXT, events = [], mutate = null,
   checks = passChecks, tests = passTests, review = passReview, repair = null } = {}) {
   const author = {
@@ -60,6 +64,7 @@ test('normal edit mode produces a bound completed report', async () => {
   assert.equal(report.outcome, 'COMPLETED');
   assert.equal(report.workflowOutcome, 'COMPLETED');
   assert.equal(report.code, null);
+  assert.equal(report.workflowCode, null);
   assert.match(report.runId, /^[0-9a-f-]{36}$/);
   assert.match(report.taskFingerprint, /^[0-9a-f]{64}$/);
   assert.deepEqual(report.stages.map(stage => stage.stage), ['intake', 'authorizeContext', 'draft', 'staticChecks', 'tests', 'review']);
@@ -461,4 +466,24 @@ test('the reviewer plan, author and adapter IDs are read once and the validated 
   const authored = await runWorkflow(makeTask(), { adapters: swapped });
   assert.equal(authored.outcome, 'COMPLETED');
   assert.equal(authorReads, 1);
+});
+
+test('workflowCode keeps the workflow code when storage changes the outcome and code', async () => {
+  const task = makeTask(); task.policy.repairBudget = 0; task.policy.requireReportStore = true;
+  const unavailable = { store: ({ report, reportSha256, binding }) => ({ status: 'UNAVAILABLE', evidence: { ...binding, outcome: report.outcome, reportSha256 } }) };
+  const stored = await runWorkflow(task, { adapters: adapters({ tests: failTests() }), reportStore: unavailable });
+  assert.deepEqual([stored.outcome, stored.code, stored.workflowOutcome, stored.workflowCode, stored.reportStoreCode],
+    ['BLOCKED', 'REPORT_STORE_UNAVAILABLE', 'FAILED', 'TESTS_FAILED', 'REPORT_STORE_UNAVAILABLE']);
+  const controller = new AbortController();
+  const cancelled = await runWorkflow(task, { adapters: adapters({ tests: failTests() }), signal: controller.signal,
+    reportStore: { store: () => { controller.abort(); return null; } } });
+  assert.deepEqual([cancelled.outcome, cancelled.code, cancelled.workflowOutcome, cancelled.workflowCode],
+    ['CANCELLED', 'ABORTED', 'FAILED', 'TESTS_FAILED']);
+  let preliminary;
+  const optional = makeTask(); optional.policy.repairBudget = 0;
+  const kept = await runWorkflow(optional, { adapters: adapters({ tests: failTests() }), reportStore: { store: ({ report, reportSha256, binding }) => {
+    preliminary = report;
+    return { status: 'PASS', evidence: { ...binding, outcome: report.outcome, reportSha256 } };
+  } } });
+  assert.deepEqual([kept.outcome, kept.code, kept.workflowCode, preliminary.workflowCode], ['FAILED', 'TESTS_FAILED', 'TESTS_FAILED', 'TESTS_FAILED']);
 });

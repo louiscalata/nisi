@@ -194,9 +194,11 @@ cooperate with cancellation and clean up their own processes and requests.
 ## Run report and storage
 
 The frozen report includes task/run identity, mode, final candidate, stage
-records, repair-attempt count, `outcome`, `code`, `workflowOutcome`, and storage
-fields. A setup refusal after a valid task retains task identity; invalid tasks
-have null identity. Setup refusals do not invoke adapters or the store.
+records, repair-attempt count, `outcome`, `code`, `workflowOutcome`,
+`workflowCode`, and storage fields. A setup refusal after a valid task retains
+task identity; invalid tasks have null identity. Setup refusals do not invoke
+adapters or the store; a missing required store is refused as
+`REPORT_STORE_REQUIRED`.
 
 An optional `store({ report, reportSha256, binding, signal })` receives the frozen
 **preliminary** report. The digest uses `nisi/run-report/v1` and the engine's
@@ -213,8 +215,14 @@ report that adds the storage result. The engine trusts that acknowledgement;
 it does not independently prove durability or retention. The example performs
 an actual write, file sync and read-back digest check.
 
-`workflowOutcome` preserves the outcome before storage. Ordinary optional-store
-failures leave `outcome` unchanged and set `reportStoreCode`. Required-store
-failures make it BLOCKED. Cancellation or expiry during either kind of storage
-produces CANCELLED or TIMED_OUT. A missing required store blocks before any work.
+`workflowOutcome` and `workflowCode` preserve the outcome and code from before
+storage; they are the values the store's preliminary report carries as
+`outcome` and `code`. Ordinary optional-store failures leave `outcome` and
+`code` unchanged and set `reportStoreCode`. Required-store failures make
+`outcome` BLOCKED and `code` the storage code. Cancellation or expiry during
+either kind of storage produces CANCELLED or TIMED_OUT with `code` ABORTED or
+DEADLINE_EXCEEDED. For example, failing tests with a required store that
+reports UNAVAILABLE give `outcome` BLOCKED and `code`
+REPORT_STORE_UNAVAILABLE, while `workflowOutcome` stays FAILED and
+`workflowCode` TESTS_FAILED. A missing required store blocks before any work.
 COMPLETED is not a claim of universal correctness or permission to apply or ship.
