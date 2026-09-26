@@ -130,31 +130,53 @@ const INSTRUCTIONS = Object.freeze({
 function responseFormat(payload, operation) {
   const object = properties => ({type: 'object', properties, required: Object.keys(properties), additionalProperties: false});
   const note = {type: 'string', minLength: 1, maxLength: 4096};
+  // A protected file cannot change, so its path is offered only when every allowed path is protected.
+  const writable = payload.task.allowedFiles.filter(path => !(payload.task.protectedFiles ?? []).includes(path));
   const candidate = object({files: {type: 'array', minItems: 1, maxItems: 256, items: object({
-    path: {type: 'string', enum: payload.task.allowedFiles}, content: {type: 'string'},
+    path: {type: 'string', enum: writable.length ? writable : payload.task.allowedFiles}, content: {type: 'string'},
   })}});
+  // Finding bounds mirror validateFindings in workflow/contracts.mjs.
   const schema = operation === 'review'
-    ? object({findings: {type: 'array', maxItems: 256, items: object({code: {type: 'string'}, message: {type: 'string'}})}, summary: note})
+    ? object({findings: {type: 'array', maxItems: 256, items: object({code: {type: 'string', minLength: 1, maxLength: 128},
+      message: {type: 'string', minLength: 1, maxLength: 2048}})}, summary: note})
     : operation === 'repair'
       ? object({status: {type: 'string', enum: ['REPAIRED', 'NO_CHANGE']}, candidate: {anyOf: [candidate, {type: 'null'}]}, note})
       : object({candidate, note});
   return {type: 'json_schema', json_schema: {name: `nisi_${operation}`, strict: true, schema}};
 }
 
+// Provider token counts, or undefined when present but malformed; absent or null usage is null.
+function tokenUsage(value) {
+  if (value === undefined || value === null) return null;
+  if (!isRecord(value)) return undefined;
+  const {prompt_tokens: promptTokens, completion_tokens: completionTokens, total_tokens: totalTokens} = value;
+  return [promptTokens, completionTokens, totalTokens].every(count => Number.isSafeInteger(count) && count >= 0) &&
+    promptTokens + completionTokens === totalTokens ? {promptTokens, completionTokens, totalTokens} : undefined;
+}
+
 async function call(state, payload, operation, receipts, transform) {
   if (typeof state.fetch !== 'function') fail('LOCAL_CHAT_UNAVAILABLE');
   const controller = new AbortController();
   const started = performance.now();
-  let stopCode = null, requestSha256 = null;
+  const binding = isRecord(payload) ? payload.binding : undefined;
+  // Response facts are kept as soon as they are known, so a failure receipt retains them.
+  let stopCode = null, requestSha256 = null, httpStatus = null, responseSha256 = null, contentSha256 = null, reportedModel = null, usage = null;
   const stop = code => { if (stopCode === null) { stopCode = code; controller.abort(); } };
+  const metadata = () => ({schemaVersion: 1, operation, adapterId: state.id,
+    requestedModel: state.model, runId: binding?.runId ?? null,
+    taskFingerprint: binding?.taskFingerprint ?? null, attempt: binding?.attempt ?? null,
+    inputCandidateFingerprint: binding?.candidateFingerprint ?? null, requestedMaxOutputTokens: state.maxOutputTokens,
+    requestSha256, elapsedMs: Math.round(performance.now() - started)});
+  const record = (status, extra, fingerprint = null) => receipts.push(cloneFreeze({...metadata(), status, ...extra, reportedModel,
+    candidateFingerprint: fingerprint, resultCandidateFingerprint: fingerprint, responseSha256, contentSha256, usage, httpStatus}));
+  // Refuse a malformed call before any timer or listener exists.
+  if (!isRecord(payload) || !isRecord(payload.task) || !Array.isArray(payload.task.allowedFiles) ||
+      !(payload.task.protectedFiles === undefined || Array.isArray(payload.task.protectedFiles))) {
+    record('UNAVAILABLE', {code: 'LOCAL_CHAT_PAYLOAD_INVALID'}); fail('LOCAL_CHAT_PAYLOAD_INVALID');
+  }
   const timer = setTimeout(() => stop('LOCAL_CHAT_TIMEOUT'), state.timeoutMs);
   const upstream = payload.signal;
   const abort = () => stop('ABORTED');
-  const metadata = () => ({schemaVersion: 1, operation, adapterId: state.id,
-    requestedModel: state.model, runId: payload.binding?.runId ?? null,
-    taskFingerprint: payload.binding?.taskFingerprint ?? null, attempt: payload.binding?.attempt ?? null,
-    inputCandidateFingerprint: payload.binding?.candidateFingerprint ?? null, requestedMaxOutputTokens: state.maxOutputTokens,
-    requestSha256, elapsedMs: Math.round(performance.now() - started)});
   try {
     if (upstream !== undefined && !(upstream instanceof AbortSignal)) fail('LOCAL_CHAT_SIGNAL_INVALID');
     upstream?.addEventListener('abort', abort, { once: true });
@@ -170,6 +192,7 @@ async function call(state, payload, operation, receipts, transform) {
       const response = await state.fetch(state.endpoint, { method: 'POST', redirect: 'error', signal: controller.signal,
       headers: { 'content-type': 'application/json', accept: 'application/json' },
       body });
+      if (Number.isSafeInteger(response?.status) && response.status >= 100 && response.status <= 999) httpStatus = response.status;
       if (controller.signal.aborted) { await response.body?.cancel(); fail(stopCode); }
       return readBounded(response, state.maxResponseBytes, controller.signal);
     };
@@ -181,30 +204,29 @@ async function call(state, payload, operation, receipts, transform) {
     let raw;
     try { raw = await Promise.race([request(), interrupted]); }
     finally { controller.signal.removeEventListener('abort', onStop); }
+    responseSha256 = sha256Text(raw);
     const envelope = strictJSON(raw);
-    if (!Array.isArray(envelope.choices) || envelope.choices.length !== 1) fail('LOCAL_CHAT_CHOICES_INVALID');
+    const reportedUsage = isRecord(envelope) ? tokenUsage(envelope.usage) : null;
+    if (typeof envelope?.model === 'string' && envelope.model.length <= 256) reportedModel = envelope.model;
+    usage = reportedUsage ?? null;
+    if (!isRecord(envelope) || !Array.isArray(envelope.choices) || envelope.choices.length !== 1 || !isRecord(envelope.choices[0])) fail('LOCAL_CHAT_CHOICES_INVALID');
     const choice = envelope.choices[0];
+    const message = isRecord(choice.message) ? choice.message : {};
+    const content = message.content;
+    if (typeof content === 'string') contentSha256 = sha256Text(content);
     if (choice.finish_reason !== 'stop') fail('LOCAL_CHAT_FINISH_REFUSED');
     if (envelope.model !== state.model) fail('LOCAL_CHAT_MODEL_MISMATCH');
-    const content = choice.message?.content;
-    if (choice.message?.tool_calls?.length || choice.message?.refusal) fail('LOCAL_CHAT_FINISH_REFUSED');
+    const toolCalls = message.tool_calls;
+    if (!(toolCalls === undefined || toolCalls === null || (Array.isArray(toolCalls) && toolCalls.length === 0)) || message.refusal) fail('LOCAL_CHAT_FINISH_REFUSED');
     if (typeof content !== 'string' || content.trim() === '') fail('LOCAL_CHAT_EMPTY_RESPONSE');
     const result = cloneFreeze(transform(strictJSON(content)));
-    let usage = null;
-    if (envelope.usage !== undefined) {
-      const {prompt_tokens: promptTokens, completion_tokens: completionTokens, total_tokens: totalTokens} = envelope.usage;
-      if (![promptTokens, completionTokens, totalTokens].every(value => Number.isSafeInteger(value) && value >= 0) ||
-          promptTokens + completionTokens !== totalTokens) fail('LOCAL_CHAT_USAGE_INVALID');
-      usage = {promptTokens, completionTokens, totalTokens};
-    }
+    if (reportedUsage === undefined) fail('LOCAL_CHAT_USAGE_INVALID');
     if (stopCode || performance.now() - started >= state.timeoutMs) fail(stopCode ?? 'LOCAL_CHAT_TIMEOUT');
-    receipts.push(cloneFreeze({...metadata(), status: 'RESPONSE_VALIDATED', reportedModel: envelope.model,
-      candidateFingerprint: result.evidence.candidateFingerprint, resultCandidateFingerprint: result.evidence.candidateFingerprint,
-      responseSha256: sha256Text(raw), contentSha256: sha256Text(content), usage}));
+    record('RESPONSE_VALIDATED', {}, result.evidence.candidateFingerprint);
     return result;
   } catch (error) {
     const code = stopCode ?? (typeof error?.code === 'string' ? error.code : 'LOCAL_CHAT_UNAVAILABLE');
-    receipts.push(cloneFreeze({...metadata(), status: 'UNAVAILABLE', code, reportedModel: null, resultCandidateFingerprint: null, usage: null}));
+    record('UNAVAILABLE', {code});
     fail(code);
   } finally { clearTimeout(timer); try { upstream?.removeEventListener('abort', abort); } catch {} }
 }
