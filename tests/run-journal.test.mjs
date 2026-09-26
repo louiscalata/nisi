@@ -12,6 +12,7 @@ const canonical = value => Array.isArray(value) ? '[' + value.map(canonical).joi
 
 const fingerprint = value => hash('nisi-run-journal/input/v1\n' + canonical(value));
 const parsed = journal => journal.serialize().trimEnd().split('\n').map(JSON.parse);
+const nest = depth => { let value = 'leaf'; for (let i = 0; i < depth; i++) value = [value]; return value; };
 // Rebuild the chain and footer after editing parsed lines, as anyone able to rewrite the file can.
 function rehash(lines) {
   let previousHash = hash('nisi-run-journal/header/v1\n' + canonical(lines[0]));
@@ -308,6 +309,21 @@ test('every configured redaction path must exist in each entry, or append throws
   assert.deepEqual(journal.list(100).map(row => [row.entry.id, row.entry.payload]), [['target', { secret: '[REDACTED]' }], ['revoker', { secret: '[REDACTED]' }]]);
 });
 
+test('entries and configs nested past 256 objects and arrays are refused, and such a journal never reopens', () => {
+  const journal = createRunJournal(config());
+  assert.deepEqual(journal.append(entry('deepest', { payload: nest(255) }), 100), { status: 'APPENDED', id: 'deepest' });
+  for (const depth of [256, 3000]) assert.throws(() => journal.append(entry('too-deep', { payload: nest(depth) }), 100), { code: 'ENTRY' });
+  assert.deepEqual(journal.list(100).map(row => row.entry.id), ['deepest']);
+  assert.equal(reopen(journal.serialize()).report.status, 'COMPLETE');
+  assert.throws(() => createRunJournal(config({ redactPaths: nest(256) })), { code: 'CONFIG' });
+  const lines = parsed(journal);
+  lines[1].record.entry.payload = nest(256);
+  lines[1].record.fingerprint = fingerprint(lines[1].record.entry);
+  const recovered = reopen(rehash(lines));
+  assert.deepEqual(recovered.report, invalid([], 2));
+  assert.deepEqual(recovered.journal.list(100), []);
+});
+
 test('reopen reports truncation, trailing data, a bad footer and a damaged header with exact reasons', () => {
   const journal = createRunJournal(config());
   assert.equal(journal.append(entry(), 100).status, 'APPENDED');
@@ -355,6 +371,30 @@ test('rehashed journals reopen INVALID for rule violations that a recomputed cha
     assert.deepEqual(recovered.report, invalid(recoveredIds, rejectedLine));
     assert.deepEqual(recovered.journal.list(1100).map(row => row.entry.id), recoveredIds);
   }
+});
+
+test('a retired record must be expired at the header time or followed by maxEntries records', () => {
+  const journal = createRunJournal(config({ maxEntries: 2 }));
+  for (const id of ['first', 'second']) assert.equal(journal.append(entry(id), 100).status, 'APPENDED');
+  // Marking an unexpired, under-cap entry retired cannot swap in another fingerprint.
+  const failed = entry('first', { state: 'FAILED' });
+  const lines = parsed(journal);
+  lines[1].record = { entry: { ...lines[1].record.entry, payload: null }, fingerprint: fingerprint(failed), retained: false };
+  const crafted = reopen(rehash(lines));
+  assert.deepEqual(crafted.report, invalid([], 2));
+  assert.deepEqual(crafted.journal.list(100), []);
+  assert.deepEqual(crafted.journal.append(failed, 100), { status: 'REFUSED', id: 'first', reason: 'SEALED' });
+
+  // A third append retires 'first' with exactly maxEntries records after it; 'second' cannot be retired too.
+  assert.equal(journal.append(entry('third'), 100).status, 'APPENDED');
+  const capped = reopen(journal.serialize());
+  assert.equal(capped.report.status, 'COMPLETE');
+  assert.deepEqual(capped.journal.list(100).map(row => row.retained), [false, true, true]);
+  const both = parsed(journal);
+  both[2].record = { ...both[2].record, entry: { ...both[2].record.entry, payload: null }, retained: false };
+  const early = reopen(rehash(both));
+  assert.deepEqual(early.report, invalid(['first'], 3));
+  assert.deepEqual(early.journal.list(100).map(row => row.entry.id), ['first']);
 });
 
 test('the header time is part of the chain root, so a later list or retain changes every hash', () => {
