@@ -228,9 +228,9 @@ archive predate this source update.
 
 ### Token use in one local pilot
 
-The [source-checkout benchmarks](benchmarks/value/README.md) exercise workflow
+The [source-checkout benchmarks](https://github.com/louiscalata/nisi/blob/main/benchmarks/value/README.md) exercise workflow
 controls, mocked inference interfaces, and orchestration overhead. A separate
-[exploratory local pilot](benchmarks/value/results/README.md) used one already
+[exploratory local pilot](https://github.com/louiscalata/nisi/blob/main/benchmarks/value/results/README.md) used one already
 loaded Gemma model through Nisi's released loopback chat adapter. A match
 required exactly one `answer.json` file whose JSON object had only an `answer`
 key holding the expected value. All six one-shot outputs that failed this
@@ -248,17 +248,17 @@ general accuracy estimate.
 | Handwritten checked loop | 12 / 12 | 18 (6) | 8,295 |
 | Nisi workflow | 12 / 12 | 18 (6) | 8,291 |
 
-![Required output-contract matches across 12 tasks: one-shot 6 matches and 6 correct values without the required wrapper; checked loop and Nisi 12 matches each](benchmarks/value/charts/exact-match.svg)
+![Required output-contract matches across 12 tasks: one-shot 6 matches and 6 correct values without the required wrapper; checked loop and Nisi 12 matches each](https://raw.githubusercontent.com/louiscalata/nisi/main/benchmarks/value/charts/exact-match.svg)
 
-![Model work across 12 tasks: one-shot 12 calls and 4,803 reported tokens; checked loop 18 calls and 8,295 tokens; Nisi 18 calls and 8,291 tokens](benchmarks/value/charts/calls-and-tokens.svg)
+![Model work across 12 tasks: one-shot 12 calls and 4,803 reported tokens; checked loop 18 calls and 8,295 tokens; Nisi 18 calls and 8,291 tokens](https://raw.githubusercontent.com/louiscalata/nisi/main/benchmarks/value/charts/calls-and-tokens.svg)
 
 The direct arm had no repair opportunity, while each checked arm could repair
 once. These graphs show one local integration and the extra model work used by
 checking and repair; they do not establish that Nisi outperforms the checked
 loop or works with arbitrary inference systems. See the
-[contract matches by task family](benchmarks/value/charts/task-families.svg),
-[raw candidate and receipt rows](benchmarks/value/results/pilot-local-gemma-20260924.json),
-and [study plan](benchmarks/value/LIVE-STUDY.md) for scope and next tests.
+[contract matches by task family](https://github.com/louiscalata/nisi/blob/main/benchmarks/value/charts/task-families.svg),
+[raw candidate and receipt rows](https://github.com/louiscalata/nisi/blob/main/benchmarks/value/results/pilot-local-gemma-20260924.json),
+and [study plan](https://github.com/louiscalata/nisi/blob/main/benchmarks/value/LIVE-STUDY.md) for scope and next tests.
 
 ### Package footprint
 
@@ -271,9 +271,9 @@ Package size is not the amount of context sent to a model and cannot establish
 token savings. In the pilot above, Nisi reported just four fewer tokens than
 the equally successful checked loop (0.048%), which is not a meaningful saving.
 
-![Compressed package archive size on a logarithmic scale: Nisi v0.2.0 42,439 bytes; LangGraph.js 1.4.17 1,001,919 bytes; Mastra core 1.69.0 14,587,291 bytes. Package size is not model-token use.](benchmarks/value/charts/package-footprint.svg)
+![Compressed package archive size on a logarithmic scale: Nisi v0.2.0 42,439 bytes; LangGraph.js 1.4.17 1,001,919 bytes; Mastra core 1.69.0 14,587,291 bytes. Package size is not model-token use.](https://raw.githubusercontent.com/louiscalata/nisi/main/benchmarks/value/charts/package-footprint.svg)
 
-See the [measurement method and product comparison](benchmarks/value/COMPARISON.md)
+See the [measurement method and product comparison](https://github.com/louiscalata/nisi/blob/main/benchmarks/value/COMPARISON.md)
 for pinned sources, capabilities, and the paired study needed before any token
 savings claim.
 
