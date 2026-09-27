@@ -27,6 +27,11 @@ const KEY_EXPORTS = {
   './history/run-journal-store': ['writeSerializedJournal', 'readSerializedJournal'],
 };
 const TEXT_FILE = /(?:\.(?:[cm]?js|json|md)|^LICENSE)$/;
+// Children run without Node's environment proxy, as in tests/cli.test.mjs: the
+// closed-port run must reach the closed port itself, not a proxy, and Node 22
+// would add a proxy warning to the stderr the preserved-symlink run checks.
+const childEnv = { ...process.env };
+delete childEnv.NODE_USE_ENV_PROXY;
 
 // Regular files of the gzip-compressed ustar archive, keyed by package path.
 // An entry this reader cannot name (a PAX long path, say) fails the comparison
@@ -73,6 +78,7 @@ fs.mkdirSync(consumerDir);
 function npm(args, cwd, label) {
   const result = spawnSync(process.execPath, [npmCli, ...args], {
     cwd,
+    env: childEnv,
     encoding: 'utf8',
     timeout: 90_000,
     maxBuffer: 1024 * 1024,
@@ -147,6 +153,7 @@ try {
   if (preservedLinkCheck === 'PASS') {
     const preserved = spawnSync(process.execPath, ['--preserve-symlinks-main', preservedLink, '--version'], {
       cwd: consumerDir,
+      env: childEnv,
       encoding: 'utf8',
       timeout: 15_000,
       maxBuffer: 128 * 1024,
@@ -156,6 +163,7 @@ try {
     assert.equal(preserved.stderr, '');
     const preservedDemo = spawnSync(process.execPath, ['--preserve-symlinks-main', preservedLink, 'demo'], {
       cwd: consumerDir,
+      env: childEnv,
       encoding: 'utf8',
       timeout: 15_000,
       maxBuffer: 128 * 1024,
@@ -198,7 +206,7 @@ try {
 for (const specifier of ${JSON.stringify(specifiers)}) {
   names[specifier] = Object.keys(await import(specifier, specifier.endsWith('.json') ? { with: { type: 'json' } } : undefined)).sort();
 }
-console.log(JSON.stringify(names));`], { cwd: consumerDir, encoding: 'utf8', timeout: 30_000, maxBuffer: 1024 * 1024 });
+console.log(JSON.stringify(names));`], { cwd: consumerDir, env: childEnv, encoding: 'utf8', timeout: 30_000, maxBuffer: 1024 * 1024 });
   assert.equal(probe.status, 0, probe.stderr || probe.stdout);
   const installedNames = JSON.parse(probe.stdout);
   for (const [key, target] of Object.entries(packageJson.exports)) {
