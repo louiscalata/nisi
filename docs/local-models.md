@@ -7,8 +7,14 @@ with structured response validation on Nisi's side. It has no runtime package
 dependencies. A model server and suitable models must already be available.
 The endpoint and model must support JSON-schema structured output. Nisi requests
 a closed schema for each role using `response_format`, plus temperature zero;
-it still validates the returned bytes. It does not retry with an unconstrained
-response when the server refuses that format. See
+it still validates the returned bytes. Candidate paths in the schema exclude the
+task's protected files (unless every allowed file is protected), and finding
+codes and messages carry the engine's limits of 1–128 and 1–2,048 UTF-16 code
+units. JSON Schema counts code points, so text outside the Basic Multilingual
+Plane, or blank text, can satisfy the schema and still be refused as
+`LOCAL_CHAT_FINDING_INVALID`.
+It does not retry with an unconstrained response when the server refuses that
+format. See
 [LM Studio's structured-output contract](https://lmstudio.ai/docs/developer/openai-compat/structured-output).
 
 ```js
@@ -55,9 +61,27 @@ references are captured at construction.
 
 The destination must resolve through URL parsing to literal IPv4 or IPv6
 loopback (`127.0.0.1` or `[::1]`) over HTTP. Hostname aliases, credentials, queries,
-fragments, HTTPS and non-loopback addresses are refused. Redirects are errors.
+fragments, HTTPS and non-loopback addresses are refused as
+`LOCAL_CHAT_DESTINATION_REFUSED`; so are `0.0.0.0`, `127.0.0.2` and
+`[::ffff:127.0.0.1]`. An unparsable endpoint, or one longer than 2,048
+characters, is `LOCAL_CHAT_ENDPOINT_INVALID`. Forms that the URL parser rewrites
+to `127.0.0.1`, such as `http://2130706433/` or a trailing dot, are accepted and
+requested as that address. Redirects are errors.
 No tools or streaming generation are requested. Response-body reads are bounded
 and cancelled on overflow or abort. First-observed timeout/cancellation wins.
+
+Without an injected `fetch`, each request uses `node:http` with a private
+connection agent, not the global `fetch`, its dispatcher or `http.globalAgent`.
+Node's environment proxy (`NODE_USE_ENV_PROXY=1` or `--use-env-proxy` with
+`HTTP_PROXY`) and a host-installed dispatcher therefore do not reroute it. This
+transport asks for an uncompressed response, never follows redirects and has no
+timeout of its own, so `timeoutMs`, the payload's `signal` and the engine deadline
+bound the whole call across the full 1–86,400,000 ms range. A status outside
+2xx, or 204 or 205, is `LOCAL_CHAT_RESPONSE_UNAVAILABLE`; a refused, reset or
+truncated connection is `LOCAL_CHAT_UNAVAILABLE`. An injected `fetch` receives
+`redirect: "error"` and brings its own routing, proxy and timeout behavior. Node's
+global `fetch`, for example, follows its dispatcher's proxy settings and default
+300-second response-header timeout.
 
 This restricts the client's destination, not the server's behavior. Nisi does
 not authenticate the listening process or independently establish that it runs
@@ -84,20 +108,46 @@ string, no requested tools or refusal, and a reported model name exactly matchin
 the configured name. Malformed or truncated results are unavailable, never a
 passing review. The engine still trusts the adapter and the endpoint's reports.
 
+Each refusal has a fixed code. An envelope or choice that is not an object, or
+not exactly one choice, is `LOCAL_CHAT_CHOICES_INVALID`. Another finish reason, a
+`tool_calls` value other than absent, `null` or `[]`, or a truthy `refusal` is
+`LOCAL_CHAT_FINISH_REFUSED`. A different reported model is
+`LOCAL_CHAT_MODEL_MISMATCH`. A missing or non-object message, or blank content, is
+`LOCAL_CHAT_EMPTY_RESPONSE`. Usage that is present but not an object whose
+`prompt_tokens` and `completion_tokens` are non-negative integers summing to
+`total_tokens` is `LOCAL_CHAT_USAGE_INVALID`; omitted or `null` usage is accepted
+as missing. A call whose payload is not an object with a `task` object is
+refused as `LOCAL_CHAT_PAYLOAD_INVALID` before any request or timer starts. The
+adapter does not otherwise check the task, which the engine supplies already
+validated; only an `allowedFiles` array is filtered, and only by a
+`protectedFiles` array.
+
 ## Receipts and measured scope
 
-`author.receipts()` and `reviewer.receipts()` return frozen snapshots containing
-operation, adapter ID, requested/reported model, run/task/attempt identity,
-input and result candidate fingerprints, request/response/content digests, elapsed time,
-the requested output-token cap,
-and provider-reported token counts when supplied. Missing usage is `null`, not
-zero. Failures retain an UNAVAILABLE receipt and a specific code. The generic
-engine reports a rejected adapter promise as ADAPTER_EXCEPTION.
+`author.receipts()` and `reviewer.receipts()` return frozen snapshots. Every
+receipt has `schemaVersion`, `operation`, `adapterId`, `requestedModel`, `runId`,
+`taskFingerprint`, `attempt`, `inputCandidateFingerprint`,
+`requestedMaxOutputTokens`, `requestSha256`, `elapsedMs`, `status`,
+`reportedModel`, `candidateFingerprint`, `resultCandidateFingerprint`,
+`responseSha256`, `contentSha256`, `usage` and `httpStatus`. `usage` holds
+provider-reported `promptTokens`, `completionTokens` and `totalTokens`; missing
+usage is `null`, not zero. A validated call has status `RESPONSE_VALIDATED`.
+A failure has status `UNAVAILABLE`, a specific `code` and null candidate
+fingerprints (`ABORTED` when the payload's `signal`, such as the engine's
+deadline or a cancellation, stopped the call; `LOCAL_CHAT_TIMEOUT` when the
+adapter's own `timeoutMs` did), and keeps whatever the endpoint had already supplied: the HTTP
+status of a response the transport returned (an integer from 100 to 999; the
+default transport returns only statuses 200–599, so any other status leaves
+`httpStatus` `null`), the response and content digests, a reported
+model name of at most 256 characters, and usage that passes validation. Anything
+not yet known is `null`. The generic engine reports a rejected adapter promise
+as ADAPTER_EXCEPTION.
 
 Receipts remain in adapter memory; the host may store them with the run report.
-They contain hashes rather than copies of prompts or responses. The endpoint
-can misreport its model or usage; these records are not model attestation or
-independent billing measurements.
+Apart from the reported model name and token counts, they contain hashes rather
+than copies of prompts or responses. The endpoint can misreport its model or
+usage; these records are not model attestation or independent billing
+measurements.
 
 An earlier example run completed with Qwen as author, four real configuration
 assertions, and GPT-OSS as reviewer, before JSON-schema requests were added.

@@ -22,11 +22,17 @@ import { afmStubLaunches, registerAFMStub, restoreAFMStubLauncher } from './afm-
 
 test.after(restoreAFMStubLauncher);
 
+// Every scratch directory is removed after this file's tests; a locked file
+// (for example under a Windows scanner) must not fail the suite.
+const made = [];
+const scratch = prefix => { const dir = fs.mkdtempSync(path.join(os.tmpdir(), prefix)); made.push(dir); return dir; };
+test.after(() => { for (const dir of made) { try { fs.rmSync(dir, { recursive: true, force: true, maxRetries: 5 }); } catch {} } });
+
 const sha = b => createHash('sha256').update(b).digest('hex');
 const packet = Buffer.from('{"kind":"nisi-request-v1"}', 'utf8');
 
 function tempRoot() {
-  return fs.realpathSync(fs.mkdtempSync(path.join(os.tmpdir(), 'afm-content-')));
+  return fs.realpathSync(scratch('afm-content-'));
 }
 
 function grantBytes(scopeRoot, overrides = {}) {
@@ -52,7 +58,7 @@ function consent(scopeRoot, overrides) {
  *  JavaScript expression applied to the evidence object before it is emitted,
  *  which is how the negative cases forge dishonest evidence. */
 function stubProbe(mutate = '', { marker = null, extra = '', output = 'JSON.stringify(evidence)', register = true } = {}) {
-  const dir = fs.mkdtempSync(path.join(os.tmpdir(), 'afm-stub-'));
+  const dir = scratch('afm-stub-');
   const file = path.join(dir, 'stub');
   const body = `#!${process.execPath}
 const fs = require('fs'), crypto = require('crypto');
@@ -86,7 +92,7 @@ process.stdout.write(${output});
 }
 
 function childFailureProbe(script) {
-  const dir = fs.mkdtempSync(path.join(os.tmpdir(), 'afm-stub-'));
+  const dir = scratch('afm-stub-');
   const file = path.join(dir, 'stub');
   fs.writeFileSync(file, `#!${process.execPath}\nprocess.stdin.resume();\nprocess.stdin.on('end', () => { ${script} });\n`,
     { mode: 0o755 });
@@ -348,6 +354,108 @@ test('child failures are refused with their own causes, never as evidence', asyn
     assert.equal((await made.execute(packet, { taskId: 't.1' })).ok, false, cause);
     assert.equal(made.refusals()[0].cause, cause);
   }
+});
+
+test("the helper's own refusal code rides beside CHILD_EXIT_NONZERO, and nothing else from stderr does", async () => {
+  const root = tempRoot();
+  const file = write(root, 'a.json', '{}');
+  const codes = ['PLATFORM', 'MODEL_UNAVAILABLE', 'MODEL_REFUSED', 'STDIN_BYTES', 'STDIN_FRAMING',
+    'HEADER_INVALID', 'HEADER_BOUNDS', 'CONTENT_DIGEST_MISMATCH', 'CONTENT_NOT_UTF8'];
+  const cases = [
+    ...codes.map(code => [`process.stderr.write('${code}\\n'); process.exitCode = 65;`, code]),
+    // An unknown code, another exit status, a missing newline, a second line,
+    // extra bytes or silence leave only the exit status.
+    ["process.stderr.write('SOMETHING_ELSE\\n'); process.exitCode = 65;", null],
+    ["process.stderr.write('MODEL_UNAVAILABLE\\n'); process.exitCode = 3;", null],
+    ["process.stderr.write('MODEL_UNAVAILABLE'); process.exitCode = 65;", null],
+    ["process.stderr.write('MODEL_UNAVAILABLE\\nMODEL_REFUSED\\n'); process.exitCode = 65;", null],
+    ["process.stderr.write('MODEL_UNAVAILABLE\\n' + 'x'.repeat(100)); process.exitCode = 65;", null],
+    ['process.exitCode = 65;', null],
+  ];
+  const refusalDigest = sha(Buffer.from('nisi/content-refusal/v1\0CHILD_EXIT_NONZERO', 'utf8'));
+  for (const [script, helperCode] of cases) {
+    const { grant } = consent(root);
+    const made = build(childFailureProbe(script), grant, { 't.1': { filePath: file, kind: 'json' } });
+    const out = await made.execute(packet, { taskId: 't.1' });
+    assert.equal(out.code, 'AFM_PACKET_UNAVAILABLE', script);
+    assert.equal(out.payloadSha256, refusalDigest, script);
+    assert.deepEqual(made.refusals(),
+      [{ taskId: 't.1', cause: 'CHILD_EXIT_NONZERO', ...(helperCode ? { helperCode } : {}) }], script);
+  }
+});
+
+test('a missing helper binary is BINARY_UNREADABLE at construction and before any launch', async () => {
+  const root = tempRoot();
+  const { grant } = consent(root);
+  const stub = stubProbe();
+  const items = { 't.1': { filePath: write(root, 'a.json', '{}'), kind: 'json' } };
+  const unbuilt = path.join(stub.dir, 'not-built');
+  assert.equal(createAFMContentExecutor({ binary: unbuilt, binarySHA256: stub.sha, grant, items }).code,
+    'BINARY_UNREADABLE');
+  const made = build(stub, grant, items);
+  assert.equal(made.ok, true, made.code);
+  fs.rmSync(stub.file);
+  const out = await made.execute(packet, { taskId: 't.1' });
+  assert.equal(out.code, 'AFM_PACKET_UNAVAILABLE');
+  assert.equal(out.payloadSha256, sha(Buffer.from('nisi/content-refusal/v1\0BINARY_UNREADABLE', 'utf8')));
+  assert.deepEqual(made.refusals(), [{ taskId: 't.1', cause: 'BINARY_UNREADABLE' }]);
+  assert.deepEqual(made.readings(), []);
+});
+
+test('an unreadable helper binary is BINARY_UNREADABLE at construction and before any launch', async () => {
+  const root = tempRoot();
+  const { grant } = consent(root);
+  const marker = path.join(root, 'spawned.marker');
+  const stub = stubProbe('', { marker });
+  const items = { 't.1': { filePath: write(root, 'a.json', '{}'), kind: 'json' } };
+  // The file is there and lstat succeeds; only its read fails. A thrown EACCES
+  // stands in for a permission the suite, which may run as root, cannot withhold.
+  const original = fs.readFileSync;
+  const unreadable = function(target, ...args) {
+    if (target === stub.file) throw Object.assign(new Error(`EACCES: permission denied, open '${target}'`), { code: 'EACCES' });
+    return original.call(fs, target, ...args);
+  };
+  fs.readFileSync = unreadable;
+  try {
+    assert.equal(createAFMContentExecutor({ binary: stub.file, binarySHA256: stub.sha, grant, items }).code,
+      'BINARY_UNREADABLE');
+  } finally { fs.readFileSync = original; }
+  const made = build(stub, grant, items);
+  assert.equal(made.ok, true, made.code);
+  let out;
+  fs.readFileSync = unreadable;
+  try { out = await made.execute(packet, { taskId: 't.1' }); } finally { fs.readFileSync = original; }
+  assert.equal(out.code, 'AFM_PACKET_UNAVAILABLE');
+  assert.equal(out.payloadSha256, sha(Buffer.from('nisi/content-refusal/v1\0BINARY_UNREADABLE', 'utf8')));
+  assert.deepEqual(made.refusals(), [{ taskId: 't.1', cause: 'BINARY_UNREADABLE' }]);
+  assert.deepEqual(made.readings(), []);
+  assert.equal(fs.existsSync(marker), false);
+});
+
+test('helper stderr is drained whole, and no more than 64 bytes of it are ever copied', async () => {
+  const root = tempRoot();
+  const file = write(root, 'a.json', '{}');
+  const { grant } = consent(root);
+  const made = build(childFailureProbe("process.stderr.write('x'.repeat(1 << 20)); process.exitCode = 65;"), grant,
+    { 't.1': { filePath: file, kind: 'json' } });
+  // A mebibyte overfills the pipe and the parent's stream buffer, so a child
+  // whose stderr stopped being read would block until the deadline. Each copy
+  // of stderr appends part of the child's 'x' run to what is kept; no other
+  // concatenation in this run ends with a run of 'x' alone.
+  const original = Buffer.concat, copied = [];
+  Buffer.concat = function(list, ...rest) {
+    const tail = list?.[1];
+    if (list?.length === 2 && tail?.length > 0 && tail.every(byte => byte === 0x78)) {
+      copied.push(list[0].length + tail.length);
+    }
+    return original.call(this, list, ...rest);
+  };
+  let out;
+  try { out = await made.execute(packet, { taskId: 't.1' }); } finally { Buffer.concat = original; }
+  assert.equal(out.code, 'AFM_PACKET_UNAVAILABLE');
+  assert.deepEqual(made.refusals(), [{ taskId: 't.1', cause: 'CHILD_EXIT_NONZERO' }]);
+  assert.ok(copied.length > 0, 'stderr was never read');
+  assert.equal(Math.max(...copied), 64);
 });
 
 test('an aborted run is refused and leaves no reading behind', async () => {

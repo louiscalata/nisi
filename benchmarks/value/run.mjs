@@ -5,7 +5,8 @@ import path from 'node:path';
 import os from 'node:os';
 import { createHash } from 'node:crypto';
 import { execFileSync } from 'node:child_process';
-import { fileURLToPath, pathToFileURL } from 'node:url';
+import { realpathSync } from 'node:fs';
+import { fileURLToPath } from 'node:url';
 import { runWorkflow } from '../../workflow/engine.mjs';
 import { runCheckedLoop } from './checked-loop.mjs';
 import { scenarios, makeFixture } from './fixtures.mjs';
@@ -66,4 +67,7 @@ export async function main() {
     modelCalls: 0, conformanceFailures: failures.map(row => ({ scenario: row.scenario, arm: row.arm, score: row.score })) }, null, 2));
   if (failures.length) process.exitCode = 1;
 }
-if (process.argv[1] && import.meta.url === pathToFileURL(path.resolve(process.argv[1])).href) await main();
+// Real paths on both sides: Node names the entry module by its physical path, even through a symlink.
+let invokedAsMain = false;
+try { invokedAsMain = Boolean(process.argv[1]) && realpathSync(process.argv[1]) === realpathSync(fileURLToPath(import.meta.url)); } catch { /* imported */ }
+if (invokedAsMain) await main();

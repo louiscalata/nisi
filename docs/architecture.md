@@ -49,8 +49,8 @@ run. A repeated candidate or explicit no-change repair produces `NO_PROGRESS`.
 | **Stage** | One named step in a run, such as `authorizeContext`, `draft`, `staticChecks`, `tests`, `review`, or `repair`. Its record contains status, binding, and evidence. |
 | **Status** | The result returned by an adapter: `PASS`, `FAIL`, `NOT_RUN`, or `UNAVAILABLE`. Repair additionally permits `REPAIRED` and `NO_CHANGE`; draft returns candidate and evidence without a status field. |
 | **Outcome** | The engine's final run result: `COMPLETED`, `FAILED`, `BLOCKED`, `CANCELLED`, `TIMED_OUT`, `REPAIR_LIMIT`, or `NO_PROGRESS`. |
-| **Candidate** | A nonempty, normalized snapshot of changed relative file names and complete file contents. It has a stable fingerprint and an author ID. It is not a patch and does not apply itself. |
-| **Adapter** | An application-supplied callback object for authorization, authoring, checks, tests, review, or storage. The engine validates its declared identity and returned data; the host remains responsible for its behavior. |
+| **Candidate** | A nonempty snapshot of changed relative file names and complete file contents. Hosts and authors supply the raw `{ files }` form; the engine normalizes it into a frozen candidate with a stable fingerprint and an author ID. It is not a patch and does not apply itself. |
+| **Adapter** | An application-supplied callback object for authorization, authoring, checks, tests, review, or storage. Author and reviewer adapters are plain objects with a declared ID. The engine validates that identity and the returned data; the host remains responsible for its behavior. |
 | **State** | The run's current task, candidate, attempt number, stage records, outcome, and identity bindings. Input snapshots and returned reports are frozen so callbacks cannot mutate the engine's view after capture. |
 
 ## Architectural patterns
@@ -88,7 +88,10 @@ repeated candidate or no-change response.
 
 The optional report store receives a frozen preliminary report and an exact
 versioned digest. Its acknowledgement can set `reportStored`; the engine does
-not independently prove durable retention. Use the [Workflow API](workflow-api.md)
+not independently prove durable retention. A storage result can change the
+final `outcome` and `code`; `workflowOutcome` and `workflowCode` keep the
+values from before storage. The store is not called if the run was cancelled,
+or the clock reached the deadline, before storage. Use the [Workflow API](workflow-api.md)
 for exact schemas, [File Access Policy](file-policy.md) for host-controlled
 content admission, [Local Models](local-models.md) for loopback adapter setup,
 and [Verification](verification.md) for source- and environment-scoped checks.

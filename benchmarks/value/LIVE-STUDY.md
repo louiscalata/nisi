@@ -27,16 +27,23 @@ sidecar. If interrupted, the output records `PARTIAL` and the remaining row
 count, while the sidecar retains completed rows. Use a single task ID in place
 of `all` for a canary.
 Fake-fetch unit tests make no live inference request. The completed live pilot
-used the earlier runner revision pinned in its source manifest; the current
-runner adds output and router-gate safeguards. Earlier smoke and exploratory
+used the earlier runner and test revisions pinned in its source manifest,
+neither of which is in repository history; the current runner adds output and
+router-gate safeguards and symlink-safe entrypoint detection. The pinned
+workflow and adapter are those of the v0.2.0 release, which the unreleased
+hardening on `main` has since changed. Earlier smoke and exploratory
 runs saw the same tasks, so the completed result is not a fresh confirmatory
 sample.
 
 Each task rotates A/B/C order. A calls the shipped author adapter once. B uses
-the handwritten checked loop. C uses the released workflow engine. All use the
-same task text, model, author adapter, temperature zero, output-token cap, and
-loopback transport. B/C share deterministic file-shape checks, a structural
-reviewer, and one repair attempt. Their reviewer is not a second model and does
+the handwritten checked loop. C uses the workflow engine in the checkout (the
+v0.2.0 engine for the completed pilot). All use the same task text, model,
+author adapter, temperature zero, output-token cap, and loopback transport. B/C share deterministic file-shape checks, a structural
+reviewer, and one repair attempt. Before each repair call the runner replaces
+both schedulers' own failed-stage records with one fixed `ANSWER_SHAPE`
+finding, so C's repair requests are not Nisi's default repair payload; with
+the engine's own stage records each would have been about 1.65 KB larger
+([details](results/README.md)). Their reviewer is not a second model and does
 not verify answer meaning. The frozen exact-answer key is applied after each
 arm, independently of its report. Thus `COMPLETED` can coexist with an
 incorrect answer; such rows must remain visible. A has no checks or repair, so

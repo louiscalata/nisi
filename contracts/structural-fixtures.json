@@ -40,6 +40,36 @@
       "id": "STRUCT-008-WORKER",
       "source": "new Worker('worker.js');",
       "expectedRule": "dynamic-or-worker-construction"
+    },
+    {
+      "id": "STRUCT-009-GETBUILTINMODULE",
+      "source": "process.getBuiltinModule('node:fs');",
+      "expectedRule": "module-load"
+    },
+    {
+      "id": "STRUCT-010-COPYFILE",
+      "source": "fs.copyFileSync('source', 'result');",
+      "expectedRule": "filesystem-write"
+    },
+    {
+      "id": "STRUCT-011-OPEN-FOR-WRITE",
+      "source": "fs.openSync('result', 'w');",
+      "expectedRule": "filesystem-write"
+    },
+    {
+      "id": "STRUCT-012-WRITE-STREAM",
+      "source": "fs.createWriteStream('result');",
+      "expectedRule": "filesystem-write"
+    },
+    {
+      "id": "STRUCT-013-BINDING",
+      "source": "process.binding('fs');",
+      "expectedRule": "module-load"
+    },
+    {
+      "id": "STRUCT-014-PROCESS-ABORT",
+      "source": "process.abort();",
+      "expectedRule": "process-mutation"
     }
   ],
   "allowed": [

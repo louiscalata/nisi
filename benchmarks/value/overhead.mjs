@@ -4,7 +4,8 @@ import fs from 'node:fs/promises';
 import path from 'node:path';
 import assert from 'node:assert/strict';
 import { performance } from 'node:perf_hooks';
-import { pathToFileURL } from 'node:url';
+import { realpathSync } from 'node:fs';
+import { fileURLToPath } from 'node:url';
 import { runWorkflow } from '../../workflow/engine.mjs';
 import { runCheckedLoop } from './checked-loop.mjs';
 import { makeFixture, scenarios } from './fixtures.mjs';
@@ -88,4 +89,7 @@ export async function main() {
   console.log(JSON.stringify({ output, measuredPairs: result.rows.length,
     measuredWorkflowExecutions: result.rows.length * 2, modelCalls: 0, summaries: result.summaries }, null, 2));
 }
-if (process.argv[1] && import.meta.url === pathToFileURL(path.resolve(process.argv[1])).href) await main();
+// Real paths on both sides: Node names the entry module by its physical path, even through a symlink.
+let invokedAsMain = false;
+try { invokedAsMain = Boolean(process.argv[1]) && realpathSync(process.argv[1]) === realpathSync(fileURLToPath(import.meta.url)); } catch { /* imported */ }
+if (invokedAsMain) await main();

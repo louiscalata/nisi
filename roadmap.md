@@ -1,6 +1,6 @@
 # Nisi roadmap
 
-Canonical project roadmap. Updated September 23, 2026. Product name: Nisi.
+Canonical project roadmap. Updated September 27, 2026. Product name: Nisi.
 Public v0.2.0 scope: a Node.js CLI and library with the existing workflow APIs,
 the run journal, and its store. The CLI exposes fixed demonstrations; the private
 native repository workflow and other private features remain outside this
@@ -9,16 +9,61 @@ registry publication is a separate action.
 The September 12 documentation and onboarding revision started from public
 commit `fc8bf1b`.
 
+## 2026-09-26 hardening pass
+
+Unreleased source on `main`; the package version stays 0.2.0. The
+[changelog](CHANGELOG.md) lists each behavior and contract change.
+
+- [x] Workflow engine: read adapter sources and review-mode options once and run
+  the validated snapshot; refuse non-data objects before reading them and copy
+  shared input once; keep `workflowCode` in reports; pin every documented guard
+  by its exact code; document evidence limits and when storage is skipped.
+- [x] Run journal and store: bound entry nesting; reject an unexplained retired
+  record on reopen; refuse symlinked destinations, over-long file names and
+  journals too large to read back; report the fs error code; add the
+  [journal and store API reference](docs/journal-api.md).
+- [x] Local-chat adapter: a private `node:http` default transport that
+  environment proxies cannot reroute; linear JSON parsing; exact codes for
+  malformed envelopes and payloads; full failure receipts; the engine's finding
+  limits in the requested review schema.
+- [x] CLI, examples and package check: remove the demo's temporary directory;
+  name the argument, rule and code in local-model refusals; symlink-safe
+  entrypoints; check packed exports, line endings and relative README links.
+- [x] File access policy and Apple adapter: operating-system path resolution,
+  exact race codes, `BINARY_UNREADABLE`, the helper's own refusal code, a
+  working declaration-bytes recipe and wider structural-check patterns.
+- [x] A regression test for each fix. `npm run check`, `check:static`,
+  `check:cli-package` and the editor check pass on Linux with Node 22.
+- [x] Record the stable v0.2.0 CI evidence and correct the benchmark
+  disclosures.
+- [ ] Run the hardening pass through the hosted Windows/Linux Node 22/24 matrix
+  before any release that includes it.
+
+Deferred:
+
+- [ ] TypeScript declarations for the public API.
+- [ ] Remove the acceptance criteria that local-chat prompts send twice, only
+  after a measured before/after study of prompt size and outcomes.
+- [ ] Register or scope the npm package name (owner decision).
+- [ ] Decide whether the journal store should refuse a replacement that does
+  not extend the existing journal (owner decision).
+
 ## Public v0.2.0 CLI release
 
 - [x] Add an installable `nisi` command for help, version, fixed workflow demo,
   and opt-in fixed local-model JSON demo without private/native assets.
 - [x] Run direct and installed-archive CLI checks on the release candidate.
 
-Release gates: pass the hosted Windows/Linux Node 22/24 matrix on the final
-public commit, then publish the GitHub stable tag and archive against that
-tested commit. Verify the tag, archive, and repository landing page after
-publication. npm registry publication remains separate.
+Release gates (npm registry publication remains separate):
+
+- [x] Pass the hosted Windows/Linux Node 22/24 matrix on the final public
+  commit: [CI run 35907095428](https://github.com/louiscalata/nisi/actions/runs/35907095428)
+  passed all four jobs on `41fb6aeb67713011abc40b1434f5a939a5704aa4`.
+- [x] Publish the GitHub stable tag and archive against that tested commit:
+  `v0.2.0` targets it, and `nisi-0.2.0.tgz` is 42,439 bytes.
+- [x] Verify the tag and archive after publication; the
+  [v0.2 verification record](docs/verification-v0.2.md#stable-v020-release)
+  lists them. No separate landing-page check is recorded.
 
 ## Public v0.2 journal and store prereleases
 
@@ -98,7 +143,9 @@ v0.2 README is maintained at the repository root.
   passing assertions, one repair, separate callback review and a report written,
   synced and verified by reading it back.
 - [x] Restricted integer-only JSON canonicalizer and digest, with scoped static
-  analysis and eight forbidden/eight allowed fixtures.
+  analysis and mutation-tested forbidden/allowed fixtures (eight of each at the
+  time; [contracts/structural-fixtures.json](contracts/structural-fixtures.json)
+  holds the current set).
 - [x] File-admission checks with captured file identity, bounded reads, UTF-8
   validation, scope, expiry and revocation. Stable parent paths remain required.
 - [x] Native Apple advisory adapter with strict returned-evidence validation,

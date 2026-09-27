@@ -1,0 +1,265 @@
+{
+  "schemaVersion": 1,
+  "recordedAt": "2026-09-27T00:55:00Z",
+  "recordedFrom": "GitHub REST records for the workflow run, its jobs, the v0.2.0 tag and the v0.2.0 release, read back on this date. Job logs and per-job test counts were not retained.",
+  "runId": 35907095428,
+  "url": "https://github.com/louiscalata/nisi/actions/runs/35907095428",
+  "workflow": ".github/workflows/ci.yml",
+  "event": "push",
+  "headBranch": "main",
+  "headSha": "41fb6aeb67713011abc40b1434f5a939a5704aa4",
+  "status": "completed",
+  "conclusion": "success",
+  "createdAt": "2026-09-23T19:06:36Z",
+  "updatedAt": "2026-09-23T19:07:18Z",
+  "jobs": [
+    {
+      "name": "test (ubuntu-latest, 22)",
+      "url": "https://github.com/louiscalata/nisi/actions/runs/35907095428/job/107337374928",
+      "runner": "ubuntu-latest",
+      "conclusion": "success",
+      "steps": [
+        {
+          "name": "Set up job",
+          "conclusion": "success"
+        },
+        {
+          "name": "Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262",
+          "conclusion": "success"
+        },
+        {
+          "name": "Run actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020",
+          "conclusion": "success"
+        },
+        {
+          "name": "Run npm ci",
+          "conclusion": "success"
+        },
+        {
+          "name": "Scoped static analysis check on the codec",
+          "conclusion": "success"
+        },
+        {
+          "name": "Structural check and tests",
+          "conclusion": "success"
+        },
+        {
+          "name": "Installed public CLI package",
+          "conclusion": "success"
+        },
+        {
+          "name": "Public journal and store tests",
+          "conclusion": "success"
+        },
+        {
+          "name": "Editable README consistency",
+          "conclusion": "success"
+        },
+        {
+          "name": "Post Run actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020",
+          "conclusion": "success"
+        },
+        {
+          "name": "Post Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262",
+          "conclusion": "success"
+        },
+        {
+          "name": "Complete job",
+          "conclusion": "success"
+        }
+      ]
+    },
+    {
+      "name": "test (ubuntu-latest, 24)",
+      "url": "https://github.com/louiscalata/nisi/actions/runs/35907095428/job/107337375233",
+      "runner": "ubuntu-latest",
+      "conclusion": "success",
+      "steps": [
+        {
+          "name": "Set up job",
+          "conclusion": "success"
+        },
+        {
+          "name": "Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262",
+          "conclusion": "success"
+        },
+        {
+          "name": "Run actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020",
+          "conclusion": "success"
+        },
+        {
+          "name": "Run npm ci",
+          "conclusion": "success"
+        },
+        {
+          "name": "Scoped static analysis check on the codec",
+          "conclusion": "success"
+        },
+        {
+          "name": "Structural check and tests",
+          "conclusion": "success"
+        },
+        {
+          "name": "Installed public CLI package",
+          "conclusion": "success"
+        },
+        {
+          "name": "Public journal and store tests",
+          "conclusion": "success"
+        },
+        {
+          "name": "Editable README consistency",
+          "conclusion": "success"
+        },
+        {
+          "name": "Post Run actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020",
+          "conclusion": "success"
+        },
+        {
+          "name": "Post Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262",
+          "conclusion": "success"
+        },
+        {
+          "name": "Complete job",
+          "conclusion": "success"
+        }
+      ]
+    },
+    {
+      "name": "test (windows-latest, 22)",
+      "url": "https://github.com/louiscalata/nisi/actions/runs/35907095428/job/107337375339",
+      "runner": "windows-latest",
+      "conclusion": "success",
+      "steps": [
+        {
+          "name": "Set up job",
+          "conclusion": "success"
+        },
+        {
+          "name": "Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262",
+          "conclusion": "success"
+        },
+        {
+          "name": "Run actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020",
+          "conclusion": "success"
+        },
+        {
+          "name": "Run npm ci",
+          "conclusion": "success"
+        },
+        {
+          "name": "Scoped static analysis check on the codec",
+          "conclusion": "success"
+        },
+        {
+          "name": "Structural check and tests",
+          "conclusion": "success"
+        },
+        {
+          "name": "Installed public CLI package",
+          "conclusion": "success"
+        },
+        {
+          "name": "Public journal and store tests",
+          "conclusion": "success"
+        },
+        {
+          "name": "Editable README consistency",
+          "conclusion": "success"
+        },
+        {
+          "name": "Post Run actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020",
+          "conclusion": "success"
+        },
+        {
+          "name": "Post Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262",
+          "conclusion": "success"
+        },
+        {
+          "name": "Complete job",
+          "conclusion": "success"
+        }
+      ]
+    },
+    {
+      "name": "test (windows-latest, 24)",
+      "url": "https://github.com/louiscalata/nisi/actions/runs/35907095428/job/107337375176",
+      "runner": "windows-latest",
+      "conclusion": "success",
+      "steps": [
+        {
+          "name": "Set up job",
+          "conclusion": "success"
+        },
+        {
+          "name": "Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262",
+          "conclusion": "success"
+        },
+        {
+          "name": "Run actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020",
+          "conclusion": "success"
+        },
+        {
+          "name": "Run npm ci",
+          "conclusion": "success"
+        },
+        {
+          "name": "Scoped static analysis check on the codec",
+          "conclusion": "success"
+        },
+        {
+          "name": "Structural check and tests",
+          "conclusion": "success"
+        },
+        {
+          "name": "Installed public CLI package",
+          "conclusion": "success"
+        },
+        {
+          "name": "Public journal and store tests",
+          "conclusion": "success"
+        },
+        {
+          "name": "Editable README consistency",
+          "conclusion": "success"
+        },
+        {
+          "name": "Post Run actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020",
+          "conclusion": "success"
+        },
+        {
+          "name": "Post Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262",
+          "conclusion": "success"
+        },
+        {
+          "name": "Complete job",
+          "conclusion": "success"
+        }
+      ]
+    }
+  ],
+  "tag": {
+    "name": "v0.2.0",
+    "target": "41fb6aeb67713011abc40b1434f5a939a5704aa4"
+  },
+  "release": {
+    "url": "https://github.com/louiscalata/nisi/releases/tag/v0.2.0",
+    "createdAt": "2026-09-23T19:06:33Z",
+    "publishedAt": "2026-09-23T19:07:54Z",
+    "draft": false,
+    "prerelease": false,
+    "assets": [
+      {
+        "name": "nisi-0.2.0.tgz",
+        "size": 42439,
+        "sha256": "aa46147005814c4e72aaa87099894552122ebe2bed91dad89a61b61388be3737"
+      },
+      {
+        "name": "SHA256SUMS",
+        "size": 81,
+        "sha256": "ded8fba18b37bad55da992ec521f64012c754d2339585c6ecb64ce79e66088a5"
+      }
+    ]
+  },
+  "sourceBinding": "The run's head commit is the commit the v0.2.0 tag targets; this run validates the released source."
+}

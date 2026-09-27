@@ -109,11 +109,13 @@ class ContentConsentGrant {
     if (!this.#value.allowedKinds.includes(kind)) return fail('CONTENT_KIND_REFUSED');
 
     // Resolve symlinks before the scope test: a link inside the approved root
-    // that points outside it must not smuggle content past the boundary.
+    // that points outside it must not smuggle content past the boundary. The
+    // OS resolver is used because the JavaScript one collapses `link/..` as
+    // text before following `link`, naming a file the OS would not open.
     let resolved, rootResolved;
     try {
-      resolved = fs.realpathSync(filePath);
-      rootResolved = fs.realpathSync(this.#value.scopeRoot);
+      resolved = fs.realpathSync.native(filePath);
+      rootResolved = fs.realpathSync.native(this.#value.scopeRoot);
     } catch { return fail('CONTENT_PATH_UNRESOLVABLE'); }
     const prefix = rootResolved.endsWith(path.sep) ? rootResolved : rootResolved + path.sep;
     if (!resolved.startsWith(prefix)) return fail('CONTENT_OUT_OF_SCOPE');

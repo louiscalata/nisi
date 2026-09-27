@@ -33,36 +33,60 @@ const isPlainObject = value => value !== null && typeof value === 'object' && !A
 const isId = value => typeof value === 'string' && /^[a-z][a-z0-9_.-]{0,95}$/u.test(value);
 const isHex64 = value => typeof value === 'string' && /^[0-9a-f]{64}$/u.test(value);
 
-export function cloneFreeze(value, seen = new WeakSet(), depth = 0) {
-  if (depth > 64) reject('INPUT_DEPTH_LIMIT');
-  if (value === null || typeof value === 'string' || typeof value === 'boolean') return value;
-  if (typeof value === 'number') {
-    if (!Number.isFinite(value)) reject('INPUT_NUMBER_INVALID');
-    return value;
-  }
-  if (typeof value !== 'object') reject('INPUT_VALUE_INVALID');
-  if (seen.has(value)) reject('INPUT_CYCLE');
-  seen.add(value);
-  let copy;
-  const descriptors = Object.getOwnPropertyDescriptors(value);
-  if (Reflect.ownKeys(descriptors).some(key => typeof key !== 'string' ||
-      !Object.hasOwn(descriptors[key], 'value'))) reject('INPUT_PROPERTY_INVALID');
-  if (Array.isArray(value)) {
-    if (Reflect.ownKeys(descriptors).length !== value.length + 1) reject('INPUT_ARRAY_INVALID');
-    copy = [];
-    for (let index = 0; index < value.length; index += 1) {
-      if (!Object.hasOwn(descriptors, index)) reject('INPUT_ARRAY_INVALID');
-      copy.push(cloneFreeze(descriptors[index].value, seen, depth + 1));
+// Objects are classified before their properties are listed, so a Buffer, typed
+// array or Map is refused in O(1). A shared reference is copied once and its
+// frozen copy reused, keeping DAG-shaped input linear; the recorded height keeps
+// the depth limit exact for every path that reaches a reused copy.
+export function cloneFreeze(value) {
+  const copies = new Map(); // object -> false while on the current path, then { copy, height }
+  let reached = 0; // height below the value visit() last returned
+  const visit = (item, depth) => {
+    reached = 0;
+    if (depth > 64) reject('INPUT_DEPTH_LIMIT');
+    if (item === null || typeof item === 'string' || typeof item === 'boolean') return item;
+    if (typeof item === 'number') {
+      if (!Number.isFinite(item)) reject('INPUT_NUMBER_INVALID');
+      return item;
     }
-  } else if (isPlainObject(value)) {
-    copy = Object.create(null);
-    for (const key of Object.keys(descriptors)) {
-      if (!descriptors[key].enumerable) reject('INPUT_PROPERTY_INVALID');
-      copy[key] = cloneFreeze(descriptors[key].value, seen, depth + 1);
+    if (typeof item !== 'object') reject('INPUT_VALUE_INVALID');
+    const done = copies.get(item);
+    if (done === false) reject('INPUT_CYCLE');
+    if (done) {
+      if (depth + done.height > 64) reject('INPUT_DEPTH_LIMIT');
+      reached = done.height;
+      return done.copy;
     }
-  } else reject('INPUT_OBJECT_INVALID');
-  seen.delete(value);
-  return Object.freeze(copy);
+    const array = Array.isArray(item);
+    if (!array && !isPlainObject(item)) reject('INPUT_OBJECT_INVALID');
+    copies.set(item, false);
+    let copy, height = 0;
+    const child = next => {
+      const copied = visit(next, depth + 1);
+      if (reached >= height) height = reached + 1;
+      return copied;
+    };
+    const descriptors = Object.getOwnPropertyDescriptors(item);
+    if (Reflect.ownKeys(descriptors).some(key => typeof key !== 'string' ||
+        !Object.hasOwn(descriptors[key], 'value'))) reject('INPUT_PROPERTY_INVALID');
+    if (array) {
+      if (Reflect.ownKeys(descriptors).length !== item.length + 1) reject('INPUT_ARRAY_INVALID');
+      copy = [];
+      for (let index = 0; index < item.length; index += 1) {
+        if (!Object.hasOwn(descriptors, index)) reject('INPUT_ARRAY_INVALID');
+        copy.push(child(descriptors[index].value));
+      }
+    } else {
+      copy = Object.create(null);
+      for (const key of Object.keys(descriptors)) {
+        if (!descriptors[key].enumerable) reject('INPUT_PROPERTY_INVALID');
+        copy[key] = child(descriptors[key].value);
+      }
+    }
+    copies.set(item, { copy: Object.freeze(copy), height });
+    reached = height;
+    return copy;
+  };
+  return visit(value, 0);
 }
 
 export function stableStringify(value) {
@@ -175,9 +199,12 @@ export function validateFindings(findings, stage) {
   return findings;
 }
 
+// Author and reviewer adapters are plain objects. The ID is read once, so the
+// value validated is the value returned.
 export function validateAdapterIdentity(adapter, label) {
-  if (!isPlainObject(adapter) || !isId(adapter.id)) reject(`${label.toUpperCase()}_IDENTITY_INVALID`);
-  return adapter.id;
+  const id = isPlainObject(adapter) ? adapter.id : undefined;
+  if (!isId(id)) reject(`${label.toUpperCase()}_IDENTITY_INVALID`);
+  return id;
 }
 
 export function freezeReport(value) { return cloneFreeze(value); }

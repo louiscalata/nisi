@@ -16,9 +16,23 @@ import path from 'node:path';
 import { createHash } from 'node:crypto';
 import { canonicalizeJSONV1 } from '../canonical/canonical-json-v1.mjs';
 import { createContentConsent, CONTENT_CONSENT_LIMITS, ALLOWED_CONTENT_KINDS } from '../gate/content-consent.mjs';
+import { createFileAccessPolicy } from 'nisi/policy';
+import { canonicalizeJsonV1 } from 'nisi/serialization';
 
 const sha = b => createHash('sha256').update(b).digest('hex');
-const tempRoot = () => fs.realpathSync(fs.mkdtempSync(path.join(os.tmpdir(), 'consent-')));
+// Every scratch directory is removed after this file's tests; a locked file
+// (for example under a Windows scanner) must not fail the suite.
+const made = [];
+const tempRoot = () => { const dir = fs.realpathSync(fs.mkdtempSync(path.join(os.tmpdir(), 'consent-'))); made.push(dir); return dir; };
+test.after(() => { for (const dir of made) { try { fs.rmSync(dir, { recursive: true, force: true, maxRetries: 5 }); } catch {} } });
+// Creating a symlink on Windows needs elevated rights or Developer Mode; a test
+// that swaps one in mid-read is skipped, with the reason, where that is refused.
+const SYMLINKS = (() => {
+  const dir = tempRoot(), target = path.join(dir, 'target');
+  fs.writeFileSync(target, 'x');
+  try { fs.symlinkSync(target, path.join(dir, 'link')); return false; }
+  catch (error) { return `symlink creation is unavailable here (${error.code})`; }
+})();
 
 function declaration(scopeRoot, overrides = {}) {
   return {
@@ -120,6 +134,7 @@ test('scope is a path boundary, not a string prefix', () => {
   const root = tempRoot();
   const sibling = `${root}-evil`;
   fs.mkdirSync(sibling);
+  made.push(sibling);
   const grant = grantOf(root);
   const smuggled = write(sibling, 'a.json', '{"secret":true}');
   assert.equal(grant.admitContent({ filePath: smuggled, kind: 'json' }).code, 'CONTENT_OUT_OF_SCOPE');
@@ -138,6 +153,63 @@ test('a symlink cannot carry content across the boundary', () => {
   fs.symlinkSync(outside, linkedDir);
   assert.equal(grant.admitContent({ filePath: path.join(linkedDir, 'secret.json'), kind: 'json' }).code,
     'CONTENT_OUT_OF_SCOPE');
+  assert.equal(grant.status().admittedItems, 0);
+});
+
+test("'..' after a linked directory is resolved as the OS resolves it, for items and the root", {
+  skip: process.platform === 'win32' &&
+    'Windows collapses .. as text before following links, so the path names the in-scope file',
+}, () => {
+  const root = tempRoot(), outside = tempRoot();
+  fs.mkdirSync(path.join(outside, 'dir'));
+  fs.symlinkSync(path.join(outside, 'dir'), path.join(root, 'linked'));
+  const inside = write(root, 'a.txt', 'IN-SCOPE'), beyond = write(outside, 'a.txt', 'OUTSIDE');
+  // Concatenated, because path.join would collapse the '..' away as text.
+  const dotted = `${root}${path.sep}linked${path.sep}..`, filePath = `${dotted}${path.sep}a.txt`;
+  assert.equal(fs.readFileSync(filePath, 'utf8'), 'OUTSIDE');
+  const grant = grantOf(root);
+  const refused = grant.admitContent({ filePath, kind: 'text' });
+  assert.equal(refused.code, 'CONTENT_OUT_OF_SCOPE');
+  assert.equal('bytes' in refused, false);
+  assert.equal(grant.status().admittedItems, 0);
+  // A declared root is the directory the OS names, not its lexical parent.
+  const rooted = grantOf(dotted);
+  assert.equal(rooted.admitContent({ filePath: inside, kind: 'text' }).code, 'CONTENT_OUT_OF_SCOPE');
+  const admitted = rooted.admitContent({ filePath: beyond, kind: 'text' });
+  assert.equal(admitted.code, 'CONTENT_ADMITTED');
+  assert.equal(admitted.bytes.toString('utf8'), 'OUTSIDE');
+});
+
+test("'..' after a missing directory is unresolvable, for items and the root, though its text names a file", {
+  skip: process.platform === 'win32' &&
+    'Windows collapses .. as text before resolving, so the path names the existing file',
+}, () => {
+  const root = tempRoot();
+  const inside = write(root, 'a.txt', 'IN-SCOPE');
+  const dotted = `${root}${path.sep}missing${path.sep}..`, filePath = `${dotted}${path.sep}a.txt`;
+  assert.throws(() => fs.readFileSync(filePath), { code: 'ENOENT' });
+  const grant = grantOf(root);
+  const refused = grant.admitContent({ filePath, kind: 'text' });
+  assert.equal(refused.code, 'CONTENT_PATH_UNRESOLVABLE');
+  assert.equal('bytes' in refused, false);
+  // A root written that way leaves no file admissible.
+  assert.equal(grantOf(dotted).admitContent({ filePath: inside, kind: 'text' }).code, 'CONTENT_PATH_UNRESOLVABLE');
+  assert.equal(grant.status().admittedItems, 0);
+});
+
+test('a trailing slash after a file name is unresolvable on Linux, where the OS refuses it', {
+  skip: process.platform !== 'linux' &&
+    'other realpath(3) implementations, such as macOS, may strip the slash and name the file',
+}, () => {
+  const root = tempRoot();
+  const file = write(root, 'a.txt', 'IN-SCOPE');
+  const grant = grantOf(root);
+  for (const filePath of [`${file}/`, `${file}/.`]) {
+    assert.throws(() => fs.readFileSync(filePath), { code: 'ENOTDIR' }, filePath);
+    const refused = grant.admitContent({ filePath, kind: 'text' });
+    assert.equal(refused.code, 'CONTENT_PATH_UNRESOLVABLE', filePath);
+    assert.equal('bytes' in refused, false, filePath);
+  }
   assert.equal(grant.status().admittedItems, 0);
 });
 
@@ -270,25 +342,124 @@ test('later clock failures are named refusals and status samples the clock once'
   assert.equal(grant.status().refusalIfNotLive, 'CONSENT_EXPIRED');
 });
 
-test('a final-component replacement after validation is refused before content is returned', () => {
+// The race tests below swap the file at one step of admission. The gate works
+// on the OS-resolved path, whose spelling can differ from the caller's (8.3
+// names on Windows), so each wrapper matches that path.
+
+test('a final-component replacement after validation is refused before content is returned', { skip: SYMLINKS }, () => {
   const root = tempRoot(), outside = tempRoot();
-  const filePath = write(root, 'safe.txt', 'PUBLIC');
+  const filePath = write(root, 'safe.txt', 'PUBLIC'), resolved = fs.realpathSync.native(filePath);
   const secret = write(outside, 'secret.txt', 'SECRET');
   const grant = grantOf(root);
   const original = fs.lstatSync;
   let replaced = false;
   fs.lstatSync = function(target, ...args) {
     const result = original.call(fs, target, ...args);
-    if (target === filePath && !replaced) { replaced = true; fs.unlinkSync(filePath); fs.symlinkSync(secret, filePath); }
+    if (target === resolved && !replaced) { replaced = true; fs.unlinkSync(filePath); fs.symlinkSync(secret, filePath); }
     return result;
   };
   try {
     const result = grant.admitContent({ filePath, kind: 'text' });
     assert.equal(replaced, true);
     assert.equal(result.ok, false);
+    // O_NOFOLLOW refuses the link where it exists; elsewhere the opened
+    // object's identity differs. Either way it is this one named refusal.
+    assert.equal(result.code, 'CONTENT_CHANGED_DURING_READ');
     assert.equal('bytes' in result, false);
     assert.equal(grant.status().admittedItems, 0);
   } finally { fs.lstatSync = original; }
+});
+
+test('a different regular file renamed over the path between lstat and open is refused', () => {
+  const root = tempRoot();
+  // Without the opened-identity check the empty file would bypass
+  // CONTENT_EMPTY and the same-size one would be admitted as the original.
+  for (const replacement of ['', 'SECRET']) {
+    const filePath = write(root, 'safe.txt', 'PUBLIC'), resolved = fs.realpathSync.native(filePath);
+    const other = write(root, 'other.txt', replacement), grant = grantOf(root);
+    const original = fs.openSync;
+    let replaced = false;
+    fs.openSync = function(target, ...args) {
+      if (target === resolved && !replaced) { replaced = true; fs.renameSync(other, filePath); }
+      return original.call(fs, target, ...args);
+    };
+    try {
+      const result = grant.admitContent({ filePath, kind: 'text' });
+      assert.equal(replaced, true);
+      assert.equal(result.code, 'CONTENT_CHANGED_DURING_READ', JSON.stringify(replacement));
+      assert.equal('bytes' in result, false);
+      assert.equal(grant.status().admittedItems, 0);
+    } finally { fs.openSync = original; }
+  }
+});
+
+test('a directory swapped in between lstat and open is refused at the opened descriptor', {
+  skip: process.platform === 'win32' && 'relies on POSIX open(2) accepting a directory for reading',
+}, () => {
+  const root = tempRoot();
+  const filePath = write(root, 'safe.txt', 'PUBLIC'), resolved = fs.realpathSync.native(filePath);
+  const grant = grantOf(root);
+  const original = fs.openSync;
+  let replaced = false;
+  fs.openSync = function(target, ...args) {
+    if (target === resolved && !replaced) { replaced = true; fs.unlinkSync(filePath); fs.mkdirSync(filePath); }
+    return original.call(fs, target, ...args);
+  };
+  try {
+    const result = grant.admitContent({ filePath, kind: 'text' });
+    assert.equal(replaced, true);
+    assert.equal(result.code, 'CONTENT_NOT_REGULAR_FILE');
+    assert.equal(grant.status().admittedItems, 0);
+  } finally { fs.openSync = original; }
+});
+
+test('a file that grows during the bounded read stops at the byte cap', () => {
+  const root = tempRoot(), filePath = write(root, 'grows.txt', 'PUBLIC'), grant = grantOf(root);
+  const original = fs.readSync;
+  let grown = false;
+  fs.readSync = (...args) => {
+    if (!grown) { grown = true; fs.appendFileSync(filePath, 'x'.repeat(5000)); }
+    return original(...args);
+  };
+  try {
+    const result = grant.admitContent({ filePath, kind: 'text' });
+    assert.equal(grown, true);
+    assert.equal(result.code, 'CONTENT_BYTE_LIMIT');
+    assert.equal(result.bytes, 4097);
+    assert.equal(result.maximum, 4096);
+    assert.equal(grant.status().admittedItems, 0);
+  } finally { fs.readSync = original; }
+});
+
+test('a read that ends before the size the descriptor reported is refused', () => {
+  const root = tempRoot(), filePath = write(root, 'short.txt', 'PUBLIC'), grant = grantOf(root);
+  const original = fs.readSync;
+  let calls = 0;
+  // End of file after two bytes while the metadata stays unchanged: only the
+  // byte count can see this torn read.
+  fs.readSync = (descriptor, buffer, offset, length, position) =>
+    calls++ === 0 ? original(descriptor, buffer, offset, 2, position) : 0;
+  try {
+    const result = grant.admitContent({ filePath, kind: 'text' });
+    assert.equal(calls, 2);
+    assert.equal(result.code, 'CONTENT_CHANGED_DURING_READ');
+    assert.equal('bytes' in result, false);
+    assert.equal(grant.status().admittedItems, 0);
+  } finally { fs.readSync = original; }
+});
+
+test('the declaration-bytes recipe in docs/file-policy.md builds a ready policy', () => {
+  const doc = fs.readFileSync(new URL('../docs/file-policy.md', import.meta.url), 'utf8').replace(/\s+/g, ' ');
+  const recipe = /Build those bytes with `([^`]+)`/.exec(doc)?.[1];
+  assert.equal(typeof recipe, 'string', 'docs/file-policy.md no longer states the recipe');
+  const bytesFor = new Function('canonicalizeJsonV1', 'declaration', `return ${recipe};`);
+  const root = tempRoot();
+  const made = createFileAccessPolicy(bytesFor(canonicalizeJsonV1, declaration(root)), { clock: () => 0 });
+  assert.equal(made.code, 'READY_PRIVATE_CONTENT_CONSENT_ONLY');
+  assert.equal(made.consentDigest, make(root).consentDigest);
+  // The codec returns a result record, not bytes; the record itself is refused.
+  const record = canonicalizeJsonV1(Buffer.from(JSON.stringify(declaration(root))));
+  assert.equal(createFileAccessPolicy(record, { clock: () => 0 }).code, 'CONSENT_BYTES_REFUSED');
 });
 
 test('file kind is a declared label; the v1 policy does not parse JSON content', () => {

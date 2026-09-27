@@ -2,9 +2,9 @@
 // SPDX-License-Identifier: Apache-2.0
 //
 // A/B: the deterministic structural checker vs. a language model reading the
-// same code. Same 16 fixtures from contracts/structural-fixtures.json, same
-// question, nothing simulated. Backs the "With Nisi, versus asking a model"
-// table in the README.
+// same code. Every fixture in contracts/structural-fixtures.json, the same
+// question, nothing simulated. It backed the "With Nisi, versus asking a
+// model" table in an earlier README revision.
 //
 // Requires the `afm` CLI (macOS 26+ with Apple Intelligence), so this is not
 // part of `npm run check` and CI does not run it.
