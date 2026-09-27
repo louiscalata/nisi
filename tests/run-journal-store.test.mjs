@@ -502,6 +502,27 @@ test('a destination that becomes a symlink before rename is refused and the owne
   assert.equal(f.descriptors.size, 0);
 });
 
+test('a destination lookup that fails just before rename is refused with its code and the owned temp is cleaned', t => {
+  for (const point of ['lstatSync', 'readFileSync']) {
+    let calls = 0;
+    const f = fixture(t, { [point]: (e, invoke) => {
+      if (e.args[0] === f.path && ++calls === 2) throw Object.assign(new Error('recheck denied'), { code: 'EACCES' });
+      return invoke();
+    } });
+    realFs.writeFileSync(f.path, journal('old'));
+    const result = write({ ...f, serialized: journal('new'), expectedPreviousSha256: hash(journal('old')) });
+    refused(result, 'READ_FAILED');
+    assert.equal(result.error, 'EACCES');
+    assert.equal(result.committed, false);
+    assert.equal(calls, 2);
+    assert.ok(f.events.findIndex(e => e.name === 'writeSync') < f.events.findLastIndex(e => e.name === point));
+    assert.ok(f.events.every(e => e.name !== 'renameSync'));
+    assert.equal(realFs.readFileSync(f.path, 'utf8'), journal('old'));
+    assert.deepEqual(realFs.readdirSync(f.dir), ['journal.jsonl']);
+    assert.equal(f.descriptors.size, 0);
+  }
+});
+
 test('a file name too long for its 106-byte temp suffix is refused before any file access', t => {
   const f = fixture(t);
   for (const name of ['j'.repeat(150), '日'.repeat(50)]) {
@@ -515,12 +536,24 @@ test('a file name too long for its 106-byte temp suffix is refused before any fi
   assert.deepEqual(realFs.readdirSync(f.dir), ['j'.repeat(149)]);
 });
 
-test('bytes too long to decode are refused as data, and a journal too large to read back is not written', t => {
+test('bytes over the string limit are refused before decoding, and a journal too large to read back is not written', t => {
   const huge = Buffer.alloc(constants.MAX_STRING_LENGTH + 1);
-  const f = fixture(t, { readFileSync: (e, invoke) => e.args[0] === f.path ? huge : invoke() });
+  const edge = huge.subarray(0, constants.MAX_STRING_LENGTH);
+  // Spies replace decoding, which at the limit would build a string of MAX_STRING_LENGTH
+  // characters; their throw also stands for a caller's fs returning a Buffer that throws.
+  const decoded = [];
+  for (const bytes of [huge, edge]) bytes.toString = () => { decoded.push(bytes.length); throw new Error('spy'); };
+  let served = huge;
+  const f = fixture(t, { readFileSync: (e, invoke) => e.args[0] === f.path ? served : invoke() });
   refused(read(f), 'INVALID_JOURNAL');
   refused(write({ ...f, serialized: journal() }), 'EXISTING_INVALID');
+  assert.deepEqual(decoded, []);
+  served = edge;
+  refused(read(f), 'INVALID_JOURNAL');
+  refused(write({ ...f, serialized: journal() }), 'EXISTING_INVALID');
+  assert.deepEqual(decoded, [constants.MAX_STRING_LENGTH, constants.MAX_STRING_LENGTH]);
   assert.ok(inspectOnly(f.events));
+  // The TOO_LARGE boundary is not pinned: that needs a second string of MAX_STRING_LENGTH bytes.
   const g = fixture(t);
   refused(write({ ...g, serialized: 'é'.repeat(Math.floor(constants.MAX_STRING_LENGTH / 2) + 1) }), 'TOO_LARGE');
   assert.deepEqual(g.events, []);

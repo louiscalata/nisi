@@ -176,9 +176,9 @@ repeats, or a retry or revocation breaks the append rules. A retained record
 must have `'[REDACTED]'` at every configured path, a fingerprint that matches
 its entry, and must not be expired at the header's `now`; at most `maxEntries`
 records may be retained. A retired record must have `payload: null`. When the
-footer is otherwise valid, the last retired record that is not expired at the
-header's `now` must have at least `maxEntries` records after it; otherwise it
-is the rejected record.
+footer is otherwise valid, each retired record that is not expired at the
+header's `now` must have at least `maxEntries` records after it; the first that
+does not is the rejected record.
 
 ## What the chain shows
 
@@ -210,8 +210,10 @@ removal.
 
 `fs` needs `readFileSync`. The read does not refuse symlinks (Node's
 `readFileSync` follows them) and makes no other `fs` call. It returns `{ status: 'READ', serialized, sha256, bytes, verified: true }`
-only when the file is strict UTF-8 and a journal that reopens `COMPLETE` with
-canonical framing, no empty lines and a final newline. `sha256` is the
+only when the file is at most `buffer.constants.MAX_STRING_LENGTH` bytes,
+strict UTF-8, and a journal that reopens `COMPLETE` with canonical framing, no
+empty lines and a final newline. A larger file is refused without being
+decoded, so the limit is the same on every Node version. `sha256` is the
 lowercase hex SHA-256 of the file's bytes and `bytes` is their count.
 
 ### writeSerializedJournal({ path, serialized, fs, expectedPreviousSha256 })
@@ -250,13 +252,13 @@ does not block a retry.
 | Reason | Cause |
 |---|---|
 | `INVALID_INPUT` | Missing options, an empty or NUL-containing path, a missing `fs` method, or an `expectedPreviousSha256` that is not 64 lowercase hex characters |
-| `PATH_TOO_LONG` | Write only: the file name exceeds 149 UTF-8 bytes, so the temp name would exceed 255 |
-| `TOO_LARGE` | Write only: the journal's UTF-8 size exceeds `buffer.constants.MAX_STRING_LENGTH`, so it could not be read back |
-| `INVALID_JOURNAL` | `serialized`, or the file being read, is not a valid journal (including a file above that size) |
+| `PATH_TOO_LONG` | Write only: the file name exceeds 149 UTF-8 bytes, so the temp name could exceed the common 255-byte limit; this byte count applies on every platform |
+| `TOO_LARGE` | Write only: the journal's UTF-8 size exceeds `buffer.constants.MAX_STRING_LENGTH` bytes, so this store could not read it back |
+| `INVALID_JOURNAL` | `serialized`, or the file being read, is not a valid journal, including a file above that size |
 | `NOT_FOUND` | Read only: the file does not exist |
 | `SYMLINK` | Write only: the destination is a symlink, checked before any change and again before the rename |
 | `READ_FAILED` | Reading or inspecting the file failed other than with `ENOENT` |
-| `EXISTING_INVALID` | The existing file is not a valid journal; it is left unchanged |
+| `EXISTING_INVALID` | The existing file is not a valid journal, including one above that size; it is left unchanged |
 | `CONFLICT` | The hash is missing for a replacement, does not match, or was given for a missing file; or the destination appeared, disappeared or changed before the rename |
 | `WRITE_FAILED` | Opening, writing or closing the temp failed, or a write made no progress |
 | `READBACK_MISMATCH` | The temp or, after the rename, the destination did not read back identically; `committed` tells which |

@@ -160,14 +160,15 @@ function reopenData(serialized) {
   const h=parseLine(ls[0]);
   if (!h || !exact(h,['type','schema','config','now']) || h.type!=='header' || h.schema!=='nisi-run-journal-v1' || !safe(h.now)) return {journal:null,report:report('INVALID',[],1,'HEADER')};
   let c; try { c=configOf(h.config); } catch (_) { return {journal:null,report:report('INVALID',[],1,'HEADER')}; }
-  const b=build(c,h.now), ids=[]; let prev=H('nisi-run-journal/header/v1\n'+C(h)), footer=false, bad=null, retained=0, late=0;
+  const b=build(c,h.now), ids=[], late=[]; let prev=H('nisi-run-journal/header/v1\n'+C(h)), footer=false, bad=null, retained=0;
   const failAt=(line,reason='RECORD',status='INVALID')=>{bad={line,reason,status};};
   for(let n=1;n<ls.length&&!bad;n++) {
     const v=parseLine(ls[n]); if (!v) { failAt(n+1); break; }
     if (v.type==='footer') {
       if (!exact(v,['type','count','lastHash']) || v.type!=='footer' || !Number.isSafeInteger(v.count) || v.count!==ids.length || v.lastHash!==prev) failAt(n+1,'FOOTER');
-      // Retirement is by TTL (expired at the header time) or by the cap (maxEntries later records).
-      else if (late && v.count-late<c.maxEntries) { ids.length=late-1; b.records.length=late-1; failAt(late+1); } else footer=true;
+      // Retirement is by TTL (expired at the header time) or by the cap (maxEntries later records);
+      // the first record retired otherwise is rejected.
+      else { const s=late.find(q=>v.count-q<c.maxEntries); if (s!==undefined) { ids.length=s-1; b.records.length=s-1; failAt(s+1); } else footer=true; }
       if (footer && (n+1<ls.length || trailing)) failAt(n+1<ls.length ? n+2 : ls.length+1,'TRAILING_DATA');
       break;
     }
@@ -182,7 +183,7 @@ function reopenData(serialized) {
       retained++; if(retained>c.maxEntries){failAt(n+1);break;} }
     if (e.retryOf!==null) { const t=b.byId.get(e.retryOf); if(!t || e.state!=='QUEUED' || t.entry.runId!==e.runId || e.attempt<=t.entry.attempt || e.createdAt<t.entry.createdAt || !(new Set(['SUCCEEDED','FAILED','CANCELLED','REVOKED'])).has(t.entry.state) && !expired(t,h.now) && !b.revoked.has(t.entry.id)) { failAt(n+1); break; } }
     if (e.revokes!==null) { const t=b.byId.get(e.revokes); if(!t || t.entry.runId!==e.runId || t.entry.attempt!==e.attempt || t.entry.candidateId!==e.candidateId || t.entry.createdAt>e.createdAt){failAt(n+1);break;} }
-    if (!v.record.retained && !expired({entry:e},h.now)) late=n;
+    if (!v.record.retained && !expired({entry:e},h.now)) late.push(n);
     const r={entry:e,fingerprint:v.record.fingerprint,retained:v.record.retained,historical:true}; b.records.push(r); b.byId.set(e.id,r); if(e.revokes!==null)b.revoked.add(e.revokes); prev=v.hash; ids.push(e.id);
   }
   if (!bad && !footer) bad={line:ls.length+1,reason:trailing?'TRUNCATED':'MISSING_FOOTER',status:'INCOMPLETE'};

@@ -60,9 +60,11 @@ function validJournal(serialized) {
 }
 
 function decode(bytes) {
-  if (!Buffer.isBuffer(bytes)) return null;
+  // Node 22 will not decode more than buffer.constants.MAX_STRING_LENGTH bytes, while Node 24
+  // limits characters and so decodes larger multibyte files; the byte limit holds on every version.
+  if (!Buffer.isBuffer(bytes) || bytes.length > constants.MAX_STRING_LENGTH) return null;
+  // A caller-supplied fs may return a Buffer whose methods throw; that is data, not a crash.
   try {
-    // toString throws ERR_STRING_TOO_LONG above buffer.constants.MAX_STRING_LENGTH bytes.
     const serialized = bytes.toString('utf8');
     return Buffer.from(serialized, 'utf8').equals(bytes) && validJournal(serialized) ? serialized : null;
   } catch {
@@ -113,7 +115,7 @@ export function writeSerializedJournal(options) {
   if (!options || !validPath(options.path) || !hasMethods(options.fs, ['readFileSync', 'lstatSync', 'openSync', 'writeSync', 'closeSync', 'renameSync', 'unlinkSync'])) return refusal(state, 'INVALID_INPUT');
   const { path, serialized, fs, expectedPreviousSha256 } = options;
   if (Buffer.byteLength(basename(path)) > MAX_NAME_BYTES) return refusal(state, 'PATH_TOO_LONG');
-  // Bytes that decode() could never turn back into a string are not written.
+  // A journal above decode()'s byte limit could not be read back by this store, so it is not written.
   if (typeof serialized === 'string' && Buffer.byteLength(serialized) > constants.MAX_STRING_LENGTH) return refusal(state, 'TOO_LARGE');
   if (!validJournal(serialized)) return refusal(state, 'INVALID_JOURNAL');
   if (expectedPreviousSha256 !== undefined && !hex(expectedPreviousSha256)) return refusal(state, 'INVALID_INPUT');
