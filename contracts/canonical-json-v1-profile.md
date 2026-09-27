@@ -10,11 +10,16 @@ bounds views are refused. Current in-bounds resizable views are supported; limit
 apply to the captured view, not unused backing bytes. Output is an
 immutable profile/string/SHA-256 tuple. The codec performs no file, network,
 queue, or model action. `scripts/structural-check.mjs` scans its marked region
-for configured direct call patterns (process spawn, filesystem write, network,
-dynamic code or import, module load, process mutation) and is itself
-mutation-tested against `contracts/structural-fixtures.json`. The scan is
-supporting evidence, not a purity proof: aliased or computed calls, assignments
-and the imports above the region are outside it.
+for configured call patterns (process spawn, filesystem write, network, dynamic
+code or import, module load, process mutation) and is itself mutation-tested
+against `contracts/structural-fixtures.json`. A call matches when its callee, as
+written, is a configured name or ends in `.` and that name, such as
+`fs.writeFileSync`; process-mutation names match only as `process.exit` and the
+like. Only the name is matched, so a read-only `open` or an in-memory `write` is
+reported too. The scan is supporting evidence, not a purity proof: aliased or
+computed callees, `.call`, `.apply` and `Reflect.apply`, tagged templates, a
+qualified `globalThis.process`, assignments, the imports above the region and
+any other form the patterns do not name are outside it.
 
 The host JavaScript realm and its built-ins are trusted. Refusing proxy inputs
 does not make this a sandbox, and it does not protect against malicious

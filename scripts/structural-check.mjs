@@ -15,8 +15,10 @@ import {
 
 const beginMarker = "// PURE-REGION-BEGIN";
 const endMarker = "// PURE-REGION-END";
-// Direct call names only: aliased or computed calls, assignments and the
-// imports above the marked region are outside what these patterns see.
+// Each pattern tests a call's callee text, whatever its receiver or arguments.
+// Aliased or computed callees, .call/.apply, tagged templates, a qualified
+// globalThis.process, assignments and the imports above the marked region are
+// outside what these patterns see (contracts/canonical-json-v1-profile.md).
 const forbiddenCalls = new Map([
   ["process-spawn", /(?:^|\.)(?:spawn|spawnSync|exec|execSync|execFile|execFileSync|fork)$/u],
   ["filesystem-write", /(?:^|\.)(?:(?:writeFile|appendFile|rename|unlink|rm|rmdir|mkdir|mkdtemp|chmod|fchmod|lchmod|chown|fchown|lchown|truncate|ftruncate|copyFile|cp|link|symlink|write|writev|open|utimes|futimes|lutimes)(?:Sync)?|createWriteStream)$/u],

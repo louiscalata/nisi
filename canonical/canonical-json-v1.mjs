@@ -5,10 +5,10 @@
 //
 // Everything between the PURE-REGION markers below must contain no process
 // spawn, no filesystem write, no network call, no dynamic code, no module load,
-// and no process mutation. scripts/structural-check.mjs checks the region for
-// the direct call patterns it configures; aliased or computed calls, assignments
-// and the imports above the region are outside what it sees. The checker itself
-// is mutation-tested and false-positive-tested against
+// and no process mutation. scripts/structural-check.mjs checks the region's
+// callees against the names it configures, and
+// contracts/canonical-json-v1-profile.md lists the forms that check does not
+// see. The checker itself is mutation-tested and false-positive-tested against
 // contracts/structural-fixtures.json, so a checker that silently stopped
 // detecting anything would fail its own suite.
 import { createHash } from 'node:crypto';

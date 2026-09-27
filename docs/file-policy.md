@@ -52,14 +52,27 @@ digest, kind and advisory cap. Because the OS resolves the paths, a `..` after
 a linked directory means what it means when the OS opens the path: on POSIX
 systems, the parent of the link's target, not the directory holding the link.
 
-The opened-object checks reduce replacement and mutation races. A link, another
-file or a torn read detected there is `CONTENT_CHANGED_DURING_READ`, a non-file
-opened in its place is `CONTENT_NOT_REGULAR_FILE`, and growth past the cap
-during the read is `CONTENT_BYTE_LIMIT`. A same-size in-place write is detected
-when the filesystem reports changed metadata; a write that leaves the compared
-metadata unchanged can escape that check. The parent directories and file
-writers must remain trusted and stable: this is not a directory-descriptor
-sandbox or proof against every concurrent filesystem change.
+A path the OS resolver cannot resolve is `CONTENT_PATH_UNRESOLVABLE`, even when
+its text names an existing file: on POSIX systems, a `..` after a directory
+that does not exist, and on Linux, a trailing `/` or `/.` after a file name. A
+`scopeRoot` written that way leaves no file admissible. On Windows, the resolved
+path is the one the system reports for the opened file: short (8.3) names are
+expanded, letter case follows the file system, and subst and mapped drives
+resolve to their targets. A volume the resolver cannot name is refused with
+`CONTENT_PATH_UNRESOLVABLE`.
+
+The opened-object checks reduce replacement and mutation races. Another file or
+a torn read detected there is `CONTENT_CHANGED_DURING_READ`, a non-file opened
+in its place is `CONTENT_NOT_REGULAR_FILE`, and growth past the cap during the
+read is `CONTENT_BYTE_LIMIT`. A link swapped in is `CONTENT_CHANGED_DURING_READ`
+where the open refuses it with `ELOOP`, as `O_NOFOLLOW` does on Linux and
+macOS. Where the open follows the link, as on Windows, its target is checked
+like any other replacement, and a target that cannot be opened is
+`CONTENT_UNREADABLE`. A same-size in-place write is detected when the
+filesystem reports changed metadata; a write that leaves the compared metadata
+unchanged can escape that check. The parent directories and file writers must
+remain trusted and stable: this is not a directory-descriptor sandbox or proof
+against every concurrent filesystem change.
 
 `grant.revoke()` is terminal and prevents future admissions. It does not retract
 returned bytes or cancel a model already running. `grant.status()` reports the

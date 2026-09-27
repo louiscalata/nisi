@@ -148,7 +148,8 @@ function runProbe(binary, input, timeoutMs, signal) {
       out = Buffer.concat([out, chunk]);
     });
     // Drained always, kept only up to 64 bytes: longer than any helper code line.
-    child.stderr.on('data', chunk => { if (err.length < 64) err = Buffer.concat([err, chunk]).subarray(0, 64); });
+    // Only the kept bytes are copied, so no chunk outlives its own event.
+    child.stderr.on('data', chunk => { if (err.length < 64) err = Buffer.concat([err, chunk.subarray(0, 64 - err.length)]); });
     child.once('close', (exitCode, sig) => {
       if (overflow) return finish({ code: 'EVIDENCE_OVERFLOW' });
       if (sig) return finish({ code: 'CHILD_SIGNALLED' });

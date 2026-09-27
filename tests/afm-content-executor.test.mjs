@@ -396,6 +396,62 @@ test('a missing helper binary is BINARY_UNREADABLE at construction and before an
   assert.deepEqual(made.readings(), []);
 });
 
+test('an unreadable helper binary is BINARY_UNREADABLE at construction and before any launch', async () => {
+  const root = tempRoot();
+  const { grant } = consent(root);
+  const marker = path.join(root, 'spawned.marker');
+  const stub = stubProbe('', { marker });
+  const items = { 't.1': { filePath: write(root, 'a.json', '{}'), kind: 'json' } };
+  // The file is there and lstat succeeds; only its read fails. A thrown EACCES
+  // stands in for a permission the suite, which may run as root, cannot withhold.
+  const original = fs.readFileSync;
+  const unreadable = function(target, ...args) {
+    if (target === stub.file) throw Object.assign(new Error(`EACCES: permission denied, open '${target}'`), { code: 'EACCES' });
+    return original.call(fs, target, ...args);
+  };
+  fs.readFileSync = unreadable;
+  try {
+    assert.equal(createAFMContentExecutor({ binary: stub.file, binarySHA256: stub.sha, grant, items }).code,
+      'BINARY_UNREADABLE');
+  } finally { fs.readFileSync = original; }
+  const made = build(stub, grant, items);
+  assert.equal(made.ok, true, made.code);
+  let out;
+  fs.readFileSync = unreadable;
+  try { out = await made.execute(packet, { taskId: 't.1' }); } finally { fs.readFileSync = original; }
+  assert.equal(out.code, 'AFM_PACKET_UNAVAILABLE');
+  assert.equal(out.payloadSha256, sha(Buffer.from('nisi/content-refusal/v1\0BINARY_UNREADABLE', 'utf8')));
+  assert.deepEqual(made.refusals(), [{ taskId: 't.1', cause: 'BINARY_UNREADABLE' }]);
+  assert.deepEqual(made.readings(), []);
+  assert.equal(fs.existsSync(marker), false);
+});
+
+test('helper stderr is drained whole, and no more than 64 bytes of it are ever copied', async () => {
+  const root = tempRoot();
+  const file = write(root, 'a.json', '{}');
+  const { grant } = consent(root);
+  const made = build(childFailureProbe("process.stderr.write('x'.repeat(1 << 20)); process.exitCode = 65;"), grant,
+    { 't.1': { filePath: file, kind: 'json' } });
+  // A mebibyte overfills the pipe and the parent's stream buffer, so a child
+  // whose stderr stopped being read would block until the deadline. Each copy
+  // of stderr appends part of the child's 'x' run to what is kept; no other
+  // concatenation in this run ends with a run of 'x' alone.
+  const original = Buffer.concat, copied = [];
+  Buffer.concat = function(list, ...rest) {
+    const tail = list?.[1];
+    if (list?.length === 2 && tail?.length > 0 && tail.every(byte => byte === 0x78)) {
+      copied.push(list[0].length + tail.length);
+    }
+    return original.call(this, list, ...rest);
+  };
+  let out;
+  try { out = await made.execute(packet, { taskId: 't.1' }); } finally { Buffer.concat = original; }
+  assert.equal(out.code, 'AFM_PACKET_UNAVAILABLE');
+  assert.deepEqual(made.refusals(), [{ taskId: 't.1', cause: 'CHILD_EXIT_NONZERO' }]);
+  assert.ok(copied.length > 0, 'stderr was never read');
+  assert.equal(Math.max(...copied), 64);
+});
+
 test('an aborted run is refused and leaves no reading behind', async () => {
   const root = tempRoot();
   const { grant } = consent(root);

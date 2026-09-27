@@ -167,6 +167,39 @@ test("'..' after a linked directory is resolved as the OS resolves it, for items
   assert.equal(admitted.bytes.toString('utf8'), 'OUTSIDE');
 });
 
+test("'..' after a missing directory is unresolvable, for items and the root, though its text names a file", {
+  skip: process.platform === 'win32' &&
+    'Windows collapses .. as text before resolving, so the path names the existing file',
+}, () => {
+  const root = tempRoot();
+  const inside = write(root, 'a.txt', 'IN-SCOPE');
+  const dotted = `${root}${path.sep}missing${path.sep}..`, filePath = `${dotted}${path.sep}a.txt`;
+  assert.throws(() => fs.readFileSync(filePath), { code: 'ENOENT' });
+  const grant = grantOf(root);
+  const refused = grant.admitContent({ filePath, kind: 'text' });
+  assert.equal(refused.code, 'CONTENT_PATH_UNRESOLVABLE');
+  assert.equal('bytes' in refused, false);
+  // A root written that way leaves no file admissible.
+  assert.equal(grantOf(dotted).admitContent({ filePath: inside, kind: 'text' }).code, 'CONTENT_PATH_UNRESOLVABLE');
+  assert.equal(grant.status().admittedItems, 0);
+});
+
+test('a trailing slash after a file name is unresolvable on Linux, where the OS refuses it', {
+  skip: process.platform !== 'linux' &&
+    'other realpath(3) implementations, such as macOS, may strip the slash and name the file',
+}, () => {
+  const root = tempRoot();
+  const file = write(root, 'a.txt', 'IN-SCOPE');
+  const grant = grantOf(root);
+  for (const filePath of [`${file}/`, `${file}/.`]) {
+    assert.throws(() => fs.readFileSync(filePath), { code: 'ENOTDIR' }, filePath);
+    const refused = grant.admitContent({ filePath, kind: 'text' });
+    assert.equal(refused.code, 'CONTENT_PATH_UNRESOLVABLE', filePath);
+    assert.equal('bytes' in refused, false, filePath);
+  }
+  assert.equal(grant.status().admittedItems, 0);
+});
+
 test('each item is checked on its own terms', () => {
   const root = tempRoot();
   const grant = grantOf(root);
