@@ -14,7 +14,11 @@ the workflow, journal, and store APIs directly. This release does not run
 arbitrary repositories from the command line. The [v0.1 verification
 record](https://github.com/louiscalata/nisi/blob/main/docs/verification.md)
 describes the earlier release. The [v0.2 verification record](https://github.com/louiscalata/nisi/blob/main/docs/verification-v0.2.md)
-records the checks for this release and their limits.
+records the checks for this release and their limits. The `main` branch also
+carries an unreleased hardening update; the
+[changelog](https://github.com/louiscalata/nisi/blob/main/CHANGELOG.md) lists its
+behavior changes. The v0.2.0 tag and release archive do not include it, and the
+guides linked from this README describe `main`.
 
 ## Quick start
 
@@ -52,8 +56,18 @@ commands. An installed release archive provides the `nisi` executable.
 `nisi demo` runs the same fixed workflow shown above, with no model call.
 `nisi local-model` runs a fixed JSON-configuration task against a configured
 loopback chat server. It does not execute model-generated programs or apply
-changes to a repository. The host application remains responsible for any
-broader coding task and for deciding whether to apply proposed files.
+changes to a repository. On `main`, `nisi demo` removes its temporary report
+directory after the report has been written and verified; when a failure has a
+fixed cause code, such as `ENOENT`, the message includes it. `nisi local-model`
+refuses invalid arguments with exit code `2` and names the argument, its rule
+and a fixed code such as `LOCAL_CHAT_DESTINATION_REFUSED` or
+`LOCAL_MODEL_NAMES_EQUAL`; `nisi --help` lists the endpoint and model-name
+rules. Its JSON summary includes `authorCode` and `reviewerCode`: the fixed code
+on each role's last adapter receipt, which is set when that call failed (for
+example `LOCAL_CHAT_UNAVAILABLE` or `LOCAL_CHAT_MODEL_MISMATCH`), or `null`. If
+the command cannot load its workflow module it exits `1`. The host application
+remains responsible for any broader coding task and for deciding whether to
+apply proposed files.
 
 To use the downloadable `nisi-0.2.0.tgz` archive without cloning the source,
 install it into a new project folder with
@@ -67,24 +81,38 @@ install models or start a model server.
 v0.2 adds the public `nisi` command, a **run journal**, and a disk store for it.
 The journal is an append-only, hash-chained record of what a run observed. A host can write it,
 reopen it after a process restart, and check it before relying on its rows.
-These modules live under `history/`. The v0.1 workflow and local-model adapter
-are unchanged; results measured with a separate private adapter do not apply
-to this public package.
+The header records the journal's latest observed time and is part of the
+chain root, so once an append, `list` or `retain` advances that time, every
+later serialization has new entry hashes and a new `lastHash`. A saved
+`lastHash` identifies one snapshot, not a prefix of later files.
+These modules live under `history/`. In v0.2.0 the v0.1 workflow and
+local-model adapter were unchanged; results measured with a separate private
+adapter do not apply to this public package.
 
 - **Run journal** (`history/run-journal-v1.mjs`, import `nisi/history/run-journal`).
   `createRunJournal(config)` validates every entry (fixed keys, identifier
-  formats, safe integers, one of six states), reports duplicate and conflicting
-  re-appends, refuses invalid retries, revocations, and project mismatches,
-  applies the configured payload redaction before anything is stored, and
+  formats, safe integers, one of six states; on `main`, at most 256 nested
+  objects and arrays, counting the entry itself), reports duplicate and
+  conflicting re-appends, refuses invalid retries, revocations, and project
+  mismatches, applies the configured payload redaction before anything is
+  stored (every configured path must exist in each entry's payload,
+  revocations included, or `append` throws code `REDACTION`), and
   retires entries past their TTL or beyond the configured maximum by clearing
   their payloads while keeping their place in the chain. `list(now)` reports
-  each entry's liveness: `RUNNING` with a fresh heartbeat, `UNKNOWN` once the
-  heartbeat is stale, `EXPIRED` after its TTL, or `REVOKED`. `serialize()`
-  produces canonical JSON lines with a header, a SHA-256 chain, and a footer;
-  `reopen(serialized)` rebuilds the journal and returns a recovery report
-  (`COMPLETE`, `INCOMPLETE` for truncated input, or `INVALID`). A journal
-  reopened from damaged input is sealed and refuses further appends. The
-  module imports only `node:crypto` and `node:util`.
+  each entry's liveness: `REVOKED` if another entry revokes it; otherwise its
+  own terminal state (`SUCCEEDED`, `FAILED`, `CANCELLED` or `REVOKED`), even
+  after its TTL; otherwise `EXPIRED` after its TTL; otherwise `UNKNOWN` for
+  `RUNNING` with a missing or stale heartbeat; otherwise `QUEUED` or `RUNNING`.
+  Use the separate `expired` and `revoked` fields to filter by TTL or
+  revocation. `serialize()` produces canonical JSON lines with a header, a
+  SHA-256 chain, and a footer; `reopen(serialized)` rebuilds the journal and
+  returns a recovery report (`COMPLETE`, `INCOMPLETE` for input truncated
+  after the header, or `INVALID`). A journal reopened from damaged input is
+  sealed and refuses further appends. If the header line is missing or
+  damaged, including an empty input or one cut off within the first line,
+  `reopen` reports `INVALID` with reason `HEADER` and returns `journal: null`;
+  check `report.status` before using `journal`. The module imports only
+  `node:crypto` and `node:util`.
   Fingerprints and duplicate detection use the redacted entry. Changes only to
   redacted values therefore compare as duplicates; the original values cannot
   be reconstructed from the journal.
@@ -95,12 +123,25 @@ to this public package.
   syncs the file and its directory, verifies by reading back, and renames into
   place. Each write attempt uses its own temporary filename, so an orphaned
   temporary file from a stopped process does not block an identical retry.
-  `expectedPreviousSha256` detects stale **sequential** writes; it is not an
-  atomic guard for concurrent writers. Use one writer per journal and
-  serialize writes in the host. The store reports `committed` and `durable`
-  separately, so a write that landed without confirmed file and directory
-  sync is never reported as durable. A read refuses truncated, non-canonical,
-  malformed-UTF-8, or chain-broken files instead of returning partial data.
+  Creating a new file needs no hash (a hash given for a missing file is a
+  `CONFLICT`). Replacing an existing journal requires
+  `expectedPreviousSha256`, the `sha256` returned by the previous
+  `writeSerializedJournal` or `readSerializedJournal`; without it, or with a
+  stale value, the write is refused with reason `CONFLICT` and the file is
+  unchanged. Identical bytes return `UNCHANGED` when the hash is omitted or
+  matches. This detects stale **sequential** writes; it is not an atomic guard
+  for concurrent writers. Use one writer per journal and serialize writes in
+  the host. The store checks that a replacement is a valid journal and that the
+  existing file matches the hash; it does not check that the replacement
+  extends the existing journal. On `main`, a write to a symlinked destination
+  is refused with `SYMLINK`, so point the store at the real file; the writer's
+  `fs` must provide `lstatSync`; and on every platform a journal file name
+  longer than 149 UTF-8 bytes, which leaves no room for the temporary name
+  within the common 255-byte limit, is refused with `PATH_TOO_LONG`. The store
+  reports `committed` and `durable` separately, so a write that landed without
+  confirmed file and directory sync is never reported as durable. A read
+  refuses truncated, non-canonical, malformed-UTF-8, or chain-broken files
+  instead of returning partial data.
 
 The public package does not include a recovery worker. Package exports are
 limited to the declared runtime modules; old undocumented deep imports may no
@@ -236,7 +277,13 @@ required exactly one `answer.json` file whose JSON object had only an `answer`
 key holding the expected value. All six one-shot outputs that failed this
 contract contained the expected value without that wrapper. A handwritten
 checked loop and Nisi each repaired those six shapes once and tied on all 12
-tasks; their draft and repair request bytes matched per task.
+tasks; their draft and repair request bytes matched per task. Before each
+repair call, the pilot harness replaced both schedulers' own failed-stage
+records with one fixed `ANSWER_SHAPE` finding, so the Nisi row does not
+measure Nisi's default repair request. Rebuilt from the retained reports with
+the engine's own stage records, each of Nisi's six repair request bodies would
+have been 1,641 to 1,695 bytes larger (about 58% in total); those requests'
+token counts were not measured.
 
 The same 12 tasks had appeared in earlier exploratory runs, and server cache
 behavior was not measured. Treat these counts as an integration check, not a
@@ -280,6 +327,7 @@ savings claim.
 ## Documentation
 
 - [Workflow API reference](https://github.com/louiscalata/nisi/blob/main/docs/workflow-api.md) — task, candidate, callback, and report contracts.
+- [Run journal and store API reference](https://github.com/louiscalata/nisi/blob/main/docs/journal-api.md) — config, entries, limits, result and refusal codes, liveness, reopen reports, and durability.
 - [Architecture](https://github.com/louiscalata/nisi/blob/main/docs/architecture.md) — components, terminology, and trust boundaries.
 - [Local models](https://github.com/louiscalata/nisi/blob/main/docs/local-models.md), [file access](https://github.com/louiscalata/nisi/blob/main/docs/file-policy.md), and [Apple integration](https://github.com/louiscalata/nisi/blob/main/docs/apple-foundation-models.md) — integration setup and limits.
 - [v0.1 verification](https://github.com/louiscalata/nisi/blob/main/docs/verification.md) and [v0.2 verification](https://github.com/louiscalata/nisi/blob/main/docs/verification-v0.2.md) — version-scoped results and limits.

@@ -47,12 +47,20 @@ Two limits are worth stating plainly because they are easy to misread:
   separate people or models. Read-only workflow mode skips authoring and repair;
   it cannot prevent callbacks or other processes from writing files.
 - Model and test evidence can be well formed and still dishonest. The Apple
-  helper's egress/persistence flags and a local HTTP endpoint's model/usage
-  fields are validated reports, not independently witnessed facts.
-- The local-chat client permits loopback HTTP only and refuses redirects. It
-  does not authenticate the listening process or control that server's logging,
-  forwarding, tools or inference location. The Apple-only file declaration
-  never grants permission to send its admitted content to another destination.
+  helper's egress/persistence flags and its stderr refusal codes, and a local
+  HTTP endpoint's model/usage fields, are validated reports, not independently
+  witnessed facts.
+- The local-chat client permits loopback HTTP only and refuses redirects.
+  Without an injected `fetch`, the source on `main` connects through a private
+  `node:http` agent, so Node's environment proxy (`NODE_USE_ENV_PROXY` or
+  `--use-env-proxy`), a replaced `http.globalAgent` and the global `fetch`
+  dispatcher do not reroute its requests. The v0.2.0 release used the global
+  `fetch`, which Node's environment proxy and a replaced global dispatcher can
+  reroute. An injected `fetch` is trusted and brings its own routing. The
+  client does not authenticate the listening process or control that server's
+  logging, forwarding, tools or inference location. The Apple-only file
+  declaration never grants permission to send its admitted content to another
+  destination.
 - Cancellation stops the engine waiting and rejects late results. It cannot
   undo external effects, preempt synchronous JavaScript or guarantee an
   uncooperative callback stopped. Hosts must implement isolation and cleanup.

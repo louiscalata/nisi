@@ -3,7 +3,9 @@
 Import `createFileAccessPolicy` from `nisi/policy` or the package root. This is
 an additive name for `createContentConsent`; the original module, result codes
 and v1 digest remain compatible. Run `node examples/allow-a-file.mjs` for six
-admission/refusal cases without model execution.
+admission/refusal cases without model execution. Where symlink creation is not
+permitted, such as Windows without Developer Mode, the symlink case prints a
+`SKIPPED` line instead.
 
 ## Declaration
 
