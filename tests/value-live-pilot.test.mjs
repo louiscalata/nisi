@@ -2,6 +2,7 @@
 // SPDX-License-Identifier: Apache-2.0
 import test from 'node:test';
 import assert from 'node:assert/strict';
+import { createHash } from 'node:crypto';
 import fs from 'node:fs/promises';
 import os from 'node:os';
 import path from 'node:path';
@@ -150,4 +151,20 @@ test('an interrupted pilot retains the first row and marks the rest not run', as
   const rows = (await fs.readFile(`${output}.rows.jsonl`, 'utf8')).trim().split('\n').map(JSON.parse);
   assert.equal(rows.length, 1);
   assert.equal(rows[0].taskId, 'class-01');
+});
+
+test('the pilot source manifest differs from this checkout only where the results README says so', async () => {
+  const root = new URL('../', import.meta.url);
+  const read = file => fs.readFile(new URL(file, root));
+  const { sourceSha256 } = JSON.parse(await read('benchmarks/value/results/pilot-local-gemma-source-sha256.json'));
+  const differing = [];
+  for (const [file, pinned] of Object.entries(sourceSha256)) {
+    if (createHash('sha256').update(await read(file)).digest('hex') !== pinned) differing.push(file);
+  }
+  // The runner and this test never matched in any commit; the engine, contracts and
+  // adapter match v0.2.0 and changed afterwards. Other drift must be disclosed first.
+  assert.deepEqual(differing.sort(), ['adapters/local-chat.mjs', 'benchmarks/value/live-pilot.mjs',
+    'tests/value-live-pilot.test.mjs', 'workflow/contracts.mjs', 'workflow/engine.mjs']);
+  const disclosure = (await read('benchmarks/value/results/README.md')).toString('utf8');
+  for (const file of differing) assert.ok(disclosure.includes(`\`${file}\``), `results/README.md must name ${file}`);
 });

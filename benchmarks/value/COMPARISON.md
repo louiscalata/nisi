@@ -67,9 +67,14 @@ handwritten checked loop each met the strict output contract on all 12 tasks
 with 18 model calls and six repairs. The loop reported 8,295 tokens; Nisi
 reported 8,291. **Four fewer reported tokens, or 0.048% of the loop total, is
 not evidence of material token savings.** Their draft and repair request bytes
-matched per task. The direct one-shot arm used 4,803 tokens but met the contract
-on only 6/12 tasks and had no repair budget, so it is not an equal-success
-comparison. The tasks were synthetic and previously exercised, with one local
+matched per task. In both checked arms the harness replaced the scheduler's own
+failed-stage records with one fixed `ANSWER_SHAPE` finding before each repair
+call (`benchmarks/value/live-pilot.mjs`), so the token counts do not measure
+Nisi's default repair payload; with the engine's own stage records, each of
+Nisi's six repair request bodies would have been 1,641 to 1,695 bytes larger
+([details](results/README.md)). The direct one-shot arm used 4,803 tokens but
+met the contract on only 6/12 tasks and had no repair budget, so it is not an
+equal-success comparison. The tasks were synthetic and previously exercised, with one local
 Gemma endpoint and unmeasured cache behavior.
 
 Nisi exposes an explicit host/workflow boundary and a validated evidence path;

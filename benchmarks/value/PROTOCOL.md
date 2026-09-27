@@ -4,7 +4,9 @@ This is a development-time, openly authored benchmark of the released v0.2.0
 workflow implementation. It is not a held-out task evaluation, a provider
 certification, or a preregistered clinical-style experiment. Source hashes and
 the exact scenario list are written before every run. Results use new directories
-so failed and superseded runs remain available.
+so failed and superseded runs remain available. A run from `main` after the
+2026-09-26 hardening pass exercises the changed, unreleased workflow source,
+which those hashes identify.
 
 ## Questions and arms
 
@@ -15,7 +17,7 @@ so failed and superseded runs remain available.
 4. Which inference interfaces can feed the same workflow through an adapter?
 
 The three control arms are a checked one-shot (zero repairs), a handwritten
-checked loop (two repairs), and the unchanged released Nisi workflow (two
+checked loop (two repairs), and the Nisi workflow in the checkout (two
 repairs). Both references share Nisi task/candidate value-object contracts and
 hashing; the loop independently implements scheduling. They are not independent
 Nisi-free products. All arms use the same authored transcript callbacks. The
