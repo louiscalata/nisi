@@ -22,11 +22,17 @@ import { afmStubLaunches, registerAFMStub, restoreAFMStubLauncher } from './afm-
 
 test.after(restoreAFMStubLauncher);
 
+// Every scratch directory is removed after this file's tests; a locked file
+// (for example under a Windows scanner) must not fail the suite.
+const made = [];
+const scratch = prefix => { const dir = fs.mkdtempSync(path.join(os.tmpdir(), prefix)); made.push(dir); return dir; };
+test.after(() => { for (const dir of made) { try { fs.rmSync(dir, { recursive: true, force: true, maxRetries: 5 }); } catch {} } });
+
 const sha = b => createHash('sha256').update(b).digest('hex');
 const packet = Buffer.from('{"kind":"nisi-request-v1"}', 'utf8');
 
 function tempRoot() {
-  return fs.realpathSync(fs.mkdtempSync(path.join(os.tmpdir(), 'afm-content-')));
+  return fs.realpathSync(scratch('afm-content-'));
 }
 
 function grantBytes(scopeRoot, overrides = {}) {
@@ -52,7 +58,7 @@ function consent(scopeRoot, overrides) {
  *  JavaScript expression applied to the evidence object before it is emitted,
  *  which is how the negative cases forge dishonest evidence. */
 function stubProbe(mutate = '', { marker = null, extra = '', output = 'JSON.stringify(evidence)', register = true } = {}) {
-  const dir = fs.mkdtempSync(path.join(os.tmpdir(), 'afm-stub-'));
+  const dir = scratch('afm-stub-');
   const file = path.join(dir, 'stub');
   const body = `#!${process.execPath}
 const fs = require('fs'), crypto = require('crypto');
@@ -86,7 +92,7 @@ process.stdout.write(${output});
 }
 
 function childFailureProbe(script) {
-  const dir = fs.mkdtempSync(path.join(os.tmpdir(), 'afm-stub-'));
+  const dir = scratch('afm-stub-');
   const file = path.join(dir, 'stub');
   fs.writeFileSync(file, `#!${process.execPath}\nprocess.stdin.resume();\nprocess.stdin.on('end', () => { ${script} });\n`,
     { mode: 0o755 });

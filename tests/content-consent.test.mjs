@@ -20,7 +20,19 @@ import { createFileAccessPolicy } from 'nisi/policy';
 import { canonicalizeJsonV1 } from 'nisi/serialization';
 
 const sha = b => createHash('sha256').update(b).digest('hex');
-const tempRoot = () => fs.realpathSync(fs.mkdtempSync(path.join(os.tmpdir(), 'consent-')));
+// Every scratch directory is removed after this file's tests; a locked file
+// (for example under a Windows scanner) must not fail the suite.
+const made = [];
+const tempRoot = () => { const dir = fs.realpathSync(fs.mkdtempSync(path.join(os.tmpdir(), 'consent-'))); made.push(dir); return dir; };
+test.after(() => { for (const dir of made) { try { fs.rmSync(dir, { recursive: true, force: true, maxRetries: 5 }); } catch {} } });
+// Creating a symlink on Windows needs elevated rights or Developer Mode; a test
+// that swaps one in mid-read is skipped, with the reason, where that is refused.
+const SYMLINKS = (() => {
+  const dir = tempRoot(), target = path.join(dir, 'target');
+  fs.writeFileSync(target, 'x');
+  try { fs.symlinkSync(target, path.join(dir, 'link')); return false; }
+  catch (error) { return `symlink creation is unavailable here (${error.code})`; }
+})();
 
 function declaration(scopeRoot, overrides = {}) {
   return {
@@ -122,6 +134,7 @@ test('scope is a path boundary, not a string prefix', () => {
   const root = tempRoot();
   const sibling = `${root}-evil`;
   fs.mkdirSync(sibling);
+  made.push(sibling);
   const grant = grantOf(root);
   const smuggled = write(sibling, 'a.json', '{"secret":true}');
   assert.equal(grant.admitContent({ filePath: smuggled, kind: 'json' }).code, 'CONTENT_OUT_OF_SCOPE');
@@ -333,7 +346,7 @@ test('later clock failures are named refusals and status samples the clock once'
 // on the OS-resolved path, whose spelling can differ from the caller's (8.3
 // names on Windows), so each wrapper matches that path.
 
-test('a final-component replacement after validation is refused before content is returned', () => {
+test('a final-component replacement after validation is refused before content is returned', { skip: SYMLINKS }, () => {
   const root = tempRoot(), outside = tempRoot();
   const filePath = write(root, 'safe.txt', 'PUBLIC'), resolved = fs.realpathSync.native(filePath);
   const secret = write(outside, 'secret.txt', 'SECRET');

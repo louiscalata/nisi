@@ -57,9 +57,11 @@ and [docs/local-models.md](docs/local-models.md) give the details.
   `length`, such as `{}` or `true`.
 - **Local chat receipts and schemas**: every receipt adds `httpStatus`; failure
   receipts keep `responseSha256`, `contentSha256`, the reported model and valid
-  usage once known. The review schema bounds finding `code` to 1-128 and
-  `message` to 1-2,048 characters, and author and repair schemas no longer
-  offer protected paths unless every allowed path is protected.
+  usage once known. A `binding` value a receipt cannot hold (such as `NaN` or an
+  object) is recorded as null, so every call leaves a receipt. The review
+  schema bounds finding `code` to 1-128 and `message` to 1-2,048 characters,
+  and author and repair schemas no longer offer protected paths unless every
+  allowed path is protected.
 - **Run journal**: entries nested past 256 objects and arrays (counting the
   entry) throw `ENTRY` on append; v0.2.0 accepted them until the stack ran out,
   then threw an uncoded RangeError. A journal already holding one, which v0.2.0
@@ -144,9 +146,12 @@ and [docs/local-models.md](docs/local-models.md) give the details.
 
 ### Tests
 
-- Add 71 tests (296 in all) that pin the documented guards and codes above.
+- Add 72 tests (297 in all) that pin the documented guards and codes above.
   Each fix has a regression test.
-- The report-store timeout test no longer depends on wall-clock stage timing.
+- The report-store timeout test no longer depends on wall-clock stage timing,
+  the file-policy and Apple helper tests remove their scratch directories, and
+  the symlink-swap race test is skipped with a reason where symlink creation
+  is refused.
 - `npm run check:cli-package` checks packed export targets and installed
   imports, LF-only packed text, relative README links, and a closed-port
   `nisi local-model` run. The structural check covers more direct-call

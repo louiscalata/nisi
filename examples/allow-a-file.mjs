@@ -69,6 +69,11 @@ try {
   console.log(a === b ? 'same hash for same meaning' : 'BUG');
 } finally {
   // These directories were created by this demonstration; remove them however it ends.
-  fs.rmSync(allowed, { recursive: true, force: true });
-  if (elsewhere) fs.rmSync(elsewhere, { recursive: true, force: true });
+  // Each is removed on its own, with retries for a briefly locked file, and a failed
+  // removal is reported without replacing the demonstration's own error.
+  for (const dir of [allowed, elsewhere]) {
+    if (!dir) continue;
+    try { fs.rmSync(dir, { recursive: true, force: true, maxRetries: 5 }); }
+    catch (error) { console.error(`Could not remove ${dir} (${error.code ?? 'ERROR'}).`); process.exitCode = 1; }
+  }
 }

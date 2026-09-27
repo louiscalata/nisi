@@ -141,7 +141,7 @@ export async function runCli(args, options = {}) {
       // was written. Remove only the demo's own mkdtemp directory.
       if (typeof directory === 'string' && path.basename(directory).startsWith(WORKFLOW_DIRECTORY_PREFIX)) {
         try {
-          await rm(directory, { recursive: true, force: true, maxRetries: 2 });
+          await rm(directory, { recursive: true, force: true, maxRetries: 5 });
         } catch (error) {
           await emit(stderr, `${withCode(`The deterministic workflow demo could not remove its ${WORKFLOW_DIRECTORY_PREFIX}* temporary directory`, error?.code)}.`);
         }

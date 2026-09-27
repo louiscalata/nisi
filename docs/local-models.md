@@ -133,7 +133,9 @@ receipt has `schemaVersion`, `operation`, `adapterId`, `requestedModel`, `runId`
 provider-reported `promptTokens`, `completionTokens` and `totalTokens`; missing
 usage is `null`, not zero. A validated call has status `RESPONSE_VALIDATED`.
 A failure has status `UNAVAILABLE`, a specific `code` and null candidate
-fingerprints, and keeps whatever the endpoint had already supplied: the HTTP
+fingerprints (`ABORTED` when the payload's `signal`, such as the engine's
+deadline or a cancellation, stopped the call; `LOCAL_CHAT_TIMEOUT` when the
+adapter's own `timeoutMs` did), and keeps whatever the endpoint had already supplied: the HTTP
 status of a response the transport returned (an integer from 100 to 999; the
 default transport returns only statuses 200–599, so any other status leaves
 `httpStatus` `null`), the response and content digests, a reported

@@ -202,10 +202,13 @@ async function call(state, payload, operation, receipts, transform) {
   // Response facts are kept as soon as they are known, so a failure receipt retains them.
   let stopCode = null, requestSha256 = null, httpStatus = null, responseSha256 = null, contentSha256 = null, reportedModel = null, usage = null;
   const stop = code => { if (stopCode === null) { stopCode = code; controller.abort(); } };
+  // A binding value a receipt cannot hold (NaN, an object) is recorded as null, so every call still leaves a receipt.
+  const bound = key => { const value = isRecord(binding) ? binding[key] : null;
+    return typeof value === 'string' || Number.isSafeInteger(value) ? value : null; };
   const metadata = () => ({schemaVersion: 1, operation, adapterId: state.id,
-    requestedModel: state.model, runId: binding?.runId ?? null,
-    taskFingerprint: binding?.taskFingerprint ?? null, attempt: binding?.attempt ?? null,
-    inputCandidateFingerprint: binding?.candidateFingerprint ?? null, requestedMaxOutputTokens: state.maxOutputTokens,
+    requestedModel: state.model, runId: bound('runId'),
+    taskFingerprint: bound('taskFingerprint'), attempt: bound('attempt'),
+    inputCandidateFingerprint: bound('candidateFingerprint'), requestedMaxOutputTokens: state.maxOutputTokens,
     requestSha256, elapsedMs: Math.round(performance.now() - started)});
   const record = (status, extra, fingerprint = null) => receipts.push(cloneFreeze({...metadata(), status, ...extra, reportedModel,
     candidateFingerprint: fingerprint, resultCandidateFingerprint: fingerprint, responseSha256, contentSha256, usage, httpStatus}));

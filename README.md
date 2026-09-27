@@ -65,8 +65,11 @@ and a fixed code such as `LOCAL_CHAT_DESTINATION_REFUSED` or
 `LOCAL_MODEL_NAMES_EQUAL`; `nisi --help` lists the endpoint and model-name
 rules. Its JSON summary includes `authorCode` and `reviewerCode`: the fixed code
 on each role's last adapter receipt, which is set when that call failed (for
-example `LOCAL_CHAT_UNAVAILABLE` or `LOCAL_CHAT_MODEL_MISMATCH`), or `null`. If
-the command cannot load its workflow module it exits `1`. The host application
+example `LOCAL_CHAT_UNAVAILABLE` or `LOCAL_CHAT_MODEL_MISMATCH`), or `null`.
+`ABORTED` means the workflow deadline or a cancellation stopped that call; the
+command's adapter timeout equals its workflow deadline, so a server that never
+answers shows `ABORTED` with outcome `TIMED_OUT`. If the command cannot load
+its workflow module it exits `1`. The host application
 remains responsible for any broader coding task and for deciding whether to
 apply proposed files.
 

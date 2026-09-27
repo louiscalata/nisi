@@ -412,6 +412,17 @@ test('malformed payloads are refused with an exact code and receipt before any t
   assert.deepEqual(JSON.parse(stdout.trim()), { code: 'LOCAL_CHAT_PAYLOAD_INVALID', receipts: 1, timers: 0 });
 });
 
+test('a binding value a receipt cannot hold is recorded as null, and the call still leaves a receipt', async () => {
+  const adapter = reviewer({ timeoutMs: 5_000, fetch: async () => { throw new Error('offline'); } });
+  const odd = { ...binding, runId: { nested: true }, attempt: Number.NaN, taskFingerprint: 7.5, candidateFingerprint: undefined };
+  await rejectsCode(() => adapter.review(payload({ binding: odd })), 'LOCAL_CHAT_UNAVAILABLE');
+  await rejectsCode(() => adapter.review(payload({ binding: 'not-a-binding' })), 'LOCAL_CHAT_UNAVAILABLE');
+  const receipts = adapter.receipts();
+  assert.deepEqual(receipts.map(receipt => [receipt.status, receipt.code, receipt.runId, receipt.taskFingerprint, receipt.attempt,
+    receipt.inputCandidateFingerprint]), [['UNAVAILABLE', 'LOCAL_CHAT_UNAVAILABLE', null, null, null, null],
+    ['UNAVAILABLE', 'LOCAL_CHAT_UNAVAILABLE', null, null, null, null]]);
+});
+
 test('a payload with a task object is still sent, whatever its file lists hold', async () => {
   // The engine only supplies validated arrays; direct callers keep the acceptance they had before the payload guard.
   const listed = { ...task, allowedFiles: ['a.json', 'config.json'] };
