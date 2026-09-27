@@ -90,8 +90,8 @@ The optional report store receives a frozen preliminary report and an exact
 versioned digest. Its acknowledgement can set `reportStored`; the engine does
 not independently prove durable retention. A storage result can change the
 final `outcome` and `code`; `workflowOutcome` and `workflowCode` keep the
-values from before storage. The store is not called once the run was cancelled
-or its deadline has passed. Use the [Workflow API](workflow-api.md)
+values from before storage. The store is not called if the run was cancelled,
+or the clock reached the deadline, before storage. Use the [Workflow API](workflow-api.md)
 for exact schemas, [File Access Policy](file-policy.md) for host-controlled
 content admission, [Local Models](local-models.md) for loopback adapter setup,
 and [Verification](verification.md) for source- and environment-scoped checks.

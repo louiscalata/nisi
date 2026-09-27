@@ -165,6 +165,7 @@ test('stale or malformed evidence and protected or out-of-scope candidates are b
   const malformed = adapters({ checks: binding => ({ status: 'PASS', evidence: { ...binding, findings: [], reason: '', extra: true } }) });
   assert.equal((await runWorkflow(makeTask(), { adapters: malformed })).code, 'STATIC_CHECKS_EVIDENCE_SCHEMA');
   // Drafts carry their real fingerprint, so only the scope or protection guard can refuse them.
+  // createCandidate() takes no task: it fingerprints out-of-scope and changed protected files.
   const candidateOf = files => createCandidate({ files }, { authorId: 'author.one' });
   const drafting = (task, files, fingerprint = candidateOf(files).fingerprint) => {
     const a = adapters();
@@ -532,6 +533,19 @@ test('the reviewer plan, author and adapter IDs are read once and the validated 
   const authored = await runWorkflow(makeTask(), { adapters: swapped });
   assert.equal(authored.outcome, 'COMPLETED');
   assert.equal(authorReads, 1);
+
+  const reads = { candidate: 0, candidateAuthorId: 0, reportStore: 0 };
+  const first = { candidate: { files: [file(BASE_TEXT)] }, candidateAuthorId: 'author.one', reportStore: { store: ({ report, reportSha256, binding }) => ({
+    status: 'PASS', evidence: { ...binding, outcome: report.outcome, reportSha256 } }) } };
+  const later = { candidate: { files: [] }, candidateAuthorId: 'reviewer.one', reportStore: undefined };
+  const options = { adapters: adapters() };
+  for (const key of Object.keys(reads)) {
+    Object.defineProperty(options, key, { enumerable: true, get() { reads[key] += 1; return reads[key] === 1 ? first[key] : later[key]; } });
+  }
+  const reviewed = await runWorkflow(makeTask('review'), options);
+  assert.equal(reviewed.outcome, 'COMPLETED');
+  assert.equal(reviewed.reportStored, true);
+  assert.deepEqual(reads, { candidate: 1, candidateAuthorId: 1, reportStore: 1 });
 });
 
 test('cloneFreeze refuses non-data objects before listing their properties', async () => {
@@ -570,7 +584,8 @@ test('cloneFreeze copies a shared reference once, keeps cycles refused and the d
   const node = { name: 'node' }; node.children = [{ parent: node }];
   refuses(() => cloneFreeze([node, node]), 'INPUT_CYCLE');
 
-  // A reused copy must be refused wherever an unshared copy would exceed 64 levels.
+  // A reused copy must be refused wherever an unshared copy would exceed 64 levels,
+  // including a reused copy nested in another, and a leaf must not inherit a height.
   const chain = (inner, levels) => { let value = inner; for (let index = 0; index < levels; index += 1) value = [value]; return value; };
   const result = value => { try { cloneFreeze(value); return 'ok'; } catch (error) { return error.code; } };
   for (let levels = 50; levels <= 56; levels += 1) {
@@ -578,6 +593,10 @@ test('cloneFreeze copies a shared reference once, keeps cycles refused and the d
     const reused = chain('leaf', 10);
     assert.equal(result([reused, chain(reused, levels)]), expected, `shared ${levels}`);
     assert.equal(result([chain('leaf', 10), chain(chain('leaf', 10), levels)]), expected, `unshared ${levels}`);
+    const inner = chain('leaf', 10), outer = [inner];
+    assert.equal(result([inner, outer, chain(outer, levels - 1)]), expected, `nested ${levels}`);
+    const small = ['x'];
+    assert.equal(result([chain('leaf', 30), small, chain(small, levels + 9)]), expected, `leaf ${levels}`);
   }
 });
 
@@ -632,6 +651,19 @@ test('the report store is not called after cancellation, deadline expiry or an i
     assert.equal(report.reportStored, false);
     assert.equal(report.reportStoreEvidence, null);
   }
+});
+
+test('the store guard reads the clock: a run timed out by a stage timer still reaches the store', async () => {
+  const task = makeTask(); task.policy.totalDeadlineMs = 20; task.policy.requireReportStore = true;
+  let stores = 0;
+  // The frozen clock never reaches the deadline; only the hanging stage's timer expires.
+  const report = await runWorkflow(task, { adapters: adapters({ tests: () => new Promise(() => {}) }), clock: () => 0,
+    reportStore: { store: ({ report: preliminary, reportSha256, binding }) => {
+      stores += 1;
+      return { status: 'PASS', evidence: { ...binding, outcome: preliminary.outcome, reportSha256 } };
+    } } });
+  assert.deepEqual([report.outcome, report.code, report.workflowOutcome, report.reportStored, report.reportStoreCode, stores],
+    ['TIMED_OUT', 'DEADLINE_EXCEEDED', 'TIMED_OUT', true, null, 1]);
 });
 
 test('workflowCode keeps the workflow code when storage changes the outcome and code', async () => {

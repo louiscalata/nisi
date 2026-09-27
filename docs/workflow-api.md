@@ -80,9 +80,11 @@ are outside this representation.
 candidate**: `{ schemaVersion, authorId, files, fingerprint }`, with files
 sorted by path. The `fingerprint` is SHA-256 of the versioned, sorted
 path/content snapshot. Author metadata is excluded so repeated content can be
-detected as no progress. A protected file included in a candidate must retain
-its original source digest (`PROTECTED_FILE_CHANGED`), and every path must be in
-`allowedFiles` (`CANDIDATE_FILE_OUT_OF_SCOPE`).
+detected as no progress. `createCandidate()` takes no task, so it does not check
+scope or protection. When `runWorkflow` validates a candidate against the task,
+a protected file must keep its original source digest
+(`PROTECTED_FILE_CHANGED`) and every path must be in `allowedFiles`
+(`CANDIDATE_FILE_OUT_OF_SCOPE`).
 
 `runWorkflow` takes the raw `{ files }` shape wherever it accepts a candidate:
 review-mode `options.candidate` and the `candidate` returned by draft and
@@ -262,8 +264,8 @@ storage; they are the values the store's preliminary report carries as
 `code` unchanged and set `reportStoreCode`. Required-store failures make
 `outcome` BLOCKED and `code` the storage code. Cancellation or expiry during
 either kind of storage produces CANCELLED or TIMED_OUT with `code` ABORTED or
-DEADLINE_EXCEEDED. For example, failing tests with a required store that
-reports UNAVAILABLE give `outcome` BLOCKED and `code`
+DEADLINE_EXCEEDED. For example, failing tests with no repair budget and a
+required store that reports UNAVAILABLE give `outcome` BLOCKED and `code`
 REPORT_STORE_UNAVAILABLE, while `workflowOutcome` stays FAILED and
 `workflowCode` TESTS_FAILED. A missing required store blocks before any work.
 
@@ -272,8 +274,10 @@ adapter call. It is not made when the signal has been aborted, the clock reads
 at or past the deadline, or the clock is invalid. In those cases
 `reportStoreCode` is ABORTED, DEADLINE_EXCEEDED or CLOCK_INVALID and
 `reportStoreEvidence` is null, the same as when a started store call is
-cancelled or expires. A CANCELLED run therefore never reaches the store, nor
-does a TIMED_OUT run once the clock has reached the deadline, even when
-`requireReportStore` is true. A host that needs a record of every run should
-persist the returned report itself.
+cancelled or expires. A run already cancelled before storage therefore never
+reaches the store, nor does one whose clock reached the deadline before
+storage, even when `requireReportStore` is true. The check reads the clock, not
+the stage timers: a run timed out by a stage timer still reaches the store
+while the clock reads short of the deadline. A host that needs a record of
+every run should persist the returned report itself.
 COMPLETED is not a claim of universal correctness or permission to apply or ship.
