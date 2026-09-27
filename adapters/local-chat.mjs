@@ -168,9 +168,12 @@ function responseFormat(payload, operation) {
   const object = properties => ({type: 'object', properties, required: Object.keys(properties), additionalProperties: false});
   const note = {type: 'string', minLength: 1, maxLength: 4096};
   // A protected file cannot change, so its path is offered only when every allowed path is protected.
-  const writable = payload.task.allowedFiles.filter(path => !(payload.task.protectedFiles ?? []).includes(path));
+  // As before this filter, a non-array allowedFiles passes through unchanged and a non-array
+  // protectedFiles is ignored; the engine only supplies validated arrays.
+  const {allowedFiles, protectedFiles} = payload.task, guarded = Array.isArray(protectedFiles) ? protectedFiles : [];
+  const writable = Array.isArray(allowedFiles) ? allowedFiles.filter(path => !guarded.includes(path)) : [];
   const candidate = object({files: {type: 'array', minItems: 1, maxItems: 256, items: object({
-    path: {type: 'string', enum: writable.length ? writable : payload.task.allowedFiles}, content: {type: 'string'},
+    path: {type: 'string', enum: writable.length ? writable : allowedFiles}, content: {type: 'string'},
   })}});
   // Finding bounds mirror validateFindings in workflow/contracts.mjs.
   const schema = operation === 'review'
@@ -206,11 +209,8 @@ async function call(state, payload, operation, receipts, transform) {
     requestSha256, elapsedMs: Math.round(performance.now() - started)});
   const record = (status, extra, fingerprint = null) => receipts.push(cloneFreeze({...metadata(), status, ...extra, reportedModel,
     candidateFingerprint: fingerprint, resultCandidateFingerprint: fingerprint, responseSha256, contentSha256, usage, httpStatus}));
-  // Refuse a malformed call before any timer or listener exists.
-  if (!isRecord(payload) || !isRecord(payload.task) || !Array.isArray(payload.task.allowedFiles) ||
-      !(payload.task.protectedFiles === undefined || Array.isArray(payload.task.protectedFiles))) {
-    record('UNAVAILABLE', {code: 'LOCAL_CHAT_PAYLOAD_INVALID'}); fail('LOCAL_CHAT_PAYLOAD_INVALID');
-  }
+  // Refuse a call that has no task object before any timer or listener exists.
+  if (!isRecord(payload) || !isRecord(payload.task)) { record('UNAVAILABLE', {code: 'LOCAL_CHAT_PAYLOAD_INVALID'}); fail('LOCAL_CHAT_PAYLOAD_INVALID'); }
   const timer = setTimeout(() => stop('LOCAL_CHAT_TIMEOUT'), state.timeoutMs);
   const upstream = payload.signal;
   const abort = () => stop('ABORTED');

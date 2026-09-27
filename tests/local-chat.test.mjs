@@ -27,8 +27,8 @@ test('codec trims only JSON whitespace and removes at most one fence, as before 
   for (const [text, expected] of [
     [' \t\r\n{"a":1}\r\n\t ', {a: 1}], ['```JSON {"a":1} ```', {a: 1}], ['``` {"a":2}\n```', {a: 2}],
     ['```jsonfoo```', 'LOCAL_CHAT_JSON_INVALID'], ['``````', 'LOCAL_CHAT_JSON_INVALID'], ['`````', 'LOCAL_CHAT_JSON_INVALID'],
-    ['```json```json {"a":1}``````', 'LOCAL_CHAT_JSON_INVALID'], [' {"a":1}', 'LOCAL_CHAT_JSON_INVALID'],
-    ['{"a":1} ', 'LOCAL_CHAT_JSON_INVALID'], ['\f{"a":1}', 'LOCAL_CHAT_JSON_INVALID'],
+    ['```json```json {"a":1}``````', 'LOCAL_CHAT_JSON_INVALID'], ['\u00a0{"a":1}', 'LOCAL_CHAT_JSON_INVALID'],
+    ['{"a":1}\u00a0', 'LOCAL_CHAT_JSON_INVALID'], ['\f{"a":1}', 'LOCAL_CHAT_JSON_INVALID'],
   ]) {
     if (typeof expected === 'string') assert.throws(() => strictJSON(text), error => error.code === expected, JSON.stringify(text));
     else assert.deepEqual({...strictJSON(text)}, expected, JSON.stringify(text));

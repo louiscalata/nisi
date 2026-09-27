@@ -154,13 +154,15 @@ test('Node environment proxy settings do not reroute the default transport', asy
 test('other statuses keep their HTTP status, expose no body and never follow a redirect', async () => {
   const target = await serve((request, response) => response.end(reply('redirected')));
   // An endpoint may not carry a query, so each status has its own path. 600 cannot form a Response.
+  // The 503 body never ends, so only the transport's own destroy can release that connection.
   const model = await serve((request, response) => {
     const status = Number(request.url.split('/').at(-1));
     response.writeHead(status, [301, 302, 303, 307, 308].includes(status) ? { location: target.url } : {});
-    response.end([204, 205, 304].includes(status) ? undefined : reply('not read'));
+    if (status === 503) response.write('x'.repeat(4096));
+    else response.end([204, 205, 304].includes(status) ? undefined : reply('not read'));
   });
   try {
-    for (const [status, httpStatus] of [[204, 204], [205, 205], [304, 304], [302, 302], [307, 307], [400, 400], [404, 404], [500, 500], [600, null]]) {
+    for (const [status, httpStatus] of [[204, 204], [205, 205], [304, 304], [302, 302], [307, 307], [400, 400], [404, 404], [500, 500], [503, 503], [600, null]]) {
       const adapter = reviewer(`http://127.0.0.1:${model.port}/status/${status}`);
       await rejectsCode(() => adapter.review(payload()), 'LOCAL_CHAT_RESPONSE_UNAVAILABLE');
       const receipt = adapter.receipts().at(-1);

@@ -9,7 +9,10 @@ The endpoint and model must support JSON-schema structured output. Nisi requests
 a closed schema for each role using `response_format`, plus temperature zero;
 it still validates the returned bytes. Candidate paths in the schema exclude the
 task's protected files (unless every allowed file is protected), and finding
-codes and messages carry the engine's limits of 1–128 and 1–2,048 characters.
+codes and messages carry the engine's limits of 1–128 and 1–2,048 UTF-16 code
+units. JSON Schema counts code points, so text outside the Basic Multilingual
+Plane, or blank text, can satisfy the schema and still be refused as
+`LOCAL_CHAT_FINDING_INVALID`.
 It does not retry with an unconstrained response when the server refuses that
 format. See
 [LM Studio's structured-output contract](https://lmstudio.ai/docs/developer/openai-compat/structured-output).
@@ -113,9 +116,11 @@ not exactly one choice, is `LOCAL_CHAT_CHOICES_INVALID`. Another finish reason, 
 `LOCAL_CHAT_EMPTY_RESPONSE`. Usage that is present but not an object whose
 `prompt_tokens` and `completion_tokens` are non-negative integers summing to
 `total_tokens` is `LOCAL_CHAT_USAGE_INVALID`; omitted or `null` usage is accepted
-as missing. A call whose payload is not an object with a `task` object, an
-`allowedFiles` array and, if present, a `protectedFiles` array is refused as
-`LOCAL_CHAT_PAYLOAD_INVALID` before any request or timer starts.
+as missing. A call whose payload is not an object with a `task` object is
+refused as `LOCAL_CHAT_PAYLOAD_INVALID` before any request or timer starts. The
+adapter does not otherwise check the task, which the engine supplies already
+validated; only an `allowedFiles` array is filtered, and only by a
+`protectedFiles` array.
 
 ## Receipts and measured scope
 
@@ -129,7 +134,9 @@ provider-reported `promptTokens`, `completionTokens` and `totalTokens`; missing
 usage is `null`, not zero. A validated call has status `RESPONSE_VALIDATED`.
 A failure has status `UNAVAILABLE`, a specific `code` and null candidate
 fingerprints, and keeps whatever the endpoint had already supplied: the HTTP
-status of a returned response, the response and content digests, a reported
+status of a response the transport returned (an integer from 100 to 999; the
+default transport returns only statuses 200–599, so any other status leaves
+`httpStatus` `null`), the response and content digests, a reported
 model name of at most 256 characters, and usage that passes validation. Anything
 not yet known is `null`. The generic engine reports a rejected adapter promise
 as ADAPTER_EXCEPTION.

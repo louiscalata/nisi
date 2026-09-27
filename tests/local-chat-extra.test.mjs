@@ -308,6 +308,9 @@ test('finding bounds match the engine and repair NO_CHANGE cannot carry a candid
   assert.equal((await review([{ code: 'C'.repeat(128), message: 'm'.repeat(2048) }])).status, 'FAIL');
   await rejectsCode(() => review([{ code: 'C'.repeat(129), message: 'm' }]), 'LOCAL_CHAT_FINDING_INVALID');
   await rejectsCode(() => review([{ code: 'C', message: 'm'.repeat(2049) }]), 'LOCAL_CHAT_FINDING_INVALID');
+  // The schema counts code points; the engine counts UTF-16 units and refuses blank text.
+  await rejectsCode(() => review([{ code: '\u{1f600}'.repeat(65), message: 'm' }]), 'LOCAL_CHAT_FINDING_INVALID');
+  await rejectsCode(() => review([{ code: 'C', message: ' ' }]), 'LOCAL_CHAT_FINDING_INVALID');
   const author = createLocalChatAuthorAdapter({ destination: 'LOOPBACK_HTTP', endpoint: 'http://127.0.0.1:1234/v1/chat/completions',
     model: 'author-model', id: 'extra.author', fetch: async () => jsonResponse(envelope('author-model',
       { status: 'NO_CHANGE', candidate: { files: [{ path: 'config.json', content: '{}' }] }, note: 'x' })) });
@@ -359,8 +362,17 @@ test('failure receipts keep the response facts already supplied, with the succes
   const unrecorded = await receiptFor(bodyFor('m'.repeat(257), { usage: { ...tokens, total_tokens: 1 } }), 'LOCAL_CHAT_MODEL_MISMATCH');
   assert.deepEqual([unrecorded.reportedModel, unrecorded.usage], [null, null]);
   assert.match(unrecorded.responseSha256, /^[0-9a-f]{64}$/u);
+  // The response digest is kept once the body is read, even when the envelope cannot be parsed or used.
+  for (const [body, code] of [['{"model":', 'LOCAL_CHAT_JSON_INVALID'], ['null', 'LOCAL_CHAT_CHOICES_INVALID']]) {
+    const early = await receiptFor(body, code);
+    assert.deepEqual([early.responseSha256, early.contentSha256, early.httpStatus], [sha256(body), null, 200], body);
+  }
   const rejected = await receiptFor(bodyFor('expected'), 'LOCAL_CHAT_RESPONSE_UNAVAILABLE', { ok: false, status: 400 });
   assert.deepEqual([rejected.httpStatus, rejected.responseSha256, rejected.contentSha256], [400, null, null]);
+  // Only an integer status from 100 to 999 is recorded.
+  for (const status of [99, 1000, 400.5, '400']) {
+    assert.equal((await receiptFor(bodyFor('expected'), 'LOCAL_CHAT_RESPONSE_UNAVAILABLE', { ok: false, status })).httpStatus, null, String(status));
+  }
   const thrown = reviewer({ fetch: async () => { throw new Error('transport failed'); } });
   await rejectsCode(() => thrown.review(payload()), 'LOCAL_CHAT_UNAVAILABLE');
   const none = thrown.receipts().at(-1);
@@ -376,8 +388,7 @@ test('failure receipts keep the response facts already supplied, with the succes
 test('malformed payloads are refused with an exact code and receipt before any timer or request', async () => {
   let fetchCalls = 0;
   const adapter = reviewer({ timeoutMs: 5_000, fetch: async () => { fetchCalls += 1; throw new Error('must not fetch'); } });
-  const bad = [undefined, null, 1, 'payload', [], {}, { task: null, binding }, { task: [] }, { task: { ...task, allowedFiles: 'config.json' } },
-    { task: { ...task, protectedFiles: 'config.json' } }];
+  const bad = [undefined, null, 1, 'payload', [], {}, { task: null, binding }, { task: [] }, { task: 'task', binding }];
   for (const value of bad) await rejectsCode(() => adapter.review(value), 'LOCAL_CHAT_PAYLOAD_INVALID');
   const receipts = adapter.receipts();
   assert.equal(fetchCalls, 0);
@@ -399,4 +410,23 @@ test('malformed payloads are refused with an exact code and receipt before any t
   const stdout = await new Promise((resolve, reject) => execFile(process.execPath, ['--input-type=module', '-e', script],
     { timeout: 60_000, windowsHide: true }, (error, out) => error ? reject(error) : resolve(out)));
   assert.deepEqual(JSON.parse(stdout.trim()), { code: 'LOCAL_CHAT_PAYLOAD_INVALID', receipts: 1, timers: 0 });
+});
+
+test('a payload with a task object is still sent, whatever its file lists hold', async () => {
+  // The engine only supplies validated arrays; direct callers keep the acceptance they had before the payload guard.
+  const listed = { ...task, allowedFiles: ['a.json', 'config.json'] };
+  const tasks = [{ ...listed, protectedFiles: null }, { ...listed, protectedFiles: 'config.json' }, {}, { ...task, allowedFiles: undefined }];
+  const calls = [];
+  const draft = envelope('author-model', { candidate: { files: [{ path: 'config.json', content: '{}' }] }, note: 'draft' });
+  const author = createLocalChatAuthorAdapter({ destination: 'LOOPBACK_HTTP', endpoint: 'http://127.0.0.1:1234/v1/chat/completions',
+    model: 'author-model', id: 'extra.author', fetch: queuedFetch(tasks.map(() => jsonResponse(draft)), { calls }) });
+  for (const value of tasks) assert.equal((await author.draft(payload({ task: value }))).candidate.files[0].path, 'config.json');
+  // Only an array protectedFiles narrows the path enum, and a missing allowedFiles leaves it out.
+  assert.deepEqual(calls.map(item => JSON.parse(item.request.body).response_format.json_schema.schema.properties.candidate.properties.files.items.properties.path),
+    [{ type: 'string', enum: ['a.json', 'config.json'] }, { type: 'string', enum: ['a.json', 'config.json'] }, { type: 'string' }, { type: 'string' }]);
+  for (const value of tasks) {
+    const adapter = reviewer({ fetch: async () => reviewerResponse('review-model', { findings: [], summary: 'ok' }) });
+    assert.equal((await adapter.review(payload({ task: value }))).status, 'PASS');
+    assert.equal(adapter.receipts().at(-1).status, 'RESPONSE_VALIDATED');
+  }
 });
