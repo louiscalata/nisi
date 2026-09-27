@@ -57,8 +57,9 @@ commands. An installed release archive provides the `nisi` executable.
 `nisi local-model` runs a fixed JSON-configuration task against a configured
 loopback chat server. It does not execute model-generated programs or apply
 changes to a repository. On `main`, `nisi demo` removes its temporary report
-directory after the report has been written and verified; when a failure has a
-fixed cause code, such as `ENOENT`, the message includes it. `nisi local-model`
+directory once the workflow run returns, whether or not the report was stored;
+when a failure has a fixed cause code, such as `ENOENT`, the message includes
+it. `nisi local-model`
 refuses invalid arguments with exit code `2` and names the argument, its rule
 and a fixed code such as `LOCAL_CHAT_DESTINATION_REFUSED` or
 `LOCAL_MODEL_NAMES_EQUAL`; `nisi --help` lists the endpoint and model-name
@@ -280,8 +281,9 @@ checked loop and Nisi each repaired those six shapes once and tied on all 12
 tasks; their draft and repair request bytes matched per task. Before each
 repair call, the pilot harness replaced both schedulers' own failed-stage
 records with one fixed `ANSWER_SHAPE` finding, so the Nisi row does not
-measure Nisi's default repair request. Rebuilt from the retained reports with
-the engine's own stage records, each of Nisi's six repair request bodies would
+measure Nisi's default repair request. Rebuilt from the retained raw result
+with the v0.2.0 adapter and the engine's own stage records, each of Nisi's six
+repair request bodies would
 have been 1,641 to 1,695 bytes larger (about 58% in total); those requests'
 token counts were not measured.
 

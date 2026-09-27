@@ -36,9 +36,9 @@ runs saw the same tasks, so the completed result is not a fresh confirmatory
 sample.
 
 Each task rotates A/B/C order. A calls the shipped author adapter once. B uses
-the handwritten checked loop. C uses the released workflow engine. All use the
-same task text, model, author adapter, temperature zero, output-token cap, and
-loopback transport. B/C share deterministic file-shape checks, a structural
+the handwritten checked loop. C uses the workflow engine in the checkout (the
+v0.2.0 engine for the completed pilot). All use the same task text, model,
+author adapter, temperature zero, output-token cap, and loopback transport. B/C share deterministic file-shape checks, a structural
 reviewer, and one repair attempt. Before each repair call the runner replaces
 both schedulers' own failed-stage records with one fixed `ANSWER_SHAPE`
 finding, so C's repair requests are not Nisi's default repair payload; with

@@ -1,6 +1,6 @@
 # Nisi roadmap
 
-Canonical project roadmap. Updated September 26, 2026. Product name: Nisi.
+Canonical project roadmap. Updated September 27, 2026. Product name: Nisi.
 Public v0.2.0 scope: a Node.js CLI and library with the existing workflow APIs,
 the run journal, and its store. The CLI exposes fixed demonstrations; the private
 native repository workflow and other private features remain outside this
@@ -28,12 +28,11 @@ Unreleased source on `main`; the package version stays 0.2.0. The
   limits in the requested review schema.
 - [x] CLI, examples and package check: remove the demo's temporary directory;
   name the argument, rule and code in local-model refusals; symlink-safe
-  entrypoints; check packed exports, line endings and README links.
+  entrypoints; check packed exports, line endings and relative README links.
 - [x] File access policy and Apple adapter: operating-system path resolution,
   exact race codes, `BINARY_UNREADABLE`, the helper's own refusal code, a
   working declaration-bytes recipe and wider structural-check patterns.
-- [x] Regression tests for each fix, shown to fail with the fix reverted where a
-  deterministic test exists. `npm run check`, `check:static`,
+- [x] A regression test for each fix. `npm run check`, `check:static`,
   `check:cli-package` and the editor check pass on Linux with Node 22.
 - [x] Record the stable v0.2.0 CI evidence and correct the benchmark
   disclosures.

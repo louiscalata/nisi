@@ -48,7 +48,8 @@ fresh temporary consumer with scripts disabled, and invokes the installed `nisi`
 command. It uses a fixed demonstration and malformed model arguments; it does
 not contact a model server. On `main` after the September 26, 2026 hardening
 pass, it also checks that every export target is packed, that packed text uses
-LF line endings, and that the packed README links only to packed files. It
+LF line endings, and that every relative link in the packed README resolves
+to a packed file (the README currently uses only absolute GitHub URLs). It
 imports every package export from the installed archive and removes
 `NODE_USE_ENV_PROXY` from its child processes' environment. It also runs the
 installed `nisi local-model` with well-formed arguments against a closed
@@ -137,8 +138,9 @@ also recorded in
 [the benchmark footprint manifest](../benchmarks/value/footprint/packages.json).
 
 The tag, run, and asset facts above were read back from GitHub's release and
-Actions records on September 27, 2026. This repository retains no job logs or
-per-job test counts for that run. These checks do not establish live-model
+Actions records on September 27, 2026 and are recorded in
+[github-actions.json](verification/2026-09-23-v0.2.0/github-actions.json). This
+repository retains no job logs or per-job test counts for that run. These checks do not establish live-model
 accuracy or native application readiness.
 
 The prior v0.1 workflow, local-chat and platform evidence remains in the

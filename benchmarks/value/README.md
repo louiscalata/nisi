@@ -3,8 +3,10 @@
 Run these benchmarks when evaluating Nisi's workflow controls, integration seam,
 and execution overhead. They were written against the released v0.2.0
 orchestrator and import the one in the checkout; `main` now carries the
-unreleased hardening listed in the [changelog](../../CHANGELOG.md), and each
-run's source manifest records the hashes it used.
+unreleased hardening listed in the [changelog](../../CHANGELOG.md). The
+control, interface, and overhead commands record their source hashes in each
+run's manifest; the pilot runner records only the dataset digest, and the
+pilot's committed source manifest was written separately.
 The control, interface, and overhead commands do not call a model. A separate
 opt-in local pilot does; neither establishes that Nisi improves model reasoning.
 
