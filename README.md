@@ -45,6 +45,26 @@ it directly. The [GitHub release](https://github.com/louiscalata/nisi/releases/t
 also provides an npm-format archive for local installation; Nisi v0.2.0 is not
 published to the npm registry.
 
+## Explore the code and evidence
+
+- **Run a complete example:** [workflow.mjs](https://github.com/louiscalata/nisi/blob/main/examples/workflow.mjs)
+  uses deterministic callbacks for authorization, drafting, checks, assertions,
+  one repair, review, and report storage. It makes no model calls.
+- **Trace the design:** [engine.mjs](https://github.com/louiscalata/nisi/blob/main/workflow/engine.mjs)
+  and [contracts.mjs](https://github.com/louiscalata/nisi/blob/main/workflow/contracts.mjs)
+  implement stage order, evidence binding, deadlines, and stop outcomes. The
+  [architecture guide](https://github.com/louiscalata/nisi/blob/main/docs/architecture.md)
+  explains which work remains with the host.
+- **Inspect failure cases:** [workflow tests](https://github.com/louiscalata/nisi/blob/main/tests/workflow.test.mjs)
+  cover fresh checks after repair, stale evidence, unavailable work, repair
+  limits, and timeouts.
+- **Connect a local model:** the optional [local chat adapter](https://github.com/louiscalata/nisi/blob/main/adapters/local-chat.mjs)
+  uses a host-configured loopback server. The [guide](https://github.com/louiscalata/nisi/blob/main/docs/local-models.md)
+  covers setup and response validation.
+- **Reproduce the evidence:** the [v0.2 verification record](https://github.com/louiscalata/nisi/blob/main/docs/verification-v0.2.md)
+  gives commands and environment-scoped results. The [benchmark protocol](https://github.com/louiscalata/nisi/blob/main/benchmarks/value/PROTOCOL.md)
+  describes synthetic controls, scoring, and measurement limits.
+
 ## Command line
 
 From a source checkout, run `node bin/nisi.mjs --help` to see the supported
