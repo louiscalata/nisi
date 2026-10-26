@@ -33,8 +33,11 @@ function finish(child, report = passing(), exitCode = 0, stderr = '') {
 }
 const run = async (c, f, extra = {}, variant = 1) => f.executor.execute({ workspace: await c.workspace(variant), runId: randomUUID(), attempt: variant, ...extra });
 const tick = () => new Promise(resolve => setImmediate(resolve));
-async function waitFor(predicate, turns = 100) {
-  for (let i = 0; i < turns; i++) { if (predicate()) return true; await tick(); }
+// Late settlement depends on real I/O timing; slower CI runners need more than
+// a fixed number of event-loop turns, so poll for at least `turns` turns and up to 2 s.
+async function waitFor(predicate, turns = 100, ms = 2000) {
+  const deadline = Date.now() + ms;
+  for (let i = 0; i < turns || Date.now() < deadline; i++) { if (predicate()) return true; await tick(); }
   return predicate();
 }
 async function watchdog(promise, ms = 250) {
