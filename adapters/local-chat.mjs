@@ -135,6 +135,9 @@ function responseFormat(payload, operation) {
 
 async function call(state, payload, operation, receipts, transform) {
   if (typeof state.fetch !== 'function') fail('LOCAL_CHAT_UNAVAILABLE');
+  // The host may replace or edit payload while the response is in flight.
+  // Copy the binding now so the receipt names the candidate this call sent.
+  const bound = isRecord(payload?.binding) ? Object.freeze({ ...payload.binding }) : undefined;
   const controller = new AbortController();
   const started = performance.now();
   let stopCode = null, requestSha256 = null;
@@ -143,9 +146,9 @@ async function call(state, payload, operation, receipts, transform) {
   const upstream = payload.signal;
   const abort = () => stop('ABORTED');
   const metadata = () => ({schemaVersion: 1, operation, adapterId: state.id,
-    requestedModel: state.model, runId: payload.binding?.runId ?? null,
-    taskFingerprint: payload.binding?.taskFingerprint ?? null, attempt: payload.binding?.attempt ?? null,
-    inputCandidateFingerprint: payload.binding?.candidateFingerprint ?? null, requestedMaxOutputTokens: state.maxOutputTokens,
+    requestedModel: state.model, runId: bound?.runId ?? null,
+    taskFingerprint: bound?.taskFingerprint ?? null, attempt: bound?.attempt ?? null,
+    inputCandidateFingerprint: bound?.candidateFingerprint ?? null, requestedMaxOutputTokens: state.maxOutputTokens,
     requestSha256, elapsedMs: Math.round(performance.now() - started)});
   try {
     if (upstream !== undefined && !(upstream instanceof AbortSignal)) fail('LOCAL_CHAT_SIGNAL_INVALID');
@@ -181,7 +184,7 @@ async function call(state, payload, operation, receipts, transform) {
     const content = choice.message?.content;
     if (choice.message?.tool_calls?.length || choice.message?.refusal) fail('LOCAL_CHAT_FINISH_REFUSED');
     if (typeof content !== 'string' || content.trim() === '') fail('LOCAL_CHAT_EMPTY_RESPONSE');
-    const result = cloneFreeze(transform(strictJSON(content)));
+    const result = cloneFreeze(transform(strictJSON(content), bound));
     let usage = null;
     if (envelope.usage !== undefined) {
       const {prompt_tokens: promptTokens, completion_tokens: completionTokens, total_tokens: totalTokens} = envelope.usage;
@@ -201,7 +204,7 @@ async function call(state, payload, operation, receipts, transform) {
   } finally { clearTimeout(timer); try { upstream?.removeEventListener('abort', abort); } catch {} }
 }
 
-function bindingEvidence(payload, extra) { return { ...payload.binding, ...extra }; }
+function bindingEvidence(bound, extra) { return { ...(isRecord(bound) ? bound : {}), ...extra }; }
 function note(value) { if (typeof value !== 'string' || value.trim() === '' || value.length > 4096) fail('LOCAL_CHAT_NOTE_INVALID'); return value; }
 function findingList(value) { if (!Array.isArray(value) || value.length > 256) fail('LOCAL_CHAT_FINDINGS_INVALID'); return value; }
 function exact(value, keys) {
@@ -213,15 +216,15 @@ export function createLocalChatAuthorAdapter(input) {
   const receipts = [];
   return Object.freeze({ id: state.id,
     receipts: () => cloneFreeze(receipts),
-    async draft(payload) { return call(state, payload, 'draft', receipts, output => {
+    async draft(payload) { return call(state, payload, 'draft', receipts, (output, bound) => {
       exact(output, ['candidate', 'note']); if (!isRecord(output.candidate)) fail('LOCAL_CHAT_DRAFT_INVALID');
       const normalized = createCandidate(output.candidate, { authorId: state.id });
-      return { candidate: output.candidate, evidence: bindingEvidence(payload, { candidateFingerprint: normalized.fingerprint, note: note(output.note) }) }; }); },
-    async repair(payload) { return call(state, payload, 'repair', receipts, output => {
+      return { candidate: output.candidate, evidence: bindingEvidence(bound, { candidateFingerprint: normalized.fingerprint, note: note(output.note) }) }; }); },
+    async repair(payload) { return call(state, payload, 'repair', receipts, (output, bound) => {
       exact(output, ['status', 'candidate', 'note']); if (!['REPAIRED', 'NO_CHANGE'].includes(output.status)) fail('LOCAL_CHAT_REPAIR_INVALID');
       if (output.status === 'NO_CHANGE' && output.candidate !== null) fail('LOCAL_CHAT_REPAIR_INVALID');
       const candidate = output.status === 'REPAIRED' ? output.candidate : null; const normalized = candidate ? createCandidate(candidate, { authorId: state.id }) : null;
-      return { status: output.status, candidate, evidence: bindingEvidence(payload, { candidateFingerprint: normalized?.fingerprint ?? payload.binding.candidateFingerprint, baseCandidateFingerprint: payload.binding.candidateFingerprint, note: note(output.note) }) }; }); }
+      return { status: output.status, candidate, evidence: bindingEvidence(bound, { candidateFingerprint: normalized?.fingerprint ?? bound.candidateFingerprint, baseCandidateFingerprint: bound.candidateFingerprint, note: note(output.note) }) }; }); }
   });
 }
 
@@ -230,9 +233,9 @@ export function createLocalChatReviewerAdapter(input) {
   const receipts = [];
   return Object.freeze({ id: state.id,
     receipts: () => cloneFreeze(receipts),
-    async review(payload) { return call(state, payload, 'review', receipts, output => {
+    async review(payload) { return call(state, payload, 'review', receipts, (output, bound) => {
       exact(output, ['findings', 'summary']); const findings = findingList(output.findings); validateFindings(findings, 'LOCAL_CHAT'); const summary = note(output.summary);
-      return { status: findings.length === 0 ? 'PASS' : 'FAIL', evidence: bindingEvidence(payload, { reviewerId: state.id, findings, summary, reason: findings.length === 0 ? '' : summary }) }; }); }
+      return { status: findings.length === 0 ? 'PASS' : 'FAIL', evidence: bindingEvidence(bound, { reviewerId: state.id, findings, summary, reason: findings.length === 0 ? '' : summary }) }; }); }
   });
 }
 
