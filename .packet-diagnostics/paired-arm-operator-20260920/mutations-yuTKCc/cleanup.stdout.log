@@ -1,0 +1,234 @@
+TAP version 13
+# Subtest: parser keeps the distinct read-only command bounded and immutable
+ok 1 - parser keeps the distinct read-only command bounded and immutable
+  ---
+  duration_ms: 0.63475
+  type: 'test'
+  ...
+# Subtest: projection refuses unknown states, malformed arrays, proxy/accessor fields and future schemas
+ok 2 - projection refuses unknown states, malformed arrays, proxy/accessor fields and future schemas
+  ---
+  duration_ms: 0.302959
+  type: 'test'
+  ...
+# Subtest: malformed arguments remain sanitized stderr; absent storage is bounded stdout refusal
+ok 3 - malformed arguments remain sanitized stderr; absent storage is bounded stdout refusal
+  ---
+  duration_ms: 95.652292
+  type: 'test'
+  ...
+# Subtest: actual binary opens each ledger once, emits aggregates only and leaves bytes/metadata unchanged
+ok 4 - actual binary opens each ledger once, emits aggregates only and leaves bytes/metadata unchanged
+  ---
+  duration_ms: 581.107583
+  type: 'test'
+  ...
+# Subtest: empty, missing, partial, corrupt and rehashed mismatching sidecars are distinguished
+ok 5 - empty, missing, partial, corrupt and rehashed mismatching sidecars are distinguished
+  ---
+  duration_ms: 726.551541
+  type: 'test'
+  ...
+# Subtest: help preserves all existing warnings and adds observation-only paired-arm guidance
+ok 6 - help preserves all existing warnings and adds observation-only paired-arm guidance
+  ---
+  duration_ms: 0.17925
+  type: 'test'
+  ...
+# Subtest: paired-arm loader permission stays exact and never loads execution owners or model modules
+ok 7 - paired-arm loader permission stays exact and never loads execution owners or model modules
+  ---
+  duration_ms: 173.887083
+  type: 'test'
+  ...
+# Subtest: original durable owner is single-use, projects bounded observations, preserves legacy trust flags
+ok 8 - original durable owner is single-use, projects bounded observations, preserves legacy trust flags
+  ---
+  duration_ms: 446.385834
+  type: 'test'
+  ...
+# Subtest: invalid input and call arguments do not install listeners or create trial storage
+ok 9 - invalid input and call arguments do not install listeners or create trial storage
+  ---
+  duration_ms: 5.2545
+  type: 'test'
+  ...
+# Subtest: setup SIGINT is latched through both listener boundaries
+ok 10 - setup SIGINT is latched through both listener boundaries
+  ---
+  duration_ms: 26.908958
+  type: 'test'
+  ...
+# Subtest: setup SIGTERM is latched through both listener boundaries
+ok 11 - setup SIGTERM is latched through both listener boundaries
+  ---
+  duration_ms: 23.610167
+  type: 'test'
+  ...
+# Subtest: listener install throw-first creates no stores and preserves unrelated listeners
+ok 12 - listener install throw-first creates no stores and preserves unrelated listeners
+  ---
+  duration_ms: 2.850416
+  type: 'test'
+  ...
+# Subtest: listener install throw-second creates no stores and preserves unrelated listeners
+ok 13 - listener install throw-second creates no stores and preserves unrelated listeners
+  ---
+  duration_ms: 2.5215
+  type: 'test'
+  ...
+# Subtest: listener install silent creates no stores and preserves unrelated listeners
+ok 14 - listener install silent creates no stores and preserves unrelated listeners
+  ---
+  duration_ms: 2.916583
+  type: 'test'
+  ...
+# Subtest: main store creation signal stops before dispatch
+ok 15 - main store creation signal stops before dispatch
+  ---
+  duration_ms: 24.845916
+  type: 'test'
+  ...
+# Subtest: sidecar store creation signal stops before dispatch
+ok 16 - sidecar store creation signal stops before dispatch
+  ---
+  duration_ms: 21.914292
+  type: 'test'
+  ...
+# Subtest: repeated and mixed signals during original execution request one cancellation with no oracle or redispatch
+ok 17 - repeated and mixed signals during original execution request one cancellation with no oracle or redispatch
+  ---
+  duration_ms: 64.991709
+  type: 'test'
+  ...
+# Subtest: signal during main retention "type":"SCHEDULE" cannot overlap close
+ok 18 - signal during main retention "type":"SCHEDULE" cannot overlap close
+  ---
+  duration_ms: 21.876292
+  type: 'test'
+  ...
+# Subtest: signal during sidecar retention "kind":"HEADER" cannot overlap close
+ok 19 - signal during sidecar retention "kind":"HEADER" cannot overlap close
+  ---
+  duration_ms: 23.14475
+  type: 'test'
+  ...
+# Subtest: signal during sidecar retention "kind":"PREPARED" cannot overlap close
+ok 20 - signal during sidecar retention "kind":"PREPARED" cannot overlap close
+  ---
+  duration_ms: 35.600458
+  type: 'test'
+  ...
+# Subtest: signal during main retention "type":"START_INTENT" cannot overlap close
+ok 21 - signal during main retention "type":"START_INTENT" cannot overlap close
+  ---
+  duration_ms: 32.988667
+  type: 'test'
+  ...
+# Subtest: signal during sidecar retention "kind":"PHASE_OBSERVED" cannot overlap close
+ok 22 - signal during sidecar retention "kind":"PHASE_OBSERVED" cannot overlap close
+  ---
+  duration_ms: 111.044042
+  type: 'test'
+  ...
+# Subtest: signal during main retention "type":"FINAL" cannot overlap close
+ok 23 - signal during main retention "type":"FINAL" cannot overlap close
+  ---
+  duration_ms: 425.277917
+  type: 'test'
+  ...
+# Subtest: signal during sidecar retention "kind":"FINAL" cannot overlap close
+ok 24 - signal during sidecar retention "kind":"FINAL" cannot overlap close
+  ---
+  duration_ms: 420.474834
+  type: 'test'
+  ...
+# Subtest: main final close keeps handlers installed and uncertainty cannot become acknowledged
+ok 25 - main final close keeps handlers installed and uncertainty cannot become acknowledged
+  ---
+  duration_ms: 409.578834
+  type: 'test'
+  ...
+# Subtest: sidecar final close keeps handlers installed and uncertainty cannot become acknowledged
+ok 26 - sidecar final close keeps handlers installed and uncertainty cannot become acknowledged
+  ---
+  duration_ms: 416.349
+  type: 'test'
+  ...
+# Subtest: main creation failure retains evidence and never retries
+ok 27 - main creation failure retains evidence and never retries
+  ---
+  duration_ms: 2.999125
+  type: 'test'
+  ...
+# Subtest: sidecar creation failure retains evidence and never retries
+ok 28 - sidecar creation failure retains evidence and never retries
+  ---
+  duration_ms: 6.075
+  type: 'test'
+  ...
+# Subtest: listener removal throw cannot report command recorded
+not ok 29 - listener removal throw cannot report command recorded
+  ---
+  duration_ms: 413.687584
+  type: 'test'
+  location: '/Users/louiscalata/nisi/tests/paired-arm-command-owner.test.mjs:133:38'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly equal:
+    
+    true !== false
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: false
+  actual: true
+  operator: 'strictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///Users/louiscalata/nisi/tests/paired-arm-command-owner.test.mjs:140:58)
+    async Test.run (node:internal/test_runner/test:1332:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:911:7)
+  ...
+# Subtest: listener removal silent cannot report command recorded
+not ok 30 - listener removal silent cannot report command recorded
+  ---
+  duration_ms: 408.725584
+  type: 'test'
+  location: '/Users/louiscalata/nisi/tests/paired-arm-command-owner.test.mjs:133:38'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly equal:
+    
+    true !== false
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: false
+  actual: true
+  operator: 'strictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///Users/louiscalata/nisi/tests/paired-arm-command-owner.test.mjs:140:58)
+    async Test.run (node:internal/test_runner/test:1332:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:911:7)
+  ...
+# Subtest: post-close missing bytes cannot erase historical ack or become accepted inspection
+ok 31 - post-close missing bytes cannot erase historical ack or become accepted inspection
+  ---
+  duration_ms: 411.630458
+  type: 'test'
+  ...
+# Subtest: throwing inspector is captured once, cannot leak errors, and cannot erase historical ack
+ok 32 - throwing inspector is captured once, cannot leak errors, and cannot erase historical ack
+  ---
+  duration_ms: 412.779084
+  type: 'test'
+  ...
+1..32
+# tests 32
+# suites 0
+# pass 30
+# fail 2
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 5844.989667

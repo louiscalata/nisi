@@ -1,0 +1,112 @@
+{
+  "at": "2026-09-20T11:08:58.913Z",
+  "node": "v24.18.0",
+  "output": "/Users/louiscalata/nisi/.packet-diagnostics/c04-owner-review-1lSoKr/controls-NBbEix",
+  "sourceHashes": {
+    "work-orders/v02-finish-cluster-v1/check-cluster.mjs": "4a3d15a681f1db288a7b5134482333f2a45ba07d0448da09cd9da4a385eedf4e",
+    "tests/finish-cluster-inventory.test.mjs": "b64e51e8547025c9f673a46a5a49f2d6c9231ab4eabe3a7ddf76f393caa06cb1",
+    "tests/finish-cluster-dispatch.test.mjs": "b8ca32dd4a38a6e8eb912ac9cc8d4457cd2e29a917d315ba0cae33def1f99686"
+  },
+  "proposalSha256": "770065aa34374a568a1d57c2dd968de9e5a3da55f2ad259dd70a72253f24b649",
+  "checks": [
+    {
+      "name": "inventory",
+      "command": [
+        "/usr/local/bin/node",
+        "work-orders/v02-finish-cluster-v1/check-cluster.mjs"
+      ],
+      "cwd": "/Users/louiscalata/nisi/.packet-diagnostics/c04-owner-review-1lSoKr/controls-NBbEix/source",
+      "exitCode": 0,
+      "error": null,
+      "signal": null,
+      "logSha256": "f03d9b19ca5491274062969614cc708d7ccc2716d324a015c8edda410a57de69",
+      "counts": {
+        "tests": -1,
+        "pass": -1,
+        "fail": -1,
+        "skipped": -1,
+        "cancelled": -1
+      }
+    },
+    {
+      "name": "controls",
+      "command": [
+        "/usr/local/bin/node",
+        "--test",
+        "--test-reporter=tap",
+        "--test-concurrency=1",
+        "tests/finish-cluster-inventory.test.mjs",
+        "tests/finish-cluster-dispatch.test.mjs"
+      ],
+      "cwd": "/Users/louiscalata/nisi/.packet-diagnostics/c04-owner-review-1lSoKr/controls-NBbEix/source",
+      "exitCode": 0,
+      "error": null,
+      "signal": null,
+      "logSha256": "39c50a86ccf96787aea9e75ce1cf0376d605b4952a525fd79f4ad2075e53864b",
+      "counts": {
+        "tests": 16,
+        "pass": 16,
+        "fail": 0,
+        "skipped": 0,
+        "cancelled": 0
+      }
+    },
+    {
+      "name": "baseline",
+      "command": [
+        "/usr/local/bin/node",
+        "--test-reporter=tap",
+        "--test-concurrency=1",
+        "--test",
+        "../../tests/workflow.test.mjs",
+        "../../tests/veritas-import.test.mjs",
+        "../../tests/finish-cluster-dispatch.test.mjs",
+        "../../tests/finish-cluster-inventory.test.mjs",
+        "../../tests/native-overlay-final-snapshot.test.mjs"
+      ],
+      "cwd": "/Users/louiscalata/nisi/.packet-diagnostics/c04-owner-review-1lSoKr/controls-NBbEix/source/work-orders/v02-finish-cluster-v1",
+      "exitCode": 0,
+      "error": null,
+      "signal": null,
+      "logSha256": "a1e74705f43e1f7fc297384093fd8454307bedfa961375f0d8ba822cceb9c7fa",
+      "counts": {
+        "tests": 52,
+        "pass": 52,
+        "fail": 0,
+        "skipped": 0,
+        "cancelled": 0
+      }
+    },
+    {
+      "name": "c01",
+      "command": [
+        "/usr/local/bin/node",
+        "--test-reporter=tap",
+        "--test-concurrency=1",
+        "--test",
+        "../../tests/native-overlay-inventory-v1.test.mjs",
+        "../../tests/nisi-native-overlay.test.mjs",
+        "../../tests/veritas-import.test.mjs",
+        "../../tests/finish-cluster-dispatch.test.mjs",
+        "../../tests/finish-cluster-inventory.test.mjs",
+        "../../tests/native-overlay-final-snapshot.test.mjs"
+      ],
+      "cwd": "/Users/louiscalata/nisi/.packet-diagnostics/c04-owner-review-1lSoKr/controls-NBbEix/source/work-orders/v02-finish-cluster-v1",
+      "exitCode": 0,
+      "error": null,
+      "signal": null,
+      "logSha256": "cfda167eefdc8572d25f934b75edd7059583eda66c2a3d83a3cb1ec5dc7db307",
+      "counts": {
+        "tests": 47,
+        "pass": 47,
+        "fail": 0,
+        "skipped": 0,
+        "cancelled": 0
+      }
+    }
+  ],
+  "unchanged": true,
+  "canonicalLedgerApplied": false,
+  "nativeBuildAccepted": false,
+  "publicationAuthorized": false
+}

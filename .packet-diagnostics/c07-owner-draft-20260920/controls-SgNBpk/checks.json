@@ -1,0 +1,166 @@
+{
+  "schema": "nisi.c07.owner-controls.v1",
+  "at": "2026-09-20T14:08:20.692Z",
+  "sourceHashes": {
+    "work-orders/v02-finish-cluster-v1/check-c07.mjs": "1f886084e9f8f166a2910f67e0b96a7fd19590fcbedd65576d63909b10c885ed",
+    "work-orders/v02-finish-cluster-v1/check-c06.mjs": "20ff0d8ffe3cd9572603545ee89ab13d483659086b74ed2b437871e67862b4a2",
+    "work-orders/v02-finish-cluster-v1/check-cluster.mjs": "33a5fdef3876dd76581eed9ee873cb210c078a25eb1fee3c3a6be2274ae4a058",
+    "tests/finish-cluster-c07.test.mjs": "50ad65292bbe59fb8f78d4db7c0ffd21ef6f7a414362376698940c2f126862a1",
+    "tests/finish-cluster-c06.test.mjs": "b6330bf0fc401ec9cc41bfc792586e8bd23ba40be99e441e3653b87f8e4b2f13",
+    "tests/finish-cluster-inventory.test.mjs": "bc0ec90514a1ba5378a898ea14c797dd5827421ef1e0d12e37d2bd50f96058a7",
+    "tests/finish-cluster-dispatch.test.mjs": "5e4e93af24edbbcc68c0b303550154057aedb3b42747c002ca436455d822d9b4"
+  },
+  "sourceUnchanged": true,
+  "checks": [
+    {
+      "name": "mutant-guard-disabled",
+      "command": [
+        "/usr/local/bin/node",
+        "--test-reporter=tap",
+        "--test",
+        "tests/finish-cluster-c07.test.mjs"
+      ],
+      "cwd": "/Users/louiscalata/nisi/.packet-diagnostics/c07-owner-draft-20260920/controls-SgNBpk/mutant",
+      "exitCode": 1,
+      "error": null,
+      "signal": null,
+      "counts": {
+        "tests": 30,
+        "pass": 4,
+        "fail": 26,
+        "skipped": 0,
+        "cancelled": 0,
+        "todo": 0
+      },
+      "logPath": ".packet-diagnostics/c07-owner-draft-20260920/controls-SgNBpk/mutant-guard-disabled.log",
+      "logSha256": "7083d8f9f6acbd3d09f5035db6301ff877e90c149a6c9a5ee9704e029642c693",
+      "ok": true
+    },
+    {
+      "name": "c07-controls",
+      "command": [
+        "/usr/local/bin/node",
+        "--test-reporter=tap",
+        "--test",
+        "tests/finish-cluster-c07.test.mjs"
+      ],
+      "cwd": "/Users/louiscalata/nisi",
+      "exitCode": 0,
+      "error": null,
+      "signal": null,
+      "counts": {
+        "tests": 30,
+        "pass": 30,
+        "fail": 0,
+        "skipped": 0,
+        "cancelled": 0,
+        "todo": 0
+      },
+      "logPath": ".packet-diagnostics/c07-owner-draft-20260920/controls-SgNBpk/c07-controls.log",
+      "logSha256": "a74451929c24e15b98027ab78351a15701d1620cc6c0fc7381a2fd9e2d1dcdc9",
+      "ok": true
+    },
+    {
+      "name": "c06-controls",
+      "command": [
+        "/usr/local/bin/node",
+        "--test-reporter=tap",
+        "--test",
+        "tests/finish-cluster-c06.test.mjs"
+      ],
+      "cwd": "/Users/louiscalata/nisi",
+      "exitCode": 0,
+      "error": null,
+      "signal": null,
+      "counts": {
+        "tests": 25,
+        "pass": 25,
+        "fail": 0,
+        "skipped": 0,
+        "cancelled": 0,
+        "todo": 0
+      },
+      "logPath": ".packet-diagnostics/c07-owner-draft-20260920/controls-SgNBpk/c06-controls.log",
+      "logSha256": "efb95349a79d8abd3abd539c7317df7e5bb4270127d4017653ccac25c9505f75",
+      "ok": true
+    },
+    {
+      "name": "baseline",
+      "command": [
+        "/usr/local/bin/node",
+        "--test-reporter=tap",
+        "--test-concurrency=1",
+        "--test",
+        "../../tests/workflow.test.mjs",
+        "../../tests/veritas-import.test.mjs",
+        "../../tests/finish-cluster-dispatch.test.mjs",
+        "../../tests/finish-cluster-inventory.test.mjs",
+        "../../tests/native-overlay-final-snapshot.test.mjs"
+      ],
+      "cwd": "/Users/louiscalata/nisi/work-orders/v02-finish-cluster-v1",
+      "exitCode": 1,
+      "error": null,
+      "signal": null,
+      "counts": {
+        "tests": 115,
+        "pass": 107,
+        "fail": 8,
+        "skipped": 0,
+        "cancelled": 0,
+        "todo": 0
+      },
+      "logPath": ".packet-diagnostics/c07-owner-draft-20260920/controls-SgNBpk/baseline.log",
+      "logSha256": "f9f6917b568c196146a160f0ac7931b454ece7aa6594125558d8cd09a2b00ecf",
+      "ok": false
+    },
+    {
+      "name": "c01",
+      "command": [
+        "/usr/local/bin/node",
+        "--test-reporter=tap",
+        "--test-concurrency=1",
+        "--test",
+        "../../tests/native-overlay-inventory-v1.test.mjs",
+        "../../tests/nisi-native-overlay.test.mjs",
+        "../../tests/veritas-import.test.mjs",
+        "../../tests/finish-cluster-dispatch.test.mjs",
+        "../../tests/finish-cluster-inventory.test.mjs",
+        "../../tests/native-overlay-final-snapshot.test.mjs"
+      ],
+      "cwd": "/Users/louiscalata/nisi/work-orders/v02-finish-cluster-v1",
+      "exitCode": 1,
+      "error": null,
+      "signal": null,
+      "counts": {
+        "tests": 110,
+        "pass": 102,
+        "fail": 8,
+        "skipped": 0,
+        "cancelled": 0,
+        "todo": 0
+      },
+      "logPath": ".packet-diagnostics/c07-owner-draft-20260920/controls-SgNBpk/c01.log",
+      "logSha256": "c57dc34cd3e72f3b1a165822a96c94b5b5aab219ddc3f73c151273665b3abbbf",
+      "ok": false
+    }
+  ],
+  "validation": {
+    "exitCode": 0,
+    "error": null,
+    "signal": null,
+    "ok": true,
+    "path": ".packet-diagnostics/c07-owner-draft-20260920/controls-SgNBpk/nisi-validation.log",
+    "sha256": "a545f47b34f372fa40295db11654f3bfb5f4f2a69f74be56918f9cdef35bd464",
+    "binding": {
+      "taskFingerprint": "65b32ab7f08953d88267d6be19c9f8b6d8bcebf2e282472b51eb2a4f4abc186b",
+      "candidateFingerprint": "24459c00bde88fe4f1a7e105c0fda821598e12e9104887ac781725c472c03bd2",
+      "reviewedCandidateSha256": null,
+      "reviewBindingMatches": false
+    }
+  },
+  "inference": "NOT_RUN",
+  "implementationAccepted": false,
+  "nativeBuildAccepted": false,
+  "publicationAuthorized": false,
+  "ok": false
+}

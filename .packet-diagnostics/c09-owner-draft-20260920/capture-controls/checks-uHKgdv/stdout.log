@@ -1,0 +1,222 @@
+TAP version 13
+# Subtest: semantic lifecycle flags refuse even when temporary-copy pins are refreshed
+ok 1 - semantic lifecycle flags refuse even when temporary-copy pins are refreshed
+  ---
+  duration_ms: 10.111083
+  type: 'test'
+  ...
+# Subtest: an unmodified owned temporary copy preserves the positive contract
+ok 2 - an unmodified owned temporary copy preserves the positive contract
+  ---
+  duration_ms: 6.193875
+  type: 'test'
+  ...
+# Subtest: temporary-copy source contracts cannot pass by refreshing caller pins
+ok 3 - temporary-copy source contracts cannot pass by refreshing caller pins
+  ---
+  duration_ms: 10.005875
+  type: 'test'
+  ...
+# Subtest: temporary-copy archive bytes remain bound to receipt metadata
+ok 4 - temporary-copy archive bytes remain bound to receipt metadata
+  ---
+  duration_ms: 2.325917
+  type: 'test'
+  ...
+# Subtest: required after/retained descriptors cannot be omitted in a refreshed copy
+ok 5 - required after/retained descriptors cannot be omitted in a refreshed copy
+  ---
+  duration_ms: 24.272083
+  type: 'test'
+  ...
+# Subtest: caller contract validation rejects accessors, toJSON, and revoked proxies without traps
+ok 6 - caller contract validation rejects accessors, toJSON, and revoked proxies without traps
+  ---
+  duration_ms: 0.889292
+  type: 'test'
+  ...
+# Subtest: retained owner bundle is checked as Node24-only and never accepted
+ok 7 - retained owner bundle is checked as Node24-only and never accepted
+  ---
+  duration_ms: 3.284209
+  type: 'test'
+  ...
+# Subtest: any external seven-file pin mismatch refuses without reading an alternate path
+ok 8 - any external seven-file pin mismatch refuses without reading an alternate path
+  ---
+  duration_ms: 0.8185
+  type: 'test'
+  ...
+# Subtest: fixed-root and closed-pin boundaries refuse safely
+ok 9 - fixed-root and closed-pin boundaries refuse safely
+  ---
+  duration_ms: 1.004416
+  type: 'test'
+  ...
+# Subtest: checker remains a bounded reader with no execution/network/model surface
+ok 10 - checker remains a bounded reader with no execution/network/model surface
+  ---
+  duration_ms: 0.171875
+  type: 'test'
+  ...
+# Subtest: coherent malformed original identities refuse even when both observations agree
+ok 11 - coherent malformed original identities refuse even when both observations agree
+  ---
+  duration_ms: 23.747167
+  type: 'test'
+  ...
+# Subtest: mutually consistent substituted capture maps do not replace current checkout evidence
+ok 12 - mutually consistent substituted capture maps do not replace current checkout evidence
+  ---
+  duration_ms: 98.187
+  type: 'test'
+  ...
+# Subtest: real current checkout derives the frozen-sized context without capture input
+ok 13 - real current checkout derives the frozen-sized context without capture input
+  ---
+  duration_ms: 88.673667
+  type: 'test'
+  ...
+# Subtest: owned scratch closure is a positive independent-source context
+ok 14 - owned scratch closure is a positive independent-source context
+  ---
+  duration_ms: 266.611375
+  type: 'test'
+  ...
+# Subtest: source and case mutations produce new observations; inventory breaks refuse
+    # Subtest: package source digest changes
+    ok 1 - package source digest changes
+      ---
+      duration_ms: 351.813833
+      type: 'test'
+      ...
+    # Subtest: case digest changes
+    ok 2 - case digest changes
+      ---
+      duration_ms: 353.589583
+      type: 'test'
+      ...
+    # Subtest: case omission refuses
+    ok 3 - case omission refuses
+      ---
+      duration_ms: 264.737542
+      type: 'test'
+      ...
+    # Subtest: extra case refuses
+    ok 4 - extra case refuses
+      ---
+      duration_ms: 264.601834
+      type: 'test'
+      ...
+    # Subtest: malformed UTF8 package.json
+    ok 5 - malformed UTF8 package.json
+      ---
+      duration_ms: 263.31125
+      type: 'test'
+      ...
+    # Subtest: malformed UTF8 node_modules/typescript/package.json
+    ok 6 - malformed UTF8 node_modules/typescript/package.json
+      ---
+      duration_ms: 264.838084
+      type: 'test'
+      ...
+    # Subtest: malformed UTF8 node_modules/@types/node/package.json
+    ok 7 - malformed UTF8 node_modules/@types/node/package.json
+      ---
+      duration_ms: 267.246292
+      type: 'test'
+      ...
+    # Subtest: malformed UTF8 tests/private-consumer/baseline.mts
+    ok 8 - malformed UTF8 tests/private-consumer/baseline.mts
+      ---
+      duration_ms: 263.933875
+      type: 'test'
+      ...
+    # Subtest: moved marker changes locations while preserving count
+    ok 9 - moved marker changes locations while preserving count
+      ---
+      duration_ms: 350.8435
+      type: 'test'
+      ...
+    1..9
+ok 15 - source and case mutations produce new observations; inventory breaks refuse
+  ---
+  duration_ms: 2645.748167
+  type: 'test'
+  ...
+# Subtest: identity, containment, and size boundaries refuse
+    # Subtest: altered writer hash
+    ok 1 - altered writer hash
+      ---
+      duration_ms: 180.015833
+      type: 'test'
+      ...
+    # Subtest: altered contract pin
+    ok 2 - altered contract pin
+      ---
+      duration_ms: 179.731125
+      type: 'test'
+      ...
+    # Subtest: contract executable mutation is never imported
+    ok 3 - contract executable mutation is never imported
+      ---
+      duration_ms: 179.698792
+      type: 'test'
+      ...
+    # Subtest: forbidden package dependency
+    ok 4 - forbidden package dependency
+      ---
+      duration_ms: 265.936542
+      type: 'test'
+      ...
+    # Subtest: symlink ancestor
+    ok 5 - symlink ancestor
+      ---
+      duration_ms: 179.632292
+      type: 'test'
+      ...
+    # Subtest: case directory instead of file
+    ok 6 - case directory instead of file
+      ---
+      duration_ms: 264.671291
+      type: 'test'
+      ...
+    # Subtest: case symlink instead of file
+    ok 7 - case symlink instead of file
+      ---
+      duration_ms: 263.824
+      type: 'test'
+      ...
+    # Subtest: oversize source
+    ok 8 - oversize source
+      ---
+      duration_ms: 265.880333
+      type: 'test'
+      ...
+    1..8
+ok 16 - identity, containment, and size boundaries refuse
+  ---
+  duration_ms: 1779.848917
+  type: 'test'
+  ...
+# Subtest: options reject proxies and accessors without invoking traps
+ok 17 - options reject proxies and accessors without invoking traps
+  ---
+  duration_ms: 0.128
+  type: 'test'
+  ...
+# Subtest: repeated snapshots do not mutate the checkout or change their byte maps
+ok 18 - repeated snapshots do not mutate the checkout or change their byte maps
+  ---
+  duration_ms: 170.468125
+  type: 'test'
+  ...
+1..18
+# tests 35
+# suites 0
+# pass 35
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 5204.786958

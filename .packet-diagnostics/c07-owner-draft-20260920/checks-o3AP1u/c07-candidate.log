@@ -1,0 +1,454 @@
+TAP version 13
+# Subtest: empty source has an honest NONEMPTY failure and zero-byte untruncated input
+ok 1 - empty source has an honest NONEMPTY failure and zero-byte untruncated input
+  ---
+  duration_ms: 29.296333
+  type: 'test'
+  ...
+# Subtest: multibyte UTF8 preserves exact characters, byte length and digest privately
+ok 2 - multibyte UTF8 preserves exact characters, byte length and digest privately
+  ---
+  duration_ms: 36.362542
+  type: 'test'
+  ...
+# Subtest: exactly one MiB is source-bound without truncation
+ok 3 - exactly one MiB is source-bound without truncation
+  ---
+  duration_ms: 25.905291
+  type: 'test'
+  ...
+# Subtest: all fixed profiles retain exact closed native reconstruction settings
+ok 4 - all fixed profiles retain exact closed native reconstruction settings
+  ---
+  duration_ms: 66.189417
+  type: 'test'
+  ...
+# Subtest: public plan recursively excludes raw content, relative paths, stdout and reports
+ok 5 - public plan recursively excludes raw content, relative paths, stdout and reports
+  ---
+  duration_ms: 28.776625
+  type: 'test'
+  ...
+# Subtest: private input arrays, transcript and nested objects are deeply immutable
+ok 6 - private input arrays, transcript and nested objects are deeply immutable
+  ---
+  duration_ms: 26.157209
+  type: 'test'
+  ...
+# Subtest: all three native source hashes independently match their canonical domains
+ok 7 - all three native source hashes independently match their canonical domains
+  ---
+  duration_ms: 28.366667
+  type: 'test'
+  ...
+# Subtest: reordered serialized bundle and cross-run selection refuse
+ok 8 - reordered serialized bundle and cross-run selection refuse
+  ---
+  duration_ms: 34.114542
+  type: 'test'
+  ...
+# Subtest: invalid input accessors are rejected without invocation
+ok 9 - invalid input accessors are rejected without invocation
+  ---
+  duration_ms: 11.05025
+  type: 'test'
+  ...
+# Subtest: oversized source is refused by the repository snapshot boundary before an issued Swift plan exists
+ok 10 - oversized source is refused by the repository snapshot boundary before an issued Swift plan exists
+  ---
+  duration_ms: 0.330875
+  type: 'test'
+  ...
+# Subtest: actual settled host binds an original static failure source without exposing content
+ok 11 - actual settled host binds an original static failure source without exposing content
+  ---
+  duration_ms: 30.165958
+  type: 'test'
+  ...
+# Subtest: source plan is gated before settlement, while draining, and when quarantined
+ok 12 - source plan is gated before settlement, while draining, and when quarantined
+  ---
+  duration_ms: 107.475167
+  type: 'test'
+  ...
+# Subtest: invalid row input and Node-stage rows refuse without changing incident/history APIs
+ok 13 - invalid row input and Node-stage rows refuse without changing incident/history APIs
+  ---
+  duration_ms: 72.420583
+  type: 'test'
+  ...
+# Subtest: accessor accepts only the original issued plan and rejects clones or altered plans
+ok 14 - accessor accepts only the original issued plan and rejects clones or altered plans
+  ---
+  duration_ms: 21.557333
+  type: 'test'
+  ...
+# Subtest: original issued static failure binds exact source bytes without exposing them publicly
+ok 15 - original issued static failure binds exact source bytes without exposing them publicly
+  ---
+  duration_ms: 15.412
+  type: 'test'
+  ...
+# Subtest: private accessor returns the frozen exact failed artifact and prior native report
+ok 16 - private accessor returns the frozen exact failed artifact and prior native report
+  ---
+  duration_ms: 8.533667
+  type: 'test'
+  ...
+# Subtest: source plan identity and private input are stable for the same original inputs
+ok 17 - source plan identity and private input are stable for the same original inputs
+  ---
+  duration_ms: 10.234875
+  type: 'test'
+  ...
+# Subtest: serialized or cloned plans never retain private source authority
+ok 18 - serialized or cloned plans never retain private source authority
+  ---
+  duration_ms: 7.221208
+  type: 'test'
+  ...
+# Subtest: accessor input is exact and rejects getters before invoking them
+ok 19 - accessor input is exact and rejects getters before invoking them
+  ---
+  duration_ms: 0.100292
+  type: 'test'
+  ...
+# Subtest: cloned preview is not source authority even when bytes and hashes match
+ok 20 - cloned preview is not source authority even when bytes and hashes match
+  ---
+  duration_ms: 5.311084
+  type: 'test'
+  ...
+# Subtest: a different original preview cannot be substituted across original contexts
+ok 21 - a different original preview cannot be substituted across original contexts
+  ---
+  duration_ms: 11.909083
+  type: 'test'
+  ...
+# Subtest: missing, partial, malformed and noncanonical row ids refuse without fallback selection
+ok 22 - missing, partial, malformed and noncanonical row ids refuse without fallback selection
+  ---
+  duration_ms: 19.897458
+  type: 'test'
+  ...
+# Subtest: recorded static PASS is not a native incident source
+ok 23 - recorded static PASS is not a native incident source
+  ---
+  duration_ms: 57.19625
+  type: 'test'
+  ...
+# Subtest: recorded Node failure remains unsupported because no file transcript can be invented
+ok 24 - recorded Node failure remains unsupported because no file transcript can be invented
+  ---
+  duration_ms: 50.212666
+  type: 'test'
+  ...
+# Subtest: operational static failures are not reconstructed as deterministic incidents
+ok 25 - operational static failures are not reconstructed as deterministic incidents
+  ---
+  duration_ms: 4.928417
+  type: 'test'
+  ...
+# Subtest: interrupted evidence cannot become a source-bound native incident
+ok 26 - interrupted evidence cannot become a source-bound native incident
+  ---
+  duration_ms: 27.383167
+  type: 'test'
+  ...
+# Subtest: serialized bundle remains inspectable with original context, while cloned or cross-run context has no authority
+ok 27 - serialized bundle remains inspectable with original context, while cloned or cross-run context has no authority
+  ---
+  duration_ms: 13.65275
+  type: 'test'
+  ...
+# Subtest: a repaired run reconstructs the exact original failed attempt rather than the later passing source
+ok 28 - a repaired run reconstructs the exact original failed attempt rather than the later passing source
+  ---
+  duration_ms: 31.502667
+  type: 'test'
+  ...
+# Subtest: public selection metadata is copied and deeply frozen against later mutation
+ok 29 - public selection metadata is copied and deeply frozen against later mutation
+  ---
+  duration_ms: 6.840084
+  type: 'test'
+  ...
+# Subtest: real settled host exposes source planning while unsettled host refuses
+ok 30 - real settled host exposes source planning while unsettled host refuses
+  ---
+  duration_ms: 22.427417
+  type: 'test'
+  ...
+# Subtest: host method requires an exact full row-id request and never returns raw content
+ok 31 - host method requires an exact full row-id request and never returns raw content
+  ---
+  duration_ms: 15.026584
+  type: 'test'
+  ...
+# Subtest: additive execution identity is exact issued expectation data and leaves v1 projections byte-compatible
+ok 32 - additive execution identity is exact issued expectation data and leaves v1 projections byte-compatible
+  ---
+  duration_ms: 22.279708
+  type: 'test'
+  ...
+# Subtest: execution identity is issued-object bound and rejects clones, hashes, and accessor inputs without traversal
+ok 33 - execution identity is issued-object bound and rejects clones, hashes, and accessor inputs without traversal
+  ---
+  duration_ms: 16.683834
+  type: 'test'
+  ...
+# Subtest: exact issued plan admits one frozen, nonauthorizing original-snapshot handle
+ok 34 - exact issued plan admits one frozen, nonauthorizing original-snapshot handle
+  ---
+  duration_ms: 31.881208
+  type: 'test'
+  ...
+# Subtest: serialized, spread, reconstructed, and public-hash plans are refused
+ok 35 - serialized, spread, reconstructed, and public-hash plans are refused
+  ---
+  duration_ms: 29.747
+  type: 'test'
+  ...
+# Subtest: grant schema, scope, time window, revocation, and host state fail closed
+ok 36 - grant schema, scope, time window, revocation, and host state fail closed
+  ---
+  duration_ms: 29.821041
+  type: 'test'
+  ...
+# Subtest: identity accessor and private input bind exact source, profile, and executable identities
+ok 37 - identity accessor and private input bind exact source, profile, and executable identities
+  ---
+  duration_ms: 29.255042
+  type: 'test'
+  ...
+# Subtest: admission and binding preserve original identities and do not expose source material
+not ok 38 - admission and binding preserve original identities and do not expose source material
+  ---
+  duration_ms: 29.448
+  type: 'test'
+  location: '/Users/louiscalata/nisi/.packet-diagnostics/c07-owner-draft-20260920/checks-o3AP1u/source/work-orders/v02-finish-cluster-v1/native-incident/admission-integration.test.mjs:256:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly equal:
+    + actual - expected
+    
+    + 'REFUSED'
+    - 'MATCHED'
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: 'MATCHED'
+  actual: 'REFUSED'
+  operator: 'strictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///Users/louiscalata/nisi/.packet-diagnostics/c07-owner-draft-20260920/checks-o3AP1u/source/work-orders/v02-finish-cluster-v1/native-incident/admission-integration.test.mjs:261:10)
+    async Test.run (node:internal/test_runner/test:1332:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:911:7)
+  ...
+# Subtest: MATCHED and DIVERGED require the original request, selected file, and fixed outcome inventory
+not ok 39 - MATCHED and DIVERGED require the original request, selected file, and fixed outcome inventory
+  ---
+  duration_ms: 28.612
+  type: 'test'
+  location: '/Users/louiscalata/nisi/.packet-diagnostics/c07-owner-draft-20260920/checks-o3AP1u/source/work-orders/v02-finish-cluster-v1/native-incident/admission-integration.test.mjs:265:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly equal:
+    + actual - expected
+    
+    + 'REFUSED'
+    - 'MATCHED'
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: 'MATCHED'
+  actual: 'REFUSED'
+  operator: 'strictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///Users/louiscalata/nisi/.packet-diagnostics/c07-owner-draft-20260920/checks-o3AP1u/source/work-orders/v02-finish-cluster-v1/native-incident/admission-integration.test.mjs:269:10)
+    async Test.run (node:internal/test_runner/test:1332:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:911:7)
+  ...
+# Subtest: wrong check, executable, request, artifact, owner, and report identities never promote evidence
+not ok 40 - wrong check, executable, request, artifact, owner, and report identities never promote evidence
+  ---
+  duration_ms: 28.94275
+  type: 'test'
+  location: '/Users/louiscalata/nisi/.packet-diagnostics/c07-owner-draft-20260920/checks-o3AP1u/source/work-orders/v02-finish-cluster-v1/native-incident/admission-integration.test.mjs:282:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    FRESH_PATH_MISMATCH
+    + actual - expected
+    
+    + 'ADMISSION_NOT_ISSUED'
+    - 'FRESH_PATH_MISMATCH'
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: 'FRESH_PATH_MISMATCH'
+  actual: 'ADMISSION_NOT_ISSUED'
+  operator: 'strictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///Users/louiscalata/nisi/.packet-diagnostics/c07-owner-draft-20260920/checks-o3AP1u/source/work-orders/v02-finish-cluster-v1/native-incident/admission-integration.test.mjs:296:12)
+    async Test.run (node:internal/test_runner/test:1332:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:911:7)
+  ...
+# Subtest: receipt is checked before expectation traversal and report/outcome records are inert exact data
+not ok 41 - receipt is checked before expectation traversal and report/outcome records are inert exact data
+  ---
+  duration_ms: 28.826375
+  type: 'test'
+  location: '/Users/louiscalata/nisi/.packet-diagnostics/c07-owner-draft-20260920/checks-o3AP1u/source/work-orders/v02-finish-cluster-v1/native-incident/admission-integration.test.mjs:304:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly equal:
+    + actual - expected
+    
+    + 'ADMISSION_NOT_ISSUED'
+    - 'FRESH_RECEIPT_INVALID'
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: 'FRESH_RECEIPT_INVALID'
+  actual: 'ADMISSION_NOT_ISSUED'
+  operator: 'strictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///Users/louiscalata/nisi/.packet-diagnostics/c07-owner-draft-20260920/checks-o3AP1u/source/work-orders/v02-finish-cluster-v1/native-incident/admission-integration.test.mjs:313:12)
+    async Test.run (node:internal/test_runner/test:1332:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:911:7)
+  ...
+# Subtest: all receipt graph accessors, proxies, and revoked proxies are refused with zero traps
+not ok 42 - all receipt graph accessors, proxies, and revoked proxies are refused with zero traps
+  ---
+  duration_ms: 30.596042
+  type: 'test'
+  location: '/Users/louiscalata/nisi/.packet-diagnostics/c07-owner-draft-20260920/checks-o3AP1u/source/work-orders/v02-finish-cluster-v1/native-incident/admission-integration.test.mjs:331:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    top
+    + actual - expected
+    
+    + 'ADMISSION_NOT_ISSUED'
+    - 'FRESH_RECEIPT_INVALID'
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: 'FRESH_RECEIPT_INVALID'
+  actual: 'ADMISSION_NOT_ISSUED'
+  operator: 'strictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///Users/louiscalata/nisi/.packet-diagnostics/c07-owner-draft-20260920/checks-o3AP1u/source/work-orders/v02-finish-cluster-v1/native-incident/admission-integration.test.mjs:355:12)
+    async Test.run (node:internal/test_runner/test:1332:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:911:7)
+  ...
+# Subtest: raw observation is exact, request-bound, and cannot be replaced by a proxy or digest mismatch
+not ok 43 - raw observation is exact, request-bound, and cannot be replaced by a proxy or digest mismatch
+  ---
+  duration_ms: 28.196792
+  type: 'test'
+  location: '/Users/louiscalata/nisi/.packet-diagnostics/c07-owner-draft-20260920/checks-o3AP1u/source/work-orders/v02-finish-cluster-v1/native-incident/admission-integration.test.mjs:386:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly equal:
+    + actual - expected
+    
+    + 'REFUSED'
+    - 'MATCHED'
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: 'MATCHED'
+  actual: 'REFUSED'
+  operator: 'strictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///Users/louiscalata/nisi/.packet-diagnostics/c07-owner-draft-20260920/checks-o3AP1u/source/work-orders/v02-finish-cluster-v1/native-incident/admission-integration.test.mjs:391:10)
+    async Test.run (node:internal/test_runner/test:1332:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:911:7)
+  ...
+# Subtest: cancel, unknown drain, receipt error, and missing report remain adverse and nonpromoting
+not ok 44 - cancel, unknown drain, receipt error, and missing report remain adverse and nonpromoting
+  ---
+  duration_ms: 28.137041
+  type: 'test'
+  location: '/Users/louiscalata/nisi/.packet-diagnostics/c07-owner-draft-20260920/checks-o3AP1u/source/work-orders/v02-finish-cluster-v1/native-incident/admission-integration.test.mjs:405:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly equal:
+    + actual - expected
+    
+    + 'REFUSED'
+    - 'INTERRUPTED'
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: 'INTERRUPTED'
+  actual: 'REFUSED'
+  operator: 'strictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///Users/louiscalata/nisi/.packet-diagnostics/c07-owner-draft-20260920/checks-o3AP1u/source/work-orders/v02-finish-cluster-v1/native-incident/admission-integration.test.mjs:416:12)
+    async Test.run (node:internal/test_runner/test:1332:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:911:7)
+  ...
+# Subtest: handle is single-use; malformed, expired, reverse-clock, copied, and wrong-instance calls have no authority
+not ok 45 - handle is single-use; malformed, expired, reverse-clock, copied, and wrong-instance calls have no authority
+  ---
+  duration_ms: 27.700917
+  type: 'test'
+  location: '/Users/louiscalata/nisi/.packet-diagnostics/c07-owner-draft-20260920/checks-o3AP1u/source/work-orders/v02-finish-cluster-v1/native-incident/admission-integration.test.mjs:424:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly equal:
+    + actual - expected
+    
+    + 'ADMISSION_NOT_ISSUED'
+    - 'FRESH_OBSERVATION_SCHEMA'
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: 'FRESH_OBSERVATION_SCHEMA'
+  actual: 'ADMISSION_NOT_ISSUED'
+  operator: 'strictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///Users/louiscalata/nisi/.packet-diagnostics/c07-owner-draft-20260920/checks-o3AP1u/source/work-orders/v02-finish-cluster-v1/native-incident/admission-integration.test.mjs:431:10)
+    async Test.run (node:internal/test_runner/test:1332:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:911:7)
+  ...
+# Subtest: null-prototype data records are accepted without granting authority
+not ok 46 - null-prototype data records are accepted without granting authority
+  ---
+  duration_ms: 27.743958
+  type: 'test'
+  location: '/Users/louiscalata/nisi/.packet-diagnostics/c07-owner-draft-20260920/checks-o3AP1u/source/work-orders/v02-finish-cluster-v1/native-incident/admission-integration.test.mjs:458:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly equal:
+    + actual - expected
+    
+    + 'REFUSED'
+    - 'MATCHED'
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: 'MATCHED'
+  actual: 'REFUSED'
+  operator: 'strictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///Users/louiscalata/nisi/.packet-diagnostics/c07-owner-draft-20260920/checks-o3AP1u/source/work-orders/v02-finish-cluster-v1/native-incident/admission-integration.test.mjs:471:10)
+    async Test.run (node:internal/test_runner/test:1332:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:911:7)
+  ...
+# Subtest: normalized admission and refusal records are exact authority-free shapes
+ok 47 - normalized admission and refusal records are exact authority-free shapes
+  ---
+  duration_ms: 27.533625
+  type: 'test'
+  ...
+1..47
+# tests 47
+# suites 0
+# pass 38
+# fail 9
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 1430.574834

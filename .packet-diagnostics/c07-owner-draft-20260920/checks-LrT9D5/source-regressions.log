@@ -1,0 +1,196 @@
+TAP version 13
+# Subtest: empty source has an honest NONEMPTY failure and zero-byte untruncated input
+ok 1 - empty source has an honest NONEMPTY failure and zero-byte untruncated input
+  ---
+  duration_ms: 30.669875
+  type: 'test'
+  ...
+# Subtest: multibyte UTF8 preserves exact characters, byte length and digest privately
+ok 2 - multibyte UTF8 preserves exact characters, byte length and digest privately
+  ---
+  duration_ms: 37.797542
+  type: 'test'
+  ...
+# Subtest: exactly one MiB is source-bound without truncation
+ok 3 - exactly one MiB is source-bound without truncation
+  ---
+  duration_ms: 27.136042
+  type: 'test'
+  ...
+# Subtest: all fixed profiles retain exact closed native reconstruction settings
+ok 4 - all fixed profiles retain exact closed native reconstruction settings
+  ---
+  duration_ms: 68.363667
+  type: 'test'
+  ...
+# Subtest: public plan recursively excludes raw content, relative paths, stdout and reports
+ok 5 - public plan recursively excludes raw content, relative paths, stdout and reports
+  ---
+  duration_ms: 30.333958
+  type: 'test'
+  ...
+# Subtest: private input arrays, transcript and nested objects are deeply immutable
+ok 6 - private input arrays, transcript and nested objects are deeply immutable
+  ---
+  duration_ms: 26.932209
+  type: 'test'
+  ...
+# Subtest: all three native source hashes independently match their canonical domains
+ok 7 - all three native source hashes independently match their canonical domains
+  ---
+  duration_ms: 29.853583
+  type: 'test'
+  ...
+# Subtest: reordered serialized bundle and cross-run selection refuse
+ok 8 - reordered serialized bundle and cross-run selection refuse
+  ---
+  duration_ms: 35.450125
+  type: 'test'
+  ...
+# Subtest: invalid input accessors are rejected without invocation
+ok 9 - invalid input accessors are rejected without invocation
+  ---
+  duration_ms: 11.778041
+  type: 'test'
+  ...
+# Subtest: oversized source is refused by the repository snapshot boundary before an issued Swift plan exists
+ok 10 - oversized source is refused by the repository snapshot boundary before an issued Swift plan exists
+  ---
+  duration_ms: 0.217667
+  type: 'test'
+  ...
+# Subtest: actual settled host binds an original static failure source without exposing content
+ok 11 - actual settled host binds an original static failure source without exposing content
+  ---
+  duration_ms: 32.238291
+  type: 'test'
+  ...
+# Subtest: source plan is gated before settlement, while draining, and when quarantined
+ok 12 - source plan is gated before settlement, while draining, and when quarantined
+  ---
+  duration_ms: 125.384667
+  type: 'test'
+  ...
+# Subtest: invalid row input and Node-stage rows refuse without changing incident/history APIs
+ok 13 - invalid row input and Node-stage rows refuse without changing incident/history APIs
+  ---
+  duration_ms: 73.002584
+  type: 'test'
+  ...
+# Subtest: accessor accepts only the original issued plan and rejects clones or altered plans
+ok 14 - accessor accepts only the original issued plan and rejects clones or altered plans
+  ---
+  duration_ms: 21.606
+  type: 'test'
+  ...
+# Subtest: original issued static failure binds exact source bytes without exposing them publicly
+ok 15 - original issued static failure binds exact source bytes without exposing them publicly
+  ---
+  duration_ms: 16.0095
+  type: 'test'
+  ...
+# Subtest: private accessor returns the frozen exact failed artifact and prior native report
+ok 16 - private accessor returns the frozen exact failed artifact and prior native report
+  ---
+  duration_ms: 9.387791
+  type: 'test'
+  ...
+# Subtest: source plan identity and private input are stable for the same original inputs
+ok 17 - source plan identity and private input are stable for the same original inputs
+  ---
+  duration_ms: 10.500375
+  type: 'test'
+  ...
+# Subtest: serialized or cloned plans never retain private source authority
+ok 18 - serialized or cloned plans never retain private source authority
+  ---
+  duration_ms: 7.760792
+  type: 'test'
+  ...
+# Subtest: accessor input is exact and rejects getters before invoking them
+ok 19 - accessor input is exact and rejects getters before invoking them
+  ---
+  duration_ms: 0.130833
+  type: 'test'
+  ...
+# Subtest: cloned preview is not source authority even when bytes and hashes match
+ok 20 - cloned preview is not source authority even when bytes and hashes match
+  ---
+  duration_ms: 5.66725
+  type: 'test'
+  ...
+# Subtest: a different original preview cannot be substituted across original contexts
+ok 21 - a different original preview cannot be substituted across original contexts
+  ---
+  duration_ms: 12.160042
+  type: 'test'
+  ...
+# Subtest: missing, partial, malformed and noncanonical row ids refuse without fallback selection
+ok 22 - missing, partial, malformed and noncanonical row ids refuse without fallback selection
+  ---
+  duration_ms: 12.927375
+  type: 'test'
+  ...
+# Subtest: recorded static PASS is not a native incident source
+ok 23 - recorded static PASS is not a native incident source
+  ---
+  duration_ms: 54.867791
+  type: 'test'
+  ...
+# Subtest: recorded Node failure remains unsupported because no file transcript can be invented
+ok 24 - recorded Node failure remains unsupported because no file transcript can be invented
+  ---
+  duration_ms: 60.746916
+  type: 'test'
+  ...
+# Subtest: operational static failures are not reconstructed as deterministic incidents
+ok 25 - operational static failures are not reconstructed as deterministic incidents
+  ---
+  duration_ms: 6.07675
+  type: 'test'
+  ...
+# Subtest: interrupted evidence cannot become a source-bound native incident
+ok 26 - interrupted evidence cannot become a source-bound native incident
+  ---
+  duration_ms: 31.737125
+  type: 'test'
+  ...
+# Subtest: serialized bundle remains inspectable with original context, while cloned or cross-run context has no authority
+ok 27 - serialized bundle remains inspectable with original context, while cloned or cross-run context has no authority
+  ---
+  duration_ms: 18.141583
+  type: 'test'
+  ...
+# Subtest: a repaired run reconstructs the exact original failed attempt rather than the later passing source
+ok 28 - a repaired run reconstructs the exact original failed attempt rather than the later passing source
+  ---
+  duration_ms: 38.182166
+  type: 'test'
+  ...
+# Subtest: public selection metadata is copied and deeply frozen against later mutation
+ok 29 - public selection metadata is copied and deeply frozen against later mutation
+  ---
+  duration_ms: 7.694708
+  type: 'test'
+  ...
+# Subtest: real settled host exposes source planning while unsettled host refuses
+ok 30 - real settled host exposes source planning while unsettled host refuses
+  ---
+  duration_ms: 24.493708
+  type: 'test'
+  ...
+# Subtest: host method requires an exact full row-id request and never returns raw content
+ok 31 - host method requires an exact full row-id request and never returns raw content
+  ---
+  duration_ms: 15.985166
+  type: 'test'
+  ...
+1..31
+# tests 31
+# suites 0
+# pass 31
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 1008.163208

@@ -1,0 +1,42 @@
+{
+  "schema": "nisi.c07.owner-retained-source-review.v1",
+  "reviewerTask": "/root/sharedchami_cleanup_daybreak_review",
+  "reviewerRole": "Daybreak defensive second source review",
+  "modelActuallyServed": "UNKNOWN",
+  "verdict": "FAIL",
+  "scope": "CALLER_SUPPLIED_NATIVE_INCIDENT_EVIDENCE_NODE_ONLY",
+  "sourceHashes": {
+    "candidate/hosts/repository/native-incident-source-v1.mjs": "6a1ddf192be45ff14e4471e08470429a6fcea300642e4f681d10f187b7540e74",
+    "candidate/hosts/repository/native-incident-admission-v1.mjs": "1924dbd6472585d747151992e6fb680a9821a075feaf3cc70e4441a400b525c5",
+    "candidate/work-orders/v02-finish-cluster-v1/native-incident/native-incident-source-v1.test.mjs": "b59e4880e742a07ed9d883024c173dd1d30ba94bdc253b4a5446c2abb3df2a51",
+    "candidate/work-orders/v02-finish-cluster-v1/native-incident/admission-integration.test.mjs": "4d82def6def22e51cdf19bd104f9e90e28795ec4be6860a32ab07d679e2c5911"
+  },
+  "findings": [
+    {
+      "priority": "P1",
+      "code": "NESTED_RECEIPT_PROXY_TRAPS",
+      "path": "candidate/hosts/repository/native-incident-admission-v1.mjs",
+      "lines": "173-178",
+      "evidence": "The new boundary rejects only a Proxy used as fresh.receipt itself, then passes the caller-owned receipt graph directly to readExecutionReceipt. That reader reflects receipt.binding, receipt.process, receipt.outputs, receipt.outputs.stdout/stderr, and receipt.result. A plain top-level receipt containing a Proxy at any of those nested paths can therefore execute getPrototypeOf or ownKeys traps before the candidate converts the thrown error to FRESH_RECEIPT_INVALID. The current zero-trap regression covers hostile fresh.expected and nativeReport/outcomes, but not these nested receipt paths.",
+      "requiredFix": "Before readExecutionReceipt, recursively validate and snapshot the exact receipt schema with Proxy-first checks at the top receipt and every nested record/list boundary, without reading caller properties or invoking getters; pass that data-only snapshot and the original issued expectation to readExecutionReceipt. Add deterministic counters for Proxy and revoked-Proxy values at binding, process, outputs, stdout, stderr, and result. Each must return FRESH_RECEIPT_INVALID with zero traps. Keep handle consumption fail-closed and do not add a shape-only receipt acceptance path."
+    }
+  ],
+  "resolvedInitialFindings": [
+    "The fixture now returns the selected issued check and demonstrates a genuinely positive synthetic MATCHED result with nativeRerun NOT_RUN and all authority flags false.",
+    "Identity negatives obtain fresh admission handles instead of relying on a consumed handle.",
+    "Native report schemaVersion, expectation, preparation, source, artifact, request, profile and rules identities are compared.",
+    "Expected/report/outcome descriptor boundaries are guarded and tested without invoking their hostile accessors or Proxy traps.",
+    "Future host observations are refused and the grant is bound to the private issued execution-profile and executable identities."
+  ],
+  "compatibilityAssessment": "The additive execution-identity WeakMap and accessor preserve the existing v1 public plan and private source-input shapes in the reviewed source. The accessor grants data only for the exact issued plan, returns a frozen nonauthorizing record, and the integration test reaches MATCHED from the original issued expectation and receipt. This assessment does not override the remaining nested-receipt boundary finding.",
+  "reviewerExecutedTests": false,
+  "implementationAccepted": false,
+  "openCodeExecuted": false,
+  "nativeBuildAccepted": false,
+  "nativeExecutionAttested": false,
+  "sourceAuthenticityAttested": false,
+  "resumeGranted": false,
+  "publicationAuthorized": false,
+  "inference": "NOT_RUN",
+  "note": "Read-only source review only. No tests, imports, native execution, model calls, network activity, canonical writes, dispatch, or acceptance occurred."
+}

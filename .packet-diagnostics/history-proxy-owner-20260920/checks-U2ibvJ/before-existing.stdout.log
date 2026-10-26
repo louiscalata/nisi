@@ -1,0 +1,202 @@
+TAP version 13
+# Subtest: malformed envelopes, hidden fields, symbols and accessors refuse without getter invocation
+ok 1 - malformed envelopes, hidden fields, symbols and accessors refuse without getter invocation
+  ---
+  duration_ms: 1.313542
+  type: 'test'
+  ...
+# Subtest: invalid times and fabricated handles are INVALID_INPUT with no snapshot
+ok 2 - invalid times and fabricated handles are INVALID_INPUT with no snapshot
+  ---
+  duration_ms: 0.211083
+  type: 'test'
+  ...
+# Subtest: plain and null-prototype exact envelopes are accepted
+ok 3 - plain and null-prototype exact envelopes are accepted
+  ---
+  duration_ms: 0.750916
+  type: 'test'
+  ...
+# Subtest: SEALED owner refusal preserves its snapshot and performs no IO
+ok 4 - SEALED owner refusal preserves its snapshot and performs no IO
+  ---
+  duration_ms: 0.440958
+  type: 'test'
+  ...
+# Subtest: COMMIT_UNCERTAIN owner refusal preserves quarantine and performs no IO
+ok 5 - COMMIT_UNCERTAIN owner refusal preserves quarantine and performs no IO
+  ---
+  duration_ms: 0.365042
+  type: 'test'
+  ...
+# Subtest: empty NEW owner persists a complete header/footer without synthetic observations
+ok 6 - empty NEW owner persists a complete header/footer without synthetic observations
+  ---
+  duration_ms: 0.201417
+  type: 'test'
+  ...
+# Subtest: same-watermark repeat verifies disk and returns UNCHANGED without durability claim
+ok 7 - same-watermark repeat verifies disk and returns UNCHANGED without durability claim
+  ---
+  duration_ms: 0.233
+  type: 'test'
+  ...
+# Subtest: later maintenance advances serialized watermark even when no payload expires
+ok 8 - later maintenance advances serialized watermark even when no payload expires
+  ---
+  duration_ms: 0.256667
+  type: 'test'
+  ...
+# Subtest: backward maintenance time refuses TIME and preserves exact prior snapshot and disk
+ok 9 - backward maintenance time refuses TIME and preserves exact prior snapshot and disk
+  ---
+  duration_ms: 0.379
+  type: 'test'
+  ...
+# Subtest: payload is retained immediately before TTL boundary
+ok 10 - payload is retained immediately before TTL boundary
+  ---
+  duration_ms: 0.370541
+  type: 'test'
+  ...
+# Subtest: payload is removed exactly at TTL while identity and fingerprint remain
+ok 11 - payload is removed exactly at TTL while identity and fingerprint remain
+  ---
+  duration_ms: 0.400166
+  type: 'test'
+  ...
+# Subtest: revocation expires before its target without undoing revoked liveness after reopen
+ok 12 - revocation expires before its target without undoing revoked liveness after reopen
+  ---
+  duration_ms: 0.864417
+  type: 'test'
+  ...
+# Subtest: capacity eviction of target and revocation payloads preserves their relation
+ok 13 - capacity eviction of target and revocation payloads preserves their relation
+  ---
+  duration_ms: 0.860958
+  type: 'test'
+  ...
+# Subtest: same-watermark maintenance does not conceal disk drift behind unchanged private bytes
+ok 14 - same-watermark maintenance does not conceal disk drift behind unchanged private bytes
+  ---
+  duration_ms: 0.39325
+  type: 'test'
+  ...
+# Subtest: open-time private pruning is durably persisted even without newly expired payload
+ok 15 - open-time private pruning is durably persisted even without newly expired payload
+  ---
+  duration_ms: 0.225041
+  type: 'test'
+  ...
+# Subtest: maintenance preserves already-redacted payload and never restores caller secret
+ok 16 - maintenance preserves already-redacted payload and never restores caller secret
+  ---
+  duration_ms: 0.212417
+  type: 'test'
+  ...
+# Subtest: durable REVOKED row removes target liveness but preserves target payload before TTL
+ok 17 - durable REVOKED row removes target liveness but preserves target payload before TTL
+  ---
+  duration_ms: 0.48575
+  type: 'test'
+  ...
+# Subtest: revocation relation and both identities survive target TTL pruning and reopen
+ok 18 - revocation relation and both identities survive target TTL pruning and reopen
+  ---
+  duration_ms: 0.422916
+  type: 'test'
+  ...
+# Subtest: replaying an expired target is DUPLICATE while changed content remains CONFLICT
+ok 19 - replaying an expired target is DUPLICATE while changed content remains CONFLICT
+  ---
+  duration_ms: 0.264542
+  type: 'test'
+  ...
+# Subtest: replaying a durable revocation is DUPLICATE and conflicting revocation is CONFLICT
+ok 20 - replaying a durable revocation is DUPLICATE and conflicting revocation is CONFLICT
+  ---
+  duration_ms: 0.503583
+  type: 'test'
+  ...
+# Subtest: REVOKED row validation still requires prior target and top-level revokes metadata
+ok 21 - REVOKED row validation still requires prior target and top-level revokes metadata
+  ---
+  duration_ms: 0.1925
+  type: 'test'
+  ...
+# Subtest: capacity pruning removes oldest payloads but conserves every accepted ID
+ok 22 - capacity pruning removes oldest payloads but conserves every accepted ID
+  ---
+  duration_ms: 6.922667
+  type: 'test'
+  ...
+# Subtest: stale owner maintenance detects changed disk and preserves its prior snapshot
+ok 23 - stale owner maintenance detects changed disk and preserves its prior snapshot
+  ---
+  duration_ms: 0.231959
+  type: 'test'
+  ...
+# Subtest: concurrent NEW owners accept identical bytes as verified UNCHANGED and reject different bytes
+ok 24 - concurrent NEW owners accept identical bytes as verified UNCHANGED and reject different bytes
+  ---
+  duration_ms: 0.174875
+  type: 'test'
+  ...
+# Subtest: precommit rename failure rolls back staged pruning and preserves disk bytes
+ok 25 - precommit rename failure rolls back staged pruning and preserves disk bytes
+  ---
+  duration_ms: 0.240875
+  type: 'test'
+  ...
+# Subtest: postcommit readback failure quarantines owner and fresh reopen reconciles committed maintenance
+ok 26 - postcommit readback failure quarantines owner and fresh reopen reconciles committed maintenance
+  ---
+  duration_ms: 0.371042
+  type: 'test'
+  ...
+# Subtest: missing fsync truthfully succeeds as non-durable MAINTAINED
+ok 27 - missing fsync truthfully succeeds as non-durable MAINTAINED
+  ---
+  duration_ms: 0.136666
+  type: 'test'
+  ...
+# Subtest: coherent fsync faults remain verified non-durable success rather than uncertainty
+ok 28 - coherent fsync faults remain verified non-durable success rather than uncertainty
+  ---
+  duration_ms: 0.112458
+  type: 'test'
+  ...
+# Subtest: maintenance holds the shared busy guard against reentrant record
+ok 29 - maintenance holds the shared busy guard against reentrant record
+  ---
+  duration_ms: 0.118083
+  type: 'test'
+  ...
+# Subtest: record holds the shared busy guard against reentrant maintenance
+ok 30 - record holds the shared busy guard against reentrant maintenance
+  ---
+  duration_ms: 0.131542
+  type: 'test'
+  ...
+# Subtest: busy guard is released after failed maintenance
+ok 31 - busy guard is released after failed maintenance
+  ---
+  duration_ms: 0.120583
+  type: 'test'
+  ...
+# Subtest: maintenance snapshots are immutable and older returned payload snapshots are not erased retroactively
+ok 32 - maintenance snapshots are immutable and older returned payload snapshots are not erased retroactively
+  ---
+  duration_ms: 0.35925
+  type: 'test'
+  ...
+1..32
+# tests 32
+# suites 0
+# pass 32
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 53.900333

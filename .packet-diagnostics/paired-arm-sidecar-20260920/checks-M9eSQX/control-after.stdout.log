@@ -1,0 +1,342 @@
+TAP version 13
+# Subtest: durable original owner NATIVE_API/OFF/repaired, readonly reopened crosslinks
+ok 1 - durable original owner NATIVE_API/OFF/repaired, readonly reopened crosslinks
+  ---
+  duration_ms: 496.071209
+  type: 'test'
+  ...
+# Subtest: durable original owner NATIVE_API/OFF/no-progress, readonly reopened crosslinks
+ok 2 - durable original owner NATIVE_API/OFF/no-progress, readonly reopened crosslinks
+  ---
+  duration_ms: 434.373833
+  type: 'test'
+  ...
+# Subtest: durable original owner NATIVE_API/ON/repaired, readonly reopened crosslinks
+ok 3 - durable original owner NATIVE_API/ON/repaired, readonly reopened crosslinks
+  ---
+  duration_ms: 465.563958
+  type: 'test'
+  ...
+# Subtest: durable original owner NATIVE_API/ON/no-progress, readonly reopened crosslinks
+ok 4 - durable original owner NATIVE_API/ON/no-progress, readonly reopened crosslinks
+  ---
+  duration_ms: 433.147708
+  type: 'test'
+  ...
+# Subtest: durable original owner CHAT_COMPLETIONS/OFF/repaired, readonly reopened crosslinks
+ok 5 - durable original owner CHAT_COMPLETIONS/OFF/repaired, readonly reopened crosslinks
+  ---
+  duration_ms: 460.896833
+  type: 'test'
+  ...
+# Subtest: durable original owner CHAT_COMPLETIONS/OFF/no-progress, readonly reopened crosslinks
+ok 6 - durable original owner CHAT_COMPLETIONS/OFF/no-progress, readonly reopened crosslinks
+  ---
+  duration_ms: 427.218958
+  type: 'test'
+  ...
+# Subtest: durable original owner CHAT_COMPLETIONS/ON/repaired, readonly reopened crosslinks
+ok 7 - durable original owner CHAT_COMPLETIONS/ON/repaired, readonly reopened crosslinks
+  ---
+  duration_ms: 467.213625
+  type: 'test'
+  ...
+# Subtest: durable original owner CHAT_COMPLETIONS/ON/no-progress, readonly reopened crosslinks
+ok 8 - durable original owner CHAT_COMPLETIONS/ON/no-progress, readonly reopened crosslinks
+  ---
+  duration_ms: 434.981083
+  type: 'test'
+  ...
+# Subtest: immediate user stop records no dispatch and does not resume
+ok 9 - immediate user stop records no dispatch and does not resume
+  ---
+  duration_ms: 25.504584
+  type: 'test'
+  ...
+# Subtest: post-mint consent refusal retains final history without inventing dispatch
+ok 10 - post-mint consent refusal retains final history without inventing dispatch
+  ---
+  duration_ms: 40.158959
+  type: 'test'
+  ...
+# Subtest: failure sidecar "kind":"PREPARED" preserves prefix without redispatch
+ok 11 - failure sidecar "kind":"PREPARED" preserves prefix without redispatch
+  ---
+  duration_ms: 20.655958
+  type: 'test'
+  ...
+# Subtest: failure main "type":"START_INTENT" preserves prefix without redispatch
+ok 12 - failure main "type":"START_INTENT" preserves prefix without redispatch
+  ---
+  duration_ms: 23.513583
+  type: 'test'
+  ...
+# Subtest: failure sidecar "kind":"START_LINKED" preserves prefix without redispatch
+ok 13 - failure sidecar "kind":"START_LINKED" preserves prefix without redispatch
+  ---
+  duration_ms: 28.128208
+  type: 'test'
+  ...
+# Subtest: failure sidecar "kind":"HISTORY" preserves prefix without redispatch
+ok 14 - failure sidecar "kind":"HISTORY" preserves prefix without redispatch
+  ---
+  duration_ms: 100.032834
+  type: 'test'
+  ...
+# Subtest: failure sidecar "kind":"PHASE_OBSERVED" preserves prefix without redispatch
+ok 15 - failure sidecar "kind":"PHASE_OBSERVED" preserves prefix without redispatch
+  ---
+  duration_ms: 101.135291
+  type: 'test'
+  ...
+# Subtest: failure main "type":"FINAL" preserves prefix without redispatch
+ok 16 - failure main "type":"FINAL" preserves prefix without redispatch
+  ---
+  duration_ms: 419.602583
+  type: 'test'
+  ...
+# Subtest: failure sidecar "kind":"FINAL" preserves prefix without redispatch
+ok 17 - failure sidecar "kind":"FINAL" preserves prefix without redispatch
+  ---
+  duration_ms: 416.283083
+  type: 'test'
+  ...
+# Subtest: fresh admission refusal remains a recorded stop, not task success
+ok 18 - fresh admission refusal remains a recorded stop, not task success
+  ---
+  duration_ms: 24.031125
+  type: 'test'
+  ...
+# Subtest: caller mutation cannot change the controller-captured approval used for history
+ok 19 - caller mutation cannot change the controller-captured approval used for history
+  ---
+  duration_ms: 425.089125
+  type: 'test'
+  ...
+# Subtest: semantically forged rehashed sidecars refuse exact binding errors
+    # Subtest: header runner
+    ok 1 - header runner
+      ---
+      duration_ms: 2.388125
+      type: 'test'
+      ...
+    # Subtest: header intents
+    ok 2 - header intents
+      ---
+      duration_ms: 1.97375
+      type: 'test'
+      ...
+    # Subtest: wrong main hash
+    ok 3 - wrong main hash
+      ---
+      duration_ms: 1.950833
+      type: 'test'
+      ...
+    # Subtest: wrong intent
+    ok 4 - wrong intent
+      ---
+      duration_ms: 1.844125
+      type: 'test'
+      ...
+    # Subtest: wrong source
+    ok 5 - wrong source
+      ---
+      duration_ms: 2.017833
+      type: 'test'
+      ...
+    # Subtest: wrong owner
+    ok 6 - wrong owner
+      ---
+      duration_ms: 2.4425
+      type: 'test'
+      ...
+    # Subtest: wrong prepared link
+    ok 7 - wrong prepared link
+      ---
+      duration_ms: 1.843583
+      type: 'test'
+      ...
+    # Subtest: wrong history generation
+    ok 8 - wrong history generation
+      ---
+      duration_ms: 1.87175
+      type: 'test'
+      ...
+    # Subtest: wrong history point
+    ok 9 - wrong history point
+      ---
+      duration_ms: 1.898625
+      type: 'test'
+      ...
+    # Subtest: wrong projection candidate
+    ok 10 - wrong projection candidate
+      ---
+      duration_ms: 1.905792
+      type: 'test'
+      ...
+    # Subtest: wrong projection inputs
+    ok 11 - wrong projection inputs
+      ---
+      duration_ms: 2.339125
+      type: 'test'
+      ...
+    # Subtest: wrong projection intent
+    ok 12 - wrong projection intent
+      ---
+      duration_ms: 2.366917
+      type: 'test'
+      ...
+    # Subtest: wrong treatment arm
+    ok 13 - wrong treatment arm
+      ---
+      duration_ms: 2.45425
+      type: 'test'
+      ...
+    # Subtest: wrong final state
+    ok 14 - wrong final state
+      ---
+      duration_ms: 1.890417
+      type: 'test'
+      ...
+    1..14
+ok 20 - semantically forged rehashed sidecars refuse exact binding errors
+  ---
+  duration_ms: 457.898333
+  type: 'test'
+  ...
+# Subtest: physical process death after SIDE_PREPARED
+ok 21 - physical process death after SIDE_PREPARED
+  ---
+  duration_ms: 71.038791
+  type: 'test'
+  ...
+# Subtest: physical process death after MAIN_START
+ok 22 - physical process death after MAIN_START
+  ---
+  duration_ms: 70.385875
+  type: 'test'
+  ...
+# Subtest: physical process death after SIDE_START
+ok 23 - physical process death after SIDE_START
+  ---
+  duration_ms: 77.959167
+  type: 'test'
+  ...
+# Subtest: physical process death after MAIN_EXECUTOR
+ok 24 - physical process death after MAIN_EXECUTOR
+  ---
+  duration_ms: 161.9725
+  type: 'test'
+  ...
+# Subtest: physical process death after MAIN_ORACLE
+ok 25 - physical process death after MAIN_ORACLE
+  ---
+  duration_ms: 479.746416
+  type: 'test'
+  ...
+# Subtest: physical process death after MAIN_FINAL
+ok 26 - physical process death after MAIN_FINAL
+  ---
+  duration_ms: 488.944625
+  type: 'test'
+  ...
+# Subtest: physical process death after SIDE_FINAL
+ok 27 - physical process death after SIDE_FINAL
+  ---
+  duration_ms: 490.893417
+  type: 'test'
+  ...
+# Subtest: sidecar codec accepts only original arm-owner producer shapes and round-trips its chain
+    # Subtest: closed original admission and history schemas reject recomputed hybrids
+    ok 1 - closed original admission and history schemas reject recomputed hybrids
+      ---
+      duration_ms: 0.613667
+      type: 'test'
+      ...
+    # Subtest: closed V2 producer rejects omitted discarded data and unknown data
+    ok 2 - closed V2 producer rejects omitted discarded data and unknown data
+      ---
+      duration_ms: 0.243084
+      type: 'test'
+      ...
+    # Subtest: terminal labels are non-null and from the current producer contracts
+    ok 3 - terminal labels are non-null and from the current producer contracts
+      ---
+      duration_ms: 0.805084
+      type: 'test'
+      ...
+    # Subtest: proxy and getter inputs refuse without invoking traps
+    ok 4 - proxy and getter inputs refuse without invoking traps
+      ---
+      duration_ms: 0.133416
+      type: 'test'
+      ...
+    1..4
+ok 28 - sidecar codec accepts only original arm-owner producer shapes and round-trips its chain
+  ---
+  duration_ms: 394.220708
+  type: 'test'
+  ...
+# Subtest: missing sidecar is unavailable while an empty created sidecar is empty
+ok 29 - missing sidecar is unavailable while an empty created sidecar is empty
+  ---
+  duration_ms: 5.713459
+  type: 'test'
+  ...
+# Subtest: exclusive private creation, header/final round-trip, and readonly reopen boundary
+ok 30 - exclusive private creation, header/final round-trip, and readonly reopen boundary
+  ---
+  duration_ms: 12.961417
+  type: 'test'
+  ...
+# Subtest: descriptor-bound injected IO completes short writes and rejects zero progress
+ok 31 - descriptor-bound injected IO completes short writes and rejects zero progress
+  ---
+  duration_ms: 17.58475
+  type: 'test'
+  ...
+# Subtest: fsync-after-write failure is uncertain and sticky
+ok 32 - fsync-after-write failure is uncertain and sticky
+  ---
+  duration_ms: 3.736458
+  type: 'test'
+  ...
+# Subtest: readback corruption and premature EOF are uncertain and sticky
+ok 33 - readback corruption and premature EOF are uncertain and sticky
+  ---
+  duration_ms: 15.116875
+  type: 'test'
+  ...
+# Subtest: FINAL close failure rejects without acknowledging record or finalSeen
+ok 34 - FINAL close failure rejects without acknowledging record or finalSeen
+  ---
+  duration_ms: 11.860208
+  type: 'test'
+  ...
+# Subtest: codec rejects Proxy/getter retain inputs without invoking traps
+ok 35 - codec rejects Proxy/getter retain inputs without invoking traps
+  ---
+  duration_ms: 8.003166
+  type: 'test'
+  ...
+# Subtest: corrupt, partial-tail, and post-FINAL extra bytes are non-authorizing inspection results
+ok 36 - corrupt, partial-tail, and post-FINAL extra bytes are non-authorizing inspection results
+  ---
+  duration_ms: 30.478625
+  type: 'test'
+  ...
+# Subtest: symlink, hardlink, and non-private directory/file modes are refused
+ok 37 - symlink, hardlink, and non-private directory/file modes are refused
+  ---
+  duration_ms: 1.572458
+  type: 'test'
+  ...
+1..37
+# tests 55
+# suites 0
+# pass 55
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 8198.149084

@@ -1,0 +1,64 @@
+{
+  "schema": "nisi.history-hardening-evidence/v1",
+  "scope": "NODE_HISTORY_PROXY_BOUNDARIES",
+  "transitions": [
+    {
+      "path": "history/journal-owner-v2.mjs",
+      "oldSha256": "b64e21ae717870faf220baf3f0ddc9c44841f0492415805f7b75b812828e7184",
+      "newSha256": "2120bf0c75d9aa6122c06a2b34d55b3256a08f024d0e5fa43d8877e4eb67e44f"
+    },
+    {
+      "path": "history/run-journal-v1.mjs",
+      "oldSha256": "dee9f490c091000b2560cd9464d945885e7f341091b87dde9ae4f2b7cdbd359e",
+      "newSha256": "0164f10da27f6d12cfd1f3d443bd8e0f7c237b46363353570ae4a759a97f749b"
+    }
+  ],
+  "affectedAcceptances": [
+    "C04",
+    "C05",
+    "C06",
+    "C07"
+  ],
+  "canonical": ".packet-diagnostics/history-proxy-owner-20260920/integration/canonical-jwtGZe/checks.json",
+  "isolated": ".packet-diagnostics/history-proxy-owner-20260920/checks-pHQtKm/checks.json",
+  "validation": ".packet-diagnostics/history-proxy-owner-20260920/nisi-validation-xtUkLM/receipt.json",
+  "sourceReview": ".packet-diagnostics/history-proxy-owner-20260920/integration/source-review.json",
+  "bindings": {
+    ".packet-diagnostics/history-proxy-owner-20260920/REVIEW.md": "4548de26529b56a042e7fe2c0aaec9c5810c99c511af389794c77c9764a33573",
+    ".packet-diagnostics/history-proxy-owner-20260920/before/history/journal-owner-v2.mjs": "b64e21ae717870faf220baf3f0ddc9c44841f0492415805f7b75b812828e7184",
+    ".packet-diagnostics/history-proxy-owner-20260920/before/history/run-journal-v1.mjs": "dee9f490c091000b2560cd9464d945885e7f341091b87dde9ae4f2b7cdbd359e",
+    ".packet-diagnostics/history-proxy-owner-20260920/checks-pHQtKm/before-existing.stderr.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    ".packet-diagnostics/history-proxy-owner-20260920/checks-pHQtKm/before-existing.stdout.log": "ba2eeac0d29dfa7be0652a4c8a1a4f30f68733b426faa318576afbbf631a6c35",
+    ".packet-diagnostics/history-proxy-owner-20260920/checks-pHQtKm/before-new-regressions.stderr.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    ".packet-diagnostics/history-proxy-owner-20260920/checks-pHQtKm/before-new-regressions.stdout.log": "471c06f01ea6dcb1d4fdbc8a373d0e33f5485d2903b25fae07be918348d4782a",
+    ".packet-diagnostics/history-proxy-owner-20260920/checks-pHQtKm/candidate-existing.stderr.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    ".packet-diagnostics/history-proxy-owner-20260920/checks-pHQtKm/candidate-existing.stdout.log": "e1b34f161974c9acce24d8c7ac099d1ebd0b98ba4957d77319b500636672091d",
+    ".packet-diagnostics/history-proxy-owner-20260920/checks-pHQtKm/candidate-new-regressions.stderr.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    ".packet-diagnostics/history-proxy-owner-20260920/checks-pHQtKm/candidate-new-regressions.stdout.log": "f4d30971d7554df71a09364a9754abb88f80c6568e744e88490a60a2e7c30ece",
+    ".packet-diagnostics/history-proxy-owner-20260920/checks-pHQtKm/checks.json": "a5d0b1f6be48254d337e670b9ee1ac064ec8cf97b7f35649249533be02a7a9b6",
+    ".packet-diagnostics/history-proxy-owner-20260920/integration/canonical-jwtGZe/c05.stderr.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    ".packet-diagnostics/history-proxy-owner-20260920/integration/canonical-jwtGZe/c05.stdout.log": "5c109abd353beeca4710a59f8694c593bd9a987caa5fe6c4a744a24aefc45328",
+    ".packet-diagnostics/history-proxy-owner-20260920/integration/canonical-jwtGZe/c06.stderr.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    ".packet-diagnostics/history-proxy-owner-20260920/integration/canonical-jwtGZe/c06.stdout.log": "d6206df44a8c098c13569c4fed710c2c1834b0f95d9e00d9b1926c481f4e4fea",
+    ".packet-diagnostics/history-proxy-owner-20260920/integration/canonical-jwtGZe/c07.stderr.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    ".packet-diagnostics/history-proxy-owner-20260920/integration/canonical-jwtGZe/c07.stdout.log": "e75ce452a18f17a664472e9ef53185b696599fab28a0823fac5681c3d5790288",
+    ".packet-diagnostics/history-proxy-owner-20260920/integration/canonical-jwtGZe/checks.json": "fe364e55c959b26da13467f993dddddb76db596c6b25378397b1056a87c583e1",
+    ".packet-diagnostics/history-proxy-owner-20260920/integration/canonical-jwtGZe/history.stderr.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    ".packet-diagnostics/history-proxy-owner-20260920/integration/canonical-jwtGZe/history.stdout.log": "bb54f777a35f5bf68275d8b61a552b803b1ac429fd1c64073ac499abbade4bf6",
+    ".packet-diagnostics/history-proxy-owner-20260920/integration/canonical-jwtGZe/host-history.stderr.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    ".packet-diagnostics/history-proxy-owner-20260920/integration/canonical-jwtGZe/host-history.stdout.log": "4aadb932a60bc021f6ca1a84b04264ed9b2948dc4da52af00971852e926d2ae8",
+    ".packet-diagnostics/history-proxy-owner-20260920/integration/canonical-jwtGZe/intent.json": "720f69fd05e6eb11e096189b4a27d7fca41aef31d4548bf67a5bfa858987085b",
+    ".packet-diagnostics/history-proxy-owner-20260920/integration/predecessor-tests/journal-owner-v2-baseline.test.mjs": "bc5c2951ddd22ddbdc850a632119f5d11cb9a374ca3918f7b8ebc234b6f72029",
+    ".packet-diagnostics/history-proxy-owner-20260920/integration/predecessor-tests/journal-owner-v2-store.test.mjs": "216432ae044d4d7b57476f4f5a429e8a531e0bdcd5ff011a7f7bc365a999e994",
+    ".packet-diagnostics/history-proxy-owner-20260920/integration/verify-canonical.mjs": "67c62b4ac9cb3bb90fc0b3a3d2cde5f0894c8cb38684e4a3f24bdecbfc07ad68",
+    ".packet-diagnostics/history-proxy-owner-20260920/nisi-validation-xtUkLM/input.json": "0e7b8fb752bdb651d68235509b7d825da792e0c9647185eefa3a58377265edef",
+    ".packet-diagnostics/history-proxy-owner-20260920/nisi-validation-xtUkLM/receipt.json": "e019fab15732337101f959a6cb59514e2248f840b055b1b927eedb67fb3eb05b",
+    ".packet-diagnostics/history-proxy-owner-20260920/nisi-validation-xtUkLM/stderr.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    ".packet-diagnostics/history-proxy-owner-20260920/nisi-validation-xtUkLM/stdout.log": "9cb3f855a6fe4e57ee54338886410b7fc73105b33b2f8f4e0fd26e179eeb1ae9",
+    ".packet-diagnostics/history-proxy-owner-20260920/integration/source-review.json": "06d75d6de8ca7925fe3696134ade7d06927bf76890cdb94dfc29401b04f09dce"
+  },
+  "implementationAccepted": false,
+  "nativeBuildAccepted": false,
+  "publicationAuthorized": false,
+  "inference": "NOT_RUN"
+}

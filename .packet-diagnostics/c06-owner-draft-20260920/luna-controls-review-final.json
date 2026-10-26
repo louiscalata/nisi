@@ -1,0 +1,28 @@
+{
+  "schema": "nisi.c06.owner-retained-control-review.v1",
+  "reviewerTask": "/root/ternary_concept_check",
+  "modelRequested": "gpt-5.6-luna",
+  "modelActuallyServed": "UNKNOWN",
+  "verdict": "NO_REMAINING_P1_P2_FINDINGS",
+  "sourceHashes": {
+    "work-orders/v02-finish-cluster-v1/check-c06.mjs": "9c792a59a8574fb413a4430c98eeca3c24d3547ecf4c77ca07a2746c32855dec",
+    "tests/finish-cluster-c06.test.mjs": "a9291a63d527249e1e1c8a583294b5a508d71637ff43519048a8cc3e8d7b00e3"
+  },
+  "wiringReviewed": "work-orders/v02-finish-cluster-v1/check-cluster.mjs validates C01-C05 before invoking the additive C06 guard",
+  "findingsAddressed": [
+    "Recognized C06 ledger-row authority claims are refused.",
+    "Immutable owner evidence identity rejects structurally valid replacement receipts.",
+    "Original checkpoint logs are read from fixed paths and checked against hashes and counts.",
+    "Recorded runtime path and version are exact.",
+    "Complete predecessor validation occurs in the parent inventory checker."
+  ],
+  "limits": [
+    "Historical absolute paths and runtime metadata are not portable binary attestation.",
+    "This is source/wiring review; owner tests remain separately attributed."
+  ],
+  "reviewerExecutedTests": false,
+  "implementationAccepted": false,
+  "nativeBuildAccepted": false,
+  "publicationAuthorized": false,
+  "note": "Owner transcription of the actual independent task reply, not a provider identity receipt or self-authorized acceptance."
+}

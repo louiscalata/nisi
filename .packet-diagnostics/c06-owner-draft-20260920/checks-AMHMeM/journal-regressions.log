@@ -1,0 +1,490 @@
+TAP version 13
+# Subtest: baseline package stays private, dependency-free and ESM
+ok 1 - baseline package stays private, dependency-free and ESM
+  ---
+  duration_ms: 1.669333
+  type: 'test'
+  ...
+# Subtest: baseline module exports the demo request function
+ok 2 - baseline module exports the demo request function
+  ---
+  duration_ms: 0.099708
+  type: 'test'
+  ...
+# Subtest: baseline frozen modules are byte-identical to the integrated product modules
+ok 3 - baseline frozen modules are byte-identical to the integrated product modules
+  ---
+  duration_ms: 0.684375
+  type: 'test'
+  ...
+# Subtest: baseline package stays private, dependency-free and ESM
+ok 4 - baseline package stays private, dependency-free and ESM
+  ---
+  duration_ms: 1.600583
+  type: 'test'
+  ...
+# Subtest: baseline module exports the entry builder
+ok 5 - baseline module exports the entry builder
+  ---
+  duration_ms: 0.084042
+  type: 'test'
+  ...
+# Subtest: baseline frozen journal module and summary fixtures are byte-identical to the accepted sources
+ok 6 - baseline frozen journal module and summary fixtures are byte-identical to the accepted sources
+  ---
+  duration_ms: 1.01375
+  type: 'test'
+  ...
+# Subtest: the observed run becomes a SUCCEEDED fixed-run entry with the exact shape
+ok 7 - the observed run becomes a SUCCEEDED fixed-run entry with the exact shape
+  ---
+  duration_ms: 1.294583
+  type: 'test'
+  ...
+# Subtest: every NOT_ACCEPTED summary becomes a FAILED entry that keeps its reasons and table
+ok 8 - every NOT_ACCEPTED summary becomes a FAILED entry that keeps its reasons and table
+  ---
+  duration_ms: 0.292208
+  type: 'test'
+  ...
+# Subtest: the entry is accepted by the accepted run journal: append, duplicate, conflict, reopen and redaction
+ok 9 - the entry is accepted by the accepted run journal: append, duplicate, conflict, reopen and redaction
+  ---
+  duration_ms: 2.158083
+  type: 'test'
+  ...
+# Subtest: non-object input throws TypeError; every field is checked in a fixed order with a named refusal
+ok 10 - non-object input throws TypeError; every field is checked in a fixed order with a named refusal
+  ---
+  duration_ms: 1.104625
+  type: 'test'
+  ...
+# Subtest: a summary that does not satisfy the v1 contract is refused before anything is built
+ok 11 - a summary that does not satisfy the v1 contract is refused before anything is built
+  ---
+  duration_ms: 1.041334
+  type: 'test'
+  ...
+# Subtest: a summary the journal cannot hold is refused as PAYLOAD_UNREPRESENTABLE, never coerced
+ok 12 - a summary the journal cannot hold is refused as PAYLOAD_UNREPRESENTABLE, never coerced
+  ---
+  duration_ms: 1.089833
+  type: 'test'
+  ...
+# Subtest: inputs are never mutated, results are fresh and identical across calls
+ok 13 - inputs are never mutated, results are fresh and identical across calls
+  ---
+  duration_ms: 0.3165
+  type: 'test'
+  ...
+# Subtest: entry module has no imports, exports only the builder and stays pure
+ok 14 - entry module has no imports, exports only the builder and stays pure
+  ---
+  duration_ms: 1.797292
+  type: 'test'
+  ...
+# Subtest: baseline package stays private, dependency-free and ESM
+ok 15 - baseline package stays private, dependency-free and ESM
+  ---
+  duration_ms: 1.67975
+  type: 'test'
+  ...
+# Subtest: baseline module exports the two bundle functions
+ok 16 - baseline module exports the two bundle functions
+  ---
+  duration_ms: 0.092791
+  type: 'test'
+  ...
+# Subtest: baseline frozen modules and fixtures are byte-identical to the accepted sources
+ok 17 - baseline frozen modules and fixtures are byte-identical to the accepted sources
+  ---
+  duration_ms: 0.7255
+  type: 'test'
+  ...
+# Subtest: opening an absent path yields an empty bundle that reports NEW and holds no history
+ok 18 - opening an absent path yields an empty bundle that reports NEW and holds no history
+  ---
+  duration_ms: 0.869167
+  type: 'test'
+  ...
+# Subtest: opening a complete persisted journal reports COMPLETE, the on-disk hash and every retained row
+ok 19 - opening a complete persisted journal reports COMPLETE, the on-disk hash and every retained row
+  ---
+  duration_ms: 0.839208
+  type: 'test'
+  ...
+# Subtest: interrupted work is a RUNNING row whose heartbeat is stale at open time, reported by id with its liveness
+ok 20 - interrupted work is a RUNNING row whose heartbeat is stale at open time, reported by id with its liveness
+  ---
+  duration_ms: 0.893375
+  type: 'test'
+  ...
+# Subtest: a truncated or corrupt persisted journal opens SEALED: prefix recovered, nothing appendable, no rewrite
+ok 21 - a truncated or corrupt persisted journal opens SEALED: prefix recovered, nothing appendable, no rewrite
+  ---
+  duration_ms: 0.625875
+  type: 'test'
+  ...
+# Subtest: a journal for another project or an unreadable file is refused at open, never adopted
+ok 22 - a journal for another project or an unreadable file is refused at open, never adopted
+  ---
+  duration_ms: 0.397584
+  type: 'test'
+  ...
+# Subtest: recording an observed fixed run appends, persists durably with the expected-previous hash, and reports the new on-disk hash
+ok 23 - recording an observed fixed run appends, persists durably with the expected-previous hash, and reports the new on-disk hash
+  ---
+  duration_ms: 1.001833
+  type: 'test'
+  ...
+# Subtest: the second record on the same open bundle chains on the first: expected-previous is the last written hash
+ok 24 - the second record on the same open bundle chains on the first: expected-previous is the last written hash
+  ---
+  duration_ms: 1.117875
+  type: 'test'
+  ...
+# Subtest: identical replay is idempotent and touches nothing on disk; same identity with different content is a CONFLICT that writes nothing
+ok 25 - identical replay is idempotent and touches nothing on disk; same identity with different content is a CONFLICT that writes nothing
+  ---
+  duration_ms: 0.440583
+  type: 'test'
+  ...
+# Subtest: an invalid run is refused by the builder before the journal or disk is touched; a bad clock is refused too
+ok 26 - an invalid run is refused by the builder before the journal or disk is touched; a bad clock is refused too
+  ---
+  duration_ms: 0.472834
+  type: 'test'
+  ...
+# Subtest: a disk that changed underneath the bundle is a STORE_CONFLICT: the append is rolled back and the caller must reopen
+ok 27 - a disk that changed underneath the bundle is a STORE_CONFLICT: the append is rolled back and the caller must reopen
+  ---
+  duration_ms: 1.008417
+  type: 'test'
+  ...
+# Subtest: a non-durable write is reported, not hidden: WRITTEN with durable:false keeps the bundle open and the hash advanced
+ok 28 - a non-durable write is reported, not hidden: WRITTEN with durable:false keeps the bundle open and the hash advanced
+  ---
+  duration_ms: 0.353
+  type: 'test'
+  ...
+# Subtest: an interrupted write (rename fails) is STORE_FAILED: old bytes intact, no temp left, append rolled back
+ok 29 - an interrupted write (rename fails) is STORE_FAILED: old bytes intact, no temp left, append rolled back
+  ---
+  duration_ms: 0.890708
+  type: 'test'
+  ...
+# Subtest: a fresh open after recording sees the record and reports no interrupted work for a finished run
+ok 30 - a fresh open after recording sees the record and reports no interrupted work for a finished run
+  ---
+  duration_ms: 0.302708
+  type: 'test'
+  ...
+# Subtest: bundle module imports three frozen siblings plus Proxy detection and stays pure
+ok 31 - bundle module imports three frozen siblings plus Proxy detection and stays pure
+  ---
+  duration_ms: 2.350417
+  type: 'test'
+  ...
+# Subtest: T2 a crashed RUNNING row reopened from disk is RUN_UNRECONCILED; with a v1 checkpoint it is RESUME_ELIGIBLE; after a terminal sibling it is SAFE_RESTART
+ok 32 - T2 a crashed RUNNING row reopened from disk is RUN_UNRECONCILED; with a v1 checkpoint it is RESUME_ELIGIBLE; after a terminal sibling it is SAFE_RESTART
+  ---
+  duration_ms: 18.255
+  type: 'test'
+  ...
+# Subtest: T2 sealed reopen states are JOURNAL_SEALED with the bundle's own reason word and nothing echoed
+ok 33 - T2 sealed reopen states are JOURNAL_SEALED with the bundle's own reason word and nothing echoed
+  ---
+  duration_ms: 8.230958
+  type: 'test'
+  ...
+# Subtest: T2 a heartbeat still inside heartbeatTtlMs at reopen is HEARTBEAT_LIVE, not an interruption
+ok 34 - T2 a heartbeat still inside heartbeatTtlMs at reopen is HEARTBEAT_LIVE, not an interruption
+  ---
+  duration_ms: 7.391958
+  type: 'test'
+  ...
+# Subtest: T20 mixed persisted state (QUEUED, RUNNING, SUCCEEDED + revoker, expired) round-trips without INVALID_INPUT and agrees with the bundle
+ok 35 - T20 mixed persisted state (QUEUED, RUNNING, SUCCEEDED + revoker, expired) round-trips without INVALID_INPUT and agrees with the bundle
+  ---
+  duration_ms: 8.47075
+  type: 'test'
+  ...
+# Subtest: private dependency-free ESM work order and synchronous export
+ok 36 - private dependency-free ESM work order and synchronous export
+  ---
+  duration_ms: 0.292625
+  type: 'test'
+  ...
+# Subtest: inherited command name is not a valid command or an I/O error
+ok 37 - inherited command name is not a valid command or an I/O error
+  ---
+  duration_ms: 0.448333
+  type: 'test'
+  ...
+# Subtest: array-coerced command must not enter the inspect/replay route
+ok 38 - array-coerced command must not enter the inspect/replay route
+  ---
+  duration_ms: 0.141
+  type: 'test'
+  ...
+# Subtest: scratch root itself and missing parent are refused without creating a file
+ok 39 - scratch root itself and missing parent are refused without creating a file
+  ---
+  duration_ms: 0.537958
+  type: 'test'
+  ...
+# Subtest: symbolic-link target and directory target are refused without changing bytes
+ok 40 - symbolic-link target and directory target are refused without changing bytes
+  ---
+  duration_ms: 0.628875
+  type: 'test'
+  ...
+# Subtest: outside scratch and relative paths are refused without store access
+ok 41 - outside scratch and relative paths are refused without store access
+  ---
+  duration_ms: 0.169583
+  type: 'test'
+  ...
+# Subtest: declared journal exports
+ok 42 - declared journal exports
+  ---
+  duration_ms: 0.410292
+  type: 'test'
+  ...
+# Subtest: source uses no ambient effects and at most the declared deterministic hash import
+ok 43 - source uses no ambient effects and at most the declared deterministic hash import
+  ---
+  duration_ms: 1.563459
+  type: 'test'
+  ...
+# Subtest: private dependency-free ESM baseline with exactly the store exports
+ok 44 - private dependency-free ESM baseline with exactly the store exports
+  ---
+  duration_ms: 0.518084
+  type: 'test'
+  ...
+# Subtest: source imports only deterministic crypto and path helpers; effects require injected fs
+ok 45 - source imports only deterministic crypto and path helpers; effects require injected fs
+  ---
+  duration_ms: 0.229083
+  type: 'test'
+  ...
+# Subtest: raw UTF-8 round trip preserves bytes and records successful file and directory fsync
+ok 46 - raw UTF-8 round trip preserves bytes and records successful file and directory fsync
+  ---
+  duration_ms: 10.963833
+  type: 'test'
+  ...
+# Subtest: exclusive same-directory temp, file sync and temp verification precede rename; directory sync and final verification follow
+ok 47 - exclusive same-directory temp, file sync and temp verification precede rename; directory sync and final verification follow
+  ---
+  duration_ms: 8.134541
+  type: 'test'
+  ...
+# Subtest: short writes are completed; zero progress is refused and the owned temp is cleaned
+ok 48 - short writes are completed; zero progress is refused and the owned temp is cleaned
+  ---
+  duration_ms: 8.368875
+  type: 'test'
+  ...
+# Subtest: file fsync failure is recorded, still writes and verifies, and cannot claim durability
+ok 49 - file fsync failure is recorded, still writes and verifies, and cannot claim durability
+  ---
+  duration_ms: 4.818875
+  type: 'test'
+  ...
+# Subtest: directory fsync or directory-open failure records a committed but non-durable write
+ok 50 - directory fsync or directory-open failure records a committed but non-durable write
+  ---
+  duration_ms: 8.187417
+  type: 'test'
+  ...
+# Subtest: absent fsync support is recorded for both attempts and never upgraded to durable
+ok 51 - absent fsync support is recorded for both attempts and never upgraded to durable
+  ---
+  duration_ms: 0.572833
+  type: 'test'
+  ...
+# Subtest: different existing content needs exact previous sha256; conflicts preserve bytes without opening any file
+ok 52 - different existing content needs exact previous sha256; conflicts preserve bytes without opening any file
+  ---
+  duration_ms: 9.066667
+  type: 'test'
+  ...
+# Subtest: same bytes are an explicit non-durable no-op; supplied stale expected hash still refuses
+ok 53 - same bytes are an explicit non-durable no-op; supplied stale expected hash still refuses
+  ---
+  duration_ms: 1.095125
+  type: 'test'
+  ...
+# Subtest: read refuses every truncated prefix, including complete-line boundaries, and never returns partial data
+ok 54 - read refuses every truncated prefix, including complete-line boundaries, and never returns partial data
+  ---
+  duration_ms: 38.866417
+  type: 'test'
+  ...
+# Subtest: read refuses malformed UTF-8, corrupt chain/footer/schema, trailing data and noncanonical JSON
+ok 55 - read refuses malformed UTF-8, corrupt chain/footer/schema, trailing data and noncanonical JSON
+  ---
+  duration_ms: 1.656958
+  type: 'test'
+  ...
+# Subtest: write validates strings, framing and expected hash before mutation; corrupt existing data stays intact
+ok 56 - write validates strings, framing and expected hash before mutation; corrupt existing data stays intact
+  ---
+  duration_ms: 0.438708
+  type: 'test'
+  ...
+# Subtest: missing and unreadable files are refusals, and read never attempts mutations or sync
+ok 57 - missing and unreadable files are refusals, and read never attempts mutations or sync
+  ---
+  duration_ms: 0.446375
+  type: 'test'
+  ...
+# Subtest: write and rename failures preserve old bytes, close descriptors and clean only the owned temp
+ok 58 - write and rename failures preserve old bytes, close descriptors and clean only the owned temp
+  ---
+  duration_ms: 6.244625
+  type: 'test'
+  ...
+# Subtest: temp read-back mismatch refuses before rename and final mismatch never reports durable success
+ok 59 - temp read-back mismatch refuses before rename and final mismatch never reports durable success
+  ---
+  duration_ms: 25.345833
+  type: 'test'
+  ...
+# Subtest: destination is rechecked before rename and an observed concurrent change is preserved
+ok 60 - destination is rechecked before rename and an observed concurrent change is preserved
+  ---
+  duration_ms: 4.784625
+  type: 'test'
+  ...
+# Subtest: file close failure refuses before rename, preserves destination and cannot claim durability
+ok 61 - file close failure refuses before rename, preserves destination and cannot claim durability
+  ---
+  duration_ms: 3.988416
+  type: 'test'
+  ...
+# Subtest: combined directory fsync and close failures preserve both codes in a committed non-durable write
+ok 62 - combined directory fsync and close failures preserve both codes in a committed non-durable write
+  ---
+  duration_ms: 4.068917
+  type: 'test'
+  ...
+# Subtest: 01 exact synchronous API, empty complete framing and non-authority
+ok 63 - 01 exact synchronous API, empty complete framing and non-authority
+  ---
+  duration_ms: 1.187
+  type: 'test'
+  ...
+# Subtest: 02 closed configuration and entry schemas reject malformed data atomically
+ok 64 - 02 closed configuration and entry schemas reject malformed data atomically
+  ---
+  duration_ms: 0.918417
+  type: 'test'
+  ...
+# Subtest: 03 full attribution retained and cross-project input refused
+ok 65 - 03 full attribution retained and cross-project input refused
+  ---
+  duration_ms: 0.215542
+  type: 'test'
+  ...
+# Subtest: 04 canonical exact replay is idempotent across object key order and capacity
+ok 66 - 04 canonical exact replay is idempotent across object key order and capacity
+  ---
+  duration_ms: 0.216667
+  type: 'test'
+  ...
+# Subtest: 05 same id with changed binding, lifecycle or redacted content is CONFLICT
+ok 67 - 05 same id with changed binding, lifecycle or redacted content is CONFLICT
+  ---
+  duration_ms: 0.252583
+  type: 'test'
+  ...
+# Subtest: 06 terminal replay never becomes new work; retries need new id and valid citation
+ok 68 - 06 terminal replay never becomes new work; retries need new id and valid citation
+  ---
+  duration_ms: 0.155542
+  type: 'test'
+  ...
+# Subtest: 07 TTL boundary, irreversible payload retention and caller time validation
+ok 69 - 07 TTL boundary, irreversible payload retention and caller time validation
+  ---
+  duration_ms: 0.139917
+  type: 'test'
+  ...
+# Subtest: 08 stale heartbeat is UNKNOWN and never sufficient for retry
+ok 70 - 08 stale heartbeat is UNKNOWN and never sufficient for retry
+  ---
+  duration_ms: 0.183083
+  type: 'test'
+  ...
+# Subtest: 09 maxEntries bounds retained payloads in insertion order but never forgets ids
+ok 71 - 09 maxEntries bounds retained payloads in insertion order but never forgets ids
+  ---
+  duration_ms: 0.32425
+  type: 'test'
+  ...
+# Subtest: 10 revocation cites an existing exact attempt and candidate without deleting it
+ok 72 - 10 revocation cites an existing exact attempt and candidate without deleting it
+  ---
+  duration_ms: 0.225083
+  type: 'test'
+  ...
+# Subtest: 11 revocation survives tombstones, expiry, revoker revocation and reopen
+ok 73 - 11 revocation survives tombstones, expiry, revoker revocation and reopen
+  ---
+  duration_ms: 0.378542
+  type: 'test'
+  ...
+# Subtest: 12 declared payload paths redact nested values and arrays before exposure
+ok 74 - 12 declared payload paths redact nested values and arrays before exposure
+  ---
+  duration_ms: 0.385708
+  type: 'test'
+  ...
+# Subtest: 13 complete persisted reopen is historical through replay and serialization cycles
+ok 75 - 13 complete persisted reopen is historical through replay and serialization cycles
+  ---
+  duration_ms: 0.279917
+  type: 'test'
+  ...
+# Subtest: 14 truncation recovers only committed prefix and cannot be resealed or appended
+ok 76 - 14 truncation recovers only committed prefix and cannot be resealed or appended
+  ---
+  duration_ms: 0.255959
+  type: 'test'
+  ...
+# Subtest: 15 invalid line stops recovery; deletion or reordering cannot bless later entries
+ok 77 - 15 invalid line stops recovery; deletion or reordering cannot bless later entries
+  ---
+  duration_ms: 0.20775
+  type: 'test'
+  ...
+# Subtest: 16 footer mismatches and data after footer report uncertainty without losing recovered ids
+ok 78 - 16 footer mismatches and data after footer report uncertainty without losing recovered ids
+  ---
+  duration_ms: 0.320708
+  type: 'test'
+  ...
+# Subtest: 17 closed persisted schema rejects profiles, duplicate ids and semantically invalid records
+ok 79 - 17 closed persisted schema rejects profiles, duplicate ids and semantically invalid records
+  ---
+  duration_ms: 1.159375
+  type: 'test'
+  ...
+# Subtest: 18 snapshots are deeply frozen, caller-independent and serialization is deterministic
+ok 80 - 18 snapshots are deeply frozen, caller-independent and serialization is deterministic
+  ---
+  duration_ms: 0.162958
+  type: 'test'
+  ...
+1..80
+# tests 80
+# suites 0
+# pass 80
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 573.222375

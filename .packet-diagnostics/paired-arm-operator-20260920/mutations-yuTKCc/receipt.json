@@ -1,0 +1,143 @@
+{
+  "scope": "TEST_ONLY_IN_MEMORY_FAULTS",
+  "node": "v24.18.0",
+  "loaderSha256": "13fa0f12fb560b49e134d39d15c768651ec56acba738cb3b0f7eaeb97c05a55b",
+  "sourceReceiptSha256": "de0d70fe4fc047b3df44778689924a9d3ce5a65ff04663e7c76d9493b33660aa",
+  "sourceUnchanged": true,
+  "results": [
+    {
+      "name": "projection",
+      "command": [
+        "/usr/local/bin/node",
+        "--import",
+        "/Users/louiscalata/nisi/.packet-diagnostics/paired-arm-operator-20260920/mutation-loader.mjs",
+        "--test",
+        "--test-reporter=tap",
+        "--test-concurrency=1",
+        "tests/paired-arm-cli.test.mjs",
+        "tests/paired-arm-command-owner.test.mjs"
+      ],
+      "exitCode": 1,
+      "signal": null,
+      "error": null,
+      "counts": {
+        "tests": 32,
+        "pass": 31,
+        "fail": 1,
+        "skipped": 0,
+        "cancelled": 0,
+        "todo": 0
+      },
+      "passed": true,
+      "stdoutSha256": "b840f7751768b749c333c6b31f77a3222e5d09bcc400dcec4595019e19ec6724",
+      "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "name": "observation",
+      "command": [
+        "/usr/local/bin/node",
+        "--import",
+        "/Users/louiscalata/nisi/.packet-diagnostics/paired-arm-operator-20260920/mutation-loader.mjs",
+        "--test",
+        "--test-reporter=tap",
+        "--test-concurrency=1",
+        "tests/paired-arm-cli.test.mjs",
+        "tests/paired-arm-command-owner.test.mjs"
+      ],
+      "exitCode": 1,
+      "signal": null,
+      "error": null,
+      "counts": {
+        "tests": 32,
+        "pass": 31,
+        "fail": 1,
+        "skipped": 0,
+        "cancelled": 0,
+        "todo": 0
+      },
+      "passed": true,
+      "stdoutSha256": "770009516a7abee36b73e1d1d7b7698793eb098f8ebe0ad8fb245a7efbaf8282",
+      "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "name": "setupStop",
+      "command": [
+        "/usr/local/bin/node",
+        "--import",
+        "/Users/louiscalata/nisi/.packet-diagnostics/paired-arm-operator-20260920/mutation-loader.mjs",
+        "--test",
+        "--test-reporter=tap",
+        "--test-concurrency=1",
+        "tests/paired-arm-cli.test.mjs",
+        "tests/paired-arm-command-owner.test.mjs"
+      ],
+      "exitCode": 1,
+      "signal": null,
+      "error": null,
+      "counts": {
+        "tests": 32,
+        "pass": 28,
+        "fail": 4,
+        "skipped": 0,
+        "cancelled": 0,
+        "todo": 0
+      },
+      "passed": true,
+      "stdoutSha256": "403cebd9254668d407047438dfb4aaf98e4cb8e49e267edb69ceccbd29304c9f",
+      "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "name": "cleanup",
+      "command": [
+        "/usr/local/bin/node",
+        "--import",
+        "/Users/louiscalata/nisi/.packet-diagnostics/paired-arm-operator-20260920/mutation-loader.mjs",
+        "--test",
+        "--test-reporter=tap",
+        "--test-concurrency=1",
+        "tests/paired-arm-cli.test.mjs",
+        "tests/paired-arm-command-owner.test.mjs"
+      ],
+      "exitCode": 1,
+      "signal": null,
+      "error": null,
+      "counts": {
+        "tests": 32,
+        "pass": 30,
+        "fail": 2,
+        "skipped": 0,
+        "cancelled": 0,
+        "todo": 0
+      },
+      "passed": true,
+      "stdoutSha256": "7e157356d2714d8fb1e1afa967f43b9b193328ae931795325c971ba6491f0cfb",
+      "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "name": "control-after",
+      "command": [
+        "/usr/local/bin/node",
+        "--test",
+        "--test-reporter=tap",
+        "--test-concurrency=1",
+        "tests/paired-arm-cli.test.mjs",
+        "tests/paired-arm-command-owner.test.mjs"
+      ],
+      "exitCode": 0,
+      "signal": null,
+      "error": null,
+      "counts": {
+        "tests": 32,
+        "pass": 32,
+        "fail": 0,
+        "skipped": 0,
+        "cancelled": 0,
+        "todo": 0
+      },
+      "passed": true,
+      "stdoutSha256": "ee988d73bc4d9355179739a6084cd3df27dee1a85762d20b1912f83b6f27c784",
+      "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    }
+  ],
+  "passed": true
+}

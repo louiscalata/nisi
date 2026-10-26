@@ -1,0 +1,199 @@
+{
+  "kind": "nisi.scratch-validation.v1",
+  "version": 1,
+  "status": "VALIDATED",
+  "advisoryOnly": true,
+  "accepted": false,
+  "authorizing": false,
+  "certification": "NOT_RUN",
+  "sandboxed": false,
+  "descendantContainment": "NOT_ENFORCED",
+  "sourceReviewRequired": true,
+  "warning": "Test execution is not sandboxed. Review candidate and test source before --run-tests.",
+  "binding": {
+    "taskFingerprint": "64dd51bd2b6ec83acbf1e2a1ba2c76f7c2d722658b7c234b4f32d03d2b7afe82",
+    "candidateFingerprint": "e02409a233b4d1404543946aa5bba9f47434d1870b0475ecb84ed82595dd2dcf",
+    "reviewedCandidateSha256": null,
+    "reviewBindingMatches": false
+  },
+  "testsSha256": null,
+  "checks": {
+    "contract": {
+      "status": "PASS",
+      "code": null
+    },
+    "syntax": {
+      "status": "PASS",
+      "code": null,
+      "checkedFiles": [
+        {
+          "path": "work-orders/parallel-seven-tracks-v1/track1/findings-cluster-cleanup.test.mjs",
+          "status": "PASS",
+          "code": null,
+          "evidence": {
+            "argv": [
+              "--check",
+              "./work-orders/parallel-seven-tracks-v1/track1/findings-cluster-cleanup.test.mjs"
+            ],
+            "exitCode": 0,
+            "signal": null,
+            "timedOut": false,
+            "outputExceeded": false,
+            "closeObserved": true,
+            "errorCode": null,
+            "stdout": {
+              "observedBytes": 0,
+              "capturedBytes": 0,
+              "truncated": false,
+              "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+              "text": ""
+            },
+            "stderr": {
+              "observedBytes": 0,
+              "capturedBytes": 0,
+              "truncated": false,
+              "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+              "text": ""
+            }
+          }
+        },
+        {
+          "path": "work-orders/parallel-seven-tracks-v1/track1/findings-cluster-input-imports.test.mjs",
+          "status": "PASS",
+          "code": null,
+          "evidence": {
+            "argv": [
+              "--check",
+              "./work-orders/parallel-seven-tracks-v1/track1/findings-cluster-input-imports.test.mjs"
+            ],
+            "exitCode": 0,
+            "signal": null,
+            "timedOut": false,
+            "outputExceeded": false,
+            "closeObserved": true,
+            "errorCode": null,
+            "stdout": {
+              "observedBytes": 0,
+              "capturedBytes": 0,
+              "truncated": false,
+              "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+              "text": ""
+            },
+            "stderr": {
+              "observedBytes": 0,
+              "capturedBytes": 0,
+              "truncated": false,
+              "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+              "text": ""
+            }
+          }
+        },
+        {
+          "path": "work-orders/parallel-seven-tracks-v1/track1/fixture-write-guard.mjs",
+          "status": "PASS",
+          "code": null,
+          "evidence": {
+            "argv": [
+              "--check",
+              "./work-orders/parallel-seven-tracks-v1/track1/fixture-write-guard.mjs"
+            ],
+            "exitCode": 0,
+            "signal": null,
+            "timedOut": false,
+            "outputExceeded": false,
+            "closeObserved": true,
+            "errorCode": null,
+            "stdout": {
+              "observedBytes": 0,
+              "capturedBytes": 0,
+              "truncated": false,
+              "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+              "text": ""
+            },
+            "stderr": {
+              "observedBytes": 0,
+              "capturedBytes": 0,
+              "truncated": false,
+              "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+              "text": ""
+            }
+          }
+        },
+        {
+          "path": "work-orders/parallel-seven-tracks-v1/track1/repository-fixture-runner.mjs",
+          "status": "PASS",
+          "code": null,
+          "evidence": {
+            "argv": [
+              "--check",
+              "./work-orders/parallel-seven-tracks-v1/track1/repository-fixture-runner.mjs"
+            ],
+            "exitCode": 0,
+            "signal": null,
+            "timedOut": false,
+            "outputExceeded": false,
+            "closeObserved": true,
+            "errorCode": null,
+            "stdout": {
+              "observedBytes": 0,
+              "capturedBytes": 0,
+              "truncated": false,
+              "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+              "text": ""
+            },
+            "stderr": {
+              "observedBytes": 0,
+              "capturedBytes": 0,
+              "truncated": false,
+              "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+              "text": ""
+            }
+          }
+        },
+        {
+          "path": "work-orders/parallel-seven-tracks-v1/track1/repository-fixture-runner.test.mjs",
+          "status": "PASS",
+          "code": null,
+          "evidence": {
+            "argv": [
+              "--check",
+              "./work-orders/parallel-seven-tracks-v1/track1/repository-fixture-runner.test.mjs"
+            ],
+            "exitCode": 0,
+            "signal": null,
+            "timedOut": false,
+            "outputExceeded": false,
+            "closeObserved": true,
+            "errorCode": null,
+            "stdout": {
+              "observedBytes": 0,
+              "capturedBytes": 0,
+              "truncated": false,
+              "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+              "text": ""
+            },
+            "stderr": {
+              "observedBytes": 0,
+              "capturedBytes": 0,
+              "truncated": false,
+              "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+              "text": ""
+            }
+          }
+        }
+      ],
+      "skippedFiles": []
+    },
+    "tests": {
+      "status": "NOT_RUN",
+      "code": "EXECUTION_NOT_REQUESTED",
+      "assertionsExecuted": 0,
+      "assertionsPassed": 0,
+      "testsSha256": null,
+      "evidence": null
+    }
+  },
+  "cleanup": "REMOVED",
+  "retainedRoot": null,
+  "outputSha256": "a4cb3ae30deac1dc71122c1c8369ed984fcf48dfdd2270c445d43403c99c3f77"
+}

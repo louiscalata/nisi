@@ -1,0 +1,166 @@
+TAP version 13
+# Subtest: additive execution identity is exact issued expectation data and leaves v1 projections byte-compatible
+ok 1 - additive execution identity is exact issued expectation data and leaves v1 projections byte-compatible
+  ---
+  duration_ms: 22.482334
+  type: 'test'
+  ...
+# Subtest: execution identity is issued-object bound and rejects clones, hashes, and accessor inputs without traversal
+ok 2 - execution identity is issued-object bound and rejects clones, hashes, and accessor inputs without traversal
+  ---
+  duration_ms: 15.409875
+  type: 'test'
+  ...
+# Subtest: exact issued plan admits one frozen, nonauthorizing original-snapshot handle
+ok 3 - exact issued plan admits one frozen, nonauthorizing original-snapshot handle
+  ---
+  duration_ms: 33.709917
+  type: 'test'
+  ...
+# Subtest: serialized, spread, reconstructed, and public-hash plans are refused
+ok 4 - serialized, spread, reconstructed, and public-hash plans are refused
+  ---
+  duration_ms: 29.844666
+  type: 'test'
+  ...
+# Subtest: grant schema, scope, time window, revocation, and host state fail closed
+not ok 5 - grant schema, scope, time window, revocation, and host state fail closed
+  ---
+  duration_ms: 29.501333
+  type: 'test'
+  location: '/Users/louiscalata/nisi/.packet-diagnostics/c07-owner-draft-20260920/mutations-aHt2co/source/work-orders/v02-finish-cluster-v1/native-incident/admission-integration.test.mjs:211:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    GRANT_EXECUTABLE_MISMATCH
+    + actual - expected
+    
+    + null
+    - 'GRANT_EXECUTABLE_MISMATCH'
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: 'GRANT_EXECUTABLE_MISMATCH'
+  actual: ~
+  operator: 'strictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///Users/louiscalata/nisi/.packet-diagnostics/c07-owner-draft-20260920/mutations-aHt2co/source/work-orders/v02-finish-cluster-v1/native-incident/admission-integration.test.mjs:224:12)
+    async Test.run (node:internal/test_runner/test:1332:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:911:7)
+  ...
+# Subtest: identity accessor and private input bind exact source, profile, and executable identities
+ok 6 - identity accessor and private input bind exact source, profile, and executable identities
+  ---
+  duration_ms: 29.688208
+  type: 'test'
+  ...
+# Subtest: admission and binding preserve original identities and do not expose source material
+ok 7 - admission and binding preserve original identities and do not expose source material
+  ---
+  duration_ms: 29.457708
+  type: 'test'
+  ...
+# Subtest: MATCHED and DIVERGED require the original request, selected file, and fixed outcome inventory
+ok 8 - MATCHED and DIVERGED require the original request, selected file, and fixed outcome inventory
+  ---
+  duration_ms: 29.069083
+  type: 'test'
+  ...
+# Subtest: wrong check, executable, request, artifact, owner, and report identities never promote evidence
+ok 9 - wrong check, executable, request, artifact, owner, and report identities never promote evidence
+  ---
+  duration_ms: 28.947875
+  type: 'test'
+  ...
+# Subtest: receipt is checked before expectation traversal and report/outcome records are inert exact data
+ok 10 - receipt is checked before expectation traversal and report/outcome records are inert exact data
+  ---
+  duration_ms: 29.670334
+  type: 'test'
+  ...
+# Subtest: all receipt graph accessors, proxies, and revoked proxies are refused with zero traps
+ok 11 - all receipt graph accessors, proxies, and revoked proxies are refused with zero traps
+  ---
+  duration_ms: 29.589875
+  type: 'test'
+  ...
+# Subtest: raw observation is exact, request-bound, and cannot be replaced by a proxy or digest mismatch
+ok 12 - raw observation is exact, request-bound, and cannot be replaced by a proxy or digest mismatch
+  ---
+  duration_ms: 30.102292
+  type: 'test'
+  ...
+# Subtest: cancel, unknown drain, receipt error, and missing report remain adverse and nonpromoting
+ok 13 - cancel, unknown drain, receipt error, and missing report remain adverse and nonpromoting
+  ---
+  duration_ms: 28.061208
+  type: 'test'
+  ...
+# Subtest: handle is single-use; malformed, expired, reverse-clock, copied, and wrong-instance calls have no authority
+ok 14 - handle is single-use; malformed, expired, reverse-clock, copied, and wrong-instance calls have no authority
+  ---
+  duration_ms: 28.091333
+  type: 'test'
+  ...
+# Subtest: null-prototype data records are accepted without granting authority
+ok 15 - null-prototype data records are accepted without granting authority
+  ---
+  duration_ms: 27.90875
+  type: 'test'
+  ...
+# Subtest: normalized admission and refusal records are exact authority-free shapes
+ok 16 - normalized admission and refusal records are exact authority-free shapes
+  ---
+  duration_ms: 28.146083
+  type: 'test'
+  ...
+# Subtest: paired request substitution and detached receipt bytes cannot manufacture a comparison
+ok 17 - paired request substitution and detached receipt bytes cannot manufacture a comparison
+  ---
+  duration_ms: 28.19675
+  type: 'test'
+  ...
+# Subtest: report identity, inventory, aggregate and status contradictions are rejected
+ok 18 - report identity, inventory, aggregate and status contradictions are rejected
+  ---
+  duration_ms: 28.872458
+  type: 'test'
+  ...
+# Subtest: outcome array and rows reject accessor and proxy inputs without traversing them
+ok 19 - outcome array and rows reject accessor and proxy inputs without traversing them
+  ---
+  duration_ms: 28.418166
+  type: 'test'
+  ...
+# Subtest: wording changes preserve outcome comparison while exact transcript and receipt digests remain distinct
+ok 20 - wording changes preserve outcome comparison while exact transcript and receipt digests remain distinct
+  ---
+  duration_ms: 28.34075
+  type: 'test'
+  ...
+# Subtest: missing native report has its own reason and adverse evidence consumes the returned handle
+ok 21 - missing native report has its own reason and adverse evidence consumes the returned handle
+  ---
+  duration_ms: 28.456458
+  type: 'test'
+  ...
+# Subtest: valid empty, JSON, markdown and exact-cap source comparisons preserve existing source contracts
+ok 22 - valid empty, JSON, markdown and exact-cap source comparisons preserve existing source contracts
+  ---
+  duration_ms: 83.658583
+  type: 'test'
+  ...
+# Subtest: wrapper and returned handle publish one canonical admission digest and share consumption
+ok 23 - wrapper and returned handle publish one canonical admission digest and share consumption
+  ---
+  duration_ms: 28.672042
+  type: 'test'
+  ...
+1..23
+# tests 23
+# suites 0
+# pass 22
+# fail 1
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 749.854125

@@ -1,0 +1,201 @@
+TAP version 13
+# Subtest: C07 exact owner-frozen evidence and five-file scope pass the additive guard
+ok 1 - C07 exact owner-frozen evidence and five-file scope pass the additive guard
+  ---
+  duration_ms: 39.875334
+  type: 'test'
+  ...
+# Subtest: C07 rejects accepted source drift and missing source closure
+    # Subtest: accepted source drift
+    ok 1 - accepted source drift
+      ---
+      duration_ms: 29.483584
+      type: 'test'
+      ...
+    # Subtest: accepted documentation omitted
+    ok 2 - accepted documentation omitted
+      ---
+      duration_ms: 28.715291
+      type: 'test'
+      ...
+    # Subtest: dependency removed from canonical receipt
+    ok 3 - dependency removed from canonical receipt
+      ---
+      duration_ms: 27.808125
+      type: 'test'
+      ...
+    1..3
+ok 2 - C07 rejects accepted source drift and missing source closure
+  ---
+  duration_ms: 86.355333
+  type: 'test'
+  ...
+# Subtest: C07 rejects recomputed but contradictory receipts
+    # Subtest: checkpoint count rebinding
+    ok 1 - checkpoint count rebinding
+      ---
+      duration_ms: 31.489166
+      type: 'test'
+      ...
+    # Subtest: canonical check rebinding
+    ok 2 - canonical check rebinding
+      ---
+      duration_ms: 26.823
+      type: 'test'
+      ...
+    # Subtest: review verdict rebinding
+    ok 3 - review verdict rebinding
+      ---
+      duration_ms: 27.571917
+      type: 'test'
+      ...
+    # Subtest: validation authority rebinding
+    ok 4 - validation authority rebinding
+      ---
+      duration_ms: 28.265916
+      type: 'test'
+      ...
+    1..4
+ok 3 - C07 rejects recomputed but contradictory receipts
+  ---
+  duration_ms: 114.498208
+  type: 'test'
+  ...
+# Subtest: C07 preserves C06 history and refuses authority or supersession rebinding
+    # Subtest: C06 immutable owner evidence changed
+    ok 1 - C06 immutable owner evidence changed
+      ---
+      duration_ms: 28.470125
+      type: 'test'
+      ...
+    # Subtest: C07 native authority
+    ok 2 - C07 native authority
+      ---
+      duration_ms: 26.882625
+      type: 'test'
+      ...
+    # Subtest: dependency supersession changed
+    ok 3 - dependency supersession changed
+      ---
+      duration_ms: 26.916541
+      type: 'test'
+      ...
+    # Subtest: predecessor metadata changed
+    ok 4 - predecessor metadata changed
+      ---
+      duration_ms: 26.791083
+      type: 'test'
+      ...
+    # Subtest: accepted file inventory changed
+    ok 5 - accepted file inventory changed
+      ---
+      duration_ms: 27.751167
+      type: 'test'
+      ...
+    1..5
+ok 4 - C07 preserves C06 history and refuses authority or supersession rebinding
+  ---
+  duration_ms: 137.119375
+  type: 'test'
+  ...
+# Subtest: C07 binds raw evidence, current dependencies and declared authority
+    # Subtest: unrelated live dependency
+    ok 1 - unrelated live dependency
+      ---
+      duration_ms: 30.080584
+      type: 'test'
+      ...
+    # Subtest: raw checkpoint log
+    ok 2 - raw checkpoint log
+      ---
+      duration_ms: 32.891584
+      type: 'test'
+      ...
+    # Subtest: missing mutation log
+    ok 3 - missing mutation log
+      ---
+      duration_ms: 32.544583
+      type: 'test'
+      ...
+    # Subtest: declared dependency omitted
+    ok 4 - declared dependency omitted
+      ---
+      duration_ms: 27.6775
+      type: 'test'
+      ...
+    # Subtest: row-level authority
+    ok 5 - row-level authority
+      ---
+      duration_ms: 186.253584
+      type: 'test'
+      ...
+    # Subtest: extra transition
+    ok 6 - extra transition
+      ---
+      duration_ms: 27.36525
+      type: 'test'
+      ...
+    # Subtest: affected acceptance inventory is exact
+    ok 7 - affected acceptance inventory is exact
+      ---
+      duration_ms: 79.813042
+      type: 'test'
+      ...
+    # Subtest: false transition evidence
+    ok 8 - false transition evidence
+      ---
+      duration_ms: 26.717334
+      type: 'test'
+      ...
+    # Subtest: unaccepted predecessor
+    ok 9 - unaccepted predecessor
+      ---
+      duration_ms: 26.233792
+      type: 'test'
+      ...
+    1..9
+ok 5 - C07 binds raw evidence, current dependencies and declared authority
+  ---
+  duration_ms: 470.035917
+  type: 'test'
+  ...
+# Subtest: C06 admits only the complete C07 one-dependency transition
+    # Subtest: complete exact transition
+    ok 1 - complete exact transition
+      ---
+      duration_ms: 38.840041
+      type: 'test'
+      ...
+    # Subtest: flag alone with missing evidence
+    ok 2 - flag alone with missing evidence
+      ---
+      duration_ms: 27.086417
+      type: 'test'
+      ...
+    # Subtest: unaccepted C07 cannot activate a record
+    ok 3 - unaccepted C07 cannot activate a record
+      ---
+      duration_ms: 26.806792
+      type: 'test'
+      ...
+    # Subtest: new bytes alone cannot pass historical C06
+    ok 4 - new bytes alone cannot pass historical C06
+      ---
+      duration_ms: 27.301625
+      type: 'test'
+      ...
+    1..4
+ok 6 - C06 admits only the complete C07 one-dependency transition
+  ---
+  duration_ms: 120.25025
+  type: 'test'
+  ...
+1..6
+# tests 31
+# suites 0
+# pass 31
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 1002.469041

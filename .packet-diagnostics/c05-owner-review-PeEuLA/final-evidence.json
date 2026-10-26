@@ -1,0 +1,44 @@
+{
+  "schema": "nisi.c05.evidence-binding.v1",
+  "scope": "INERT_FIXTURE_INPUT_IMPORTS_NODE_ONLY",
+  "sourceHashes": {
+    "work-orders/parallel-seven-tracks-v1/track1/repository-fixture-runner.mjs": "5267ad2ee84f6ac9394280773220fb260e40e1a9f7eb0f64e9b3a586571c4967",
+    "work-orders/parallel-seven-tracks-v1/track1/repository-fixture-runner.test.mjs": "c2b458cd3083bfeeb52b2e22e2ba4cb35386b6eca879337fdffa7ae7a239277f",
+    "work-orders/parallel-seven-tracks-v1/track1/fixture-write-guard.mjs": "bf615353eee044cf0a3289b027b5ea05e3b18fde5eff7ae12d06f61f6ac05f43",
+    "work-orders/parallel-seven-tracks-v1/track1/findings-cluster-input-imports.test.mjs": "beaa83d4584e133b605ae6e31fa51aad97288bc7f095132fa5004aec84c37d77",
+    "work-orders/parallel-seven-tracks-v1/track1/findings-cluster-cleanup.test.mjs": "c3d47f379018ce679e02c9a33e6dc8f4f9c861b672df1c7ee44d283f3878cc15"
+  },
+  "checkpoint": {
+    "path": ".packet-diagnostics/c05-owner-review-PeEuLA/checks-LmiUMS/checks.json",
+    "sha256": "caa0c92336dda107d7773fb032b3ce264f2c8680ae5d549356ae0f7ed4af2ac6"
+  },
+  "mutations": {
+    "path": ".packet-diagnostics/c05-owner-review-PeEuLA/mutations-KQ7IzR/mutation-results.json",
+    "sha256": "14249a3b1552bf207750b354495c90ff000dd60f1fbaf4eabecdbc0c96b6e225"
+  },
+  "review": {
+    "path": ".packet-diagnostics/c05-owner-review-PeEuLA/daybreak-c05-source-review.json",
+    "sha256": "3828f070fcaf9264e69cb4c8a1d01c4002f6bbea494bbe05aacdb4d5875e166c"
+  },
+  "validation": {
+    "path": ".packet-diagnostics/c05-owner-review-PeEuLA/checks-LmiUMS/nisi-validation.log",
+    "sha256": "27e54f860f59b41652b0d1e678a72765b6f625c7ab7d59ed7fd14f3334f36ef4",
+    "status": "VALIDATED",
+    "binding": {
+      "taskFingerprint": "64dd51bd2b6ec83acbf1e2a1ba2c76f7c2d722658b7c234b4f32d03d2b7afe82",
+      "candidateFingerprint": "e02409a233b4d1404543946aa5bba9f47434d1870b0475ecb84ed82595dd2dcf",
+      "reviewedCandidateSha256": null,
+      "reviewBindingMatches": false
+    }
+  },
+  "openCodeExecuted": false,
+  "nativeBuildAccepted": false,
+  "publicationAuthorized": false,
+  "implementationAccepted": false,
+  "note": "Verified isolated candidate; canonical integration and acceptance-control review are still pending.",
+  "packet": {
+    "path": ".packets/nisi-v02-c05-fixture-input-imports.packet.md",
+    "normalization": "PROJECT_ROOT_PLACEHOLDER_V1",
+    "sha256": "761abe6e180c3c95b86f852accb70d3443adb84e7e3fe0d2841110d6bc0a18cf"
+  }
+}

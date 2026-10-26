@@ -1,0 +1,52 @@
+{
+  "schemaVersion": "nisi-c07-private-candidate-checkpoint/v1",
+  "scope": "CALLER_SUPPLIED_NATIVE_INCIDENT_EVIDENCE_NODE_ONLY",
+  "sourceHashes": {
+    "hosts/repository/native-incident-source-v1.mjs": "6a1ddf192be45ff14e4471e08470429a6fcea300642e4f681d10f187b7540e74",
+    "hosts/repository/native-incident-admission-v1.mjs": "fd333e82263b1fa7953880d592dc73615f98bca615ebc95ffcf6432692e82fdf",
+    "work-orders/v02-finish-cluster-v1/native-incident/admission-integration.test.mjs": "de732e0241db59e7f4f4a7e75d473add44dd0a47bdff32c9b5716c2d6ab321cb",
+    "work-orders/v02-finish-cluster-v1/native-incident/native-incident-source-v1.test.mjs": "b59e4880e742a07ed9d883024c173dd1d30ba94bdc253b4a5446c2abb3df2a51"
+  },
+  "checks": {
+    "path": "checks-LrT9D5/checks.json",
+    "sha256": "03142d49ae68f027180a10f36be74b8ce6065c20762f8b64f6ae2a4a3c93c247"
+  },
+  "mutations": {
+    "path": "mutations-aHt2co/checks.json",
+    "sha256": "528e0d6810f12aee07670021e17a452c49b863e853e932198f9e480da5f12563"
+  },
+  "validation": {
+    "path": "nisi-validation-AKuzou/receipt.json",
+    "sha256": "6236070e65849c14a3fe3425deb974209569a37094921383640c9a955b9c714a"
+  },
+  "review": {
+    "path": "daybreak-source-review-final.json",
+    "sha256": "ea4c978803e123054851653fe02a575c1a2ca45a92efe974981c95c88b7da182"
+  },
+  "before": [
+    {
+      "path": "checks-KNvt6H/checks.json",
+      "sha256": "01141c7adb98a217a6969a80e406dbf054dbbc000f3b371c319db44801379504"
+    },
+    {
+      "path": "checks-o3AP1u/checks.json",
+      "sha256": "10eaafeec0902476313e47422a221a896baa58543c8c44dd4272523c841fca84"
+    }
+  ],
+  "canonicalBaseCommit": "b37c40d8a641b27ad3756d660254ac6f9f4c830c",
+  "requiredDependencySupersession": {
+    "path": "hosts/repository/native-incident-source-v1.mjs",
+    "oldSha256": "ab08ed666126011f3e57f7d3975dce8602a1d570f81c8c544f1c58a2f0616a26",
+    "newSha256": "6a1ddf192be45ff14e4471e08470429a6fcea300642e4f681d10f187b7540e74",
+    "status": "NOT_IMPLEMENTED"
+  },
+  "implementationAccepted": false,
+  "integrated": false,
+  "nativeBuildAccepted": false,
+  "nativeExecutionAttested": false,
+  "sourceAuthenticityAttested": false,
+  "resumeGranted": false,
+  "publicationAuthorized": false,
+  "openCodeExecuted": false,
+  "inference": "NOT_RUN"
+}

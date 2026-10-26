@@ -1,0 +1,106 @@
+{
+  "kind": "nisi.scratch-validation.v1",
+  "version": 1,
+  "status": "VALIDATED",
+  "advisoryOnly": true,
+  "accepted": false,
+  "authorizing": false,
+  "certification": "NOT_RUN",
+  "sandboxed": false,
+  "descendantContainment": "NOT_ENFORCED",
+  "sourceReviewRequired": true,
+  "warning": "Test execution is not sandboxed. Review candidate and test source before --run-tests.",
+  "binding": {
+    "taskFingerprint": "d5cbc07169f025b292ea0ac7bb4d40efe214d0ee95df515f7d3bf5ede6138790",
+    "candidateFingerprint": "620c7ebdaf8c4533b6b8d9a678c189b3aa065cc813d06240f8187b0bdbd68726",
+    "reviewedCandidateSha256": null,
+    "reviewBindingMatches": false
+  },
+  "testsSha256": null,
+  "checks": {
+    "contract": {
+      "status": "PASS",
+      "code": null
+    },
+    "syntax": {
+      "status": "PASS",
+      "code": null,
+      "checkedFiles": [
+        {
+          "path": "work-orders/v02-finish-cluster-v1/consumer/runtime-matrix-v1.mjs",
+          "status": "PASS",
+          "code": null,
+          "evidence": {
+            "argv": [
+              "--check",
+              "./work-orders/v02-finish-cluster-v1/consumer/runtime-matrix-v1.mjs"
+            ],
+            "exitCode": 0,
+            "signal": null,
+            "timedOut": false,
+            "outputExceeded": false,
+            "closeObserved": true,
+            "errorCode": null,
+            "stdout": {
+              "observedBytes": 0,
+              "capturedBytes": 0,
+              "truncated": false,
+              "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+              "text": ""
+            },
+            "stderr": {
+              "observedBytes": 0,
+              "capturedBytes": 0,
+              "truncated": false,
+              "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+              "text": ""
+            }
+          }
+        },
+        {
+          "path": "work-orders/v02-finish-cluster-v1/consumer/runtime-matrix-v1.test.mjs",
+          "status": "PASS",
+          "code": null,
+          "evidence": {
+            "argv": [
+              "--check",
+              "./work-orders/v02-finish-cluster-v1/consumer/runtime-matrix-v1.test.mjs"
+            ],
+            "exitCode": 0,
+            "signal": null,
+            "timedOut": false,
+            "outputExceeded": false,
+            "closeObserved": true,
+            "errorCode": null,
+            "stdout": {
+              "observedBytes": 0,
+              "capturedBytes": 0,
+              "truncated": false,
+              "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+              "text": ""
+            },
+            "stderr": {
+              "observedBytes": 0,
+              "capturedBytes": 0,
+              "truncated": false,
+              "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+              "text": ""
+            }
+          }
+        }
+      ],
+      "skippedFiles": []
+    },
+    "tests": {
+      "status": "NOT_RUN",
+      "code": "EXECUTION_NOT_REQUESTED",
+      "assertionsExecuted": 0,
+      "assertionsPassed": 0,
+      "testsSha256": null,
+      "evidence": null
+    }
+  },
+  "cleanup": "REMOVED",
+  "retainedRoot": null,
+  "outputSha256": "0b7d79dd5bf46aa0b2637888f3e17c01793fc226fbca62fa07b3ac77665b50b7"
+}

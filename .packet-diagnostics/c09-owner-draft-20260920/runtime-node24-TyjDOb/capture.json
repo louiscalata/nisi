@@ -1,0 +1,119 @@
+{
+  "schema": "nisi.c09.owner-runtime-capture.v1",
+  "startedAt": "2026-09-20T14:38:17.400Z",
+  "spawnObservedAt": "2026-09-20T14:38:17.402Z",
+  "closedAt": "2026-09-20T14:38:19.474Z",
+  "pid": 31294,
+  "exitCode": 0,
+  "signal": null,
+  "closeConfirmed": true,
+  "spawnError": null,
+  "timedOut": false,
+  "overflow": false,
+  "killAttempt": null,
+  "command": [
+    "/usr/local/bin/node",
+    "scripts/check-private-package.mjs"
+  ],
+  "cwd": "/Users/louiscalata/nisi",
+  "stdoutSha256": "adcf879341ab37a914911e32f030b56b17529dbc849dfcd9b0401543de0fd597",
+  "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+  "nodeBefore": {
+    "path": "/usr/local/bin/node",
+    "resolved": "/usr/local/bin/node",
+    "sha256": "bf0cea6ab3631b6b53a9709ed54d62608dd0725187426d34d4d6af6644c5197f",
+    "byteLength": 244304112,
+    "device": 16777234,
+    "inode": 54451016,
+    "mode": 33261
+  },
+  "writerBefore": {
+    "path": "/Users/louiscalata/nisi/scripts/check-private-package.mjs",
+    "resolved": "/Users/louiscalata/nisi/scripts/check-private-package.mjs",
+    "sha256": "bf342e5e1b1c75bc89d8481ea0e20ca1641a23a60ff426b3ec10974a75806c69",
+    "byteLength": 8503,
+    "device": 16777234,
+    "inode": 124807854,
+    "mode": 33188
+  },
+  "status": "COLLECTED_NODE24_ONLY",
+  "descendantDrain": "NOT_ATTESTED",
+  "ownerInterventionRequired": false,
+  "accepted": false,
+  "executionAttested": false,
+  "sourceAuthenticityAttested": false,
+  "publicationAuthorized": false,
+  "modelInference": "NOT_RUN",
+  "nativeAppExecution": "NOT_RUN",
+  "receiptBefore": {
+    "path": "/Users/louiscalata/nisi/.build/private-package-aHhVwX/receipt.json",
+    "resolved": "/Users/louiscalata/nisi/.build/private-package-aHhVwX/receipt.json",
+    "sha256": "412e2fa843ca3cda318f419a582451c73b40169f6da6b712e1ef7a17f0fdb584",
+    "byteLength": 251535,
+    "device": 16777234,
+    "inode": 132577307,
+    "mode": 33188
+  },
+  "receiptAfter": {
+    "path": "/Users/louiscalata/nisi/.build/private-package-aHhVwX/receipt.json",
+    "resolved": "/Users/louiscalata/nisi/.build/private-package-aHhVwX/receipt.json",
+    "sha256": "412e2fa843ca3cda318f419a582451c73b40169f6da6b712e1ef7a17f0fdb584",
+    "byteLength": 251535,
+    "device": 16777234,
+    "inode": 132577307,
+    "mode": 33188
+  },
+  "retainedReceipt": {
+    "path": "/Users/louiscalata/nisi/.packet-diagnostics/c09-owner-draft-20260920/runtime-node24-TyjDOb/receipt.json",
+    "sha256": "412e2fa843ca3cda318f419a582451c73b40169f6da6b712e1ef7a17f0fdb584",
+    "byteLength": 251535
+  },
+  "retainedArchive": {
+    "path": "/Users/louiscalata/nisi/.packet-diagnostics/c09-owner-draft-20260920/runtime-node24-TyjDOb/archive.tgz",
+    "sha256": "f79c9f133966b4258953021ea2d107bad991121704ce9d9c299090eba7879972",
+    "byteLength": 43624
+  },
+  "retainedExpected": {
+    "path": "/Users/louiscalata/nisi/.packet-diagnostics/c09-owner-draft-20260920/runtime-node24-TyjDOb/expected.json",
+    "sha256": "5d2e8c383606414677d6d0c900bed22300504612c51412842b709de02bf7d622",
+    "byteLength": 14001
+  },
+  "archiveBefore": {
+    "path": "/Users/louiscalata/nisi/.build/private-package-aHhVwX/nisi-0.2.0-private.0.tgz",
+    "resolved": "/Users/louiscalata/nisi/.build/private-package-aHhVwX/nisi-0.2.0-private.0.tgz",
+    "sha256": "f79c9f133966b4258953021ea2d107bad991121704ce9d9c299090eba7879972",
+    "byteLength": 43624,
+    "device": 16777234,
+    "inode": 132577154,
+    "mode": 33188
+  },
+  "archiveAfter": {
+    "path": "/Users/louiscalata/nisi/.build/private-package-aHhVwX/nisi-0.2.0-private.0.tgz",
+    "resolved": "/Users/louiscalata/nisi/.build/private-package-aHhVwX/nisi-0.2.0-private.0.tgz",
+    "sha256": "f79c9f133966b4258953021ea2d107bad991121704ce9d9c299090eba7879972",
+    "byteLength": 43624,
+    "device": 16777234,
+    "inode": 132577154,
+    "mode": 33188
+  },
+  "nodeAfter": {
+    "path": "/usr/local/bin/node",
+    "resolved": "/usr/local/bin/node",
+    "sha256": "bf0cea6ab3631b6b53a9709ed54d62608dd0725187426d34d4d6af6644c5197f",
+    "byteLength": 244304112,
+    "device": 16777234,
+    "inode": 54451016,
+    "mode": 33261
+  },
+  "writerAfter": {
+    "path": "/Users/louiscalata/nisi/scripts/check-private-package.mjs",
+    "resolved": "/Users/louiscalata/nisi/scripts/check-private-package.mjs",
+    "sha256": "bf342e5e1b1c75bc89d8481ea0e20ca1641a23a60ff426b3ec10974a75806c69",
+    "byteLength": 8503,
+    "device": 16777234,
+    "inode": 124807854,
+    "mode": 33188
+  },
+  "expectedSha256": "5d2e8c383606414677d6d0c900bed22300504612c51412842b709de02bf7d622",
+  "node22": "NOT_RUN"
+}

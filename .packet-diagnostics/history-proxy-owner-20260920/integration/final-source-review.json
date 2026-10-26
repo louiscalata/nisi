@@ -1,0 +1,32 @@
+{
+  "schema": "nisi.history-integration-source-review/v1",
+  "scope": "NODE_HISTORY_PROXY_BOUNDARIES",
+  "verdict": "PASS",
+  "reviewerTask": "/root/sharedchami_cleanup_daybreak_review",
+  "modelRequested": "gpt-daybreak-blue-latest",
+  "modelActuallyServed": "UNKNOWN",
+  "reviewerExecutedTests": false,
+  "sourceHashes": {
+    "history/journal-owner-v2.mjs": "2120bf0c75d9aa6122c06a2b34d55b3256a08f024d0e5fa43d8877e4eb67e44f",
+    "history/run-journal-v1.mjs": "0164f10da27f6d12cfd1f3d443bd8e0f7c237b46363353570ae4a759a97f749b",
+    "tests/journal-proxy-boundaries.test.mjs": "4608d36de36c91b0318889b712e78f4971d7a2ea5c6093112e9975553ce8a1cb",
+    "tests/journal-owner-v2-store.test.mjs": "7384606520f6b10b25fe3815da2c59120a1c786ffe8e88b7e22b503de5b95b63",
+    "tests/journal-owner-v2-baseline.test.mjs": "29cd10eff45bb8ec3bd95af41226392477e23c47b137fa922f3535c857da9eb7",
+    "work-orders/v02-finish-cluster-v1/check-c07.mjs": "3ad5fc05d81a81ac4039c27dfc58c412271b3ea96f6712614871659f8ff75f97",
+    "work-orders/v02-finish-cluster-v1/check-c06.mjs": "19c6dfa1ab67f7b764a9a60e36edd18dc92545ed059e9c96c569e382a89dad4a",
+    "work-orders/v02-finish-cluster-v1/check-cluster.mjs": "4a13a3d36170419baec4b9251ecd80d9f8542e023de746c3d3689233dbb42347",
+    "work-orders/v02-finish-cluster-v1/cluster.json": "afa0a60caae5bed42d5d368aa0eccd8ffefc3ab497af68aa26325ff63e6b9528",
+    "tests/finish-cluster-history.test.mjs": "659169c06185d2f3e7d970e53975a62298645e5199d1916fe80dc86a27795ce1",
+    "tests/finish-cluster-c07.test.mjs": "8b9d86582b2dbb479b04fcef6d3e4d9f4c67df6766be12a10142d742e77bbe7d",
+    "tests/finish-cluster-c06.test.mjs": "f66a76f4921d99a12185eb4c1e647c6cef96c791d6b61145453e09735b03f644",
+    "tests/finish-cluster-inventory.test.mjs": "39f5f74b5143b977abe0b647c6315dd757b4cec36710490099d599f3dcfd7237"
+  },
+  "authority": {
+    "native": false,
+    "inference": false,
+    "publication": false,
+    "dispatch": false,
+    "milestone": false
+  },
+  "note": "Owner transcription of final independent source review. Both requested evidence-semantic tightenings are closed. Trusted-host source review only; root owns executed tests and integration acceptance."
+}

@@ -1,0 +1,310 @@
+TAP version 13
+# Subtest: new parser strips one review request and preserves legacy selection
+ok 1 - new parser strips one review request and preserves legacy selection
+  ---
+  duration_ms: 8.3735
+  type: 'test'
+  ...
+# Subtest: help remains standalone and inert
+ok 2 - help remains standalone and inert
+  ---
+  duration_ms: 2.065292
+  type: 'test'
+  ...
+# Subtest: non-TTY review refuses before fixture, build, or model startup
+ok 3 - non-TTY review refuses before fixture, build, or model startup
+  ---
+  duration_ms: 2.184042
+  type: 'test'
+  ...
+# Subtest: requested history review occurs after host settlement and receipt remains original
+ok 4 - requested history review occurs after host settlement and receipt remains original
+  ---
+  duration_ms: 5.55775
+  type: 'test'
+  ...
+# Subtest: default invocation does not add historyReview or invoke review
+ok 5 - default invocation does not add historyReview or invoke review
+  ---
+  duration_ms: 4.136417
+  type: 'test'
+  ...
+# Subtest: actual host exposes only preview/capture additions, never helper publication authority
+ok 6 - actual host exposes only preview/capture additions, never helper publication authority
+  ---
+  duration_ms: 6.644709
+  type: 'test'
+  ...
+# Subtest: before run, preview and capture refuse without clock or journal IO
+ok 7 - before run, preview and capture refuse without clock or journal IO
+  ---
+  duration_ms: 1.928458
+  type: 'test'
+  ...
+# Subtest: engine report availability does not permit history while either drain is pending
+ok 8 - engine report availability does not permit history while either drain is pending
+  ---
+  duration_ms: 1.774625
+  type: 'test'
+  ...
+# Subtest: unexpected collection rejection publishes SETTLEMENT_REJECTED without clock
+ok 9 - unexpected collection rejection publishes SETTLEMENT_REJECTED without clock
+  ---
+  duration_ms: 0.9355
+  type: 'test'
+  ...
+# Subtest: published preview has exact fixed metadata, vocabulary conservation and digest
+ok 10 - published preview has exact fixed metadata, vocabulary conservation and digest
+  ---
+  duration_ms: 1.808625
+  type: 'test'
+  ...
+# Subtest: preview is cached, deterministic and independent from existing host state and result identity
+ok 11 - preview is cached, deterministic and independent from existing host state and result identity
+  ---
+  duration_ms: 1.309667
+  type: 'test'
+  ...
+# Subtest: preview and capture never expose sources, paths, histories, messages or arbitrary diagnostic text
+ok 12 - preview and capture never expose sources, paths, histories, messages or arbitrary diagnostic text
+  ---
+  duration_ms: 2.469375
+  type: 'test'
+  ...
+# Subtest: unknown stage status refuses rather than disappearing from counts
+ok 13 - unknown stage status refuses rather than disappearing from counts
+  ---
+  duration_ms: 1.590958
+  type: 'test'
+  ...
+# Subtest: malformed report and wrong task identity are distinct cached refusals
+ok 14 - malformed report and wrong task identity are distinct cached refusals
+  ---
+  duration_ms: 1.340333
+  type: 'test'
+  ...
+# Subtest: candidate absence uses null/false preview and reserved none:run namespace without inventing evaluation
+ok 15 - candidate absence uses null/false preview and reserved none:run namespace without inventing evaluation
+  ---
+  duration_ms: 1.5335
+  type: 'test'
+  ...
+# Subtest: candidate presence uses cand:hex namespace and deterministic rh1 identity
+ok 16 - candidate presence uses cand:hex namespace and deterministic rh1 identity
+  ---
+  duration_ms: 1.913584
+  type: 'test'
+  ...
+# Subtest: quarantined completed host is stored as FAILED operational state, never model failure
+ok 17 - quarantined completed host is stored as FAILED operational state, never model failure
+  ---
+  duration_ms: 1.517625
+  type: 'test'
+  ...
+# Subtest: consistent completed settlement from the trusted combined fixture stores SUCCEEDED without execution attestation
+ok 18 - consistent completed settlement from the trusted combined fixture stores SUCCEEDED without execution attestation
+  ---
+  duration_ms: 55.941208
+  type: 'test'
+  ...
+# Subtest: consistent cancelled settlement stores CANCELLED as run outcome, not candidate failure
+ok 19 - consistent cancelled settlement stores CANCELLED as run outcome, not candidate failure
+  ---
+  duration_ms: 25.004459
+  type: 'test'
+  ...
+# Subtest: capture rejects malformed closed envelopes and declarations without getters or consumption
+ok 20 - capture rejects malformed closed envelopes and declarations without getters or consumption
+  ---
+  duration_ms: 1.663042
+  type: 'test'
+  ...
+# Subtest: digest mismatch and invalid declaration times are non-consuming and correctable
+ok 21 - digest mismatch and invalid declaration times are non-consuming and correctable
+  ---
+  duration_ms: 1.555125
+  type: 'test'
+  ...
+# Subtest: forged, SEALED and uncertain owners refuse before admission without consuming
+ok 22 - forged, SEALED and uncertain owners refuse before admission without consuming
+  ---
+  duration_ms: 1.885916
+  type: 'test'
+  ...
+# Subtest: clock is called twice, copied declaration survives first-clock mutation, and reentry is BUSY
+ok 23 - clock is called twice, copied declaration survives first-clock mutation, and reentry is BUSY
+  ---
+  duration_ms: 1.369375
+  type: 'test'
+  ...
+# Subtest: clock throw, backward second clock, expiry and observation times refuse without consumption
+ok 24 - clock throw, backward second clock, expiry and observation times refuse without consumption
+  ---
+  duration_ms: 3.256667
+  type: 'test'
+  ...
+# Subtest: all temporal reasons and invalid clock types are precise and non-consuming
+ok 25 - all temporal reasons and invalid clock types are precise and non-consuming
+  ---
+  duration_ms: 6.884958
+  type: 'test'
+  ...
+# Subtest: stage count overflow refuses INVALID_SETTLEMENT instead of clamping
+ok 26 - stage count overflow refuses INVALID_SETTLEMENT instead of clamping
+  ---
+  duration_ms: 9.76775
+  type: 'test'
+  ...
+# Subtest: wrong-project reaches record, returns REFUSED, and permanently consumes
+ok 27 - wrong-project reaches record, returns REFUSED, and permanently consumes
+  ---
+  duration_ms: 1.1285
+  type: 'test'
+  ...
+# Subtest: reentry from journal FS after admission sees ALREADY_CAPTURED, never BUSY
+ok 28 - reentry from journal FS after admission sees ALREADY_CAPTURED, never BUSY
+  ---
+  duration_ms: 1.279291
+  type: 'test'
+  ...
+# Subtest: duplicate journal result consumes the host admission and is preserved exactly
+ok 29 - duplicate journal result consumes the host admission and is preserved exactly
+  ---
+  duration_ms: 1.373667
+  type: 'test'
+  ...
+# Subtest: journal content conflict is preserved and consumes the one host attempt
+ok 30 - journal content conflict is preserved and consumes the one host attempt
+  ---
+  duration_ms: 1.785167
+  type: 'test'
+  ...
+# Subtest: stale owner STORE_CONFLICT is preserved and consumes the one host attempt
+ok 31 - stale owner STORE_CONFLICT is preserved and consumes the one host attempt
+  ---
+  duration_ms: 1.367459
+  type: 'test'
+  ...
+# Subtest: precommit store failure and commit uncertainty both consume with actual journal evidence
+ok 32 - precommit store failure and commit uncertainty both consume with actual journal evidence
+  ---
+  duration_ms: 2.251833
+  type: 'test'
+  ...
+# Subtest: capture does not mutate settled report, host status, invocations or reportStored
+ok 33 - capture does not mutate settled report, host status, invocations or reportStored
+  ---
+  duration_ms: 1.261334
+  type: 'test'
+  ...
+# Subtest: published preview and malformed-settlement refusal are cached without partial metadata
+ok 34 - published preview and malformed-settlement refusal are cached without partial metadata
+  ---
+  duration_ms: 1.521959
+  type: 'test'
+  ...
+# Subtest: internal publication is one-shot and cannot replace an already retained result
+ok 35 - internal publication is one-shot and cannot replace an already retained result
+  ---
+  duration_ms: 1.087541
+  type: 'test'
+  ...
+# Subtest: success snapshot is exclusively retained and read without changing ledger or inventing acknowledgement
+ok 36 - success snapshot is exclusively retained and read without changing ledger or inventing acknowledgement
+  ---
+  duration_ms: 131.167166
+  type: 'test'
+  ...
+# Subtest: no-candidate terminal error gets durable diagnostic data not fabricated candidate or usage
+ok 37 - no-candidate terminal error gets durable diagnostic data not fabricated candidate or usage
+  ---
+  duration_ms: 31.667917
+  type: 'test'
+  ...
+# Subtest: partial on-disk capture cannot be upgraded or rewritten by late operation completion
+ok 38 - partial on-disk capture cannot be upgraded or rewritten by late operation completion
+  ---
+  duration_ms: 56.83625
+  type: 'test'
+  ...
+# Subtest: ledger mismatches refuse before file creation and observer-only hashes remain explicitly unconfirmed
+ok 39 - ledger mismatches refuse before file creation and observer-only hashes remain explicitly unconfirmed
+  ---
+  duration_ms: 106.507541
+  type: 'test'
+  ...
+# Subtest: short writes and reads are completed before acknowledged retention
+ok 40 - short writes and reads are completed before acknowledged retention
+  ---
+  duration_ms: 97.072791
+  type: 'test'
+  ...
+# Subtest: acknowledgement requires data-file fsync then directory fsync independently
+ok 41 - acknowledgement requires data-file fsync then directory fsync independently
+  ---
+  duration_ms: 95.744708
+  type: 'test'
+  ...
+# Subtest: storage write remains uncertain and does not change the event ledger
+ok 42 - storage write remains uncertain and does not change the event ledger
+  ---
+  duration_ms: 92.016417
+  type: 'test'
+  ...
+# Subtest: storage partial-write remains uncertain and does not change the event ledger
+ok 43 - storage partial-write remains uncertain and does not change the event ledger
+  ---
+  duration_ms: 90.190125
+  type: 'test'
+  ...
+# Subtest: storage fsync remains uncertain and does not change the event ledger
+ok 44 - storage fsync remains uncertain and does not change the event ledger
+  ---
+  duration_ms: 93.593875
+  type: 'test'
+  ...
+# Subtest: storage readback remains uncertain and does not change the event ledger
+ok 45 - storage readback remains uncertain and does not change the event ledger
+  ---
+  duration_ms: 95.884042
+  type: 'test'
+  ...
+# Subtest: storage close-after-close remains uncertain and does not change the event ledger
+ok 46 - storage close-after-close remains uncertain and does not change the event ledger
+  ---
+  duration_ms: 95.865792
+  type: 'test'
+  ...
+# Subtest: storage directory-fsync remains uncertain and does not change the event ledger
+ok 47 - storage directory-fsync remains uncertain and does not change the event ledger
+  ---
+  duration_ms: 108.230583
+  type: 'test'
+  ...
+# Subtest: storage identity-change remains uncertain and does not change the event ledger
+ok 48 - storage identity-change remains uncertain and does not change the event ledger
+  ---
+  duration_ms: 99.817417
+  type: 'test'
+  ...
+# Subtest: reader rejects corruption unsafe links modes locations and wrong filename without side effects
+ok 49 - reader rejects corruption unsafe links modes locations and wrong filename without side effects
+  ---
+  duration_ms: 95.673209
+  type: 'test'
+  ...
+# Subtest: corrupted or mismatched ledger cannot establish diagnostic linkage
+ok 50 - corrupted or mismatched ledger cannot establish diagnostic linkage
+  ---
+  duration_ms: 95.43175
+  type: 'test'
+  ...
+1..50
+# tests 50
+# suites 0
+# pass 50
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 1665.001792

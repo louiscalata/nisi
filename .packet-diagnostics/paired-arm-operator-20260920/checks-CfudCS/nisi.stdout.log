@@ -1,0 +1,447 @@
+{
+  "kind": "nisi.scratch-validation.v1",
+  "version": 1,
+  "status": "VALIDATED",
+  "advisoryOnly": true,
+  "accepted": false,
+  "authorizing": false,
+  "certification": "NOT_RUN",
+  "sandboxed": false,
+  "descendantContainment": "NOT_ENFORCED",
+  "sourceReviewRequired": true,
+  "warning": "Test execution is not sandboxed. Review candidate and test source before --run-tests.",
+  "binding": {
+    "taskFingerprint": "04f6b2f00daaf82a3cab2c6491151330cc3fae991ba144638d7c1f92cdb0dece",
+    "candidateFingerprint": "3421e95ab9e7c022767b8536dd736808c357c4242a2bf0e5ee1807f5efafc779",
+    "reviewedCandidateSha256": null,
+    "reviewBindingMatches": false
+  },
+  "testsSha256": null,
+  "checks": {
+    "contract": {
+      "status": "PASS",
+      "code": null
+    },
+    "syntax": {
+      "status": "PASS",
+      "code": null,
+      "checkedFiles": [
+        {
+          "path": "cli/arguments.mjs",
+          "status": "PASS",
+          "code": null,
+          "evidence": {
+            "argv": [
+              "--check",
+              "./cli/arguments.mjs"
+            ],
+            "exitCode": 0,
+            "signal": null,
+            "timedOut": false,
+            "outputExceeded": false,
+            "closeObserved": true,
+            "errorCode": null,
+            "stdout": {
+              "observedBytes": 0,
+              "capturedBytes": 0,
+              "truncated": false,
+              "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+              "text": ""
+            },
+            "stderr": {
+              "observedBytes": 0,
+              "capturedBytes": 0,
+              "truncated": false,
+              "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+              "text": ""
+            }
+          }
+        },
+        {
+          "path": "cli/main.mjs",
+          "status": "PASS",
+          "code": null,
+          "evidence": {
+            "argv": [
+              "--check",
+              "./cli/main.mjs"
+            ],
+            "exitCode": 0,
+            "signal": null,
+            "timedOut": false,
+            "outputExceeded": false,
+            "closeObserved": true,
+            "errorCode": null,
+            "stdout": {
+              "observedBytes": 0,
+              "capturedBytes": 0,
+              "truncated": false,
+              "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+              "text": ""
+            },
+            "stderr": {
+              "observedBytes": 0,
+              "capturedBytes": 0,
+              "truncated": false,
+              "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+              "text": ""
+            }
+          }
+        },
+        {
+          "path": "cli/paired-arm-command-owner.mjs",
+          "status": "PASS",
+          "code": null,
+          "evidence": {
+            "argv": [
+              "--check",
+              "./cli/paired-arm-command-owner.mjs"
+            ],
+            "exitCode": 0,
+            "signal": null,
+            "timedOut": false,
+            "outputExceeded": false,
+            "closeObserved": true,
+            "errorCode": null,
+            "stdout": {
+              "observedBytes": 0,
+              "capturedBytes": 0,
+              "truncated": false,
+              "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+              "text": ""
+            },
+            "stderr": {
+              "observedBytes": 0,
+              "capturedBytes": 0,
+              "truncated": false,
+              "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+              "text": ""
+            }
+          }
+        },
+        {
+          "path": "cli/paired-arm-inspect.mjs",
+          "status": "PASS",
+          "code": null,
+          "evidence": {
+            "argv": [
+              "--check",
+              "./cli/paired-arm-inspect.mjs"
+            ],
+            "exitCode": 0,
+            "signal": null,
+            "timedOut": false,
+            "outputExceeded": false,
+            "closeObserved": true,
+            "errorCode": null,
+            "stdout": {
+              "observedBytes": 0,
+              "capturedBytes": 0,
+              "truncated": false,
+              "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+              "text": ""
+            },
+            "stderr": {
+              "observedBytes": 0,
+              "capturedBytes": 0,
+              "truncated": false,
+              "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+              "text": ""
+            }
+          }
+        },
+        {
+          "path": "cli/text.mjs",
+          "status": "PASS",
+          "code": null,
+          "evidence": {
+            "argv": [
+              "--check",
+              "./cli/text.mjs"
+            ],
+            "exitCode": 0,
+            "signal": null,
+            "timedOut": false,
+            "outputExceeded": false,
+            "closeObserved": true,
+            "errorCode": null,
+            "stdout": {
+              "observedBytes": 0,
+              "capturedBytes": 0,
+              "truncated": false,
+              "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+              "text": ""
+            },
+            "stderr": {
+              "observedBytes": 0,
+              "capturedBytes": 0,
+              "truncated": false,
+              "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+              "text": ""
+            }
+          }
+        },
+        {
+          "path": "scripts/check-private-cli-package.mjs",
+          "status": "PASS",
+          "code": null,
+          "evidence": {
+            "argv": [
+              "--check",
+              "./scripts/check-private-cli-package.mjs"
+            ],
+            "exitCode": 0,
+            "signal": null,
+            "timedOut": false,
+            "outputExceeded": false,
+            "closeObserved": true,
+            "errorCode": null,
+            "stdout": {
+              "observedBytes": 0,
+              "capturedBytes": 0,
+              "truncated": false,
+              "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+              "text": ""
+            },
+            "stderr": {
+              "observedBytes": 0,
+              "capturedBytes": 0,
+              "truncated": false,
+              "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+              "text": ""
+            }
+          }
+        },
+        {
+          "path": "scripts/private-cli-package-contract.mjs",
+          "status": "PASS",
+          "code": null,
+          "evidence": {
+            "argv": [
+              "--check",
+              "./scripts/private-cli-package-contract.mjs"
+            ],
+            "exitCode": 0,
+            "signal": null,
+            "timedOut": false,
+            "outputExceeded": false,
+            "closeObserved": true,
+            "errorCode": null,
+            "stdout": {
+              "observedBytes": 0,
+              "capturedBytes": 0,
+              "truncated": false,
+              "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+              "text": ""
+            },
+            "stderr": {
+              "observedBytes": 0,
+              "capturedBytes": 0,
+              "truncated": false,
+              "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+              "text": ""
+            }
+          }
+        },
+        {
+          "path": "tests/helpers/nisi-cli-no-effects.mjs",
+          "status": "PASS",
+          "code": null,
+          "evidence": {
+            "argv": [
+              "--check",
+              "./tests/helpers/nisi-cli-no-effects.mjs"
+            ],
+            "exitCode": 0,
+            "signal": null,
+            "timedOut": false,
+            "outputExceeded": false,
+            "closeObserved": true,
+            "errorCode": null,
+            "stdout": {
+              "observedBytes": 0,
+              "capturedBytes": 0,
+              "truncated": false,
+              "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+              "text": ""
+            },
+            "stderr": {
+              "observedBytes": 0,
+              "capturedBytes": 0,
+              "truncated": false,
+              "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+              "text": ""
+            }
+          }
+        },
+        {
+          "path": "tests/helpers/paired-arm-command-child.mjs",
+          "status": "PASS",
+          "code": null,
+          "evidence": {
+            "argv": [
+              "--check",
+              "./tests/helpers/paired-arm-command-child.mjs"
+            ],
+            "exitCode": 0,
+            "signal": null,
+            "timedOut": false,
+            "outputExceeded": false,
+            "closeObserved": true,
+            "errorCode": null,
+            "stdout": {
+              "observedBytes": 0,
+              "capturedBytes": 0,
+              "truncated": false,
+              "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+              "text": ""
+            },
+            "stderr": {
+              "observedBytes": 0,
+              "capturedBytes": 0,
+              "truncated": false,
+              "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+              "text": ""
+            }
+          }
+        },
+        {
+          "path": "tests/paired-arm-cli.test.mjs",
+          "status": "PASS",
+          "code": null,
+          "evidence": {
+            "argv": [
+              "--check",
+              "./tests/paired-arm-cli.test.mjs"
+            ],
+            "exitCode": 0,
+            "signal": null,
+            "timedOut": false,
+            "outputExceeded": false,
+            "closeObserved": true,
+            "errorCode": null,
+            "stdout": {
+              "observedBytes": 0,
+              "capturedBytes": 0,
+              "truncated": false,
+              "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+              "text": ""
+            },
+            "stderr": {
+              "observedBytes": 0,
+              "capturedBytes": 0,
+              "truncated": false,
+              "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+              "text": ""
+            }
+          }
+        },
+        {
+          "path": "tests/paired-arm-command-owner.test.mjs",
+          "status": "PASS",
+          "code": null,
+          "evidence": {
+            "argv": [
+              "--check",
+              "./tests/paired-arm-command-owner.test.mjs"
+            ],
+            "exitCode": 0,
+            "signal": null,
+            "timedOut": false,
+            "outputExceeded": false,
+            "closeObserved": true,
+            "errorCode": null,
+            "stdout": {
+              "observedBytes": 0,
+              "capturedBytes": 0,
+              "truncated": false,
+              "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+              "text": ""
+            },
+            "stderr": {
+              "observedBytes": 0,
+              "capturedBytes": 0,
+              "truncated": false,
+              "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+              "text": ""
+            }
+          }
+        },
+        {
+          "path": "tests/paired-arm-command-signals.test.mjs",
+          "status": "PASS",
+          "code": null,
+          "evidence": {
+            "argv": [
+              "--check",
+              "./tests/paired-arm-command-signals.test.mjs"
+            ],
+            "exitCode": 0,
+            "signal": null,
+            "timedOut": false,
+            "outputExceeded": false,
+            "closeObserved": true,
+            "errorCode": null,
+            "stdout": {
+              "observedBytes": 0,
+              "capturedBytes": 0,
+              "truncated": false,
+              "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+              "text": ""
+            },
+            "stderr": {
+              "observedBytes": 0,
+              "capturedBytes": 0,
+              "truncated": false,
+              "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+              "text": ""
+            }
+          }
+        },
+        {
+          "path": "tests/private-cli-package-contract.test.mjs",
+          "status": "PASS",
+          "code": null,
+          "evidence": {
+            "argv": [
+              "--check",
+              "./tests/private-cli-package-contract.test.mjs"
+            ],
+            "exitCode": 0,
+            "signal": null,
+            "timedOut": false,
+            "outputExceeded": false,
+            "closeObserved": true,
+            "errorCode": null,
+            "stdout": {
+              "observedBytes": 0,
+              "capturedBytes": 0,
+              "truncated": false,
+              "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+              "text": ""
+            },
+            "stderr": {
+              "observedBytes": 0,
+              "capturedBytes": 0,
+              "truncated": false,
+              "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+              "text": ""
+            }
+          }
+        }
+      ],
+      "skippedFiles": []
+    },
+    "tests": {
+      "status": "NOT_RUN",
+      "code": "EXECUTION_NOT_REQUESTED",
+      "assertionsExecuted": 0,
+      "assertionsPassed": 0,
+      "testsSha256": null,
+      "evidence": null
+    }
+  },
+  "cleanup": "REMOVED",
+  "retainedRoot": null,
+  "outputSha256": "5e54ba1cc2b57380c511fad68738f2caf5fe3e191d9369f4406bd64d86a7fc5d"
+}

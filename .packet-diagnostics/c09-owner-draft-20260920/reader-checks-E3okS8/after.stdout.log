@@ -1,0 +1,86 @@
+TAP version 13
+# Subtest: positive exact writer-shaped receipt and honest missing Node22 row
+ok 1 - positive exact writer-shaped receipt and honest missing Node22 row
+  ---
+  duration_ms: 3.355
+  type: 'test'
+  ...
+# Subtest: independent two-runtime proof is scoped to the same archive
+ok 2 - independent two-runtime proof is scoped to the same archive
+  ---
+  duration_ms: 2.872541
+  type: 'test'
+  ...
+# Subtest: proof hash, length, node path/version and archive claims are independently checked
+ok 3 - proof hash, length, node path/version and archive claims are independently checked
+  ---
+  duration_ms: 0.88575
+  type: 'test'
+  ...
+# Subtest: missing, duplicate and wrong tar evidence cannot pass
+ok 4 - missing, duplicate and wrong tar evidence cannot pass
+  ---
+  duration_ms: 2.392208
+  type: 'test'
+  ...
+# Subtest: strict flags, all roles and command order are binding
+ok 5 - strict flags, all roles and command order are binding
+  ---
+  duration_ms: 0.525458
+  type: 'test'
+  ...
+# Subtest: case hashes and inclusive cutoff are binding
+ok 6 - case hashes and inclusive cutoff are binding
+  ---
+  duration_ms: 1.337
+  type: 'test'
+  ...
+# Subtest: negative locations and duplicate TAP/diagnostics are binding
+ok 7 - negative locations and duplicate TAP/diagnostics are binding
+  ---
+  duration_ms: 1.213542
+  type: 'test'
+  ...
+# Subtest: parsed objects cannot earn public PASS; reader remains inspectable
+not ok 8 - parsed objects cannot earn public PASS; reader remains inspectable
+  ---
+  duration_ms: 0.244792
+  type: 'test'
+  location: '/Users/louiscalata/nisi/.packet-diagnostics/c09-owner-draft-20260920/reader-checks-E3okS8/after/work-orders/v02-finish-cluster-v1/consumer/runtime-matrix-v1.test.mjs:52:1'
+  failureType: 'testCodeFailure'
+  error: 'RECEIPT_SCHEMA: object'
+  code: 'RECEIPT_SCHEMA'
+  name: 'RuntimeMatrixError'
+  stack: |-
+    refuse (file:///Users/louiscalata/nisi/.packet-diagnostics/c09-owner-draft-20260920/reader-checks-E3okS8/after/work-orders/v02-finish-cluster-v1/consumer/runtime-matrix-v1.mjs:32:36)
+    fields (file:///Users/louiscalata/nisi/.packet-diagnostics/c09-owner-draft-20260920/reader-checks-E3okS8/after/work-orders/v02-finish-cluster-v1/consumer/runtime-matrix-v1.mjs:42:20)
+    readRehearsalRecord (file:///Users/louiscalata/nisi/.packet-diagnostics/c09-owner-draft-20260920/reader-checks-E3okS8/after/work-orders/v02-finish-cluster-v1/consumer/runtime-matrix-v1.mjs:123:30)
+    TestContext.<anonymous> (file:///Users/louiscalata/nisi/.packet-diagnostics/c09-owner-draft-20260920/reader-checks-E3okS8/after/work-orders/v02-finish-cluster-v1/consumer/runtime-matrix-v1.test.mjs:52:110)
+    Test.runInAsyncScope (node:async_hooks:227:14)
+    Test.run (node:internal/test_runner/test:1325:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:911:18)
+    Test.postRun (node:internal/test_runner/test:1465:19)
+    Test.run (node:internal/test_runner/test:1390:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:911:7)
+  ...
+# Subtest: nested and revoked proxies are refused before traps; resource bounds refuse
+ok 9 - nested and revoked proxies are refused before traps; resource bounds refuse
+  ---
+  duration_ms: 0.693917
+  type: 'test'
+  ...
+# Subtest: rehearsal command documentation preserves offline script-disabled route
+ok 10 - rehearsal command documentation preserves offline script-disabled route
+  ---
+  duration_ms: 0.16925
+  type: 'test'
+  ...
+1..10
+# tests 10
+# suites 0
+# pass 9
+# fail 1
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 49.079958

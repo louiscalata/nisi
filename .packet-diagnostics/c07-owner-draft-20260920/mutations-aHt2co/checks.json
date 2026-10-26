@@ -1,0 +1,213 @@
+{
+  "checkpoint": "checks-LrT9D5",
+  "checkpointSha256": "03142d49ae68f027180a10f36be74b8ce6065c20762f8b64f6ae2a4a3c93c247",
+  "output": "/Users/louiscalata/nisi/.packet-diagnostics/c07-owner-draft-20260920/mutations-aHt2co",
+  "checks": [
+    {
+      "name": "control-before",
+      "shouldPass": true,
+      "command": [
+        "/usr/local/bin/node",
+        "--test-reporter=tap",
+        "--test-concurrency=1",
+        "--test",
+        "work-orders/v02-finish-cluster-v1/native-incident/admission-integration.test.mjs"
+      ],
+      "sourceSha256": "fd333e82263b1fa7953880d592dc73615f98bca615ebc95ffcf6432692e82fdf",
+      "exitCode": 0,
+      "error": null,
+      "signal": null,
+      "counts": {
+        "tests": 23,
+        "pass": 23,
+        "fail": 0,
+        "skipped": 0,
+        "cancelled": 0,
+        "todo": 0
+      },
+      "logSha256": "5a6f268345fab683df6fee0d9e08a4fdd7d22cbd320971ff3a03734e6e8d5bfa",
+      "ok": true
+    },
+    {
+      "name": "alias-digest",
+      "shouldPass": false,
+      "command": [
+        "/usr/local/bin/node",
+        "--test-reporter=tap",
+        "--test-concurrency=1",
+        "--test",
+        "work-orders/v02-finish-cluster-v1/native-incident/admission-integration.test.mjs"
+      ],
+      "sourceSha256": "6e55547086c59f180489652341bc9fb9b2cf9063c48fddbb8afe6dc320ea1c9f",
+      "exitCode": 1,
+      "error": null,
+      "signal": null,
+      "counts": {
+        "tests": 23,
+        "pass": 22,
+        "fail": 1,
+        "skipped": 0,
+        "cancelled": 0,
+        "todo": 0
+      },
+      "logSha256": "64f1d4a2499d6227daa889114cc759df2c9463ba9256fc48cbf93ef318631071",
+      "ok": true
+    },
+    {
+      "name": "reuse-handle",
+      "shouldPass": false,
+      "command": [
+        "/usr/local/bin/node",
+        "--test-reporter=tap",
+        "--test-concurrency=1",
+        "--test",
+        "work-orders/v02-finish-cluster-v1/native-incident/admission-integration.test.mjs"
+      ],
+      "sourceSha256": "f6fedd75e9c83b63b4a31376e29c64872fb85ded51d15f68ac86880f2f82acaf",
+      "exitCode": 1,
+      "error": null,
+      "signal": null,
+      "counts": {
+        "tests": 23,
+        "pass": 20,
+        "fail": 3,
+        "skipped": 0,
+        "cancelled": 0,
+        "todo": 0
+      },
+      "logSha256": "a0f85c924efc1d1959ec6bda39ba5bfa2feaeeaa85d4cfaccf17c7ca83e519fa",
+      "ok": true
+    },
+    {
+      "name": "reverse-clock",
+      "shouldPass": false,
+      "command": [
+        "/usr/local/bin/node",
+        "--test-reporter=tap",
+        "--test-concurrency=1",
+        "--test",
+        "work-orders/v02-finish-cluster-v1/native-incident/admission-integration.test.mjs"
+      ],
+      "sourceSha256": "54c056e95bd4fd94b0558bec96c460444eed4886e02110c5d4c23955ad90ae2c",
+      "exitCode": 1,
+      "error": null,
+      "signal": null,
+      "counts": {
+        "tests": 23,
+        "pass": 22,
+        "fail": 1,
+        "skipped": 0,
+        "cancelled": 0,
+        "todo": 0
+      },
+      "logSha256": "72eb344e6252dc1869dbbc7b1277ca2e5b00757611e0e1a477c49cef6c3c422e",
+      "ok": true
+    },
+    {
+      "name": "raw-stream-hash",
+      "shouldPass": false,
+      "command": [
+        "/usr/local/bin/node",
+        "--test-reporter=tap",
+        "--test-concurrency=1",
+        "--test",
+        "work-orders/v02-finish-cluster-v1/native-incident/admission-integration.test.mjs"
+      ],
+      "sourceSha256": "ef330c54feeac64baa117ffda9b2d6a3841157aa1d0ff6368ffdb2a55996d9ae",
+      "exitCode": 1,
+      "error": null,
+      "signal": null,
+      "counts": {
+        "tests": 23,
+        "pass": 21,
+        "fail": 2,
+        "skipped": 0,
+        "cancelled": 0,
+        "todo": 0
+      },
+      "logSha256": "329b9de95e5df81d92d22dcc3172f97699516f754dd6230514912ec9cba65012",
+      "ok": true
+    },
+    {
+      "name": "paired-request",
+      "shouldPass": false,
+      "command": [
+        "/usr/local/bin/node",
+        "--test-reporter=tap",
+        "--test-concurrency=1",
+        "--test",
+        "work-orders/v02-finish-cluster-v1/native-incident/admission-integration.test.mjs"
+      ],
+      "sourceSha256": "1ac912ceb8c9e031ac3e070efa93cb4629441d8180ea725d0d2ecf8e7171ddd3",
+      "exitCode": 1,
+      "error": null,
+      "signal": null,
+      "counts": {
+        "tests": 23,
+        "pass": 22,
+        "fail": 1,
+        "skipped": 0,
+        "cancelled": 0,
+        "todo": 0
+      },
+      "logSha256": "3d3aaa6bdcb31d8b5dbb01bb8b180447aac4cdb9ba34d4b3db7db6c71d4fc313",
+      "ok": true
+    },
+    {
+      "name": "grant-executable",
+      "shouldPass": false,
+      "command": [
+        "/usr/local/bin/node",
+        "--test-reporter=tap",
+        "--test-concurrency=1",
+        "--test",
+        "work-orders/v02-finish-cluster-v1/native-incident/admission-integration.test.mjs"
+      ],
+      "sourceSha256": "fb27fda2662690717fea5603cf1b621618b7c65c7f462120a393b64563ddd406",
+      "exitCode": 1,
+      "error": null,
+      "signal": null,
+      "counts": {
+        "tests": 23,
+        "pass": 22,
+        "fail": 1,
+        "skipped": 0,
+        "cancelled": 0,
+        "todo": 0
+      },
+      "logSha256": "353dd9949cf5beca1444f9b00fbe8cf01ecb8dfd787a738249ae9cef8f7f5539",
+      "ok": true
+    },
+    {
+      "name": "control-after",
+      "shouldPass": true,
+      "command": [
+        "/usr/local/bin/node",
+        "--test-reporter=tap",
+        "--test-concurrency=1",
+        "--test",
+        "work-orders/v02-finish-cluster-v1/native-incident/admission-integration.test.mjs"
+      ],
+      "sourceSha256": "fd333e82263b1fa7953880d592dc73615f98bca615ebc95ffcf6432692e82fdf",
+      "exitCode": 0,
+      "error": null,
+      "signal": null,
+      "counts": {
+        "tests": 23,
+        "pass": 23,
+        "fail": 0,
+        "skipped": 0,
+        "cancelled": 0,
+        "todo": 0
+      },
+      "logSha256": "bb43b70ee6051bed027737ce6f6a8f054d6ba59eb9248b675988260a6a94c63d",
+      "ok": true
+    }
+  ],
+  "restored": true,
+  "candidateUnchanged": true,
+  "implementationAccepted": false,
+  "nativeRerun": "NOT_RUN",
+  "inference": "NOT_RUN",
+  "ok": true
+}

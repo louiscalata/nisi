@@ -1,0 +1,22 @@
+{
+  "sourceHashes": {
+    "hosts/repository/native-incident-source-v1.mjs": "6a1ddf192be45ff14e4471e08470429a6fcea300642e4f681d10f187b7540e74",
+    "hosts/repository/native-incident-admission-v1.mjs": "fd333e82263b1fa7953880d592dc73615f98bca615ebc95ffcf6432692e82fdf",
+    "work-orders/v02-finish-cluster-v1/native-incident/admission-integration.test.mjs": "de732e0241db59e7f4f4a7e75d473add44dd0a47bdff32c9b5716c2d6ab321cb",
+    "work-orders/v02-finish-cluster-v1/native-incident/native-incident-source-v1.test.mjs": "b59e4880e742a07ed9d883024c173dd1d30ba94bdc253b4a5446c2abb3df2a51"
+  },
+  "exitCode": 0,
+  "error": null,
+  "signal": null,
+  "unchanged": true,
+  "ok": true,
+  "binding": {
+    "taskFingerprint": "ea3d22e640c1dc45fb5cae9c011eee3ee56ea39612660e26b6318ce74c152e07",
+    "candidateFingerprint": "e69730ebd50d7845cf5eaf154ba06255584fb0e79e308471a843c95ba06c6392",
+    "reviewedCandidateSha256": null,
+    "reviewBindingMatches": false
+  },
+  "logSha256": "fbb07d5379f7fffc5ebc9c40d66a8aa0eb3d3bdf1050c7b9eac0f65be78b9896",
+  "inference": "NOT_RUN",
+  "implementationAccepted": false
+}

@@ -1,0 +1,22 @@
+{
+  "schema": "nisi.c06.owner-retained-source-review.v1",
+  "reviewerTask": "/root/cli_acceptance_luna",
+  "reviewerRole": "Luna independent source review",
+  "modelActuallyServed": "UNKNOWN",
+  "verdict": "NO_NEW_P1_P2_FINDINGS",
+  "sourceHashes": {
+    "history/host-journal-bundle.mjs": "e2954caeaa987993fd17e1904d4222e5b030b29e7f028c816809fe83ae0ace6b",
+    "work-orders/v02-finish-cluster-v1/restart/host-bundle-integration.test.mjs": "b24f8c1d8599fd91b636e960fb2dc841d646ca0347b3be075457ab7195e03817",
+    "tests/host-journal-bundle.test.mjs": "815556218a0ef5907f11acdf4de22259ca171e3725be977e08c2fa7001a3dabf"
+  },
+  "findingsAddressed": [
+    "Primitive outcome strings are required before property-key membership checks.",
+    "Proxy detection precedes reflection; public bundle fields are checked against private issued state.",
+    "Failed observation writes restore exact pre-append serialization including NEW-journal watermark."
+  ],
+  "reviewerExecutedTests": false,
+  "implementationAccepted": false,
+  "nativeBuildAccepted": false,
+  "publicationAuthorized": false,
+  "note": "Owner transcription of the actual independent task reply. It is source review, not provider identity, independently rerun tests, or canonical acceptance."
+}

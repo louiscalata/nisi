@@ -1,0 +1,261 @@
+{
+  "kind": "nisi.scratch-validation.v1",
+  "version": 1,
+  "status": "VALIDATED",
+  "advisoryOnly": true,
+  "accepted": false,
+  "authorizing": false,
+  "certification": "NOT_RUN",
+  "sandboxed": false,
+  "descendantContainment": "NOT_ENFORCED",
+  "sourceReviewRequired": true,
+  "warning": "Test execution is not sandboxed. Review candidate and test source before --run-tests.",
+  "binding": {
+    "taskFingerprint": "65b32ab7f08953d88267d6be19c9f8b6d8bcebf2e282472b51eb2a4f4abc186b",
+    "candidateFingerprint": "24459c00bde88fe4f1a7e105c0fda821598e12e9104887ac781725c472c03bd2",
+    "reviewedCandidateSha256": null,
+    "reviewBindingMatches": false
+  },
+  "testsSha256": null,
+  "checks": {
+    "contract": {
+      "status": "PASS",
+      "code": null
+    },
+    "syntax": {
+      "status": "PASS",
+      "code": null,
+      "checkedFiles": [
+        {
+          "path": "tests/finish-cluster-c06.test.mjs",
+          "status": "PASS",
+          "code": null,
+          "evidence": {
+            "argv": [
+              "--check",
+              "./tests/finish-cluster-c06.test.mjs"
+            ],
+            "exitCode": 0,
+            "signal": null,
+            "timedOut": false,
+            "outputExceeded": false,
+            "closeObserved": true,
+            "errorCode": null,
+            "stdout": {
+              "observedBytes": 0,
+              "capturedBytes": 0,
+              "truncated": false,
+              "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+              "text": ""
+            },
+            "stderr": {
+              "observedBytes": 0,
+              "capturedBytes": 0,
+              "truncated": false,
+              "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+              "text": ""
+            }
+          }
+        },
+        {
+          "path": "tests/finish-cluster-c07.test.mjs",
+          "status": "PASS",
+          "code": null,
+          "evidence": {
+            "argv": [
+              "--check",
+              "./tests/finish-cluster-c07.test.mjs"
+            ],
+            "exitCode": 0,
+            "signal": null,
+            "timedOut": false,
+            "outputExceeded": false,
+            "closeObserved": true,
+            "errorCode": null,
+            "stdout": {
+              "observedBytes": 0,
+              "capturedBytes": 0,
+              "truncated": false,
+              "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+              "text": ""
+            },
+            "stderr": {
+              "observedBytes": 0,
+              "capturedBytes": 0,
+              "truncated": false,
+              "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+              "text": ""
+            }
+          }
+        },
+        {
+          "path": "tests/finish-cluster-dispatch.test.mjs",
+          "status": "PASS",
+          "code": null,
+          "evidence": {
+            "argv": [
+              "--check",
+              "./tests/finish-cluster-dispatch.test.mjs"
+            ],
+            "exitCode": 0,
+            "signal": null,
+            "timedOut": false,
+            "outputExceeded": false,
+            "closeObserved": true,
+            "errorCode": null,
+            "stdout": {
+              "observedBytes": 0,
+              "capturedBytes": 0,
+              "truncated": false,
+              "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+              "text": ""
+            },
+            "stderr": {
+              "observedBytes": 0,
+              "capturedBytes": 0,
+              "truncated": false,
+              "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+              "text": ""
+            }
+          }
+        },
+        {
+          "path": "tests/finish-cluster-inventory.test.mjs",
+          "status": "PASS",
+          "code": null,
+          "evidence": {
+            "argv": [
+              "--check",
+              "./tests/finish-cluster-inventory.test.mjs"
+            ],
+            "exitCode": 0,
+            "signal": null,
+            "timedOut": false,
+            "outputExceeded": false,
+            "closeObserved": true,
+            "errorCode": null,
+            "stdout": {
+              "observedBytes": 0,
+              "capturedBytes": 0,
+              "truncated": false,
+              "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+              "text": ""
+            },
+            "stderr": {
+              "observedBytes": 0,
+              "capturedBytes": 0,
+              "truncated": false,
+              "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+              "text": ""
+            }
+          }
+        },
+        {
+          "path": "work-orders/v02-finish-cluster-v1/check-c06.mjs",
+          "status": "PASS",
+          "code": null,
+          "evidence": {
+            "argv": [
+              "--check",
+              "./work-orders/v02-finish-cluster-v1/check-c06.mjs"
+            ],
+            "exitCode": 0,
+            "signal": null,
+            "timedOut": false,
+            "outputExceeded": false,
+            "closeObserved": true,
+            "errorCode": null,
+            "stdout": {
+              "observedBytes": 0,
+              "capturedBytes": 0,
+              "truncated": false,
+              "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+              "text": ""
+            },
+            "stderr": {
+              "observedBytes": 0,
+              "capturedBytes": 0,
+              "truncated": false,
+              "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+              "text": ""
+            }
+          }
+        },
+        {
+          "path": "work-orders/v02-finish-cluster-v1/check-c07.mjs",
+          "status": "PASS",
+          "code": null,
+          "evidence": {
+            "argv": [
+              "--check",
+              "./work-orders/v02-finish-cluster-v1/check-c07.mjs"
+            ],
+            "exitCode": 0,
+            "signal": null,
+            "timedOut": false,
+            "outputExceeded": false,
+            "closeObserved": true,
+            "errorCode": null,
+            "stdout": {
+              "observedBytes": 0,
+              "capturedBytes": 0,
+              "truncated": false,
+              "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+              "text": ""
+            },
+            "stderr": {
+              "observedBytes": 0,
+              "capturedBytes": 0,
+              "truncated": false,
+              "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+              "text": ""
+            }
+          }
+        },
+        {
+          "path": "work-orders/v02-finish-cluster-v1/check-cluster.mjs",
+          "status": "PASS",
+          "code": null,
+          "evidence": {
+            "argv": [
+              "--check",
+              "./work-orders/v02-finish-cluster-v1/check-cluster.mjs"
+            ],
+            "exitCode": 0,
+            "signal": null,
+            "timedOut": false,
+            "outputExceeded": false,
+            "closeObserved": true,
+            "errorCode": null,
+            "stdout": {
+              "observedBytes": 0,
+              "capturedBytes": 0,
+              "truncated": false,
+              "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+              "text": ""
+            },
+            "stderr": {
+              "observedBytes": 0,
+              "capturedBytes": 0,
+              "truncated": false,
+              "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+              "text": ""
+            }
+          }
+        }
+      ],
+      "skippedFiles": []
+    },
+    "tests": {
+      "status": "NOT_RUN",
+      "code": "EXECUTION_NOT_REQUESTED",
+      "assertionsExecuted": 0,
+      "assertionsPassed": 0,
+      "testsSha256": null,
+      "evidence": null
+    }
+  },
+  "cleanup": "REMOVED",
+  "retainedRoot": null,
+  "outputSha256": "602e9f3da30aa4e5e985ac30dbbfa9db8f4e845148d4908ca1f3c41bba52385b"
+}

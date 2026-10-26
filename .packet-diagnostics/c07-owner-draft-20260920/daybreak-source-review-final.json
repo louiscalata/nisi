@@ -1,0 +1,38 @@
+{
+  "schema": "nisi.c07.owner-retained-source-review.v1",
+  "reviewerTask": "/root/sharedchami_cleanup_daybreak_review",
+  "modelActuallyServed": "UNKNOWN",
+  "scope": "CALLER_SUPPLIED_NATIVE_INCIDENT_EVIDENCE_NODE_ONLY",
+  "verdict": "PASS",
+  "sourceHashes": {
+    "candidate/hosts/repository/native-incident-source-v1.mjs": "6a1ddf192be45ff14e4471e08470429a6fcea300642e4f681d10f187b7540e74",
+    "candidate/hosts/repository/native-incident-admission-v1.mjs": "fd333e82263b1fa7953880d592dc73615f98bca615ebc95ffcf6432692e82fdf",
+    "candidate/work-orders/v02-finish-cluster-v1/native-incident/native-incident-source-v1.test.mjs": "b59e4880e742a07ed9d883024c173dd1d30ba94bdc253b4a5446c2abb3df2a51",
+    "candidate/work-orders/v02-finish-cluster-v1/native-incident/admission-integration.test.mjs": "de732e0241db59e7f4f4a7e75d473add44dd0a47bdff32c9b5716c2d6ab321cb"
+  },
+  "findings": [],
+  "resolvedFinalFinding": {
+    "priority": "P2",
+    "code": "ADMISSION_ALIAS_DIGEST_INCONSISTENCY",
+    "previousSourceSha256": "b24763bb247683498ad64ce0bbf9dcfb52379b91bb8775401798a5808b9f91f2",
+    "previousOracleSha256": "d48c779151645fed0899597a701a177af5452f52cad3d5aa5176117bfd496eff",
+    "correction": "Canonical returned-handle digest is computed once after cloneFreeze, retained in shared private state, and used through both issued aliases and their consumed refusals.",
+    "oracle": "Two equivalent fresh admissions exercise wrapper and nested-handle success, equal canonical digests, then all four consumed aliases."
+  },
+  "reviewSummary": [
+    "No remaining P1/P2 finding in the reviewed four-file candidate.",
+    "Actual returned handle and wrapper share one consumed latch; copied objects remain unissued.",
+    "Issued source, expectation, request, artifact, profile and executable identities remain bound.",
+    "Receipt bytes and validated report snapshots agree, including fixed outcome inventory and aggregate status.",
+    "Reversed clocks, hostile records, paired request substitution and missing reports remain correctly classified.",
+    "Caller-supplied labeling and all false authority fields remain unchanged."
+  ],
+  "reviewerExecutedTests": false,
+  "implementationAccepted": false,
+  "nativeBuildAccepted": false,
+  "nativeExecutionAttested": false,
+  "sourceAuthenticityAttested": false,
+  "resumeGranted": false,
+  "publicationAuthorized": false,
+  "openCodeExecuted": false
+}

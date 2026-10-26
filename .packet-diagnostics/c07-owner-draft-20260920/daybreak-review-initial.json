@@ -1,0 +1,24 @@
+{
+  "schema": "nisi.c07.owner-retained-source-review.v1",
+  "reviewerTask": "/root/sharedchami_cleanup_daybreak_review",
+  "reviewerRole": "Daybreak defensive review",
+  "modelActuallyServed": "UNKNOWN",
+  "verdict": "FAIL",
+  "sourceHashes": {
+    "DESIGN.md": "74c66123881a0bdccf137eaadebb8d40d9db49f4609d0387990d9d50acdc7ced",
+    "candidate/hosts/repository/native-incident-admission-v1.mjs": "c48d8d6a28d14543de55aeec64bc7e11908811938f447e51f7753d8a58c288b9",
+    "candidate/work-orders/v02-finish-cluster-v1/native-incident/admission-integration.test.mjs": "1131f616ffa3f208e8678089388ad47d244b72e11cc1eebaeddb8e44aa0e885a"
+  },
+  "findings": [
+    "Oracle references source.checks absent from its fixture return, preventing the positive path.",
+    "Negative identity cases reuse a consumed handle and assert only not-MATCHED, masking missing identity checks.",
+    "Report schemaVersion, preparationFingerprint and sourceFingerprint are admitted but not compared.",
+    "Nested binding, expected/profile and outcome reads can invoke caller getters or proxies before validation.",
+    "Future host observations and grants not bound to the source executable can receive readiness admission."
+  ],
+  "reviewerExecutedTests": false,
+  "implementationAccepted": false,
+  "nativeBuildAccepted": false,
+  "publicationAuthorized": false,
+  "note": "Owner transcription of actual independent review; author correction requested. No tests or native execution were performed."
+}

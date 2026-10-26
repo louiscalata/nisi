@@ -1,0 +1,120 @@
+{
+  "schema": "nisi.c06.final-owner-checkpoint.v1",
+  "at": "2026-09-20T13:14:18.188Z",
+  "sourceHashes": {
+    "history/host-journal-bundle.mjs": "e2954caeaa987993fd17e1904d4222e5b030b29e7f028c816809fe83ae0ace6b",
+    "tests/host-journal-bundle.test.mjs": "815556218a0ef5907f11acdf4de22259ca171e3725be977e08c2fa7001a3dabf",
+    "work-orders/v02-finish-cluster-v1/restart/host-bundle-integration.test.mjs": "b24f8c1d8599fd91b636e960fb2dc841d646ca0347b3be075457ab7195e03817",
+    "work-orders/v02-finish-cluster-v1/restart/README.md": "588f548cdce3616d5c239d4d343bdf5693d3862ae3f53deb54468ac99ebee9f1",
+    "work-orders/v02-finish-cluster-v1/check-c06.mjs": "9c792a59a8574fb413a4430c98eeca3c24d3547ecf4c77ca07a2746c32855dec",
+    "work-orders/v02-finish-cluster-v1/check-cluster.mjs": "678a92113e4ec1e57c7a05403ba3ac8e85f6e1f2602e971bbafb157516285c9b",
+    "work-orders/v02-finish-cluster-v1/cluster.json": "423b14d85edc2bdb1449d25b2bcf65a07961004a50d17b7f606fb4f8acb58312",
+    "tests/finish-cluster-c06.test.mjs": "a9291a63d527249e1e1c8a583294b5a508d71637ff43519048a8cc3e8d7b00e3",
+    "tests/finish-cluster-inventory.test.mjs": "41b188dc6471c66227bd772a28df149d24380d1c48d5b11d541221a5526c265a",
+    "tests/finish-cluster-dispatch.test.mjs": "70b9eb06fa11114434509e5195fdff23b8122ce55ef9b4e911aa30be4a0e195d",
+    ".packets/nisi-v02-c06-restart-integration-oracle.packet.md": "c9807a60d2501132aed35d4b65f5ae17a6ac8767f27db5adf213a18457d3c49a"
+  },
+  "sourceUnchanged": true,
+  "runs": [
+    {
+      "name": "owner-controls",
+      "args": [
+        ".packet-diagnostics/c06-owner-draft-20260920/verify-controls.mjs"
+      ],
+      "exitCode": 0,
+      "error": null,
+      "signal": null,
+      "logPath": ".packet-diagnostics/c06-owner-draft-20260920/final-vTjqcJ/owner-controls.log",
+      "logSha256": "c6469eaeb6ebedf90087084c2b71a4732e46116dc582c09cf9f279890fcd8958",
+      "ok": true
+    },
+    {
+      "name": "inventory",
+      "args": [
+        "work-orders/v02-finish-cluster-v1/check-cluster.mjs"
+      ],
+      "exitCode": 0,
+      "error": null,
+      "signal": null,
+      "logPath": ".packet-diagnostics/c06-owner-draft-20260920/final-vTjqcJ/inventory.log",
+      "logSha256": "172b39ab0c986009333f9dec4f60e4c0fca9e453e5d089ebd70d93713910d053",
+      "ok": true
+    },
+    {
+      "name": "dispatch",
+      "args": [
+        "work-orders/v02-finish-cluster-v1/dispatch-check.mjs",
+        "C06"
+      ],
+      "exitCode": 2,
+      "error": null,
+      "signal": null,
+      "logPath": ".packet-diagnostics/c06-owner-draft-20260920/final-vTjqcJ/dispatch.log",
+      "logSha256": "71bd776f70b221dc0f03c279d0062e6359dab9f907fd6e94fc7dd1ec44a3540e",
+      "ok": true
+    }
+  ],
+  "controls": {
+    "path": ".packet-diagnostics/c06-owner-draft-20260920/controls-hrxlV5/checks.json",
+    "sha256": "4ff108332b6faff3ad862f2411910cfc7de93a459d8a656fdcce298bf04ddb35"
+  },
+  "inventory": {
+    "status": "PASS_PACKET_INVENTORY_ONLY",
+    "authored": 10,
+    "fableAssignments": 7,
+    "released": [
+      "C01"
+    ],
+    "executedByThisCheck": 0,
+    "implementationAccepted": 6,
+    "fixtureReceiptAccepted": true,
+    "fixtureCleanupAccepted": true,
+    "fixtureContainmentAccepted": true,
+    "fixtureInputImportsAccepted": true,
+    "hostObservationAccepted": true,
+    "finishPacketPercent": 60,
+    "acceptedScopes": [
+      {
+        "id": "C01",
+        "scope": "TRUSTED_LOCAL_CHECKOUT_NODE_ONLY"
+      },
+      {
+        "id": "C02",
+        "scope": "INERT_FIXTURE_RECEIPT_NODE_ONLY"
+      },
+      {
+        "id": "C03",
+        "scope": "INERT_FIXTURE_CLEANUP_NODE_ONLY"
+      },
+      {
+        "id": "C04",
+        "scope": "INERT_FIXTURE_WRITE_GUARD_NODE_ONLY"
+      },
+      {
+        "id": "C05",
+        "scope": "INERT_FIXTURE_INPUT_IMPORTS_NODE_ONLY"
+      },
+      {
+        "id": "C06",
+        "scope": "CALLER_SUPPLIED_HOST_OBSERVATION_NODE_ONLY"
+      }
+    ],
+    "acceptanceScope": "TRUSTED_LOCAL_CHECKOUT_NODE_ONLY",
+    "nativeBuildAccepted": false,
+    "overallMilestonePercent": 30,
+    "dispatchApproved": []
+  },
+  "dispatch": {
+    "status": "HELD",
+    "code": "NODE_IMPLEMENTATION_ACCEPTED",
+    "packet": "C06",
+    "dispatchApproved": false,
+    "publicationAuthorized": false,
+    "reason": "Implementation already accepted in its recorded scope; repeat dispatch is closed. Native and release acceptance remain separate."
+  },
+  "implementationAccepted": false,
+  "nativeBuildAccepted": false,
+  "publicationAuthorized": false,
+  "inference": "NOT_RUN",
+  "ok": true
+}

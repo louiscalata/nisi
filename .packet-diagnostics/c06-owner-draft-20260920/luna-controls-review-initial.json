@@ -1,0 +1,23 @@
+{
+  "schema": "nisi.c06.owner-retained-control-review.v1",
+  "reviewerTask": "/root/ternary_concept_check",
+  "modelRequested": "gpt-5.6-luna",
+  "modelActuallyServed": "UNKNOWN",
+  "verdict": "FINDINGS",
+  "sourceHashes": {
+    "work-orders/v02-finish-cluster-v1/check-c06.mjs": "39e54839ae4b136fe4d97be3fb1efd6d8606a585c1f0719e17401d5e235c95c1",
+    "tests/finish-cluster-c06.test.mjs": "6aee8eef003a6d84061dc3322529c6b301ddb86890ebbe93d7e9e513e9480cc4"
+  },
+  "findings": [
+    {"priority": "P1", "issue": "C06 row-level authority flags were not rejected.", "disposition": "Owner added explicit row-level refusals and negative tests."},
+    {"priority": "P2", "issue": "Structurally valid replacement receipts could be rebound without a frozen owner evidence identity.", "disposition": "Owner pinned final evidence hash in the guard after semantic checks."},
+    {"priority": "P2", "issue": "Retained isolated checkpoint log hashes were not checked against log bytes.", "disposition": "Owner added fixed-path original log reads, hashes and TAP count comparisons."},
+    {"priority": "P2", "issue": "C05 full acceptance was a transitive boundary, not independently re-established by this helper.", "disposition": "Parent checker validates C01-C05 first; C06 binds exact C05 evidence and current closure. Boundary documented, not duplicated."},
+    {"priority": "P2", "issue": "Recorded executable matching allowed any path ending in node.", "disposition": "Owner now binds recorded /usr/local/bin/node and v24.18.0; this is not binary attestation or cross-runtime acceptance."}
+  ],
+  "reviewerExecutedTests": false,
+  "implementationAccepted": false,
+  "nativeBuildAccepted": false,
+  "publicationAuthorized": false,
+  "note": "Owner transcription of the actual independent review and subsequent owner dispositions. Final delta review is separate. This is not a provider receipt or test evidence."
+}

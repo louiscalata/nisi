@@ -1,0 +1,3345 @@
+{
+  "schema": "nisi-private-cli-package-rehearsal/v1",
+  "status": "PASS_SCOPED",
+  "root": "/Users/louiscalata/nisi/",
+  "evidence": "/Users/louiscalata/nisi/.build/private-cli-package-b8cCay",
+  "observedAt": "2026-09-20T17:09:53.234Z",
+  "node": {
+    "path": "/usr/local/bin/node",
+    "version": "v24.18.0",
+    "sha256": "bf0cea6ab3631b6b53a9709ed54d62608dd0725187426d34d4d6af6644c5197f"
+  },
+  "checks": [
+    {
+      "name": "npm version",
+      "exe": "npm",
+      "args": [
+        "--version"
+      ],
+      "cwd": "/Users/louiscalata/nisi/.build/private-cli-package-b8cCay/consumer",
+      "exitCode": 0,
+      "signal": null,
+      "error": null,
+      "elapsedMs": 97,
+      "stdoutBytes": 8,
+      "stdoutSha256": "041fb0a6f23ccf0102a18d4591e1bfa36eebc17d27d348727a5eee18806d1c3c",
+      "stderr": ""
+    },
+    {
+      "name": "pack private CLI",
+      "exe": "npm",
+      "args": [
+        "pack",
+        "--offline",
+        "--ignore-scripts",
+        "--no-audit",
+        "--no-fund",
+        "--cache",
+        "/Users/louiscalata/nisi/.build/private-cli-package-b8cCay/npm-cache",
+        "--json",
+        "--pack-destination",
+        "/Users/louiscalata/nisi/.build/private-cli-package-b8cCay"
+      ],
+      "cwd": "/Users/louiscalata/nisi/.build/private-cli-package-b8cCay/stage",
+      "exitCode": 0,
+      "signal": null,
+      "error": null,
+      "elapsedMs": 307,
+      "stdoutBytes": 10706,
+      "stdoutSha256": "183df87595db8072af7e55f2fe8f76d84dc303fc8211cb7ca2bc2ce74535fd49",
+      "stderr": ""
+    },
+    {
+      "name": "actual tar archive inventory",
+      "exe": "tar",
+      "args": [
+        "-tzf",
+        "/Users/louiscalata/nisi/.build/private-cli-package-b8cCay/nisi-private-cli-0.2.0-private.0.tgz"
+      ],
+      "cwd": "/Users/louiscalata/nisi/.build/private-cli-package-b8cCay/consumer",
+      "exitCode": 0,
+      "signal": null,
+      "error": null,
+      "elapsedMs": 8,
+      "stdoutBytes": 4130,
+      "stdoutSha256": "dfa1fd29ff44b471f4201cd3e955b32cc9be4e31c560f244edc0f1e5a1b38b09",
+      "stderr": ""
+    },
+    {
+      "name": "actual archive bytes adapters/local-chat.mjs",
+      "exe": "tar",
+      "args": [
+        "-xOf",
+        "/Users/louiscalata/nisi/.build/private-cli-package-b8cCay/nisi-private-cli-0.2.0-private.0.tgz",
+        "package/adapters/local-chat.mjs"
+      ],
+      "cwd": "/Users/louiscalata/nisi/.build/private-cli-package-b8cCay/consumer",
+      "exitCode": 0,
+      "signal": null,
+      "error": null,
+      "elapsedMs": 5,
+      "stdoutBytes": 21759,
+      "stdoutSha256": "83e7af06515387273c11bf8595be5f1bf8c2520000704be12acb274dd49a37a9",
+      "stderr": ""
+    },
+    {
+      "name": "actual archive bytes adapters/native-chat-protocol-v1.mjs",
+      "exe": "tar",
+      "args": [
+        "-xOf",
+        "/Users/louiscalata/nisi/.build/private-cli-package-b8cCay/nisi-private-cli-0.2.0-private.0.tgz",
+        "package/adapters/native-chat-protocol-v1.mjs"
+      ],
+      "cwd": "/Users/louiscalata/nisi/.build/private-cli-package-b8cCay/consumer",
+      "exitCode": 0,
+      "signal": null,
+      "error": null,
+      "elapsedMs": 5,
+      "stdoutBytes": 3948,
+      "stdoutSha256": "44468cb8b6ebc97e1821405a5add4916a97bf82b0ffeaa2076f85e79e12255f3",
+      "stderr": ""
+    },
+    {
+      "name": "actual archive bytes adapters/native-chat-v1.mjs",
+      "exe": "tar",
+      "args": [
+        "-xOf",
+        "/Users/louiscalata/nisi/.build/private-cli-package-b8cCay/nisi-private-cli-0.2.0-private.0.tgz",
+        "package/adapters/native-chat-v1.mjs"
+      ],
+      "cwd": "/Users/louiscalata/nisi/.build/private-cli-package-b8cCay/consumer",
+      "exitCode": 0,
+      "signal": null,
+      "error": null,
+      "elapsedMs": 5,
+      "stdoutBytes": 17182,
+      "stdoutSha256": "05db89079e5a167c6cb48018c659e514d573d3b7e95a3ce8282f2803e0bc024c",
+      "stderr": ""
+    },
+    {
+      "name": "actual archive bytes adapters/repair-guidance-v1.mjs",
+      "exe": "tar",
+      "args": [
+        "-xOf",
+        "/Users/louiscalata/nisi/.build/private-cli-package-b8cCay/nisi-private-cli-0.2.0-private.0.tgz",
+        "package/adapters/repair-guidance-v1.mjs"
+      ],
+      "cwd": "/Users/louiscalata/nisi/.build/private-cli-package-b8cCay/consumer",
+      "exitCode": 0,
+      "signal": null,
+      "error": null,
+      "elapsedMs": 5,
+      "stdoutBytes": 6011,
+      "stdoutSha256": "d4421a3c6dc57ab20e9ad2cbae57e07280c34bcdadb72fcf3caf017dd88759e0",
+      "stderr": ""
+    },
+    {
+      "name": "actual archive bytes bin/nisi.mjs",
+      "exe": "tar",
+      "args": [
+        "-xOf",
+        "/Users/louiscalata/nisi/.build/private-cli-package-b8cCay/nisi-private-cli-0.2.0-private.0.tgz",
+        "package/bin/nisi.mjs"
+      ],
+      "cwd": "/Users/louiscalata/nisi/.build/private-cli-package-b8cCay/consumer",
+      "exitCode": 0,
+      "signal": null,
+      "error": null,
+      "elapsedMs": 5,
+      "stdoutBytes": 1885,
+      "stdoutSha256": "aea4736ee1224b4403217af6ea018a7d881f2f2398b8f7e2509ab913265e5848",
+      "stderr": ""
+    },
+    {
+      "name": "actual archive bytes canonical/canonical-json-v1.mjs",
+      "exe": "tar",
+      "args": [
+        "-xOf",
+        "/Users/louiscalata/nisi/.build/private-cli-package-b8cCay/nisi-private-cli-0.2.0-private.0.tgz",
+        "package/canonical/canonical-json-v1.mjs"
+      ],
+      "cwd": "/Users/louiscalata/nisi/.build/private-cli-package-b8cCay/consumer",
+      "exitCode": 0,
+      "signal": null,
+      "error": null,
+      "elapsedMs": 5,
+      "stdoutBytes": 8170,
+      "stdoutSha256": "d1049a26d2bea0d14e959c0af22af15b975345091c5fa5360e8bd685637f8e59",
+      "stderr": ""
+    },
+    {
+      "name": "actual archive bytes cli/arguments.mjs",
+      "exe": "tar",
+      "args": [
+        "-xOf",
+        "/Users/louiscalata/nisi/.build/private-cli-package-b8cCay/nisi-private-cli-0.2.0-private.0.tgz",
+        "package/cli/arguments.mjs"
+      ],
+      "cwd": "/Users/louiscalata/nisi/.build/private-cli-package-b8cCay/consumer",
+      "exitCode": 0,
+      "signal": null,
+      "error": null,
+      "elapsedMs": 5,
+      "stdoutBytes": 1924,
+      "stdoutSha256": "c19daefc0a595f94d7bf0ae5c29616b54f32acc6ca03e1b2a4ca0a44e663e4cd",
+      "stderr": ""
+    },
+    {
+      "name": "actual archive bytes cli/doctor.mjs",
+      "exe": "tar",
+      "args": [
+        "-xOf",
+        "/Users/louiscalata/nisi/.build/private-cli-package-b8cCay/nisi-private-cli-0.2.0-private.0.tgz",
+        "package/cli/doctor.mjs"
+      ],
+      "cwd": "/Users/louiscalata/nisi/.build/private-cli-package-b8cCay/consumer",
+      "exitCode": 0,
+      "signal": null,
+      "error": null,
+      "elapsedMs": 5,
+      "stdoutBytes": 2936,
+      "stdoutSha256": "35cce14c819cfa555928fb1c531c2f7a3dc64e55920c7e99089af6e5e78b74cd",
+      "stderr": ""
+    },
+    {
+      "name": "actual archive bytes cli/inspect.mjs",
+      "exe": "tar",
+      "args": [
+        "-xOf",
+        "/Users/louiscalata/nisi/.build/private-cli-package-b8cCay/nisi-private-cli-0.2.0-private.0.tgz",
+        "package/cli/inspect.mjs"
+      ],
+      "cwd": "/Users/louiscalata/nisi/.build/private-cli-package-b8cCay/consumer",
+      "exitCode": 0,
+      "signal": null,
+      "error": null,
+      "elapsedMs": 5,
+      "stdoutBytes": 9550,
+      "stdoutSha256": "ea23beaaee44170651d06b0dc0ed9e523896acbe38cfbf9e238734f7135d1296",
+      "stderr": ""
+    },
+    {
+      "name": "actual archive bytes cli/main.mjs",
+      "exe": "tar",
+      "args": [
+        "-xOf",
+        "/Users/louiscalata/nisi/.build/private-cli-package-b8cCay/nisi-private-cli-0.2.0-private.0.tgz",
+        "package/cli/main.mjs"
+      ],
+      "cwd": "/Users/louiscalata/nisi/.build/private-cli-package-b8cCay/consumer",
+      "exitCode": 0,
+      "signal": null,
+      "error": null,
+      "elapsedMs": 4,
+      "stdoutBytes": 2917,
+      "stdoutSha256": "97bc14e46e23b566dcd2eba5f42f165c89ca4fda29d8fc053e14ae3d7cbce422",
+      "stderr": ""
+    },
+    {
+      "name": "actual archive bytes cli/paired-arm-inspect.mjs",
+      "exe": "tar",
+      "args": [
+        "-xOf",
+        "/Users/louiscalata/nisi/.build/private-cli-package-b8cCay/nisi-private-cli-0.2.0-private.0.tgz",
+        "package/cli/paired-arm-inspect.mjs"
+      ],
+      "cwd": "/Users/louiscalata/nisi/.build/private-cli-package-b8cCay/consumer",
+      "exitCode": 0,
+      "signal": null,
+      "error": null,
+      "elapsedMs": 5,
+      "stdoutBytes": 4149,
+      "stdoutSha256": "cc40aa7d2f763bb5cda49b0e5d9b50983c2e35772d68e43cc334f4083dc1228b",
+      "stderr": ""
+    },
+    {
+      "name": "actual archive bytes cli/paired-trial-diagnostic-inspect.mjs",
+      "exe": "tar",
+      "args": [
+        "-xOf",
+        "/Users/louiscalata/nisi/.build/private-cli-package-b8cCay/nisi-private-cli-0.2.0-private.0.tgz",
+        "package/cli/paired-trial-diagnostic-inspect.mjs"
+      ],
+      "cwd": "/Users/louiscalata/nisi/.build/private-cli-package-b8cCay/consumer",
+      "exitCode": 0,
+      "signal": null,
+      "error": null,
+      "elapsedMs": 5,
+      "stdoutBytes": 747,
+      "stdoutSha256": "55267d87d702f41ed5fdc06d38b6fbb06e821ff75c0ec2d8707552a5e0a44c31",
+      "stderr": ""
+    },
+    {
+      "name": "actual archive bytes cli/paired-trial-inspect.mjs",
+      "exe": "tar",
+      "args": [
+        "-xOf",
+        "/Users/louiscalata/nisi/.build/private-cli-package-b8cCay/nisi-private-cli-0.2.0-private.0.tgz",
+        "package/cli/paired-trial-inspect.mjs"
+      ],
+      "cwd": "/Users/louiscalata/nisi/.build/private-cli-package-b8cCay/consumer",
+      "exitCode": 0,
+      "signal": null,
+      "error": null,
+      "elapsedMs": 4,
+      "stdoutBytes": 2523,
+      "stdoutSha256": "337de65a19b68c328a9799dd43444577d1472d3cc249662f99f09b0370352c37",
+      "stderr": ""
+    },
+    {
+      "name": "actual archive bytes cli/stored-summary-v1.mjs",
+      "exe": "tar",
+      "args": [
+        "-xOf",
+        "/Users/louiscalata/nisi/.build/private-cli-package-b8cCay/nisi-private-cli-0.2.0-private.0.tgz",
+        "package/cli/stored-summary-v1.mjs"
+      ],
+      "cwd": "/Users/louiscalata/nisi/.build/private-cli-package-b8cCay/consumer",
+      "exitCode": 0,
+      "signal": null,
+      "error": null,
+      "elapsedMs": 4,
+      "stdoutBytes": 6860,
+      "stdoutSha256": "cc946d0a25c90998e6f0f7a566bc083fa64daf62d437ef7aa2e2e013234532c7",
+      "stderr": ""
+    },
+    {
+      "name": "actual archive bytes cli/text.mjs",
+      "exe": "tar",
+      "args": [
+        "-xOf",
+        "/Users/louiscalata/nisi/.build/private-cli-package-b8cCay/nisi-private-cli-0.2.0-private.0.tgz",
+        "package/cli/text.mjs"
+      ],
+      "cwd": "/Users/louiscalata/nisi/.build/private-cli-package-b8cCay/consumer",
+      "exitCode": 0,
+      "signal": null,
+      "error": null,
+      "elapsedMs": 4,
+      "stdoutBytes": 5185,
+      "stdoutSha256": "8be1e7f5f4ba4275f451909dfcda6dc111a182b229ff137dcf2112ed13523d20",
+      "stderr": ""
+    },
+    {
+      "name": "actual archive bytes evaluation/intake-v1.mjs",
+      "exe": "tar",
+      "args": [
+        "-xOf",
+        "/Users/louiscalata/nisi/.build/private-cli-package-b8cCay/nisi-private-cli-0.2.0-private.0.tgz",
+        "package/evaluation/intake-v1.mjs"
+      ],
+      "cwd": "/Users/louiscalata/nisi/.build/private-cli-package-b8cCay/consumer",
+      "exitCode": 0,
+      "signal": null,
+      "error": null,
+      "elapsedMs": 4,
+      "stdoutBytes": 1936,
+      "stdoutSha256": "7c338bf7419c236bc8a8c912266f470e68ff3711848f777c56e68f0ef7c7912a",
+      "stderr": ""
+    },
+    {
+      "name": "actual archive bytes evaluation/metrics-v1.mjs",
+      "exe": "tar",
+      "args": [
+        "-xOf",
+        "/Users/louiscalata/nisi/.build/private-cli-package-b8cCay/nisi-private-cli-0.2.0-private.0.tgz",
+        "package/evaluation/metrics-v1.mjs"
+      ],
+      "cwd": "/Users/louiscalata/nisi/.build/private-cli-package-b8cCay/consumer",
+      "exitCode": 0,
+      "signal": null,
+      "error": null,
+      "elapsedMs": 5,
+      "stdoutBytes": 2240,
+      "stdoutSha256": "a11f1247df37b89c661fe3033e8d88a0c347038114bd9192ac48620d52ba0e91",
+      "stderr": ""
+    },
+    {
+      "name": "actual archive bytes evaluation/paired-trial-v1.mjs",
+      "exe": "tar",
+      "args": [
+        "-xOf",
+        "/Users/louiscalata/nisi/.build/private-cli-package-b8cCay/nisi-private-cli-0.2.0-private.0.tgz",
+        "package/evaluation/paired-trial-v1.mjs"
+      ],
+      "cwd": "/Users/louiscalata/nisi/.build/private-cli-package-b8cCay/consumer",
+      "exitCode": 0,
+      "signal": null,
+      "error": null,
+      "elapsedMs": 5,
+      "stdoutBytes": 4053,
+      "stdoutSha256": "1e741765c303ba0623642f31d83c17cc0d683b0ceafa486071ae99fa443af1d6",
+      "stderr": ""
+    },
+    {
+      "name": "actual archive bytes evaluation/prevention-execution-profile-v1.mjs",
+      "exe": "tar",
+      "args": [
+        "-xOf",
+        "/Users/louiscalata/nisi/.build/private-cli-package-b8cCay/nisi-private-cli-0.2.0-private.0.tgz",
+        "package/evaluation/prevention-execution-profile-v1.mjs"
+      ],
+      "cwd": "/Users/louiscalata/nisi/.build/private-cli-package-b8cCay/consumer",
+      "exitCode": 0,
+      "signal": null,
+      "error": null,
+      "elapsedMs": 4,
+      "stdoutBytes": 2439,
+      "stdoutSha256": "b663798f149e44d783feb7e7833c2758263dbfa38bb7f1213a52b276c30375a7",
+      "stderr": ""
+    },
+    {
+      "name": "actual archive bytes evaluation/prevention-experiment-plan-v1.mjs",
+      "exe": "tar",
+      "args": [
+        "-xOf",
+        "/Users/louiscalata/nisi/.build/private-cli-package-b8cCay/nisi-private-cli-0.2.0-private.0.tgz",
+        "package/evaluation/prevention-experiment-plan-v1.mjs"
+      ],
+      "cwd": "/Users/louiscalata/nisi/.build/private-cli-package-b8cCay/consumer",
+      "exitCode": 0,
+      "signal": null,
+      "error": null,
+      "elapsedMs": 5,
+      "stdoutBytes": 6172,
+      "stdoutSha256": "470443df194876c39e74444860dd1f376ffbead27bb83a61f498c2f942a9a0d1",
+      "stderr": ""
+    },
+    {
+      "name": "actual archive bytes examples/repository-live-model.mjs",
+      "exe": "tar",
+      "args": [
+        "-xOf",
+        "/Users/louiscalata/nisi/.build/private-cli-package-b8cCay/nisi-private-cli-0.2.0-private.0.tgz",
+        "package/examples/repository-live-model.mjs"
+      ],
+      "cwd": "/Users/louiscalata/nisi/.build/private-cli-package-b8cCay/consumer",
+      "exitCode": 0,
+      "signal": null,
+      "error": null,
+      "elapsedMs": 4,
+      "stdoutBytes": 23131,
+      "stdoutSha256": "e56b3dd062e89725772d4d39bd2cdcb9b6342fce9f9e0d88711fcfa6c415c0df",
+      "stderr": ""
+    },
+    {
+      "name": "actual archive bytes examples/repository-task/fixtures/baseline/README.md",
+      "exe": "tar",
+      "args": [
+        "-xOf",
+        "/Users/louiscalata/nisi/.build/private-cli-package-b8cCay/nisi-private-cli-0.2.0-private.0.tgz",
+        "package/examples/repository-task/fixtures/baseline/README.md"
+      ],
+      "cwd": "/Users/louiscalata/nisi/.build/private-cli-package-b8cCay/consumer",
+      "exitCode": 0,
+      "signal": null,
+      "error": null,
+      "elapsedMs": 4,
+      "stdoutBytes": 1225,
+      "stdoutSha256": "b6ce54912db6b4605d19e4e0fdce5cc1e680de4a57bb1af82ca7b737ff578011",
+      "stderr": ""
+    },
+    {
+      "name": "actual archive bytes examples/repository-task/fixtures/baseline/config.json",
+      "exe": "tar",
+      "args": [
+        "-xOf",
+        "/Users/louiscalata/nisi/.build/private-cli-package-b8cCay/nisi-private-cli-0.2.0-private.0.tgz",
+        "package/examples/repository-task/fixtures/baseline/config.json"
+      ],
+      "cwd": "/Users/louiscalata/nisi/.build/private-cli-package-b8cCay/consumer",
+      "exitCode": 0,
+      "signal": null,
+      "error": null,
+      "elapsedMs": 4,
+      "stdoutBytes": 17,
+      "stdoutSha256": "fc2001f12401983fa2632ee17e9879b6a1595f0de616e6e1484083c0c3324f04",
+      "stderr": ""
+    },
+    {
+      "name": "actual archive bytes examples/repository-task/fixtures/harness/check-retry-settings.mjs",
+      "exe": "tar",
+      "args": [
+        "-xOf",
+        "/Users/louiscalata/nisi/.build/private-cli-package-b8cCay/nisi-private-cli-0.2.0-private.0.tgz",
+        "package/examples/repository-task/fixtures/harness/check-retry-settings.mjs"
+      ],
+      "cwd": "/Users/louiscalata/nisi/.build/private-cli-package-b8cCay/consumer",
+      "exitCode": 0,
+      "signal": null,
+      "error": null,
+      "elapsedMs": 5,
+      "stdoutBytes": 3168,
+      "stdoutSha256": "e07a9bd6a63a52ac6977734c61ea0a210c71ec2c331951f4d94b44159c8245c5",
+      "stderr": ""
+    },
+    {
+      "name": "actual archive bytes examples/repository-task/fixtures/live-baseline/retry-settings.mjs",
+      "exe": "tar",
+      "args": [
+        "-xOf",
+        "/Users/louiscalata/nisi/.build/private-cli-package-b8cCay/nisi-private-cli-0.2.0-private.0.tgz",
+        "package/examples/repository-task/fixtures/live-baseline/retry-settings.mjs"
+      ],
+      "cwd": "/Users/louiscalata/nisi/.build/private-cli-package-b8cCay/consumer",
+      "exitCode": 0,
+      "signal": null,
+      "error": null,
+      "elapsedMs": 4,
+      "stdoutBytes": 275,
+      "stdoutSha256": "65525edd21e81c5de1791c6f47fa404ffea10f7ea332545a8e295afdd6270254",
+      "stderr": ""
+    },
+    {
+      "name": "actual archive bytes examples/repository-task/fixtures/live-repair/retry-settings.mjs",
+      "exe": "tar",
+      "args": [
+        "-xOf",
+        "/Users/louiscalata/nisi/.build/private-cli-package-b8cCay/nisi-private-cli-0.2.0-private.0.tgz",
+        "package/examples/repository-task/fixtures/live-repair/retry-settings.mjs"
+      ],
+      "cwd": "/Users/louiscalata/nisi/.build/private-cli-package-b8cCay/consumer",
+      "exitCode": 0,
+      "signal": null,
+      "error": null,
+      "elapsedMs": 5,
+      "stdoutBytes": 275,
+      "stdoutSha256": "73369f8d0cc0cefbb082c65388c3652c7602254ab5b6fbab138e08078b568112",
+      "stderr": ""
+    },
+    {
+      "name": "actual archive bytes examples/repository-task/reviewed-live-fixture-v1.mjs",
+      "exe": "tar",
+      "args": [
+        "-xOf",
+        "/Users/louiscalata/nisi/.build/private-cli-package-b8cCay/nisi-private-cli-0.2.0-private.0.tgz",
+        "package/examples/repository-task/reviewed-live-fixture-v1.mjs"
+      ],
+      "cwd": "/Users/louiscalata/nisi/.build/private-cli-package-b8cCay/consumer",
+      "exitCode": 0,
+      "signal": null,
+      "error": null,
+      "elapsedMs": 5,
+      "stdoutBytes": 6175,
+      "stdoutSha256": "292bd67a2e4132c9c5122f5d716e7eeb3cdd3a6ebf5362470d046b6d025add36",
+      "stderr": ""
+    },
+    {
+      "name": "actual archive bytes history/journal-owner-v2.mjs",
+      "exe": "tar",
+      "args": [
+        "-xOf",
+        "/Users/louiscalata/nisi/.build/private-cli-package-b8cCay/nisi-private-cli-0.2.0-private.0.tgz",
+        "package/history/journal-owner-v2.mjs"
+      ],
+      "cwd": "/Users/louiscalata/nisi/.build/private-cli-package-b8cCay/consumer",
+      "exitCode": 0,
+      "signal": null,
+      "error": null,
+      "elapsedMs": 5,
+      "stdoutBytes": 19557,
+      "stdoutSha256": "2120bf0c75d9aa6122c06a2b34d55b3256a08f024d0e5fa43d8877e4eb67e44f",
+      "stderr": ""
+    },
+    {
+      "name": "actual archive bytes history/paired-arm-reconciliation-v1.mjs",
+      "exe": "tar",
+      "args": [
+        "-xOf",
+        "/Users/louiscalata/nisi/.build/private-cli-package-b8cCay/nisi-private-cli-0.2.0-private.0.tgz",
+        "package/history/paired-arm-reconciliation-v1.mjs"
+      ],
+      "cwd": "/Users/louiscalata/nisi/.build/private-cli-package-b8cCay/consumer",
+      "exitCode": 0,
+      "signal": null,
+      "error": null,
+      "elapsedMs": 5,
+      "stdoutBytes": 9687,
+      "stdoutSha256": "8c22a08ef5508a9af4567e787cdf9602cdd97a0d949dbf317a96ad3e7850c489",
+      "stderr": ""
+    },
+    {
+      "name": "actual archive bytes history/paired-arm-sidecar-codec-v1.mjs",
+      "exe": "tar",
+      "args": [
+        "-xOf",
+        "/Users/louiscalata/nisi/.build/private-cli-package-b8cCay/nisi-private-cli-0.2.0-private.0.tgz",
+        "package/history/paired-arm-sidecar-codec-v1.mjs"
+      ],
+      "cwd": "/Users/louiscalata/nisi/.build/private-cli-package-b8cCay/consumer",
+      "exitCode": 0,
+      "signal": null,
+      "error": null,
+      "elapsedMs": 5,
+      "stdoutBytes": 14524,
+      "stdoutSha256": "f79bff6baf8c6dbc6738c47df4a49039044384569ca139e140438ed7c094922d",
+      "stderr": ""
+    },
+    {
+      "name": "actual archive bytes history/paired-arm-sidecar-store-v1.mjs",
+      "exe": "tar",
+      "args": [
+        "-xOf",
+        "/Users/louiscalata/nisi/.build/private-cli-package-b8cCay/nisi-private-cli-0.2.0-private.0.tgz",
+        "package/history/paired-arm-sidecar-store-v1.mjs"
+      ],
+      "cwd": "/Users/louiscalata/nisi/.build/private-cli-package-b8cCay/consumer",
+      "exitCode": 0,
+      "signal": null,
+      "error": null,
+      "elapsedMs": 4,
+      "stdoutBytes": 12491,
+      "stdoutSha256": "89b71397aae2a4638a4074242057dbf447f37a653c20d9c8154220d1f9e2f59b",
+      "stderr": ""
+    },
+    {
+      "name": "actual archive bytes history/paired-trial-event-codec-v1.mjs",
+      "exe": "tar",
+      "args": [
+        "-xOf",
+        "/Users/louiscalata/nisi/.build/private-cli-package-b8cCay/nisi-private-cli-0.2.0-private.0.tgz",
+        "package/history/paired-trial-event-codec-v1.mjs"
+      ],
+      "cwd": "/Users/louiscalata/nisi/.build/private-cli-package-b8cCay/consumer",
+      "exitCode": 0,
+      "signal": null,
+      "error": null,
+      "elapsedMs": 4,
+      "stdoutBytes": 3364,
+      "stdoutSha256": "b052a96df1e8611b1779ab84144773d818157ae11a550c4aa6a80854c0e4176c",
+      "stderr": ""
+    },
+    {
+      "name": "actual archive bytes history/paired-trial-event-store-v1.mjs",
+      "exe": "tar",
+      "args": [
+        "-xOf",
+        "/Users/louiscalata/nisi/.build/private-cli-package-b8cCay/nisi-private-cli-0.2.0-private.0.tgz",
+        "package/history/paired-trial-event-store-v1.mjs"
+      ],
+      "cwd": "/Users/louiscalata/nisi/.build/private-cli-package-b8cCay/consumer",
+      "exitCode": 0,
+      "signal": null,
+      "error": null,
+      "elapsedMs": 4,
+      "stdoutBytes": 12184,
+      "stdoutSha256": "108780fcd2cc04cc4e2fef6002ee84187bdea19db4c923aaf8e7e89f495dbcb2",
+      "stderr": ""
+    },
+    {
+      "name": "actual archive bytes history/paired-trial-reconciliation-v1.mjs",
+      "exe": "tar",
+      "args": [
+        "-xOf",
+        "/Users/louiscalata/nisi/.build/private-cli-package-b8cCay/nisi-private-cli-0.2.0-private.0.tgz",
+        "package/history/paired-trial-reconciliation-v1.mjs"
+      ],
+      "cwd": "/Users/louiscalata/nisi/.build/private-cli-package-b8cCay/consumer",
+      "exitCode": 0,
+      "signal": null,
+      "error": null,
+      "elapsedMs": 4,
+      "stdoutBytes": 11417,
+      "stdoutSha256": "2703cd7aa4b9ff1bff24df48426a5ae694f419c45760abf1f04917a577a46f76",
+      "stderr": ""
+    },
+    {
+      "name": "actual archive bytes history/repository-host-history-v1.mjs",
+      "exe": "tar",
+      "args": [
+        "-xOf",
+        "/Users/louiscalata/nisi/.build/private-cli-package-b8cCay/nisi-private-cli-0.2.0-private.0.tgz",
+        "package/history/repository-host-history-v1.mjs"
+      ],
+      "cwd": "/Users/louiscalata/nisi/.build/private-cli-package-b8cCay/consumer",
+      "exitCode": 0,
+      "signal": null,
+      "error": null,
+      "elapsedMs": 4,
+      "stdoutBytes": 11270,
+      "stdoutSha256": "e74aa40389a1c132ec535c77a90b0e56a61b91aa20126b48546b5942091d5418",
+      "stderr": ""
+    },
+    {
+      "name": "actual archive bytes history/repository-incident-candidates-v1.mjs",
+      "exe": "tar",
+      "args": [
+        "-xOf",
+        "/Users/louiscalata/nisi/.build/private-cli-package-b8cCay/nisi-private-cli-0.2.0-private.0.tgz",
+        "package/history/repository-incident-candidates-v1.mjs"
+      ],
+      "cwd": "/Users/louiscalata/nisi/.build/private-cli-package-b8cCay/consumer",
+      "exitCode": 0,
+      "signal": null,
+      "error": null,
+      "elapsedMs": 4,
+      "stdoutBytes": 6972,
+      "stdoutSha256": "618c32c09775b2931826c39f442e5c103463f9c11c877e483781850a7e1751f2",
+      "stderr": ""
+    },
+    {
+      "name": "actual archive bytes history/repository-incident-capture-v1.mjs",
+      "exe": "tar",
+      "args": [
+        "-xOf",
+        "/Users/louiscalata/nisi/.build/private-cli-package-b8cCay/nisi-private-cli-0.2.0-private.0.tgz",
+        "package/history/repository-incident-capture-v1.mjs"
+      ],
+      "cwd": "/Users/louiscalata/nisi/.build/private-cli-package-b8cCay/consumer",
+      "exitCode": 0,
+      "signal": null,
+      "error": null,
+      "elapsedMs": 4,
+      "stdoutBytes": 17493,
+      "stdoutSha256": "6b0aaaf0b21dde32eca9301e73863c37bc2ac1bff63b14de7120c35e8968933c",
+      "stderr": ""
+    },
+    {
+      "name": "actual archive bytes history/repository-trial-diagnostic-store-v1.mjs",
+      "exe": "tar",
+      "args": [
+        "-xOf",
+        "/Users/louiscalata/nisi/.build/private-cli-package-b8cCay/nisi-private-cli-0.2.0-private.0.tgz",
+        "package/history/repository-trial-diagnostic-store-v1.mjs"
+      ],
+      "cwd": "/Users/louiscalata/nisi/.build/private-cli-package-b8cCay/consumer",
+      "exitCode": 0,
+      "signal": null,
+      "error": null,
+      "elapsedMs": 4,
+      "stdoutBytes": 10209,
+      "stdoutSha256": "2ed75c2d80c9a7667dd332f642cd211378b23682569f9b7e4b7a2c6d981b82a3",
+      "stderr": ""
+    },
+    {
+      "name": "actual archive bytes history/repository-trial-diagnostic-v1.mjs",
+      "exe": "tar",
+      "args": [
+        "-xOf",
+        "/Users/louiscalata/nisi/.build/private-cli-package-b8cCay/nisi-private-cli-0.2.0-private.0.tgz",
+        "package/history/repository-trial-diagnostic-v1.mjs"
+      ],
+      "cwd": "/Users/louiscalata/nisi/.build/private-cli-package-b8cCay/consumer",
+      "exitCode": 0,
+      "signal": null,
+      "error": null,
+      "elapsedMs": 4,
+      "stdoutBytes": 7326,
+      "stdoutSha256": "e494d9c3d91c723637c8a35079299fb6f3fe266d9ea97959ba8619a22cc19dc2",
+      "stderr": ""
+    },
+    {
+      "name": "actual archive bytes history/run-journal-store-v1.mjs",
+      "exe": "tar",
+      "args": [
+        "-xOf",
+        "/Users/louiscalata/nisi/.build/private-cli-package-b8cCay/nisi-private-cli-0.2.0-private.0.tgz",
+        "package/history/run-journal-store-v1.mjs"
+      ],
+      "cwd": "/Users/louiscalata/nisi/.build/private-cli-package-b8cCay/consumer",
+      "exitCode": 0,
+      "signal": null,
+      "error": null,
+      "elapsedMs": 5,
+      "stdoutBytes": 8012,
+      "stdoutSha256": "1356028b65f9f8b96e3b9ec8ba3bfbb4968092af53d00e8b5dfdb11b161f4792",
+      "stderr": ""
+    },
+    {
+      "name": "actual archive bytes history/run-journal-v1.mjs",
+      "exe": "tar",
+      "args": [
+        "-xOf",
+        "/Users/louiscalata/nisi/.build/private-cli-package-b8cCay/nisi-private-cli-0.2.0-private.0.tgz",
+        "package/history/run-journal-v1.mjs"
+      ],
+      "cwd": "/Users/louiscalata/nisi/.build/private-cli-package-b8cCay/consumer",
+      "exitCode": 0,
+      "signal": null,
+      "error": null,
+      "elapsedMs": 4,
+      "stdoutBytes": 13302,
+      "stdoutSha256": "0164f10da27f6d12cfd1f3d443bd8e0f7c237b46363353570ae4a759a97f749b",
+      "stderr": ""
+    },
+    {
+      "name": "actual archive bytes hosts/history/review-repository-history-v1.mjs",
+      "exe": "tar",
+      "args": [
+        "-xOf",
+        "/Users/louiscalata/nisi/.build/private-cli-package-b8cCay/nisi-private-cli-0.2.0-private.0.tgz",
+        "package/hosts/history/review-repository-history-v1.mjs"
+      ],
+      "cwd": "/Users/louiscalata/nisi/.build/private-cli-package-b8cCay/consumer",
+      "exitCode": 0,
+      "signal": null,
+      "error": null,
+      "elapsedMs": 4,
+      "stdoutBytes": 8952,
+      "stdoutSha256": "a1042e1913e468edb322df493454f91f88f8c58231791b77c7c2eb1b00b5a090",
+      "stderr": ""
+    },
+    {
+      "name": "actual archive bytes hosts/history/review-repository-incidents-v1.mjs",
+      "exe": "tar",
+      "args": [
+        "-xOf",
+        "/Users/louiscalata/nisi/.build/private-cli-package-b8cCay/nisi-private-cli-0.2.0-private.0.tgz",
+        "package/hosts/history/review-repository-incidents-v1.mjs"
+      ],
+      "cwd": "/Users/louiscalata/nisi/.build/private-cli-package-b8cCay/consumer",
+      "exitCode": 0,
+      "signal": null,
+      "error": null,
+      "elapsedMs": 5,
+      "stdoutBytes": 15369,
+      "stdoutSha256": "9d614cb78939664f276f6a70ac053fce1d4cc72db78b1126c5f372f49a68008e",
+      "stderr": ""
+    },
+    {
+      "name": "actual archive bytes hosts/history/terminal-history-prompt-v1.mjs",
+      "exe": "tar",
+      "args": [
+        "-xOf",
+        "/Users/louiscalata/nisi/.build/private-cli-package-b8cCay/nisi-private-cli-0.2.0-private.0.tgz",
+        "package/hosts/history/terminal-history-prompt-v1.mjs"
+      ],
+      "cwd": "/Users/louiscalata/nisi/.build/private-cli-package-b8cCay/consumer",
+      "exitCode": 0,
+      "signal": null,
+      "error": null,
+      "elapsedMs": 5,
+      "stdoutBytes": 2864,
+      "stdoutSha256": "282774b329890be4a0d4b0cf144558cdc5e4b7e623c8e5b2f201f911ceb02db4",
+      "stderr": ""
+    },
+    {
+      "name": "actual archive bytes hosts/repository/demo-state-v1.mjs",
+      "exe": "tar",
+      "args": [
+        "-xOf",
+        "/Users/louiscalata/nisi/.build/private-cli-package-b8cCay/nisi-private-cli-0.2.0-private.0.tgz",
+        "package/hosts/repository/demo-state-v1.mjs"
+      ],
+      "cwd": "/Users/louiscalata/nisi/.build/private-cli-package-b8cCay/consumer",
+      "exitCode": 0,
+      "signal": null,
+      "error": null,
+      "elapsedMs": 5,
+      "stdoutBytes": 1986,
+      "stdoutSha256": "22a5a2fc455990afdc1cc30e677c48bda1216846822d6c49061b9be5cebd902f",
+      "stderr": ""
+    },
+    {
+      "name": "actual archive bytes hosts/repository/execution-admission-v1.mjs",
+      "exe": "tar",
+      "args": [
+        "-xOf",
+        "/Users/louiscalata/nisi/.build/private-cli-package-b8cCay/nisi-private-cli-0.2.0-private.0.tgz",
+        "package/hosts/repository/execution-admission-v1.mjs"
+      ],
+      "cwd": "/Users/louiscalata/nisi/.build/private-cli-package-b8cCay/consumer",
+      "exitCode": 0,
+      "signal": null,
+      "error": null,
+      "elapsedMs": 4,
+      "stdoutBytes": 7003,
+      "stdoutSha256": "5a9d94e141dd06d5d3492b355134a13c795d8750e4523c5277bf0da0b6ec2dd6",
+      "stderr": ""
+    },
+    {
+      "name": "actual archive bytes hosts/repository/execution-coordinator-v1.mjs",
+      "exe": "tar",
+      "args": [
+        "-xOf",
+        "/Users/louiscalata/nisi/.build/private-cli-package-b8cCay/nisi-private-cli-0.2.0-private.0.tgz",
+        "package/hosts/repository/execution-coordinator-v1.mjs"
+      ],
+      "cwd": "/Users/louiscalata/nisi/.build/private-cli-package-b8cCay/consumer",
+      "exitCode": 0,
+      "signal": null,
+      "error": null,
+      "elapsedMs": 4,
+      "stdoutBytes": 5716,
+      "stdoutSha256": "eb72e875cb2ae62657d6a4414629f01dab017dfa41d4d83bf78b6deac0760c3d",
+      "stderr": ""
+    },
+    {
+      "name": "actual archive bytes hosts/repository/host-evidence-v1.mjs",
+      "exe": "tar",
+      "args": [
+        "-xOf",
+        "/Users/louiscalata/nisi/.build/private-cli-package-b8cCay/nisi-private-cli-0.2.0-private.0.tgz",
+        "package/hosts/repository/host-evidence-v1.mjs"
+      ],
+      "cwd": "/Users/louiscalata/nisi/.build/private-cli-package-b8cCay/consumer",
+      "exitCode": 0,
+      "signal": null,
+      "error": null,
+      "elapsedMs": 4,
+      "stdoutBytes": 2251,
+      "stdoutSha256": "71ce2b38f2c98b2f2767447727aab3858c02ced49b8c4389d738bb995b4677b0",
+      "stderr": ""
+    },
+    {
+      "name": "actual archive bytes hosts/repository/live-demo-execution-v1.mjs",
+      "exe": "tar",
+      "args": [
+        "-xOf",
+        "/Users/louiscalata/nisi/.build/private-cli-package-b8cCay/nisi-private-cli-0.2.0-private.0.tgz",
+        "package/hosts/repository/live-demo-execution-v1.mjs"
+      ],
+      "cwd": "/Users/louiscalata/nisi/.build/private-cli-package-b8cCay/consumer",
+      "exitCode": 0,
+      "signal": null,
+      "error": null,
+      "elapsedMs": 4,
+      "stdoutBytes": 7950,
+      "stdoutSha256": "30b9eb39762dbda40b4d4b3785b72e423651975868480ccb066346d9b4dacb1e",
+      "stderr": ""
+    },
+    {
+      "name": "actual archive bytes hosts/repository/live-model-selection-v3.mjs",
+      "exe": "tar",
+      "args": [
+        "-xOf",
+        "/Users/louiscalata/nisi/.build/private-cli-package-b8cCay/nisi-private-cli-0.2.0-private.0.tgz",
+        "package/hosts/repository/live-model-selection-v3.mjs"
+      ],
+      "cwd": "/Users/louiscalata/nisi/.build/private-cli-package-b8cCay/consumer",
+      "exitCode": 0,
+      "signal": null,
+      "error": null,
+      "elapsedMs": 4,
+      "stdoutBytes": 2215,
+      "stdoutSha256": "22a242290248180f158974d7a733a368a82669c270b0171eae747ac18c638520",
+      "stderr": ""
+    },
+    {
+      "name": "actual archive bytes hosts/repository/live-owner-status-v1.mjs",
+      "exe": "tar",
+      "args": [
+        "-xOf",
+        "/Users/louiscalata/nisi/.build/private-cli-package-b8cCay/nisi-private-cli-0.2.0-private.0.tgz",
+        "package/hosts/repository/live-owner-status-v1.mjs"
+      ],
+      "cwd": "/Users/louiscalata/nisi/.build/private-cli-package-b8cCay/consumer",
+      "exitCode": 0,
+      "signal": null,
+      "error": null,
+      "elapsedMs": 4,
+      "stdoutBytes": 1476,
+      "stdoutSha256": "525394da3ff7f4d9818e139c66a96890c455cdcd1e86d8eea9d3bfd70a46260b",
+      "stderr": ""
+    },
+    {
+      "name": "actual archive bytes hosts/repository/native-incident-source-v1.mjs",
+      "exe": "tar",
+      "args": [
+        "-xOf",
+        "/Users/louiscalata/nisi/.build/private-cli-package-b8cCay/nisi-private-cli-0.2.0-private.0.tgz",
+        "package/hosts/repository/native-incident-source-v1.mjs"
+      ],
+      "cwd": "/Users/louiscalata/nisi/.build/private-cli-package-b8cCay/consumer",
+      "exitCode": 0,
+      "signal": null,
+      "error": null,
+      "elapsedMs": 4,
+      "stdoutBytes": 7071,
+      "stdoutSha256": "6a1ddf192be45ff14e4471e08470429a6fcea300642e4f681d10f187b7540e74",
+      "stderr": ""
+    },
+    {
+      "name": "actual archive bytes hosts/repository/node-adapter-v1.mjs",
+      "exe": "tar",
+      "args": [
+        "-xOf",
+        "/Users/louiscalata/nisi/.build/private-cli-package-b8cCay/nisi-private-cli-0.2.0-private.0.tgz",
+        "package/hosts/repository/node-adapter-v1.mjs"
+      ],
+      "cwd": "/Users/louiscalata/nisi/.build/private-cli-package-b8cCay/consumer",
+      "exitCode": 0,
+      "signal": null,
+      "error": null,
+      "elapsedMs": 4,
+      "stdoutBytes": 5152,
+      "stdoutSha256": "669fcea3ba29c6b6f1b80d80d112e50d0c935047068b36edd3a4b121e37194cc",
+      "stderr": ""
+    },
+    {
+      "name": "actual archive bytes hosts/repository/node-executor-v1.mjs",
+      "exe": "tar",
+      "args": [
+        "-xOf",
+        "/Users/louiscalata/nisi/.build/private-cli-package-b8cCay/nisi-private-cli-0.2.0-private.0.tgz",
+        "package/hosts/repository/node-executor-v1.mjs"
+      ],
+      "cwd": "/Users/louiscalata/nisi/.build/private-cli-package-b8cCay/consumer",
+      "exitCode": 0,
+      "signal": null,
+      "error": null,
+      "elapsedMs": 4,
+      "stdoutBytes": 17382,
+      "stdoutSha256": "cba7dc17fdd32260a79796ac6fcbf443a63d48f919acb6fcadbf17ce6f9ca22b",
+      "stderr": ""
+    },
+    {
+      "name": "actual archive bytes hosts/repository/node-suite-v1.mjs",
+      "exe": "tar",
+      "args": [
+        "-xOf",
+        "/Users/louiscalata/nisi/.build/private-cli-package-b8cCay/nisi-private-cli-0.2.0-private.0.tgz",
+        "package/hosts/repository/node-suite-v1.mjs"
+      ],
+      "cwd": "/Users/louiscalata/nisi/.build/private-cli-package-b8cCay/consumer",
+      "exitCode": 0,
+      "signal": null,
+      "error": null,
+      "elapsedMs": 4,
+      "stdoutBytes": 5359,
+      "stdoutSha256": "5ed5cd9ca407b281379d6b67d93df60ab3b3a45676b6a4e82c7bfc474d29e2c2",
+      "stderr": ""
+    },
+    {
+      "name": "actual archive bytes hosts/repository/proposed-changes-v1.mjs",
+      "exe": "tar",
+      "args": [
+        "-xOf",
+        "/Users/louiscalata/nisi/.build/private-cli-package-b8cCay/nisi-private-cli-0.2.0-private.0.tgz",
+        "package/hosts/repository/proposed-changes-v1.mjs"
+      ],
+      "cwd": "/Users/louiscalata/nisi/.build/private-cli-package-b8cCay/consumer",
+      "exitCode": 0,
+      "signal": null,
+      "error": null,
+      "elapsedMs": 4,
+      "stdoutBytes": 4222,
+      "stdoutSha256": "045fe0d77b3b6d4d95c406964b603b09b2aeabe131cde267b41806114379f55d",
+      "stderr": ""
+    },
+    {
+      "name": "actual archive bytes hosts/repository/reviewed-live-model-v1.mjs",
+      "exe": "tar",
+      "args": [
+        "-xOf",
+        "/Users/louiscalata/nisi/.build/private-cli-package-b8cCay/nisi-private-cli-0.2.0-private.0.tgz",
+        "package/hosts/repository/reviewed-live-model-v1.mjs"
+      ],
+      "cwd": "/Users/louiscalata/nisi/.build/private-cli-package-b8cCay/consumer",
+      "exitCode": 0,
+      "signal": null,
+      "error": null,
+      "elapsedMs": 4,
+      "stdoutBytes": 11394,
+      "stdoutSha256": "25826068f4e105d29edb0877c4c4d546d223ff07586075aacd82a31c601a44c9",
+      "stderr": ""
+    },
+    {
+      "name": "actual archive bytes hosts/repository/reviewed-live-model-v3.mjs",
+      "exe": "tar",
+      "args": [
+        "-xOf",
+        "/Users/louiscalata/nisi/.build/private-cli-package-b8cCay/nisi-private-cli-0.2.0-private.0.tgz",
+        "package/hosts/repository/reviewed-live-model-v3.mjs"
+      ],
+      "cwd": "/Users/louiscalata/nisi/.build/private-cli-package-b8cCay/consumer",
+      "exitCode": 0,
+      "signal": null,
+      "error": null,
+      "elapsedMs": 4,
+      "stdoutBytes": 12276,
+      "stdoutSha256": "86afd41465f65713dfa6914a1543968e2e40cdd63b863c910a78994f89011d95",
+      "stderr": ""
+    },
+    {
+      "name": "actual archive bytes hosts/repository/reviewed-workflow-v1.mjs",
+      "exe": "tar",
+      "args": [
+        "-xOf",
+        "/Users/louiscalata/nisi/.build/private-cli-package-b8cCay/nisi-private-cli-0.2.0-private.0.tgz",
+        "package/hosts/repository/reviewed-workflow-v1.mjs"
+      ],
+      "cwd": "/Users/louiscalata/nisi/.build/private-cli-package-b8cCay/consumer",
+      "exitCode": 0,
+      "signal": null,
+      "error": null,
+      "elapsedMs": 4,
+      "stdoutBytes": 15529,
+      "stdoutSha256": "14b4c5d0db419a666df42f50f00dfe64d29a57a8fae7b66aeeef553c25d1bdb2",
+      "stderr": ""
+    },
+    {
+      "name": "actual archive bytes hosts/repository/snapshot-contract.mjs",
+      "exe": "tar",
+      "args": [
+        "-xOf",
+        "/Users/louiscalata/nisi/.build/private-cli-package-b8cCay/nisi-private-cli-0.2.0-private.0.tgz",
+        "package/hosts/repository/snapshot-contract.mjs"
+      ],
+      "cwd": "/Users/louiscalata/nisi/.build/private-cli-package-b8cCay/consumer",
+      "exitCode": 0,
+      "signal": null,
+      "error": null,
+      "elapsedMs": 5,
+      "stdoutBytes": 7995,
+      "stdoutSha256": "2b52c23bac3a817769b7892eed71baba79cb81954b6a63724d107a9c258ba13f",
+      "stderr": ""
+    },
+    {
+      "name": "actual archive bytes hosts/repository/task-materialization-owner-v1.mjs",
+      "exe": "tar",
+      "args": [
+        "-xOf",
+        "/Users/louiscalata/nisi/.build/private-cli-package-b8cCay/nisi-private-cli-0.2.0-private.0.tgz",
+        "package/hosts/repository/task-materialization-owner-v1.mjs"
+      ],
+      "cwd": "/Users/louiscalata/nisi/.build/private-cli-package-b8cCay/consumer",
+      "exitCode": 0,
+      "signal": null,
+      "error": null,
+      "elapsedMs": 4,
+      "stdoutBytes": 13347,
+      "stdoutSha256": "16e5fa985dbe8dcdd95f54ac2c1916fdb4cb0602bc6e97a3f657152d823741ed",
+      "stderr": ""
+    },
+    {
+      "name": "actual archive bytes hosts/repository/task-workspace-v1.mjs",
+      "exe": "tar",
+      "args": [
+        "-xOf",
+        "/Users/louiscalata/nisi/.build/private-cli-package-b8cCay/nisi-private-cli-0.2.0-private.0.tgz",
+        "package/hosts/repository/task-workspace-v1.mjs"
+      ],
+      "cwd": "/Users/louiscalata/nisi/.build/private-cli-package-b8cCay/consumer",
+      "exitCode": 0,
+      "signal": null,
+      "error": null,
+      "elapsedMs": 4,
+      "stdoutBytes": 18210,
+      "stdoutSha256": "0208549404e57d4208a82f251e6d8e6e7c425c131c2873fd38294b3e9a531c4d",
+      "stderr": ""
+    },
+    {
+      "name": "actual archive bytes hosts/swift-verifier/build.mjs",
+      "exe": "tar",
+      "args": [
+        "-xOf",
+        "/Users/louiscalata/nisi/.build/private-cli-package-b8cCay/nisi-private-cli-0.2.0-private.0.tgz",
+        "package/hosts/swift-verifier/build.mjs"
+      ],
+      "cwd": "/Users/louiscalata/nisi/.build/private-cli-package-b8cCay/consumer",
+      "exitCode": 0,
+      "signal": null,
+      "error": null,
+      "elapsedMs": 4,
+      "stdoutBytes": 5864,
+      "stdoutSha256": "c4cc18ea3cf540c268232b474e1ff045b7572e9bc194501e2fd0f168daa61a63",
+      "stderr": ""
+    },
+    {
+      "name": "actual archive bytes hosts/swift-verifier/check-plan-v1.mjs",
+      "exe": "tar",
+      "args": [
+        "-xOf",
+        "/Users/louiscalata/nisi/.build/private-cli-package-b8cCay/nisi-private-cli-0.2.0-private.0.tgz",
+        "package/hosts/swift-verifier/check-plan-v1.mjs"
+      ],
+      "cwd": "/Users/louiscalata/nisi/.build/private-cli-package-b8cCay/consumer",
+      "exitCode": 0,
+      "signal": null,
+      "error": null,
+      "elapsedMs": 4,
+      "stdoutBytes": 4007,
+      "stdoutSha256": "a30ff5596e2bebc376cfa0da84be1c00eca8443cc2b37f5b1b7da42ef44b658a",
+      "stderr": ""
+    },
+    {
+      "name": "actual archive bytes hosts/swift-verifier/executor.mjs",
+      "exe": "tar",
+      "args": [
+        "-xOf",
+        "/Users/louiscalata/nisi/.build/private-cli-package-b8cCay/nisi-private-cli-0.2.0-private.0.tgz",
+        "package/hosts/swift-verifier/executor.mjs"
+      ],
+      "cwd": "/Users/louiscalata/nisi/.build/private-cli-package-b8cCay/consumer",
+      "exitCode": 0,
+      "signal": null,
+      "error": null,
+      "elapsedMs": 5,
+      "stdoutBytes": 12331,
+      "stdoutSha256": "b250d3161ce97b24993d4c89c4c097e6086a3179fac42d6523ca6dabb2a8ea13",
+      "stderr": ""
+    },
+    {
+      "name": "actual archive bytes hosts/swift-verifier/group-adapter-v1.mjs",
+      "exe": "tar",
+      "args": [
+        "-xOf",
+        "/Users/louiscalata/nisi/.build/private-cli-package-b8cCay/nisi-private-cli-0.2.0-private.0.tgz",
+        "package/hosts/swift-verifier/group-adapter-v1.mjs"
+      ],
+      "cwd": "/Users/louiscalata/nisi/.build/private-cli-package-b8cCay/consumer",
+      "exitCode": 0,
+      "signal": null,
+      "error": null,
+      "elapsedMs": 4,
+      "stdoutBytes": 4838,
+      "stdoutSha256": "471ae91cfc78a82abcb425ed75cd16aec2a76d8123cdc9b3e4063c536382e774",
+      "stderr": ""
+    },
+    {
+      "name": "actual archive bytes hosts/swift-verifier/group-contract-utils.mjs",
+      "exe": "tar",
+      "args": [
+        "-xOf",
+        "/Users/louiscalata/nisi/.build/private-cli-package-b8cCay/nisi-private-cli-0.2.0-private.0.tgz",
+        "package/hosts/swift-verifier/group-contract-utils.mjs"
+      ],
+      "cwd": "/Users/louiscalata/nisi/.build/private-cli-package-b8cCay/consumer",
+      "exitCode": 0,
+      "signal": null,
+      "error": null,
+      "elapsedMs": 4,
+      "stdoutBytes": 636,
+      "stdoutSha256": "8fc51ac107abd68adb1c72683ccfa2af9c74ac077c5506bf89525f972b14ac82",
+      "stderr": ""
+    },
+    {
+      "name": "actual archive bytes hosts/swift-verifier/main.swift",
+      "exe": "tar",
+      "args": [
+        "-xOf",
+        "/Users/louiscalata/nisi/.build/private-cli-package-b8cCay/nisi-private-cli-0.2.0-private.0.tgz",
+        "package/hosts/swift-verifier/main.swift"
+      ],
+      "cwd": "/Users/louiscalata/nisi/.build/private-cli-package-b8cCay/consumer",
+      "exitCode": 0,
+      "signal": null,
+      "error": null,
+      "elapsedMs": 4,
+      "stdoutBytes": 6740,
+      "stdoutSha256": "0d4e15b22b3231d990cfd5e7de1c52f4fdfebf4f4ab6da15b0ae22c74cea910c",
+      "stderr": ""
+    },
+    {
+      "name": "actual archive bytes hosts/swift-verifier/owned-child.mjs",
+      "exe": "tar",
+      "args": [
+        "-xOf",
+        "/Users/louiscalata/nisi/.build/private-cli-package-b8cCay/nisi-private-cli-0.2.0-private.0.tgz",
+        "package/hosts/swift-verifier/owned-child.mjs"
+      ],
+      "cwd": "/Users/louiscalata/nisi/.build/private-cli-package-b8cCay/consumer",
+      "exitCode": 0,
+      "signal": null,
+      "error": null,
+      "elapsedMs": 4,
+      "stdoutBytes": 10197,
+      "stdoutSha256": "bb5386e1d7e3f90bbb75ccdc6340a394aea56f429f88530f128018c0fa6566e5",
+      "stderr": ""
+    },
+    {
+      "name": "actual archive bytes hosts/swift-verifier/protocol.mjs",
+      "exe": "tar",
+      "args": [
+        "-xOf",
+        "/Users/louiscalata/nisi/.build/private-cli-package-b8cCay/nisi-private-cli-0.2.0-private.0.tgz",
+        "package/hosts/swift-verifier/protocol.mjs"
+      ],
+      "cwd": "/Users/louiscalata/nisi/.build/private-cli-package-b8cCay/consumer",
+      "exitCode": 0,
+      "signal": null,
+      "error": null,
+      "elapsedMs": 4,
+      "stdoutBytes": 6510,
+      "stdoutSha256": "7557d81836f263c13e06ac7613ebfa61ce7fbeeb7b0f7db98889473806f322cc",
+      "stderr": ""
+    },
+    {
+      "name": "actual archive bytes hosts/swift-verifier/reservation.mjs",
+      "exe": "tar",
+      "args": [
+        "-xOf",
+        "/Users/louiscalata/nisi/.build/private-cli-package-b8cCay/nisi-private-cli-0.2.0-private.0.tgz",
+        "package/hosts/swift-verifier/reservation.mjs"
+      ],
+      "cwd": "/Users/louiscalata/nisi/.build/private-cli-package-b8cCay/consumer",
+      "exitCode": 0,
+      "signal": null,
+      "error": null,
+      "elapsedMs": 4,
+      "stdoutBytes": 3690,
+      "stdoutSha256": "6d7573d23a3d2b0ecdb4b396cb58f4f9ae8e5997190616c08c1b93bd0ab376fd",
+      "stderr": ""
+    },
+    {
+      "name": "actual archive bytes integrations/veritas/import-manifest.json",
+      "exe": "tar",
+      "args": [
+        "-xOf",
+        "/Users/louiscalata/nisi/.build/private-cli-package-b8cCay/nisi-private-cli-0.2.0-private.0.tgz",
+        "package/integrations/veritas/import-manifest.json"
+      ],
+      "cwd": "/Users/louiscalata/nisi/.build/private-cli-package-b8cCay/consumer",
+      "exitCode": 0,
+      "signal": null,
+      "error": null,
+      "elapsedMs": 4,
+      "stdoutBytes": 44831,
+      "stdoutSha256": "8207efbc465ec99f0c16a7a281c349bb7ce8819349dbbafe17534f72dd527bcb",
+      "stderr": ""
+    },
+    {
+      "name": "actual archive bytes integrations/veritas/native/macos/CodenameVeritasFramework/Sources/VeritasCore/ArtifactSnapshot.swift",
+      "exe": "tar",
+      "args": [
+        "-xOf",
+        "/Users/louiscalata/nisi/.build/private-cli-package-b8cCay/nisi-private-cli-0.2.0-private.0.tgz",
+        "package/integrations/veritas/native/macos/CodenameVeritasFramework/Sources/VeritasCore/ArtifactSnapshot.swift"
+      ],
+      "cwd": "/Users/louiscalata/nisi/.build/private-cli-package-b8cCay/consumer",
+      "exitCode": 0,
+      "signal": null,
+      "error": null,
+      "elapsedMs": 4,
+      "stdoutBytes": 9517,
+      "stdoutSha256": "013e796d11a844dda345f223894a8d76713b19b0f46f6a7f84019aa5b7bc0f22",
+      "stderr": ""
+    },
+    {
+      "name": "actual archive bytes integrations/veritas/native/macos/CodenameVeritasFramework/Sources/VeritasCore/DeterministicChecks.swift",
+      "exe": "tar",
+      "args": [
+        "-xOf",
+        "/Users/louiscalata/nisi/.build/private-cli-package-b8cCay/nisi-private-cli-0.2.0-private.0.tgz",
+        "package/integrations/veritas/native/macos/CodenameVeritasFramework/Sources/VeritasCore/DeterministicChecks.swift"
+      ],
+      "cwd": "/Users/louiscalata/nisi/.build/private-cli-package-b8cCay/consumer",
+      "exitCode": 0,
+      "signal": null,
+      "error": null,
+      "elapsedMs": 4,
+      "stdoutBytes": 11021,
+      "stdoutSha256": "4d234fd389895cf0a55bf7daf0f5d082077ab3677880165f7d0e1236a88be474",
+      "stderr": ""
+    },
+    {
+      "name": "actual archive bytes integrations/veritas/native/macos/CodenameVeritasFramework/Sources/VeritasCore/StrictJSONDocumentValidator.swift",
+      "exe": "tar",
+      "args": [
+        "-xOf",
+        "/Users/louiscalata/nisi/.build/private-cli-package-b8cCay/nisi-private-cli-0.2.0-private.0.tgz",
+        "package/integrations/veritas/native/macos/CodenameVeritasFramework/Sources/VeritasCore/StrictJSONDocumentValidator.swift"
+      ],
+      "cwd": "/Users/louiscalata/nisi/.build/private-cli-package-b8cCay/consumer",
+      "exitCode": 0,
+      "signal": null,
+      "error": null,
+      "elapsedMs": 4,
+      "stdoutBytes": 11424,
+      "stdoutSha256": "bd6173e012890f2fde2e26be94c5e577cd9e098841bdad98a377b1c88dff1b2c",
+      "stderr": ""
+    },
+    {
+      "name": "actual archive bytes integrity/record-utils.mjs",
+      "exe": "tar",
+      "args": [
+        "-xOf",
+        "/Users/louiscalata/nisi/.build/private-cli-package-b8cCay/nisi-private-cli-0.2.0-private.0.tgz",
+        "package/integrity/record-utils.mjs"
+      ],
+      "cwd": "/Users/louiscalata/nisi/.build/private-cli-package-b8cCay/consumer",
+      "exitCode": 0,
+      "signal": null,
+      "error": null,
+      "elapsedMs": 4,
+      "stdoutBytes": 1501,
+      "stdoutSha256": "e46eb1a01170231bd6873771cd256740fd3dde6bcb01d418f6f7d7a75e6139ff",
+      "stderr": ""
+    },
+    {
+      "name": "actual archive bytes package.json",
+      "exe": "tar",
+      "args": [
+        "-xOf",
+        "/Users/louiscalata/nisi/.build/private-cli-package-b8cCay/nisi-private-cli-0.2.0-private.0.tgz",
+        "package/package.json"
+      ],
+      "cwd": "/Users/louiscalata/nisi/.build/private-cli-package-b8cCay/consumer",
+      "exitCode": 0,
+      "signal": null,
+      "error": null,
+      "elapsedMs": 4,
+      "stdoutBytes": 4253,
+      "stdoutSha256": "d821c65dbfaa8edc96c44995dbb1dfa8f74f5c5461718a9a814fb336b45327fc",
+      "stderr": ""
+    },
+    {
+      "name": "actual archive bytes receipts/host-run-bundle-v2.mjs",
+      "exe": "tar",
+      "args": [
+        "-xOf",
+        "/Users/louiscalata/nisi/.build/private-cli-package-b8cCay/nisi-private-cli-0.2.0-private.0.tgz",
+        "package/receipts/host-run-bundle-v2.mjs"
+      ],
+      "cwd": "/Users/louiscalata/nisi/.build/private-cli-package-b8cCay/consumer",
+      "exitCode": 0,
+      "signal": null,
+      "error": null,
+      "elapsedMs": 4,
+      "stdoutBytes": 10757,
+      "stdoutSha256": "406936e6523f58323634fab1c9f560d671d58e1c343d2082f081f8a7810061fe",
+      "stderr": ""
+    },
+    {
+      "name": "actual archive bytes receipts/live-usage-v1.mjs",
+      "exe": "tar",
+      "args": [
+        "-xOf",
+        "/Users/louiscalata/nisi/.build/private-cli-package-b8cCay/nisi-private-cli-0.2.0-private.0.tgz",
+        "package/receipts/live-usage-v1.mjs"
+      ],
+      "cwd": "/Users/louiscalata/nisi/.build/private-cli-package-b8cCay/consumer",
+      "exitCode": 0,
+      "signal": null,
+      "error": null,
+      "elapsedMs": 4,
+      "stdoutBytes": 1723,
+      "stdoutSha256": "f015e2973567e21329d4e79de8abc6e1f664370eff3f2338aad31490fb4791a5",
+      "stderr": ""
+    },
+    {
+      "name": "actual archive bytes receipts/repository-execution-v1.mjs",
+      "exe": "tar",
+      "args": [
+        "-xOf",
+        "/Users/louiscalata/nisi/.build/private-cli-package-b8cCay/nisi-private-cli-0.2.0-private.0.tgz",
+        "package/receipts/repository-execution-v1.mjs"
+      ],
+      "cwd": "/Users/louiscalata/nisi/.build/private-cli-package-b8cCay/consumer",
+      "exitCode": 0,
+      "signal": null,
+      "error": null,
+      "elapsedMs": 4,
+      "stdoutBytes": 13800,
+      "stdoutSha256": "7317e06c094bdf33e51645ce39348fc9e2d5a11ad0921af87434e34c45828cc2",
+      "stderr": ""
+    },
+    {
+      "name": "actual archive bytes receipts/repository-live-model-run-v1.mjs",
+      "exe": "tar",
+      "args": [
+        "-xOf",
+        "/Users/louiscalata/nisi/.build/private-cli-package-b8cCay/nisi-private-cli-0.2.0-private.0.tgz",
+        "package/receipts/repository-live-model-run-v1.mjs"
+      ],
+      "cwd": "/Users/louiscalata/nisi/.build/private-cli-package-b8cCay/consumer",
+      "exitCode": 0,
+      "signal": null,
+      "error": null,
+      "elapsedMs": 4,
+      "stdoutBytes": 11655,
+      "stdoutSha256": "7a17b15f5d649c9255da8b09c531f5192b7d6e14ba5db928c878e1ccd13dc293",
+      "stderr": ""
+    },
+    {
+      "name": "actual archive bytes receipts/repository-live-model-run-v3.mjs",
+      "exe": "tar",
+      "args": [
+        "-xOf",
+        "/Users/louiscalata/nisi/.build/private-cli-package-b8cCay/nisi-private-cli-0.2.0-private.0.tgz",
+        "package/receipts/repository-live-model-run-v3.mjs"
+      ],
+      "cwd": "/Users/louiscalata/nisi/.build/private-cli-package-b8cCay/consumer",
+      "exitCode": 0,
+      "signal": null,
+      "error": null,
+      "elapsedMs": 4,
+      "stdoutBytes": 20869,
+      "stdoutSha256": "66f7598c6b3be393c65dbd92e1a3c58c52b7ca66c4e73f57a46c8556739614a4",
+      "stderr": ""
+    },
+    {
+      "name": "actual archive bytes receipts/repository-run-v1.mjs",
+      "exe": "tar",
+      "args": [
+        "-xOf",
+        "/Users/louiscalata/nisi/.build/private-cli-package-b8cCay/nisi-private-cli-0.2.0-private.0.tgz",
+        "package/receipts/repository-run-v1.mjs"
+      ],
+      "cwd": "/Users/louiscalata/nisi/.build/private-cli-package-b8cCay/consumer",
+      "exitCode": 0,
+      "signal": null,
+      "error": null,
+      "elapsedMs": 4,
+      "stdoutBytes": 7897,
+      "stdoutSha256": "50c1e86cec48fc666aae64b3285f9acda8e20968d5f10f0d9313e0e22051d697",
+      "stderr": ""
+    },
+    {
+      "name": "actual archive bytes receipts/swift-static-group-v1.mjs",
+      "exe": "tar",
+      "args": [
+        "-xOf",
+        "/Users/louiscalata/nisi/.build/private-cli-package-b8cCay/nisi-private-cli-0.2.0-private.0.tgz",
+        "package/receipts/swift-static-group-v1.mjs"
+      ],
+      "cwd": "/Users/louiscalata/nisi/.build/private-cli-package-b8cCay/consumer",
+      "exitCode": 0,
+      "signal": null,
+      "error": null,
+      "elapsedMs": 4,
+      "stdoutBytes": 5444,
+      "stdoutSha256": "e07e9a361ef808f8d652f1542fec54085d4f341fd093a582f2e86baf77e4cdbb",
+      "stderr": ""
+    },
+    {
+      "name": "actual archive bytes receipts/swift-static-run-v1.mjs",
+      "exe": "tar",
+      "args": [
+        "-xOf",
+        "/Users/louiscalata/nisi/.build/private-cli-package-b8cCay/nisi-private-cli-0.2.0-private.0.tgz",
+        "package/receipts/swift-static-run-v1.mjs"
+      ],
+      "cwd": "/Users/louiscalata/nisi/.build/private-cli-package-b8cCay/consumer",
+      "exitCode": 0,
+      "signal": null,
+      "error": null,
+      "elapsedMs": 4,
+      "stdoutBytes": 5123,
+      "stdoutSha256": "454e8657a2a2aaf6a016de5d09c5d65512d53ffb9db2a6843e05471450f8c8ef",
+      "stderr": ""
+    },
+    {
+      "name": "actual archive bytes workflow/contracts.mjs",
+      "exe": "tar",
+      "args": [
+        "-xOf",
+        "/Users/louiscalata/nisi/.build/private-cli-package-b8cCay/nisi-private-cli-0.2.0-private.0.tgz",
+        "package/workflow/contracts.mjs"
+      ],
+      "cwd": "/Users/louiscalata/nisi/.build/private-cli-package-b8cCay/consumer",
+      "exitCode": 0,
+      "signal": null,
+      "error": null,
+      "elapsedMs": 4,
+      "stdoutBytes": 9641,
+      "stdoutSha256": "c28a3ee3db6e9a936cd58fca8b8ee3f2744ca25c259e2ea278b3b09cdbb73d82",
+      "stderr": ""
+    },
+    {
+      "name": "actual archive bytes workflow/engine.mjs",
+      "exe": "tar",
+      "args": [
+        "-xOf",
+        "/Users/louiscalata/nisi/.build/private-cli-package-b8cCay/nisi-private-cli-0.2.0-private.0.tgz",
+        "package/workflow/engine.mjs"
+      ],
+      "cwd": "/Users/louiscalata/nisi/.build/private-cli-package-b8cCay/consumer",
+      "exitCode": 0,
+      "signal": null,
+      "error": null,
+      "elapsedMs": 4,
+      "stdoutBytes": 17338,
+      "stdoutSha256": "c67c63baeadc725a8487af7108b01d3a38dd50e64ff35f1be66471c81e5f979b",
+      "stderr": ""
+    },
+    {
+      "name": "offline script-disabled private install",
+      "exe": "npm",
+      "args": [
+        "install",
+        "/Users/louiscalata/nisi/.build/private-cli-package-b8cCay/nisi-private-cli-0.2.0-private.0.tgz",
+        "--offline",
+        "--ignore-scripts",
+        "--no-audit",
+        "--no-fund",
+        "--cache",
+        "/Users/louiscalata/nisi/.build/private-cli-package-b8cCay/npm-cache",
+        "--package-lock=false"
+      ],
+      "cwd": "/Users/louiscalata/nisi/.build/private-cli-package-b8cCay/consumer",
+      "exitCode": 0,
+      "signal": null,
+      "error": null,
+      "elapsedMs": 301,
+      "stdoutBytes": 26,
+      "stdoutSha256": "c5dc34e8c32a2f7b43f00f4c4dcee1296a1cd2f5afff1060f614d7bed0b28ab1",
+      "stderr": ""
+    },
+    {
+      "name": "installed help",
+      "exe": "/usr/local/bin/node",
+      "args": [
+        "--import",
+        "/Users/louiscalata/nisi/tests/helpers/nisi-cli-no-effects.mjs",
+        "/Users/louiscalata/nisi/.build/private-cli-package-b8cCay/consumer/node_modules/.bin/nisi",
+        "--help"
+      ],
+      "cwd": "/Users/louiscalata/nisi/.build/private-cli-package-b8cCay/consumer",
+      "exitCode": 0,
+      "signal": null,
+      "error": null,
+      "elapsedMs": 35,
+      "stdoutBytes": 4654,
+      "stdoutSha256": "1016b81657db83e8227119e16bfa1a01150490ba6c078b1845ae48a88470d1d9",
+      "stderr": ""
+    },
+    {
+      "name": "installed version",
+      "exe": "/usr/local/bin/node",
+      "args": [
+        "--import",
+        "/Users/louiscalata/nisi/tests/helpers/nisi-cli-no-effects.mjs",
+        "/Users/louiscalata/nisi/.build/private-cli-package-b8cCay/consumer/node_modules/.bin/nisi",
+        "--version"
+      ],
+      "cwd": "/Users/louiscalata/nisi/.build/private-cli-package-b8cCay/consumer",
+      "exitCode": 0,
+      "signal": null,
+      "error": null,
+      "elapsedMs": 34,
+      "stdoutBytes": 16,
+      "stdoutSha256": "668874481d67b1e59000c2473a768678918d223df225a30da91cf135984d5077",
+      "stderr": ""
+    },
+    {
+      "name": "installed symlink --preserve-symlinks-main",
+      "exe": "/usr/local/bin/node",
+      "args": [
+        "--preserve-symlinks-main",
+        "--import",
+        "/Users/louiscalata/nisi/tests/helpers/nisi-cli-no-effects.mjs",
+        "/Users/louiscalata/nisi/.build/private-cli-package-b8cCay/consumer/node_modules/.bin/nisi",
+        "--version"
+      ],
+      "cwd": "/Users/louiscalata/nisi/.build/private-cli-package-b8cCay/consumer",
+      "exitCode": 0,
+      "signal": null,
+      "error": null,
+      "elapsedMs": 33,
+      "stdoutBytes": 16,
+      "stdoutSha256": "668874481d67b1e59000c2473a768678918d223df225a30da91cf135984d5077",
+      "stderr": ""
+    },
+    {
+      "name": "installed symlink --preserve-symlinks",
+      "exe": "/usr/local/bin/node",
+      "args": [
+        "--preserve-symlinks",
+        "--import",
+        "/Users/louiscalata/nisi/tests/helpers/nisi-cli-no-effects.mjs",
+        "/Users/louiscalata/nisi/.build/private-cli-package-b8cCay/consumer/node_modules/.bin/nisi",
+        "--version"
+      ],
+      "cwd": "/Users/louiscalata/nisi/.build/private-cli-package-b8cCay/consumer",
+      "exitCode": 0,
+      "signal": null,
+      "error": null,
+      "elapsedMs": 35,
+      "stdoutBytes": 16,
+      "stdoutSha256": "668874481d67b1e59000c2473a768678918d223df225a30da91cf135984d5077",
+      "stderr": ""
+    },
+    {
+      "name": "installed executable shebang",
+      "exe": "/Users/louiscalata/nisi/.build/private-cli-package-b8cCay/consumer/node_modules/.bin/nisi",
+      "args": [
+        "--version"
+      ],
+      "cwd": "/Users/louiscalata/nisi/.build/private-cli-package-b8cCay/consumer",
+      "exitCode": 0,
+      "signal": null,
+      "error": null,
+      "elapsedMs": 211,
+      "stdoutBytes": 16,
+      "stdoutSha256": "668874481d67b1e59000c2473a768678918d223df225a30da91cf135984d5077",
+      "stderr": ""
+    },
+    {
+      "name": "installed inventory doctor",
+      "exe": "/usr/local/bin/node",
+      "args": [
+        "--import",
+        "/Users/louiscalata/nisi/tests/helpers/nisi-cli-no-effects.mjs",
+        "/Users/louiscalata/nisi/.build/private-cli-package-b8cCay/consumer/node_modules/.bin/nisi",
+        "doctor"
+      ],
+      "cwd": "/Users/louiscalata/nisi/.build/private-cli-package-b8cCay/consumer",
+      "exitCode": 0,
+      "signal": null,
+      "error": null,
+      "elapsedMs": 36,
+      "stdoutBytes": 2266,
+      "stdoutSha256": "275e7b44a56ad01d21c449658209c43dfd093cf115a440894636983c8a6feab8",
+      "stderr": ""
+    },
+    {
+      "name": "installed summary observation",
+      "exe": "/usr/local/bin/node",
+      "args": [
+        "--import",
+        "/Users/louiscalata/nisi/tests/helpers/nisi-cli-no-effects.mjs",
+        "/Users/louiscalata/nisi/.build/private-cli-package-b8cCay/consumer/node_modules/.bin/nisi",
+        "inspect",
+        "/Users/louiscalata/nisi/.build/private-cli-package-b8cCay/synthetic-summary"
+      ],
+      "cwd": "/Users/louiscalata/nisi/.build/private-cli-package-b8cCay/consumer",
+      "exitCode": 0,
+      "signal": null,
+      "error": null,
+      "elapsedMs": 38,
+      "stdoutBytes": 808,
+      "stdoutSha256": "33f89164a5e5e278f6965c1a5efafe5f4514e397ca154bd14d01d1adbb293079",
+      "stderr": ""
+    },
+    {
+      "name": "installed inspect requires one explicit directory",
+      "exe": "/usr/local/bin/node",
+      "args": [
+        "--import",
+        "/Users/louiscalata/nisi/tests/helpers/nisi-cli-no-effects.mjs",
+        "/Users/louiscalata/nisi/.build/private-cli-package-b8cCay/consumer/node_modules/.bin/nisi",
+        "inspect"
+      ],
+      "cwd": "/Users/louiscalata/nisi/.build/private-cli-package-b8cCay/consumer",
+      "exitCode": 2,
+      "signal": null,
+      "error": null,
+      "elapsedMs": 36,
+      "stdoutBytes": 0,
+      "stdoutSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderr": "{\"status\":\"INCOMPLETE\",\"code\":\"NISI_CLI_ARGUMENTS\",\"hint\":\"Use nisi --help.\"}\n"
+    },
+    {
+      "name": "installed inspect refuses relative directory",
+      "exe": "/usr/local/bin/node",
+      "args": [
+        "--import",
+        "/Users/louiscalata/nisi/tests/helpers/nisi-cli-no-effects.mjs",
+        "/Users/louiscalata/nisi/.build/private-cli-package-b8cCay/consumer/node_modules/.bin/nisi",
+        "inspect",
+        "relative"
+      ],
+      "cwd": "/Users/louiscalata/nisi/.build/private-cli-package-b8cCay/consumer",
+      "exitCode": 2,
+      "signal": null,
+      "error": null,
+      "elapsedMs": 36,
+      "stdoutBytes": 0,
+      "stdoutSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderr": "{\"status\":\"INCOMPLETE\",\"code\":\"NISI_INSPECT_DIRECTORY_INVALID\",\"hint\":\"Use nisi --help.\"}\n"
+    },
+    {
+      "name": "installed inspect refuses malformed summary",
+      "exe": "/usr/local/bin/node",
+      "args": [
+        "--import",
+        "/Users/louiscalata/nisi/tests/helpers/nisi-cli-no-effects.mjs",
+        "/Users/louiscalata/nisi/.build/private-cli-package-b8cCay/consumer/node_modules/.bin/nisi",
+        "inspect",
+        "/Users/louiscalata/nisi/.build/private-cli-package-b8cCay/invalid-summary"
+      ],
+      "cwd": "/Users/louiscalata/nisi/.build/private-cli-package-b8cCay/consumer",
+      "exitCode": 2,
+      "signal": null,
+      "error": null,
+      "elapsedMs": 74,
+      "stdoutBytes": 0,
+      "stdoutSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderr": "{\"status\":\"INCOMPLETE\",\"code\":\"NISI_INSPECT_SUMMARY_INVALID\",\"hint\":\"Use nisi --help.\"}\n"
+    },
+    {
+      "name": "installed trial final",
+      "exe": "/usr/local/bin/node",
+      "args": [
+        "--import",
+        "/Users/louiscalata/nisi/tests/helpers/nisi-cli-no-effects.mjs",
+        "/Users/louiscalata/nisi/.build/private-cli-package-b8cCay/consumer/node_modules/.bin/nisi",
+        "inspect-trial",
+        "/Users/louiscalata/nisi/.build/private-cli-package-b8cCay/synthetic-trial-final"
+      ],
+      "cwd": "/Users/louiscalata/nisi/.build/private-cli-package-b8cCay/consumer",
+      "exitCode": 0,
+      "signal": null,
+      "error": null,
+      "elapsedMs": 58,
+      "stdoutBytes": 1073,
+      "stdoutSha256": "08da84c9dede7ad0fff51bd0eed66f5b265237e8c45a73ac8eef1b3cf470a313",
+      "stderr": ""
+    },
+    {
+      "name": "installed trial intent",
+      "exe": "/usr/local/bin/node",
+      "args": [
+        "--import",
+        "/Users/louiscalata/nisi/tests/helpers/nisi-cli-no-effects.mjs",
+        "/Users/louiscalata/nisi/.build/private-cli-package-b8cCay/consumer/node_modules/.bin/nisi",
+        "inspect-trial",
+        "/Users/louiscalata/nisi/.build/private-cli-package-b8cCay/synthetic-trial-intent"
+      ],
+      "cwd": "/Users/louiscalata/nisi/.build/private-cli-package-b8cCay/consumer",
+      "exitCode": 1,
+      "signal": null,
+      "error": null,
+      "elapsedMs": 55,
+      "stdoutBytes": 1067,
+      "stdoutSha256": "878c60f2d5127e119c64d716698579923fed7d95614d3f823e700ef6e42bb6d3",
+      "stderr": ""
+    },
+    {
+      "name": "installed trial empty",
+      "exe": "/usr/local/bin/node",
+      "args": [
+        "--import",
+        "/Users/louiscalata/nisi/tests/helpers/nisi-cli-no-effects.mjs",
+        "/Users/louiscalata/nisi/.build/private-cli-package-b8cCay/consumer/node_modules/.bin/nisi",
+        "inspect-trial",
+        "/Users/louiscalata/nisi/.build/private-cli-package-b8cCay/synthetic-trial-empty"
+      ],
+      "cwd": "/Users/louiscalata/nisi/.build/private-cli-package-b8cCay/consumer",
+      "exitCode": 1,
+      "signal": null,
+      "error": null,
+      "elapsedMs": 53,
+      "stdoutBytes": 757,
+      "stdoutSha256": "bdb785480d1302ecc30c5318bac797aaf4f69e17fb50f2a9b73cd4c155086e87",
+      "stderr": ""
+    },
+    {
+      "name": "installed trial partial",
+      "exe": "/usr/local/bin/node",
+      "args": [
+        "--import",
+        "/Users/louiscalata/nisi/tests/helpers/nisi-cli-no-effects.mjs",
+        "/Users/louiscalata/nisi/.build/private-cli-package-b8cCay/consumer/node_modules/.bin/nisi",
+        "inspect-trial",
+        "/Users/louiscalata/nisi/.build/private-cli-package-b8cCay/synthetic-trial-partial"
+      ],
+      "cwd": "/Users/louiscalata/nisi/.build/private-cli-package-b8cCay/consumer",
+      "exitCode": 1,
+      "signal": null,
+      "error": null,
+      "elapsedMs": 61,
+      "stdoutBytes": 1069,
+      "stdoutSha256": "a375e149ee6b5d5cef9cd888d254ab62d86a03a57a2fb118a77b698f810c6ecf",
+      "stderr": ""
+    },
+    {
+      "name": "installed trial invalid",
+      "exe": "/usr/local/bin/node",
+      "args": [
+        "--import",
+        "/Users/louiscalata/nisi/tests/helpers/nisi-cli-no-effects.mjs",
+        "/Users/louiscalata/nisi/.build/private-cli-package-b8cCay/consumer/node_modules/.bin/nisi",
+        "inspect-trial",
+        "/Users/louiscalata/nisi/.build/private-cli-package-b8cCay/synthetic-trial-invalid"
+      ],
+      "cwd": "/Users/louiscalata/nisi/.build/private-cli-package-b8cCay/consumer",
+      "exitCode": 2,
+      "signal": null,
+      "error": null,
+      "elapsedMs": 58,
+      "stdoutBytes": 750,
+      "stdoutSha256": "4d6f503f8936eb1aa28e410a0a999ef1ba696a4b17d43fb988bfe9b4acbf3516",
+      "stderr": ""
+    },
+    {
+      "name": "installed trial missing event file",
+      "exe": "/usr/local/bin/node",
+      "args": [
+        "--import",
+        "/Users/louiscalata/nisi/tests/helpers/nisi-cli-no-effects.mjs",
+        "/Users/louiscalata/nisi/.build/private-cli-package-b8cCay/consumer/node_modules/.bin/nisi",
+        "inspect-trial",
+        "/Users/louiscalata/nisi/.build/private-cli-package-b8cCay/synthetic-summary"
+      ],
+      "cwd": "/Users/louiscalata/nisi/.build/private-cli-package-b8cCay/consumer",
+      "exitCode": 2,
+      "signal": null,
+      "error": null,
+      "elapsedMs": 52,
+      "stdoutBytes": 760,
+      "stdoutSha256": "ed96a832879f142f332751d6b13143c2184bb2ea50510d47049f7662ed441b64",
+      "stderr": ""
+    },
+    {
+      "name": "installed trial malformed usage",
+      "exe": "/usr/local/bin/node",
+      "args": [
+        "--import",
+        "/Users/louiscalata/nisi/tests/helpers/nisi-cli-no-effects.mjs",
+        "/Users/louiscalata/nisi/.build/private-cli-package-b8cCay/consumer/node_modules/.bin/nisi",
+        "inspect-trial",
+        "PRIVATE_RELATIVE"
+      ],
+      "cwd": "/Users/louiscalata/nisi/.build/private-cli-package-b8cCay/consumer",
+      "exitCode": 2,
+      "signal": null,
+      "error": null,
+      "elapsedMs": 49,
+      "stdoutBytes": 0,
+      "stdoutSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderr": "{\"status\":\"INCOMPLETE\",\"code\":\"NISI_CLI_ARGUMENTS\",\"hint\":\"Use nisi --help.\"}\n"
+    },
+    {
+      "name": "installed arm final",
+      "exe": "/usr/local/bin/node",
+      "args": [
+        "--import",
+        "/Users/louiscalata/nisi/tests/helpers/nisi-cli-no-effects.mjs",
+        "/Users/louiscalata/nisi/.build/private-cli-package-b8cCay/consumer/node_modules/.bin/nisi",
+        "inspect-arm-trial",
+        "/Users/louiscalata/nisi/.build/private-cli-package-b8cCay/synthetic-arm-final"
+      ],
+      "cwd": "/Users/louiscalata/nisi/.build/private-cli-package-b8cCay/consumer",
+      "exitCode": 0,
+      "signal": null,
+      "error": null,
+      "elapsedMs": 58,
+      "stdoutBytes": 687,
+      "stdoutSha256": "51373a21d419bcb8756f49be80bf586e4f51053fe9381bbedf497472df133f90",
+      "stderr": ""
+    },
+    {
+      "name": "installed arm header",
+      "exe": "/usr/local/bin/node",
+      "args": [
+        "--import",
+        "/Users/louiscalata/nisi/tests/helpers/nisi-cli-no-effects.mjs",
+        "/Users/louiscalata/nisi/.build/private-cli-package-b8cCay/consumer/node_modules/.bin/nisi",
+        "inspect-arm-trial",
+        "/Users/louiscalata/nisi/.build/private-cli-package-b8cCay/synthetic-arm-header"
+      ],
+      "cwd": "/Users/louiscalata/nisi/.build/private-cli-package-b8cCay/consumer",
+      "exitCode": 1,
+      "signal": null,
+      "error": null,
+      "elapsedMs": 58,
+      "stdoutBytes": 712,
+      "stdoutSha256": "c4e0b2831764e18069461d2a642502a68f9996454f076070f68f7684bb531c33",
+      "stderr": ""
+    },
+    {
+      "name": "installed arm empty",
+      "exe": "/usr/local/bin/node",
+      "args": [
+        "--import",
+        "/Users/louiscalata/nisi/tests/helpers/nisi-cli-no-effects.mjs",
+        "/Users/louiscalata/nisi/.build/private-cli-package-b8cCay/consumer/node_modules/.bin/nisi",
+        "inspect-arm-trial",
+        "/Users/louiscalata/nisi/.build/private-cli-package-b8cCay/synthetic-arm-empty"
+      ],
+      "cwd": "/Users/louiscalata/nisi/.build/private-cli-package-b8cCay/consumer",
+      "exitCode": 1,
+      "signal": null,
+      "error": null,
+      "elapsedMs": 56,
+      "stdoutBytes": 696,
+      "stdoutSha256": "c6fb2e6ed3407e81eeecaf314c4a9a1eb1f557d892f6c083df56a5e395cf5659",
+      "stderr": ""
+    },
+    {
+      "name": "installed arm partial",
+      "exe": "/usr/local/bin/node",
+      "args": [
+        "--import",
+        "/Users/louiscalata/nisi/tests/helpers/nisi-cli-no-effects.mjs",
+        "/Users/louiscalata/nisi/.build/private-cli-package-b8cCay/consumer/node_modules/.bin/nisi",
+        "inspect-arm-trial",
+        "/Users/louiscalata/nisi/.build/private-cli-package-b8cCay/synthetic-arm-partial"
+      ],
+      "cwd": "/Users/louiscalata/nisi/.build/private-cli-package-b8cCay/consumer",
+      "exitCode": 1,
+      "signal": null,
+      "error": null,
+      "elapsedMs": 57,
+      "stdoutBytes": 714,
+      "stdoutSha256": "1624d8e6dac8dbdabb11af8a8787ce2e9328acfd0dc958c5f226d65c889e0476",
+      "stderr": ""
+    },
+    {
+      "name": "installed arm corrupt",
+      "exe": "/usr/local/bin/node",
+      "args": [
+        "--import",
+        "/Users/louiscalata/nisi/tests/helpers/nisi-cli-no-effects.mjs",
+        "/Users/louiscalata/nisi/.build/private-cli-package-b8cCay/consumer/node_modules/.bin/nisi",
+        "inspect-arm-trial",
+        "/Users/louiscalata/nisi/.build/private-cli-package-b8cCay/synthetic-arm-corrupt"
+      ],
+      "cwd": "/Users/louiscalata/nisi/.build/private-cli-package-b8cCay/consumer",
+      "exitCode": 2,
+      "signal": null,
+      "error": null,
+      "elapsedMs": 55,
+      "stdoutBytes": 706,
+      "stdoutSha256": "8fff8ecd192ade570b40c73dc1fd98ce24715f9bb9f3f759e28020d570cba927",
+      "stderr": ""
+    },
+    {
+      "name": "installed arm missing",
+      "exe": "/usr/local/bin/node",
+      "args": [
+        "--import",
+        "/Users/louiscalata/nisi/tests/helpers/nisi-cli-no-effects.mjs",
+        "/Users/louiscalata/nisi/.build/private-cli-package-b8cCay/consumer/node_modules/.bin/nisi",
+        "inspect-arm-trial",
+        "/Users/louiscalata/nisi/.build/private-cli-package-b8cCay/synthetic-arm-missing"
+      ],
+      "cwd": "/Users/louiscalata/nisi/.build/private-cli-package-b8cCay/consumer",
+      "exitCode": 2,
+      "signal": null,
+      "error": null,
+      "elapsedMs": 55,
+      "stdoutBytes": 710,
+      "stdoutSha256": "77977f7ac1ecfc17debfe5b3f8839b189357108a6457f21f8816f6e50f5c7810",
+      "stderr": ""
+    },
+    {
+      "name": "installed arm malformed usage",
+      "exe": "/usr/local/bin/node",
+      "args": [
+        "--import",
+        "/Users/louiscalata/nisi/tests/helpers/nisi-cli-no-effects.mjs",
+        "/Users/louiscalata/nisi/.build/private-cli-package-b8cCay/consumer/node_modules/.bin/nisi",
+        "inspect-arm-trial",
+        "PRIVATE_RELATIVE"
+      ],
+      "cwd": "/Users/louiscalata/nisi/.build/private-cli-package-b8cCay/consumer",
+      "exitCode": 2,
+      "signal": null,
+      "error": null,
+      "elapsedMs": 50,
+      "stdoutBytes": 0,
+      "stdoutSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderr": "{\"status\":\"INCOMPLETE\",\"code\":\"NISI_CLI_ARGUMENTS\",\"hint\":\"Use nisi --help.\"}\n"
+    },
+    {
+      "name": "installed demo help",
+      "exe": "/usr/local/bin/node",
+      "args": [
+        "--import",
+        "/Users/louiscalata/nisi/tests/helpers/nisi-cli-no-effects.mjs",
+        "/Users/louiscalata/nisi/.build/private-cli-package-b8cCay/consumer/node_modules/.bin/nisi",
+        "demo",
+        "--help"
+      ],
+      "cwd": "/Users/louiscalata/nisi/.build/private-cli-package-b8cCay/consumer",
+      "exitCode": 0,
+      "signal": null,
+      "error": null,
+      "elapsedMs": 50,
+      "stdoutBytes": 1888,
+      "stdoutSha256": "b461242c34b1118876ec1d51c7eaba0baa0141656c36ffafe16bfe80110b60ec",
+      "stderr": ""
+    },
+    {
+      "name": "installed offline fixture preflight",
+      "exe": "/usr/local/bin/node",
+      "args": [
+        "--import",
+        "/Users/louiscalata/nisi/tests/helpers/nisi-cli-no-effects.mjs",
+        "/Users/louiscalata/nisi/.build/private-cli-package-b8cCay/consumer/node_modules/.bin/nisi",
+        "demo",
+        "--approved-reviewed-fixture",
+        "--endpoint",
+        "http://127.0.0.1:1234/v1/chat/completions",
+        "--author-model",
+        "synthetic.author",
+        "--reviewer-model",
+        "synthetic.reviewer",
+        "--preflight-only"
+      ],
+      "cwd": "/Users/louiscalata/nisi/.build/private-cli-package-b8cCay/consumer",
+      "exitCode": 1,
+      "signal": null,
+      "error": null,
+      "elapsedMs": 50,
+      "stdoutBytes": 574,
+      "stdoutSha256": "1d22d014fa5776987b2bd23056cc6802f6bdfa556f3659d7d9e209975e638f71",
+      "stderr": ""
+    },
+    {
+      "name": "installed unsupported command",
+      "exe": "/usr/local/bin/node",
+      "args": [
+        "--import",
+        "/Users/louiscalata/nisi/tests/helpers/nisi-cli-no-effects.mjs",
+        "/Users/louiscalata/nisi/.build/private-cli-package-b8cCay/consumer/node_modules/.bin/nisi",
+        "run"
+      ],
+      "cwd": "/Users/louiscalata/nisi/.build/private-cli-package-b8cCay/consumer",
+      "exitCode": 2,
+      "signal": null,
+      "error": null,
+      "elapsedMs": 36,
+      "stdoutBytes": 0,
+      "stdoutSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderr": "{\"status\":\"INCOMPLETE\",\"code\":\"NISI_CLI_ARGUMENTS\",\"hint\":\"Use nisi --help.\"}\n"
+    },
+    {
+      "name": "installed state required",
+      "exe": "/usr/local/bin/node",
+      "args": [
+        "--import",
+        "/Users/louiscalata/nisi/tests/helpers/nisi-cli-no-effects.mjs",
+        "/Users/louiscalata/nisi/.build/private-cli-package-b8cCay/consumer/node_modules/.bin/nisi",
+        "demo",
+        "--approved-reviewed-fixture",
+        "--endpoint",
+        "http://127.0.0.1:1234",
+        "--author-model",
+        "not-contacted-a",
+        "--reviewer-model",
+        "not-contacted-b"
+      ],
+      "cwd": "/Users/louiscalata/nisi/.build/private-cli-package-b8cCay/consumer",
+      "exitCode": 2,
+      "signal": null,
+      "error": null,
+      "elapsedMs": 46,
+      "stdoutBytes": 0,
+      "stdoutSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderr": "{\"status\":\"INCOMPLETE\",\"code\":\"NISI_STATE_DIRECTORY_REQUIRED\",\"hint\":\"Use nisi --help.\"}\n"
+    },
+    {
+      "name": "installed invalid state refused",
+      "exe": "/usr/local/bin/node",
+      "args": [
+        "--import",
+        "/Users/louiscalata/nisi/tests/helpers/nisi-cli-no-effects.mjs",
+        "/Users/louiscalata/nisi/.build/private-cli-package-b8cCay/consumer/node_modules/.bin/nisi",
+        "demo",
+        "--approved-reviewed-fixture",
+        "--endpoint",
+        "http://127.0.0.1:1234",
+        "--author-model",
+        "not-contacted-a",
+        "--reviewer-model",
+        "not-contacted-b",
+        "--state-dir",
+        "/Users/louiscalata/nisi/.build/private-cli-package-b8cCay/consumer/node_modules/nisi-private-cli"
+      ],
+      "cwd": "/Users/louiscalata/nisi/.build/private-cli-package-b8cCay/consumer",
+      "exitCode": 2,
+      "signal": null,
+      "error": null,
+      "elapsedMs": 46,
+      "stdoutBytes": 0,
+      "stdoutSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderr": "{\"status\":\"INCOMPLETE\",\"code\":\"NISI_STATE_DIRECTORY_INVALID\",\"hint\":\"Use nisi --help.\"}\n"
+    },
+    {
+      "name": "installed invalid state refused",
+      "exe": "/usr/local/bin/node",
+      "args": [
+        "--import",
+        "/Users/louiscalata/nisi/tests/helpers/nisi-cli-no-effects.mjs",
+        "/Users/louiscalata/nisi/.build/private-cli-package-b8cCay/consumer/node_modules/.bin/nisi",
+        "demo",
+        "--approved-reviewed-fixture",
+        "--endpoint",
+        "http://127.0.0.1:1234",
+        "--author-model",
+        "not-contacted-a",
+        "--reviewer-model",
+        "not-contacted-b",
+        "--state-dir",
+        "/Users/louiscalata/nisi/.build/private-cli-package-b8cCay/consumer/node_modules/nisi-private-cli/cli"
+      ],
+      "cwd": "/Users/louiscalata/nisi/.build/private-cli-package-b8cCay/consumer",
+      "exitCode": 2,
+      "signal": null,
+      "error": null,
+      "elapsedMs": 48,
+      "stdoutBytes": 0,
+      "stdoutSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderr": "{\"status\":\"INCOMPLETE\",\"code\":\"NISI_STATE_DIRECTORY_INVALID\",\"hint\":\"Use nisi --help.\"}\n"
+    },
+    {
+      "name": "installed invalid state refused",
+      "exe": "/usr/local/bin/node",
+      "args": [
+        "--import",
+        "/Users/louiscalata/nisi/tests/helpers/nisi-cli-no-effects.mjs",
+        "/Users/louiscalata/nisi/.build/private-cli-package-b8cCay/consumer/node_modules/.bin/nisi",
+        "demo",
+        "--approved-reviewed-fixture",
+        "--endpoint",
+        "http://127.0.0.1:1234",
+        "--author-model",
+        "not-contacted-a",
+        "--reviewer-model",
+        "not-contacted-b",
+        "--state-dir",
+        "/Users/louiscalata/nisi/.build/private-cli-package-b8cCay/consumer/node_modules"
+      ],
+      "cwd": "/Users/louiscalata/nisi/.build/private-cli-package-b8cCay/consumer",
+      "exitCode": 2,
+      "signal": null,
+      "error": null,
+      "elapsedMs": 46,
+      "stdoutBytes": 0,
+      "stdoutSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderr": "{\"status\":\"INCOMPLETE\",\"code\":\"NISI_STATE_DIRECTORY_INVALID\",\"hint\":\"Use nisi --help.\"}\n"
+    },
+    {
+      "name": "installed invalid state refused",
+      "exe": "/usr/local/bin/node",
+      "args": [
+        "--import",
+        "/Users/louiscalata/nisi/tests/helpers/nisi-cli-no-effects.mjs",
+        "/Users/louiscalata/nisi/.build/private-cli-package-b8cCay/consumer/node_modules/.bin/nisi",
+        "demo",
+        "--approved-reviewed-fixture",
+        "--endpoint",
+        "http://127.0.0.1:1234",
+        "--author-model",
+        "not-contacted-a",
+        "--reviewer-model",
+        "not-contacted-b",
+        "--state-dir",
+        "relative"
+      ],
+      "cwd": "/Users/louiscalata/nisi/.build/private-cli-package-b8cCay/consumer",
+      "exitCode": 2,
+      "signal": null,
+      "error": null,
+      "elapsedMs": 45,
+      "stdoutBytes": 0,
+      "stdoutSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderr": "{\"status\":\"INCOMPLETE\",\"code\":\"NISI_STATE_DIRECTORY_INVALID\",\"hint\":\"Use nisi --help.\"}\n"
+    }
+  ],
+  "sourceManifest": {
+    "adapters/local-chat.mjs": "83e7af06515387273c11bf8595be5f1bf8c2520000704be12acb274dd49a37a9",
+    "adapters/native-chat-protocol-v1.mjs": "44468cb8b6ebc97e1821405a5add4916a97bf82b0ffeaa2076f85e79e12255f3",
+    "adapters/native-chat-v1.mjs": "05db89079e5a167c6cb48018c659e514d573d3b7e95a3ce8282f2803e0bc024c",
+    "adapters/repair-guidance-v1.mjs": "d4421a3c6dc57ab20e9ad2cbae57e07280c34bcdadb72fcf3caf017dd88759e0",
+    "bin/nisi.mjs": "aea4736ee1224b4403217af6ea018a7d881f2f2398b8f7e2509ab913265e5848",
+    "canonical/canonical-json-v1.mjs": "d1049a26d2bea0d14e959c0af22af15b975345091c5fa5360e8bd685637f8e59",
+    "cli/arguments.mjs": "c19daefc0a595f94d7bf0ae5c29616b54f32acc6ca03e1b2a4ca0a44e663e4cd",
+    "cli/doctor.mjs": "35cce14c819cfa555928fb1c531c2f7a3dc64e55920c7e99089af6e5e78b74cd",
+    "cli/inspect.mjs": "ea23beaaee44170651d06b0dc0ed9e523896acbe38cfbf9e238734f7135d1296",
+    "cli/main.mjs": "97bc14e46e23b566dcd2eba5f42f165c89ca4fda29d8fc053e14ae3d7cbce422",
+    "cli/paired-arm-inspect.mjs": "cc40aa7d2f763bb5cda49b0e5d9b50983c2e35772d68e43cc334f4083dc1228b",
+    "cli/paired-trial-diagnostic-inspect.mjs": "55267d87d702f41ed5fdc06d38b6fbb06e821ff75c0ec2d8707552a5e0a44c31",
+    "cli/paired-trial-inspect.mjs": "337de65a19b68c328a9799dd43444577d1472d3cc249662f99f09b0370352c37",
+    "cli/stored-summary-v1.mjs": "cc946d0a25c90998e6f0f7a566bc083fa64daf62d437ef7aa2e2e013234532c7",
+    "cli/text.mjs": "8be1e7f5f4ba4275f451909dfcda6dc111a182b229ff137dcf2112ed13523d20",
+    "evaluation/intake-v1.mjs": "7c338bf7419c236bc8a8c912266f470e68ff3711848f777c56e68f0ef7c7912a",
+    "evaluation/metrics-v1.mjs": "a11f1247df37b89c661fe3033e8d88a0c347038114bd9192ac48620d52ba0e91",
+    "evaluation/paired-trial-v1.mjs": "1e741765c303ba0623642f31d83c17cc0d683b0ceafa486071ae99fa443af1d6",
+    "evaluation/prevention-execution-profile-v1.mjs": "b663798f149e44d783feb7e7833c2758263dbfa38bb7f1213a52b276c30375a7",
+    "evaluation/prevention-experiment-plan-v1.mjs": "470443df194876c39e74444860dd1f376ffbead27bb83a61f498c2f942a9a0d1",
+    "examples/repository-live-model.mjs": "e56b3dd062e89725772d4d39bd2cdcb9b6342fce9f9e0d88711fcfa6c415c0df",
+    "examples/repository-task/fixtures/baseline/README.md": "b6ce54912db6b4605d19e4e0fdce5cc1e680de4a57bb1af82ca7b737ff578011",
+    "examples/repository-task/fixtures/baseline/config.json": "fc2001f12401983fa2632ee17e9879b6a1595f0de616e6e1484083c0c3324f04",
+    "examples/repository-task/fixtures/harness/check-retry-settings.mjs": "e07a9bd6a63a52ac6977734c61ea0a210c71ec2c331951f4d94b44159c8245c5",
+    "examples/repository-task/fixtures/live-baseline/retry-settings.mjs": "65525edd21e81c5de1791c6f47fa404ffea10f7ea332545a8e295afdd6270254",
+    "examples/repository-task/fixtures/live-repair/retry-settings.mjs": "73369f8d0cc0cefbb082c65388c3652c7602254ab5b6fbab138e08078b568112",
+    "examples/repository-task/reviewed-live-fixture-v1.mjs": "292bd67a2e4132c9c5122f5d716e7eeb3cdd3a6ebf5362470d046b6d025add36",
+    "history/journal-owner-v2.mjs": "2120bf0c75d9aa6122c06a2b34d55b3256a08f024d0e5fa43d8877e4eb67e44f",
+    "history/paired-arm-reconciliation-v1.mjs": "8c22a08ef5508a9af4567e787cdf9602cdd97a0d949dbf317a96ad3e7850c489",
+    "history/paired-arm-sidecar-codec-v1.mjs": "f79bff6baf8c6dbc6738c47df4a49039044384569ca139e140438ed7c094922d",
+    "history/paired-arm-sidecar-store-v1.mjs": "89b71397aae2a4638a4074242057dbf447f37a653c20d9c8154220d1f9e2f59b",
+    "history/paired-trial-event-codec-v1.mjs": "b052a96df1e8611b1779ab84144773d818157ae11a550c4aa6a80854c0e4176c",
+    "history/paired-trial-event-store-v1.mjs": "108780fcd2cc04cc4e2fef6002ee84187bdea19db4c923aaf8e7e89f495dbcb2",
+    "history/paired-trial-reconciliation-v1.mjs": "2703cd7aa4b9ff1bff24df48426a5ae694f419c45760abf1f04917a577a46f76",
+    "history/repository-host-history-v1.mjs": "e74aa40389a1c132ec535c77a90b0e56a61b91aa20126b48546b5942091d5418",
+    "history/repository-incident-candidates-v1.mjs": "618c32c09775b2931826c39f442e5c103463f9c11c877e483781850a7e1751f2",
+    "history/repository-incident-capture-v1.mjs": "6b0aaaf0b21dde32eca9301e73863c37bc2ac1bff63b14de7120c35e8968933c",
+    "history/repository-trial-diagnostic-store-v1.mjs": "2ed75c2d80c9a7667dd332f642cd211378b23682569f9b7e4b7a2c6d981b82a3",
+    "history/repository-trial-diagnostic-v1.mjs": "e494d9c3d91c723637c8a35079299fb6f3fe266d9ea97959ba8619a22cc19dc2",
+    "history/run-journal-store-v1.mjs": "1356028b65f9f8b96e3b9ec8ba3bfbb4968092af53d00e8b5dfdb11b161f4792",
+    "history/run-journal-v1.mjs": "0164f10da27f6d12cfd1f3d443bd8e0f7c237b46363353570ae4a759a97f749b",
+    "hosts/history/review-repository-history-v1.mjs": "a1042e1913e468edb322df493454f91f88f8c58231791b77c7c2eb1b00b5a090",
+    "hosts/history/review-repository-incidents-v1.mjs": "9d614cb78939664f276f6a70ac053fce1d4cc72db78b1126c5f372f49a68008e",
+    "hosts/history/terminal-history-prompt-v1.mjs": "282774b329890be4a0d4b0cf144558cdc5e4b7e623c8e5b2f201f911ceb02db4",
+    "hosts/repository/demo-state-v1.mjs": "22a5a2fc455990afdc1cc30e677c48bda1216846822d6c49061b9be5cebd902f",
+    "hosts/repository/execution-admission-v1.mjs": "5a9d94e141dd06d5d3492b355134a13c795d8750e4523c5277bf0da0b6ec2dd6",
+    "hosts/repository/execution-coordinator-v1.mjs": "eb72e875cb2ae62657d6a4414629f01dab017dfa41d4d83bf78b6deac0760c3d",
+    "hosts/repository/host-evidence-v1.mjs": "71ce2b38f2c98b2f2767447727aab3858c02ced49b8c4389d738bb995b4677b0",
+    "hosts/repository/live-demo-execution-v1.mjs": "30b9eb39762dbda40b4d4b3785b72e423651975868480ccb066346d9b4dacb1e",
+    "hosts/repository/live-model-selection-v3.mjs": "22a242290248180f158974d7a733a368a82669c270b0171eae747ac18c638520",
+    "hosts/repository/live-owner-status-v1.mjs": "525394da3ff7f4d9818e139c66a96890c455cdcd1e86d8eea9d3bfd70a46260b",
+    "hosts/repository/native-incident-source-v1.mjs": "6a1ddf192be45ff14e4471e08470429a6fcea300642e4f681d10f187b7540e74",
+    "hosts/repository/node-adapter-v1.mjs": "669fcea3ba29c6b6f1b80d80d112e50d0c935047068b36edd3a4b121e37194cc",
+    "hosts/repository/node-executor-v1.mjs": "cba7dc17fdd32260a79796ac6fcbf443a63d48f919acb6fcadbf17ce6f9ca22b",
+    "hosts/repository/node-suite-v1.mjs": "5ed5cd9ca407b281379d6b67d93df60ab3b3a45676b6a4e82c7bfc474d29e2c2",
+    "hosts/repository/proposed-changes-v1.mjs": "045fe0d77b3b6d4d95c406964b603b09b2aeabe131cde267b41806114379f55d",
+    "hosts/repository/reviewed-live-model-v1.mjs": "25826068f4e105d29edb0877c4c4d546d223ff07586075aacd82a31c601a44c9",
+    "hosts/repository/reviewed-live-model-v3.mjs": "86afd41465f65713dfa6914a1543968e2e40cdd63b863c910a78994f89011d95",
+    "hosts/repository/reviewed-workflow-v1.mjs": "14b4c5d0db419a666df42f50f00dfe64d29a57a8fae7b66aeeef553c25d1bdb2",
+    "hosts/repository/snapshot-contract.mjs": "2b52c23bac3a817769b7892eed71baba79cb81954b6a63724d107a9c258ba13f",
+    "hosts/repository/task-materialization-owner-v1.mjs": "16e5fa985dbe8dcdd95f54ac2c1916fdb4cb0602bc6e97a3f657152d823741ed",
+    "hosts/repository/task-workspace-v1.mjs": "0208549404e57d4208a82f251e6d8e6e7c425c131c2873fd38294b3e9a531c4d",
+    "hosts/swift-verifier/build.mjs": "c4cc18ea3cf540c268232b474e1ff045b7572e9bc194501e2fd0f168daa61a63",
+    "hosts/swift-verifier/check-plan-v1.mjs": "a30ff5596e2bebc376cfa0da84be1c00eca8443cc2b37f5b1b7da42ef44b658a",
+    "hosts/swift-verifier/executor.mjs": "b250d3161ce97b24993d4c89c4c097e6086a3179fac42d6523ca6dabb2a8ea13",
+    "hosts/swift-verifier/group-adapter-v1.mjs": "471ae91cfc78a82abcb425ed75cd16aec2a76d8123cdc9b3e4063c536382e774",
+    "hosts/swift-verifier/group-contract-utils.mjs": "8fc51ac107abd68adb1c72683ccfa2af9c74ac077c5506bf89525f972b14ac82",
+    "hosts/swift-verifier/main.swift": "0d4e15b22b3231d990cfd5e7de1c52f4fdfebf4f4ab6da15b0ae22c74cea910c",
+    "hosts/swift-verifier/owned-child.mjs": "bb5386e1d7e3f90bbb75ccdc6340a394aea56f429f88530f128018c0fa6566e5",
+    "hosts/swift-verifier/protocol.mjs": "7557d81836f263c13e06ac7613ebfa61ce7fbeeb7b0f7db98889473806f322cc",
+    "hosts/swift-verifier/reservation.mjs": "6d7573d23a3d2b0ecdb4b396cb58f4f9ae8e5997190616c08c1b93bd0ab376fd",
+    "integrations/veritas/import-manifest.json": "8207efbc465ec99f0c16a7a281c349bb7ce8819349dbbafe17534f72dd527bcb",
+    "integrations/veritas/native/macos/CodenameVeritasFramework/Sources/VeritasCore/ArtifactSnapshot.swift": "013e796d11a844dda345f223894a8d76713b19b0f46f6a7f84019aa5b7bc0f22",
+    "integrations/veritas/native/macos/CodenameVeritasFramework/Sources/VeritasCore/DeterministicChecks.swift": "4d234fd389895cf0a55bf7daf0f5d082077ab3677880165f7d0e1236a88be474",
+    "integrations/veritas/native/macos/CodenameVeritasFramework/Sources/VeritasCore/StrictJSONDocumentValidator.swift": "bd6173e012890f2fde2e26be94c5e577cd9e098841bdad98a377b1c88dff1b2c",
+    "integrity/record-utils.mjs": "e46eb1a01170231bd6873771cd256740fd3dde6bcb01d418f6f7d7a75e6139ff",
+    "package.json": "adeab157ab448d1bc2a40793c6b127fd74bb2c64339b6e3c419ae29fcb3fd7e1",
+    "receipts/host-run-bundle-v2.mjs": "406936e6523f58323634fab1c9f560d671d58e1c343d2082f081f8a7810061fe",
+    "receipts/live-usage-v1.mjs": "f015e2973567e21329d4e79de8abc6e1f664370eff3f2338aad31490fb4791a5",
+    "receipts/repository-execution-v1.mjs": "7317e06c094bdf33e51645ce39348fc9e2d5a11ad0921af87434e34c45828cc2",
+    "receipts/repository-live-model-run-v1.mjs": "7a17b15f5d649c9255da8b09c531f5192b7d6e14ba5db928c878e1ccd13dc293",
+    "receipts/repository-live-model-run-v3.mjs": "66f7598c6b3be393c65dbd92e1a3c58c52b7ca66c4e73f57a46c8556739614a4",
+    "receipts/repository-run-v1.mjs": "50c1e86cec48fc666aae64b3285f9acda8e20968d5f10f0d9313e0e22051d697",
+    "receipts/swift-static-group-v1.mjs": "e07e9a361ef808f8d652f1542fec54085d4f341fd093a582f2e86baf77e4cdbb",
+    "receipts/swift-static-run-v1.mjs": "454e8657a2a2aaf6a016de5d09c5d65512d53ffb9db2a6843e05471450f8c8ef",
+    "workflow/contracts.mjs": "c28a3ee3db6e9a936cd58fca8b8ee3f2744ca25c259e2ea278b3b09cdbb73d82",
+    "workflow/engine.mjs": "c67c63baeadc725a8487af7108b01d3a38dd50e64ff35f1be66471c81e5f979b"
+  },
+  "stageManifest": {
+    "adapters/local-chat.mjs": "83e7af06515387273c11bf8595be5f1bf8c2520000704be12acb274dd49a37a9",
+    "adapters/native-chat-protocol-v1.mjs": "44468cb8b6ebc97e1821405a5add4916a97bf82b0ffeaa2076f85e79e12255f3",
+    "adapters/native-chat-v1.mjs": "05db89079e5a167c6cb48018c659e514d573d3b7e95a3ce8282f2803e0bc024c",
+    "adapters/repair-guidance-v1.mjs": "d4421a3c6dc57ab20e9ad2cbae57e07280c34bcdadb72fcf3caf017dd88759e0",
+    "bin/nisi.mjs": "aea4736ee1224b4403217af6ea018a7d881f2f2398b8f7e2509ab913265e5848",
+    "canonical/canonical-json-v1.mjs": "d1049a26d2bea0d14e959c0af22af15b975345091c5fa5360e8bd685637f8e59",
+    "cli/arguments.mjs": "c19daefc0a595f94d7bf0ae5c29616b54f32acc6ca03e1b2a4ca0a44e663e4cd",
+    "cli/doctor.mjs": "35cce14c819cfa555928fb1c531c2f7a3dc64e55920c7e99089af6e5e78b74cd",
+    "cli/inspect.mjs": "ea23beaaee44170651d06b0dc0ed9e523896acbe38cfbf9e238734f7135d1296",
+    "cli/main.mjs": "97bc14e46e23b566dcd2eba5f42f165c89ca4fda29d8fc053e14ae3d7cbce422",
+    "cli/paired-arm-inspect.mjs": "cc40aa7d2f763bb5cda49b0e5d9b50983c2e35772d68e43cc334f4083dc1228b",
+    "cli/paired-trial-diagnostic-inspect.mjs": "55267d87d702f41ed5fdc06d38b6fbb06e821ff75c0ec2d8707552a5e0a44c31",
+    "cli/paired-trial-inspect.mjs": "337de65a19b68c328a9799dd43444577d1472d3cc249662f99f09b0370352c37",
+    "cli/stored-summary-v1.mjs": "cc946d0a25c90998e6f0f7a566bc083fa64daf62d437ef7aa2e2e013234532c7",
+    "cli/text.mjs": "8be1e7f5f4ba4275f451909dfcda6dc111a182b229ff137dcf2112ed13523d20",
+    "evaluation/intake-v1.mjs": "7c338bf7419c236bc8a8c912266f470e68ff3711848f777c56e68f0ef7c7912a",
+    "evaluation/metrics-v1.mjs": "a11f1247df37b89c661fe3033e8d88a0c347038114bd9192ac48620d52ba0e91",
+    "evaluation/paired-trial-v1.mjs": "1e741765c303ba0623642f31d83c17cc0d683b0ceafa486071ae99fa443af1d6",
+    "evaluation/prevention-execution-profile-v1.mjs": "b663798f149e44d783feb7e7833c2758263dbfa38bb7f1213a52b276c30375a7",
+    "evaluation/prevention-experiment-plan-v1.mjs": "470443df194876c39e74444860dd1f376ffbead27bb83a61f498c2f942a9a0d1",
+    "examples/repository-live-model.mjs": "e56b3dd062e89725772d4d39bd2cdcb9b6342fce9f9e0d88711fcfa6c415c0df",
+    "examples/repository-task/fixtures/baseline/README.md": "b6ce54912db6b4605d19e4e0fdce5cc1e680de4a57bb1af82ca7b737ff578011",
+    "examples/repository-task/fixtures/baseline/config.json": "fc2001f12401983fa2632ee17e9879b6a1595f0de616e6e1484083c0c3324f04",
+    "examples/repository-task/fixtures/harness/check-retry-settings.mjs": "e07a9bd6a63a52ac6977734c61ea0a210c71ec2c331951f4d94b44159c8245c5",
+    "examples/repository-task/fixtures/live-baseline/retry-settings.mjs": "65525edd21e81c5de1791c6f47fa404ffea10f7ea332545a8e295afdd6270254",
+    "examples/repository-task/fixtures/live-repair/retry-settings.mjs": "73369f8d0cc0cefbb082c65388c3652c7602254ab5b6fbab138e08078b568112",
+    "examples/repository-task/reviewed-live-fixture-v1.mjs": "292bd67a2e4132c9c5122f5d716e7eeb3cdd3a6ebf5362470d046b6d025add36",
+    "history/journal-owner-v2.mjs": "2120bf0c75d9aa6122c06a2b34d55b3256a08f024d0e5fa43d8877e4eb67e44f",
+    "history/paired-arm-reconciliation-v1.mjs": "8c22a08ef5508a9af4567e787cdf9602cdd97a0d949dbf317a96ad3e7850c489",
+    "history/paired-arm-sidecar-codec-v1.mjs": "f79bff6baf8c6dbc6738c47df4a49039044384569ca139e140438ed7c094922d",
+    "history/paired-arm-sidecar-store-v1.mjs": "89b71397aae2a4638a4074242057dbf447f37a653c20d9c8154220d1f9e2f59b",
+    "history/paired-trial-event-codec-v1.mjs": "b052a96df1e8611b1779ab84144773d818157ae11a550c4aa6a80854c0e4176c",
+    "history/paired-trial-event-store-v1.mjs": "108780fcd2cc04cc4e2fef6002ee84187bdea19db4c923aaf8e7e89f495dbcb2",
+    "history/paired-trial-reconciliation-v1.mjs": "2703cd7aa4b9ff1bff24df48426a5ae694f419c45760abf1f04917a577a46f76",
+    "history/repository-host-history-v1.mjs": "e74aa40389a1c132ec535c77a90b0e56a61b91aa20126b48546b5942091d5418",
+    "history/repository-incident-candidates-v1.mjs": "618c32c09775b2931826c39f442e5c103463f9c11c877e483781850a7e1751f2",
+    "history/repository-incident-capture-v1.mjs": "6b0aaaf0b21dde32eca9301e73863c37bc2ac1bff63b14de7120c35e8968933c",
+    "history/repository-trial-diagnostic-store-v1.mjs": "2ed75c2d80c9a7667dd332f642cd211378b23682569f9b7e4b7a2c6d981b82a3",
+    "history/repository-trial-diagnostic-v1.mjs": "e494d9c3d91c723637c8a35079299fb6f3fe266d9ea97959ba8619a22cc19dc2",
+    "history/run-journal-store-v1.mjs": "1356028b65f9f8b96e3b9ec8ba3bfbb4968092af53d00e8b5dfdb11b161f4792",
+    "history/run-journal-v1.mjs": "0164f10da27f6d12cfd1f3d443bd8e0f7c237b46363353570ae4a759a97f749b",
+    "hosts/history/review-repository-history-v1.mjs": "a1042e1913e468edb322df493454f91f88f8c58231791b77c7c2eb1b00b5a090",
+    "hosts/history/review-repository-incidents-v1.mjs": "9d614cb78939664f276f6a70ac053fce1d4cc72db78b1126c5f372f49a68008e",
+    "hosts/history/terminal-history-prompt-v1.mjs": "282774b329890be4a0d4b0cf144558cdc5e4b7e623c8e5b2f201f911ceb02db4",
+    "hosts/repository/demo-state-v1.mjs": "22a5a2fc455990afdc1cc30e677c48bda1216846822d6c49061b9be5cebd902f",
+    "hosts/repository/execution-admission-v1.mjs": "5a9d94e141dd06d5d3492b355134a13c795d8750e4523c5277bf0da0b6ec2dd6",
+    "hosts/repository/execution-coordinator-v1.mjs": "eb72e875cb2ae62657d6a4414629f01dab017dfa41d4d83bf78b6deac0760c3d",
+    "hosts/repository/host-evidence-v1.mjs": "71ce2b38f2c98b2f2767447727aab3858c02ced49b8c4389d738bb995b4677b0",
+    "hosts/repository/live-demo-execution-v1.mjs": "30b9eb39762dbda40b4d4b3785b72e423651975868480ccb066346d9b4dacb1e",
+    "hosts/repository/live-model-selection-v3.mjs": "22a242290248180f158974d7a733a368a82669c270b0171eae747ac18c638520",
+    "hosts/repository/live-owner-status-v1.mjs": "525394da3ff7f4d9818e139c66a96890c455cdcd1e86d8eea9d3bfd70a46260b",
+    "hosts/repository/native-incident-source-v1.mjs": "6a1ddf192be45ff14e4471e08470429a6fcea300642e4f681d10f187b7540e74",
+    "hosts/repository/node-adapter-v1.mjs": "669fcea3ba29c6b6f1b80d80d112e50d0c935047068b36edd3a4b121e37194cc",
+    "hosts/repository/node-executor-v1.mjs": "cba7dc17fdd32260a79796ac6fcbf443a63d48f919acb6fcadbf17ce6f9ca22b",
+    "hosts/repository/node-suite-v1.mjs": "5ed5cd9ca407b281379d6b67d93df60ab3b3a45676b6a4e82c7bfc474d29e2c2",
+    "hosts/repository/proposed-changes-v1.mjs": "045fe0d77b3b6d4d95c406964b603b09b2aeabe131cde267b41806114379f55d",
+    "hosts/repository/reviewed-live-model-v1.mjs": "25826068f4e105d29edb0877c4c4d546d223ff07586075aacd82a31c601a44c9",
+    "hosts/repository/reviewed-live-model-v3.mjs": "86afd41465f65713dfa6914a1543968e2e40cdd63b863c910a78994f89011d95",
+    "hosts/repository/reviewed-workflow-v1.mjs": "14b4c5d0db419a666df42f50f00dfe64d29a57a8fae7b66aeeef553c25d1bdb2",
+    "hosts/repository/snapshot-contract.mjs": "2b52c23bac3a817769b7892eed71baba79cb81954b6a63724d107a9c258ba13f",
+    "hosts/repository/task-materialization-owner-v1.mjs": "16e5fa985dbe8dcdd95f54ac2c1916fdb4cb0602bc6e97a3f657152d823741ed",
+    "hosts/repository/task-workspace-v1.mjs": "0208549404e57d4208a82f251e6d8e6e7c425c131c2873fd38294b3e9a531c4d",
+    "hosts/swift-verifier/build.mjs": "c4cc18ea3cf540c268232b474e1ff045b7572e9bc194501e2fd0f168daa61a63",
+    "hosts/swift-verifier/check-plan-v1.mjs": "a30ff5596e2bebc376cfa0da84be1c00eca8443cc2b37f5b1b7da42ef44b658a",
+    "hosts/swift-verifier/executor.mjs": "b250d3161ce97b24993d4c89c4c097e6086a3179fac42d6523ca6dabb2a8ea13",
+    "hosts/swift-verifier/group-adapter-v1.mjs": "471ae91cfc78a82abcb425ed75cd16aec2a76d8123cdc9b3e4063c536382e774",
+    "hosts/swift-verifier/group-contract-utils.mjs": "8fc51ac107abd68adb1c72683ccfa2af9c74ac077c5506bf89525f972b14ac82",
+    "hosts/swift-verifier/main.swift": "0d4e15b22b3231d990cfd5e7de1c52f4fdfebf4f4ab6da15b0ae22c74cea910c",
+    "hosts/swift-verifier/owned-child.mjs": "bb5386e1d7e3f90bbb75ccdc6340a394aea56f429f88530f128018c0fa6566e5",
+    "hosts/swift-verifier/protocol.mjs": "7557d81836f263c13e06ac7613ebfa61ce7fbeeb7b0f7db98889473806f322cc",
+    "hosts/swift-verifier/reservation.mjs": "6d7573d23a3d2b0ecdb4b396cb58f4f9ae8e5997190616c08c1b93bd0ab376fd",
+    "integrations/veritas/import-manifest.json": "8207efbc465ec99f0c16a7a281c349bb7ce8819349dbbafe17534f72dd527bcb",
+    "integrations/veritas/native/macos/CodenameVeritasFramework/Sources/VeritasCore/ArtifactSnapshot.swift": "013e796d11a844dda345f223894a8d76713b19b0f46f6a7f84019aa5b7bc0f22",
+    "integrations/veritas/native/macos/CodenameVeritasFramework/Sources/VeritasCore/DeterministicChecks.swift": "4d234fd389895cf0a55bf7daf0f5d082077ab3677880165f7d0e1236a88be474",
+    "integrations/veritas/native/macos/CodenameVeritasFramework/Sources/VeritasCore/StrictJSONDocumentValidator.swift": "bd6173e012890f2fde2e26be94c5e577cd9e098841bdad98a377b1c88dff1b2c",
+    "integrity/record-utils.mjs": "e46eb1a01170231bd6873771cd256740fd3dde6bcb01d418f6f7d7a75e6139ff",
+    "package.json": "d821c65dbfaa8edc96c44995dbb1dfa8f74f5c5461718a9a814fb336b45327fc",
+    "receipts/host-run-bundle-v2.mjs": "406936e6523f58323634fab1c9f560d671d58e1c343d2082f081f8a7810061fe",
+    "receipts/live-usage-v1.mjs": "f015e2973567e21329d4e79de8abc6e1f664370eff3f2338aad31490fb4791a5",
+    "receipts/repository-execution-v1.mjs": "7317e06c094bdf33e51645ce39348fc9e2d5a11ad0921af87434e34c45828cc2",
+    "receipts/repository-live-model-run-v1.mjs": "7a17b15f5d649c9255da8b09c531f5192b7d6e14ba5db928c878e1ccd13dc293",
+    "receipts/repository-live-model-run-v3.mjs": "66f7598c6b3be393c65dbd92e1a3c58c52b7ca66c4e73f57a46c8556739614a4",
+    "receipts/repository-run-v1.mjs": "50c1e86cec48fc666aae64b3285f9acda8e20968d5f10f0d9313e0e22051d697",
+    "receipts/swift-static-group-v1.mjs": "e07e9a361ef808f8d652f1542fec54085d4f341fd093a582f2e86baf77e4cdbb",
+    "receipts/swift-static-run-v1.mjs": "454e8657a2a2aaf6a016de5d09c5d65512d53ffb9db2a6843e05471450f8c8ef",
+    "workflow/contracts.mjs": "c28a3ee3db6e9a936cd58fca8b8ee3f2744ca25c259e2ea278b3b09cdbb73d82",
+    "workflow/engine.mjs": "c67c63baeadc725a8487af7108b01d3a38dd50e64ff35f1be66471c81e5f979b"
+  },
+  "boundaries": {
+    "privateOnly": true,
+    "networkAllowed": false,
+    "lifecycleScriptsAllowed": false,
+    "globalInstall": false,
+    "published": false,
+    "modelInference": false,
+    "nativeRequested": false,
+    "hostileWriterIsolation": false,
+    "arbitraryCandidateExecution": false,
+    "fullMerger": false
+  },
+  "verificationInputs": {
+    "scripts/check-private-cli-package.mjs": "1e81e96320140a0cede324f1ea01bd65162cdf4c3b5d3c5bcfa43bb6264b9a9f",
+    "scripts/private-cli-package-contract.mjs": "d995c5738c3c76d092443d6f5c3af4ba601ed427ca0bb604a69de40e02ab8b20",
+    "tests/helpers/stored-summary-fixture.mjs": "dabc64843bf3ca90d35b98ab1228f1ac0d3c5327452446e3c4fa848aec04f279",
+    "tests/helpers/paired-trial-fixture.mjs": "3a4fcfde078f53a58208ee9b3f036cc9ec8f5590f85313bc405bb5a271cfc95e",
+    "evaluation/paired-trial-runner-v1.mjs": "81eee259f372233585afff7e84a8753bc815705b9d71a5f5a5bdbb2614c3ec5a",
+    "tests/helpers/nisi-cli-no-effects.mjs": "7b772d36a89f7878049673e546ccde954c3057886bac8569e1a48001a52730ce",
+    "tests/helpers/nisi-cli-no-heavy-loader.mjs": "ba7cfaf1cc431f2fe05e4893e480fb3b8457775757fc353adac295483eb07dc8",
+    "history/paired-arm-sidecar-codec-v1.mjs": "f79bff6baf8c6dbc6738c47df4a49039044384569ca139e140438ed7c094922d",
+    "hosts/repository/execution-admission-v1.mjs": "5a9d94e141dd06d5d3492b355134a13c795d8750e4523c5277bf0da0b6ec2dd6",
+    "evaluation/intake-v1.mjs": "7c338bf7419c236bc8a8c912266f470e68ff3711848f777c56e68f0ef7c7912a",
+    "workflow/contracts.mjs": "c28a3ee3db6e9a936cd58fca8b8ee3f2744ca25c259e2ea278b3b09cdbb73d82"
+  },
+  "npmVersion": "11.16.0",
+  "archive": {
+    "path": "/Users/louiscalata/nisi/.build/private-cli-package-b8cCay/nisi-private-cli-0.2.0-private.0.tgz",
+    "sha256": "4cd3f3df081c027d80a231a05142ff8c1be87edd4825d81204cac5c37df6e847",
+    "entries": {
+      "adapters/local-chat.mjs": "83e7af06515387273c11bf8595be5f1bf8c2520000704be12acb274dd49a37a9",
+      "adapters/native-chat-protocol-v1.mjs": "44468cb8b6ebc97e1821405a5add4916a97bf82b0ffeaa2076f85e79e12255f3",
+      "adapters/native-chat-v1.mjs": "05db89079e5a167c6cb48018c659e514d573d3b7e95a3ce8282f2803e0bc024c",
+      "adapters/repair-guidance-v1.mjs": "d4421a3c6dc57ab20e9ad2cbae57e07280c34bcdadb72fcf3caf017dd88759e0",
+      "bin/nisi.mjs": "aea4736ee1224b4403217af6ea018a7d881f2f2398b8f7e2509ab913265e5848",
+      "canonical/canonical-json-v1.mjs": "d1049a26d2bea0d14e959c0af22af15b975345091c5fa5360e8bd685637f8e59",
+      "cli/arguments.mjs": "c19daefc0a595f94d7bf0ae5c29616b54f32acc6ca03e1b2a4ca0a44e663e4cd",
+      "cli/doctor.mjs": "35cce14c819cfa555928fb1c531c2f7a3dc64e55920c7e99089af6e5e78b74cd",
+      "cli/inspect.mjs": "ea23beaaee44170651d06b0dc0ed9e523896acbe38cfbf9e238734f7135d1296",
+      "cli/main.mjs": "97bc14e46e23b566dcd2eba5f42f165c89ca4fda29d8fc053e14ae3d7cbce422",
+      "cli/paired-arm-inspect.mjs": "cc40aa7d2f763bb5cda49b0e5d9b50983c2e35772d68e43cc334f4083dc1228b",
+      "cli/paired-trial-diagnostic-inspect.mjs": "55267d87d702f41ed5fdc06d38b6fbb06e821ff75c0ec2d8707552a5e0a44c31",
+      "cli/paired-trial-inspect.mjs": "337de65a19b68c328a9799dd43444577d1472d3cc249662f99f09b0370352c37",
+      "cli/stored-summary-v1.mjs": "cc946d0a25c90998e6f0f7a566bc083fa64daf62d437ef7aa2e2e013234532c7",
+      "cli/text.mjs": "8be1e7f5f4ba4275f451909dfcda6dc111a182b229ff137dcf2112ed13523d20",
+      "evaluation/intake-v1.mjs": "7c338bf7419c236bc8a8c912266f470e68ff3711848f777c56e68f0ef7c7912a",
+      "evaluation/metrics-v1.mjs": "a11f1247df37b89c661fe3033e8d88a0c347038114bd9192ac48620d52ba0e91",
+      "evaluation/paired-trial-v1.mjs": "1e741765c303ba0623642f31d83c17cc0d683b0ceafa486071ae99fa443af1d6",
+      "evaluation/prevention-execution-profile-v1.mjs": "b663798f149e44d783feb7e7833c2758263dbfa38bb7f1213a52b276c30375a7",
+      "evaluation/prevention-experiment-plan-v1.mjs": "470443df194876c39e74444860dd1f376ffbead27bb83a61f498c2f942a9a0d1",
+      "examples/repository-live-model.mjs": "e56b3dd062e89725772d4d39bd2cdcb9b6342fce9f9e0d88711fcfa6c415c0df",
+      "examples/repository-task/fixtures/baseline/README.md": "b6ce54912db6b4605d19e4e0fdce5cc1e680de4a57bb1af82ca7b737ff578011",
+      "examples/repository-task/fixtures/baseline/config.json": "fc2001f12401983fa2632ee17e9879b6a1595f0de616e6e1484083c0c3324f04",
+      "examples/repository-task/fixtures/harness/check-retry-settings.mjs": "e07a9bd6a63a52ac6977734c61ea0a210c71ec2c331951f4d94b44159c8245c5",
+      "examples/repository-task/fixtures/live-baseline/retry-settings.mjs": "65525edd21e81c5de1791c6f47fa404ffea10f7ea332545a8e295afdd6270254",
+      "examples/repository-task/fixtures/live-repair/retry-settings.mjs": "73369f8d0cc0cefbb082c65388c3652c7602254ab5b6fbab138e08078b568112",
+      "examples/repository-task/reviewed-live-fixture-v1.mjs": "292bd67a2e4132c9c5122f5d716e7eeb3cdd3a6ebf5362470d046b6d025add36",
+      "history/journal-owner-v2.mjs": "2120bf0c75d9aa6122c06a2b34d55b3256a08f024d0e5fa43d8877e4eb67e44f",
+      "history/paired-arm-reconciliation-v1.mjs": "8c22a08ef5508a9af4567e787cdf9602cdd97a0d949dbf317a96ad3e7850c489",
+      "history/paired-arm-sidecar-codec-v1.mjs": "f79bff6baf8c6dbc6738c47df4a49039044384569ca139e140438ed7c094922d",
+      "history/paired-arm-sidecar-store-v1.mjs": "89b71397aae2a4638a4074242057dbf447f37a653c20d9c8154220d1f9e2f59b",
+      "history/paired-trial-event-codec-v1.mjs": "b052a96df1e8611b1779ab84144773d818157ae11a550c4aa6a80854c0e4176c",
+      "history/paired-trial-event-store-v1.mjs": "108780fcd2cc04cc4e2fef6002ee84187bdea19db4c923aaf8e7e89f495dbcb2",
+      "history/paired-trial-reconciliation-v1.mjs": "2703cd7aa4b9ff1bff24df48426a5ae694f419c45760abf1f04917a577a46f76",
+      "history/repository-host-history-v1.mjs": "e74aa40389a1c132ec535c77a90b0e56a61b91aa20126b48546b5942091d5418",
+      "history/repository-incident-candidates-v1.mjs": "618c32c09775b2931826c39f442e5c103463f9c11c877e483781850a7e1751f2",
+      "history/repository-incident-capture-v1.mjs": "6b0aaaf0b21dde32eca9301e73863c37bc2ac1bff63b14de7120c35e8968933c",
+      "history/repository-trial-diagnostic-store-v1.mjs": "2ed75c2d80c9a7667dd332f642cd211378b23682569f9b7e4b7a2c6d981b82a3",
+      "history/repository-trial-diagnostic-v1.mjs": "e494d9c3d91c723637c8a35079299fb6f3fe266d9ea97959ba8619a22cc19dc2",
+      "history/run-journal-store-v1.mjs": "1356028b65f9f8b96e3b9ec8ba3bfbb4968092af53d00e8b5dfdb11b161f4792",
+      "history/run-journal-v1.mjs": "0164f10da27f6d12cfd1f3d443bd8e0f7c237b46363353570ae4a759a97f749b",
+      "hosts/history/review-repository-history-v1.mjs": "a1042e1913e468edb322df493454f91f88f8c58231791b77c7c2eb1b00b5a090",
+      "hosts/history/review-repository-incidents-v1.mjs": "9d614cb78939664f276f6a70ac053fce1d4cc72db78b1126c5f372f49a68008e",
+      "hosts/history/terminal-history-prompt-v1.mjs": "282774b329890be4a0d4b0cf144558cdc5e4b7e623c8e5b2f201f911ceb02db4",
+      "hosts/repository/demo-state-v1.mjs": "22a5a2fc455990afdc1cc30e677c48bda1216846822d6c49061b9be5cebd902f",
+      "hosts/repository/execution-admission-v1.mjs": "5a9d94e141dd06d5d3492b355134a13c795d8750e4523c5277bf0da0b6ec2dd6",
+      "hosts/repository/execution-coordinator-v1.mjs": "eb72e875cb2ae62657d6a4414629f01dab017dfa41d4d83bf78b6deac0760c3d",
+      "hosts/repository/host-evidence-v1.mjs": "71ce2b38f2c98b2f2767447727aab3858c02ced49b8c4389d738bb995b4677b0",
+      "hosts/repository/live-demo-execution-v1.mjs": "30b9eb39762dbda40b4d4b3785b72e423651975868480ccb066346d9b4dacb1e",
+      "hosts/repository/live-model-selection-v3.mjs": "22a242290248180f158974d7a733a368a82669c270b0171eae747ac18c638520",
+      "hosts/repository/live-owner-status-v1.mjs": "525394da3ff7f4d9818e139c66a96890c455cdcd1e86d8eea9d3bfd70a46260b",
+      "hosts/repository/native-incident-source-v1.mjs": "6a1ddf192be45ff14e4471e08470429a6fcea300642e4f681d10f187b7540e74",
+      "hosts/repository/node-adapter-v1.mjs": "669fcea3ba29c6b6f1b80d80d112e50d0c935047068b36edd3a4b121e37194cc",
+      "hosts/repository/node-executor-v1.mjs": "cba7dc17fdd32260a79796ac6fcbf443a63d48f919acb6fcadbf17ce6f9ca22b",
+      "hosts/repository/node-suite-v1.mjs": "5ed5cd9ca407b281379d6b67d93df60ab3b3a45676b6a4e82c7bfc474d29e2c2",
+      "hosts/repository/proposed-changes-v1.mjs": "045fe0d77b3b6d4d95c406964b603b09b2aeabe131cde267b41806114379f55d",
+      "hosts/repository/reviewed-live-model-v1.mjs": "25826068f4e105d29edb0877c4c4d546d223ff07586075aacd82a31c601a44c9",
+      "hosts/repository/reviewed-live-model-v3.mjs": "86afd41465f65713dfa6914a1543968e2e40cdd63b863c910a78994f89011d95",
+      "hosts/repository/reviewed-workflow-v1.mjs": "14b4c5d0db419a666df42f50f00dfe64d29a57a8fae7b66aeeef553c25d1bdb2",
+      "hosts/repository/snapshot-contract.mjs": "2b52c23bac3a817769b7892eed71baba79cb81954b6a63724d107a9c258ba13f",
+      "hosts/repository/task-materialization-owner-v1.mjs": "16e5fa985dbe8dcdd95f54ac2c1916fdb4cb0602bc6e97a3f657152d823741ed",
+      "hosts/repository/task-workspace-v1.mjs": "0208549404e57d4208a82f251e6d8e6e7c425c131c2873fd38294b3e9a531c4d",
+      "hosts/swift-verifier/build.mjs": "c4cc18ea3cf540c268232b474e1ff045b7572e9bc194501e2fd0f168daa61a63",
+      "hosts/swift-verifier/check-plan-v1.mjs": "a30ff5596e2bebc376cfa0da84be1c00eca8443cc2b37f5b1b7da42ef44b658a",
+      "hosts/swift-verifier/executor.mjs": "b250d3161ce97b24993d4c89c4c097e6086a3179fac42d6523ca6dabb2a8ea13",
+      "hosts/swift-verifier/group-adapter-v1.mjs": "471ae91cfc78a82abcb425ed75cd16aec2a76d8123cdc9b3e4063c536382e774",
+      "hosts/swift-verifier/group-contract-utils.mjs": "8fc51ac107abd68adb1c72683ccfa2af9c74ac077c5506bf89525f972b14ac82",
+      "hosts/swift-verifier/main.swift": "0d4e15b22b3231d990cfd5e7de1c52f4fdfebf4f4ab6da15b0ae22c74cea910c",
+      "hosts/swift-verifier/owned-child.mjs": "bb5386e1d7e3f90bbb75ccdc6340a394aea56f429f88530f128018c0fa6566e5",
+      "hosts/swift-verifier/protocol.mjs": "7557d81836f263c13e06ac7613ebfa61ce7fbeeb7b0f7db98889473806f322cc",
+      "hosts/swift-verifier/reservation.mjs": "6d7573d23a3d2b0ecdb4b396cb58f4f9ae8e5997190616c08c1b93bd0ab376fd",
+      "integrations/veritas/import-manifest.json": "8207efbc465ec99f0c16a7a281c349bb7ce8819349dbbafe17534f72dd527bcb",
+      "integrations/veritas/native/macos/CodenameVeritasFramework/Sources/VeritasCore/ArtifactSnapshot.swift": "013e796d11a844dda345f223894a8d76713b19b0f46f6a7f84019aa5b7bc0f22",
+      "integrations/veritas/native/macos/CodenameVeritasFramework/Sources/VeritasCore/DeterministicChecks.swift": "4d234fd389895cf0a55bf7daf0f5d082077ab3677880165f7d0e1236a88be474",
+      "integrations/veritas/native/macos/CodenameVeritasFramework/Sources/VeritasCore/StrictJSONDocumentValidator.swift": "bd6173e012890f2fde2e26be94c5e577cd9e098841bdad98a377b1c88dff1b2c",
+      "integrity/record-utils.mjs": "e46eb1a01170231bd6873771cd256740fd3dde6bcb01d418f6f7d7a75e6139ff",
+      "package.json": "d821c65dbfaa8edc96c44995dbb1dfa8f74f5c5461718a9a814fb336b45327fc",
+      "receipts/host-run-bundle-v2.mjs": "406936e6523f58323634fab1c9f560d671d58e1c343d2082f081f8a7810061fe",
+      "receipts/live-usage-v1.mjs": "f015e2973567e21329d4e79de8abc6e1f664370eff3f2338aad31490fb4791a5",
+      "receipts/repository-execution-v1.mjs": "7317e06c094bdf33e51645ce39348fc9e2d5a11ad0921af87434e34c45828cc2",
+      "receipts/repository-live-model-run-v1.mjs": "7a17b15f5d649c9255da8b09c531f5192b7d6e14ba5db928c878e1ccd13dc293",
+      "receipts/repository-live-model-run-v3.mjs": "66f7598c6b3be393c65dbd92e1a3c58c52b7ca66c4e73f57a46c8556739614a4",
+      "receipts/repository-run-v1.mjs": "50c1e86cec48fc666aae64b3285f9acda8e20968d5f10f0d9313e0e22051d697",
+      "receipts/swift-static-group-v1.mjs": "e07e9a361ef808f8d652f1542fec54085d4f341fd093a582f2e86baf77e4cdbb",
+      "receipts/swift-static-run-v1.mjs": "454e8657a2a2aaf6a016de5d09c5d65512d53ffb9db2a6843e05471450f8c8ef",
+      "workflow/contracts.mjs": "c28a3ee3db6e9a936cd58fca8b8ee3f2744ca25c259e2ea278b3b09cdbb73d82",
+      "workflow/engine.mjs": "c67c63baeadc725a8487af7108b01d3a38dd50e64ff35f1be66471c81e5f979b"
+    }
+  },
+  "installed": {
+    "path": "/Users/louiscalata/nisi/.build/private-cli-package-b8cCay/consumer/node_modules/nisi-private-cli",
+    "bin": "/Users/louiscalata/nisi/.build/private-cli-package-b8cCay/consumer/node_modules/.bin/nisi",
+    "exactArchiveMatch": true,
+    "before": {
+      "adapters/local-chat.mjs": {
+        "sha256": "83e7af06515387273c11bf8595be5f1bf8c2520000704be12acb274dd49a37a9",
+        "mode": 420
+      },
+      "adapters/native-chat-protocol-v1.mjs": {
+        "sha256": "44468cb8b6ebc97e1821405a5add4916a97bf82b0ffeaa2076f85e79e12255f3",
+        "mode": 420
+      },
+      "adapters/native-chat-v1.mjs": {
+        "sha256": "05db89079e5a167c6cb48018c659e514d573d3b7e95a3ce8282f2803e0bc024c",
+        "mode": 420
+      },
+      "adapters/repair-guidance-v1.mjs": {
+        "sha256": "d4421a3c6dc57ab20e9ad2cbae57e07280c34bcdadb72fcf3caf017dd88759e0",
+        "mode": 420
+      },
+      "bin/nisi.mjs": {
+        "sha256": "aea4736ee1224b4403217af6ea018a7d881f2f2398b8f7e2509ab913265e5848",
+        "mode": 493
+      },
+      "canonical/canonical-json-v1.mjs": {
+        "sha256": "d1049a26d2bea0d14e959c0af22af15b975345091c5fa5360e8bd685637f8e59",
+        "mode": 420
+      },
+      "cli/arguments.mjs": {
+        "sha256": "c19daefc0a595f94d7bf0ae5c29616b54f32acc6ca03e1b2a4ca0a44e663e4cd",
+        "mode": 420
+      },
+      "cli/doctor.mjs": {
+        "sha256": "35cce14c819cfa555928fb1c531c2f7a3dc64e55920c7e99089af6e5e78b74cd",
+        "mode": 420
+      },
+      "cli/inspect.mjs": {
+        "sha256": "ea23beaaee44170651d06b0dc0ed9e523896acbe38cfbf9e238734f7135d1296",
+        "mode": 420
+      },
+      "cli/main.mjs": {
+        "sha256": "97bc14e46e23b566dcd2eba5f42f165c89ca4fda29d8fc053e14ae3d7cbce422",
+        "mode": 420
+      },
+      "cli/paired-arm-inspect.mjs": {
+        "sha256": "cc40aa7d2f763bb5cda49b0e5d9b50983c2e35772d68e43cc334f4083dc1228b",
+        "mode": 420
+      },
+      "cli/paired-trial-diagnostic-inspect.mjs": {
+        "sha256": "55267d87d702f41ed5fdc06d38b6fbb06e821ff75c0ec2d8707552a5e0a44c31",
+        "mode": 420
+      },
+      "cli/paired-trial-inspect.mjs": {
+        "sha256": "337de65a19b68c328a9799dd43444577d1472d3cc249662f99f09b0370352c37",
+        "mode": 420
+      },
+      "cli/stored-summary-v1.mjs": {
+        "sha256": "cc946d0a25c90998e6f0f7a566bc083fa64daf62d437ef7aa2e2e013234532c7",
+        "mode": 420
+      },
+      "cli/text.mjs": {
+        "sha256": "8be1e7f5f4ba4275f451909dfcda6dc111a182b229ff137dcf2112ed13523d20",
+        "mode": 420
+      },
+      "evaluation/intake-v1.mjs": {
+        "sha256": "7c338bf7419c236bc8a8c912266f470e68ff3711848f777c56e68f0ef7c7912a",
+        "mode": 420
+      },
+      "evaluation/metrics-v1.mjs": {
+        "sha256": "a11f1247df37b89c661fe3033e8d88a0c347038114bd9192ac48620d52ba0e91",
+        "mode": 420
+      },
+      "evaluation/paired-trial-v1.mjs": {
+        "sha256": "1e741765c303ba0623642f31d83c17cc0d683b0ceafa486071ae99fa443af1d6",
+        "mode": 420
+      },
+      "evaluation/prevention-execution-profile-v1.mjs": {
+        "sha256": "b663798f149e44d783feb7e7833c2758263dbfa38bb7f1213a52b276c30375a7",
+        "mode": 420
+      },
+      "evaluation/prevention-experiment-plan-v1.mjs": {
+        "sha256": "470443df194876c39e74444860dd1f376ffbead27bb83a61f498c2f942a9a0d1",
+        "mode": 420
+      },
+      "examples/repository-live-model.mjs": {
+        "sha256": "e56b3dd062e89725772d4d39bd2cdcb9b6342fce9f9e0d88711fcfa6c415c0df",
+        "mode": 420
+      },
+      "examples/repository-task/fixtures/baseline/README.md": {
+        "sha256": "b6ce54912db6b4605d19e4e0fdce5cc1e680de4a57bb1af82ca7b737ff578011",
+        "mode": 420
+      },
+      "examples/repository-task/fixtures/baseline/config.json": {
+        "sha256": "fc2001f12401983fa2632ee17e9879b6a1595f0de616e6e1484083c0c3324f04",
+        "mode": 420
+      },
+      "examples/repository-task/fixtures/harness/check-retry-settings.mjs": {
+        "sha256": "e07a9bd6a63a52ac6977734c61ea0a210c71ec2c331951f4d94b44159c8245c5",
+        "mode": 420
+      },
+      "examples/repository-task/fixtures/live-baseline/retry-settings.mjs": {
+        "sha256": "65525edd21e81c5de1791c6f47fa404ffea10f7ea332545a8e295afdd6270254",
+        "mode": 420
+      },
+      "examples/repository-task/fixtures/live-repair/retry-settings.mjs": {
+        "sha256": "73369f8d0cc0cefbb082c65388c3652c7602254ab5b6fbab138e08078b568112",
+        "mode": 420
+      },
+      "examples/repository-task/reviewed-live-fixture-v1.mjs": {
+        "sha256": "292bd67a2e4132c9c5122f5d716e7eeb3cdd3a6ebf5362470d046b6d025add36",
+        "mode": 420
+      },
+      "history/journal-owner-v2.mjs": {
+        "sha256": "2120bf0c75d9aa6122c06a2b34d55b3256a08f024d0e5fa43d8877e4eb67e44f",
+        "mode": 420
+      },
+      "history/paired-arm-reconciliation-v1.mjs": {
+        "sha256": "8c22a08ef5508a9af4567e787cdf9602cdd97a0d949dbf317a96ad3e7850c489",
+        "mode": 420
+      },
+      "history/paired-arm-sidecar-codec-v1.mjs": {
+        "sha256": "f79bff6baf8c6dbc6738c47df4a49039044384569ca139e140438ed7c094922d",
+        "mode": 420
+      },
+      "history/paired-arm-sidecar-store-v1.mjs": {
+        "sha256": "89b71397aae2a4638a4074242057dbf447f37a653c20d9c8154220d1f9e2f59b",
+        "mode": 420
+      },
+      "history/paired-trial-event-codec-v1.mjs": {
+        "sha256": "b052a96df1e8611b1779ab84144773d818157ae11a550c4aa6a80854c0e4176c",
+        "mode": 420
+      },
+      "history/paired-trial-event-store-v1.mjs": {
+        "sha256": "108780fcd2cc04cc4e2fef6002ee84187bdea19db4c923aaf8e7e89f495dbcb2",
+        "mode": 420
+      },
+      "history/paired-trial-reconciliation-v1.mjs": {
+        "sha256": "2703cd7aa4b9ff1bff24df48426a5ae694f419c45760abf1f04917a577a46f76",
+        "mode": 420
+      },
+      "history/repository-host-history-v1.mjs": {
+        "sha256": "e74aa40389a1c132ec535c77a90b0e56a61b91aa20126b48546b5942091d5418",
+        "mode": 420
+      },
+      "history/repository-incident-candidates-v1.mjs": {
+        "sha256": "618c32c09775b2931826c39f442e5c103463f9c11c877e483781850a7e1751f2",
+        "mode": 420
+      },
+      "history/repository-incident-capture-v1.mjs": {
+        "sha256": "6b0aaaf0b21dde32eca9301e73863c37bc2ac1bff63b14de7120c35e8968933c",
+        "mode": 420
+      },
+      "history/repository-trial-diagnostic-store-v1.mjs": {
+        "sha256": "2ed75c2d80c9a7667dd332f642cd211378b23682569f9b7e4b7a2c6d981b82a3",
+        "mode": 420
+      },
+      "history/repository-trial-diagnostic-v1.mjs": {
+        "sha256": "e494d9c3d91c723637c8a35079299fb6f3fe266d9ea97959ba8619a22cc19dc2",
+        "mode": 420
+      },
+      "history/run-journal-store-v1.mjs": {
+        "sha256": "1356028b65f9f8b96e3b9ec8ba3bfbb4968092af53d00e8b5dfdb11b161f4792",
+        "mode": 420
+      },
+      "history/run-journal-v1.mjs": {
+        "sha256": "0164f10da27f6d12cfd1f3d443bd8e0f7c237b46363353570ae4a759a97f749b",
+        "mode": 420
+      },
+      "hosts/history/review-repository-history-v1.mjs": {
+        "sha256": "a1042e1913e468edb322df493454f91f88f8c58231791b77c7c2eb1b00b5a090",
+        "mode": 420
+      },
+      "hosts/history/review-repository-incidents-v1.mjs": {
+        "sha256": "9d614cb78939664f276f6a70ac053fce1d4cc72db78b1126c5f372f49a68008e",
+        "mode": 420
+      },
+      "hosts/history/terminal-history-prompt-v1.mjs": {
+        "sha256": "282774b329890be4a0d4b0cf144558cdc5e4b7e623c8e5b2f201f911ceb02db4",
+        "mode": 420
+      },
+      "hosts/repository/demo-state-v1.mjs": {
+        "sha256": "22a5a2fc455990afdc1cc30e677c48bda1216846822d6c49061b9be5cebd902f",
+        "mode": 420
+      },
+      "hosts/repository/execution-admission-v1.mjs": {
+        "sha256": "5a9d94e141dd06d5d3492b355134a13c795d8750e4523c5277bf0da0b6ec2dd6",
+        "mode": 420
+      },
+      "hosts/repository/execution-coordinator-v1.mjs": {
+        "sha256": "eb72e875cb2ae62657d6a4414629f01dab017dfa41d4d83bf78b6deac0760c3d",
+        "mode": 420
+      },
+      "hosts/repository/host-evidence-v1.mjs": {
+        "sha256": "71ce2b38f2c98b2f2767447727aab3858c02ced49b8c4389d738bb995b4677b0",
+        "mode": 420
+      },
+      "hosts/repository/live-demo-execution-v1.mjs": {
+        "sha256": "30b9eb39762dbda40b4d4b3785b72e423651975868480ccb066346d9b4dacb1e",
+        "mode": 420
+      },
+      "hosts/repository/live-model-selection-v3.mjs": {
+        "sha256": "22a242290248180f158974d7a733a368a82669c270b0171eae747ac18c638520",
+        "mode": 420
+      },
+      "hosts/repository/live-owner-status-v1.mjs": {
+        "sha256": "525394da3ff7f4d9818e139c66a96890c455cdcd1e86d8eea9d3bfd70a46260b",
+        "mode": 420
+      },
+      "hosts/repository/native-incident-source-v1.mjs": {
+        "sha256": "6a1ddf192be45ff14e4471e08470429a6fcea300642e4f681d10f187b7540e74",
+        "mode": 420
+      },
+      "hosts/repository/node-adapter-v1.mjs": {
+        "sha256": "669fcea3ba29c6b6f1b80d80d112e50d0c935047068b36edd3a4b121e37194cc",
+        "mode": 420
+      },
+      "hosts/repository/node-executor-v1.mjs": {
+        "sha256": "cba7dc17fdd32260a79796ac6fcbf443a63d48f919acb6fcadbf17ce6f9ca22b",
+        "mode": 420
+      },
+      "hosts/repository/node-suite-v1.mjs": {
+        "sha256": "5ed5cd9ca407b281379d6b67d93df60ab3b3a45676b6a4e82c7bfc474d29e2c2",
+        "mode": 420
+      },
+      "hosts/repository/proposed-changes-v1.mjs": {
+        "sha256": "045fe0d77b3b6d4d95c406964b603b09b2aeabe131cde267b41806114379f55d",
+        "mode": 420
+      },
+      "hosts/repository/reviewed-live-model-v1.mjs": {
+        "sha256": "25826068f4e105d29edb0877c4c4d546d223ff07586075aacd82a31c601a44c9",
+        "mode": 420
+      },
+      "hosts/repository/reviewed-live-model-v3.mjs": {
+        "sha256": "86afd41465f65713dfa6914a1543968e2e40cdd63b863c910a78994f89011d95",
+        "mode": 420
+      },
+      "hosts/repository/reviewed-workflow-v1.mjs": {
+        "sha256": "14b4c5d0db419a666df42f50f00dfe64d29a57a8fae7b66aeeef553c25d1bdb2",
+        "mode": 420
+      },
+      "hosts/repository/snapshot-contract.mjs": {
+        "sha256": "2b52c23bac3a817769b7892eed71baba79cb81954b6a63724d107a9c258ba13f",
+        "mode": 420
+      },
+      "hosts/repository/task-materialization-owner-v1.mjs": {
+        "sha256": "16e5fa985dbe8dcdd95f54ac2c1916fdb4cb0602bc6e97a3f657152d823741ed",
+        "mode": 420
+      },
+      "hosts/repository/task-workspace-v1.mjs": {
+        "sha256": "0208549404e57d4208a82f251e6d8e6e7c425c131c2873fd38294b3e9a531c4d",
+        "mode": 420
+      },
+      "hosts/swift-verifier/build.mjs": {
+        "sha256": "c4cc18ea3cf540c268232b474e1ff045b7572e9bc194501e2fd0f168daa61a63",
+        "mode": 420
+      },
+      "hosts/swift-verifier/check-plan-v1.mjs": {
+        "sha256": "a30ff5596e2bebc376cfa0da84be1c00eca8443cc2b37f5b1b7da42ef44b658a",
+        "mode": 420
+      },
+      "hosts/swift-verifier/executor.mjs": {
+        "sha256": "b250d3161ce97b24993d4c89c4c097e6086a3179fac42d6523ca6dabb2a8ea13",
+        "mode": 420
+      },
+      "hosts/swift-verifier/group-adapter-v1.mjs": {
+        "sha256": "471ae91cfc78a82abcb425ed75cd16aec2a76d8123cdc9b3e4063c536382e774",
+        "mode": 420
+      },
+      "hosts/swift-verifier/group-contract-utils.mjs": {
+        "sha256": "8fc51ac107abd68adb1c72683ccfa2af9c74ac077c5506bf89525f972b14ac82",
+        "mode": 420
+      },
+      "hosts/swift-verifier/main.swift": {
+        "sha256": "0d4e15b22b3231d990cfd5e7de1c52f4fdfebf4f4ab6da15b0ae22c74cea910c",
+        "mode": 420
+      },
+      "hosts/swift-verifier/owned-child.mjs": {
+        "sha256": "bb5386e1d7e3f90bbb75ccdc6340a394aea56f429f88530f128018c0fa6566e5",
+        "mode": 420
+      },
+      "hosts/swift-verifier/protocol.mjs": {
+        "sha256": "7557d81836f263c13e06ac7613ebfa61ce7fbeeb7b0f7db98889473806f322cc",
+        "mode": 420
+      },
+      "hosts/swift-verifier/reservation.mjs": {
+        "sha256": "6d7573d23a3d2b0ecdb4b396cb58f4f9ae8e5997190616c08c1b93bd0ab376fd",
+        "mode": 420
+      },
+      "integrations/veritas/import-manifest.json": {
+        "sha256": "8207efbc465ec99f0c16a7a281c349bb7ce8819349dbbafe17534f72dd527bcb",
+        "mode": 420
+      },
+      "integrations/veritas/native/macos/CodenameVeritasFramework/Sources/VeritasCore/ArtifactSnapshot.swift": {
+        "sha256": "013e796d11a844dda345f223894a8d76713b19b0f46f6a7f84019aa5b7bc0f22",
+        "mode": 420
+      },
+      "integrations/veritas/native/macos/CodenameVeritasFramework/Sources/VeritasCore/DeterministicChecks.swift": {
+        "sha256": "4d234fd389895cf0a55bf7daf0f5d082077ab3677880165f7d0e1236a88be474",
+        "mode": 420
+      },
+      "integrations/veritas/native/macos/CodenameVeritasFramework/Sources/VeritasCore/StrictJSONDocumentValidator.swift": {
+        "sha256": "bd6173e012890f2fde2e26be94c5e577cd9e098841bdad98a377b1c88dff1b2c",
+        "mode": 420
+      },
+      "integrity/record-utils.mjs": {
+        "sha256": "e46eb1a01170231bd6873771cd256740fd3dde6bcb01d418f6f7d7a75e6139ff",
+        "mode": 420
+      },
+      "package.json": {
+        "sha256": "d821c65dbfaa8edc96c44995dbb1dfa8f74f5c5461718a9a814fb336b45327fc",
+        "mode": 420
+      },
+      "receipts/host-run-bundle-v2.mjs": {
+        "sha256": "406936e6523f58323634fab1c9f560d671d58e1c343d2082f081f8a7810061fe",
+        "mode": 420
+      },
+      "receipts/live-usage-v1.mjs": {
+        "sha256": "f015e2973567e21329d4e79de8abc6e1f664370eff3f2338aad31490fb4791a5",
+        "mode": 420
+      },
+      "receipts/repository-execution-v1.mjs": {
+        "sha256": "7317e06c094bdf33e51645ce39348fc9e2d5a11ad0921af87434e34c45828cc2",
+        "mode": 420
+      },
+      "receipts/repository-live-model-run-v1.mjs": {
+        "sha256": "7a17b15f5d649c9255da8b09c531f5192b7d6e14ba5db928c878e1ccd13dc293",
+        "mode": 420
+      },
+      "receipts/repository-live-model-run-v3.mjs": {
+        "sha256": "66f7598c6b3be393c65dbd92e1a3c58c52b7ca66c4e73f57a46c8556739614a4",
+        "mode": 420
+      },
+      "receipts/repository-run-v1.mjs": {
+        "sha256": "50c1e86cec48fc666aae64b3285f9acda8e20968d5f10f0d9313e0e22051d697",
+        "mode": 420
+      },
+      "receipts/swift-static-group-v1.mjs": {
+        "sha256": "e07e9a361ef808f8d652f1542fec54085d4f341fd093a582f2e86baf77e4cdbb",
+        "mode": 420
+      },
+      "receipts/swift-static-run-v1.mjs": {
+        "sha256": "454e8657a2a2aaf6a016de5d09c5d65512d53ffb9db2a6843e05471450f8c8ef",
+        "mode": 420
+      },
+      "workflow/contracts.mjs": {
+        "sha256": "c28a3ee3db6e9a936cd58fca8b8ee3f2744ca25c259e2ea278b3b09cdbb73d82",
+        "mode": 420
+      },
+      "workflow/engine.mjs": {
+        "sha256": "c67c63baeadc725a8487af7108b01d3a38dd50e64ff35f1be66471c81e5f979b",
+        "mode": 420
+      }
+    },
+    "doctor": {
+      "schemaVersion": "nisi-cli-doctor/v1",
+      "status": "INVENTORY_COMPLETE",
+      "version": "0.2.0-private.0",
+      "metadata": "VALID",
+      "node": {
+        "version": "v24.18.0",
+        "required": ">=22",
+        "supported": true
+      },
+      "platform": "darwin",
+      "arch": "arm64",
+      "assets": [
+        {
+          "relativePath": "examples/repository-live-model.mjs",
+          "status": "PRESENT"
+        },
+        {
+          "relativePath": "hosts/swift-verifier/build.mjs",
+          "status": "PRESENT"
+        },
+        {
+          "relativePath": "hosts/swift-verifier/main.swift",
+          "status": "PRESENT"
+        },
+        {
+          "relativePath": "integrations/veritas/import-manifest.json",
+          "status": "PRESENT"
+        },
+        {
+          "relativePath": "integrations/veritas/native/macos/CodenameVeritasFramework/Sources/VeritasCore/ArtifactSnapshot.swift",
+          "status": "PRESENT"
+        },
+        {
+          "relativePath": "integrations/veritas/native/macos/CodenameVeritasFramework/Sources/VeritasCore/StrictJSONDocumentValidator.swift",
+          "status": "PRESENT"
+        },
+        {
+          "relativePath": "integrations/veritas/native/macos/CodenameVeritasFramework/Sources/VeritasCore/DeterministicChecks.swift",
+          "status": "PRESENT"
+        },
+        {
+          "relativePath": "examples/repository-task/fixtures/live-baseline/retry-settings.mjs",
+          "status": "PRESENT"
+        },
+        {
+          "relativePath": "examples/repository-task/fixtures/live-repair/retry-settings.mjs",
+          "status": "PRESENT"
+        },
+        {
+          "relativePath": "examples/repository-task/fixtures/baseline/config.json",
+          "status": "PRESENT"
+        },
+        {
+          "relativePath": "examples/repository-task/fixtures/baseline/README.md",
+          "status": "PRESENT"
+        },
+        {
+          "relativePath": "examples/repository-task/fixtures/harness/check-retry-settings.mjs",
+          "status": "PRESENT"
+        }
+      ],
+      "nativeTarget": "arm64-apple-macosx27.0",
+      "sourceTrust": "NOT_ASSESSED",
+      "inventoryOnly": true,
+      "inventoryScope": "METADATA_AND_SELECTED_DEMO_ASSETS",
+      "nativeCompatibility": "NOT_ASSESSED",
+      "moduleResolution": "NOT_RUN",
+      "compiler": "NOT_RUN",
+      "nativeExecution": "NOT_RUN",
+      "modelInference": "NOT_RUN",
+      "network": "NOT_RUN",
+      "writeAccess": "NOT_TESTED",
+      "readyForExecution": false,
+      "authorizing": false,
+      "exitCode": 0
+    },
+    "inspection": {
+      "schemaVersion": "nisi-cli-inspection/v1",
+      "status": "OBSERVED",
+      "scope": "STORED_SUMMARY_ONLY",
+      "summarySha256": "0854701083c6e41b5b4d89d1c05124bb8853ab04e4cfe2867f576d558ef7cd92",
+      "producerSchema": "nisi-private-live-demo-summary-v1",
+      "reportedStatus": "INCOMPLETE",
+      "reportedOutcome": "TIMED_OUT",
+      "reportedErrorCode": "SYNTHETIC_TIMEOUT",
+      "diagnosticCount": 0,
+      "declaredArtifactCount": 1,
+      "receiptFingerprint": null,
+      "timings": {
+        "setupDurationMs": 0,
+        "workflowDurationMs": null
+      },
+      "sourceTrust": "UNVERIFIED",
+      "integrity": "SUMMARY_BYTES_HASHED_ONLY",
+      "bundleValidation": "NOT_RUN",
+      "lateSettlement": "NOT_ASSESSED",
+      "currentRunState": "UNKNOWN",
+      "remoteInferenceStopped": "NOT_OBSERVED",
+      "authorizing": false,
+      "accepted": false,
+      "applied": false
+    },
+    "trialInspections": [
+      {
+        "name": "final",
+        "report": {
+          "schemaVersion": "nisi-cli-trial-inspection-v1",
+          "status": "OBSERVED",
+          "exitCode": 0,
+          "byteStatus": "FINAL_PRESENT",
+          "semanticStatus": "FINAL_CONSISTENT",
+          "counts": {
+            "planned": 4,
+            "uniqueTasks": 1,
+            "repetitions": 2,
+            "startIntents": 4,
+            "completePhaseRecords": 4,
+            "incompletePhaseRecords": 0
+          },
+          "runnerId": "414a90ab-0829-41df-8ca0-09f32235e25d",
+          "planSha256": "654a431c3c94982300350eb6556395ac83ecc2e044695166a40b31ee285d5cb5",
+          "profileSha256": "db04e567ec2ec641f79c7f19459ada72d2cf5771a22d9062147cb6a851cf7a30",
+          "finalStopReason": null,
+          "actualDispatchCount": null,
+          "sourceTrust": "UNAUTHENTICATED_HOST_STATEMENTS",
+          "creationAcknowledgement": "UNKNOWN",
+          "durabilityAcknowledgement": "UNKNOWN",
+          "remoteExecutionStopped": "UNKNOWN",
+          "durationBudgetReconciliation": "NOT_RECONCILABLE_FROM_RETAINED_EVENTS",
+          "drainSemantics": "NOT_VALIDATED",
+          "candidateBytesRevalidated": false,
+          "measurementVerified": false,
+          "causalClaim": false,
+          "authorizing": false,
+          "resumable": false,
+          "promotionEligible": false
+        },
+        "bytesUnchanged": true
+      },
+      {
+        "name": "intent",
+        "report": {
+          "schemaVersion": "nisi-cli-trial-inspection-v1",
+          "status": "INCOMPLETE",
+          "exitCode": 1,
+          "byteStatus": "INCOMPLETE",
+          "semanticStatus": "INTERRUPTED",
+          "counts": {
+            "planned": 4,
+            "uniqueTasks": 1,
+            "repetitions": 2,
+            "startIntents": 1,
+            "completePhaseRecords": 0,
+            "incompletePhaseRecords": 1
+          },
+          "runnerId": "414a90ab-0829-41df-8ca0-09f32235e25d",
+          "planSha256": "654a431c3c94982300350eb6556395ac83ecc2e044695166a40b31ee285d5cb5",
+          "profileSha256": "db04e567ec2ec641f79c7f19459ada72d2cf5771a22d9062147cb6a851cf7a30",
+          "finalStopReason": null,
+          "actualDispatchCount": null,
+          "sourceTrust": "UNAUTHENTICATED_HOST_STATEMENTS",
+          "creationAcknowledgement": "UNKNOWN",
+          "durabilityAcknowledgement": "UNKNOWN",
+          "remoteExecutionStopped": "UNKNOWN",
+          "durationBudgetReconciliation": "NOT_RECONCILABLE_FROM_RETAINED_EVENTS",
+          "drainSemantics": "NOT_VALIDATED",
+          "candidateBytesRevalidated": false,
+          "measurementVerified": false,
+          "causalClaim": false,
+          "authorizing": false,
+          "resumable": false,
+          "promotionEligible": false
+        },
+        "bytesUnchanged": true
+      },
+      {
+        "name": "empty",
+        "report": {
+          "schemaVersion": "nisi-cli-trial-inspection-v1",
+          "status": "INCOMPLETE",
+          "exitCode": 1,
+          "byteStatus": "EMPTY",
+          "semanticStatus": "NOT_PERFORMED",
+          "counts": null,
+          "runnerId": null,
+          "planSha256": null,
+          "profileSha256": null,
+          "finalStopReason": null,
+          "actualDispatchCount": null,
+          "sourceTrust": "UNAUTHENTICATED_HOST_STATEMENTS",
+          "creationAcknowledgement": "UNKNOWN",
+          "durabilityAcknowledgement": "UNKNOWN",
+          "remoteExecutionStopped": "UNKNOWN",
+          "durationBudgetReconciliation": "NOT_RECONCILABLE_FROM_RETAINED_EVENTS",
+          "drainSemantics": "NOT_VALIDATED",
+          "candidateBytesRevalidated": false,
+          "measurementVerified": false,
+          "causalClaim": false,
+          "authorizing": false,
+          "resumable": false,
+          "promotionEligible": false
+        },
+        "bytesUnchanged": true
+      },
+      {
+        "name": "partial",
+        "report": {
+          "schemaVersion": "nisi-cli-trial-inspection-v1",
+          "status": "INCOMPLETE",
+          "exitCode": 1,
+          "byteStatus": "PARTIAL_TAIL",
+          "semanticStatus": "INTERRUPTED",
+          "counts": {
+            "planned": 4,
+            "uniqueTasks": 1,
+            "repetitions": 2,
+            "startIntents": 1,
+            "completePhaseRecords": 0,
+            "incompletePhaseRecords": 1
+          },
+          "runnerId": "414a90ab-0829-41df-8ca0-09f32235e25d",
+          "planSha256": "654a431c3c94982300350eb6556395ac83ecc2e044695166a40b31ee285d5cb5",
+          "profileSha256": "db04e567ec2ec641f79c7f19459ada72d2cf5771a22d9062147cb6a851cf7a30",
+          "finalStopReason": null,
+          "actualDispatchCount": null,
+          "sourceTrust": "UNAUTHENTICATED_HOST_STATEMENTS",
+          "creationAcknowledgement": "UNKNOWN",
+          "durabilityAcknowledgement": "UNKNOWN",
+          "remoteExecutionStopped": "UNKNOWN",
+          "durationBudgetReconciliation": "NOT_RECONCILABLE_FROM_RETAINED_EVENTS",
+          "drainSemantics": "NOT_VALIDATED",
+          "candidateBytesRevalidated": false,
+          "measurementVerified": false,
+          "causalClaim": false,
+          "authorizing": false,
+          "resumable": false,
+          "promotionEligible": false
+        },
+        "bytesUnchanged": true
+      },
+      {
+        "name": "invalid",
+        "report": {
+          "schemaVersion": "nisi-cli-trial-inspection-v1",
+          "status": "REFUSED",
+          "exitCode": 2,
+          "byteStatus": "CORRUPT",
+          "semanticStatus": "REFUSED",
+          "counts": null,
+          "runnerId": null,
+          "planSha256": null,
+          "profileSha256": null,
+          "finalStopReason": null,
+          "actualDispatchCount": null,
+          "sourceTrust": "UNAUTHENTICATED_HOST_STATEMENTS",
+          "creationAcknowledgement": "UNKNOWN",
+          "durabilityAcknowledgement": "UNKNOWN",
+          "remoteExecutionStopped": "UNKNOWN",
+          "durationBudgetReconciliation": "NOT_RECONCILABLE_FROM_RETAINED_EVENTS",
+          "drainSemantics": "NOT_VALIDATED",
+          "candidateBytesRevalidated": false,
+          "measurementVerified": false,
+          "causalClaim": false,
+          "authorizing": false,
+          "resumable": false,
+          "promotionEligible": false
+        },
+        "bytesUnchanged": true
+      }
+    ],
+    "armInspections": [
+      {
+        "name": "final",
+        "report": {
+          "schemaVersion": "nisi-cli-paired-arm-inspection-v1",
+          "status": "OBSERVED",
+          "exitCode": 0,
+          "mainByteStatus": "FINAL_PRESENT",
+          "sidecarByteStatus": "FINAL_PRESENT",
+          "reason": null,
+          "counts": {
+            "NOT_STARTED": 4,
+            "PREPARED_UNCONFIRMED": 0,
+            "STARTED_INCOMPLETE": 0,
+            "EXECUTOR_OBSERVED": 0,
+            "COMPLETE": 0
+          },
+          "missingLinks": 0,
+          "actualDispatchCount": null,
+          "sourceTrust": "UNAUTHENTICATED_LOCAL_BYTES",
+          "pastAcknowledgement": "UNKNOWN",
+          "remoteExecutionStopped": "UNKNOWN",
+          "candidateBytesRevalidated": false,
+          "measurementVerified": false,
+          "causalClaim": false,
+          "authorizing": false,
+          "resumable": false,
+          "promotionEligible": false
+        },
+        "bytesUnchanged": true
+      },
+      {
+        "name": "header",
+        "report": {
+          "schemaVersion": "nisi-cli-paired-arm-inspection-v1",
+          "status": "INCOMPLETE",
+          "exitCode": 1,
+          "mainByteStatus": "FINAL_PRESENT",
+          "sidecarByteStatus": "INCOMPLETE",
+          "reason": "UNFINISHED_OR_PARTIAL_PREFIX",
+          "counts": {
+            "NOT_STARTED": 4,
+            "PREPARED_UNCONFIRMED": 0,
+            "STARTED_INCOMPLETE": 0,
+            "EXECUTOR_OBSERVED": 0,
+            "COMPLETE": 0
+          },
+          "missingLinks": 0,
+          "actualDispatchCount": null,
+          "sourceTrust": "UNAUTHENTICATED_LOCAL_BYTES",
+          "pastAcknowledgement": "UNKNOWN",
+          "remoteExecutionStopped": "UNKNOWN",
+          "candidateBytesRevalidated": false,
+          "measurementVerified": false,
+          "causalClaim": false,
+          "authorizing": false,
+          "resumable": false,
+          "promotionEligible": false
+        },
+        "bytesUnchanged": true
+      },
+      {
+        "name": "empty",
+        "report": {
+          "schemaVersion": "nisi-cli-paired-arm-inspection-v1",
+          "status": "INCOMPLETE",
+          "exitCode": 1,
+          "mainByteStatus": "FINAL_PRESENT",
+          "sidecarByteStatus": "EMPTY",
+          "reason": "NO_SIDECAR_HEADER",
+          "counts": {
+            "NOT_STARTED": 4,
+            "PREPARED_UNCONFIRMED": 0,
+            "STARTED_INCOMPLETE": 0,
+            "EXECUTOR_OBSERVED": 0,
+            "COMPLETE": 0
+          },
+          "missingLinks": 0,
+          "actualDispatchCount": null,
+          "sourceTrust": "UNAUTHENTICATED_LOCAL_BYTES",
+          "pastAcknowledgement": "UNKNOWN",
+          "remoteExecutionStopped": "UNKNOWN",
+          "candidateBytesRevalidated": false,
+          "measurementVerified": false,
+          "causalClaim": false,
+          "authorizing": false,
+          "resumable": false,
+          "promotionEligible": false
+        },
+        "bytesUnchanged": true
+      },
+      {
+        "name": "partial",
+        "report": {
+          "schemaVersion": "nisi-cli-paired-arm-inspection-v1",
+          "status": "INCOMPLETE",
+          "exitCode": 1,
+          "mainByteStatus": "FINAL_PRESENT",
+          "sidecarByteStatus": "PARTIAL_TAIL",
+          "reason": "UNFINISHED_OR_PARTIAL_PREFIX",
+          "counts": {
+            "NOT_STARTED": 4,
+            "PREPARED_UNCONFIRMED": 0,
+            "STARTED_INCOMPLETE": 0,
+            "EXECUTOR_OBSERVED": 0,
+            "COMPLETE": 0
+          },
+          "missingLinks": 0,
+          "actualDispatchCount": null,
+          "sourceTrust": "UNAUTHENTICATED_LOCAL_BYTES",
+          "pastAcknowledgement": "UNKNOWN",
+          "remoteExecutionStopped": "UNKNOWN",
+          "candidateBytesRevalidated": false,
+          "measurementVerified": false,
+          "causalClaim": false,
+          "authorizing": false,
+          "resumable": false,
+          "promotionEligible": false
+        },
+        "bytesUnchanged": true
+      },
+      {
+        "name": "corrupt",
+        "report": {
+          "schemaVersion": "nisi-cli-paired-arm-inspection-v1",
+          "status": "REFUSED",
+          "exitCode": 2,
+          "mainByteStatus": "FINAL_PRESENT",
+          "sidecarByteStatus": "CORRUPT",
+          "reason": "UNAVAILABLE_OR_CORRUPT_BYTES",
+          "counts": {
+            "NOT_STARTED": 0,
+            "PREPARED_UNCONFIRMED": 0,
+            "STARTED_INCOMPLETE": 0,
+            "EXECUTOR_OBSERVED": 0,
+            "COMPLETE": 0
+          },
+          "missingLinks": 0,
+          "actualDispatchCount": null,
+          "sourceTrust": "UNAUTHENTICATED_LOCAL_BYTES",
+          "pastAcknowledgement": "UNKNOWN",
+          "remoteExecutionStopped": "UNKNOWN",
+          "candidateBytesRevalidated": false,
+          "measurementVerified": false,
+          "causalClaim": false,
+          "authorizing": false,
+          "resumable": false,
+          "promotionEligible": false
+        },
+        "bytesUnchanged": true
+      },
+      {
+        "name": "missing",
+        "report": {
+          "schemaVersion": "nisi-cli-paired-arm-inspection-v1",
+          "status": "REFUSED",
+          "exitCode": 2,
+          "mainByteStatus": "FINAL_PRESENT",
+          "sidecarByteStatus": "UNAVAILABLE",
+          "reason": "UNAVAILABLE_OR_CORRUPT_BYTES",
+          "counts": {
+            "NOT_STARTED": 0,
+            "PREPARED_UNCONFIRMED": 0,
+            "STARTED_INCOMPLETE": 0,
+            "EXECUTOR_OBSERVED": 0,
+            "COMPLETE": 0
+          },
+          "missingLinks": 0,
+          "actualDispatchCount": null,
+          "sourceTrust": "UNAUTHENTICATED_LOCAL_BYTES",
+          "pastAcknowledgement": "UNKNOWN",
+          "remoteExecutionStopped": "UNKNOWN",
+          "candidateBytesRevalidated": false,
+          "measurementVerified": false,
+          "causalClaim": false,
+          "authorizing": false,
+          "resumable": false,
+          "promotionEligible": false
+        },
+        "bytesUnchanged": true
+      }
+    ],
+    "preflight": {
+      "schemaVersion": "nisi-live-demo-preflight/v1",
+      "status": "PREFLIGHT_VALIDATED",
+      "scope": "EXACT_REVIEWED_FIXTURE_CONFIGURATION_ONLY",
+      "reviewedSourceFingerprint": "daddbd38c6b7378b8063faf912cd741ee0d9a95516db462243fb25f2b8c534f1",
+      "sourceFileCount": 5,
+      "modelConfigurationValidated": true,
+      "runtimeAdmission": "NOT_OBSERVED",
+      "serverIdleObserved": false,
+      "modelCalls": 0,
+      "compilerStarted": false,
+      "workspaceCreated": false,
+      "artifactWrites": 0,
+      "nx04Accepted": false,
+      "authorizing": false,
+      "publicationAuthorized": false,
+      "exitCode": 1
+    },
+    "unchangedAfterChecks": true
+  },
+  "guardSha256": "7b772d36a89f7878049673e546ccde954c3057886bac8569e1a48001a52730ce",
+  "portable": "PASS_SCOPED",
+  "native": {
+    "status": "NOT_RUN"
+  },
+  "completedAt": "2026-09-20T17:09:56.147Z"
+}

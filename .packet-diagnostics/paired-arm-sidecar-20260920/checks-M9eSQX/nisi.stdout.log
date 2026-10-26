@@ -1,0 +1,354 @@
+{
+  "kind": "nisi.scratch-validation.v1",
+  "version": 1,
+  "status": "VALIDATED",
+  "advisoryOnly": true,
+  "accepted": false,
+  "authorizing": false,
+  "certification": "NOT_RUN",
+  "sandboxed": false,
+  "descendantContainment": "NOT_ENFORCED",
+  "sourceReviewRequired": true,
+  "warning": "Test execution is not sandboxed. Review candidate and test source before --run-tests.",
+  "binding": {
+    "taskFingerprint": "1cfd6b42def1aea102f53d3b180b56a4ccffd658ae5a6bc05e878e2ec3996b65",
+    "candidateFingerprint": "137fc46971f3de79f353eb938fc8da1ca5e46f588bf4c423826e51d283bba802",
+    "reviewedCandidateSha256": null,
+    "reviewBindingMatches": false
+  },
+  "testsSha256": null,
+  "checks": {
+    "contract": {
+      "status": "PASS",
+      "code": null
+    },
+    "syntax": {
+      "status": "PASS",
+      "code": null,
+      "checkedFiles": [
+        {
+          "path": "history/paired-arm-reconciliation-v1.mjs",
+          "status": "PASS",
+          "code": null,
+          "evidence": {
+            "argv": [
+              "--check",
+              "./history/paired-arm-reconciliation-v1.mjs"
+            ],
+            "exitCode": 0,
+            "signal": null,
+            "timedOut": false,
+            "outputExceeded": false,
+            "closeObserved": true,
+            "errorCode": null,
+            "stdout": {
+              "observedBytes": 0,
+              "capturedBytes": 0,
+              "truncated": false,
+              "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+              "text": ""
+            },
+            "stderr": {
+              "observedBytes": 0,
+              "capturedBytes": 0,
+              "truncated": false,
+              "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+              "text": ""
+            }
+          }
+        },
+        {
+          "path": "history/paired-arm-sidecar-codec-v1.mjs",
+          "status": "PASS",
+          "code": null,
+          "evidence": {
+            "argv": [
+              "--check",
+              "./history/paired-arm-sidecar-codec-v1.mjs"
+            ],
+            "exitCode": 0,
+            "signal": null,
+            "timedOut": false,
+            "outputExceeded": false,
+            "closeObserved": true,
+            "errorCode": null,
+            "stdout": {
+              "observedBytes": 0,
+              "capturedBytes": 0,
+              "truncated": false,
+              "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+              "text": ""
+            },
+            "stderr": {
+              "observedBytes": 0,
+              "capturedBytes": 0,
+              "truncated": false,
+              "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+              "text": ""
+            }
+          }
+        },
+        {
+          "path": "history/paired-arm-sidecar-store-v1.mjs",
+          "status": "PASS",
+          "code": null,
+          "evidence": {
+            "argv": [
+              "--check",
+              "./history/paired-arm-sidecar-store-v1.mjs"
+            ],
+            "exitCode": 0,
+            "signal": null,
+            "timedOut": false,
+            "outputExceeded": false,
+            "closeObserved": true,
+            "errorCode": null,
+            "stdout": {
+              "observedBytes": 0,
+              "capturedBytes": 0,
+              "truncated": false,
+              "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+              "text": ""
+            },
+            "stderr": {
+              "observedBytes": 0,
+              "capturedBytes": 0,
+              "truncated": false,
+              "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+              "text": ""
+            }
+          }
+        },
+        {
+          "path": "hosts/repository/durable-paired-arm-owner-v1.mjs",
+          "status": "PASS",
+          "code": null,
+          "evidence": {
+            "argv": [
+              "--check",
+              "./hosts/repository/durable-paired-arm-owner-v1.mjs"
+            ],
+            "exitCode": 0,
+            "signal": null,
+            "timedOut": false,
+            "outputExceeded": false,
+            "closeObserved": true,
+            "errorCode": null,
+            "stdout": {
+              "observedBytes": 0,
+              "capturedBytes": 0,
+              "truncated": false,
+              "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+              "text": ""
+            },
+            "stderr": {
+              "observedBytes": 0,
+              "capturedBytes": 0,
+              "truncated": false,
+              "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+              "text": ""
+            }
+          }
+        },
+        {
+          "path": "tests/durable-paired-arm.test.mjs",
+          "status": "PASS",
+          "code": null,
+          "evidence": {
+            "argv": [
+              "--check",
+              "./tests/durable-paired-arm.test.mjs"
+            ],
+            "exitCode": 0,
+            "signal": null,
+            "timedOut": false,
+            "outputExceeded": false,
+            "closeObserved": true,
+            "errorCode": null,
+            "stdout": {
+              "observedBytes": 0,
+              "capturedBytes": 0,
+              "truncated": false,
+              "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+              "text": ""
+            },
+            "stderr": {
+              "observedBytes": 0,
+              "capturedBytes": 0,
+              "truncated": false,
+              "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+              "text": ""
+            }
+          }
+        },
+        {
+          "path": "tests/helpers/paired-arm-crash-child.mjs",
+          "status": "PASS",
+          "code": null,
+          "evidence": {
+            "argv": [
+              "--check",
+              "./tests/helpers/paired-arm-crash-child.mjs"
+            ],
+            "exitCode": 0,
+            "signal": null,
+            "timedOut": false,
+            "outputExceeded": false,
+            "closeObserved": true,
+            "errorCode": null,
+            "stdout": {
+              "observedBytes": 0,
+              "capturedBytes": 0,
+              "truncated": false,
+              "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+              "text": ""
+            },
+            "stderr": {
+              "observedBytes": 0,
+              "capturedBytes": 0,
+              "truncated": false,
+              "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+              "text": ""
+            }
+          }
+        },
+        {
+          "path": "tests/helpers/repository-live-run-fixture.mjs",
+          "status": "PASS",
+          "code": null,
+          "evidence": {
+            "argv": [
+              "--check",
+              "./tests/helpers/repository-live-run-fixture.mjs"
+            ],
+            "exitCode": 0,
+            "signal": null,
+            "timedOut": false,
+            "outputExceeded": false,
+            "closeObserved": true,
+            "errorCode": null,
+            "stdout": {
+              "observedBytes": 0,
+              "capturedBytes": 0,
+              "truncated": false,
+              "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+              "text": ""
+            },
+            "stderr": {
+              "observedBytes": 0,
+              "capturedBytes": 0,
+              "truncated": false,
+              "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+              "text": ""
+            }
+          }
+        },
+        {
+          "path": "tests/paired-arm-process-death.test.mjs",
+          "status": "PASS",
+          "code": null,
+          "evidence": {
+            "argv": [
+              "--check",
+              "./tests/paired-arm-process-death.test.mjs"
+            ],
+            "exitCode": 0,
+            "signal": null,
+            "timedOut": false,
+            "outputExceeded": false,
+            "closeObserved": true,
+            "errorCode": null,
+            "stdout": {
+              "observedBytes": 0,
+              "capturedBytes": 0,
+              "truncated": false,
+              "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+              "text": ""
+            },
+            "stderr": {
+              "observedBytes": 0,
+              "capturedBytes": 0,
+              "truncated": false,
+              "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+              "text": ""
+            }
+          }
+        },
+        {
+          "path": "tests/paired-arm-sidecar-codec.test.mjs",
+          "status": "PASS",
+          "code": null,
+          "evidence": {
+            "argv": [
+              "--check",
+              "./tests/paired-arm-sidecar-codec.test.mjs"
+            ],
+            "exitCode": 0,
+            "signal": null,
+            "timedOut": false,
+            "outputExceeded": false,
+            "closeObserved": true,
+            "errorCode": null,
+            "stdout": {
+              "observedBytes": 0,
+              "capturedBytes": 0,
+              "truncated": false,
+              "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+              "text": ""
+            },
+            "stderr": {
+              "observedBytes": 0,
+              "capturedBytes": 0,
+              "truncated": false,
+              "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+              "text": ""
+            }
+          }
+        },
+        {
+          "path": "tests/paired-arm-sidecar-store.test.mjs",
+          "status": "PASS",
+          "code": null,
+          "evidence": {
+            "argv": [
+              "--check",
+              "./tests/paired-arm-sidecar-store.test.mjs"
+            ],
+            "exitCode": 0,
+            "signal": null,
+            "timedOut": false,
+            "outputExceeded": false,
+            "closeObserved": true,
+            "errorCode": null,
+            "stdout": {
+              "observedBytes": 0,
+              "capturedBytes": 0,
+              "truncated": false,
+              "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+              "text": ""
+            },
+            "stderr": {
+              "observedBytes": 0,
+              "capturedBytes": 0,
+              "truncated": false,
+              "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+              "text": ""
+            }
+          }
+        }
+      ],
+      "skippedFiles": []
+    },
+    "tests": {
+      "status": "NOT_RUN",
+      "code": "EXECUTION_NOT_REQUESTED",
+      "assertionsExecuted": 0,
+      "assertionsPassed": 0,
+      "testsSha256": null,
+      "evidence": null
+    }
+  },
+  "cleanup": "REMOVED",
+  "retainedRoot": null,
+  "outputSha256": "c32cc46690a15c3e6e718a5f4cd7b0d69d4bae7fc387c46223db427d3a2c8bcf"
+}

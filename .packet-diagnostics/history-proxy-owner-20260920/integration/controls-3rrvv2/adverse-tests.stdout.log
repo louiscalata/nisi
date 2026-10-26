@@ -1,0 +1,657 @@
+TAP version 13
+# Subtest: dispatch approves only the four packet-run status transitions after normalization
+ok 1 - dispatch approves only the four packet-run status transitions after normalization
+  ---
+  duration_ms: 95.848333
+  type: 'test'
+  ...
+# Subtest: dispatch rejects missing, duplicate, and invalid frontmatter statuses
+ok 2 - dispatch rejects missing, duplicate, and invalid frontmatter statuses
+  ---
+  duration_ms: 162.922208
+  type: 'test'
+  ...
+# Subtest: dispatch rejects non-status packet changes, including body status-like text and owner changes
+ok 3 - dispatch rejects non-status packet changes, including body status-like text and owner changes
+  ---
+  duration_ms: 74.052875
+  type: 'test'
+  ...
+# Subtest: dispatch fails closed for wrong hash, unreleased, accepted, and non-C01 ledger rows
+ok 4 - dispatch fails closed for wrong hash, unreleased, accepted, and non-C01 ledger rows
+  ---
+  duration_ms: 160.184666
+  type: 'test'
+  ...
+# Subtest: accepted C04 and forged repeat-dispatch states remain HELD
+ok 5 - accepted C04 and forged repeat-dispatch states remain HELD
+  ---
+  duration_ms: 70.767583
+  type: 'test'
+  ...
+# Subtest: accepted C05 and forged READY states never authorize OpenCode dispatch
+ok 6 - accepted C05 and forged READY states never authorize OpenCode dispatch
+  ---
+  duration_ms: 71.74025
+  type: 'test'
+  ...
+# Subtest: C06 owner acceptance and forged release combinations never authorize dispatch
+ok 7 - C06 owner acceptance and forged release combinations never authorize dispatch
+  ---
+  duration_ms: 143.374042
+  type: 'test'
+  ...
+# Subtest: C07 owner integration does not open an OpenCode dispatch route
+ok 8 - C07 owner integration does not open an OpenCode dispatch route
+  ---
+  duration_ms: 138.240833
+  type: 'test'
+  ...
+# Subtest: C06 exact owner-frozen evidence is accepted by the additive guard
+ok 9 - C06 exact owner-frozen evidence is accepted by the additive guard
+  ---
+  duration_ms: 27.945875
+  type: 'test'
+  ...
+# Subtest: C06 refuses accepted source and dependency drift
+    # Subtest: accepted source
+    ok 1 - accepted source
+      ---
+      duration_ms: 20.705333
+      type: 'test'
+      ...
+    # Subtest: meaningful dependency
+    ok 2 - meaningful dependency
+      ---
+      duration_ms: 20.571375
+      type: 'test'
+      ...
+    1..2
+ok 10 - C06 refuses accepted source and dependency drift
+  ---
+  duration_ms: 41.498792
+  type: 'test'
+  ...
+# Subtest: C06 refuses omitted, rebound, and contradictory evidence
+    # Subtest: missing review
+    ok 1 - missing review
+      ---
+      duration_ms: 23.963333
+      type: 'test'
+      ...
+    # Subtest: recomputed review digest with false served identity
+    ok 2 - recomputed review digest with false served identity
+      ---
+      duration_ms: 23.9835
+      type: 'test'
+      ...
+    # Subtest: recomputed checkpoint digest with skipped test
+    ok 3 - recomputed checkpoint digest with skipped test
+      ---
+      duration_ms: 25.438833
+      type: 'test'
+      ...
+    # Subtest: recomputed validation digest with wrong candidate
+    ok 4 - recomputed validation digest with wrong candidate
+      ---
+      duration_ms: 23.583125
+      type: 'test'
+      ...
+    # Subtest: recomputed packet and outer digest
+    ok 5 - recomputed packet and outer digest
+      ---
+      duration_ms: 21.793917
+      type: 'test'
+      ...
+    # Subtest: dependency removed from evidence and canonical receipt
+    ok 6 - dependency removed from evidence and canonical receipt
+      ---
+      duration_ms: 18.8205
+      type: 'test'
+      ...
+    # Subtest: raw validation relabeled authorizing with rebound receipts
+    ok 7 - raw validation relabeled authorizing with rebound receipts
+      ---
+      duration_ms: 22.94475
+      type: 'test'
+      ...
+    1..7
+ok 11 - C06 refuses omitted, rebound, and contradictory evidence
+  ---
+  duration_ms: 160.974417
+  type: 'test'
+  ...
+# Subtest: C06 refuses unauthorized authority and predecessor changes
+    # Subtest: native credit
+    ok 1 - native credit
+      ---
+      duration_ms: 18.711458
+      type: 'test'
+      ...
+    # Subtest: resume credit in canonical receipt
+    ok 2 - resume credit in canonical receipt
+      ---
+      duration_ms: 23.011584
+      type: 'test'
+      ...
+    # Subtest: publication credit
+    ok 3 - publication credit
+      ---
+      duration_ms: 18.447959
+      type: 'test'
+      ...
+    # Subtest: C05 acceptance removed
+    ok 4 - C05 acceptance removed
+      ---
+      duration_ms: 18.149708
+      type: 'test'
+      ...
+    # Subtest: canonical receipt claims publication authority
+    ok 5 - canonical receipt claims publication authority
+      ---
+      duration_ms: 23.269083
+      type: 'test'
+      ...
+    # Subtest: integration route changed
+    ok 6 - integration route changed
+      ---
+      duration_ms: 17.9555
+      type: 'test'
+      ...
+    # Subtest: accepted file omitted
+    ok 7 - accepted file omitted
+      ---
+      duration_ms: 18.0795
+      type: 'test'
+      ...
+    1..7
+ok 12 - C06 refuses unauthorized authority and predecessor changes
+  ---
+  duration_ms: 137.917041
+  type: 'test'
+  ...
+# Subtest: C06 binds ledger authority, immutable receipt identity, historical logs and runtime
+    # Subtest: row-level authority cannot bypass subordinate evidence
+    ok 1 - row-level authority cannot bypass subordinate evidence
+      ---
+      duration_ms: 107.610042
+      type: 'test'
+      ...
+    # Subtest: semantically equivalent receipt replacement still needs a new owner pin
+    ok 2 - semantically equivalent receipt replacement still needs a new owner pin
+      ---
+      duration_ms: 23.610125
+      type: 'test'
+      ...
+    # Subtest: retained checkpoint log bytes are required
+    ok 3 - retained checkpoint log bytes are required
+      ---
+      duration_ms: 22.203167
+      type: 'test'
+      ...
+    # Subtest: another executable named node is not the recorded runtime
+    ok 4 - another executable named node is not the recorded runtime
+      ---
+      duration_ms: 22.921459
+      type: 'test'
+      ...
+    1..4
+ok 13 - C06 binds ledger authority, immutable receipt identity, historical logs and runtime
+  ---
+  duration_ms: 176.55
+  type: 'test'
+  ...
+# Subtest: current history correction composes with C06 and C07 without rewriting predecessor receipts
+ok 14 - current history correction composes with C06 and C07 without rewriting predecessor receipts
+  ---
+  duration_ms: 65.617333
+  type: 'test'
+  ...
+# Subtest: new history source without its exact hardening record fails C07
+ok 15 - new history source without its exact hardening record fails C07
+  ---
+  duration_ms: 37.656042
+  type: 'test'
+  ...
+# Subtest: history record cannot replace or merge the existing C07 supersession
+ok 16 - history record cannot replace or merge the existing C07 supersession
+  ---
+  duration_ms: 109.806834
+  type: 'test'
+  ...
+# Subtest: C07 exact owner-frozen evidence and five-file scope pass the additive guard
+ok 17 - C07 exact owner-frozen evidence and five-file scope pass the additive guard
+  ---
+  duration_ms: 29.564583
+  type: 'test'
+  ...
+# Subtest: C07 rejects accepted source drift and missing source closure
+    # Subtest: accepted source drift
+    ok 1 - accepted source drift
+      ---
+      duration_ms: 24.778333
+      type: 'test'
+      ...
+    # Subtest: accepted documentation omitted
+    ok 2 - accepted documentation omitted
+      ---
+      duration_ms: 23.965208
+      type: 'test'
+      ...
+    # Subtest: dependency removed from canonical receipt
+    ok 3 - dependency removed from canonical receipt
+      ---
+      duration_ms: 24.793917
+      type: 'test'
+      ...
+    1..3
+ok 18 - C07 rejects accepted source drift and missing source closure
+  ---
+  duration_ms: 73.71175
+  type: 'test'
+  ...
+# Subtest: C07 rejects recomputed but contradictory receipts
+    # Subtest: checkpoint count rebinding
+    ok 1 - checkpoint count rebinding
+      ---
+      duration_ms: 28.163084
+      type: 'test'
+      ...
+    # Subtest: canonical check rebinding
+    ok 2 - canonical check rebinding
+      ---
+      duration_ms: 24.822292
+      type: 'test'
+      ...
+    # Subtest: review verdict rebinding
+    ok 3 - review verdict rebinding
+      ---
+      duration_ms: 24.414667
+      type: 'test'
+      ...
+    # Subtest: validation authority rebinding
+    ok 4 - validation authority rebinding
+      ---
+      duration_ms: 24.875291
+      type: 'test'
+      ...
+    1..4
+ok 19 - C07 rejects recomputed but contradictory receipts
+  ---
+  duration_ms: 102.493
+  type: 'test'
+  ...
+# Subtest: C07 preserves C06 history and refuses authority or supersession rebinding
+    # Subtest: C06 immutable owner evidence changed
+    ok 1 - C06 immutable owner evidence changed
+      ---
+      duration_ms: 24.908875
+      type: 'test'
+      ...
+    # Subtest: C07 native authority
+    ok 2 - C07 native authority
+      ---
+      duration_ms: 24.387833
+      type: 'test'
+      ...
+    # Subtest: dependency supersession changed
+    ok 3 - dependency supersession changed
+      ---
+      duration_ms: 25.000125
+      type: 'test'
+      ...
+    # Subtest: predecessor metadata changed
+    ok 4 - predecessor metadata changed
+      ---
+      duration_ms: 25.14725
+      type: 'test'
+      ...
+    # Subtest: accepted file inventory changed
+    ok 5 - accepted file inventory changed
+      ---
+      duration_ms: 24.438167
+      type: 'test'
+      ...
+    1..5
+ok 20 - C07 preserves C06 history and refuses authority or supersession rebinding
+  ---
+  duration_ms: 124.12275
+  type: 'test'
+  ...
+# Subtest: C07 binds raw evidence, current dependencies and declared authority
+    # Subtest: unrelated live dependency
+    ok 1 - unrelated live dependency
+      ---
+      duration_ms: 26.556916
+      type: 'test'
+      ...
+    # Subtest: raw checkpoint log
+    ok 2 - raw checkpoint log
+      ---
+      duration_ms: 29.03475
+      type: 'test'
+      ...
+    # Subtest: missing mutation log
+    ok 3 - missing mutation log
+      ---
+      duration_ms: 29.312958
+      type: 'test'
+      ...
+    # Subtest: declared dependency omitted
+    ok 4 - declared dependency omitted
+      ---
+      duration_ms: 26.084
+      type: 'test'
+      ...
+    # Subtest: row-level authority
+    ok 5 - row-level authority
+      ---
+      duration_ms: 172.607667
+      type: 'test'
+      ...
+    # Subtest: extra transition
+    ok 6 - extra transition
+      ---
+      duration_ms: 25.58375
+      type: 'test'
+      ...
+    # Subtest: affected acceptance inventory is exact
+    ok 7 - affected acceptance inventory is exact
+      ---
+      duration_ms: 73.620625
+      type: 'test'
+      ...
+    # Subtest: false transition evidence
+    ok 8 - false transition evidence
+      ---
+      duration_ms: 24.633125
+      type: 'test'
+      ...
+    # Subtest: unaccepted predecessor
+    ok 9 - unaccepted predecessor
+      ---
+      duration_ms: 24.23425
+      type: 'test'
+      ...
+    1..9
+ok 21 - C07 binds raw evidence, current dependencies and declared authority
+  ---
+  duration_ms: 432.1515
+  type: 'test'
+  ...
+# Subtest: C06 admits only the complete C07 one-dependency transition
+    # Subtest: complete exact transition
+    ok 1 - complete exact transition
+      ---
+      duration_ms: 33.161459
+      type: 'test'
+      ...
+    # Subtest: flag alone with missing evidence
+    ok 2 - flag alone with missing evidence
+      ---
+      duration_ms: 24.552042
+      type: 'test'
+      ...
+    # Subtest: unaccepted C07 cannot activate a record
+    ok 3 - unaccepted C07 cannot activate a record
+      ---
+      duration_ms: 24.697542
+      type: 'test'
+      ...
+    # Subtest: new bytes alone cannot pass historical C06
+    ok 4 - new bytes alone cannot pass historical C06
+      ---
+      duration_ms: 24.757125
+      type: 'test'
+      ...
+    1..4
+ok 22 - C06 admits only the complete C07 one-dependency transition
+  ---
+  duration_ms: 107.366125
+  type: 'test'
+  ...
+# Subtest: valid history resolver remains a pure old-to-new digest mapping
+ok 23 - valid history resolver remains a pure old-to-new digest mapping
+  ---
+  duration_ms: 25.715542
+  type: 'test'
+  ...
+# Subtest: history evidence rejects malformed transition records
+    # Subtest: missing record
+    ok 1 - missing record
+      ---
+      duration_ms: 21.269334
+      type: 'test'
+      ...
+    # Subtest: null transition
+    ok 2 - null transition
+      ---
+      duration_ms: 21.589459
+      type: 'test'
+      ...
+    # Subtest: boolean transition
+    ok 3 - boolean transition
+      ---
+      duration_ms: 21.136958
+      type: 'test'
+      ...
+    # Subtest: extra transition
+    ok 4 - extra transition
+      ---
+      duration_ms: 21.065625
+      type: 'test'
+      ...
+    # Subtest: omitted path
+    ok 5 - omitted path
+      ---
+      duration_ms: 21.16675
+      type: 'test'
+      ...
+    # Subtest: reordered transitions
+    ok 6 - reordered transitions
+      ---
+      duration_ms: 21.313667
+      type: 'test'
+      ...
+    # Subtest: swapped hashes
+    ok 7 - swapped hashes
+      ---
+      duration_ms: 21.195959
+      type: 'test'
+      ...
+    # Subtest: wrong path
+    ok 8 - wrong path
+      ---
+      duration_ms: 21.119833
+      type: 'test'
+      ...
+    # Subtest: affected transition mismatch
+    ok 9 - affected transition mismatch
+      ---
+      duration_ms: 21.028292
+      type: 'test'
+      ...
+    1..9
+ok 24 - history evidence rejects malformed transition records
+  ---
+  duration_ms: 191.20675
+  type: 'test'
+  ...
+# Subtest: evidence and canonical receipts cannot be rebound around contradictions
+    # Subtest: forged outer evidence hash
+    ok 1 - forged outer evidence hash
+      ---
+      duration_ms: 21.2665
+      type: 'test'
+      ...
+    # Subtest: missing raw log
+    ok 2 - missing raw log
+      ---
+      duration_ms: 21.539417
+      type: 'test'
+      ...
+    # Subtest: changed unchanged store
+    ok 3 - changed unchanged store
+      ---
+      duration_ms: 22.054917
+      type: 'test'
+      ...
+    # Subtest: partial source revert
+    ok 4 - partial source revert
+      ---
+      duration_ms: 23.07525
+      type: 'test'
+      ...
+    # Subtest: changed regression count
+    ok 5 - changed regression count
+      ---
+      duration_ms: 21.784208
+      type: 'test'
+      ...
+    # Subtest: mismatched old digest
+    ok 6 - mismatched old digest
+      ---
+      duration_ms: 21.068375
+      type: 'test'
+      ...
+    1..6
+ok 25 - evidence and canonical receipts cannot be rebound around contradictions
+  ---
+  duration_ms: 131.0205
+  type: 'test'
+  ...
+# Subtest: unrelated copied files remain outside the transition oracle and source cluster stays unchanged
+ok 26 - unrelated copied files remain outside the transition oracle and source cluster stays unchanged
+  ---
+  duration_ms: 25.03525
+  type: 'test'
+  ...
+# Subtest: history resolver never accepts an unreviewed predecessor digest
+ok 27 - history resolver never accepts an unreviewed predecessor digest
+  ---
+  duration_ms: 26.092458
+  type: 'test'
+  ...
+# Subtest: current store, regression and protected oracle bytes remain exact
+ok 28 - current store, regression and protected oracle bytes remain exact
+  ---
+  duration_ms: 116.392917
+  type: 'test'
+  ...
+# Subtest: rebound review, validation, authority and command evidence still fails the frozen owner identity
+ok 29 - rebound review, validation, authority and command evidence still fails the frozen owner identity
+  ---
+  duration_ms: 86.907542
+  type: 'test'
+  ...
+# Subtest: new C07 bytes without C07 acceptance fail the first historical dependency gate
+ok 30 - new C07 bytes without C07 acceptance fail the first historical dependency gate
+  ---
+  duration_ms: 63.006333
+  type: 'test'
+  ...
+# Subtest: C05 accepts exact five-file evidence and predecessor overlay without native or dispatch credit
+ok 31 - C05 accepts exact five-file evidence and predecessor overlay without native or dispatch credit
+  ---
+  duration_ms: 66.512666
+  type: 'test'
+  ...
+# Subtest: C05 rejects scope, provenance, authority, dependency, and predecessor-history changes
+ok 32 - C05 rejects scope, provenance, authority, dependency, and predecessor-history changes
+  ---
+  duration_ms: 424.894167
+  type: 'test'
+  ...
+# Subtest: C05 requires each artifact digest and actual current source bytes
+ok 33 - C05 requires each artifact digest and actual current source bytes
+  ---
+  duration_ms: 461.105959
+  type: 'test'
+  ...
+# Subtest: C05 rejects semantically invalid receipts even with recomputed containing digests
+ok 34 - C05 rejects semantically invalid receipts even with recomputed containing digests
+  ---
+  duration_ms: 1996.083209
+  type: 'test'
+  ...
+# Subtest: C05 binds the blocked packet contract even when edited evidence digests are recomputed
+ok 35 - C05 binds the blocked packet contract even when edited evidence digests are recomputed
+  ---
+  duration_ms: 121.068875
+  type: 'test'
+  ...
+# Subtest: real checker accepts both trusted READY precursor and trusted Node-only accepted fixture
+ok 36 - real checker accepts both trusted READY precursor and trusted Node-only accepted fixture
+  ---
+  duration_ms: 86.192792
+  type: 'test'
+  ...
+# Subtest: real checker rejects accepted-state, implementation, native, and publication mismatches
+ok 37 - real checker rejects accepted-state, implementation, native, and publication mismatches
+  ---
+  duration_ms: 146.35675
+  type: 'test'
+  ...
+# Subtest: real checker rejects wrong or missing accepted source hashes and copied-source drift
+ok 38 - real checker rejects wrong or missing accepted source hashes and copied-source drift
+  ---
+  duration_ms: 122.477667
+  type: 'test'
+  ...
+# Subtest: real checker accepts source-bound C02 but rejects invented execution or wider acceptance
+ok 39 - real checker accepts source-bound C02 but rejects invented execution or wider acceptance
+  ---
+  duration_ms: 207.33175
+  type: 'test'
+  ...
+# Subtest: real checker rejects C02 missing hashes, stale digests, and changed accepted bytes
+ok 40 - real checker rejects C02 missing hashes, stale digests, and changed accepted bytes
+  ---
+  duration_ms: 103.180208
+  type: 'test'
+  ...
+# Subtest: real checker accepts C03 only with source-bound cleanup and C02 revalidation history
+ok 41 - real checker accepts C03 only with source-bound cleanup and C02 revalidation history
+  ---
+  duration_ms: 331.072417
+  type: 'test'
+  ...
+# Subtest: real checker rejects C03 source drift and acceptance without C02
+ok 42 - real checker rejects C03 source drift and acceptance without C02
+  ---
+  duration_ms: 73.469542
+  type: 'test'
+  ...
+# Subtest: C04 acceptance binds exact reviewed sources and evidence without advancing NX or dispatch
+ok 43 - C04 acceptance binds exact reviewed sources and evidence without advancing NX or dispatch
+  ---
+  duration_ms: 54.107709
+  type: 'test'
+  ...
+# Subtest: C04 rejects acceptance, provenance, scope, shared-hash and append-only history mutations
+ok 44 - C04 rejects acceptance, provenance, scope, shared-hash and append-only history mutations
+  ---
+  duration_ms: 598.67975
+  type: 'test'
+  ...
+# Subtest: C04 rejects missing or changed evidence files and live guard drift
+ok 45 - C04 rejects missing or changed evidence files and live guard drift
+  ---
+  duration_ms: 246.817208
+  type: 'test'
+  ...
+# Subtest: C04 evidence still needs semantic success when copied receipt digests are recomputed
+ok 46 - C04 evidence still needs semantic success when copied receipt digests are recomputed
+  ---
+  duration_ms: 253.382917
+  type: 'test'
+  ...
+1..46
+# tests 106
+# suites 0
+# pass 106
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 8572.60075

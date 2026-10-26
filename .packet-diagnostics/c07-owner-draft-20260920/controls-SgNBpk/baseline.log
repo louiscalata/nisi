@@ -1,0 +1,1201 @@
+TAP version 13
+# Subtest: dispatch approves only the four packet-run status transitions after normalization
+ok 1 - dispatch approves only the four packet-run status transitions after normalization
+  ---
+  duration_ms: 102.206708
+  type: 'test'
+  ...
+# Subtest: dispatch rejects missing, duplicate, and invalid frontmatter statuses
+ok 2 - dispatch rejects missing, duplicate, and invalid frontmatter statuses
+  ---
+  duration_ms: 166.143458
+  type: 'test'
+  ...
+# Subtest: dispatch rejects non-status packet changes, including body status-like text and owner changes
+ok 3 - dispatch rejects non-status packet changes, including body status-like text and owner changes
+  ---
+  duration_ms: 69.568625
+  type: 'test'
+  ...
+# Subtest: dispatch fails closed for wrong hash, unreleased, accepted, and non-C01 ledger rows
+ok 4 - dispatch fails closed for wrong hash, unreleased, accepted, and non-C01 ledger rows
+  ---
+  duration_ms: 162.751041
+  type: 'test'
+  ...
+# Subtest: accepted C04 and forged repeat-dispatch states remain HELD
+ok 5 - accepted C04 and forged repeat-dispatch states remain HELD
+  ---
+  duration_ms: 71.189458
+  type: 'test'
+  ...
+# Subtest: accepted C05 and forged READY states never authorize OpenCode dispatch
+ok 6 - accepted C05 and forged READY states never authorize OpenCode dispatch
+  ---
+  duration_ms: 72.76725
+  type: 'test'
+  ...
+# Subtest: C06 owner acceptance and forged release combinations never authorize dispatch
+ok 7 - C06 owner acceptance and forged release combinations never authorize dispatch
+  ---
+  duration_ms: 138.559708
+  type: 'test'
+  ...
+# Subtest: C07 owner integration does not open an OpenCode dispatch route
+ok 8 - C07 owner integration does not open an OpenCode dispatch route
+  ---
+  duration_ms: 135.528
+  type: 'test'
+  ...
+# Subtest: C06 exact owner-frozen evidence is accepted by the additive guard
+ok 9 - C06 exact owner-frozen evidence is accepted by the additive guard
+  ---
+  duration_ms: 31.573958
+  type: 'test'
+  ...
+# Subtest: C06 refuses accepted source and dependency drift
+    # Subtest: accepted source
+    ok 1 - accepted source
+      ---
+      duration_ms: 21.845666
+      type: 'test'
+      ...
+    # Subtest: meaningful dependency
+    ok 2 - meaningful dependency
+      ---
+      duration_ms: 21.745167
+      type: 'test'
+      ...
+    1..2
+ok 10 - C06 refuses accepted source and dependency drift
+  ---
+  duration_ms: 43.770834
+  type: 'test'
+  ...
+# Subtest: C06 refuses omitted, rebound, and contradictory evidence
+    # Subtest: missing review
+    ok 1 - missing review
+      ---
+      duration_ms: 25.90725
+      type: 'test'
+      ...
+    # Subtest: recomputed review digest with false served identity
+    ok 2 - recomputed review digest with false served identity
+      ---
+      duration_ms: 31.713708
+      type: 'test'
+      ...
+    # Subtest: recomputed checkpoint digest with skipped test
+    ok 3 - recomputed checkpoint digest with skipped test
+      ---
+      duration_ms: 30.256375
+      type: 'test'
+      ...
+    # Subtest: recomputed validation digest with wrong candidate
+    ok 4 - recomputed validation digest with wrong candidate
+      ---
+      duration_ms: 28.942417
+      type: 'test'
+      ...
+    # Subtest: recomputed packet and outer digest
+    ok 5 - recomputed packet and outer digest
+      ---
+      duration_ms: 25.287917
+      type: 'test'
+      ...
+    # Subtest: dependency removed from evidence and canonical receipt
+    ok 6 - dependency removed from evidence and canonical receipt
+      ---
+      duration_ms: 20.757375
+      type: 'test'
+      ...
+    # Subtest: raw validation relabeled authorizing with rebound receipts
+    ok 7 - raw validation relabeled authorizing with rebound receipts
+      ---
+      duration_ms: 25.720334
+      type: 'test'
+      ...
+    1..7
+ok 11 - C06 refuses omitted, rebound, and contradictory evidence
+  ---
+  duration_ms: 189.097792
+  type: 'test'
+  ...
+# Subtest: C06 refuses unauthorized authority and predecessor changes
+    # Subtest: native credit
+    ok 1 - native credit
+      ---
+      duration_ms: 19.849708
+      type: 'test'
+      ...
+    # Subtest: resume credit in canonical receipt
+    ok 2 - resume credit in canonical receipt
+      ---
+      duration_ms: 25.760791
+      type: 'test'
+      ...
+    # Subtest: publication credit
+    ok 3 - publication credit
+      ---
+      duration_ms: 20.181834
+      type: 'test'
+      ...
+    # Subtest: C05 acceptance removed
+    ok 4 - C05 acceptance removed
+      ---
+      duration_ms: 19.381625
+      type: 'test'
+      ...
+    # Subtest: canonical receipt claims publication authority
+    ok 5 - canonical receipt claims publication authority
+      ---
+      duration_ms: 26.51275
+      type: 'test'
+      ...
+    # Subtest: integration route changed
+    ok 6 - integration route changed
+      ---
+      duration_ms: 20.671792
+      type: 'test'
+      ...
+    # Subtest: accepted file omitted
+    ok 7 - accepted file omitted
+      ---
+      duration_ms: 20.193084
+      type: 'test'
+      ...
+    1..7
+ok 12 - C06 refuses unauthorized authority and predecessor changes
+  ---
+  duration_ms: 152.8715
+  type: 'test'
+  ...
+# Subtest: C06 binds ledger authority, immutable receipt identity, historical logs and runtime
+    # Subtest: row-level authority cannot bypass subordinate evidence
+    ok 1 - row-level authority cannot bypass subordinate evidence
+      ---
+      duration_ms: 116.068459
+      type: 'test'
+      ...
+    # Subtest: semantically equivalent receipt replacement still needs a new owner pin
+    ok 2 - semantically equivalent receipt replacement still needs a new owner pin
+      ---
+      duration_ms: 25.902625
+      type: 'test'
+      ...
+    # Subtest: retained checkpoint log bytes are required
+    ok 3 - retained checkpoint log bytes are required
+      ---
+      duration_ms: 25.233125
+      type: 'test'
+      ...
+    # Subtest: another executable named node is not the recorded runtime
+    ok 4 - another executable named node is not the recorded runtime
+      ---
+      duration_ms: 25.565083
+      type: 'test'
+      ...
+    1..4
+ok 13 - C06 binds ledger authority, immutable receipt identity, historical logs and runtime
+  ---
+  duration_ms: 192.988416
+  type: 'test'
+  ...
+# Subtest: C07 exact owner-frozen evidence and five-file scope pass the additive guard
+ok 14 - C07 exact owner-frozen evidence and five-file scope pass the additive guard
+  ---
+  duration_ms: 34.236834
+  type: 'test'
+  ...
+# Subtest: C07 rejects accepted source drift and missing source closure
+    # Subtest: accepted source drift
+    ok 1 - accepted source drift
+      ---
+      duration_ms: 27.499292
+      type: 'test'
+      ...
+    # Subtest: accepted documentation omitted
+    ok 2 - accepted documentation omitted
+      ---
+      duration_ms: 27.070834
+      type: 'test'
+      ...
+    # Subtest: dependency removed from canonical receipt
+    ok 3 - dependency removed from canonical receipt
+      ---
+      duration_ms: 27.461291
+      type: 'test'
+      ...
+    1..3
+ok 15 - C07 rejects accepted source drift and missing source closure
+  ---
+  duration_ms: 82.197584
+  type: 'test'
+  ...
+# Subtest: C07 rejects recomputed but contradictory receipts
+    # Subtest: checkpoint count rebinding
+    ok 1 - checkpoint count rebinding
+      ---
+      duration_ms: 28.880958
+      type: 'test'
+      ...
+    # Subtest: canonical check rebinding
+    ok 2 - canonical check rebinding
+      ---
+      duration_ms: 26.644834
+      type: 'test'
+      ...
+    # Subtest: review verdict rebinding
+    ok 3 - review verdict rebinding
+      ---
+      duration_ms: 26.558334
+      type: 'test'
+      ...
+    # Subtest: validation authority rebinding
+    ok 4 - validation authority rebinding
+      ---
+      duration_ms: 26.144291
+      type: 'test'
+      ...
+    1..4
+ok 16 - C07 rejects recomputed but contradictory receipts
+  ---
+  duration_ms: 108.413
+  type: 'test'
+  ...
+# Subtest: C07 preserves C06 history and refuses authority or supersession rebinding
+    # Subtest: C06 immutable owner evidence changed
+    ok 1 - C06 immutable owner evidence changed
+      ---
+      duration_ms: 26.179708
+      type: 'test'
+      ...
+    # Subtest: C07 native authority
+    ok 2 - C07 native authority
+      ---
+      duration_ms: 26.941084
+      type: 'test'
+      ...
+    # Subtest: dependency supersession changed
+    ok 3 - dependency supersession changed
+      ---
+      duration_ms: 26.392375
+      type: 'test'
+      ...
+    # Subtest: predecessor metadata changed
+    ok 4 - predecessor metadata changed
+      ---
+      duration_ms: 26.202
+      type: 'test'
+      ...
+    # Subtest: accepted file inventory changed
+    ok 5 - accepted file inventory changed
+      ---
+      duration_ms: 26.098666
+      type: 'test'
+      ...
+    1..5
+ok 17 - C07 preserves C06 history and refuses authority or supersession rebinding
+  ---
+  duration_ms: 132.015708
+  type: 'test'
+  ...
+# Subtest: C07 binds raw evidence, current dependencies and declared authority
+    # Subtest: unrelated live dependency
+    ok 1 - unrelated live dependency
+      ---
+      duration_ms: 34.678083
+      type: 'test'
+      ...
+    # Subtest: raw checkpoint log
+    ok 2 - raw checkpoint log
+      ---
+      duration_ms: 40.841125
+      type: 'test'
+      ...
+    # Subtest: missing mutation log
+    ok 3 - missing mutation log
+      ---
+      duration_ms: 41.46475
+      type: 'test'
+      ...
+    # Subtest: declared dependency omitted
+    ok 4 - declared dependency omitted
+      ---
+      duration_ms: 28.019875
+      type: 'test'
+      ...
+    # Subtest: row-level authority
+    ok 5 - row-level authority
+      ---
+      duration_ms: 193.139875
+      type: 'test'
+      ...
+    # Subtest: extra transition
+    ok 6 - extra transition
+      ---
+      duration_ms: 27.44875
+      type: 'test'
+      ...
+    # Subtest: false transition evidence
+    ok 7 - false transition evidence
+      ---
+      duration_ms: 27.391667
+      type: 'test'
+      ...
+    # Subtest: unaccepted predecessor
+    ok 8 - unaccepted predecessor
+      ---
+      duration_ms: 27.062
+      type: 'test'
+      ...
+    1..8
+ok 18 - C07 binds raw evidence, current dependencies and declared authority
+  ---
+  duration_ms: 420.456
+  type: 'test'
+  ...
+# Subtest: C06 admits only the complete C07 one-dependency transition
+    # Subtest: complete exact transition
+    ok 1 - complete exact transition
+      ---
+      duration_ms: 37.692584
+      type: 'test'
+      ...
+    # Subtest: flag alone with missing evidence
+    ok 2 - flag alone with missing evidence
+      ---
+      duration_ms: 27.247292
+      type: 'test'
+      ...
+    # Subtest: unaccepted C07 cannot activate a record
+    ok 3 - unaccepted C07 cannot activate a record
+      ---
+      duration_ms: 26.557041
+      type: 'test'
+      ...
+    # Subtest: new bytes alone cannot pass historical C06
+    ok 4 - new bytes alone cannot pass historical C06
+      ---
+      duration_ms: 27.423541
+      type: 'test'
+      ...
+    1..4
+ok 19 - C06 admits only the complete C07 one-dependency transition
+  ---
+  duration_ms: 119.12675
+  type: 'test'
+  ...
+# Subtest: C05 accepts exact five-file evidence and predecessor overlay without native or dispatch credit
+not ok 20 - C05 accepts exact five-file evidence and predecessor overlay without native or dispatch credit
+  ---
+  duration_ms: 67.716333
+  type: 'test'
+  location: '/Users/louiscalata/nisi/tests/finish-cluster-inventory.test.mjs:225:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    node:internal/modules/run_main:107
+        triggerUncaughtException(
+        ^
+    
+    AssertionError [ERR_ASSERTION]: C04 dependency drift: hosts/repository/native-incident-source-v1.mjs
+    + actual - expected
+    
+    + '6a1ddf192be45ff14e4471e08470429a6fcea300642e4f681d10f187b7540e74'
+    - 'ab08ed666126011f3e57f7d3975dce8602a1d570f81c8c544f1c58a2f0616a26'
+    
+        at c05Overlay (file:///private/var/folders/mr/_s2_2c_n3dzcc1clncg5rwsh0000gn/T/nisi-finish-cluster-inventory-E8ojz6/work-orders/v02-finish-cluster-v1/check-cluster.mjs:48:53)
+        at file:///private/var/folders/mr/_s2_2c_n3dzcc1clncg5rwsh0000gn/T/nisi-finish-cluster-inventory-E8ojz6/work-orders/v02-finish-cluster-v1/check-cluster.mjs:116:5
+        at ModuleJob.run (node:internal/modules/esm/module_job:439:25)
+        at async node:internal/modules/esm/loader:643:26
+        at async asyncRunEntryPointWithESMLoader (node:internal/modules/run_main:101:5) {
+      generatedMessage: false,
+      code: 'ERR_ASSERTION',
+      actual: '6a1ddf192be45ff14e4471e08470429a6fcea300642e4f681d10f187b7540e74',
+      expected: 'ab08ed666126011f3e57f7d3975dce8602a1d570f81c8c544f1c58a2f0616a26',
+      operator: 'strictEqual',
+      diff: 'simple'
+    }
+    
+    Node.js v24.18.0
+    
+    
+    1 !== 0
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: 0
+  actual: 1
+  operator: 'strictEqual'
+  stack: |-
+    c05Overlay (file:///private/var/folders/mr/_s2_2c_n3dzcc1clncg5rwsh0000gn/T/nisi-finish-cluster-inventory-E8ojz6/work-orders/v02-finish-cluster-v1/check-cluster.mjs:48:53)
+    file:///private/var/folders/mr/_s2_2c_n3dzcc1clncg5rwsh0000gn/T/nisi-finish-cluster-inventory-E8ojz6/work-orders/v02-finish-cluster-v1/check-cluster.mjs:116:5
+    ModuleJob.run (node:internal/modules/esm/module_job:439:25)
+    async node:internal/modules/esm/loader:643:26
+    async asyncRunEntryPointWithESMLoader (node:internal/modules/run_main:101:5) {
+    TestContext.<anonymous> (file:///Users/louiscalata/nisi/tests/finish-cluster-inventory.test.mjs:227:43)
+    Test.runInAsyncScope (node:async_hooks:227:14)
+    Test.run (node:internal/test_runner/test:1325:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:911:18)
+    Test.postRun (node:internal/test_runner/test:1465:19)
+    Test.run (node:internal/test_runner/test:1390:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:911:7)
+  ...
+# Subtest: C05 rejects scope, provenance, authority, dependency, and predecessor-history changes
+not ok 21 - C05 rejects scope, provenance, authority, dependency, and predecessor-history changes
+  ---
+  duration_ms: 61.1765
+  type: 'test'
+  location: '/Users/louiscalata/nisi/tests/finish-cluster-inventory.test.mjs:239:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    The input did not match the regular expression /C05 accepted-state mismatch/. Input:
+    
+    'node:internal/modules/run_main:107\n' +
+      '    triggerUncaughtException(\n' +
+      '    ^\n' +
+      '\n' +
+      'AssertionError [ERR_ASSERTION]: C04 dependency drift: hosts/repository/native-incident-source-v1.mjs\n' +
+      '+ actual - expected\n' +
+      '\n' +
+      "+ '6a1ddf192be45ff14e4471e08470429a6fcea300642e4f681d10f187b7540e74'\n" +
+      "- 'ab08ed666126011f3e57f7d3975dce8602a1d570f81c8c544f1c58a2f0616a26'\n" +
+      '\n' +
+      '    at c05Overlay (file:///private/var/folders/mr/_s2_2c_n3dzcc1clncg5rwsh0000gn/T/nisi-finish-cluster-inventory-2bh3lg/work-orders/v02-finish-cluster-v1/check-cluster.mjs:48:53)\n' +
+      '    at file:///private/var/folders/mr/_s2_2c_n3dzcc1clncg5rwsh0000gn/T/nisi-finish-cluster-inventory-2bh3lg/work-orders/v02-finish-cluster-v1/check-cluster.mjs:116:5\n' +
+      '    at ModuleJob.run (node:internal/modules/esm/module_job:439:25)\n' +
+      '    at async node:internal/modules/esm/loader:643:26\n' +
+      '    at async asyncRunEntryPointWithESMLoader (node:internal/modules/run_main:101:5) {\n' +
+      '  generatedMessage: false,\n' +
+      "  code: 'ERR_ASSERTION',\n" +
+      "  actual: '6a1ddf192be45ff14e4471e08470429a6fcea300642e4f681d10f187b7540e74',\n" +
+      "  expected: 'ab08ed666126011f3e57f7d3975dce8602a1d570f81c8c544f1c58a2f0616a26',\n" +
+      "  operator: 'strictEqual',\n" +
+      "  diff: 'simple'\n" +
+      '}\n' +
+      '\n' +
+      'Node.js v24.18.0\n'
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected:
+  actual: |-
+    node:internal/modules/run_main:107
+        triggerUncaughtException(
+        ^
+    
+    AssertionError [ERR_ASSERTION]: C04 dependency drift: hosts/repository/native-incident-source-v1.mjs
+    + actual - expected
+    
+    + '6a1ddf192be45ff14e4471e08470429a6fcea300642e4f681d10f187b7540e74'
+    - 'ab08ed666126011f3e57f7d3975dce8602a1d570f81c8c544f1c58a2f0616a26'
+    
+        at c05Overlay (file:///private/var/folders/mr/_s2_2c_n3dzcc1clncg5rwsh0000gn/T/nisi-finish-cluster-inventory-2bh3lg/work-orders/v02-finish-cluster-v1/check-cluster.mjs:48:53)
+        at file:///private/var/folders/mr/_s2_2c_n3dzcc1clncg5rwsh0000gn/T/nisi-finish-cluster-inventory-2bh3lg/work-orders/v02-finish-cluster-v1/check-cluster.mjs:116:5
+        at ModuleJob.run (node:internal/modules/esm/module_job:439:25)
+        at async node:internal/modules/esm/loader:643:26
+        at async asyncRunEntryPointWithESMLoader (node:internal/modules/run_main:101:5) {
+      generatedMessage: false,
+      code: 'ERR_ASSERTION',
+      actual: '6a1ddf192be45ff14e4471e08470429a6fcea300642e4f681d10f187b7540e74',
+      expected: 'ab08ed666126011f3e57f7d3975dce8602a1d570f81c8c544f1c58a2f0616a26',
+      operator: 'strictEqual',
+      diff: 'simple'
+    }
+    
+    Node.js v24.18.0
+    
+  operator: 'match'
+  stack: |-
+    assertCheckerAssertion (file:///Users/louiscalata/nisi/tests/finish-cluster-inventory.test.mjs:177:21)
+    TestContext.<anonymous> (file:///Users/louiscalata/nisi/tests/finish-cluster-inventory.test.mjs:260:5)
+    Test.runInAsyncScope (node:async_hooks:227:14)
+    Test.run (node:internal/test_runner/test:1325:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:911:18)
+    Test.postRun (node:internal/test_runner/test:1465:19)
+    Test.run (node:internal/test_runner/test:1390:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:911:7)
+  ...
+# Subtest: C05 requires each artifact digest and actual current source bytes
+not ok 22 - C05 requires each artifact digest and actual current source bytes
+  ---
+  duration_ms: 64.099541
+  type: 'test'
+  location: '/Users/louiscalata/nisi/tests/finish-cluster-inventory.test.mjs:264:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    The input did not match the regular expression /C05 (Nisi )?evidence (evidence )?missing/. Input:
+    
+    'node:internal/modules/run_main:107\n' +
+      '    triggerUncaughtException(\n' +
+      '    ^\n' +
+      '\n' +
+      'AssertionError [ERR_ASSERTION]: C04 dependency drift: hosts/repository/native-incident-source-v1.mjs\n' +
+      '+ actual - expected\n' +
+      '\n' +
+      "+ '6a1ddf192be45ff14e4471e08470429a6fcea300642e4f681d10f187b7540e74'\n" +
+      "- 'ab08ed666126011f3e57f7d3975dce8602a1d570f81c8c544f1c58a2f0616a26'\n" +
+      '\n' +
+      '    at c05Overlay (file:///private/var/folders/mr/_s2_2c_n3dzcc1clncg5rwsh0000gn/T/nisi-finish-cluster-inventory-0cPiwW/work-orders/v02-finish-cluster-v1/check-cluster.mjs:48:53)\n' +
+      '    at file:///private/var/folders/mr/_s2_2c_n3dzcc1clncg5rwsh0000gn/T/nisi-finish-cluster-inventory-0cPiwW/work-orders/v02-finish-cluster-v1/check-cluster.mjs:116:5\n' +
+      '    at ModuleJob.run (node:internal/modules/esm/module_job:439:25)\n' +
+      '    at async node:internal/modules/esm/loader:643:26\n' +
+      '    at async asyncRunEntryPointWithESMLoader (node:internal/modules/run_main:101:5) {\n' +
+      '  generatedMessage: false,\n' +
+      "  code: 'ERR_ASSERTION',\n" +
+      "  actual: '6a1ddf192be45ff14e4471e08470429a6fcea300642e4f681d10f187b7540e74',\n" +
+      "  expected: 'ab08ed666126011f3e57f7d3975dce8602a1d570f81c8c544f1c58a2f0616a26',\n" +
+      "  operator: 'strictEqual',\n" +
+      "  diff: 'simple'\n" +
+      '}\n' +
+      '\n' +
+      'Node.js v24.18.0\n'
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected:
+  actual: |-
+    node:internal/modules/run_main:107
+        triggerUncaughtException(
+        ^
+    
+    AssertionError [ERR_ASSERTION]: C04 dependency drift: hosts/repository/native-incident-source-v1.mjs
+    + actual - expected
+    
+    + '6a1ddf192be45ff14e4471e08470429a6fcea300642e4f681d10f187b7540e74'
+    - 'ab08ed666126011f3e57f7d3975dce8602a1d570f81c8c544f1c58a2f0616a26'
+    
+        at c05Overlay (file:///private/var/folders/mr/_s2_2c_n3dzcc1clncg5rwsh0000gn/T/nisi-finish-cluster-inventory-0cPiwW/work-orders/v02-finish-cluster-v1/check-cluster.mjs:48:53)
+        at file:///private/var/folders/mr/_s2_2c_n3dzcc1clncg5rwsh0000gn/T/nisi-finish-cluster-inventory-0cPiwW/work-orders/v02-finish-cluster-v1/check-cluster.mjs:116:5
+        at ModuleJob.run (node:internal/modules/esm/module_job:439:25)
+        at async node:internal/modules/esm/loader:643:26
+        at async asyncRunEntryPointWithESMLoader (node:internal/modules/run_main:101:5) {
+      generatedMessage: false,
+      code: 'ERR_ASSERTION',
+      actual: '6a1ddf192be45ff14e4471e08470429a6fcea300642e4f681d10f187b7540e74',
+      expected: 'ab08ed666126011f3e57f7d3975dce8602a1d570f81c8c544f1c58a2f0616a26',
+      operator: 'strictEqual',
+      diff: 'simple'
+    }
+    
+    Node.js v24.18.0
+    
+  operator: 'match'
+  stack: |-
+    assertCheckerAssertion (file:///Users/louiscalata/nisi/tests/finish-cluster-inventory.test.mjs:177:21)
+    TestContext.<anonymous> (file:///Users/louiscalata/nisi/tests/finish-cluster-inventory.test.mjs:269:18)
+    Test.runInAsyncScope (node:async_hooks:227:14)
+    Test.run (node:internal/test_runner/test:1325:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:911:18)
+    Test.postRun (node:internal/test_runner/test:1465:19)
+    Test.run (node:internal/test_runner/test:1390:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:911:7)
+  ...
+# Subtest: C05 rejects semantically invalid receipts even with recomputed containing digests
+not ok 23 - C05 rejects semantically invalid receipts even with recomputed containing digests
+  ---
+  duration_ms: 63.583167
+  type: 'test'
+  location: '/Users/louiscalata/nisi/tests/finish-cluster-inventory.test.mjs:286:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    node:internal/modules/run_main:107
+        triggerUncaughtException(
+        ^
+    
+    AssertionError [ERR_ASSERTION]: C04 dependency drift: hosts/repository/native-incident-source-v1.mjs
+    + actual - expected
+    
+    + '6a1ddf192be45ff14e4471e08470429a6fcea300642e4f681d10f187b7540e74'
+    - 'ab08ed666126011f3e57f7d3975dce8602a1d570f81c8c544f1c58a2f0616a26'
+    
+        at c05Overlay (file:///private/var/folders/mr/_s2_2c_n3dzcc1clncg5rwsh0000gn/T/nisi-finish-cluster-inventory-FxOBC2/work-orders/v02-finish-cluster-v1/check-cluster.mjs:48:53)
+        at file:///private/var/folders/mr/_s2_2c_n3dzcc1clncg5rwsh0000gn/T/nisi-finish-cluster-inventory-FxOBC2/work-orders/v02-finish-cluster-v1/check-cluster.mjs:116:5
+        at ModuleJob.run (node:internal/modules/esm/module_job:439:25)
+        at async node:internal/modules/esm/loader:643:26
+        at async asyncRunEntryPointWithESMLoader (node:internal/modules/run_main:101:5) {
+      generatedMessage: false,
+      code: 'ERR_ASSERTION',
+      actual: '6a1ddf192be45ff14e4471e08470429a6fcea300642e4f681d10f187b7540e74',
+      expected: 'ab08ed666126011f3e57f7d3975dce8602a1d570f81c8c544f1c58a2f0616a26',
+      operator: 'strictEqual',
+      diff: 'simple'
+    }
+    
+    Node.js v24.18.0
+    
+    
+    1 !== 0
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: 0
+  actual: 1
+  operator: 'strictEqual'
+  stack: |-
+    c05Overlay (file:///private/var/folders/mr/_s2_2c_n3dzcc1clncg5rwsh0000gn/T/nisi-finish-cluster-inventory-FxOBC2/work-orders/v02-finish-cluster-v1/check-cluster.mjs:48:53)
+    file:///private/var/folders/mr/_s2_2c_n3dzcc1clncg5rwsh0000gn/T/nisi-finish-cluster-inventory-FxOBC2/work-orders/v02-finish-cluster-v1/check-cluster.mjs:116:5
+    ModuleJob.run (node:internal/modules/esm/module_job:439:25)
+    async node:internal/modules/esm/loader:643:26
+    async asyncRunEntryPointWithESMLoader (node:internal/modules/run_main:101:5) {
+    TestContext.<anonymous> (file:///Users/louiscalata/nisi/tests/finish-cluster-inventory.test.mjs:313:47)
+    Test.runInAsyncScope (node:async_hooks:227:14)
+    Test.run (node:internal/test_runner/test:1325:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:911:18)
+    Test.postRun (node:internal/test_runner/test:1465:19)
+    Test.run (node:internal/test_runner/test:1390:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:911:7)
+  ...
+# Subtest: C05 binds the blocked packet contract even when edited evidence digests are recomputed
+not ok 24 - C05 binds the blocked packet contract even when edited evidence digests are recomputed
+  ---
+  duration_ms: 61.089042
+  type: 'test'
+  location: '/Users/louiscalata/nisi/tests/finish-cluster-inventory.test.mjs:319:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    The input did not match the regular expression /C05 packet missing/. Input:
+    
+    'node:internal/modules/run_main:107\n' +
+      '    triggerUncaughtException(\n' +
+      '    ^\n' +
+      '\n' +
+      'AssertionError [ERR_ASSERTION]: C04 dependency drift: hosts/repository/native-incident-source-v1.mjs\n' +
+      '+ actual - expected\n' +
+      '\n' +
+      "+ '6a1ddf192be45ff14e4471e08470429a6fcea300642e4f681d10f187b7540e74'\n" +
+      "- 'ab08ed666126011f3e57f7d3975dce8602a1d570f81c8c544f1c58a2f0616a26'\n" +
+      '\n' +
+      '    at c05Overlay (file:///private/var/folders/mr/_s2_2c_n3dzcc1clncg5rwsh0000gn/T/nisi-finish-cluster-inventory-yAnFhq/work-orders/v02-finish-cluster-v1/check-cluster.mjs:48:53)\n' +
+      '    at file:///private/var/folders/mr/_s2_2c_n3dzcc1clncg5rwsh0000gn/T/nisi-finish-cluster-inventory-yAnFhq/work-orders/v02-finish-cluster-v1/check-cluster.mjs:116:5\n' +
+      '    at ModuleJob.run (node:internal/modules/esm/module_job:439:25)\n' +
+      '    at async node:internal/modules/esm/loader:643:26\n' +
+      '    at async asyncRunEntryPointWithESMLoader (node:internal/modules/run_main:101:5) {\n' +
+      '  generatedMessage: false,\n' +
+      "  code: 'ERR_ASSERTION',\n" +
+      "  actual: '6a1ddf192be45ff14e4471e08470429a6fcea300642e4f681d10f187b7540e74',\n" +
+      "  expected: 'ab08ed666126011f3e57f7d3975dce8602a1d570f81c8c544f1c58a2f0616a26',\n" +
+      "  operator: 'strictEqual',\n" +
+      "  diff: 'simple'\n" +
+      '}\n' +
+      '\n' +
+      'Node.js v24.18.0\n'
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected:
+  actual: |-
+    node:internal/modules/run_main:107
+        triggerUncaughtException(
+        ^
+    
+    AssertionError [ERR_ASSERTION]: C04 dependency drift: hosts/repository/native-incident-source-v1.mjs
+    + actual - expected
+    
+    + '6a1ddf192be45ff14e4471e08470429a6fcea300642e4f681d10f187b7540e74'
+    - 'ab08ed666126011f3e57f7d3975dce8602a1d570f81c8c544f1c58a2f0616a26'
+    
+        at c05Overlay (file:///private/var/folders/mr/_s2_2c_n3dzcc1clncg5rwsh0000gn/T/nisi-finish-cluster-inventory-yAnFhq/work-orders/v02-finish-cluster-v1/check-cluster.mjs:48:53)
+        at file:///private/var/folders/mr/_s2_2c_n3dzcc1clncg5rwsh0000gn/T/nisi-finish-cluster-inventory-yAnFhq/work-orders/v02-finish-cluster-v1/check-cluster.mjs:116:5
+        at ModuleJob.run (node:internal/modules/esm/module_job:439:25)
+        at async node:internal/modules/esm/loader:643:26
+        at async asyncRunEntryPointWithESMLoader (node:internal/modules/run_main:101:5) {
+      generatedMessage: false,
+      code: 'ERR_ASSERTION',
+      actual: '6a1ddf192be45ff14e4471e08470429a6fcea300642e4f681d10f187b7540e74',
+      expected: 'ab08ed666126011f3e57f7d3975dce8602a1d570f81c8c544f1c58a2f0616a26',
+      operator: 'strictEqual',
+      diff: 'simple'
+    }
+    
+    Node.js v24.18.0
+    
+  operator: 'match'
+  stack: |-
+    assertCheckerAssertion (file:///Users/louiscalata/nisi/tests/finish-cluster-inventory.test.mjs:177:21)
+    TestContext.<anonymous> (file:///Users/louiscalata/nisi/tests/finish-cluster-inventory.test.mjs:322:18)
+    Test.runInAsyncScope (node:async_hooks:227:14)
+    Test.run (node:internal/test_runner/test:1325:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:911:18)
+    Test.postRun (node:internal/test_runner/test:1465:19)
+    Test.run (node:internal/test_runner/test:1390:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:911:7)
+  ...
+# Subtest: real checker accepts both trusted READY precursor and trusted Node-only accepted fixture
+ok 25 - real checker accepts both trusted READY precursor and trusted Node-only accepted fixture
+  ---
+  duration_ms: 83.62925
+  type: 'test'
+  ...
+# Subtest: real checker rejects accepted-state, implementation, native, and publication mismatches
+ok 26 - real checker rejects accepted-state, implementation, native, and publication mismatches
+  ---
+  duration_ms: 138.286541
+  type: 'test'
+  ...
+# Subtest: real checker rejects wrong or missing accepted source hashes and copied-source drift
+ok 27 - real checker rejects wrong or missing accepted source hashes and copied-source drift
+  ---
+  duration_ms: 113.012834
+  type: 'test'
+  ...
+# Subtest: real checker accepts source-bound C02 but rejects invented execution or wider acceptance
+ok 28 - real checker accepts source-bound C02 but rejects invented execution or wider acceptance
+  ---
+  duration_ms: 191.657166
+  type: 'test'
+  ...
+# Subtest: real checker rejects C02 missing hashes, stale digests, and changed accepted bytes
+ok 29 - real checker rejects C02 missing hashes, stale digests, and changed accepted bytes
+  ---
+  duration_ms: 90.518833
+  type: 'test'
+  ...
+# Subtest: real checker accepts C03 only with source-bound cleanup and C02 revalidation history
+ok 30 - real checker accepts C03 only with source-bound cleanup and C02 revalidation history
+  ---
+  duration_ms: 294.943542
+  type: 'test'
+  ...
+# Subtest: real checker rejects C03 source drift and acceptance without C02
+ok 31 - real checker rejects C03 source drift and acceptance without C02
+  ---
+  duration_ms: 66.964458
+  type: 'test'
+  ...
+# Subtest: C04 acceptance binds exact reviewed sources and evidence without advancing NX or dispatch
+not ok 32 - C04 acceptance binds exact reviewed sources and evidence without advancing NX or dispatch
+  ---
+  duration_ms: 53.09
+  type: 'test'
+  location: '/Users/louiscalata/nisi/tests/finish-cluster-inventory.test.mjs:450:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    node:internal/modules/run_main:107
+        triggerUncaughtException(
+        ^
+    
+    AssertionError [ERR_ASSERTION]: C04 dependency drift: hosts/repository/native-incident-source-v1.mjs
+    + actual - expected
+    
+    + '6a1ddf192be45ff14e4471e08470429a6fcea300642e4f681d10f187b7540e74'
+    - 'ab08ed666126011f3e57f7d3975dce8602a1d570f81c8c544f1c58a2f0616a26'
+    
+        at c05Overlay (file:///private/var/folders/mr/_s2_2c_n3dzcc1clncg5rwsh0000gn/T/nisi-finish-cluster-inventory-6LKKjF/work-orders/v02-finish-cluster-v1/check-cluster.mjs:48:53)
+        at file:///private/var/folders/mr/_s2_2c_n3dzcc1clncg5rwsh0000gn/T/nisi-finish-cluster-inventory-6LKKjF/work-orders/v02-finish-cluster-v1/check-cluster.mjs:116:5
+        at ModuleJob.run (node:internal/modules/esm/module_job:439:25)
+        at async node:internal/modules/esm/loader:643:26
+        at async asyncRunEntryPointWithESMLoader (node:internal/modules/run_main:101:5) {
+      generatedMessage: false,
+      code: 'ERR_ASSERTION',
+      actual: '6a1ddf192be45ff14e4471e08470429a6fcea300642e4f681d10f187b7540e74',
+      expected: 'ab08ed666126011f3e57f7d3975dce8602a1d570f81c8c544f1c58a2f0616a26',
+      operator: 'strictEqual',
+      diff: 'simple'
+    }
+    
+    Node.js v24.18.0
+    
+    
+    1 !== 0
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: 0
+  actual: 1
+  operator: 'strictEqual'
+  stack: |-
+    c05Overlay (file:///private/var/folders/mr/_s2_2c_n3dzcc1clncg5rwsh0000gn/T/nisi-finish-cluster-inventory-6LKKjF/work-orders/v02-finish-cluster-v1/check-cluster.mjs:48:53)
+    file:///private/var/folders/mr/_s2_2c_n3dzcc1clncg5rwsh0000gn/T/nisi-finish-cluster-inventory-6LKKjF/work-orders/v02-finish-cluster-v1/check-cluster.mjs:116:5
+    ModuleJob.run (node:internal/modules/esm/module_job:439:25)
+    async node:internal/modules/esm/loader:643:26
+    async asyncRunEntryPointWithESMLoader (node:internal/modules/run_main:101:5) {
+    TestContext.<anonymous> (file:///Users/louiscalata/nisi/tests/finish-cluster-inventory.test.mjs:452:43)
+    Test.runInAsyncScope (node:async_hooks:227:14)
+    Test.run (node:internal/test_runner/test:1325:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:911:18)
+    Test.postRun (node:internal/test_runner/test:1465:19)
+    Test.run (node:internal/test_runner/test:1390:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:911:7)
+  ...
+# Subtest: C04 rejects acceptance, provenance, scope, shared-hash and append-only history mutations
+not ok 33 - C04 rejects acceptance, provenance, scope, shared-hash and append-only history mutations
+  ---
+  duration_ms: 392.890125
+  type: 'test'
+  location: '/Users/louiscalata/nisi/tests/finish-cluster-inventory.test.mjs:460:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    The input did not match the regular expression /C04 shared source mismatch/. Input:
+    
+    'node:internal/modules/run_main:107\n' +
+      '    triggerUncaughtException(\n' +
+      '    ^\n' +
+      '\n' +
+      'AssertionError [ERR_ASSERTION]: C04 dependency drift: hosts/repository/native-incident-source-v1.mjs\n' +
+      '+ actual - expected\n' +
+      '\n' +
+      "+ '6a1ddf192be45ff14e4471e08470429a6fcea300642e4f681d10f187b7540e74'\n" +
+      "- 'ab08ed666126011f3e57f7d3975dce8602a1d570f81c8c544f1c58a2f0616a26'\n" +
+      '\n' +
+      '    at c05Overlay (file:///private/var/folders/mr/_s2_2c_n3dzcc1clncg5rwsh0000gn/T/nisi-finish-cluster-inventory-XXy0DT/work-orders/v02-finish-cluster-v1/check-cluster.mjs:48:53)\n' +
+      '    at file:///private/var/folders/mr/_s2_2c_n3dzcc1clncg5rwsh0000gn/T/nisi-finish-cluster-inventory-XXy0DT/work-orders/v02-finish-cluster-v1/check-cluster.mjs:116:5\n' +
+      '    at ModuleJob.run (node:internal/modules/esm/module_job:439:25)\n' +
+      '    at async node:internal/modules/esm/loader:643:26\n' +
+      '    at async asyncRunEntryPointWithESMLoader (node:internal/modules/run_main:101:5) {\n' +
+      '  generatedMessage: false,\n' +
+      "  code: 'ERR_ASSERTION',\n" +
+      "  actual: '6a1ddf192be45ff14e4471e08470429a6fcea300642e4f681d10f187b7540e74',\n" +
+      "  expected: 'ab08ed666126011f3e57f7d3975dce8602a1d570f81c8c544f1c58a2f0616a26',\n" +
+      "  operator: 'strictEqual',\n" +
+      "  diff: 'simple'\n" +
+      '}\n' +
+      '\n' +
+      'Node.js v24.18.0\n'
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected:
+  actual: |-
+    node:internal/modules/run_main:107
+        triggerUncaughtException(
+        ^
+    
+    AssertionError [ERR_ASSERTION]: C04 dependency drift: hosts/repository/native-incident-source-v1.mjs
+    + actual - expected
+    
+    + '6a1ddf192be45ff14e4471e08470429a6fcea300642e4f681d10f187b7540e74'
+    - 'ab08ed666126011f3e57f7d3975dce8602a1d570f81c8c544f1c58a2f0616a26'
+    
+        at c05Overlay (file:///private/var/folders/mr/_s2_2c_n3dzcc1clncg5rwsh0000gn/T/nisi-finish-cluster-inventory-XXy0DT/work-orders/v02-finish-cluster-v1/check-cluster.mjs:48:53)
+        at file:///private/var/folders/mr/_s2_2c_n3dzcc1clncg5rwsh0000gn/T/nisi-finish-cluster-inventory-XXy0DT/work-orders/v02-finish-cluster-v1/check-cluster.mjs:116:5
+        at ModuleJob.run (node:internal/modules/esm/module_job:439:25)
+        at async node:internal/modules/esm/loader:643:26
+        at async asyncRunEntryPointWithESMLoader (node:internal/modules/run_main:101:5) {
+      generatedMessage: false,
+      code: 'ERR_ASSERTION',
+      actual: '6a1ddf192be45ff14e4471e08470429a6fcea300642e4f681d10f187b7540e74',
+      expected: 'ab08ed666126011f3e57f7d3975dce8602a1d570f81c8c544f1c58a2f0616a26',
+      operator: 'strictEqual',
+      diff: 'simple'
+    }
+    
+    Node.js v24.18.0
+    
+  operator: 'match'
+  stack: |-
+    assertCheckerAssertion (file:///Users/louiscalata/nisi/tests/finish-cluster-inventory.test.mjs:177:21)
+    TestContext.<anonymous> (file:///Users/louiscalata/nisi/tests/finish-cluster-inventory.test.mjs:489:5)
+    Test.runInAsyncScope (node:async_hooks:227:14)
+    Test.run (node:internal/test_runner/test:1325:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:911:18)
+    Test.postRun (node:internal/test_runner/test:1465:19)
+    Test.run (node:internal/test_runner/test:1390:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:911:7)
+  ...
+# Subtest: C04 rejects missing or changed evidence files and live guard drift
+ok 34 - C04 rejects missing or changed evidence files and live guard drift
+  ---
+  duration_ms: 250.293417
+  type: 'test'
+  ...
+# Subtest: C04 evidence still needs semantic success when copied receipt digests are recomputed
+not ok 35 - C04 evidence still needs semantic success when copied receipt digests are recomputed
+  ---
+  duration_ms: 154.625417
+  type: 'test'
+  location: '/Users/louiscalata/nisi/tests/finish-cluster-inventory.test.mjs:510:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    The input did not match the regular expression /C04 missing assertion failure/. Input:
+    
+    'node:internal/modules/run_main:107\n' +
+      '    triggerUncaughtException(\n' +
+      '    ^\n' +
+      '\n' +
+      'AssertionError [ERR_ASSERTION]: C04 dependency drift: hosts/repository/native-incident-source-v1.mjs\n' +
+      '+ actual - expected\n' +
+      '\n' +
+      "+ '6a1ddf192be45ff14e4471e08470429a6fcea300642e4f681d10f187b7540e74'\n" +
+      "- 'ab08ed666126011f3e57f7d3975dce8602a1d570f81c8c544f1c58a2f0616a26'\n" +
+      '\n' +
+      '    at c05Overlay (file:///private/var/folders/mr/_s2_2c_n3dzcc1clncg5rwsh0000gn/T/nisi-finish-cluster-inventory-reXhJw/work-orders/v02-finish-cluster-v1/check-cluster.mjs:48:53)\n' +
+      '    at file:///private/var/folders/mr/_s2_2c_n3dzcc1clncg5rwsh0000gn/T/nisi-finish-cluster-inventory-reXhJw/work-orders/v02-finish-cluster-v1/check-cluster.mjs:116:5\n' +
+      '    at ModuleJob.run (node:internal/modules/esm/module_job:439:25)\n' +
+      '    at async node:internal/modules/esm/loader:643:26\n' +
+      '    at async asyncRunEntryPointWithESMLoader (node:internal/modules/run_main:101:5) {\n' +
+      '  generatedMessage: false,\n' +
+      "  code: 'ERR_ASSERTION',\n" +
+      "  actual: '6a1ddf192be45ff14e4471e08470429a6fcea300642e4f681d10f187b7540e74',\n" +
+      "  expected: 'ab08ed666126011f3e57f7d3975dce8602a1d570f81c8c544f1c58a2f0616a26',\n" +
+      "  operator: 'strictEqual',\n" +
+      "  diff: 'simple'\n" +
+      '}\n' +
+      '\n' +
+      'Node.js v24.18.0\n'
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected:
+  actual: |-
+    node:internal/modules/run_main:107
+        triggerUncaughtException(
+        ^
+    
+    AssertionError [ERR_ASSERTION]: C04 dependency drift: hosts/repository/native-incident-source-v1.mjs
+    + actual - expected
+    
+    + '6a1ddf192be45ff14e4471e08470429a6fcea300642e4f681d10f187b7540e74'
+    - 'ab08ed666126011f3e57f7d3975dce8602a1d570f81c8c544f1c58a2f0616a26'
+    
+        at c05Overlay (file:///private/var/folders/mr/_s2_2c_n3dzcc1clncg5rwsh0000gn/T/nisi-finish-cluster-inventory-reXhJw/work-orders/v02-finish-cluster-v1/check-cluster.mjs:48:53)
+        at file:///private/var/folders/mr/_s2_2c_n3dzcc1clncg5rwsh0000gn/T/nisi-finish-cluster-inventory-reXhJw/work-orders/v02-finish-cluster-v1/check-cluster.mjs:116:5
+        at ModuleJob.run (node:internal/modules/esm/module_job:439:25)
+        at async node:internal/modules/esm/loader:643:26
+        at async asyncRunEntryPointWithESMLoader (node:internal/modules/run_main:101:5) {
+      generatedMessage: false,
+      code: 'ERR_ASSERTION',
+      actual: '6a1ddf192be45ff14e4471e08470429a6fcea300642e4f681d10f187b7540e74',
+      expected: 'ab08ed666126011f3e57f7d3975dce8602a1d570f81c8c544f1c58a2f0616a26',
+      operator: 'strictEqual',
+      diff: 'simple'
+    }
+    
+    Node.js v24.18.0
+    
+  operator: 'match'
+  stack: |-
+    assertCheckerAssertion (file:///Users/louiscalata/nisi/tests/finish-cluster-inventory.test.mjs:177:21)
+    TestContext.<anonymous> (file:///Users/louiscalata/nisi/tests/finish-cluster-inventory.test.mjs:538:5)
+    Test.runInAsyncScope (node:async_hooks:227:14)
+    Test.run (node:internal/test_runner/test:1325:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:911:18)
+    Test.postRun (node:internal/test_runner/test:1465:19)
+    Test.run (node:internal/test_runner/test:1390:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:911:7)
+  ...
+# Subtest: final post-tool guard allows unchanged clean and historical exclusions
+ok 36 - final post-tool guard allows unchanged clean and historical exclusions
+  ---
+  duration_ms: 0.372
+  type: 'test'
+  ...
+# Subtest: final post-tool guard rejects newly ignored paths and both state transitions
+ok 37 - final post-tool guard rejects newly ignored paths and both state transitions
+  ---
+  duration_ms: 0.2505
+  type: 'test'
+  ...
+# Subtest: frozen import matches exact content; scope never expands to integration or release
+ok 38 - frozen import matches exact content; scope never expands to integration or release
+  ---
+  duration_ms: 2.88925
+  type: 'test'
+  ...
+# Subtest: import refuses same-size content edit
+ok 39 - import refuses same-size content edit
+  ---
+  duration_ms: 1.673542
+  type: 'test'
+  ...
+# Subtest: import refuses new source
+ok 40 - import refuses new source
+  ---
+  duration_ms: 1.516416
+  type: 'test'
+  ...
+# Subtest: import refuses missing source
+ok 41 - import refuses missing source
+  ---
+  duration_ms: 1.4165
+  type: 'test'
+  ...
+# Subtest: import refuses duplicate inventory entry
+ok 42 - import refuses duplicate inventory entry
+  ---
+  duration_ms: 1.3655
+  type: 'test'
+  ...
+# Subtest: import refuses path traversal
+ok 43 - import refuses path traversal
+  ---
+  duration_ms: 1.341333
+  type: 'test'
+  ...
+# Subtest: import refuses unknown authority field
+ok 44 - import refuses unknown authority field
+  ---
+  duration_ms: 1.376709
+  type: 'test'
+  ...
+# Subtest: import refuses wrong schema
+ok 45 - import refuses wrong schema
+  ---
+  duration_ms: 1.731625
+  type: 'test'
+  ...
+# Subtest: import refuses empty inventory
+ok 46 - import refuses empty inventory
+  ---
+  duration_ms: 1.309416
+  type: 'test'
+  ...
+# Subtest: import refuses invalid digest
+ok 47 - import refuses invalid digest
+  ---
+  duration_ms: 1.256334
+  type: 'test'
+  ...
+# Subtest: import refuses scope changed
+ok 48 - import refuses scope changed
+  ---
+  duration_ms: 1.187834
+  type: 'test'
+  ...
+# Subtest: import refuses file symlink
+ok 49 - import refuses file symlink
+  ---
+  duration_ms: 1.359209
+  type: 'test'
+  ...
+# Subtest: excluded build and hidden entries are named but not traversed or accepted as source
+ok 50 - excluded build and hidden entries are named but not traversed or accepted as source
+  ---
+  duration_ms: 1.909042
+  type: 'test'
+  ...
+# Subtest: normal edit mode produces a bound completed report
+ok 51 - normal edit mode produces a bound completed report
+  ---
+  duration_ms: 2.542375
+  type: 'test'
+  ...
+# Subtest: review mode validates the supplied candidate and never invokes draft or repair
+ok 52 - review mode validates the supplied candidate and never invokes draft or repair
+  ---
+  duration_ms: 0.306042
+  type: 'test'
+  ...
+# Subtest: a repair reruns all checks, tests, and reviewers with a new attempt binding
+ok 53 - a repair reruns all checks, tests, and reviewers with a new attempt binding
+  ---
+  duration_ms: 0.517791
+  type: 'test'
+  ...
+# Subtest: failed, unavailable, and not-run statuses remain non-successes with distinct outcomes
+ok 54 - failed, unavailable, and not-run statuses remain non-successes with distinct outcomes
+  ---
+  duration_ms: 0.588833
+  type: 'test'
+  ...
+# Subtest: repair budget, no progress, and repeated fingerprints are explicit
+ok 55 - repair budget, no progress, and repeated fingerprints are explicit
+  ---
+  duration_ms: 0.599208
+  type: 'test'
+  ...
+# Subtest: actual task and candidate mutation attempts fail while frozen snapshots remain unchanged
+ok 56 - actual task and candidate mutation attempts fail while frozen snapshots remain unchanged
+  ---
+  duration_ms: 0.24275
+  type: 'test'
+  ...
+# Subtest: replay identity binds task, run, attempt, and candidate evidence
+ok 57 - replay identity binds task, run, attempt, and candidate evidence
+  ---
+  duration_ms: 0.373458
+  type: 'test'
+  ...
+# Subtest: stale or malformed evidence and protected or out-of-scope candidates are blocked
+ok 58 - stale or malformed evidence and protected or out-of-scope candidates are blocked
+  ---
+  duration_ms: 0.710709
+  type: 'test'
+  ...
+# Subtest: cancellation before and during listener registration prevents adapter calls
+ok 59 - cancellation before and during listener registration prevents adapter calls
+  ---
+  duration_ms: 0.274792
+  type: 'test'
+  ...
+# Subtest: async timeout and synchronous clock advancement are timed out before later adapters
+ok 60 - async timeout and synchronous clock advancement are timed out before later adapters
+  ---
+  duration_ms: 17.782542
+  type: 'test'
+  ...
+# Subtest: clock regression and deadline overflow fail closed
+ok 61 - clock regression and deadline overflow fail closed
+  ---
+  duration_ms: 0.180375
+  type: 'test'
+  ...
+# Subtest: a storage acknowledgement copied after the deadline is rejected even when storage is optional
+ok 62 - a storage acknowledgement copied after the deadline is rejected even when storage is optional
+  ---
+  duration_ms: 0.495167
+  type: 'test'
+  ...
+# Subtest: report stores receive exact frozen report and binding hashes; required failure blocks
+ok 63 - report stores receive exact frozen report and binding hashes; required failure blocks
+  ---
+  duration_ms: 0.767166
+  type: 'test'
+  ...
+# Subtest: task specification and candidate inputs are frozen and schema-checked
+ok 64 - task specification and candidate inputs are frozen and schema-checked
+  ---
+  duration_ms: 0.23775
+  type: 'test'
+  ...
+# Subtest: captured reviewer list, IDs and methods survive caller mutation after authorization
+ok 65 - captured reviewer list, IDs and methods survive caller mutation after authorization
+  ---
+  duration_ms: 0.220625
+  type: 'test'
+  ...
+# Subtest: reviewers receive immutable fresh check and test evidence; all required reviewers run
+ok 66 - reviewers receive immutable fresh check and test evidence; all required reviewers run
+  ---
+  duration_ms: 0.227916
+  type: 'test'
+  ...
+# Subtest: captured evidence cannot replay across task, run, candidate or repair attempt
+ok 67 - captured evidence cannot replay across task, run, candidate or repair attempt
+  ---
+  duration_ms: 1.048584
+  type: 'test'
+  ...
+# Subtest: test status and assertion count invariants reject contradictory evidence
+ok 68 - test status and assertion count invariants reject contradictory evidence
+  ---
+  duration_ms: 0.734459
+  type: 'test'
+  ...
+# Subtest: all valid repair responses retain evidence, including fixed points and cycles
+ok 69 - all valid repair responses retain evidence, including fixed points and cycles
+  ---
+  duration_ms: 1.115167
+  type: 'test'
+  ...
+# Subtest: post-task setup refusals retain identity, and all invalid clocks have CLOCK_INVALID
+ok 70 - post-task setup refusals retain identity, and all invalid clocks have CLOCK_INVALID
+  ---
+  duration_ms: 0.43325
+  type: 'test'
+  ...
+# Subtest: valid store refusals, invalid receipts, exceptions, timeout and cancellation preserve the workflow outcome
+ok 71 - valid store refusals, invalid receipts, exceptions, timeout and cancellation preserve the workflow outcome
+  ---
+  duration_ms: 44.852583
+  type: 'test'
+  ...
+1..71
+# tests 115
+# suites 0
+# pass 107
+# fail 8
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 4827.40675

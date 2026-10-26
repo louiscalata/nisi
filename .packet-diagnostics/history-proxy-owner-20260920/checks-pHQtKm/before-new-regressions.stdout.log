@@ -1,0 +1,2061 @@
+TAP version 13
+# Subtest: throwing Proxy request: open refuses without traps or IO
+not ok 1 - throwing Proxy request: open refuses without traps or IO
+  ---
+  duration_ms: 1.072875
+  type: 'test'
+  location: '/Users/louiscalata/nisi/.packet-diagnostics/history-proxy-owner-20260920/before/tests/journal-proxy-boundaries.test.mjs:27:5'
+  failureType: 'testCodeFailure'
+  error: 'trap'
+  code: 'ERR_TEST_FAILURE'
+  stack: |-
+    Object.getPrototypeOf (file:///Users/louiscalata/nisi/.packet-diagnostics/history-proxy-owner-20260920/before/tests/journal-proxy-boundaries.test.mjs:15:71)
+    Object.getPrototypeOf (<anonymous>)
+    envelope (file:///Users/louiscalata/nisi/.packet-diagnostics/history-proxy-owner-20260920/before/history/journal-owner-v2.mjs:39:24)
+    openJournalOwner (file:///Users/louiscalata/nisi/.packet-diagnostics/history-proxy-owner-20260920/before/history/journal-owner-v2.mjs:189:15)
+    TestContext.<anonymous> (file:///Users/louiscalata/nisi/.packet-diagnostics/history-proxy-owner-20260920/before/tests/journal-proxy-boundaries.test.mjs:36:22)
+    Test.runInAsyncScope (node:async_hooks:227:14)
+    Test.run (node:internal/test_runner/test:1325:25)
+    Test.start (node:internal/test_runner/test:1191:17)
+    startSubtestAfterBootstrap (node:internal/test_runner/harness:385:17)
+  ...
+# Subtest: throwing Proxy request: inspect refuses without traps or IO
+not ok 2 - throwing Proxy request: inspect refuses without traps or IO
+  ---
+  duration_ms: 0.14625
+  type: 'test'
+  location: '/Users/louiscalata/nisi/.packet-diagnostics/history-proxy-owner-20260920/before/tests/journal-proxy-boundaries.test.mjs:27:5'
+  failureType: 'testCodeFailure'
+  error: 'trap'
+  code: 'ERR_TEST_FAILURE'
+  stack: |-
+    Object.getPrototypeOf (file:///Users/louiscalata/nisi/.packet-diagnostics/history-proxy-owner-20260920/before/tests/journal-proxy-boundaries.test.mjs:15:71)
+    Object.getPrototypeOf (<anonymous>)
+    envelope (file:///Users/louiscalata/nisi/.packet-diagnostics/history-proxy-owner-20260920/before/history/journal-owner-v2.mjs:39:24)
+    inspectJournalOwner (file:///Users/louiscalata/nisi/.packet-diagnostics/history-proxy-owner-20260920/before/history/journal-owner-v2.mjs:286:15)
+    TestContext.<anonymous> (file:///Users/louiscalata/nisi/.packet-diagnostics/history-proxy-owner-20260920/before/tests/journal-proxy-boundaries.test.mjs:36:22)
+    Test.runInAsyncScope (node:async_hooks:227:14)
+    Test.run (node:internal/test_runner/test:1325:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:911:18)
+    Test.postRun (node:internal/test_runner/test:1465:19)
+    Test.run (node:internal/test_runner/test:1390:12)
+  ...
+# Subtest: throwing Proxy request: record refuses without traps or IO
+not ok 3 - throwing Proxy request: record refuses without traps or IO
+  ---
+  duration_ms: 0.113875
+  type: 'test'
+  location: '/Users/louiscalata/nisi/.packet-diagnostics/history-proxy-owner-20260920/before/tests/journal-proxy-boundaries.test.mjs:27:5'
+  failureType: 'testCodeFailure'
+  error: 'trap'
+  code: 'ERR_TEST_FAILURE'
+  stack: |-
+    Object.getPrototypeOf (file:///Users/louiscalata/nisi/.packet-diagnostics/history-proxy-owner-20260920/before/tests/journal-proxy-boundaries.test.mjs:15:71)
+    Object.getPrototypeOf (<anonymous>)
+    envelope (file:///Users/louiscalata/nisi/.packet-diagnostics/history-proxy-owner-20260920/before/history/journal-owner-v2.mjs:39:24)
+    recordJournalObservation (file:///Users/louiscalata/nisi/.packet-diagnostics/history-proxy-owner-20260920/before/history/journal-owner-v2.mjs:382:15)
+    TestContext.<anonymous> (file:///Users/louiscalata/nisi/.packet-diagnostics/history-proxy-owner-20260920/before/tests/journal-proxy-boundaries.test.mjs:36:22)
+    Test.runInAsyncScope (node:async_hooks:227:14)
+    Test.run (node:internal/test_runner/test:1325:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:911:18)
+    Test.postRun (node:internal/test_runner/test:1465:19)
+    Test.run (node:internal/test_runner/test:1390:12)
+  ...
+# Subtest: throwing Proxy request: maintain refuses without traps or IO
+not ok 4 - throwing Proxy request: maintain refuses without traps or IO
+  ---
+  duration_ms: 0.096916
+  type: 'test'
+  location: '/Users/louiscalata/nisi/.packet-diagnostics/history-proxy-owner-20260920/before/tests/journal-proxy-boundaries.test.mjs:27:5'
+  failureType: 'testCodeFailure'
+  error: 'trap'
+  code: 'ERR_TEST_FAILURE'
+  stack: |-
+    Object.getPrototypeOf (file:///Users/louiscalata/nisi/.packet-diagnostics/history-proxy-owner-20260920/before/tests/journal-proxy-boundaries.test.mjs:15:71)
+    Object.getPrototypeOf (<anonymous>)
+    envelope (file:///Users/louiscalata/nisi/.packet-diagnostics/history-proxy-owner-20260920/before/history/journal-owner-v2.mjs:39:24)
+    maintainJournalOwner (file:///Users/louiscalata/nisi/.packet-diagnostics/history-proxy-owner-20260920/before/history/journal-owner-v2.mjs:423:15)
+    TestContext.<anonymous> (file:///Users/louiscalata/nisi/.packet-diagnostics/history-proxy-owner-20260920/before/tests/journal-proxy-boundaries.test.mjs:36:22)
+    Test.runInAsyncScope (node:async_hooks:227:14)
+    Test.run (node:internal/test_runner/test:1325:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:911:18)
+    Test.postRun (node:internal/test_runner/test:1465:19)
+    Test.run (node:internal/test_runner/test:1390:12)
+  ...
+# Subtest: throwing Proxy config: owner and direct journal reject before traps
+not ok 5 - throwing Proxy config: owner and direct journal reject before traps
+  ---
+  duration_ms: 0.673625
+  type: 'test'
+  location: '/Users/louiscalata/nisi/.packet-diagnostics/history-proxy-owner-20260920/before/tests/journal-proxy-boundaries.test.mjs:47:5'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly deep-equal:
+    + actual - expected
+    
+    + [
+    +   'getPrototypeOf',
+    +   'getPrototypeOf'
+    + ]
+    - []
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected:
+  actual:
+    0: 'getPrototypeOf'
+    1: 'getPrototypeOf'
+  operator: 'deepStrictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///Users/louiscalata/nisi/.packet-diagnostics/history-proxy-owner-20260920/before/tests/journal-proxy-boundaries.test.mjs:52:14)
+    Test.runInAsyncScope (node:async_hooks:227:14)
+    Test.run (node:internal/test_runner/test:1325:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:911:18)
+    Test.postRun (node:internal/test_runner/test:1465:19)
+    Test.run (node:internal/test_runner/test:1390:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:911:7)
+  ...
+# Subtest: throwing Proxy redactPaths: owner and direct journal reject before traps
+not ok 6 - throwing Proxy redactPaths: owner and direct journal reject before traps
+  ---
+  duration_ms: 0.106417
+  type: 'test'
+  location: '/Users/louiscalata/nisi/.packet-diagnostics/history-proxy-owner-20260920/before/tests/journal-proxy-boundaries.test.mjs:47:5'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly deep-equal:
+    + actual - expected
+    
+    + [
+    +   'getPrototypeOf',
+    +   'getPrototypeOf'
+    + ]
+    - []
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected:
+  actual:
+    0: 'getPrototypeOf'
+    1: 'getPrototypeOf'
+  operator: 'deepStrictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///Users/louiscalata/nisi/.packet-diagnostics/history-proxy-owner-20260920/before/tests/journal-proxy-boundaries.test.mjs:52:14)
+    Test.runInAsyncScope (node:async_hooks:227:14)
+    Test.run (node:internal/test_runner/test:1325:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:911:18)
+    Test.postRun (node:internal/test_runner/test:1465:19)
+    Test.run (node:internal/test_runner/test:1390:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:911:7)
+  ...
+# Subtest: throwing Proxy entry: owner and direct journal reject before traps
+not ok 7 - throwing Proxy entry: owner and direct journal reject before traps
+  ---
+  duration_ms: 0.427125
+  type: 'test'
+  location: '/Users/louiscalata/nisi/.packet-diagnostics/history-proxy-owner-20260920/before/tests/journal-proxy-boundaries.test.mjs:56:5'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly deep-equal:
+    + actual - expected
+    
+    + [
+    +   'getPrototypeOf',
+    +   'getPrototypeOf'
+    + ]
+    - []
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected:
+  actual:
+    0: 'getPrototypeOf'
+    1: 'getPrototypeOf'
+  operator: 'deepStrictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///Users/louiscalata/nisi/.packet-diagnostics/history-proxy-owner-20260920/before/tests/journal-proxy-boundaries.test.mjs:70:61)
+    Test.runInAsyncScope (node:async_hooks:227:14)
+    Test.run (node:internal/test_runner/test:1325:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:911:18)
+    Test.postRun (node:internal/test_runner/test:1465:19)
+    Test.run (node:internal/test_runner/test:1390:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:911:7)
+  ...
+# Subtest: throwing Proxy payload: owner and direct journal reject before traps
+not ok 8 - throwing Proxy payload: owner and direct journal reject before traps
+  ---
+  duration_ms: 0.193375
+  type: 'test'
+  location: '/Users/louiscalata/nisi/.packet-diagnostics/history-proxy-owner-20260920/before/tests/journal-proxy-boundaries.test.mjs:56:5'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly deep-equal:
+    + actual - expected
+    
+    + [
+    +   'getPrototypeOf',
+    +   'getPrototypeOf'
+    + ]
+    - []
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected:
+  actual:
+    0: 'getPrototypeOf'
+    1: 'getPrototypeOf'
+  operator: 'deepStrictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///Users/louiscalata/nisi/.packet-diagnostics/history-proxy-owner-20260920/before/tests/journal-proxy-boundaries.test.mjs:70:61)
+    Test.runInAsyncScope (node:async_hooks:227:14)
+    Test.run (node:internal/test_runner/test:1325:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:911:18)
+    Test.postRun (node:internal/test_runner/test:1465:19)
+    Test.run (node:internal/test_runner/test:1390:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:911:7)
+  ...
+# Subtest: throwing Proxy nestedObject: owner and direct journal reject before traps
+not ok 9 - throwing Proxy nestedObject: owner and direct journal reject before traps
+  ---
+  duration_ms: 0.196958
+  type: 'test'
+  location: '/Users/louiscalata/nisi/.packet-diagnostics/history-proxy-owner-20260920/before/tests/journal-proxy-boundaries.test.mjs:56:5'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly deep-equal:
+    + actual - expected
+    
+    + [
+    +   'getPrototypeOf',
+    +   'getPrototypeOf'
+    + ]
+    - []
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected:
+  actual:
+    0: 'getPrototypeOf'
+    1: 'getPrototypeOf'
+  operator: 'deepStrictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///Users/louiscalata/nisi/.packet-diagnostics/history-proxy-owner-20260920/before/tests/journal-proxy-boundaries.test.mjs:70:61)
+    Test.runInAsyncScope (node:async_hooks:227:14)
+    Test.run (node:internal/test_runner/test:1325:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:911:18)
+    Test.postRun (node:internal/test_runner/test:1465:19)
+    Test.run (node:internal/test_runner/test:1390:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:911:7)
+  ...
+# Subtest: throwing Proxy nestedArray: owner and direct journal reject before traps
+not ok 10 - throwing Proxy nestedArray: owner and direct journal reject before traps
+  ---
+  duration_ms: 0.264167
+  type: 'test'
+  location: '/Users/louiscalata/nisi/.packet-diagnostics/history-proxy-owner-20260920/before/tests/journal-proxy-boundaries.test.mjs:56:5'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly deep-equal:
+    + actual - expected
+    
+    + [
+    +   'getPrototypeOf',
+    +   'getPrototypeOf'
+    + ]
+    - []
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected:
+  actual:
+    0: 'getPrototypeOf'
+    1: 'getPrototypeOf'
+  operator: 'deepStrictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///Users/louiscalata/nisi/.packet-diagnostics/history-proxy-owner-20260920/before/tests/journal-proxy-boundaries.test.mjs:70:61)
+    Test.runInAsyncScope (node:async_hooks:227:14)
+    Test.run (node:internal/test_runner/test:1325:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:911:18)
+    Test.postRun (node:internal/test_runner/test:1465:19)
+    Test.run (node:internal/test_runner/test:1390:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:911:7)
+  ...
+# Subtest: throwing Proxy filesystem object: reject capability wrapper without traps
+not ok 11 - throwing Proxy filesystem object: reject capability wrapper without traps
+  ---
+  duration_ms: 0.052458
+  type: 'test'
+  location: '/Users/louiscalata/nisi/.packet-diagnostics/history-proxy-owner-20260920/before/tests/journal-proxy-boundaries.test.mjs:76:5'
+  failureType: 'testCodeFailure'
+  error: 'trap'
+  code: 'ERR_TEST_FAILURE'
+  stack: |-
+    Object.get (file:///Users/louiscalata/nisi/.packet-diagnostics/history-proxy-owner-20260920/before/tests/journal-proxy-boundaries.test.mjs:15:71)
+    openJournalOwner (file:///Users/louiscalata/nisi/.packet-diagnostics/history-proxy-owner-20260920/before/history/journal-owner-v2.mjs:194:47)
+    TestContext.<anonymous> (file:///Users/louiscalata/nisi/.packet-diagnostics/history-proxy-owner-20260920/before/tests/journal-proxy-boundaries.test.mjs:79:24)
+    Test.runInAsyncScope (node:async_hooks:227:14)
+    Test.run (node:internal/test_runner/test:1325:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:911:18)
+    Test.postRun (node:internal/test_runner/test:1465:19)
+    Test.run (node:internal/test_runner/test:1390:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:911:7)
+  ...
+# Subtest: throwing Proxy filesystem function: reject capability wrapper without traps
+not ok 12 - throwing Proxy filesystem function: reject capability wrapper without traps
+  ---
+  duration_ms: 0.039083
+  type: 'test'
+  location: '/Users/louiscalata/nisi/.packet-diagnostics/history-proxy-owner-20260920/before/tests/journal-proxy-boundaries.test.mjs:76:5'
+  failureType: 'testCodeFailure'
+  error: 'trap'
+  code: 'ERR_TEST_FAILURE'
+  stack: |-
+    Object.get (file:///Users/louiscalata/nisi/.packet-diagnostics/history-proxy-owner-20260920/before/tests/journal-proxy-boundaries.test.mjs:15:71)
+    openJournalOwner (file:///Users/louiscalata/nisi/.packet-diagnostics/history-proxy-owner-20260920/before/history/journal-owner-v2.mjs:194:47)
+    TestContext.<anonymous> (file:///Users/louiscalata/nisi/.packet-diagnostics/history-proxy-owner-20260920/before/tests/journal-proxy-boundaries.test.mjs:79:24)
+    Test.runInAsyncScope (node:async_hooks:227:14)
+    Test.run (node:internal/test_runner/test:1325:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:911:18)
+    Test.postRun (node:internal/test_runner/test:1465:19)
+    Test.run (node:internal/test_runner/test:1390:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:911:7)
+  ...
+# Subtest: throwing Proxy forged owner handle: remains invalid without traps
+ok 13 - throwing Proxy forged owner handle: remains invalid without traps
+  ---
+  duration_ms: 0.160875
+  type: 'test'
+  ...
+# Subtest: transparent Proxy request: open refuses without traps or IO
+not ok 14 - transparent Proxy request: open refuses without traps or IO
+  ---
+  duration_ms: 0.206917
+  type: 'test'
+  location: '/Users/louiscalata/nisi/.packet-diagnostics/history-proxy-owner-20260920/before/tests/journal-proxy-boundaries.test.mjs:27:5'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly deep-equal:
+    + actual - expected
+    
+      {
+        authorizing: false,
+    +   owner: {},
+    -   reason: 'INVALID_INPUT',
+        schemaVersion: 'nisi-journal-owner/v2',
+    +   snapshot: {
+    +     authorizing: false,
+    +     bytes: 0,
+    +     entries: [],
+    +     interrupted: [],
+    +     meaning: 'HISTORY_OBSERVATIONS_ONLY',
+    +     recovery: {
+    +       authorizing: false,
+    +       reason: null,
+    +       recoveredIds: [],
+    +       rejectedLine: null,
+    +       status: 'NEW'
+    +     },
+    +     schemaVersion: 'nisi-journal-owner/v2',
+    +     sha256: null,
+    +     state: 'OPEN'
+    +   },
+    +   status: 'OPENED'
+    -   status: 'REFUSED'
+      }
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected:
+    schemaVersion: 'nisi-journal-owner/v2'
+    status: 'REFUSED'
+    reason: 'INVALID_INPUT'
+    authorizing: false
+  actual:
+    schemaVersion: 'nisi-journal-owner/v2'
+    status: 'OPENED'
+    owner:
+    snapshot:
+      schemaVersion: 'nisi-journal-owner/v2'
+      state: 'OPEN'
+      recovery:
+        status: 'NEW'
+        recoveredIds:
+        rejectedLine: ~
+        reason: ~
+        authorizing: false
+      sha256: ~
+      bytes: 0
+      entries:
+      interrupted:
+      meaning: 'HISTORY_OBSERVATIONS_ONLY'
+      authorizing: false
+    authorizing: false
+  operator: 'deepStrictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///Users/louiscalata/nisi/.packet-diagnostics/history-proxy-owner-20260920/before/tests/journal-proxy-boundaries.test.mjs:41:19)
+    Test.runInAsyncScope (node:async_hooks:227:14)
+    Test.run (node:internal/test_runner/test:1325:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:911:18)
+    Test.postRun (node:internal/test_runner/test:1465:19)
+    Test.run (node:internal/test_runner/test:1390:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:911:7)
+  ...
+# Subtest: transparent Proxy request: inspect refuses without traps or IO
+not ok 15 - transparent Proxy request: inspect refuses without traps or IO
+  ---
+  duration_ms: 0.123
+  type: 'test'
+  location: '/Users/louiscalata/nisi/.packet-diagnostics/history-proxy-owner-20260920/before/tests/journal-proxy-boundaries.test.mjs:27:5'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly deep-equal:
+    + actual - expected
+    
+      {
+        authorizing: false,
+    -   reason: 'INVALID_INPUT',
+        schemaVersion: 'nisi-journal-owner/v2',
+    +   snapshot: {
+    +     authorizing: false,
+    +     bytes: 0,
+    +     entries: [],
+    +     interrupted: [],
+    +     meaning: 'HISTORY_OBSERVATIONS_ONLY',
+    +     recovery: {
+    +       authorizing: false,
+    +       reason: null,
+    +       recoveredIds: [],
+    +       rejectedLine: null,
+    +       status: 'NEW'
+    +     },
+    +     schemaVersion: 'nisi-journal-owner/v2',
+    +     sha256: null,
+    +     state: 'OPEN'
+    +   },
+    +   status: 'SNAPSHOT'
+    -   status: 'REFUSED'
+      }
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected:
+    schemaVersion: 'nisi-journal-owner/v2'
+    status: 'REFUSED'
+    reason: 'INVALID_INPUT'
+    authorizing: false
+  actual:
+    schemaVersion: 'nisi-journal-owner/v2'
+    status: 'SNAPSHOT'
+    snapshot:
+      schemaVersion: 'nisi-journal-owner/v2'
+      state: 'OPEN'
+      recovery:
+        status: 'NEW'
+        recoveredIds:
+        rejectedLine: ~
+        reason: ~
+        authorizing: false
+      sha256: ~
+      bytes: 0
+      entries:
+      interrupted:
+      meaning: 'HISTORY_OBSERVATIONS_ONLY'
+      authorizing: false
+    authorizing: false
+  operator: 'deepStrictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///Users/louiscalata/nisi/.packet-diagnostics/history-proxy-owner-20260920/before/tests/journal-proxy-boundaries.test.mjs:41:19)
+    Test.runInAsyncScope (node:async_hooks:227:14)
+    Test.run (node:internal/test_runner/test:1325:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:911:18)
+    Test.postRun (node:internal/test_runner/test:1465:19)
+    Test.run (node:internal/test_runner/test:1390:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:911:7)
+  ...
+# Subtest: transparent Proxy request: record refuses without traps or IO
+not ok 16 - transparent Proxy request: record refuses without traps or IO
+  ---
+  duration_ms: 0.989583
+  type: 'test'
+  location: '/Users/louiscalata/nisi/.packet-diagnostics/history-proxy-owner-20260920/before/tests/journal-proxy-boundaries.test.mjs:27:5'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly deep-equal:
+    + actual - expected
+    
+      {
+    +   append: {
+    +     id: 'entry-a',
+    +     status: 'APPENDED'
+    +   },
+        authorizing: false,
+    +   entryId: 'entry-a',
+    +   reason: null,
+    -   reason: 'INVALID_INPUT',
+        schemaVersion: 'nisi-journal-owner/v2',
+    +   snapshot: {
+    +     authorizing: false,
+    +     bytes: 948,
+    +     entries: [
+    +       {
+    +         authorizing: false,
+    +         entry: {
+    +           attempt: 0,
+    +           candidateId: 'candidate-a',
+    +           createdAt: 100,
+    +           heartbeatAt: null,
+    +           id: 'entry-a',
+    +           payload: {
+    +             observation: {
+    +               authorizing: false,
+    +               schemaVersion: 'nisi-fixed-xpc-journal-observation/v1',
+    +               status: 'OBSERVED'
+    +             },
+    +             secret: '[REDACTED]'
+    +           },
+    +           projectId: 'project-a',
+    +           receiptId: 'receipt-a',
+    +           retryOf: null,
+    +           revokes: null,
+    +           runId: 'run-a',
+    +           stage: 'observe',
+    +           state: 'SUCCEEDED',
+    +           ttlMs: 1000
+    +         },
+    +         expired: false,
+    +         historical: false,
+    +         liveness: 'SUCCEEDED',
+    +         retained: true,
+    +         revoked: false
+    +       }
+    +     ],
+    +     interrupted: [],
+    +     meaning: 'HISTORY_OBSERVATIONS_ONLY',
+    +     recovery: {
+    +       authorizing: false,
+    +       reason: null,
+    +       recoveredIds: [
+    +         'entry-a'
+    +       ],
+    +       rejectedLine: null,
+    +       status: 'COMPLETE'
+    +     },
+    +     schemaVersion: 'nisi-journal-owner/v2',
+    +     sha256: '6963a15869c73994d780ac69edf75d19ab7e259f5111baa913fd6e8dd0b41088',
+    +     state: 'OPEN'
+    +   },
+    +   status: 'RECORDED',
+    +   store: {
+    +     bytes: 948,
+    +     committed: true,
+    +     durable: true,
+    +     fsync: {
+    +       directory: true,
+    +       file: true
+    +     },
+    +     fsyncErrors: {
+    +       directory: null,
+    +       file: null
+    +     },
+    +     sha256: '6963a15869c73994d780ac69edf75d19ab7e259f5111baa913fd6e8dd0b41088',
+    +     status: 'WRITTEN',
+    +     verified: true
+    +   }
+    -   status: 'REFUSED'
+      }
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected:
+    schemaVersion: 'nisi-journal-owner/v2'
+    status: 'REFUSED'
+    reason: 'INVALID_INPUT'
+    authorizing: false
+  actual:
+    schemaVersion: 'nisi-journal-owner/v2'
+    status: 'RECORDED'
+    reason: ~
+    entryId: 'entry-a'
+    append:
+      status: 'APPENDED'
+      id: 'entry-a'
+    store:
+      durable: true
+      committed: true
+      fsync:
+        file: true
+        directory: true
+      fsyncErrors:
+        file: ~
+        directory: ~
+      status: 'WRITTEN'
+      sha256: '6963a15869c73994d780ac69edf75d19ab7e259f5111baa913fd6e8dd0b41088'
+      bytes: 948
+      verified: true
+    snapshot:
+      schemaVersion: 'nisi-journal-owner/v2'
+      state: 'OPEN'
+      recovery:
+        status: 'COMPLETE'
+        recoveredIds:
+          0: 'entry-a'
+        rejectedLine: ~
+        reason: ~
+        authorizing: false
+      sha256: '6963a15869c73994d780ac69edf75d19ab7e259f5111baa913fd6e8dd0b41088'
+      bytes: 948
+      entries:
+        0:
+          entry:
+            id: 'entry-a'
+            projectId: 'project-a'
+            runId: 'run-a'
+            attempt: 0
+            candidateId: 'candidate-a'
+            stage: 'observe'
+            receiptId: 'receipt-a'
+            createdAt: 100
+            ttlMs: 1000
+            state: 'SUCCEEDED'
+            heartbeatAt: ~
+            retryOf: ~
+            revokes: ~
+            payload:
+              secret: '[REDACTED]'
+              observation:
+                schemaVersion: 'nisi-fixed-xpc-journal-observation/v1'
+                status: 'OBSERVED'
+                authorizing: false
+          historical: false
+          retained: true
+          revoked: false
+          expired: false
+          liveness: 'SUCCEEDED'
+          authorizing: false
+      interrupted:
+      meaning: 'HISTORY_OBSERVATIONS_ONLY'
+      authorizing: false
+    authorizing: false
+  operator: 'deepStrictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///Users/louiscalata/nisi/.packet-diagnostics/history-proxy-owner-20260920/before/tests/journal-proxy-boundaries.test.mjs:41:19)
+    Test.runInAsyncScope (node:async_hooks:227:14)
+    Test.run (node:internal/test_runner/test:1325:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:911:18)
+    Test.postRun (node:internal/test_runner/test:1465:19)
+    Test.run (node:internal/test_runner/test:1390:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:911:7)
+  ...
+# Subtest: transparent Proxy request: maintain refuses without traps or IO
+not ok 17 - transparent Proxy request: maintain refuses without traps or IO
+  ---
+  duration_ms: 0.305708
+  type: 'test'
+  location: '/Users/louiscalata/nisi/.packet-diagnostics/history-proxy-owner-20260920/before/tests/journal-proxy-boundaries.test.mjs:27:5'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly deep-equal:
+    + actual - expected
+    
+      {
+        authorizing: false,
+        meaning: 'HISTORY_OBSERVATIONS_ONLY',
+    +   reason: null,
+    -   reason: 'INVALID_INPUT',
+        schemaVersion: 'nisi-journal-maintenance/v1',
+    +   snapshot: {
+    +     authorizing: false,
+    +     bytes: 268,
+    +     entries: [],
+    +     interrupted: [],
+    +     meaning: 'HISTORY_OBSERVATIONS_ONLY',
+    +     recovery: {
+    +       authorizing: false,
+    +       reason: null,
+    +       recoveredIds: [],
+    +       rejectedLine: null,
+    +       status: 'COMPLETE'
+    +     },
+    +     schemaVersion: 'nisi-journal-owner/v2',
+    +     sha256: '7d2777a13f69993cef0bfb71cc59fede7bfc5efb217f1536b8d844012b1ba260',
+    +     state: 'OPEN'
+    +   },
+    +   status: 'MAINTAINED',
+    +   store: {
+    +     bytes: 268,
+    +     committed: true,
+    +     durable: true,
+    +     fsync: {
+    +       directory: true,
+    +       file: true
+    +     },
+    +     fsyncErrors: {
+    +       directory: null,
+    +       file: null
+    +     },
+    +     sha256: '7d2777a13f69993cef0bfb71cc59fede7bfc5efb217f1536b8d844012b1ba260',
+    +     status: 'WRITTEN',
+    +     verified: true
+    +   }
+    -   snapshot: null,
+    -   status: 'REFUSED',
+    -   store: null
+      }
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected:
+    schemaVersion: 'nisi-journal-maintenance/v1'
+    status: 'REFUSED'
+    reason: 'INVALID_INPUT'
+    store: ~
+    snapshot: ~
+    meaning: 'HISTORY_OBSERVATIONS_ONLY'
+    authorizing: false
+  actual:
+    schemaVersion: 'nisi-journal-maintenance/v1'
+    status: 'MAINTAINED'
+    reason: ~
+    store:
+      durable: true
+      committed: true
+      fsync:
+        file: true
+        directory: true
+      fsyncErrors:
+        file: ~
+        directory: ~
+      status: 'WRITTEN'
+      sha256: '7d2777a13f69993cef0bfb71cc59fede7bfc5efb217f1536b8d844012b1ba260'
+      bytes: 268
+      verified: true
+    snapshot:
+      schemaVersion: 'nisi-journal-owner/v2'
+      state: 'OPEN'
+      recovery:
+        status: 'COMPLETE'
+        recoveredIds:
+        rejectedLine: ~
+        reason: ~
+        authorizing: false
+      sha256: '7d2777a13f69993cef0bfb71cc59fede7bfc5efb217f1536b8d844012b1ba260'
+      bytes: 268
+      entries:
+      interrupted:
+      meaning: 'HISTORY_OBSERVATIONS_ONLY'
+      authorizing: false
+    meaning: 'HISTORY_OBSERVATIONS_ONLY'
+    authorizing: false
+  operator: 'deepStrictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///Users/louiscalata/nisi/.packet-diagnostics/history-proxy-owner-20260920/before/tests/journal-proxy-boundaries.test.mjs:37:44)
+    Test.runInAsyncScope (node:async_hooks:227:14)
+    Test.run (node:internal/test_runner/test:1325:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:911:18)
+    Test.postRun (node:internal/test_runner/test:1465:19)
+    Test.run (node:internal/test_runner/test:1390:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:911:7)
+  ...
+# Subtest: transparent Proxy config: owner and direct journal reject before traps
+not ok 18 - transparent Proxy config: owner and direct journal reject before traps
+  ---
+  duration_ms: 0.110083
+  type: 'test'
+  location: '/Users/louiscalata/nisi/.packet-diagnostics/history-proxy-owner-20260920/before/tests/journal-proxy-boundaries.test.mjs:47:5'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly deep-equal:
+    + actual - expected
+    
+      {
+        authorizing: false,
+    +   owner: {},
+    -   reason: 'INVALID_INPUT',
+        schemaVersion: 'nisi-journal-owner/v2',
+    +   snapshot: {
+    +     authorizing: false,
+    +     bytes: 0,
+    +     entries: [],
+    +     interrupted: [],
+    +     meaning: 'HISTORY_OBSERVATIONS_ONLY',
+    +     recovery: {
+    +       authorizing: false,
+    +       reason: null,
+    +       recoveredIds: [],
+    +       rejectedLine: null,
+    +       status: 'NEW'
+    +     },
+    +     schemaVersion: 'nisi-journal-owner/v2',
+    +     sha256: null,
+    +     state: 'OPEN'
+    +   },
+    +   status: 'OPENED'
+    -   status: 'REFUSED'
+      }
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected:
+    schemaVersion: 'nisi-journal-owner/v2'
+    status: 'REFUSED'
+    reason: 'INVALID_INPUT'
+    authorizing: false
+  actual:
+    schemaVersion: 'nisi-journal-owner/v2'
+    status: 'OPENED'
+    owner:
+    snapshot:
+      schemaVersion: 'nisi-journal-owner/v2'
+      state: 'OPEN'
+      recovery:
+        status: 'NEW'
+        recoveredIds:
+        rejectedLine: ~
+        reason: ~
+        authorizing: false
+      sha256: ~
+      bytes: 0
+      entries:
+      interrupted:
+      meaning: 'HISTORY_OBSERVATIONS_ONLY'
+      authorizing: false
+    authorizing: false
+  operator: 'deepStrictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///Users/louiscalata/nisi/.packet-diagnostics/history-proxy-owner-20260920/before/tests/journal-proxy-boundaries.test.mjs:50:14)
+    Test.runInAsyncScope (node:async_hooks:227:14)
+    Test.run (node:internal/test_runner/test:1325:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:911:18)
+    Test.postRun (node:internal/test_runner/test:1465:19)
+    Test.run (node:internal/test_runner/test:1390:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:911:7)
+  ...
+# Subtest: transparent Proxy redactPaths: owner and direct journal reject before traps
+not ok 19 - transparent Proxy redactPaths: owner and direct journal reject before traps
+  ---
+  duration_ms: 0.096917
+  type: 'test'
+  location: '/Users/louiscalata/nisi/.packet-diagnostics/history-proxy-owner-20260920/before/tests/journal-proxy-boundaries.test.mjs:47:5'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly deep-equal:
+    + actual - expected
+    
+      {
+        authorizing: false,
+    +   owner: {},
+    -   reason: 'INVALID_INPUT',
+        schemaVersion: 'nisi-journal-owner/v2',
+    +   snapshot: {
+    +     authorizing: false,
+    +     bytes: 0,
+    +     entries: [],
+    +     interrupted: [],
+    +     meaning: 'HISTORY_OBSERVATIONS_ONLY',
+    +     recovery: {
+    +       authorizing: false,
+    +       reason: null,
+    +       recoveredIds: [],
+    +       rejectedLine: null,
+    +       status: 'NEW'
+    +     },
+    +     schemaVersion: 'nisi-journal-owner/v2',
+    +     sha256: null,
+    +     state: 'OPEN'
+    +   },
+    +   status: 'OPENED'
+    -   status: 'REFUSED'
+      }
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected:
+    schemaVersion: 'nisi-journal-owner/v2'
+    status: 'REFUSED'
+    reason: 'INVALID_INPUT'
+    authorizing: false
+  actual:
+    schemaVersion: 'nisi-journal-owner/v2'
+    status: 'OPENED'
+    owner:
+    snapshot:
+      schemaVersion: 'nisi-journal-owner/v2'
+      state: 'OPEN'
+      recovery:
+        status: 'NEW'
+        recoveredIds:
+        rejectedLine: ~
+        reason: ~
+        authorizing: false
+      sha256: ~
+      bytes: 0
+      entries:
+      interrupted:
+      meaning: 'HISTORY_OBSERVATIONS_ONLY'
+      authorizing: false
+    authorizing: false
+  operator: 'deepStrictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///Users/louiscalata/nisi/.packet-diagnostics/history-proxy-owner-20260920/before/tests/journal-proxy-boundaries.test.mjs:50:14)
+    Test.runInAsyncScope (node:async_hooks:227:14)
+    Test.run (node:internal/test_runner/test:1325:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:911:18)
+    Test.postRun (node:internal/test_runner/test:1465:19)
+    Test.run (node:internal/test_runner/test:1390:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:911:7)
+  ...
+# Subtest: transparent Proxy entry: owner and direct journal reject before traps
+not ok 20 - transparent Proxy entry: owner and direct journal reject before traps
+  ---
+  duration_ms: 0.323208
+  type: 'test'
+  location: '/Users/louiscalata/nisi/.packet-diagnostics/history-proxy-owner-20260920/before/tests/journal-proxy-boundaries.test.mjs:56:5'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly deep-equal:
+    + actual - expected
+    
+      {
+    +   append: {
+    +     id: 'entry-a',
+    +     status: 'APPENDED'
+    +   },
+    -   append: null,
+        authorizing: false,
+    +   entryId: 'entry-a',
+    +   reason: null,
+    -   entryId: null,
+    -   reason: 'ENTRY',
+        schemaVersion: 'nisi-journal-owner/v2',
+        snapshot: {
+          authorizing: false,
+    +     bytes: 948,
+    +     entries: [
+    +       {
+    +         authorizing: false,
+    +         entry: {
+    +           attempt: 0,
+    +           candidateId: 'candidate-a',
+    +           createdAt: 100,
+    +           heartbeatAt: null,
+    +           id: 'entry-a',
+    +           payload: {
+    +             observation: {
+    +               authorizing: false,
+    +               schemaVersion: 'nisi-fixed-xpc-journal-observation/v1',
+    +               status: 'OBSERVED'
+    +             },
+    +             secret: '[REDACTED]'
+    +           },
+    +           projectId: 'project-a',
+    +           receiptId: 'receipt-a',
+    +           retryOf: null,
+    +           revokes: null,
+    +           runId: 'run-a',
+    +           stage: 'observe',
+    +           state: 'SUCCEEDED',
+    +           ttlMs: 1000
+    +         },
+    +         expired: false,
+    +         historical: false,
+    +         liveness: 'SUCCEEDED',
+    +         retained: true,
+    +         revoked: false
+    +       }
+    +     ],
+    -     bytes: 0,
+    -     entries: [],
+          interrupted: [],
+          meaning: 'HISTORY_OBSERVATIONS_ONLY',
+          recovery: {
+            authorizing: false,
+            reason: null,
+    +       recoveredIds: [
+    +         'entry-a'
+    +       ],
+    -       recoveredIds: [],
+            rejectedLine: null,
+    +       status: 'COMPLETE'
+    -       status: 'NEW'
+          },
+          schemaVersion: 'nisi-journal-owner/v2',
+    +     sha256: '6963a15869c73994d780ac69edf75d19ab7e259f5111baa913fd6e8dd0b41088',
+    -     sha256: null,
+          state: 'OPEN'
+        },
+    +   status: 'RECORDED',
+    +   store: {
+    +     bytes: 948,
+    +     committed: true,
+    +     durable: true,
+    +     fsync: {
+    +       directory: true,
+    +       file: true
+    +     },
+    +     fsyncErrors: {
+    +       directory: null,
+    +       file: null
+    +     },
+    +     sha256: '6963a15869c73994d780ac69edf75d19ab7e259f5111baa913fd6e8dd0b41088',
+    +     status: 'WRITTEN',
+    +     verified: true
+    +   }
+    -   status: 'REFUSED',
+    -   store: null
+      }
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected:
+    schemaVersion: 'nisi-journal-owner/v2'
+    status: 'REFUSED'
+    reason: 'ENTRY'
+    entryId: ~
+    append: ~
+    store: ~
+    snapshot:
+      schemaVersion: 'nisi-journal-owner/v2'
+      state: 'OPEN'
+      recovery:
+        status: 'NEW'
+        recoveredIds:
+        rejectedLine: ~
+        reason: ~
+        authorizing: false
+      sha256: ~
+      bytes: 0
+      entries:
+      interrupted:
+      meaning: 'HISTORY_OBSERVATIONS_ONLY'
+      authorizing: false
+    authorizing: false
+  actual:
+    schemaVersion: 'nisi-journal-owner/v2'
+    status: 'RECORDED'
+    reason: ~
+    entryId: 'entry-a'
+    append:
+      status: 'APPENDED'
+      id: 'entry-a'
+    store:
+      durable: true
+      committed: true
+      fsync:
+        file: true
+        directory: true
+      fsyncErrors:
+        file: ~
+        directory: ~
+      status: 'WRITTEN'
+      sha256: '6963a15869c73994d780ac69edf75d19ab7e259f5111baa913fd6e8dd0b41088'
+      bytes: 948
+      verified: true
+    snapshot:
+      schemaVersion: 'nisi-journal-owner/v2'
+      state: 'OPEN'
+      recovery:
+        status: 'COMPLETE'
+        recoveredIds:
+          0: 'entry-a'
+        rejectedLine: ~
+        reason: ~
+        authorizing: false
+      sha256: '6963a15869c73994d780ac69edf75d19ab7e259f5111baa913fd6e8dd0b41088'
+      bytes: 948
+      entries:
+        0:
+          entry:
+            id: 'entry-a'
+            projectId: 'project-a'
+            runId: 'run-a'
+            attempt: 0
+            candidateId: 'candidate-a'
+            stage: 'observe'
+            receiptId: 'receipt-a'
+            createdAt: 100
+            ttlMs: 1000
+            state: 'SUCCEEDED'
+            heartbeatAt: ~
+            retryOf: ~
+            revokes: ~
+            payload:
+              secret: '[REDACTED]'
+              observation:
+                schemaVersion: 'nisi-fixed-xpc-journal-observation/v1'
+                status: 'OBSERVED'
+                authorizing: false
+          historical: false
+          retained: true
+          revoked: false
+          expired: false
+          liveness: 'SUCCEEDED'
+          authorizing: false
+      interrupted:
+      meaning: 'HISTORY_OBSERVATIONS_ONLY'
+      authorizing: false
+    authorizing: false
+  operator: 'deepStrictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///Users/louiscalata/nisi/.packet-diagnostics/history-proxy-owner-20260920/before/tests/journal-proxy-boundaries.test.mjs:64:14)
+    Test.runInAsyncScope (node:async_hooks:227:14)
+    Test.run (node:internal/test_runner/test:1325:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:911:18)
+    Test.postRun (node:internal/test_runner/test:1465:19)
+    Test.run (node:internal/test_runner/test:1390:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:911:7)
+  ...
+# Subtest: transparent Proxy payload: owner and direct journal reject before traps
+not ok 21 - transparent Proxy payload: owner and direct journal reject before traps
+  ---
+  duration_ms: 0.309042
+  type: 'test'
+  location: '/Users/louiscalata/nisi/.packet-diagnostics/history-proxy-owner-20260920/before/tests/journal-proxy-boundaries.test.mjs:56:5'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly deep-equal:
+    + actual - expected
+    
+      {
+    +   append: {
+    +     id: 'entry-a',
+    +     status: 'APPENDED'
+    +   },
+    -   append: null,
+        authorizing: false,
+    +   entryId: 'entry-a',
+    +   reason: null,
+    -   entryId: null,
+    -   reason: 'ENTRY',
+        schemaVersion: 'nisi-journal-owner/v2',
+        snapshot: {
+          authorizing: false,
+    +     bytes: 948,
+    +     entries: [
+    +       {
+    +         authorizing: false,
+    +         entry: {
+    +           attempt: 0,
+    +           candidateId: 'candidate-a',
+    +           createdAt: 100,
+    +           heartbeatAt: null,
+    +           id: 'entry-a',
+    +           payload: {
+    +             observation: {
+    +               authorizing: false,
+    +               schemaVersion: 'nisi-fixed-xpc-journal-observation/v1',
+    +               status: 'OBSERVED'
+    +             },
+    +             secret: '[REDACTED]'
+    +           },
+    +           projectId: 'project-a',
+    +           receiptId: 'receipt-a',
+    +           retryOf: null,
+    +           revokes: null,
+    +           runId: 'run-a',
+    +           stage: 'observe',
+    +           state: 'SUCCEEDED',
+    +           ttlMs: 1000
+    +         },
+    +         expired: false,
+    +         historical: false,
+    +         liveness: 'SUCCEEDED',
+    +         retained: true,
+    +         revoked: false
+    +       }
+    +     ],
+    -     bytes: 0,
+    -     entries: [],
+          interrupted: [],
+          meaning: 'HISTORY_OBSERVATIONS_ONLY',
+          recovery: {
+            authorizing: false,
+            reason: null,
+    +       recoveredIds: [
+    +         'entry-a'
+    +       ],
+    -       recoveredIds: [],
+            rejectedLine: null,
+    +       status: 'COMPLETE'
+    -       status: 'NEW'
+          },
+          schemaVersion: 'nisi-journal-owner/v2',
+    +     sha256: '6963a15869c73994d780ac69edf75d19ab7e259f5111baa913fd6e8dd0b41088',
+    -     sha256: null,
+          state: 'OPEN'
+        },
+    +   status: 'RECORDED',
+    +   store: {
+    +     bytes: 948,
+    +     committed: true,
+    +     durable: true,
+    +     fsync: {
+    +       directory: true,
+    +       file: true
+    +     },
+    +     fsyncErrors: {
+    +       directory: null,
+    +       file: null
+    +     },
+    +     sha256: '6963a15869c73994d780ac69edf75d19ab7e259f5111baa913fd6e8dd0b41088',
+    +     status: 'WRITTEN',
+    +     verified: true
+    +   }
+    -   status: 'REFUSED',
+    -   store: null
+      }
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected:
+    schemaVersion: 'nisi-journal-owner/v2'
+    status: 'REFUSED'
+    reason: 'ENTRY'
+    entryId: ~
+    append: ~
+    store: ~
+    snapshot:
+      schemaVersion: 'nisi-journal-owner/v2'
+      state: 'OPEN'
+      recovery:
+        status: 'NEW'
+        recoveredIds:
+        rejectedLine: ~
+        reason: ~
+        authorizing: false
+      sha256: ~
+      bytes: 0
+      entries:
+      interrupted:
+      meaning: 'HISTORY_OBSERVATIONS_ONLY'
+      authorizing: false
+    authorizing: false
+  actual:
+    schemaVersion: 'nisi-journal-owner/v2'
+    status: 'RECORDED'
+    reason: ~
+    entryId: 'entry-a'
+    append:
+      status: 'APPENDED'
+      id: 'entry-a'
+    store:
+      durable: true
+      committed: true
+      fsync:
+        file: true
+        directory: true
+      fsyncErrors:
+        file: ~
+        directory: ~
+      status: 'WRITTEN'
+      sha256: '6963a15869c73994d780ac69edf75d19ab7e259f5111baa913fd6e8dd0b41088'
+      bytes: 948
+      verified: true
+    snapshot:
+      schemaVersion: 'nisi-journal-owner/v2'
+      state: 'OPEN'
+      recovery:
+        status: 'COMPLETE'
+        recoveredIds:
+          0: 'entry-a'
+        rejectedLine: ~
+        reason: ~
+        authorizing: false
+      sha256: '6963a15869c73994d780ac69edf75d19ab7e259f5111baa913fd6e8dd0b41088'
+      bytes: 948
+      entries:
+        0:
+          entry:
+            id: 'entry-a'
+            projectId: 'project-a'
+            runId: 'run-a'
+            attempt: 0
+            candidateId: 'candidate-a'
+            stage: 'observe'
+            receiptId: 'receipt-a'
+            createdAt: 100
+            ttlMs: 1000
+            state: 'SUCCEEDED'
+            heartbeatAt: ~
+            retryOf: ~
+            revokes: ~
+            payload:
+              secret: '[REDACTED]'
+              observation:
+                schemaVersion: 'nisi-fixed-xpc-journal-observation/v1'
+                status: 'OBSERVED'
+                authorizing: false
+          historical: false
+          retained: true
+          revoked: false
+          expired: false
+          liveness: 'SUCCEEDED'
+          authorizing: false
+      interrupted:
+      meaning: 'HISTORY_OBSERVATIONS_ONLY'
+      authorizing: false
+    authorizing: false
+  operator: 'deepStrictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///Users/louiscalata/nisi/.packet-diagnostics/history-proxy-owner-20260920/before/tests/journal-proxy-boundaries.test.mjs:64:14)
+    Test.runInAsyncScope (node:async_hooks:227:14)
+    Test.run (node:internal/test_runner/test:1325:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:911:18)
+    Test.postRun (node:internal/test_runner/test:1465:19)
+    Test.run (node:internal/test_runner/test:1390:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:911:7)
+  ...
+# Subtest: transparent Proxy nestedObject: owner and direct journal reject before traps
+not ok 22 - transparent Proxy nestedObject: owner and direct journal reject before traps
+  ---
+  duration_ms: 0.464
+  type: 'test'
+  location: '/Users/louiscalata/nisi/.packet-diagnostics/history-proxy-owner-20260920/before/tests/journal-proxy-boundaries.test.mjs:56:5'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly deep-equal:
+    + actual - expected
+    
+      {
+    +   append: {
+    +     id: 'entry-a',
+    +     status: 'APPENDED'
+    +   },
+    -   append: null,
+        authorizing: false,
+    +   entryId: 'entry-a',
+    +   reason: null,
+    -   entryId: null,
+    -   reason: 'ENTRY',
+        schemaVersion: 'nisi-journal-owner/v2',
+        snapshot: {
+          authorizing: false,
+    +     bytes: 969,
+    +     entries: [
+    +       {
+    +         authorizing: false,
+    +         entry: {
+    +           attempt: 0,
+    +           candidateId: 'candidate-a',
+    +           createdAt: 100,
+    +           heartbeatAt: null,
+    +           id: 'entry-a',
+    +           payload: {
+    +             extra: {
+    +               note: 'x'
+    +             },
+    +             observation: {
+    +               authorizing: false,
+    +               schemaVersion: 'nisi-fixed-xpc-journal-observation/v1',
+    +               status: 'OBSERVED'
+    +             },
+    +             secret: '[REDACTED]'
+    +           },
+    +           projectId: 'project-a',
+    +           receiptId: 'receipt-a',
+    +           retryOf: null,
+    +           revokes: null,
+    +           runId: 'run-a',
+    +           stage: 'observe',
+    +           state: 'SUCCEEDED',
+    +           ttlMs: 1000
+    +         },
+    +         expired: false,
+    +         historical: false,
+    +         liveness: 'SUCCEEDED',
+    +         retained: true,
+    +         revoked: false
+    +       }
+    +     ],
+    -     bytes: 0,
+    -     entries: [],
+          interrupted: [],
+          meaning: 'HISTORY_OBSERVATIONS_ONLY',
+          recovery: {
+            authorizing: false,
+            reason: null,
+    +       recoveredIds: [
+    +         'entry-a'
+    +       ],
+    -       recoveredIds: [],
+            rejectedLine: null,
+    +       status: 'COMPLETE'
+    -       status: 'NEW'
+          },
+          schemaVersion: 'nisi-journal-owner/v2',
+    +     sha256: 'f495f4e0b511eed6e0ca3ce7f0a7899a32598bc9a4ae2d8375b4fd1fc8ef2085',
+    -     sha256: null,
+          state: 'OPEN'
+        },
+    +   status: 'RECORDED',
+    +   store: {
+    +     bytes: 969,
+    +     committed: true,
+    +     durable: true,
+    +     fsync: {
+    +       directory: true,
+    +       file: true
+    +     },
+    +     fsyncErrors: {
+    +       directory: null,
+    +       file: null
+    +     },
+    +     sha256: 'f495f4e0b511eed6e0ca3ce7f0a7899a32598bc9a4ae2d8375b4fd1fc8ef2085',
+    +     status: 'WRITTEN',
+    +     verified: true
+    +   }
+    -   status: 'REFUSED',
+    -   store: null
+      }
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected:
+    schemaVersion: 'nisi-journal-owner/v2'
+    status: 'REFUSED'
+    reason: 'ENTRY'
+    entryId: ~
+    append: ~
+    store: ~
+    snapshot:
+      schemaVersion: 'nisi-journal-owner/v2'
+      state: 'OPEN'
+      recovery:
+        status: 'NEW'
+        recoveredIds:
+        rejectedLine: ~
+        reason: ~
+        authorizing: false
+      sha256: ~
+      bytes: 0
+      entries:
+      interrupted:
+      meaning: 'HISTORY_OBSERVATIONS_ONLY'
+      authorizing: false
+    authorizing: false
+  actual:
+    schemaVersion: 'nisi-journal-owner/v2'
+    status: 'RECORDED'
+    reason: ~
+    entryId: 'entry-a'
+    append:
+      status: 'APPENDED'
+      id: 'entry-a'
+    store:
+      durable: true
+      committed: true
+      fsync:
+        file: true
+        directory: true
+      fsyncErrors:
+        file: ~
+        directory: ~
+      status: 'WRITTEN'
+      sha256: 'f495f4e0b511eed6e0ca3ce7f0a7899a32598bc9a4ae2d8375b4fd1fc8ef2085'
+      bytes: 969
+      verified: true
+    snapshot:
+      schemaVersion: 'nisi-journal-owner/v2'
+      state: 'OPEN'
+      recovery:
+        status: 'COMPLETE'
+        recoveredIds:
+          0: 'entry-a'
+        rejectedLine: ~
+        reason: ~
+        authorizing: false
+      sha256: 'f495f4e0b511eed6e0ca3ce7f0a7899a32598bc9a4ae2d8375b4fd1fc8ef2085'
+      bytes: 969
+      entries:
+        0:
+          entry:
+            id: 'entry-a'
+            projectId: 'project-a'
+            runId: 'run-a'
+            attempt: 0
+            candidateId: 'candidate-a'
+            stage: 'observe'
+            receiptId: 'receipt-a'
+            createdAt: 100
+            ttlMs: 1000
+            state: 'SUCCEEDED'
+            heartbeatAt: ~
+            retryOf: ~
+            revokes: ~
+            payload:
+              secret: '[REDACTED]'
+              observation:
+                schemaVersion: 'nisi-fixed-xpc-journal-observation/v1'
+                status: 'OBSERVED'
+                authorizing: false
+              extra:
+                note: 'x'
+          historical: false
+          retained: true
+          revoked: false
+          expired: false
+          liveness: 'SUCCEEDED'
+          authorizing: false
+      interrupted:
+      meaning: 'HISTORY_OBSERVATIONS_ONLY'
+      authorizing: false
+    authorizing: false
+  operator: 'deepStrictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///Users/louiscalata/nisi/.packet-diagnostics/history-proxy-owner-20260920/before/tests/journal-proxy-boundaries.test.mjs:64:14)
+    Test.runInAsyncScope (node:async_hooks:227:14)
+    Test.run (node:internal/test_runner/test:1325:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:911:18)
+    Test.postRun (node:internal/test_runner/test:1465:19)
+    Test.run (node:internal/test_runner/test:1390:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:911:7)
+  ...
+# Subtest: transparent Proxy nestedArray: owner and direct journal reject before traps
+not ok 23 - transparent Proxy nestedArray: owner and direct journal reject before traps
+  ---
+  duration_ms: 0.32175
+  type: 'test'
+  location: '/Users/louiscalata/nisi/.packet-diagnostics/history-proxy-owner-20260920/before/tests/journal-proxy-boundaries.test.mjs:56:5'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly deep-equal:
+    + actual - expected
+    
+      {
+    +   append: {
+    +     id: 'entry-a',
+    +     status: 'APPENDED'
+    +   },
+    -   append: null,
+        authorizing: false,
+    +   entryId: 'entry-a',
+    +   reason: null,
+    -   entryId: null,
+    -   reason: 'ENTRY',
+        schemaVersion: 'nisi-journal-owner/v2',
+        snapshot: {
+          authorizing: false,
+    +     bytes: 962,
+    +     entries: [
+    +       {
+    +         authorizing: false,
+    +         entry: {
+    +           attempt: 0,
+    +           candidateId: 'candidate-a',
+    +           createdAt: 100,
+    +           heartbeatAt: null,
+    +           id: 'entry-a',
+    +           payload: {
+    +             extra: [
+    +               'x'
+    +             ],
+    +             observation: {
+    +               authorizing: false,
+    +               schemaVersion: 'nisi-fixed-xpc-journal-observation/v1',
+    +               status: 'OBSERVED'
+    +             },
+    +             secret: '[REDACTED]'
+    +           },
+    +           projectId: 'project-a',
+    +           receiptId: 'receipt-a',
+    +           retryOf: null,
+    +           revokes: null,
+    +           runId: 'run-a',
+    +           stage: 'observe',
+    +           state: 'SUCCEEDED',
+    +           ttlMs: 1000
+    +         },
+    +         expired: false,
+    +         historical: false,
+    +         liveness: 'SUCCEEDED',
+    +         retained: true,
+    +         revoked: false
+    +       }
+    +     ],
+    -     bytes: 0,
+    -     entries: [],
+          interrupted: [],
+          meaning: 'HISTORY_OBSERVATIONS_ONLY',
+          recovery: {
+            authorizing: false,
+            reason: null,
+    +       recoveredIds: [
+    +         'entry-a'
+    +       ],
+    -       recoveredIds: [],
+            rejectedLine: null,
+    +       status: 'COMPLETE'
+    -       status: 'NEW'
+          },
+          schemaVersion: 'nisi-journal-owner/v2',
+    +     sha256: 'ed2538948e04ea3f0e44e5ececb22bab915e36b0a6c14679703cc444246d6be2',
+    -     sha256: null,
+          state: 'OPEN'
+        },
+    +   status: 'RECORDED',
+    +   store: {
+    +     bytes: 962,
+    +     committed: true,
+    +     durable: true,
+    +     fsync: {
+    +       directory: true,
+    +       file: true
+    +     },
+    +     fsyncErrors: {
+    +       directory: null,
+    +       file: null
+    +     },
+    +     sha256: 'ed2538948e04ea3f0e44e5ececb22bab915e36b0a6c14679703cc444246d6be2',
+    +     status: 'WRITTEN',
+    +     verified: true
+    +   }
+    -   status: 'REFUSED',
+    -   store: null
+      }
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected:
+    schemaVersion: 'nisi-journal-owner/v2'
+    status: 'REFUSED'
+    reason: 'ENTRY'
+    entryId: ~
+    append: ~
+    store: ~
+    snapshot:
+      schemaVersion: 'nisi-journal-owner/v2'
+      state: 'OPEN'
+      recovery:
+        status: 'NEW'
+        recoveredIds:
+        rejectedLine: ~
+        reason: ~
+        authorizing: false
+      sha256: ~
+      bytes: 0
+      entries:
+      interrupted:
+      meaning: 'HISTORY_OBSERVATIONS_ONLY'
+      authorizing: false
+    authorizing: false
+  actual:
+    schemaVersion: 'nisi-journal-owner/v2'
+    status: 'RECORDED'
+    reason: ~
+    entryId: 'entry-a'
+    append:
+      status: 'APPENDED'
+      id: 'entry-a'
+    store:
+      durable: true
+      committed: true
+      fsync:
+        file: true
+        directory: true
+      fsyncErrors:
+        file: ~
+        directory: ~
+      status: 'WRITTEN'
+      sha256: 'ed2538948e04ea3f0e44e5ececb22bab915e36b0a6c14679703cc444246d6be2'
+      bytes: 962
+      verified: true
+    snapshot:
+      schemaVersion: 'nisi-journal-owner/v2'
+      state: 'OPEN'
+      recovery:
+        status: 'COMPLETE'
+        recoveredIds:
+          0: 'entry-a'
+        rejectedLine: ~
+        reason: ~
+        authorizing: false
+      sha256: 'ed2538948e04ea3f0e44e5ececb22bab915e36b0a6c14679703cc444246d6be2'
+      bytes: 962
+      entries:
+        0:
+          entry:
+            id: 'entry-a'
+            projectId: 'project-a'
+            runId: 'run-a'
+            attempt: 0
+            candidateId: 'candidate-a'
+            stage: 'observe'
+            receiptId: 'receipt-a'
+            createdAt: 100
+            ttlMs: 1000
+            state: 'SUCCEEDED'
+            heartbeatAt: ~
+            retryOf: ~
+            revokes: ~
+            payload:
+              secret: '[REDACTED]'
+              observation:
+                schemaVersion: 'nisi-fixed-xpc-journal-observation/v1'
+                status: 'OBSERVED'
+                authorizing: false
+              extra:
+                0: 'x'
+          historical: false
+          retained: true
+          revoked: false
+          expired: false
+          liveness: 'SUCCEEDED'
+          authorizing: false
+      interrupted:
+      meaning: 'HISTORY_OBSERVATIONS_ONLY'
+      authorizing: false
+    authorizing: false
+  operator: 'deepStrictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///Users/louiscalata/nisi/.packet-diagnostics/history-proxy-owner-20260920/before/tests/journal-proxy-boundaries.test.mjs:64:14)
+    Test.runInAsyncScope (node:async_hooks:227:14)
+    Test.run (node:internal/test_runner/test:1325:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:911:18)
+    Test.postRun (node:internal/test_runner/test:1465:19)
+    Test.run (node:internal/test_runner/test:1390:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:911:7)
+  ...
+# Subtest: transparent Proxy filesystem object: reject capability wrapper without traps
+not ok 24 - transparent Proxy filesystem object: reject capability wrapper without traps
+  ---
+  duration_ms: 0.091584
+  type: 'test'
+  location: '/Users/louiscalata/nisi/.packet-diagnostics/history-proxy-owner-20260920/before/tests/journal-proxy-boundaries.test.mjs:76:5'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly deep-equal:
+    + actual - expected
+    
+      {
+        authorizing: false,
+    +   owner: {},
+    -   reason: 'INVALID_INPUT',
+        schemaVersion: 'nisi-journal-owner/v2',
+    +   snapshot: {
+    +     authorizing: false,
+    +     bytes: 0,
+    +     entries: [],
+    +     interrupted: [],
+    +     meaning: 'HISTORY_OBSERVATIONS_ONLY',
+    +     recovery: {
+    +       authorizing: false,
+    +       reason: null,
+    +       recoveredIds: [],
+    +       rejectedLine: null,
+    +       status: 'NEW'
+    +     },
+    +     schemaVersion: 'nisi-journal-owner/v2',
+    +     sha256: null,
+    +     state: 'OPEN'
+    +   },
+    +   status: 'OPENED'
+    -   status: 'REFUSED'
+      }
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected:
+    schemaVersion: 'nisi-journal-owner/v2'
+    status: 'REFUSED'
+    reason: 'INVALID_INPUT'
+    authorizing: false
+  actual:
+    schemaVersion: 'nisi-journal-owner/v2'
+    status: 'OPENED'
+    owner:
+    snapshot:
+      schemaVersion: 'nisi-journal-owner/v2'
+      state: 'OPEN'
+      recovery:
+        status: 'NEW'
+        recoveredIds:
+        rejectedLine: ~
+        reason: ~
+        authorizing: false
+      sha256: ~
+      bytes: 0
+      entries:
+      interrupted:
+      meaning: 'HISTORY_OBSERVATIONS_ONLY'
+      authorizing: false
+    authorizing: false
+  operator: 'deepStrictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///Users/louiscalata/nisi/.packet-diagnostics/history-proxy-owner-20260920/before/tests/journal-proxy-boundaries.test.mjs:79:14)
+    Test.runInAsyncScope (node:async_hooks:227:14)
+    Test.run (node:internal/test_runner/test:1325:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:911:18)
+    Test.postRun (node:internal/test_runner/test:1465:19)
+    Test.run (node:internal/test_runner/test:1390:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:911:7)
+  ...
+# Subtest: transparent Proxy filesystem function: reject capability wrapper without traps
+not ok 25 - transparent Proxy filesystem function: reject capability wrapper without traps
+  ---
+  duration_ms: 0.097083
+  type: 'test'
+  location: '/Users/louiscalata/nisi/.packet-diagnostics/history-proxy-owner-20260920/before/tests/journal-proxy-boundaries.test.mjs:76:5'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly deep-equal:
+    + actual - expected
+    
+      {
+        authorizing: false,
+    +   owner: {},
+    -   reason: 'INVALID_INPUT',
+        schemaVersion: 'nisi-journal-owner/v2',
+    +   snapshot: {
+    +     authorizing: false,
+    +     bytes: 0,
+    +     entries: [],
+    +     interrupted: [],
+    +     meaning: 'HISTORY_OBSERVATIONS_ONLY',
+    +     recovery: {
+    +       authorizing: false,
+    +       reason: null,
+    +       recoveredIds: [],
+    +       rejectedLine: null,
+    +       status: 'NEW'
+    +     },
+    +     schemaVersion: 'nisi-journal-owner/v2',
+    +     sha256: null,
+    +     state: 'OPEN'
+    +   },
+    +   status: 'OPENED'
+    -   status: 'REFUSED'
+      }
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected:
+    schemaVersion: 'nisi-journal-owner/v2'
+    status: 'REFUSED'
+    reason: 'INVALID_INPUT'
+    authorizing: false
+  actual:
+    schemaVersion: 'nisi-journal-owner/v2'
+    status: 'OPENED'
+    owner:
+    snapshot:
+      schemaVersion: 'nisi-journal-owner/v2'
+      state: 'OPEN'
+      recovery:
+        status: 'NEW'
+        recoveredIds:
+        rejectedLine: ~
+        reason: ~
+        authorizing: false
+      sha256: ~
+      bytes: 0
+      entries:
+      interrupted:
+      meaning: 'HISTORY_OBSERVATIONS_ONLY'
+      authorizing: false
+    authorizing: false
+  operator: 'deepStrictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///Users/louiscalata/nisi/.packet-diagnostics/history-proxy-owner-20260920/before/tests/journal-proxy-boundaries.test.mjs:79:14)
+    Test.runInAsyncScope (node:async_hooks:227:14)
+    Test.run (node:internal/test_runner/test:1325:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:911:18)
+    Test.postRun (node:internal/test_runner/test:1465:19)
+    Test.run (node:internal/test_runner/test:1390:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:911:7)
+  ...
+# Subtest: transparent Proxy forged owner handle: remains invalid without traps
+ok 26 - transparent Proxy forged owner handle: remains invalid without traps
+  ---
+  duration_ms: 0.063958
+  type: 'test'
+  ...
+# Subtest: revoked Proxy request: open refuses without traps or IO
+not ok 27 - revoked Proxy request: open refuses without traps or IO
+  ---
+  duration_ms: 0.057666
+  type: 'test'
+  location: '/Users/louiscalata/nisi/.packet-diagnostics/history-proxy-owner-20260920/before/tests/journal-proxy-boundaries.test.mjs:27:5'
+  failureType: 'testCodeFailure'
+  error: "Cannot perform 'IsArray' on a proxy that has been revoked"
+  code: 'ERR_TEST_FAILURE'
+  name: 'TypeError'
+  stack: |-
+    Array.isArray (<anonymous>)
+    envelope (file:///Users/louiscalata/nisi/.packet-diagnostics/history-proxy-owner-20260920/before/history/journal-owner-v2.mjs:38:60)
+    openJournalOwner (file:///Users/louiscalata/nisi/.packet-diagnostics/history-proxy-owner-20260920/before/history/journal-owner-v2.mjs:189:15)
+    TestContext.<anonymous> (file:///Users/louiscalata/nisi/.packet-diagnostics/history-proxy-owner-20260920/before/tests/journal-proxy-boundaries.test.mjs:36:22)
+    Test.runInAsyncScope (node:async_hooks:227:14)
+    Test.run (node:internal/test_runner/test:1325:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:911:18)
+    Test.postRun (node:internal/test_runner/test:1465:19)
+    Test.run (node:internal/test_runner/test:1390:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:911:7)
+  ...
+# Subtest: revoked Proxy request: inspect refuses without traps or IO
+not ok 28 - revoked Proxy request: inspect refuses without traps or IO
+  ---
+  duration_ms: 0.053542
+  type: 'test'
+  location: '/Users/louiscalata/nisi/.packet-diagnostics/history-proxy-owner-20260920/before/tests/journal-proxy-boundaries.test.mjs:27:5'
+  failureType: 'testCodeFailure'
+  error: "Cannot perform 'IsArray' on a proxy that has been revoked"
+  code: 'ERR_TEST_FAILURE'
+  name: 'TypeError'
+  stack: |-
+    Array.isArray (<anonymous>)
+    envelope (file:///Users/louiscalata/nisi/.packet-diagnostics/history-proxy-owner-20260920/before/history/journal-owner-v2.mjs:38:60)
+    inspectJournalOwner (file:///Users/louiscalata/nisi/.packet-diagnostics/history-proxy-owner-20260920/before/history/journal-owner-v2.mjs:286:15)
+    TestContext.<anonymous> (file:///Users/louiscalata/nisi/.packet-diagnostics/history-proxy-owner-20260920/before/tests/journal-proxy-boundaries.test.mjs:36:22)
+    Test.runInAsyncScope (node:async_hooks:227:14)
+    Test.run (node:internal/test_runner/test:1325:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:911:18)
+    Test.postRun (node:internal/test_runner/test:1465:19)
+    Test.run (node:internal/test_runner/test:1390:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:911:7)
+  ...
+# Subtest: revoked Proxy request: record refuses without traps or IO
+not ok 29 - revoked Proxy request: record refuses without traps or IO
+  ---
+  duration_ms: 0.049292
+  type: 'test'
+  location: '/Users/louiscalata/nisi/.packet-diagnostics/history-proxy-owner-20260920/before/tests/journal-proxy-boundaries.test.mjs:27:5'
+  failureType: 'testCodeFailure'
+  error: "Cannot perform 'IsArray' on a proxy that has been revoked"
+  code: 'ERR_TEST_FAILURE'
+  name: 'TypeError'
+  stack: |-
+    Array.isArray (<anonymous>)
+    envelope (file:///Users/louiscalata/nisi/.packet-diagnostics/history-proxy-owner-20260920/before/history/journal-owner-v2.mjs:38:60)
+    recordJournalObservation (file:///Users/louiscalata/nisi/.packet-diagnostics/history-proxy-owner-20260920/before/history/journal-owner-v2.mjs:382:15)
+    TestContext.<anonymous> (file:///Users/louiscalata/nisi/.packet-diagnostics/history-proxy-owner-20260920/before/tests/journal-proxy-boundaries.test.mjs:36:22)
+    Test.runInAsyncScope (node:async_hooks:227:14)
+    Test.run (node:internal/test_runner/test:1325:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:911:18)
+    Test.postRun (node:internal/test_runner/test:1465:19)
+    Test.run (node:internal/test_runner/test:1390:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:911:7)
+  ...
+# Subtest: revoked Proxy request: maintain refuses without traps or IO
+not ok 30 - revoked Proxy request: maintain refuses without traps or IO
+  ---
+  duration_ms: 0.042667
+  type: 'test'
+  location: '/Users/louiscalata/nisi/.packet-diagnostics/history-proxy-owner-20260920/before/tests/journal-proxy-boundaries.test.mjs:27:5'
+  failureType: 'testCodeFailure'
+  error: "Cannot perform 'IsArray' on a proxy that has been revoked"
+  code: 'ERR_TEST_FAILURE'
+  name: 'TypeError'
+  stack: |-
+    Array.isArray (<anonymous>)
+    envelope (file:///Users/louiscalata/nisi/.packet-diagnostics/history-proxy-owner-20260920/before/history/journal-owner-v2.mjs:38:60)
+    maintainJournalOwner (file:///Users/louiscalata/nisi/.packet-diagnostics/history-proxy-owner-20260920/before/history/journal-owner-v2.mjs:423:15)
+    TestContext.<anonymous> (file:///Users/louiscalata/nisi/.packet-diagnostics/history-proxy-owner-20260920/before/tests/journal-proxy-boundaries.test.mjs:36:22)
+    Test.runInAsyncScope (node:async_hooks:227:14)
+    Test.run (node:internal/test_runner/test:1325:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:911:18)
+    Test.postRun (node:internal/test_runner/test:1465:19)
+    Test.run (node:internal/test_runner/test:1390:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:911:7)
+  ...
+# Subtest: revoked Proxy config: owner and direct journal reject before traps
+ok 31 - revoked Proxy config: owner and direct journal reject before traps
+  ---
+  duration_ms: 0.061875
+  type: 'test'
+  ...
+# Subtest: revoked Proxy redactPaths: owner and direct journal reject before traps
+ok 32 - revoked Proxy redactPaths: owner and direct journal reject before traps
+  ---
+  duration_ms: 0.0505
+  type: 'test'
+  ...
+# Subtest: revoked Proxy entry: owner and direct journal reject before traps
+ok 33 - revoked Proxy entry: owner and direct journal reject before traps
+  ---
+  duration_ms: 0.214917
+  type: 'test'
+  ...
+# Subtest: revoked Proxy payload: owner and direct journal reject before traps
+ok 34 - revoked Proxy payload: owner and direct journal reject before traps
+  ---
+  duration_ms: 0.215834
+  type: 'test'
+  ...
+# Subtest: revoked Proxy nestedObject: owner and direct journal reject before traps
+ok 35 - revoked Proxy nestedObject: owner and direct journal reject before traps
+  ---
+  duration_ms: 0.36375
+  type: 'test'
+  ...
+# Subtest: revoked Proxy nestedArray: owner and direct journal reject before traps
+ok 36 - revoked Proxy nestedArray: owner and direct journal reject before traps
+  ---
+  duration_ms: 0.234875
+  type: 'test'
+  ...
+# Subtest: revoked Proxy filesystem object: reject capability wrapper without traps
+not ok 37 - revoked Proxy filesystem object: reject capability wrapper without traps
+  ---
+  duration_ms: 0.037833
+  type: 'test'
+  location: '/Users/louiscalata/nisi/.packet-diagnostics/history-proxy-owner-20260920/before/tests/journal-proxy-boundaries.test.mjs:76:5'
+  failureType: 'testCodeFailure'
+  error: "Cannot perform 'get' on a proxy that has been revoked"
+  code: 'ERR_TEST_FAILURE'
+  name: 'TypeError'
+  stack: |-
+    openJournalOwner (file:///Users/louiscalata/nisi/.packet-diagnostics/history-proxy-owner-20260920/before/history/journal-owner-v2.mjs:194:47)
+    TestContext.<anonymous> (file:///Users/louiscalata/nisi/.packet-diagnostics/history-proxy-owner-20260920/before/tests/journal-proxy-boundaries.test.mjs:79:24)
+    Test.runInAsyncScope (node:async_hooks:227:14)
+    Test.run (node:internal/test_runner/test:1325:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:911:18)
+    Test.postRun (node:internal/test_runner/test:1465:19)
+    Test.run (node:internal/test_runner/test:1390:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:911:7)
+  ...
+# Subtest: revoked Proxy filesystem function: reject capability wrapper without traps
+not ok 38 - revoked Proxy filesystem function: reject capability wrapper without traps
+  ---
+  duration_ms: 0.024958
+  type: 'test'
+  location: '/Users/louiscalata/nisi/.packet-diagnostics/history-proxy-owner-20260920/before/tests/journal-proxy-boundaries.test.mjs:76:5'
+  failureType: 'testCodeFailure'
+  error: "Cannot perform 'get' on a proxy that has been revoked"
+  code: 'ERR_TEST_FAILURE'
+  name: 'TypeError'
+  stack: |-
+    openJournalOwner (file:///Users/louiscalata/nisi/.packet-diagnostics/history-proxy-owner-20260920/before/history/journal-owner-v2.mjs:194:47)
+    TestContext.<anonymous> (file:///Users/louiscalata/nisi/.packet-diagnostics/history-proxy-owner-20260920/before/tests/journal-proxy-boundaries.test.mjs:79:24)
+    Test.runInAsyncScope (node:async_hooks:227:14)
+    Test.run (node:internal/test_runner/test:1325:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:911:18)
+    Test.postRun (node:internal/test_runner/test:1465:19)
+    Test.run (node:internal/test_runner/test:1390:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:911:7)
+  ...
+# Subtest: revoked Proxy forged owner handle: remains invalid without traps
+ok 39 - revoked Proxy forged owner handle: remains invalid without traps
+  ---
+  duration_ms: 0.046458
+  type: 'test'
+  ...
+# Subtest: valid null-prototype config and nested entry data preserve serialization and redaction
+ok 40 - valid null-prototype config and nested entry data preserve serialization and redaction
+  ---
+  duration_ms: 0.195041
+  type: 'test'
+  ...
+# Subtest: clock refusal precedes invalid entry as before and touches no Proxy traps
+ok 41 - clock refusal precedes invalid entry as before and touches no Proxy traps
+  ---
+  duration_ms: 0.180708
+  type: 'test'
+  ...
+1..41
+# tests 41
+# suites 0
+# pass 11
+# fail 30
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 48.141833

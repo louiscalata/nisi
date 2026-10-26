@@ -1,0 +1,238 @@
+TAP version 13
+# Subtest: V4 partial construction: author-adapter
+ok 1 - V4 partial construction: author-adapter
+  ---
+  duration_ms: 32.624542
+  type: 'test'
+  ...
+# Subtest: V4 partial construction: reviewer-owner
+ok 2 - V4 partial construction: reviewer-owner
+  ---
+  duration_ms: 34.507292
+  type: 'test'
+  ...
+# Subtest: V4 partial construction: reviewer-adapter
+ok 3 - V4 partial construction: reviewer-adapter
+  ---
+  duration_ms: 35.138208
+  type: 'test'
+  ...
+# Subtest: V4 partial construction: rollback-throw
+ok 4 - V4 partial construction: rollback-throw
+  ---
+  duration_ms: 31.214625
+  type: 'test'
+  ...
+# Subtest: V4 partial construction: rollback-idle
+ok 5 - V4 partial construction: rollback-idle
+  ---
+  duration_ms: 30.895167
+  type: 'test'
+  ...
+# Subtest: NATIVE_API/OFF: original owners run one fixed arm, retain it, and stop on unknown synthetic budget
+ok 6 - NATIVE_API/OFF: original owners run one fixed arm, retain it, and stop on unknown synthetic budget
+  ---
+  duration_ms: 463.345542
+  type: 'test'
+  ...
+# Subtest: NATIVE_API/ON: original owners run one fixed arm, retain it, and stop on unknown synthetic budget
+ok 7 - NATIVE_API/ON: original owners run one fixed arm, retain it, and stop on unknown synthetic budget
+  ---
+  duration_ms: 437.36675
+  type: 'test'
+  ...
+# Subtest: CHAT_COMPLETIONS/OFF: original owners run one fixed arm, retain it, and stop on unknown synthetic budget
+ok 8 - CHAT_COMPLETIONS/OFF: original owners run one fixed arm, retain it, and stop on unknown synthetic budget
+  ---
+  duration_ms: 444.081125
+  type: 'test'
+  ...
+# Subtest: CHAT_COMPLETIONS/ON: original owners run one fixed arm, retain it, and stop on unknown synthetic budget
+ok 9 - CHAT_COMPLETIONS/ON: original owners run one fixed arm, retain it, and stop on unknown synthetic budget
+  ---
+  duration_ms: 447.462708
+  type: 'test'
+  ...
+# Subtest: preflight rejects extra key without owner construction, callbacks, storage or listeners
+ok 10 - preflight rejects extra key without owner construction, callbacks, storage or listeners
+  ---
+  duration_ms: 1.887208
+  type: 'test'
+  ...
+# Subtest: preflight rejects selection without owner construction, callbacks, storage or listeners
+ok 11 - preflight rejects selection without owner construction, callbacks, storage or listeners
+  ---
+  duration_ms: 1.588625
+  type: 'test'
+  ...
+# Subtest: preflight rejects treatment without owner construction, callbacks, storage or listeners
+ok 12 - preflight rejects treatment without owner construction, callbacks, storage or listeners
+  ---
+  duration_ms: 1.609792
+  type: 'test'
+  ...
+# Subtest: preflight rejects budget without owner construction, callbacks, storage or listeners
+ok 13 - preflight rejects budget without owner construction, callbacks, storage or listeners
+  ---
+  duration_ms: 2.039458
+  type: 'test'
+  ...
+# Subtest: preflight rejects environment without owner construction, callbacks, storage or listeners
+ok 14 - preflight rejects environment without owner construction, callbacks, storage or listeners
+  ---
+  duration_ms: 1.680125
+  type: 'test'
+  ...
+# Subtest: preflight rejects approval without owner construction, callbacks, storage or listeners
+ok 15 - preflight rejects approval without owner construction, callbacks, storage or listeners
+  ---
+  duration_ms: 1.663584
+  type: 'test'
+  ...
+# Subtest: preflight rejects state path without owner construction, callbacks, storage or listeners
+ok 16 - preflight rejects state path without owner construction, callbacks, storage or listeners
+  ---
+  duration_ms: 1.759709
+  type: 'test'
+  ...
+# Subtest: preflight rejects signals without owner construction, callbacks, storage or listeners
+ok 17 - preflight rejects signals without owner construction, callbacks, storage or listeners
+  ---
+  duration_ms: 1.231708
+  type: 'test'
+  ...
+# Subtest: production path rejects test fixture build/profile without executing or allocating
+ok 18 - production path rejects test fixture build/profile without executing or allocating
+  ---
+  duration_ms: 2.021417
+  type: 'test'
+  ...
+# Subtest: checkBuild resolved native Promise is observed and cannot advance construction
+ok 19 - checkBuild resolved native Promise is observed and cannot advance construction
+  ---
+  duration_ms: 1.722875
+  type: 'test'
+  ...
+# Subtest: createHost resolved native Promise is observed and cannot advance construction
+ok 20 - createHost resolved native Promise is observed and cannot advance construction
+  ---
+  duration_ms: 29.498959
+  type: 'test'
+  ...
+# Subtest: createOracle resolved native Promise is observed and cannot advance construction
+ok 21 - createOracle resolved native Promise is observed and cannot advance construction
+  ---
+  duration_ms: 28.396125
+  type: 'test'
+  ...
+# Subtest: createLane resolved native Promise is observed and cannot advance construction
+ok 22 - createLane resolved native Promise is observed and cannot advance construction
+  ---
+  duration_ms: 28.700083
+  type: 'test'
+  ...
+# Subtest: checkBuild rejected native Promise is observed and cannot advance construction
+ok 23 - checkBuild rejected native Promise is observed and cannot advance construction
+  ---
+  duration_ms: 2.374792
+  type: 'test'
+  ...
+# Subtest: createHost rejected native Promise is observed and cannot advance construction
+ok 24 - createHost rejected native Promise is observed and cannot advance construction
+  ---
+  duration_ms: 28.439459
+  type: 'test'
+  ...
+# Subtest: createOracle rejected native Promise is observed and cannot advance construction
+ok 25 - createOracle rejected native Promise is observed and cannot advance construction
+  ---
+  duration_ms: 39.54675
+  type: 'test'
+  ...
+# Subtest: createLane rejected native Promise is observed and cannot advance construction
+ok 26 - createLane rejected native Promise is observed and cannot advance construction
+  ---
+  duration_ms: 28.579208
+  type: 'test'
+  ...
+# Subtest: unissued createHost stops before later factories
+ok 27 - unissued createHost stops before later factories
+  ---
+  duration_ms: 33.178083
+  type: 'test'
+  ...
+# Subtest: unissued createOracle stops before later factories
+ok 28 - unissued createOracle stops before later factories
+  ---
+  duration_ms: 46.06175
+  type: 'test'
+  ...
+# Subtest: downstream admission refusal closes the original unused lane without model requests
+ok 29 - downstream admission refusal closes the original unused lane without model requests
+  ---
+  duration_ms: 44.959667
+  type: 'test'
+  ...
+# Subtest: changed injected build after preflight refuses before session creation
+ok 30 - changed injected build after preflight refuses before session creation
+  ---
+  duration_ms: 1.765125
+  type: 'test'
+  ...
+# Subtest: malformed returned lane cannot report cleanup confirmed or continue
+ok 31 - malformed returned lane cannot report cleanup confirmed or continue
+  ---
+  duration_ms: 27.794792
+  type: 'test'
+  ...
+# Subtest: isolated construction-only four: original issued intents and fresh identities, no execution
+ok 32 - isolated construction-only four: original issued intents and fresh identities, no execution
+  ---
+  duration_ms: 51.572625
+  type: 'test'
+  ...
+# Subtest: isolated construction-only copy: original issued intents and fresh identities, no execution
+ok 33 - isolated construction-only copy: original issued intents and fresh identities, no execution
+  ---
+  duration_ms: 47.629292
+  type: 'test'
+  ...
+# Subtest: isolated construction-only out-of-order: original issued intents and fresh identities, no execution
+ok 34 - isolated construction-only out-of-order: original issued intents and fresh identities, no execution
+  ---
+  duration_ms: 48.365917
+  type: 'test'
+  ...
+# Subtest: isolated construction-only duplicate: original issued intents and fresh identities, no execution
+ok 35 - isolated construction-only duplicate: original issued intents and fresh identities, no execution
+  ---
+  duration_ms: 48.7005
+  type: 'test'
+  ...
+# Subtest: state root identity change after session creation refuses before first owner construction, with no retry
+ok 36 - state root identity change after session creation refuses before first owner construction, with no retry
+  ---
+  duration_ms: 18.820917
+  type: 'test'
+  ...
+# Subtest: constructor snapshots selection, budgets, plan and factory methods before later caller mutation
+ok 37 - constructor snapshots selection, budgets, plan and factory methods before later caller mutation
+  ---
+  duration_ms: 434.958166
+  type: 'test'
+  ...
+# Subtest: setup signal and in-flight user stop close only original owners
+ok 38 - setup signal and in-flight user stop close only original owners
+  ---
+  duration_ms: 88.505125
+  type: 'test'
+  ...
+1..38
+# tests 38
+# suites 0
+# pass 38
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 3127.040167

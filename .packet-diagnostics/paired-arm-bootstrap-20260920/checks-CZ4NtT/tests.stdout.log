@@ -1,0 +1,3461 @@
+TAP version 13
+# Subtest: durable original owner NATIVE_API/OFF/repaired, readonly reopened crosslinks
+ok 1 - durable original owner NATIVE_API/OFF/repaired, readonly reopened crosslinks
+  ---
+  duration_ms: 508.647541
+  type: 'test'
+  ...
+# Subtest: durable original owner NATIVE_API/OFF/no-progress, readonly reopened crosslinks
+ok 2 - durable original owner NATIVE_API/OFF/no-progress, readonly reopened crosslinks
+  ---
+  duration_ms: 486.917834
+  type: 'test'
+  ...
+# Subtest: durable original owner NATIVE_API/ON/repaired, readonly reopened crosslinks
+ok 3 - durable original owner NATIVE_API/ON/repaired, readonly reopened crosslinks
+  ---
+  duration_ms: 508.109125
+  type: 'test'
+  ...
+# Subtest: durable original owner NATIVE_API/ON/no-progress, readonly reopened crosslinks
+ok 4 - durable original owner NATIVE_API/ON/no-progress, readonly reopened crosslinks
+  ---
+  duration_ms: 435.646958
+  type: 'test'
+  ...
+# Subtest: durable original owner CHAT_COMPLETIONS/OFF/repaired, readonly reopened crosslinks
+ok 5 - durable original owner CHAT_COMPLETIONS/OFF/repaired, readonly reopened crosslinks
+  ---
+  duration_ms: 470.182875
+  type: 'test'
+  ...
+# Subtest: durable original owner CHAT_COMPLETIONS/OFF/no-progress, readonly reopened crosslinks
+ok 6 - durable original owner CHAT_COMPLETIONS/OFF/no-progress, readonly reopened crosslinks
+  ---
+  duration_ms: 429.54875
+  type: 'test'
+  ...
+# Subtest: durable original owner CHAT_COMPLETIONS/ON/repaired, readonly reopened crosslinks
+ok 7 - durable original owner CHAT_COMPLETIONS/ON/repaired, readonly reopened crosslinks
+  ---
+  duration_ms: 474.258458
+  type: 'test'
+  ...
+# Subtest: durable original owner CHAT_COMPLETIONS/ON/no-progress, readonly reopened crosslinks
+ok 8 - durable original owner CHAT_COMPLETIONS/ON/no-progress, readonly reopened crosslinks
+  ---
+  duration_ms: 440.2855
+  type: 'test'
+  ...
+# Subtest: immediate user stop records no dispatch and does not resume
+ok 9 - immediate user stop records no dispatch and does not resume
+  ---
+  duration_ms: 28.282667
+  type: 'test'
+  ...
+# Subtest: post-mint consent refusal retains final history without inventing dispatch
+ok 10 - post-mint consent refusal retains final history without inventing dispatch
+  ---
+  duration_ms: 43.311958
+  type: 'test'
+  ...
+# Subtest: failure sidecar "kind":"PREPARED" preserves prefix without redispatch
+ok 11 - failure sidecar "kind":"PREPARED" preserves prefix without redispatch
+  ---
+  duration_ms: 22.150625
+  type: 'test'
+  ...
+# Subtest: failure main "type":"START_INTENT" preserves prefix without redispatch
+ok 12 - failure main "type":"START_INTENT" preserves prefix without redispatch
+  ---
+  duration_ms: 25.876084
+  type: 'test'
+  ...
+# Subtest: failure sidecar "kind":"START_LINKED" preserves prefix without redispatch
+ok 13 - failure sidecar "kind":"START_LINKED" preserves prefix without redispatch
+  ---
+  duration_ms: 31.752833
+  type: 'test'
+  ...
+# Subtest: failure sidecar "kind":"HISTORY" preserves prefix without redispatch
+ok 14 - failure sidecar "kind":"HISTORY" preserves prefix without redispatch
+  ---
+  duration_ms: 115.24475
+  type: 'test'
+  ...
+# Subtest: failure sidecar "kind":"PHASE_OBSERVED" preserves prefix without redispatch
+ok 15 - failure sidecar "kind":"PHASE_OBSERVED" preserves prefix without redispatch
+  ---
+  duration_ms: 148.605542
+  type: 'test'
+  ...
+# Subtest: failure main "type":"FINAL" preserves prefix without redispatch
+ok 16 - failure main "type":"FINAL" preserves prefix without redispatch
+  ---
+  duration_ms: 476.470916
+  type: 'test'
+  ...
+# Subtest: failure sidecar "kind":"FINAL" preserves prefix without redispatch
+ok 17 - failure sidecar "kind":"FINAL" preserves prefix without redispatch
+  ---
+  duration_ms: 448.486
+  type: 'test'
+  ...
+# Subtest: fresh admission refusal remains a recorded stop, not task success
+ok 18 - fresh admission refusal remains a recorded stop, not task success
+  ---
+  duration_ms: 40.88175
+  type: 'test'
+  ...
+# Subtest: caller mutation cannot change the controller-captured approval used for history
+ok 19 - caller mutation cannot change the controller-captured approval used for history
+  ---
+  duration_ms: 460.1475
+  type: 'test'
+  ...
+# Subtest: semantically forged rehashed sidecars refuse exact binding errors
+    # Subtest: header runner
+    ok 1 - header runner
+      ---
+      duration_ms: 7.341584
+      type: 'test'
+      ...
+    # Subtest: header intents
+    ok 2 - header intents
+      ---
+      duration_ms: 8.104084
+      type: 'test'
+      ...
+    # Subtest: wrong main hash
+    ok 3 - wrong main hash
+      ---
+      duration_ms: 3.246167
+      type: 'test'
+      ...
+    # Subtest: wrong intent
+    ok 4 - wrong intent
+      ---
+      duration_ms: 3.951834
+      type: 'test'
+      ...
+    # Subtest: wrong source
+    ok 5 - wrong source
+      ---
+      duration_ms: 2.374875
+      type: 'test'
+      ...
+    # Subtest: wrong owner
+    ok 6 - wrong owner
+      ---
+      duration_ms: 2.151292
+      type: 'test'
+      ...
+    # Subtest: wrong prepared link
+    ok 7 - wrong prepared link
+      ---
+      duration_ms: 2.053208
+      type: 'test'
+      ...
+    # Subtest: wrong history generation
+    ok 8 - wrong history generation
+      ---
+      duration_ms: 2.075958
+      type: 'test'
+      ...
+    # Subtest: wrong history point
+    ok 9 - wrong history point
+      ---
+      duration_ms: 1.982208
+      type: 'test'
+      ...
+    # Subtest: wrong projection candidate
+    ok 10 - wrong projection candidate
+      ---
+      duration_ms: 1.934042
+      type: 'test'
+      ...
+    # Subtest: wrong projection inputs
+    ok 11 - wrong projection inputs
+      ---
+      duration_ms: 2.292583
+      type: 'test'
+      ...
+    # Subtest: wrong projection intent
+    ok 12 - wrong projection intent
+      ---
+      duration_ms: 2.146959
+      type: 'test'
+      ...
+    # Subtest: wrong treatment arm
+    ok 13 - wrong treatment arm
+      ---
+      duration_ms: 2.013708
+      type: 'test'
+      ...
+    # Subtest: wrong final state
+    ok 14 - wrong final state
+      ---
+      duration_ms: 2.035791
+      type: 'test'
+      ...
+    1..14
+ok 20 - semantically forged rehashed sidecars refuse exact binding errors
+  ---
+  duration_ms: 509.504667
+  type: 'test'
+  ...
+# Subtest: dispatch approves only the four packet-run status transitions after normalization
+ok 21 - dispatch approves only the four packet-run status transitions after normalization
+  ---
+  duration_ms: 101.550917
+  type: 'test'
+  ...
+# Subtest: dispatch rejects missing, duplicate, and invalid frontmatter statuses
+ok 22 - dispatch rejects missing, duplicate, and invalid frontmatter statuses
+  ---
+  duration_ms: 169.813875
+  type: 'test'
+  ...
+# Subtest: dispatch rejects non-status packet changes, including body status-like text and owner changes
+ok 23 - dispatch rejects non-status packet changes, including body status-like text and owner changes
+  ---
+  duration_ms: 88.404333
+  type: 'test'
+  ...
+# Subtest: dispatch fails closed for wrong hash, unreleased, accepted, and non-C01 ledger rows
+ok 24 - dispatch fails closed for wrong hash, unreleased, accepted, and non-C01 ledger rows
+  ---
+  duration_ms: 177.341875
+  type: 'test'
+  ...
+# Subtest: accepted C04 and forged repeat-dispatch states remain HELD
+ok 25 - accepted C04 and forged repeat-dispatch states remain HELD
+  ---
+  duration_ms: 73.75125
+  type: 'test'
+  ...
+# Subtest: accepted C05 and forged READY states never authorize OpenCode dispatch
+ok 26 - accepted C05 and forged READY states never authorize OpenCode dispatch
+  ---
+  duration_ms: 76.800583
+  type: 'test'
+  ...
+# Subtest: C06 owner acceptance and forged release combinations never authorize dispatch
+ok 27 - C06 owner acceptance and forged release combinations never authorize dispatch
+  ---
+  duration_ms: 149.701625
+  type: 'test'
+  ...
+# Subtest: C07 owner integration does not open an OpenCode dispatch route
+ok 28 - C07 owner integration does not open an OpenCode dispatch route
+  ---
+  duration_ms: 150.698875
+  type: 'test'
+  ...
+# Subtest: C06 exact owner-frozen evidence is accepted by the additive guard
+ok 29 - C06 exact owner-frozen evidence is accepted by the additive guard
+  ---
+  duration_ms: 29.924542
+  type: 'test'
+  ...
+# Subtest: C06 refuses accepted source and dependency drift
+    # Subtest: accepted source
+    ok 1 - accepted source
+      ---
+      duration_ms: 21.523666
+      type: 'test'
+      ...
+    # Subtest: meaningful dependency
+    ok 2 - meaningful dependency
+      ---
+      duration_ms: 21.335625
+      type: 'test'
+      ...
+    1..2
+ok 30 - C06 refuses accepted source and dependency drift
+  ---
+  duration_ms: 43.070458
+  type: 'test'
+  ...
+# Subtest: C06 refuses omitted, rebound, and contradictory evidence
+    # Subtest: missing review
+    ok 1 - missing review
+      ---
+      duration_ms: 25.471708
+      type: 'test'
+      ...
+    # Subtest: recomputed review digest with false served identity
+    ok 2 - recomputed review digest with false served identity
+      ---
+      duration_ms: 45.472583
+      type: 'test'
+      ...
+    # Subtest: recomputed checkpoint digest with skipped test
+    ok 3 - recomputed checkpoint digest with skipped test
+      ---
+      duration_ms: 98.83125
+      type: 'test'
+      ...
+    # Subtest: recomputed validation digest with wrong candidate
+    ok 4 - recomputed validation digest with wrong candidate
+      ---
+      duration_ms: 120.921459
+      type: 'test'
+      ...
+    # Subtest: recomputed packet and outer digest
+    ok 5 - recomputed packet and outer digest
+      ---
+      duration_ms: 98.957583
+      type: 'test'
+      ...
+    # Subtest: dependency removed from evidence and canonical receipt
+    ok 6 - dependency removed from evidence and canonical receipt
+      ---
+      duration_ms: 23.917084
+      type: 'test'
+      ...
+    # Subtest: raw validation relabeled authorizing with rebound receipts
+    ok 7 - raw validation relabeled authorizing with rebound receipts
+      ---
+      duration_ms: 26.883
+      type: 'test'
+      ...
+    1..7
+ok 31 - C06 refuses omitted, rebound, and contradictory evidence
+  ---
+  duration_ms: 440.9995
+  type: 'test'
+  ...
+# Subtest: C06 refuses unauthorized authority and predecessor changes
+    # Subtest: native credit
+    ok 1 - native credit
+      ---
+      duration_ms: 20.92125
+      type: 'test'
+      ...
+    # Subtest: resume credit in canonical receipt
+    ok 2 - resume credit in canonical receipt
+      ---
+      duration_ms: 25.551167
+      type: 'test'
+      ...
+    # Subtest: publication credit
+    ok 3 - publication credit
+      ---
+      duration_ms: 20.822458
+      type: 'test'
+      ...
+    # Subtest: C05 acceptance removed
+    ok 4 - C05 acceptance removed
+      ---
+      duration_ms: 20.072166
+      type: 'test'
+      ...
+    # Subtest: canonical receipt claims publication authority
+    ok 5 - canonical receipt claims publication authority
+      ---
+      duration_ms: 26.21275
+      type: 'test'
+      ...
+    # Subtest: integration route changed
+    ok 6 - integration route changed
+      ---
+      duration_ms: 20.422042
+      type: 'test'
+      ...
+    # Subtest: accepted file omitted
+    ok 7 - accepted file omitted
+      ---
+      duration_ms: 21.515333
+      type: 'test'
+      ...
+    1..7
+ok 32 - C06 refuses unauthorized authority and predecessor changes
+  ---
+  duration_ms: 155.968583
+  type: 'test'
+  ...
+# Subtest: C06 binds ledger authority, immutable receipt identity, historical logs and runtime
+    # Subtest: row-level authority cannot bypass subordinate evidence
+    ok 1 - row-level authority cannot bypass subordinate evidence
+      ---
+      duration_ms: 215.487959
+      type: 'test'
+      ...
+    # Subtest: semantically equivalent receipt replacement still needs a new owner pin
+    ok 2 - semantically equivalent receipt replacement still needs a new owner pin
+      ---
+      duration_ms: 39.702292
+      type: 'test'
+      ...
+    # Subtest: retained checkpoint log bytes are required
+    ok 3 - retained checkpoint log bytes are required
+      ---
+      duration_ms: 24.177083
+      type: 'test'
+      ...
+    # Subtest: another executable named node is not the recorded runtime
+    ok 4 - another executable named node is not the recorded runtime
+      ---
+      duration_ms: 24.913542
+      type: 'test'
+      ...
+    1..4
+ok 33 - C06 binds ledger authority, immutable receipt identity, historical logs and runtime
+  ---
+  duration_ms: 304.5955
+  type: 'test'
+  ...
+# Subtest: current history correction composes with C06 and C07 without rewriting predecessor receipts
+ok 34 - current history correction composes with C06 and C07 without rewriting predecessor receipts
+  ---
+  duration_ms: 71.4235
+  type: 'test'
+  ...
+# Subtest: new history source without its exact hardening record fails C07
+ok 35 - new history source without its exact hardening record fails C07
+  ---
+  duration_ms: 41.081958
+  type: 'test'
+  ...
+# Subtest: history record cannot replace or merge the existing C07 supersession
+ok 36 - history record cannot replace or merge the existing C07 supersession
+  ---
+  duration_ms: 235.191417
+  type: 'test'
+  ...
+# Subtest: C07 exact owner-frozen evidence and five-file scope pass the additive guard
+ok 37 - C07 exact owner-frozen evidence and five-file scope pass the additive guard
+  ---
+  duration_ms: 32.149083
+  type: 'test'
+  ...
+# Subtest: C07 rejects accepted source drift and missing source closure
+    # Subtest: accepted source drift
+    ok 1 - accepted source drift
+      ---
+      duration_ms: 27.06125
+      type: 'test'
+      ...
+    # Subtest: accepted documentation omitted
+    ok 2 - accepted documentation omitted
+      ---
+      duration_ms: 27.849791
+      type: 'test'
+      ...
+    # Subtest: dependency removed from canonical receipt
+    ok 3 - dependency removed from canonical receipt
+      ---
+      duration_ms: 28.312083
+      type: 'test'
+      ...
+    1..3
+ok 38 - C07 rejects accepted source drift and missing source closure
+  ---
+  duration_ms: 83.451125
+  type: 'test'
+  ...
+# Subtest: C07 rejects recomputed but contradictory receipts
+    # Subtest: checkpoint count rebinding
+    ok 1 - checkpoint count rebinding
+      ---
+      duration_ms: 29.689292
+      type: 'test'
+      ...
+    # Subtest: canonical check rebinding
+    ok 2 - canonical check rebinding
+      ---
+      duration_ms: 26.414417
+      type: 'test'
+      ...
+    # Subtest: review verdict rebinding
+    ok 3 - review verdict rebinding
+      ---
+      duration_ms: 26.363208
+      type: 'test'
+      ...
+    # Subtest: validation authority rebinding
+    ok 4 - validation authority rebinding
+      ---
+      duration_ms: 26.601125
+      type: 'test'
+      ...
+    1..4
+ok 39 - C07 rejects recomputed but contradictory receipts
+  ---
+  duration_ms: 109.337667
+  type: 'test'
+  ...
+# Subtest: C07 preserves C06 history and refuses authority or supersession rebinding
+    # Subtest: C06 immutable owner evidence changed
+    ok 1 - C06 immutable owner evidence changed
+      ---
+      duration_ms: 55.418584
+      type: 'test'
+      ...
+    # Subtest: C07 native authority
+    ok 2 - C07 native authority
+      ---
+      duration_ms: 56.217625
+      type: 'test'
+      ...
+    # Subtest: dependency supersession changed
+    ok 3 - dependency supersession changed
+      ---
+      duration_ms: 50.935542
+      type: 'test'
+      ...
+    # Subtest: predecessor metadata changed
+    ok 4 - predecessor metadata changed
+      ---
+      duration_ms: 28.354208
+      type: 'test'
+      ...
+    # Subtest: accepted file inventory changed
+    ok 5 - accepted file inventory changed
+      ---
+      duration_ms: 26.278041
+      type: 'test'
+      ...
+    1..5
+ok 40 - C07 preserves C06 history and refuses authority or supersession rebinding
+  ---
+  duration_ms: 217.521375
+  type: 'test'
+  ...
+# Subtest: C07 binds raw evidence, current dependencies and declared authority
+    # Subtest: unrelated live dependency
+    ok 1 - unrelated live dependency
+      ---
+      duration_ms: 28.803958
+      type: 'test'
+      ...
+    # Subtest: raw checkpoint log
+    ok 2 - raw checkpoint log
+      ---
+      duration_ms: 49.736333
+      type: 'test'
+      ...
+    # Subtest: missing mutation log
+    ok 3 - missing mutation log
+      ---
+      duration_ms: 32.541834
+      type: 'test'
+      ...
+    # Subtest: declared dependency omitted
+    ok 4 - declared dependency omitted
+      ---
+      duration_ms: 28.020792
+      type: 'test'
+      ...
+    # Subtest: row-level authority
+    ok 5 - row-level authority
+      ---
+      duration_ms: 285.536708
+      type: 'test'
+      ...
+    # Subtest: extra transition
+    ok 6 - extra transition
+      ---
+      duration_ms: 27.152292
+      type: 'test'
+      ...
+    # Subtest: affected acceptance inventory is exact
+    ok 7 - affected acceptance inventory is exact
+      ---
+      duration_ms: 96.930958
+      type: 'test'
+      ...
+    # Subtest: false transition evidence
+    ok 8 - false transition evidence
+      ---
+      duration_ms: 26.283458
+      type: 'test'
+      ...
+    # Subtest: unaccepted predecessor
+    ok 9 - unaccepted predecessor
+      ---
+      duration_ms: 26.559291
+      type: 'test'
+      ...
+    1..9
+ok 41 - C07 binds raw evidence, current dependencies and declared authority
+  ---
+  duration_ms: 602.180084
+  type: 'test'
+  ...
+# Subtest: C06 admits only the complete C07 one-dependency transition
+    # Subtest: complete exact transition
+    ok 1 - complete exact transition
+      ---
+      duration_ms: 36.516166
+      type: 'test'
+      ...
+    # Subtest: flag alone with missing evidence
+    ok 2 - flag alone with missing evidence
+      ---
+      duration_ms: 27.081125
+      type: 'test'
+      ...
+    # Subtest: unaccepted C07 cannot activate a record
+    ok 3 - unaccepted C07 cannot activate a record
+      ---
+      duration_ms: 26.422708
+      type: 'test'
+      ...
+    # Subtest: new bytes alone cannot pass historical C06
+    ok 4 - new bytes alone cannot pass historical C06
+      ---
+      duration_ms: 47.525
+      type: 'test'
+      ...
+    1..4
+ok 42 - C06 admits only the complete C07 one-dependency transition
+  ---
+  duration_ms: 137.844
+  type: 'test'
+  ...
+# Subtest: valid history resolver remains a pure old-to-new digest mapping
+ok 43 - valid history resolver remains a pure old-to-new digest mapping
+  ---
+  duration_ms: 84.257167
+  type: 'test'
+  ...
+# Subtest: history evidence rejects malformed transition records
+    # Subtest: missing record
+    ok 1 - missing record
+      ---
+      duration_ms: 46.976542
+      type: 'test'
+      ...
+    # Subtest: null transition
+    ok 2 - null transition
+      ---
+      duration_ms: 24.207625
+      type: 'test'
+      ...
+    # Subtest: boolean transition
+    ok 3 - boolean transition
+      ---
+      duration_ms: 23.556083
+      type: 'test'
+      ...
+    # Subtest: extra transition
+    ok 4 - extra transition
+      ---
+      duration_ms: 22.938791
+      type: 'test'
+      ...
+    # Subtest: omitted path
+    ok 5 - omitted path
+      ---
+      duration_ms: 42.935958
+      type: 'test'
+      ...
+    # Subtest: reordered transitions
+    ok 6 - reordered transitions
+      ---
+      duration_ms: 23.006292
+      type: 'test'
+      ...
+    # Subtest: swapped hashes
+    ok 7 - swapped hashes
+      ---
+      duration_ms: 22.921875
+      type: 'test'
+      ...
+    # Subtest: wrong path
+    ok 8 - wrong path
+      ---
+      duration_ms: 23.374042
+      type: 'test'
+      ...
+    # Subtest: affected transition mismatch
+    ok 9 - affected transition mismatch
+      ---
+      duration_ms: 22.901416
+      type: 'test'
+      ...
+    1..9
+ok 44 - history evidence rejects malformed transition records
+  ---
+  duration_ms: 253.351041
+  type: 'test'
+  ...
+# Subtest: evidence and canonical receipts cannot be rebound around contradictions
+    # Subtest: forged outer evidence hash
+    ok 1 - forged outer evidence hash
+      ---
+      duration_ms: 22.988041
+      type: 'test'
+      ...
+    # Subtest: missing raw log
+    ok 2 - missing raw log
+      ---
+      duration_ms: 23.653167
+      type: 'test'
+      ...
+    # Subtest: changed unchanged store
+    ok 3 - changed unchanged store
+      ---
+      duration_ms: 24.101125
+      type: 'test'
+      ...
+    # Subtest: partial source revert
+    ok 4 - partial source revert
+      ---
+      duration_ms: 40.196834
+      type: 'test'
+      ...
+    # Subtest: changed regression count
+    ok 5 - changed regression count
+      ---
+      duration_ms: 87.930083
+      type: 'test'
+      ...
+    # Subtest: mismatched old digest
+    ok 6 - mismatched old digest
+      ---
+      duration_ms: 36.515333
+      type: 'test'
+      ...
+    1..6
+ok 45 - evidence and canonical receipts cannot be rebound around contradictions
+  ---
+  duration_ms: 235.7625
+  type: 'test'
+  ...
+# Subtest: unrelated copied files remain outside the transition oracle and source cluster stays unchanged
+ok 46 - unrelated copied files remain outside the transition oracle and source cluster stays unchanged
+  ---
+  duration_ms: 40.250542
+  type: 'test'
+  ...
+# Subtest: history resolver never accepts an unreviewed predecessor digest
+ok 47 - history resolver never accepts an unreviewed predecessor digest
+  ---
+  duration_ms: 27.4975
+  type: 'test'
+  ...
+# Subtest: current store, regression and protected oracle bytes remain exact
+ok 48 - current store, regression and protected oracle bytes remain exact
+  ---
+  duration_ms: 144.235
+  type: 'test'
+  ...
+# Subtest: rebound review, validation, authority and command evidence still fails the frozen owner identity
+ok 49 - rebound review, validation, authority and command evidence still fails the frozen owner identity
+  ---
+  duration_ms: 90.641917
+  type: 'test'
+  ...
+# Subtest: new C07 bytes without C07 acceptance fail the first historical dependency gate
+ok 50 - new C07 bytes without C07 acceptance fail the first historical dependency gate
+  ---
+  duration_ms: 115.531917
+  type: 'test'
+  ...
+# Subtest: C05 accepts exact five-file evidence and predecessor overlay without native or dispatch credit
+ok 51 - C05 accepts exact five-file evidence and predecessor overlay without native or dispatch credit
+  ---
+  duration_ms: 214.38275
+  type: 'test'
+  ...
+# Subtest: C05 rejects scope, provenance, authority, dependency, and predecessor-history changes
+ok 52 - C05 rejects scope, provenance, authority, dependency, and predecessor-history changes
+  ---
+  duration_ms: 493.529958
+  type: 'test'
+  ...
+# Subtest: C05 requires each artifact digest and actual current source bytes
+ok 53 - C05 requires each artifact digest and actual current source bytes
+  ---
+  duration_ms: 491.454583
+  type: 'test'
+  ...
+# Subtest: C05 rejects semantically invalid receipts even with recomputed containing digests
+ok 54 - C05 rejects semantically invalid receipts even with recomputed containing digests
+  ---
+  duration_ms: 2500.962709
+  type: 'test'
+  ...
+# Subtest: C05 binds the blocked packet contract even when edited evidence digests are recomputed
+ok 55 - C05 binds the blocked packet contract even when edited evidence digests are recomputed
+  ---
+  duration_ms: 125.370375
+  type: 'test'
+  ...
+# Subtest: real checker accepts both trusted READY precursor and trusted Node-only accepted fixture
+ok 56 - real checker accepts both trusted READY precursor and trusted Node-only accepted fixture
+  ---
+  duration_ms: 88.355083
+  type: 'test'
+  ...
+# Subtest: real checker rejects accepted-state, implementation, native, and publication mismatches
+ok 57 - real checker rejects accepted-state, implementation, native, and publication mismatches
+  ---
+  duration_ms: 167.140875
+  type: 'test'
+  ...
+# Subtest: real checker rejects wrong or missing accepted source hashes and copied-source drift
+ok 58 - real checker rejects wrong or missing accepted source hashes and copied-source drift
+  ---
+  duration_ms: 133.048917
+  type: 'test'
+  ...
+# Subtest: real checker accepts source-bound C02 but rejects invented execution or wider acceptance
+ok 59 - real checker accepts source-bound C02 but rejects invented execution or wider acceptance
+  ---
+  duration_ms: 235.595084
+  type: 'test'
+  ...
+# Subtest: real checker rejects C02 missing hashes, stale digests, and changed accepted bytes
+ok 60 - real checker rejects C02 missing hashes, stale digests, and changed accepted bytes
+  ---
+  duration_ms: 131.301459
+  type: 'test'
+  ...
+# Subtest: real checker accepts C03 only with source-bound cleanup and C02 revalidation history
+ok 61 - real checker accepts C03 only with source-bound cleanup and C02 revalidation history
+  ---
+  duration_ms: 323.302542
+  type: 'test'
+  ...
+# Subtest: real checker rejects C03 source drift and acceptance without C02
+ok 62 - real checker rejects C03 source drift and acceptance without C02
+  ---
+  duration_ms: 80.089917
+  type: 'test'
+  ...
+# Subtest: C04 acceptance binds exact reviewed sources and evidence without advancing NX or dispatch
+ok 63 - C04 acceptance binds exact reviewed sources and evidence without advancing NX or dispatch
+  ---
+  duration_ms: 54.594125
+  type: 'test'
+  ...
+# Subtest: C04 rejects acceptance, provenance, scope, shared-hash and append-only history mutations
+ok 64 - C04 rejects acceptance, provenance, scope, shared-hash and append-only history mutations
+  ---
+  duration_ms: 635.361625
+  type: 'test'
+  ...
+# Subtest: C04 rejects missing or changed evidence files and live guard drift
+ok 65 - C04 rejects missing or changed evidence files and live guard drift
+  ---
+  duration_ms: 264.71625
+  type: 'test'
+  ...
+# Subtest: C04 evidence still needs semantic success when copied receipt digests are recomputed
+ok 66 - C04 evidence still needs semantic success when copied receipt digests are recomputed
+  ---
+  duration_ms: 324.58375
+  type: 'test'
+  ...
+# Subtest: pure V4 call inspection CHAT_COMPLETIONS/OFF
+ok 67 - pure V4 call inspection CHAT_COMPLETIONS/OFF
+  ---
+  duration_ms: 16.16075
+  type: 'test'
+  ...
+# Subtest: pure V4 call inspection CHAT_COMPLETIONS/ON
+ok 68 - pure V4 call inspection CHAT_COMPLETIONS/ON
+  ---
+  duration_ms: 2.942375
+  type: 'test'
+  ...
+# Subtest: pure V4 call inspection NATIVE_API/OFF
+ok 69 - pure V4 call inspection NATIVE_API/OFF
+  ---
+  duration_ms: 3.584833
+  type: 'test'
+  ...
+# Subtest: pure V4 call inspection NATIVE_API/ON
+ok 70 - pure V4 call inspection NATIVE_API/ON
+  ---
+  duration_ms: 2.44275
+  type: 'test'
+  ...
+# Subtest: CHAT_COMPLETIONS: guided author receipt schema is closed and cannot be relabelled legacy
+ok 71 - CHAT_COMPLETIONS: guided author receipt schema is closed and cannot be relabelled legacy
+  ---
+  duration_ms: 2.595667
+  type: 'test'
+  ...
+# Subtest: NATIVE_API: guided author receipt schema is closed and cannot be relabelled legacy
+ok 72 - NATIVE_API: guided author receipt schema is closed and cannot be relabelled legacy
+  ---
+  duration_ms: 2.398042
+  type: 'test'
+  ...
+# Subtest: CHAT_COMPLETIONS/OFF: treatment contradictions refuse
+ok 73 - CHAT_COMPLETIONS/OFF: treatment contradictions refuse
+  ---
+  duration_ms: 2.679333
+  type: 'test'
+  ...
+# Subtest: CHAT_COMPLETIONS/ON: treatment contradictions refuse
+ok 74 - CHAT_COMPLETIONS/ON: treatment contradictions refuse
+  ---
+  duration_ms: 2.308584
+  type: 'test'
+  ...
+# Subtest: NATIVE_API/OFF: treatment contradictions refuse
+ok 75 - NATIVE_API/OFF: treatment contradictions refuse
+  ---
+  duration_ms: 2.464875
+  type: 'test'
+  ...
+# Subtest: NATIVE_API/ON: treatment contradictions refuse
+ok 76 - NATIVE_API/ON: treatment contradictions refuse
+  ---
+  duration_ms: 2.228
+  type: 'test'
+  ...
+# Subtest: CHAT_COMPLETIONS: reviewer treatment contamination and protocol relabelling refuse
+ok 77 - CHAT_COMPLETIONS: reviewer treatment contamination and protocol relabelling refuse
+  ---
+  duration_ms: 1.807875
+  type: 'test'
+  ...
+# Subtest: NATIVE_API: reviewer treatment contamination and protocol relabelling refuse
+ok 78 - NATIVE_API: reviewer treatment contamination and protocol relabelling refuse
+  ---
+  duration_ms: 1.948417
+  type: 'test'
+  ...
+# Subtest: CHAT_COMPLETIONS: model and execution bindings refuse
+ok 79 - CHAT_COMPLETIONS: model and execution bindings refuse
+  ---
+  duration_ms: 2.366042
+  type: 'test'
+  ...
+# Subtest: NATIVE_API: model and execution bindings refuse
+ok 80 - NATIVE_API: model and execution bindings refuse
+  ---
+  duration_ms: 2.649
+  type: 'test'
+  ...
+# Subtest: CHAT_COMPLETIONS: usage lifecycle and refusal contradictions fail closed
+ok 81 - CHAT_COMPLETIONS: usage lifecycle and refusal contradictions fail closed
+  ---
+  duration_ms: 2.3415
+  type: 'test'
+  ...
+# Subtest: NATIVE_API: usage lifecycle and refusal contradictions fail closed
+ok 82 - NATIVE_API: usage lifecycle and refusal contradictions fail closed
+  ---
+  duration_ms: 2.469833
+  type: 'test'
+  ...
+# Subtest: CHAT_COMPLETIONS: genuine adapter pre-dispatch refusal is inspectable but incomplete
+ok 83 - CHAT_COMPLETIONS: genuine adapter pre-dispatch refusal is inspectable but incomplete
+  ---
+  duration_ms: 2.296042
+  type: 'test'
+  ...
+# Subtest: NATIVE_API: genuine adapter pre-dispatch refusal is inspectable but incomplete
+ok 84 - NATIVE_API: genuine adapter pre-dispatch refusal is inspectable but incomplete
+  ---
+  duration_ms: 2.629417
+  type: 'test'
+  ...
+# Subtest: CHAT_COMPLETIONS: genuine failed dispatched call remains inspectable and nonpassing
+ok 85 - CHAT_COMPLETIONS: genuine failed dispatched call remains inspectable and nonpassing
+  ---
+  duration_ms: 1.458959
+  type: 'test'
+  ...
+# Subtest: NATIVE_API: genuine failed dispatched call remains inspectable and nonpassing
+ok 86 - NATIVE_API: genuine failed dispatched call remains inspectable and nonpassing
+  ---
+  duration_ms: 1.487167
+  type: 'test'
+  ...
+# Subtest: CHAT_COMPLETIONS: independent context rejects foreign task
+ok 87 - CHAT_COMPLETIONS: independent context rejects foreign task
+  ---
+  duration_ms: 1.669458
+  type: 'test'
+  ...
+# Subtest: CHAT_COMPLETIONS: independent context rejects nonnumeric token cap
+ok 88 - CHAT_COMPLETIONS: independent context rejects nonnumeric token cap
+  ---
+  duration_ms: 1.919458
+  type: 'test'
+  ...
+# Subtest: CHAT_COMPLETIONS: independent context rejects unknown configuration field
+ok 89 - CHAT_COMPLETIONS: independent context rejects unknown configuration field
+  ---
+  duration_ms: 1.537208
+  type: 'test'
+  ...
+# Subtest: CHAT_COMPLETIONS: independent context rejects wrong fixed adapter ID
+ok 90 - CHAT_COMPLETIONS: independent context rejects wrong fixed adapter ID
+  ---
+  duration_ms: 1.483416
+  type: 'test'
+  ...
+# Subtest: CHAT_COMPLETIONS: independent context rejects invalid request cap
+ok 91 - CHAT_COMPLETIONS: independent context rejects invalid request cap
+  ---
+  duration_ms: 1.681542
+  type: 'test'
+  ...
+# Subtest: CHAT_COMPLETIONS: independent context rejects invalid response cap
+ok 92 - CHAT_COMPLETIONS: independent context rejects invalid response cap
+  ---
+  duration_ms: 1.304917
+  type: 'test'
+  ...
+# Subtest: CHAT_COMPLETIONS: independent context rejects invalid timeout
+ok 93 - CHAT_COMPLETIONS: independent context rejects invalid timeout
+  ---
+  duration_ms: 1.447417
+  type: 'test'
+  ...
+# Subtest: CHAT_COMPLETIONS: independent context rejects unknown transport
+ok 94 - CHAT_COMPLETIONS: independent context rejects unknown transport
+  ---
+  duration_ms: 1.303583
+  type: 'test'
+  ...
+# Subtest: CHAT_COMPLETIONS: independent context rejects invalid endpoint
+ok 95 - CHAT_COMPLETIONS: independent context rejects invalid endpoint
+  ---
+  duration_ms: 1.672291
+  type: 'test'
+  ...
+# Subtest: CHAT_COMPLETIONS: independent context rejects invalid run ID
+ok 96 - CHAT_COMPLETIONS: independent context rejects invalid run ID
+  ---
+  duration_ms: 1.212041
+  type: 'test'
+  ...
+# Subtest: CHAT_COMPLETIONS: independent context rejects same candidate population
+ok 97 - CHAT_COMPLETIONS: independent context rejects same candidate population
+  ---
+  duration_ms: 1.129209
+  type: 'test'
+  ...
+# Subtest: NATIVE_API: independent context rejects foreign task
+ok 98 - NATIVE_API: independent context rejects foreign task
+  ---
+  duration_ms: 1.618125
+  type: 'test'
+  ...
+# Subtest: NATIVE_API: independent context rejects nonnumeric token cap
+ok 99 - NATIVE_API: independent context rejects nonnumeric token cap
+  ---
+  duration_ms: 1.45725
+  type: 'test'
+  ...
+# Subtest: NATIVE_API: independent context rejects unknown configuration field
+ok 100 - NATIVE_API: independent context rejects unknown configuration field
+  ---
+  duration_ms: 1.519917
+  type: 'test'
+  ...
+# Subtest: NATIVE_API: independent context rejects wrong fixed adapter ID
+ok 101 - NATIVE_API: independent context rejects wrong fixed adapter ID
+  ---
+  duration_ms: 1.380292
+  type: 'test'
+  ...
+# Subtest: NATIVE_API: independent context rejects invalid request cap
+ok 102 - NATIVE_API: independent context rejects invalid request cap
+  ---
+  duration_ms: 1.767167
+  type: 'test'
+  ...
+# Subtest: NATIVE_API: independent context rejects invalid response cap
+ok 103 - NATIVE_API: independent context rejects invalid response cap
+  ---
+  duration_ms: 1.350458
+  type: 'test'
+  ...
+# Subtest: NATIVE_API: independent context rejects invalid timeout
+ok 104 - NATIVE_API: independent context rejects invalid timeout
+  ---
+  duration_ms: 1.262208
+  type: 'test'
+  ...
+# Subtest: NATIVE_API: independent context rejects unknown transport
+ok 105 - NATIVE_API: independent context rejects unknown transport
+  ---
+  duration_ms: 1.627416
+  type: 'test'
+  ...
+# Subtest: NATIVE_API: independent context rejects invalid endpoint
+ok 106 - NATIVE_API: independent context rejects invalid endpoint
+  ---
+  duration_ms: 1.329625
+  type: 'test'
+  ...
+# Subtest: NATIVE_API: independent context rejects invalid run ID
+ok 107 - NATIVE_API: independent context rejects invalid run ID
+  ---
+  duration_ms: 1.303
+  type: 'test'
+  ...
+# Subtest: NATIVE_API: independent context rejects same candidate population
+ok 108 - NATIVE_API: independent context rejects same candidate population
+  ---
+  duration_ms: 1.721292
+  type: 'test'
+  ...
+# Subtest: V4 receipt CHAT_COMPLETIONS/CHAT_COMPLETIONS/OFF/repair
+ok 109 - V4 receipt CHAT_COMPLETIONS/CHAT_COMPLETIONS/OFF/repair
+  ---
+  duration_ms: 88.922125
+  type: 'test'
+  ...
+# Subtest: V4 receipt CHAT_COMPLETIONS/CHAT_COMPLETIONS/OFF/baseline
+ok 110 - V4 receipt CHAT_COMPLETIONS/CHAT_COMPLETIONS/OFF/baseline
+  ---
+  duration_ms: 37.896791
+  type: 'test'
+  ...
+# Subtest: V4 receipt CHAT_COMPLETIONS/CHAT_COMPLETIONS/OFF/no-change
+ok 111 - V4 receipt CHAT_COMPLETIONS/CHAT_COMPLETIONS/OFF/no-change
+  ---
+  duration_ms: 33.733834
+  type: 'test'
+  ...
+# Subtest: V4 receipt CHAT_COMPLETIONS/CHAT_COMPLETIONS/ON/repair
+ok 112 - V4 receipt CHAT_COMPLETIONS/CHAT_COMPLETIONS/ON/repair
+  ---
+  duration_ms: 75.909833
+  type: 'test'
+  ...
+# Subtest: V4 receipt CHAT_COMPLETIONS/CHAT_COMPLETIONS/ON/baseline
+ok 113 - V4 receipt CHAT_COMPLETIONS/CHAT_COMPLETIONS/ON/baseline
+  ---
+  duration_ms: 45.660166
+  type: 'test'
+  ...
+# Subtest: V4 receipt CHAT_COMPLETIONS/CHAT_COMPLETIONS/ON/no-change
+ok 114 - V4 receipt CHAT_COMPLETIONS/CHAT_COMPLETIONS/ON/no-change
+  ---
+  duration_ms: 42.983625
+  type: 'test'
+  ...
+# Subtest: V4 receipt CHAT_COMPLETIONS/NATIVE_API/OFF/repair
+ok 115 - V4 receipt CHAT_COMPLETIONS/NATIVE_API/OFF/repair
+  ---
+  duration_ms: 87.734417
+  type: 'test'
+  ...
+# Subtest: V4 receipt CHAT_COMPLETIONS/NATIVE_API/OFF/baseline
+ok 116 - V4 receipt CHAT_COMPLETIONS/NATIVE_API/OFF/baseline
+  ---
+  duration_ms: 52.28825
+  type: 'test'
+  ...
+# Subtest: V4 receipt CHAT_COMPLETIONS/NATIVE_API/OFF/no-change
+ok 117 - V4 receipt CHAT_COMPLETIONS/NATIVE_API/OFF/no-change
+  ---
+  duration_ms: 51.763334
+  type: 'test'
+  ...
+# Subtest: V4 receipt CHAT_COMPLETIONS/NATIVE_API/ON/repair
+ok 118 - V4 receipt CHAT_COMPLETIONS/NATIVE_API/ON/repair
+  ---
+  duration_ms: 95.117833
+  type: 'test'
+  ...
+# Subtest: V4 receipt CHAT_COMPLETIONS/NATIVE_API/ON/baseline
+ok 119 - V4 receipt CHAT_COMPLETIONS/NATIVE_API/ON/baseline
+  ---
+  duration_ms: 34.739667
+  type: 'test'
+  ...
+# Subtest: V4 receipt CHAT_COMPLETIONS/NATIVE_API/ON/no-change
+ok 120 - V4 receipt CHAT_COMPLETIONS/NATIVE_API/ON/no-change
+  ---
+  duration_ms: 32.621625
+  type: 'test'
+  ...
+# Subtest: V4 receipt NATIVE_API/CHAT_COMPLETIONS/OFF/repair
+ok 121 - V4 receipt NATIVE_API/CHAT_COMPLETIONS/OFF/repair
+  ---
+  duration_ms: 63.062416
+  type: 'test'
+  ...
+# Subtest: V4 receipt NATIVE_API/CHAT_COMPLETIONS/OFF/baseline
+ok 122 - V4 receipt NATIVE_API/CHAT_COMPLETIONS/OFF/baseline
+  ---
+  duration_ms: 33.468083
+  type: 'test'
+  ...
+# Subtest: V4 receipt NATIVE_API/CHAT_COMPLETIONS/OFF/no-change
+ok 123 - V4 receipt NATIVE_API/CHAT_COMPLETIONS/OFF/no-change
+  ---
+  duration_ms: 36.638375
+  type: 'test'
+  ...
+# Subtest: V4 receipt NATIVE_API/CHAT_COMPLETIONS/ON/repair
+ok 124 - V4 receipt NATIVE_API/CHAT_COMPLETIONS/ON/repair
+  ---
+  duration_ms: 88.838708
+  type: 'test'
+  ...
+# Subtest: V4 receipt NATIVE_API/CHAT_COMPLETIONS/ON/baseline
+ok 125 - V4 receipt NATIVE_API/CHAT_COMPLETIONS/ON/baseline
+  ---
+  duration_ms: 38.316042
+  type: 'test'
+  ...
+# Subtest: V4 receipt NATIVE_API/CHAT_COMPLETIONS/ON/no-change
+ok 126 - V4 receipt NATIVE_API/CHAT_COMPLETIONS/ON/no-change
+  ---
+  duration_ms: 44.368208
+  type: 'test'
+  ...
+# Subtest: V4 receipt NATIVE_API/NATIVE_API/OFF/repair
+ok 127 - V4 receipt NATIVE_API/NATIVE_API/OFF/repair
+  ---
+  duration_ms: 59.8055
+  type: 'test'
+  ...
+# Subtest: V4 receipt NATIVE_API/NATIVE_API/OFF/baseline
+ok 128 - V4 receipt NATIVE_API/NATIVE_API/OFF/baseline
+  ---
+  duration_ms: 62.3535
+  type: 'test'
+  ...
+# Subtest: V4 receipt NATIVE_API/NATIVE_API/OFF/no-change
+ok 129 - V4 receipt NATIVE_API/NATIVE_API/OFF/no-change
+  ---
+  duration_ms: 31.735709
+  type: 'test'
+  ...
+# Subtest: V4 receipt NATIVE_API/NATIVE_API/ON/repair
+ok 130 - V4 receipt NATIVE_API/NATIVE_API/ON/repair
+  ---
+  duration_ms: 60.805833
+  type: 'test'
+  ...
+# Subtest: V4 receipt NATIVE_API/NATIVE_API/ON/baseline
+ok 131 - V4 receipt NATIVE_API/NATIVE_API/ON/baseline
+  ---
+  duration_ms: 32.48275
+  type: 'test'
+  ...
+# Subtest: V4 receipt NATIVE_API/NATIVE_API/ON/no-change
+ok 132 - V4 receipt NATIVE_API/NATIVE_API/ON/no-change
+  ---
+  duration_ms: 31.806459
+  type: 'test'
+  ...
+# Subtest: V4 malformed CHAT_COMPLETIONS author response is retained as non-pass
+ok 133 - V4 malformed CHAT_COMPLETIONS author response is retained as non-pass
+  ---
+  duration_ms: 38.426583
+  type: 'test'
+  ...
+# Subtest: V4 malformed NATIVE_API author response is retained as non-pass
+ok 134 - V4 malformed NATIVE_API author response is retained as non-pass
+  ---
+  duration_ms: 36.78225
+  type: 'test'
+  ...
+# Subtest: V4 adverse reviewer CHAT_COMPLETIONS cannot pass
+ok 135 - V4 adverse reviewer CHAT_COMPLETIONS cannot pass
+  ---
+  duration_ms: 75.253125
+  type: 'test'
+  ...
+# Subtest: V4 adverse reviewer NATIVE_API cannot pass
+ok 136 - V4 adverse reviewer NATIVE_API cannot pass
+  ---
+  duration_ms: 68.239625
+  type: 'test'
+  ...
+# Subtest: V4 unregistered third candidate CHAT_COMPLETIONS never reaches reviewer
+ok 137 - V4 unregistered third candidate CHAT_COMPLETIONS never reaches reviewer
+  ---
+  duration_ms: 30.46125
+  type: 'test'
+  ...
+# Subtest: V4 unregistered third candidate NATIVE_API never reaches reviewer
+ok 138 - V4 unregistered third candidate NATIVE_API never reaches reviewer
+  ---
+  duration_ms: 29.989084
+  type: 'test'
+  ...
+# Subtest: V4 unknown usage remains null without fabricated totals
+ok 139 - V4 unknown usage remains null without fabricated totals
+  ---
+  duration_ms: 59.146959
+  type: 'test'
+  ...
+# Subtest: V4 pending cancellation CHAT_COMPLETIONS retains incomplete request/lifecycle evidence
+ok 140 - V4 pending cancellation CHAT_COMPLETIONS retains incomplete request/lifecycle evidence
+  ---
+  duration_ms: 34.890958
+  type: 'test'
+  ...
+# Subtest: V4 pending cancellation NATIVE_API retains incomplete request/lifecycle evidence
+ok 141 - V4 pending cancellation NATIVE_API retains incomplete request/lifecycle evidence
+  ---
+  duration_ms: 33.50775
+  type: 'test'
+  ...
+# Subtest: V4 expiry after validated CHAT_COMPLETIONS response is incomplete and stops the lane
+ok 142 - V4 expiry after validated CHAT_COMPLETIONS response is incomplete and stops the lane
+  ---
+  duration_ms: 29.209917
+  type: 'test'
+  ...
+# Subtest: V4 expiry after validated NATIVE_API response is incomplete and stops the lane
+ok 143 - V4 expiry after validated NATIVE_API response is incomplete and stops the lane
+  ---
+  duration_ms: 30.057125
+  type: 'test'
+  ...
+# Subtest: V4 pre-aborted CHAT_COMPLETIONS run is incomplete without model dispatch
+ok 144 - V4 pre-aborted CHAT_COMPLETIONS run is incomplete without model dispatch
+  ---
+  duration_ms: 1.278541
+  type: 'test'
+  ...
+# Subtest: V4 pre-aborted NATIVE_API run is incomplete without model dispatch
+ok 145 - V4 pre-aborted NATIVE_API run is incomplete without model dispatch
+  ---
+  duration_ms: 1.169958
+  type: 'test'
+  ...
+# Subtest: V4 original-issued identity, legacy reader refusal, and serialized host refusal
+ok 146 - V4 original-issued identity, legacy reader refusal, and serialized host refusal
+  ---
+  duration_ms: 63.162958
+  type: 'test'
+  ...
+# Subtest: V4 second issued lane cannot substitute for original host/lane
+ok 147 - V4 second issued lane cannot substitute for original host/lane
+  ---
+  duration_ms: 100.57
+  type: 'test'
+  ...
+# Subtest: V4 tampered rehashed metadata is rejected by the reader
+ok 148 - V4 tampered rehashed metadata is rejected by the reader
+  ---
+  duration_ms: 62.412708
+  type: 'test'
+  ...
+# Subtest: V4 request inspection and pure call inspection retain original metadata
+ok 149 - V4 request inspection and pure call inspection retain original metadata
+  ---
+  duration_ms: 55.61575
+  type: 'test'
+  ...
+# Subtest: V4 original host rebindings never receive a quality pass
+ok 150 - V4 original host rebindings never receive a quality pass
+  ---
+  duration_ms: 78.064125
+  type: 'test'
+  ...
+# Subtest: V4 no-progress report tampering cannot remain CONSISTENT_NO_PROGRESS
+ok 151 - V4 no-progress report tampering cannot remain CONSISTENT_NO_PROGRESS
+  ---
+  duration_ms: 35.703958
+  type: 'test'
+  ...
+# Subtest: V4 original report and host journal linkage tampering is rejected
+ok 152 - V4 original report and host journal linkage tampering is rejected
+  ---
+  duration_ms: 60.229333
+  type: 'test'
+  ...
+# Subtest: CHAT_COMPLETIONS: V4 arms differ only in repair guidance; reviewer bytes and candidate checks match
+ok 153 - CHAT_COMPLETIONS: V4 arms differ only in repair guidance; reviewer bytes and candidate checks match
+  ---
+  duration_ms: 15.324375
+  type: 'test'
+  ...
+# Subtest: CHAT_COMPLETIONS/OFF: repair has identical population and workflow stopping rules
+ok 154 - CHAT_COMPLETIONS/OFF: repair has identical population and workflow stopping rules
+  ---
+  duration_ms: 3.025875
+  type: 'test'
+  ...
+# Subtest: CHAT_COMPLETIONS/OFF: baseline has identical population and workflow stopping rules
+ok 155 - CHAT_COMPLETIONS/OFF: baseline has identical population and workflow stopping rules
+  ---
+  duration_ms: 1.537375
+  type: 'test'
+  ...
+# Subtest: CHAT_COMPLETIONS/OFF: no-change has identical population and workflow stopping rules
+ok 156 - CHAT_COMPLETIONS/OFF: no-change has identical population and workflow stopping rules
+  ---
+  duration_ms: 1.680292
+  type: 'test'
+  ...
+# Subtest: CHAT_COMPLETIONS/OFF: third has identical population and workflow stopping rules
+ok 157 - CHAT_COMPLETIONS/OFF: third has identical population and workflow stopping rules
+  ---
+  duration_ms: 1.773084
+  type: 'test'
+  ...
+# Subtest: CHAT_COMPLETIONS/ON: repair has identical population and workflow stopping rules
+ok 158 - CHAT_COMPLETIONS/ON: repair has identical population and workflow stopping rules
+  ---
+  duration_ms: 1.823292
+  type: 'test'
+  ...
+# Subtest: CHAT_COMPLETIONS/ON: baseline has identical population and workflow stopping rules
+ok 159 - CHAT_COMPLETIONS/ON: baseline has identical population and workflow stopping rules
+  ---
+  duration_ms: 1.206333
+  type: 'test'
+  ...
+# Subtest: CHAT_COMPLETIONS/ON: no-change has identical population and workflow stopping rules
+ok 160 - CHAT_COMPLETIONS/ON: no-change has identical population and workflow stopping rules
+  ---
+  duration_ms: 1.313291
+  type: 'test'
+  ...
+# Subtest: CHAT_COMPLETIONS/ON: third has identical population and workflow stopping rules
+ok 161 - CHAT_COMPLETIONS/ON: third has identical population and workflow stopping rules
+  ---
+  duration_ms: 1.139542
+  type: 'test'
+  ...
+# Subtest: NATIVE_API: V4 arms differ only in repair guidance; reviewer bytes and candidate checks match
+ok 162 - NATIVE_API: V4 arms differ only in repair guidance; reviewer bytes and candidate checks match
+  ---
+  duration_ms: 3.547041
+  type: 'test'
+  ...
+# Subtest: NATIVE_API/OFF: repair has identical population and workflow stopping rules
+ok 163 - NATIVE_API/OFF: repair has identical population and workflow stopping rules
+  ---
+  duration_ms: 1.755916
+  type: 'test'
+  ...
+# Subtest: NATIVE_API/OFF: baseline has identical population and workflow stopping rules
+ok 164 - NATIVE_API/OFF: baseline has identical population and workflow stopping rules
+  ---
+  duration_ms: 1.397541
+  type: 'test'
+  ...
+# Subtest: NATIVE_API/OFF: no-change has identical population and workflow stopping rules
+ok 165 - NATIVE_API/OFF: no-change has identical population and workflow stopping rules
+  ---
+  duration_ms: 1.125083
+  type: 'test'
+  ...
+# Subtest: NATIVE_API/OFF: third has identical population and workflow stopping rules
+ok 166 - NATIVE_API/OFF: third has identical population and workflow stopping rules
+  ---
+  duration_ms: 1.106959
+  type: 'test'
+  ...
+# Subtest: NATIVE_API/ON: repair has identical population and workflow stopping rules
+ok 167 - NATIVE_API/ON: repair has identical population and workflow stopping rules
+  ---
+  duration_ms: 1.873042
+  type: 'test'
+  ...
+# Subtest: NATIVE_API/ON: baseline has identical population and workflow stopping rules
+ok 168 - NATIVE_API/ON: baseline has identical population and workflow stopping rules
+  ---
+  duration_ms: 1.249292
+  type: 'test'
+  ...
+# Subtest: NATIVE_API/ON: no-change has identical population and workflow stopping rules
+ok 169 - NATIVE_API/ON: no-change has identical population and workflow stopping rules
+  ---
+  duration_ms: 1.068
+  type: 'test'
+  ...
+# Subtest: NATIVE_API/ON: third has identical population and workflow stopping rules
+ok 170 - NATIVE_API/ON: third has identical population and workflow stopping rules
+  ---
+  duration_ms: 1.000834
+  type: 'test'
+  ...
+# Subtest: NATIVE_API: V4 supports a reviewer on the other protocol without treatment leakage
+ok 171 - NATIVE_API: V4 supports a reviewer on the other protocol without treatment leakage
+  ---
+  duration_ms: 1.625666
+  type: 'test'
+  ...
+# Subtest: CHAT_COMPLETIONS: V4 supports a reviewer on the other protocol without treatment leakage
+ok 172 - CHAT_COMPLETIONS: V4 supports a reviewer on the other protocol without treatment leakage
+  ---
+  duration_ms: 1.582708
+  type: 'test'
+  ...
+# Subtest: V4 rejects swapped arms, unissued treatment and every changed source binding before transport
+ok 173 - V4 rejects swapped arms, unissued treatment and every changed source binding before transport
+  ---
+  duration_ms: 0.82125
+  type: 'test'
+  ...
+# Subtest: V4 snapshots selection and refuses expired approval, unknown input and review after no progress
+ok 174 - V4 snapshots selection and refuses expired approval, unknown input and review after no progress
+  ---
+  duration_ms: 3.410709
+  type: 'test'
+  ...
+# Subtest: V4 revoke waits on original transport; late response never advances stage
+ok 175 - V4 revoke waits on original transport; late response never advances stage
+  ---
+  duration_ms: 1.166917
+  type: 'test'
+  ...
+# Subtest: strict codec rejects duplicate object keys and accepts one JSON fence
+ok 176 - strict codec rejects duplicate object keys and accepts one JSON fence
+  ---
+  duration_ms: 0.631042
+  type: 'test'
+  ...
+# Subtest: factory requires literal loopback HTTP destination and rejects redirects by request policy
+ok 177 - factory requires literal loopback HTTP destination and rejects redirects by request policy
+  ---
+  duration_ms: 1.485083
+  type: 'test'
+  ...
+# Subtest: author builds draft result from model data and preserves exact engine binding
+ok 178 - author builds draft result from model data and preserves exact engine binding
+  ---
+  duration_ms: 0.421916
+  type: 'test'
+  ...
+# Subtest: reviewer derives PASS or FAIL and identity from its configuration
+ok 179 - reviewer derives PASS or FAIL and identity from its configuration
+  ---
+  duration_ms: 0.193875
+  type: 'test'
+  ...
+# Subtest: length finish reason and oversized streamed body are refused
+ok 180 - length finish reason and oversized streamed body are refused
+  ---
+  duration_ms: 0.306667
+  type: 'test'
+  ...
+# Subtest: real Nisi engine consumes native draft, repair and review adapters with injected responses
+ok 181 - real Nisi engine consumes native draft, repair and review adapters with injected responses
+  ---
+  duration_ms: 10.804375
+  type: 'test'
+  ...
+# Subtest: native draft: exact request, bound result, distinct receipt, no completion attestation
+ok 182 - native draft: exact request, bound result, distinct receipt, no completion attestation
+  ---
+  duration_ms: 0.41275
+  type: 'test'
+  ...
+# Subtest: native repair: exact request, bound result, distinct receipt, no completion attestation
+ok 183 - native repair: exact request, bound result, distinct receipt, no completion attestation
+  ---
+  duration_ms: 0.300834
+  type: 'test'
+  ...
+# Subtest: native review: exact request, bound result, distinct receipt, no completion attestation
+ok 184 - native review: exact request, bound result, distinct receipt, no completion attestation
+  ---
+  duration_ms: 0.246666
+  type: 'test'
+  ...
+# Subtest: native one-fence inner content and NO_CHANGE retain original candidate binding
+ok 185 - native one-fence inner content and NO_CHANGE retain original candidate binding
+  ---
+  duration_ms: 0.238333
+  type: 'test'
+  ...
+# Subtest: native caller config and pending payload mutation cannot change request or receipt
+ok 186 - native caller config and pending payload mutation cannot change request or receipt
+  ---
+  duration_ms: 0.493583
+  type: 'test'
+  ...
+# Subtest: native refuses endpoint https://127.0.0.1/api/v1/chat before dispatch
+ok 187 - native refuses endpoint https://127.0.0.1/api/v1/chat before dispatch
+  ---
+  duration_ms: 0.148125
+  type: 'test'
+  ...
+# Subtest: native refuses endpoint http://localhost/api/v1/chat before dispatch
+ok 188 - native refuses endpoint http://localhost/api/v1/chat before dispatch
+  ---
+  duration_ms: 0.033167
+  type: 'test'
+  ...
+# Subtest: native refuses endpoint http://example.com/api/v1/chat before dispatch
+ok 189 - native refuses endpoint http://example.com/api/v1/chat before dispatch
+  ---
+  duration_ms: 0.03325
+  type: 'test'
+  ...
+# Subtest: native refuses endpoint http://127.0.0.1/v1/chat/completions before dispatch
+ok 190 - native refuses endpoint http://127.0.0.1/v1/chat/completions before dispatch
+  ---
+  duration_ms: 0.045167
+  type: 'test'
+  ...
+# Subtest: native refuses endpoint http://127.0.0.1/api/v1/chat?x=1 before dispatch
+ok 191 - native refuses endpoint http://127.0.0.1/api/v1/chat?x=1 before dispatch
+  ---
+  duration_ms: 0.025917
+  type: 'test'
+  ...
+# Subtest: native refuses endpoint http://user:pass@127.0.0.1/api/v1/chat before dispatch
+ok 192 - native refuses endpoint http://user:pass@127.0.0.1/api/v1/chat before dispatch
+  ---
+  duration_ms: 0.024917
+  type: 'test'
+  ...
+# Subtest: native null maxOutputTokens is not an implicit default
+ok 193 - native null maxOutputTokens is not an implicit default
+  ---
+  duration_ms: 0.038708
+  type: 'test'
+  ...
+# Subtest: native null timeoutMs is not an implicit default
+ok 194 - native null timeoutMs is not an implicit default
+  ---
+  duration_ms: 0.030459
+  type: 'test'
+  ...
+# Subtest: native null maxRequestBytes is not an implicit default
+ok 195 - native null maxRequestBytes is not an implicit default
+  ---
+  duration_ms: 0.0375
+  type: 'test'
+  ...
+# Subtest: native null maxResponseBytes is not an implicit default
+ok 196 - native null maxResponseBytes is not an implicit default
+  ---
+  duration_ms: 0.032583
+  type: 'test'
+  ...
+# Subtest: native rejects configuration accessors without invoking them
+ok 197 - native rejects configuration accessors without invoking them
+  ---
+  duration_ms: 0.100875
+  type: 'test'
+  ...
+# Subtest: native refuses wrong instance once without retry
+ok 198 - native refuses wrong instance once without retry
+  ---
+  duration_ms: 0.282625
+  type: 'test'
+  ...
+# Subtest: native refuses storage id even null once without retry
+ok 199 - native refuses storage id even null once without retry
+  ---
+  duration_ms: 0.540417
+  type: 'test'
+  ...
+# Subtest: native refuses missing stats once without retry
+ok 200 - native refuses missing stats once without retry
+  ---
+  duration_ms: 0.234958
+  type: 'test'
+  ...
+# Subtest: native refuses unknown outer field once without retry
+ok 201 - native refuses unknown outer field once without retry
+  ---
+  duration_ms: 0.215875
+  type: 'test'
+  ...
+# Subtest: native refuses multiple messages once without retry
+ok 202 - native refuses multiple messages once without retry
+  ---
+  duration_ms: 0.18875
+  type: 'test'
+  ...
+# Subtest: native refuses no message once without retry
+ok 203 - native refuses no message once without retry
+  ---
+  duration_ms: 0.155542
+  type: 'test'
+  ...
+# Subtest: native refuses reasoning item once without retry
+ok 204 - native refuses reasoning item once without retry
+  ---
+  duration_ms: 0.140916
+  type: 'test'
+  ...
+# Subtest: native refuses tool item once without retry
+ok 205 - native refuses tool item once without retry
+  ---
+  duration_ms: 0.142875
+  type: 'test'
+  ...
+# Subtest: native refuses empty message once without retry
+ok 206 - native refuses empty message once without retry
+  ---
+  duration_ms: 0.156875
+  type: 'test'
+  ...
+# Subtest: native refuses unknown stats once without retry
+ok 207 - native refuses unknown stats once without retry
+  ---
+  duration_ms: 0.166833
+  type: 'test'
+  ...
+# Subtest: native refuses zero output once without retry
+ok 208 - native refuses zero output once without retry
+  ---
+  duration_ms: 0.154625
+  type: 'test'
+  ...
+# Subtest: native refuses fractional input once without retry
+ok 209 - native refuses fractional input once without retry
+  ---
+  duration_ms: 0.173125
+  type: 'test'
+  ...
+# Subtest: native refuses overflow total once without retry
+ok 210 - native refuses overflow total once without retry
+  ---
+  duration_ms: 0.157541
+  type: 'test'
+  ...
+# Subtest: native refuses negative tokens once without retry
+ok 211 - native refuses negative tokens once without retry
+  ---
+  duration_ms: 0.162208
+  type: 'test'
+  ...
+# Subtest: native refuses reasoning tokens once without retry
+ok 212 - native refuses reasoning tokens once without retry
+  ---
+  duration_ms: 0.161958
+  type: 'test'
+  ...
+# Subtest: native refuses cap equality once without retry
+ok 213 - native refuses cap equality once without retry
+  ---
+  duration_ms: 0.151
+  type: 'test'
+  ...
+# Subtest: native refuses over cap once without retry
+ok 214 - native refuses over cap once without retry
+  ---
+  duration_ms: 0.136
+  type: 'test'
+  ...
+# Subtest: native refuses bad performance once without retry
+ok 215 - native refuses bad performance once without retry
+  ---
+  duration_ms: 0.137709
+  type: 'test'
+  ...
+# Subtest: native counts reject negative zero; optional load timing remains valid
+ok 216 - native counts reject negative zero; optional load timing remains valid
+  ---
+  duration_ms: 0.089208
+  type: 'test'
+  ...
+# Subtest: native outer envelopes reject fences, duplicate names and invalid UTF8
+ok 217 - native outer envelopes reject fences, duplicate names and invalid UTF8
+  ---
+  duration_ms: 0.244625
+  type: 'test'
+  ...
+# Subtest: native rejects inner duplicate result field
+ok 218 - native rejects inner duplicate result field
+  ---
+  duration_ms: 0.150542
+  type: 'test'
+  ...
+# Subtest: native rejects inner invented verdict
+ok 219 - native rejects inner invented verdict
+  ---
+  duration_ms: 0.268666
+  type: 'test'
+  ...
+# Subtest: native rejects inner reasoning prefix
+ok 220 - native rejects inner reasoning prefix
+  ---
+  duration_ms: 0.127333
+  type: 'test'
+  ...
+# Subtest: native rejects inner bad findings
+ok 221 - native rejects inner bad findings
+  ---
+  duration_ms: 0.123875
+  type: 'test'
+  ...
+# Subtest: native rejects out-of-task generated paths
+ok 222 - native rejects out-of-task generated paths
+  ---
+  duration_ms: 0.139209
+  type: 'test'
+  ...
+# Subtest: native refuses changed task identity before HTTP
+ok 223 - native refuses changed task identity before HTTP
+  ---
+  duration_ms: 0.093708
+  type: 'test'
+  ...
+# Subtest: native refuses changed candidate identity before HTTP
+ok 224 - native refuses changed candidate identity before HTTP
+  ---
+  duration_ms: 0.086709
+  type: 'test'
+  ...
+# Subtest: native refuses changed criteria before HTTP
+ok 225 - native refuses changed criteria before HTTP
+  ---
+  duration_ms: 0.074833
+  type: 'test'
+  ...
+# Subtest: native refuses changed invalid attempt before HTTP
+ok 226 - native refuses changed invalid attempt before HTTP
+  ---
+  duration_ms: 0.088583
+  type: 'test'
+  ...
+# Subtest: native pre-abort never sends; successful completion permits a second explicitly requested operation
+ok 227 - native pre-abort never sends; successful completion permits a second explicitly requested operation
+  ---
+  duration_ms: 0.33675
+  type: 'test'
+  ...
+# Subtest: native timeout preserves unresolved transport and quarantine after late settlement
+ok 228 - native timeout preserves unresolved transport and quarantine after late settlement
+  ---
+  duration_ms: 22.818916
+  type: 'test'
+  ...
+# Subtest: native shared owner reports overlap as busy; STOP drains then stays stopped
+ok 229 - native shared owner reports overlap as busy; STOP drains then stays stopped
+  ---
+  duration_ms: 0.562875
+  type: 'test'
+  ...
+# Subtest: native body cancellation pending is not local settlement
+ok 230 - native body cancellation pending is not local settlement
+  ---
+  duration_ms: 20.66025
+  type: 'test'
+  ...
+# Subtest: native request/response byte limits and synchronous over-deadline result refuse
+ok 231 - native request/response byte limits and synchronous over-deadline result refuse
+  ---
+  duration_ms: 30.612666
+  type: 'test'
+  ...
+# Subtest: actual help/version/doctor/usage processes are offline, read-only and cwd independent
+ok 232 - actual help/version/doctor/usage processes are offline, read-only and cwd independent
+  ---
+  duration_ms: 401.923583
+  type: 'test'
+  ...
+# Subtest: ordinary executable symlink works and import does not execute the binary
+ok 233 - ordinary executable symlink works and import does not execute the binary
+  ---
+  duration_ms: 134.640125
+  type: 'test'
+  ...
+# Subtest: actual inspect is read-only, lazy and non-authorizing even for reported success
+ok 234 - actual inspect is read-only, lazy and non-authorizing even for reported success
+  ---
+  duration_ms: 276.139125
+  type: 'test'
+  ...
+# Subtest: demo wrapper preserves exact arguments and scoped exit codes using an inert double
+ok 235 - demo wrapper preserves exact arguments and scoped exit codes using an inert double
+  ---
+  duration_ms: 224.925459
+  type: 'test'
+  ...
+# Subtest: actual demo help is JSON and invalid demo requests remain read-only refusals
+ok 236 - actual demo help is JSON and invalid demo requests remain read-only refusals
+  ---
+  duration_ms: 167.758167
+  type: 'test'
+  ...
+# Subtest: future dispatch and startup import failures fail closed without secret stacks
+ok 237 - future dispatch and startup import failures fail closed without secret stacks
+  ---
+  duration_ms: 134.962959
+  type: 'test'
+  ...
+# Subtest: closed stdout or stderr is an exit-2 output failure, never a successful command
+ok 238 - closed stdout or stderr is an exit-2 output failure, never a successful command
+  ---
+  duration_ms: 90.092041
+  type: 'test'
+  ...
+# Subtest: parser snapshots explicit commands and forwards demo arguments without normalization
+ok 239 - parser snapshots explicit commands and forwards demo arguments without normalization
+  ---
+  duration_ms: 0.550084
+  type: 'test'
+  ...
+# Subtest: parser rejects malformed, oversized, accessor and unknown input without echoing it
+ok 240 - parser rejects malformed, oversized, accessor and unknown input without echoing it
+  ---
+  duration_ms: 0.251875
+  type: 'test'
+  ...
+# Subtest: help/version/usage and legacy demo help/refusal preserve the no-effect preflight
+ok 241 - help/version/usage and legacy demo help/refusal preserve the no-effect preflight
+  ---
+  duration_ms: 12.261917
+  type: 'test'
+  ...
+# Subtest: error sanitizer cannot print untrusted messages, getter content or long codes
+ok 242 - error sanitizer cannot print untrusted messages, getter content or long codes
+  ---
+  duration_ms: 0.113375
+  type: 'test'
+  ...
+# Subtest: doctor distinguishes inventory from runtime, compatibility, authenticity and execution readiness
+ok 243 - doctor distinguishes inventory from runtime, compatibility, authenticity and execution readiness
+  ---
+  duration_ms: 0.215125
+  type: 'test'
+  ...
+# Subtest: doctor fails closed for missing/symlink assets, invalid metadata and unsupported Node
+ok 244 - doctor fails closed for missing/symlink assets, invalid metadata and unsupported Node
+  ---
+  duration_ms: 0.348708
+  type: 'test'
+  ...
+# Subtest: V4 partial construction: author-adapter
+ok 245 - V4 partial construction: author-adapter
+  ---
+  duration_ms: 31.640084
+  type: 'test'
+  ...
+# Subtest: V4 partial construction: reviewer-owner
+ok 246 - V4 partial construction: reviewer-owner
+  ---
+  duration_ms: 30.02875
+  type: 'test'
+  ...
+# Subtest: V4 partial construction: reviewer-adapter
+ok 247 - V4 partial construction: reviewer-adapter
+  ---
+  duration_ms: 30.399417
+  type: 'test'
+  ...
+# Subtest: V4 partial construction: rollback-throw
+ok 248 - V4 partial construction: rollback-throw
+  ---
+  duration_ms: 30.5475
+  type: 'test'
+  ...
+# Subtest: V4 partial construction: rollback-idle
+ok 249 - V4 partial construction: rollback-idle
+  ---
+  duration_ms: 31.034458
+  type: 'test'
+  ...
+# Subtest: planned V2 descriptor equals the descriptor of a freshly issued V4 lane
+ok 250 - planned V2 descriptor equals the descriptor of a freshly issued V4 lane
+  ---
+  duration_ms: 4.187
+  type: 'test'
+  ...
+# Subtest: default planned descriptor equals the legacy default lane descriptor
+ok 251 - default planned descriptor equals the legacy default lane descriptor
+  ---
+  duration_ms: 1.487167
+  type: 'test'
+  ...
+# Subtest: issued-lane reader remains the source of the descriptor snapshot
+ok 252 - issued-lane reader remains the source of the descriptor snapshot
+  ---
+  duration_ms: 0.839208
+  type: 'test'
+  ...
+# Subtest: parser keeps the distinct read-only command bounded and immutable
+ok 253 - parser keeps the distinct read-only command bounded and immutable
+  ---
+  duration_ms: 0.631416
+  type: 'test'
+  ...
+# Subtest: projection refuses unknown states, malformed arrays, proxy/accessor fields and future schemas
+ok 254 - projection refuses unknown states, malformed arrays, proxy/accessor fields and future schemas
+  ---
+  duration_ms: 0.2855
+  type: 'test'
+  ...
+# Subtest: malformed arguments remain sanitized stderr; absent storage is bounded stdout refusal
+ok 255 - malformed arguments remain sanitized stderr; absent storage is bounded stdout refusal
+  ---
+  duration_ms: 94.550208
+  type: 'test'
+  ...
+# Subtest: actual binary opens each ledger once, emits aggregates only and leaves bytes/metadata unchanged
+ok 256 - actual binary opens each ledger once, emits aggregates only and leaves bytes/metadata unchanged
+  ---
+  duration_ms: 561.983125
+  type: 'test'
+  ...
+# Subtest: empty, missing, partial, corrupt and rehashed mismatching sidecars are distinguished
+ok 257 - empty, missing, partial, corrupt and rehashed mismatching sidecars are distinguished
+  ---
+  duration_ms: 742.517417
+  type: 'test'
+  ...
+# Subtest: help preserves all existing warnings and adds observation-only paired-arm guidance
+ok 258 - help preserves all existing warnings and adds observation-only paired-arm guidance
+  ---
+  duration_ms: 0.17925
+  type: 'test'
+  ...
+# Subtest: paired-arm loader permission stays exact and never loads execution owners or model modules
+ok 259 - paired-arm loader permission stays exact and never loads execution owners or model modules
+  ---
+  duration_ms: 177.544625
+  type: 'test'
+  ...
+# Subtest: original durable owner is single-use, projects bounded observations, preserves legacy trust flags
+ok 260 - original durable owner is single-use, projects bounded observations, preserves legacy trust flags
+  ---
+  duration_ms: 456.578792
+  type: 'test'
+  ...
+# Subtest: invalid input and call arguments do not install listeners or create trial storage
+ok 261 - invalid input and call arguments do not install listeners or create trial storage
+  ---
+  duration_ms: 5.44275
+  type: 'test'
+  ...
+# Subtest: setup SIGINT is latched through both listener boundaries
+ok 262 - setup SIGINT is latched through both listener boundaries
+  ---
+  duration_ms: 27.697375
+  type: 'test'
+  ...
+# Subtest: setup SIGTERM is latched through both listener boundaries
+ok 263 - setup SIGTERM is latched through both listener boundaries
+  ---
+  duration_ms: 25.153583
+  type: 'test'
+  ...
+# Subtest: listener install throw-first creates no stores and preserves unrelated listeners
+ok 264 - listener install throw-first creates no stores and preserves unrelated listeners
+  ---
+  duration_ms: 2.785917
+  type: 'test'
+  ...
+# Subtest: listener install throw-second creates no stores and preserves unrelated listeners
+ok 265 - listener install throw-second creates no stores and preserves unrelated listeners
+  ---
+  duration_ms: 2.658458
+  type: 'test'
+  ...
+# Subtest: listener install silent creates no stores and preserves unrelated listeners
+ok 266 - listener install silent creates no stores and preserves unrelated listeners
+  ---
+  duration_ms: 2.66825
+  type: 'test'
+  ...
+# Subtest: main store creation signal stops before dispatch
+ok 267 - main store creation signal stops before dispatch
+  ---
+  duration_ms: 26.317584
+  type: 'test'
+  ...
+# Subtest: sidecar store creation signal stops before dispatch
+ok 268 - sidecar store creation signal stops before dispatch
+  ---
+  duration_ms: 28.160333
+  type: 'test'
+  ...
+# Subtest: repeated and mixed signals during original execution request one cancellation with no oracle or redispatch
+ok 269 - repeated and mixed signals during original execution request one cancellation with no oracle or redispatch
+  ---
+  duration_ms: 75.985208
+  type: 'test'
+  ...
+# Subtest: signal during main retention "type":"SCHEDULE" cannot overlap close
+ok 270 - signal during main retention "type":"SCHEDULE" cannot overlap close
+  ---
+  duration_ms: 24.835792
+  type: 'test'
+  ...
+# Subtest: signal during sidecar retention "kind":"HEADER" cannot overlap close
+ok 271 - signal during sidecar retention "kind":"HEADER" cannot overlap close
+  ---
+  duration_ms: 24.866959
+  type: 'test'
+  ...
+# Subtest: signal during sidecar retention "kind":"PREPARED" cannot overlap close
+ok 272 - signal during sidecar retention "kind":"PREPARED" cannot overlap close
+  ---
+  duration_ms: 37.919375
+  type: 'test'
+  ...
+# Subtest: signal during main retention "type":"START_INTENT" cannot overlap close
+ok 273 - signal during main retention "type":"START_INTENT" cannot overlap close
+  ---
+  duration_ms: 36.7135
+  type: 'test'
+  ...
+# Subtest: signal during sidecar retention "kind":"PHASE_OBSERVED" cannot overlap close
+ok 274 - signal during sidecar retention "kind":"PHASE_OBSERVED" cannot overlap close
+  ---
+  duration_ms: 113.078708
+  type: 'test'
+  ...
+# Subtest: signal during main retention "type":"FINAL" cannot overlap close
+ok 275 - signal during main retention "type":"FINAL" cannot overlap close
+  ---
+  duration_ms: 427.620416
+  type: 'test'
+  ...
+# Subtest: signal during sidecar retention "kind":"FINAL" cannot overlap close
+ok 276 - signal during sidecar retention "kind":"FINAL" cannot overlap close
+  ---
+  duration_ms: 428.856209
+  type: 'test'
+  ...
+# Subtest: main final close keeps handlers installed and uncertainty cannot become acknowledged
+ok 277 - main final close keeps handlers installed and uncertainty cannot become acknowledged
+  ---
+  duration_ms: 422.430125
+  type: 'test'
+  ...
+# Subtest: sidecar final close keeps handlers installed and uncertainty cannot become acknowledged
+ok 278 - sidecar final close keeps handlers installed and uncertainty cannot become acknowledged
+  ---
+  duration_ms: 438.940791
+  type: 'test'
+  ...
+# Subtest: main creation failure retains evidence and never retries
+ok 279 - main creation failure retains evidence and never retries
+  ---
+  duration_ms: 2.557583
+  type: 'test'
+  ...
+# Subtest: sidecar creation failure retains evidence and never retries
+ok 280 - sidecar creation failure retains evidence and never retries
+  ---
+  duration_ms: 9.817334
+  type: 'test'
+  ...
+# Subtest: listener removal throw cannot report command recorded
+ok 281 - listener removal throw cannot report command recorded
+  ---
+  duration_ms: 435.393375
+  type: 'test'
+  ...
+# Subtest: listener removal silent cannot report command recorded
+ok 282 - listener removal silent cannot report command recorded
+  ---
+  duration_ms: 423.120584
+  type: 'test'
+  ...
+# Subtest: post-close missing bytes cannot erase historical ack or become accepted inspection
+ok 283 - post-close missing bytes cannot erase historical ack or become accepted inspection
+  ---
+  duration_ms: 426.192583
+  type: 'test'
+  ...
+# Subtest: throwing inspector is captured once, cannot leak errors, and cannot erase historical ack
+ok 284 - throwing inspector is captured once, cannot leak errors, and cannot erase historical ack
+  ---
+  duration_ms: 439.056708
+  type: 'test'
+  ...
+# Subtest: real paired-arm child SIGINT drains its original synthetic request
+ok 285 - real paired-arm child SIGINT drains its original synthetic request
+  ---
+  duration_ms: 144.526167
+  type: 'test'
+  ...
+# Subtest: real paired-arm child SIGTERM drains its original synthetic request
+ok 286 - real paired-arm child SIGTERM drains its original synthetic request
+  ---
+  duration_ms: 138.292625
+  type: 'test'
+  ...
+# Subtest: same top-level owners stay spent after child status failure
+ok 287 - same top-level owners stay spent after child status failure
+  ---
+  duration_ms: 9.265042
+  type: 'test'
+  ...
+# Subtest: distinct wrappers sharing children stay spent after child status failure
+ok 288 - distinct wrappers sharing children stay spent after child status failure
+  ---
+  duration_ms: 6.412042
+  type: 'test'
+  ...
+# Subtest: oracle consent changes at admission boundary 1 refuse before oracle effects
+ok 289 - oracle consent changes at admission boundary 1 refuse before oracle effects
+  ---
+  duration_ms: 85.359708
+  type: 'test'
+  ...
+# Subtest: oracle capacity changes at admission boundary 1 refuse before oracle effects
+ok 290 - oracle capacity changes at admission boundary 1 refuse before oracle effects
+  ---
+  duration_ms: 63.418125
+  type: 'test'
+  ...
+# Subtest: oracle custody changes at admission boundary 1 refuse before oracle effects
+ok 291 - oracle custody changes at admission boundary 1 refuse before oracle effects
+  ---
+  duration_ms: 60.560792
+  type: 'test'
+  ...
+# Subtest: oracle consent changes at admission boundary 2 refuse before oracle effects
+ok 292 - oracle consent changes at admission boundary 2 refuse before oracle effects
+  ---
+  duration_ms: 63.17925
+  type: 'test'
+  ...
+# Subtest: oracle capacity changes at admission boundary 2 refuse before oracle effects
+ok 293 - oracle capacity changes at admission boundary 2 refuse before oracle effects
+  ---
+  duration_ms: 63.9955
+  type: 'test'
+  ...
+# Subtest: oracle custody changes at admission boundary 2 refuse before oracle effects
+ok 294 - oracle custody changes at admission boundary 2 refuse before oracle effects
+  ---
+  duration_ms: 61.427583
+  type: 'test'
+  ...
+# Subtest: oracle consent changes at admission boundary 3 refuse before oracle effects
+ok 295 - oracle consent changes at admission boundary 3 refuse before oracle effects
+  ---
+  duration_ms: 59.270166
+  type: 'test'
+  ...
+# Subtest: oracle capacity changes at admission boundary 3 refuse before oracle effects
+ok 296 - oracle capacity changes at admission boundary 3 refuse before oracle effects
+  ---
+  duration_ms: 58.99475
+  type: 'test'
+  ...
+# Subtest: oracle custody changes at admission boundary 3 refuse before oracle effects
+ok 297 - oracle custody changes at admission boundary 3 refuse before oracle effects
+  ---
+  duration_ms: 61.718167
+  type: 'test'
+  ...
+# Subtest: cancelled pending original transport can only finish diagnostically, never reach oracle or reuse owners
+ok 298 - cancelled pending original transport can only finish diagnostically, never reach oracle or reuse owners
+  ---
+  duration_ms: 127.796833
+  type: 'test'
+  ...
+# Subtest: copied and changed oracle candidate cannot consume the reserved oracle
+ok 299 - copied and changed oracle candidate cannot consume the reserved oracle
+  ---
+  duration_ms: 69.068708
+  type: 'test'
+  ...
+# Subtest: a consumed executor permit cannot be reused, even before its original result settles
+ok 300 - a consumed executor permit cannot be reused, even before its original result settles
+  ---
+  duration_ms: 62.512958
+  type: 'test'
+  ...
+# Subtest: retention observes original native settlement despite poisoned promise properties
+ok 301 - retention observes original native settlement despite poisoned promise properties
+  ---
+  duration_ms: 30.114625
+  type: 'test'
+  ...
+# Subtest: late retainAdmission fulfillment cannot acknowledge or reopen a reservation
+ok 302 - late retainAdmission fulfillment cannot acknowledge or reopen a reservation
+  ---
+  duration_ms: 20.468084
+  type: 'test'
+  ...
+# Subtest: late retain fulfillment cannot acknowledge or reopen a reservation
+ok 303 - late retain fulfillment cannot acknowledge or reopen a reservation
+  ---
+  duration_ms: 15.917375
+  type: 'test'
+  ...
+# Subtest: partial sidecar success followed by event-writer failure never mints a permit
+ok 304 - partial sidecar success followed by event-writer failure never mints a permit
+  ---
+  duration_ms: 3.664333
+  type: 'test'
+  ...
+# Subtest: reentrant verifyInputs during awaited retention is sticky even when callback catches it
+ok 305 - reentrant verifyInputs during awaited retention is sticky even when callback catches it
+  ---
+  duration_ms: 2.817375
+  type: 'test'
+  ...
+# Subtest: copied or altered retained events cannot replace original event identities
+ok 306 - copied or altered retained events cannot replace original event identities
+  ---
+  duration_ms: 3.327333
+  type: 'test'
+  ...
+# Subtest: post-phase admission-history writer failure leaves executor evidence unacknowledged
+ok 307 - post-phase admission-history writer failure leaves executor evidence unacknowledged
+  ---
+  duration_ms: 82.28375
+  type: 'test'
+  ...
+# Subtest: late post-phase admission-history fulfillment cannot acknowledge history or reopen oracle dispatch
+ok 308 - late post-phase admission-history fulfillment cannot acknowledge history or reopen oracle dispatch
+  ---
+  duration_ms: 85.6445
+  type: 'test'
+  ...
+# Subtest: arm owner NATIVE_API/OFF/repair: actual fixed Node oracle, synthetic model
+ok 309 - arm owner NATIVE_API/OFF/repair: actual fixed Node oracle, synthetic model
+  ---
+  duration_ms: 377.778875
+  type: 'test'
+  ...
+# Subtest: arm owner NATIVE_API/OFF/no-change: actual fixed Node oracle, synthetic model
+ok 310 - arm owner NATIVE_API/OFF/no-change: actual fixed Node oracle, synthetic model
+  ---
+  duration_ms: 330.564583
+  type: 'test'
+  ...
+# Subtest: arm owner NATIVE_API/ON/repair: actual fixed Node oracle, synthetic model
+ok 311 - arm owner NATIVE_API/ON/repair: actual fixed Node oracle, synthetic model
+  ---
+  duration_ms: 356.156959
+  type: 'test'
+  ...
+# Subtest: arm owner NATIVE_API/ON/no-change: actual fixed Node oracle, synthetic model
+ok 312 - arm owner NATIVE_API/ON/no-change: actual fixed Node oracle, synthetic model
+  ---
+  duration_ms: 327.365292
+  type: 'test'
+  ...
+# Subtest: arm owner CHAT_COMPLETIONS/OFF/repair: actual fixed Node oracle, synthetic model
+ok 313 - arm owner CHAT_COMPLETIONS/OFF/repair: actual fixed Node oracle, synthetic model
+  ---
+  duration_ms: 356.517792
+  type: 'test'
+  ...
+# Subtest: arm owner CHAT_COMPLETIONS/OFF/no-change: actual fixed Node oracle, synthetic model
+ok 314 - arm owner CHAT_COMPLETIONS/OFF/no-change: actual fixed Node oracle, synthetic model
+  ---
+  duration_ms: 329.248333
+  type: 'test'
+  ...
+# Subtest: arm owner CHAT_COMPLETIONS/ON/repair: actual fixed Node oracle, synthetic model
+ok 315 - arm owner CHAT_COMPLETIONS/ON/repair: actual fixed Node oracle, synthetic model
+  ---
+  duration_ms: 348.644625
+  type: 'test'
+  ...
+# Subtest: arm owner CHAT_COMPLETIONS/ON/no-change: actual fixed Node oracle, synthetic model
+ok 316 - arm owner CHAT_COMPLETIONS/ON/no-change: actual fixed Node oracle, synthetic model
+  ---
+  duration_ms: 324.129958
+  type: 'test'
+  ...
+# Subtest: persisted final admission history distinguishes post-retention rechecks from pre-intent observations
+ok 317 - persisted final admission history distinguishes post-retention rechecks from pre-intent observations
+  ---
+  duration_ms: 357.786291
+  type: 'test'
+  ...
+# Subtest: fresh consent revocation after EXECUTOR retention prevents that dispatch
+ok 318 - fresh consent revocation after EXECUTOR retention prevents that dispatch
+  ---
+  duration_ms: 3.367458
+  type: 'test'
+  ...
+# Subtest: fresh consent revocation after ORACLE retention prevents that dispatch
+ok 319 - fresh consent revocation after ORACLE retention prevents that dispatch
+  ---
+  duration_ms: 69.999167
+  type: 'test'
+  ...
+# Subtest: pre-reservation refusal: future scheduler
+ok 320 - pre-reservation refusal: future scheduler
+  ---
+  duration_ms: 2.217125
+  type: 'test'
+  ...
+# Subtest: pre-reservation refusal: future capacity
+ok 321 - pre-reservation refusal: future capacity
+  ---
+  duration_ms: 1.841875
+  type: 'test'
+  ...
+# Subtest: pre-reservation refusal: future runtime
+ok 322 - pre-reservation refusal: future runtime
+  ---
+  duration_ms: 1.914041
+  type: 'test'
+  ...
+# Subtest: pre-reservation refusal: future custody
+ok 323 - pre-reservation refusal: future custody
+  ---
+  duration_ms: 1.878
+  type: 'test'
+  ...
+# Subtest: pre-reservation refusal: unmeasured capacity
+ok 324 - pre-reservation refusal: unmeasured capacity
+  ---
+  duration_ms: 1.886375
+  type: 'test'
+  ...
+# Subtest: pre-reservation refusal: pending transport
+ok 325 - pre-reservation refusal: pending transport
+  ---
+  duration_ms: 2.44925
+  type: 'test'
+  ...
+# Subtest: pre-reservation refusal: wrong consent identity
+ok 326 - pre-reservation refusal: wrong consent identity
+  ---
+  duration_ms: 1.739
+  type: 'test'
+  ...
+# Subtest: pre-reservation refusal: wrong source
+ok 327 - pre-reservation refusal: wrong source
+  ---
+  duration_ms: 1.76325
+  type: 'test'
+  ...
+# Subtest: physical process death after SIDE_PREPARED
+ok 328 - physical process death after SIDE_PREPARED
+  ---
+  duration_ms: 74.556792
+  type: 'test'
+  ...
+# Subtest: physical process death after MAIN_START
+ok 329 - physical process death after MAIN_START
+  ---
+  duration_ms: 70.606667
+  type: 'test'
+  ...
+# Subtest: physical process death after SIDE_START
+ok 330 - physical process death after SIDE_START
+  ---
+  duration_ms: 74.040042
+  type: 'test'
+  ...
+# Subtest: physical process death after MAIN_EXECUTOR
+ok 331 - physical process death after MAIN_EXECUTOR
+  ---
+  duration_ms: 158.681916
+  type: 'test'
+  ...
+# Subtest: physical process death after MAIN_ORACLE
+ok 332 - physical process death after MAIN_ORACLE
+  ---
+  duration_ms: 482.449792
+  type: 'test'
+  ...
+# Subtest: physical process death after MAIN_FINAL
+ok 333 - physical process death after MAIN_FINAL
+  ---
+  duration_ms: 491.820792
+  type: 'test'
+  ...
+# Subtest: physical process death after SIDE_FINAL
+ok 334 - physical process death after SIDE_FINAL
+  ---
+  duration_ms: 500.895958
+  type: 'test'
+  ...
+# Subtest: sidecar codec accepts only original arm-owner producer shapes and round-trips its chain
+    # Subtest: closed original admission and history schemas reject recomputed hybrids
+    ok 1 - closed original admission and history schemas reject recomputed hybrids
+      ---
+      duration_ms: 0.669167
+      type: 'test'
+      ...
+    # Subtest: closed V2 producer rejects omitted discarded data and unknown data
+    ok 2 - closed V2 producer rejects omitted discarded data and unknown data
+      ---
+      duration_ms: 0.252667
+      type: 'test'
+      ...
+    # Subtest: terminal labels are non-null and from the current producer contracts
+    ok 3 - terminal labels are non-null and from the current producer contracts
+      ---
+      duration_ms: 0.883334
+      type: 'test'
+      ...
+    # Subtest: proxy and getter inputs refuse without invoking traps
+    ok 4 - proxy and getter inputs refuse without invoking traps
+      ---
+      duration_ms: 0.135583
+      type: 'test'
+      ...
+    1..4
+ok 335 - sidecar codec accepts only original arm-owner producer shapes and round-trips its chain
+  ---
+  duration_ms: 384.846083
+  type: 'test'
+  ...
+# Subtest: missing sidecar is unavailable while an empty created sidecar is empty
+ok 336 - missing sidecar is unavailable while an empty created sidecar is empty
+  ---
+  duration_ms: 5.821334
+  type: 'test'
+  ...
+# Subtest: exclusive private creation, header/final round-trip, and readonly reopen boundary
+ok 337 - exclusive private creation, header/final round-trip, and readonly reopen boundary
+  ---
+  duration_ms: 12.522167
+  type: 'test'
+  ...
+# Subtest: descriptor-bound injected IO completes short writes and rejects zero progress
+ok 338 - descriptor-bound injected IO completes short writes and rejects zero progress
+  ---
+  duration_ms: 12.754917
+  type: 'test'
+  ...
+# Subtest: fsync-after-write failure is uncertain and sticky
+ok 339 - fsync-after-write failure is uncertain and sticky
+  ---
+  duration_ms: 4.602958
+  type: 'test'
+  ...
+# Subtest: readback corruption and premature EOF are uncertain and sticky
+ok 340 - readback corruption and premature EOF are uncertain and sticky
+  ---
+  duration_ms: 15.122042
+  type: 'test'
+  ...
+# Subtest: FINAL close failure rejects without acknowledging record or finalSeen
+ok 341 - FINAL close failure rejects without acknowledging record or finalSeen
+  ---
+  duration_ms: 11.262708
+  type: 'test'
+  ...
+# Subtest: codec rejects Proxy/getter retain inputs without invoking traps
+ok 342 - codec rejects Proxy/getter retain inputs without invoking traps
+  ---
+  duration_ms: 8.483375
+  type: 'test'
+  ...
+# Subtest: corrupt, partial-tail, and post-FINAL extra bytes are non-authorizing inspection results
+ok 343 - corrupt, partial-tail, and post-FINAL extra bytes are non-authorizing inspection results
+  ---
+  duration_ms: 29.531834
+  type: 'test'
+  ...
+# Subtest: symlink, hardlink, and non-private directory/file modes are refused
+ok 344 - symlink, hardlink, and non-private directory/file modes are refused
+  ---
+  duration_ms: 1.368125
+  type: 'test'
+  ...
+# Subtest: V2 projection CHAT_COMPLETIONS/OFF/repair
+ok 345 - V2 projection CHAT_COMPLETIONS/OFF/repair
+  ---
+  duration_ms: 95.076583
+  type: 'test'
+  ...
+# Subtest: V2 projection CHAT_COMPLETIONS/OFF/baseline
+ok 346 - V2 projection CHAT_COMPLETIONS/OFF/baseline
+  ---
+  duration_ms: 38.940208
+  type: 'test'
+  ...
+# Subtest: V2 projection CHAT_COMPLETIONS/OFF/no-change
+ok 347 - V2 projection CHAT_COMPLETIONS/OFF/no-change
+  ---
+  duration_ms: 36.546666
+  type: 'test'
+  ...
+# Subtest: V2 projection CHAT_COMPLETIONS/ON/repair
+ok 348 - V2 projection CHAT_COMPLETIONS/ON/repair
+  ---
+  duration_ms: 65.759708
+  type: 'test'
+  ...
+# Subtest: V2 projection CHAT_COMPLETIONS/ON/baseline
+ok 349 - V2 projection CHAT_COMPLETIONS/ON/baseline
+  ---
+  duration_ms: 35.331584
+  type: 'test'
+  ...
+# Subtest: V2 projection CHAT_COMPLETIONS/ON/no-change
+ok 350 - V2 projection CHAT_COMPLETIONS/ON/no-change
+  ---
+  duration_ms: 32.894167
+  type: 'test'
+  ...
+# Subtest: V2 projection NATIVE_API/OFF/repair
+ok 351 - V2 projection NATIVE_API/OFF/repair
+  ---
+  duration_ms: 66.540042
+  type: 'test'
+  ...
+# Subtest: V2 projection NATIVE_API/OFF/baseline
+ok 352 - V2 projection NATIVE_API/OFF/baseline
+  ---
+  duration_ms: 33.467333
+  type: 'test'
+  ...
+# Subtest: V2 projection NATIVE_API/OFF/no-change
+ok 353 - V2 projection NATIVE_API/OFF/no-change
+  ---
+  duration_ms: 32.64875
+  type: 'test'
+  ...
+# Subtest: V2 projection NATIVE_API/ON/repair
+ok 354 - V2 projection NATIVE_API/ON/repair
+  ---
+  duration_ms: 65.087917
+  type: 'test'
+  ...
+# Subtest: V2 projection NATIVE_API/ON/baseline
+ok 355 - V2 projection NATIVE_API/ON/baseline
+  ---
+  duration_ms: 32.212625
+  type: 'test'
+  ...
+# Subtest: V2 projection NATIVE_API/ON/no-change
+ok 356 - V2 projection NATIVE_API/ON/no-change
+  ---
+  duration_ms: 32.919417
+  type: 'test'
+  ...
+# Subtest: V2 OFF and ON common settings are equal while treatment identity differs: CHAT_COMPLETIONS
+ok 357 - V2 OFF and ON common settings are equal while treatment identity differs: CHAT_COMPLETIONS
+  ---
+  duration_ms: 1.913417
+  type: 'test'
+  ...
+# Subtest: V2 OFF and ON common settings are equal while treatment identity differs: NATIVE_API
+ok 358 - V2 OFF and ON common settings are equal while treatment identity differs: NATIVE_API
+  ---
+  duration_ms: 1.507791
+  type: 'test'
+  ...
+# Subtest: V2 arbitrary copied intent is refused before projection
+ok 359 - V2 arbitrary copied intent is refused before projection
+  ---
+  duration_ms: 1.147542
+  type: 'test'
+  ...
+# Subtest: V2 refuses changed reviewedSourceFingerprint description
+ok 360 - V2 refuses changed reviewedSourceFingerprint description
+  ---
+  duration_ms: 54.301791
+  type: 'test'
+  ...
+# Subtest: V2 refuses changed model description
+ok 361 - V2 refuses changed model description
+  ---
+  duration_ms: 53.859458
+  type: 'test'
+  ...
+# Subtest: V2 refuses changed modelSettingsSha256 description
+ok 362 - V2 refuses changed modelSettingsSha256 description
+  ---
+  duration_ms: 49.491875
+  type: 'test'
+  ...
+# Subtest: V2 refuses changed guidancePolicySha256 description
+ok 363 - V2 refuses changed guidancePolicySha256 description
+  ---
+  duration_ms: 52.145
+  type: 'test'
+  ...
+# Subtest: V2 refuses changed arm description
+ok 364 - V2 refuses changed arm description
+  ---
+  duration_ms: 53.640417
+  type: 'test'
+  ...
+# Subtest: V2 rejects a V3 lane and a cloned report channel
+ok 365 - V2 rejects a V3 lane and a cloned report channel
+  ---
+  duration_ms: 52.949584
+  type: 'test'
+  ...
+# Subtest: inspect-trial parser snapshots exactly one bounded absolute operand
+ok 366 - inspect-trial parser snapshots exactly one bounded absolute operand
+  ---
+  duration_ms: 0.685875
+  type: 'test'
+  ...
+# Subtest: inspect-trial malformed usage emits only sanitized stderr without loading inspection
+ok 367 - inspect-trial malformed usage emits only sanitized stderr without loading inspection
+  ---
+  duration_ms: 134.225334
+  type: 'test'
+  ...
+# Subtest: real CLI observes final trial metadata only, even when all oracle outcomes failed
+ok 368 - real CLI observes final trial metadata only, even when all oracle outcomes failed
+  ---
+  duration_ms: 131.5605
+  type: 'test'
+  ...
+# Subtest: trial test allowance remains lazy, URL-exact and cannot load neighboring execution modules
+ok 369 - trial test allowance remains lazy, URL-exact and cannot load neighboring execution modules
+  ---
+  duration_ms: 221.833542
+  type: 'test'
+  ...
+# Subtest: child guard detects descriptor mutation and alternate whole-file evidence reads even if caught
+ok 370 - child guard detects descriptor mutation and alternate whole-file evidence reads even if caught
+  ---
+  duration_ms: 373.467
+  type: 'test'
+  ...
+# Subtest: inspector opens once with nonblocking flags and refuses a FIFO swapped after lstat
+ok 371 - inspector opens once with nonblocking flags and refuses a FIFO swapped after lstat
+  ---
+  duration_ms: 108.33025
+  type: 'test'
+  ...
+# Subtest: empty, intent-only, partial-tail and corrupt-tail stores never become complete
+ok 372 - empty, intent-only, partial-tail and corrupt-tail stores never become complete
+  ---
+  duration_ms: 308.307042
+  type: 'test'
+  ...
+# Subtest: semantically forged or missing stores refuse as bounded stdout reports
+ok 373 - semantically forged or missing stores refuse as bounded stdout reports
+  ---
+  duration_ms: 170.0485
+  type: 'test'
+  ...
+# Subtest: adverse final is observable without being labeled successful or verified
+ok 374 - adverse final is observable without being labeled successful or verified
+  ---
+  duration_ms: 82.130542
+  type: 'test'
+  ...
+# Subtest: user-stop travels through actual store acknowledgments and separate read-only CLI processes
+ok 375 - user-stop travels through actual store acknowledgments and separate read-only CLI processes
+  ---
+  duration_ms: 246.518208
+  type: 'test'
+  ...
+# Subtest: private readonly archive is inspectable; directory symlink spellings refuse
+ok 376 - private readonly archive is inspectable; directory symlink spellings refuse
+  ---
+  duration_ms: 278.058084
+  type: 'test'
+  ...
+# Subtest: readable valid bytes still refuse public modes, hard links, file symlinks and source-contained stores
+ok 377 - readable valid bytes still refuse public modes, hard links, file symlinks and source-contained stores
+  ---
+  duration_ms: 624.077083
+  type: 'test'
+  ...
+# Subtest: constructor validates before effects and captures inputs and methods once
+ok 378 - constructor validates before effects and captures inputs and methods once
+  ---
+  duration_ms: 80.403167
+  type: 'test'
+  ...
+# Subtest: invalid input and accessors are refused without filesystem or signal effects
+ok 379 - invalid input and accessors are refused without filesystem or signal effects
+  ---
+  duration_ms: 0.489708
+  type: 'test'
+  ...
+# Subtest: SIGINT routes repeated stop to sole runner cancellation and preserves unrelated listeners
+ok 380 - SIGINT routes repeated stop to sole runner cancellation and preserves unrelated listeners
+  ---
+  duration_ms: 21.375791
+  type: 'test'
+  ...
+# Subtest: SIGTERM routes repeated stop to sole runner cancellation and preserves unrelated listeners
+ok 381 - SIGTERM routes repeated stop to sole runner cancellation and preserves unrelated listeners
+  ---
+  duration_ms: 19.62725
+  type: 'test'
+  ...
+# Subtest: setup signal latch survives either installation boundary without dispatch
+ok 382 - setup signal latch survives either installation boundary without dispatch
+  ---
+  duration_ms: 26.225584
+  type: 'test'
+  ...
+# Subtest: install then throw rolls back both exact identities without store creation
+ok 383 - install then throw rolls back both exact identities without store creation
+  ---
+  duration_ms: 1.141875
+  type: 'test'
+  ...
+# Subtest: silent listener installation failure refuses the command
+ok 384 - silent listener installation failure refuses the command
+  ---
+  duration_ms: 0.483833
+  type: 'test'
+  ...
+# Subtest: store creation failure does not dispatch and cleans signal ownership
+ok 385 - store creation failure does not dispatch and cleans signal ownership
+  ---
+  duration_ms: 0.690209
+  type: 'test'
+  ...
+# Subtest: signals within synchronous retention wait for acknowledgement and never overlap writes
+ok 386 - signals within synchronous retention wait for acknowledgement and never overlap writes
+  ---
+  duration_ms: 129.663083
+  type: 'test'
+  ...
+# Subtest: failed acknowledgement never becomes recorded or triggers a replacement FINAL
+ok 387 - failed acknowledgement never becomes recorded or triggers a replacement FINAL
+  ---
+  duration_ms: 6.271292
+  type: 'test'
+  ...
+# Subtest: listeners remain installed through final close; late signal cannot rewrite completed execution
+ok 388 - listeners remain installed through final close; late signal cannot rewrite completed execution
+  ---
+  duration_ms: 79.739959
+  type: 'test'
+  ...
+# Subtest: close uncertainty and listener removal failures prevent a recorded result
+ok 389 - close uncertainty and listener removal failures prevent a recorded result
+  ---
+  duration_ms: 242.788459
+  type: 'test'
+  ...
+# Subtest: pending execution after stop stays unconfirmed even when late promises settle
+ok 390 - pending execution after stop stays unconfirmed even when late promises settle
+  ---
+  duration_ms: 30.372125
+  type: 'test'
+  ...
+# Subtest: throwing execution callback is retained as an adverse run not setup failure
+ok 391 - throwing execution callback is retained as an adverse run not setup failure
+  ---
+  duration_ms: 18.6615
+  type: 'test'
+  ...
+# Subtest: real owned child SIGINT yields durable stopped evidence and closes normally
+ok 392 - real owned child SIGINT yields durable stopped evidence and closes normally
+  ---
+  duration_ms: 107.482
+  type: 'test'
+  ...
+# Subtest: real owned child SIGTERM yields durable stopped evidence and closes normally
+ok 393 - real owned child SIGTERM yields durable stopped evidence and closes normally
+  ---
+  duration_ms: 99.574333
+  type: 'test'
+  ...
+# Subtest: diagnostic command requires exactly one bounded absolute path before inspection
+ok 394 - diagnostic command requires exactly one bounded absolute path before inspection
+  ---
+  duration_ms: 0.354792
+  type: 'test'
+  ...
+# Subtest: guarded CLI reads immutable terminal diagnostic and ledger once; adverse=false
+ok 395 - guarded CLI reads immutable terminal diagnostic and ledger once; adverse=false
+  ---
+  duration_ms: 173.010583
+  type: 'test'
+  ...
+# Subtest: guarded CLI reads immutable terminal diagnostic and ledger once; adverse=true
+ok 396 - guarded CLI reads immutable terminal diagnostic and ledger once; adverse=true
+  ---
+  duration_ms: 83.962375
+  type: 'test'
+  ...
+# Subtest: guarded CLI reports partial capture as incomplete and corrupt capture as unavailable
+ok 397 - guarded CLI reports partial capture as incomplete and corrupt capture as unavailable
+  ---
+  duration_ms: 183.864542
+  type: 'test'
+  ...
+# Subtest: malformed CLI usage stays sanitized and diagnostic import needs its separate test allowance
+ok 398 - malformed CLI usage stays sanitized and diagnostic import needs its separate test allowance
+  ---
+  duration_ms: 178.430666
+  type: 'test'
+  ...
+# Subtest: real immutable hash-chain store, explicit OS fsync acknowledgement and final close
+ok 399 - real immutable hash-chain store, explicit OS fsync acknowledgement and final close
+  ---
+  duration_ms: 17.880458
+  type: 'test'
+  ...
+# Subtest: actual paired runner awaits real store and emits a reopenable full experiment trace
+ok 400 - actual paired runner awaits real store and emits a reopenable full experiment trace
+  ---
+  duration_ms: 71.074958
+  type: 'test'
+  ...
+# Subtest: file fsync failure seals writer; readable bytes are not proof of acknowledged durability
+ok 401 - file fsync failure seals writer; readable bytes are not proof of acknowledged durability
+  ---
+  duration_ms: 5.195042
+  type: 'test'
+  ...
+# Subtest: partial write preserves prior prefix, seals writer and never truncates or retries
+ok 402 - partial write preserves prior prefix, seals writer and never truncates or retries
+  ---
+  duration_ms: 8.975917
+  type: 'test'
+  ...
+# Subtest: replacement of named file is detected without writing to replacement or old descriptor
+ok 403 - replacement of named file is detected without writing to replacement or old descriptor
+  ---
+  duration_ms: 10.871834
+  type: 'test'
+  ...
+# Subtest: renamed run directory and symlink inputs are rejected
+ok 404 - renamed run directory and symlink inputs are rejected
+  ---
+  duration_ms: 5.273041
+  type: 'test'
+  ...
+# Subtest: raw candidate keys, illegal event shape and event order seal writer before extra bytes
+ok 405 - raw candidate keys, illegal event shape and event order seal writer before extra bytes
+  ---
+  duration_ms: 32.906875
+  type: 'test'
+  ...
+# Subtest: readback failure and final close uncertainty never fulfill retention
+ok 406 - readback failure and final close uncertainty never fulfill retention
+  ---
+  duration_ms: 24.292709
+  type: 'test'
+  ...
+# Subtest: valid chain prefix retained when a later line is corrupted; read-only inspection leaves bytes unchanged
+ok 407 - valid chain prefix retained when a later line is corrupted; read-only inspection leaves bytes unchanged
+  ---
+  duration_ms: 11.59675
+  type: 'test'
+  ...
+# Subtest: retained ordinal bounds support full declared event count, sequence gaps are legal
+ok 408 - retained ordinal bounds support full declared event count, sequence gaps are legal
+  ---
+  duration_ms: 0.187583
+  type: 'test'
+  ...
+# Subtest: directory fsync failure refuses construction and preserves evidence without a writable owner
+ok 409 - directory fsync failure refuses construction and preserves evidence without a writable owner
+  ---
+  duration_ms: 0.991417
+  type: 'test'
+  ...
+# Subtest: two separate owners never share a file or overwrite an earlier run
+ok 410 - two separate owners never share a file or overwrite an earlier run
+  ---
+  duration_ms: 16.949708
+  type: 'test'
+  ...
+# Subtest: bytes appended after FINAL are corruption, never a later successful outcome
+ok 411 - bytes appended after FINAL are corruption, never a later successful outcome
+  ---
+  duration_ms: 11.617375
+  type: 'test'
+  ...
+# Subtest: SCHEDULE sequence must start at zero; intentional later diagnostic gaps remain valid
+ok 412 - SCHEDULE sequence must start at zero; intentional later diagnostic gaps remain valid
+  ---
+  duration_ms: 4.923917
+  type: 'test'
+  ...
+# Subtest: scratch-like temp base produces external private fixtures without weakening source refusal
+ok 413 - scratch-like temp base produces external private fixtures without weakening source refusal
+  ---
+  duration_ms: 5.626041
+  type: 'test'
+  ...
+# Subtest: read-only private archive remains inspectable without write permission
+ok 414 - read-only private archive remains inspectable without write permission
+  ---
+  duration_ms: 13.431541
+  type: 'test'
+  ...
+# Subtest: sealed writer retains bounded failure cause without reopening or copying thrown text
+ok 415 - sealed writer retains bounded failure cause without reopening or copying thrown text
+  ---
+  duration_ms: 13.704
+  type: 'test'
+  ...
+# Subtest: read-only inspector still rejects public, symlinked and source-contained selections
+ok 416 - read-only inspector still rejects public, symlinked and source-contained selections
+  ---
+  duration_ms: 9.803292
+  type: 'test'
+  ...
+# Subtest: actual process death at SCHEDULE preserves readable evidence without resume authority
+ok 417 - actual process death at SCHEDULE preserves readable evidence without resume authority
+  ---
+  duration_ms: 143.008583
+  type: 'test'
+  ...
+# Subtest: actual process death at EXECUTOR_INTENT preserves readable evidence without resume authority
+ok 418 - actual process death at EXECUTOR_INTENT preserves readable evidence without resume authority
+  ---
+  duration_ms: 143.1815
+  type: 'test'
+  ...
+# Subtest: actual process death at EXECUTOR_RESULT preserves readable evidence without resume authority
+ok 419 - actual process death at EXECUTOR_RESULT preserves readable evidence without resume authority
+  ---
+  duration_ms: 143.430875
+  type: 'test'
+  ...
+# Subtest: actual process death at ORACLE_RESULT preserves readable evidence without resume authority
+ok 420 - actual process death at ORACLE_RESULT preserves readable evidence without resume authority
+  ---
+  duration_ms: 150.912875
+  type: 'test'
+  ...
+# Subtest: actual process death at FINAL preserves readable evidence without resume authority
+ok 421 - actual process death at FINAL preserves readable evidence without resume authority
+  ---
+  duration_ms: 200.649916
+  type: 'test'
+  ...
+# Subtest: actual process death at PARTIAL_SCHEDULE preserves readable evidence without resume authority
+ok 422 - actual process death at PARTIAL_SCHEDULE preserves readable evidence without resume authority
+  ---
+  duration_ms: 128.794709
+  type: 'test'
+  ...
+# Subtest: actual process death at PARTIAL_INTENT preserves readable evidence without resume authority
+ok 423 - actual process death at PARTIAL_INTENT preserves readable evidence without resume authority
+  ---
+  duration_ms: 138.318958
+  type: 'test'
+  ...
+# Subtest: actual process death at PARTIAL_FINAL preserves readable evidence without resume authority
+ok 424 - actual process death at PARTIAL_FINAL preserves readable evidence without resume authority
+  ---
+  duration_ms: 196.041916
+  type: 'test'
+  ...
+# Subtest: parent cleanup runs after an assertion fails while the exact fixture child is still live
+ok 425 - parent cleanup runs after an assertion fails while the exact fixture child is still live
+  ---
+  duration_ms: 37.25
+  type: 'test'
+  ...
+# Subtest: parent refuses BAD_READY and confirms closure before cleanup
+ok 426 - parent refuses BAD_READY and confirms closure before cleanup
+  ---
+  duration_ms: 30.697583
+  type: 'test'
+  ...
+# Subtest: parent refuses NO_READY and confirms closure before cleanup
+ok 427 - parent refuses NO_READY and confirms closure before cleanup
+  ---
+  duration_ms: 205.808458
+  type: 'test'
+  ...
+# Subtest: parent refuses EARLY_EXIT and confirms closure before cleanup
+ok 428 - parent refuses EARLY_EXIT and confirms closure before cleanup
+  ---
+  duration_ms: 47.658375
+  type: 'test'
+  ...
+# Subtest: parent refuses FLOOD and confirms closure before cleanup
+ok 429 - parent refuses FLOOD and confirms closure before cleanup
+  ---
+  duration_ms: 31.382083
+  type: 'test'
+  ...
+# Subtest: full actual-runner trace reconciles, preserves original cases and grants no execution authority
+ok 430 - full actual-runner trace reconciles, preserves original cases and grants no execution authority
+  ---
+  duration_ms: 3.489208
+  type: 'test'
+  ...
+# Subtest: every interruption boundary preserves the full declared denominator without retry
+ok 431 - every interruption boundary preserves the full declared denominator without retry
+  ---
+  duration_ms: 4.956459
+  type: 'test'
+  ...
+# Subtest: semantically forged but byte-rehashable candidate, request, phase and declaration bindings refuse
+ok 432 - semantically forged but byte-rehashable candidate, request, phase and declaration bindings refuse
+  ---
+  duration_ms: 4.282875
+  type: 'test'
+  ...
+# Subtest: unknown-budget stop and refused dispatch are consistent adverse finals, not invented failures
+ok 433 - unknown-budget stop and refused dispatch are consistent adverse finals, not invented failures
+  ---
+  duration_ms: 0.879667
+  type: 'test'
+  ...
+# Subtest: continuing after unconfirmed usage is rejected even if all later hashes are recomputed
+ok 434 - continuing after unconfirmed usage is rejected even if all later hashes are recomputed
+  ---
+  duration_ms: 0.648833
+  type: 'test'
+  ...
+# Subtest: partial/corrupt byte tails never become a complete experiment merely because FINAL is in the prefix
+ok 435 - partial/corrupt byte tails never become a complete experiment merely because FINAL is in the prefix
+  ---
+  duration_ms: 1.423292
+  type: 'test'
+  ...
+# Subtest: FINAL cannot erase an intent-only unknown slot by claiming completed
+ok 436 - FINAL cannot erase an intent-only unknown slot by claiming completed
+  ---
+  duration_ms: 0.500208
+  type: 'test'
+  ...
+# Subtest: reported durations cannot establish wall-clock budget compliance on restart
+ok 437 - reported durations cannot establish wall-clock budget compliance on restart
+  ---
+  duration_ms: 0.871666
+  type: 'test'
+  ...
+# Subtest: unvalidated FINAL drain payload cannot prove provider stop or authorize resume
+ok 438 - unvalidated FINAL drain payload cannot prove provider stop or authorize resume
+  ---
+  duration_ms: 0.520084
+  type: 'test'
+  ...
+# Subtest: consistent candidate hashes are not a revalidation of absent candidate bytes
+ok 439 - consistent candidate hashes are not a revalidation of absent candidate bytes
+  ---
+  duration_ms: 0.794625
+  type: 'test'
+  ...
+# Subtest: wrong oracle candidate binding is refused before both arms can form a pair
+ok 440 - wrong oracle candidate binding is refused before both arms can form a pair
+  ---
+  duration_ms: 0.674666
+  type: 'test'
+  ...
+# Subtest: stop is zero-argument, frozen, refused outside execution and cannot rewrite final evidence
+ok 441 - stop is zero-argument, frozen, refused outside execution and cannot rewrite final evidence
+  ---
+  duration_ms: 3.435833
+  type: 'test'
+  ...
+# Subtest: successful waits release distinct stop subscriptions instead of accumulating one pending promise
+ok 442 - successful waits release distinct stop subscriptions instead of accumulating one pending promise
+  ---
+  duration_ms: 2.021417
+  type: 'test'
+  ...
+# Subtest: pending executor wakes promptly; repeated requests never cancel synchronously or twice
+ok 443 - pending executor wakes promptly; repeated requests never cancel synchronously or twice
+  ---
+  duration_ms: 7.960042
+  type: 'test'
+  ...
+# Subtest: stop during owner settlement joins both channels and confirms OFF only after actual settlement
+ok 444 - stop during owner settlement joins both channels and confirms OFF only after actual settlement
+  ---
+  duration_ms: 0.884166
+  type: 'test'
+  ...
+# Subtest: stop during every acknowledged retention boundary preserves rows and never overlaps FINAL writes
+ok 445 - stop during every acknowledged retention boundary preserves rows and never overlaps FINAL writes
+  ---
+  duration_ms: 2.830958
+  type: 'test'
+  ...
+# Subtest: synchronous verify/start/status stop requests block later dispatch and capture the cancel owner
+ok 446 - synchronous verify/start/status stop requests block later dispatch and capture the cancel owner
+  ---
+  duration_ms: 1.115625
+  type: 'test'
+  ...
+# Subtest: same-turn fulfilled result cannot be promoted after stop; pending oracle is also interruptible
+ok 447 - same-turn fulfilled result cannot be promoted after stop; pending oracle is also interruptible
+  ---
+  duration_ms: 0.832667
+  type: 'test'
+  ...
+# Subtest: retention failure remains authoritative when stop overlaps it; no second write or false confirmation
+ok 448 - retention failure remains authoritative when stop overlaps it; no second write or false confirmation
+  ---
+  duration_ms: 0.185875
+  type: 'test'
+  ...
+# Subtest: stop in the operation-return microtask gap prevents accepting or retaining that result
+ok 449 - stop in the operation-return microtask gap prevents accepting or retaining that result
+  ---
+  duration_ms: 0.653416
+  type: 'test'
+  ...
+# Subtest: retention timeout after stop remains uncertain; late acknowledgment neither writes FINAL nor resumes
+ok 450 - retention timeout after stop remains uncertain; late acknowledgment neither writes FINAL nor resumes
+  ---
+  duration_ms: 6.943792
+  type: 'test'
+  ...
+# Subtest: stop with rejected or pending cancellation preserves uncertainty and never issues a second cancellation
+ok 451 - stop with rejected or pending cancellation preserves uncertainty and never issues a second cancellation
+  ---
+  duration_ms: 20.558959
+  type: 'test'
+  ...
+# Subtest: same-boundary adverse callbacks, rejected channels and deadlines are not relabeled user stop
+ok 452 - same-boundary adverse callbacks, rejected channels and deadlines are not relabeled user stop
+  ---
+  duration_ms: 9.160833
+  type: 'test'
+  ...
+# Subtest: stop requests during drain or FINAL are refused; one cancellation and one final remain authoritative
+ok 453 - stop requests during drain or FINAL are refused; one cancellation and one final remain authoritative
+  ---
+  duration_ms: 1.142416
+  type: 'test'
+  ...
+# Subtest: last oracle acknowledgment is committed before stop, preserving all completed rows in final reconciliation
+ok 454 - last oracle acknowledgment is committed before stop, preserving all completed rows in final reconciliation
+  ---
+  duration_ms: 0.861833
+  type: 'test'
+  ...
+# Subtest: a rejected FINAL attempt is not acknowledged evidence and cannot reconcile as final
+ok 455 - a rejected FINAL attempt is not acknowledged evidence and cannot reconcile as final
+  ---
+  duration_ms: 0.3665
+  type: 'test'
+  ...
+# Subtest: asynchronously pending FINAL refuses stop and preserves the final row snapshot
+ok 456 - asynchronously pending FINAL refuses stop and preserves the final row snapshot
+  ---
+  duration_ms: 1.355792
+  type: 'test'
+  ...
+# Subtest: private CLI has exactly 87 entries and a separate reviewed 29-entry library contract
+ok 457 - private CLI has exactly 87 entries and a separate reviewed 29-entry library contract
+  ---
+  duration_ms: 0.968583
+  type: 'test'
+  ...
+# Subtest: every allowlisted file and its ancestor directories are ordinary package-relative entries
+ok 458 - every allowlisted file and its ancestor directories are ordinary package-relative entries
+  ---
+  duration_ms: 0.822083
+  type: 'test'
+  ...
+# Subtest: actual static and fixed dynamic imports close exactly over the reviewed CLI module list
+ok 459 - actual static and fixed dynamic imports close exactly over the reviewed CLI module list
+  ---
+  duration_ms: 54.42625
+  type: 'test'
+  ...
+# Subtest: fixed guidance snapshots bindings and refuses copied or protocol-swapped registrations
+ok 460 - fixed guidance snapshots bindings and refuses copied or protocol-swapped registrations
+  ---
+  duration_ms: 0.617375
+  type: 'test'
+  ...
+# Subtest: only explicit OFF/ON and fixed instruction bytes can be registered
+ok 461 - only explicit OFF/ON and fixed instruction bytes can be registered
+  ---
+  duration_ms: 0.561292
+  type: 'test'
+  ...
+# Subtest: guidance observations cannot imply model use or dispatch of an unresolved prompt
+ok 462 - guidance observations cannot imply model use or dispatch of an unresolved prompt
+  ---
+  duration_ms: 0.138917
+  type: 'test'
+  ...
+# Subtest: NATIVE_API/OFF: original owners run one fixed arm, retain it, and stop on unknown synthetic budget
+ok 463 - NATIVE_API/OFF: original owners run one fixed arm, retain it, and stop on unknown synthetic budget
+  ---
+  duration_ms: 456.61025
+  type: 'test'
+  ...
+# Subtest: NATIVE_API/ON: original owners run one fixed arm, retain it, and stop on unknown synthetic budget
+ok 464 - NATIVE_API/ON: original owners run one fixed arm, retain it, and stop on unknown synthetic budget
+  ---
+  duration_ms: 430.647
+  type: 'test'
+  ...
+# Subtest: CHAT_COMPLETIONS/OFF: original owners run one fixed arm, retain it, and stop on unknown synthetic budget
+ok 465 - CHAT_COMPLETIONS/OFF: original owners run one fixed arm, retain it, and stop on unknown synthetic budget
+  ---
+  duration_ms: 429.8465
+  type: 'test'
+  ...
+# Subtest: CHAT_COMPLETIONS/ON: original owners run one fixed arm, retain it, and stop on unknown synthetic budget
+ok 466 - CHAT_COMPLETIONS/ON: original owners run one fixed arm, retain it, and stop on unknown synthetic budget
+  ---
+  duration_ms: 426.533834
+  type: 'test'
+  ...
+# Subtest: preflight rejects extra key without owner construction, callbacks, storage or listeners
+ok 467 - preflight rejects extra key without owner construction, callbacks, storage or listeners
+  ---
+  duration_ms: 1.675583
+  type: 'test'
+  ...
+# Subtest: preflight rejects selection without owner construction, callbacks, storage or listeners
+ok 468 - preflight rejects selection without owner construction, callbacks, storage or listeners
+  ---
+  duration_ms: 1.342916
+  type: 'test'
+  ...
+# Subtest: preflight rejects treatment without owner construction, callbacks, storage or listeners
+ok 469 - preflight rejects treatment without owner construction, callbacks, storage or listeners
+  ---
+  duration_ms: 1.558625
+  type: 'test'
+  ...
+# Subtest: preflight rejects budget without owner construction, callbacks, storage or listeners
+ok 470 - preflight rejects budget without owner construction, callbacks, storage or listeners
+  ---
+  duration_ms: 1.674959
+  type: 'test'
+  ...
+# Subtest: preflight rejects environment without owner construction, callbacks, storage or listeners
+ok 471 - preflight rejects environment without owner construction, callbacks, storage or listeners
+  ---
+  duration_ms: 1.327625
+  type: 'test'
+  ...
+# Subtest: preflight rejects approval without owner construction, callbacks, storage or listeners
+ok 472 - preflight rejects approval without owner construction, callbacks, storage or listeners
+  ---
+  duration_ms: 1.186708
+  type: 'test'
+  ...
+# Subtest: preflight rejects state path without owner construction, callbacks, storage or listeners
+ok 473 - preflight rejects state path without owner construction, callbacks, storage or listeners
+  ---
+  duration_ms: 1.365041
+  type: 'test'
+  ...
+# Subtest: preflight rejects signals without owner construction, callbacks, storage or listeners
+ok 474 - preflight rejects signals without owner construction, callbacks, storage or listeners
+  ---
+  duration_ms: 1.089584
+  type: 'test'
+  ...
+# Subtest: production path rejects test fixture build/profile without executing or allocating
+ok 475 - production path rejects test fixture build/profile without executing or allocating
+  ---
+  duration_ms: 1.794667
+  type: 'test'
+  ...
+# Subtest: checkBuild resolved native Promise is observed and cannot advance construction
+ok 476 - checkBuild resolved native Promise is observed and cannot advance construction
+  ---
+  duration_ms: 1.659291
+  type: 'test'
+  ...
+# Subtest: createHost resolved native Promise is observed and cannot advance construction
+ok 477 - createHost resolved native Promise is observed and cannot advance construction
+  ---
+  duration_ms: 28.079167
+  type: 'test'
+  ...
+# Subtest: createOracle resolved native Promise is observed and cannot advance construction
+ok 478 - createOracle resolved native Promise is observed and cannot advance construction
+  ---
+  duration_ms: 29.231667
+  type: 'test'
+  ...
+# Subtest: createLane resolved native Promise is observed and cannot advance construction
+ok 479 - createLane resolved native Promise is observed and cannot advance construction
+  ---
+  duration_ms: 27.968666
+  type: 'test'
+  ...
+# Subtest: checkBuild rejected native Promise is observed and cannot advance construction
+ok 480 - checkBuild rejected native Promise is observed and cannot advance construction
+  ---
+  duration_ms: 1.731042
+  type: 'test'
+  ...
+# Subtest: createHost rejected native Promise is observed and cannot advance construction
+ok 481 - createHost rejected native Promise is observed and cannot advance construction
+  ---
+  duration_ms: 26.99475
+  type: 'test'
+  ...
+# Subtest: createOracle rejected native Promise is observed and cannot advance construction
+ok 482 - createOracle rejected native Promise is observed and cannot advance construction
+  ---
+  duration_ms: 26.42725
+  type: 'test'
+  ...
+# Subtest: createLane rejected native Promise is observed and cannot advance construction
+ok 483 - createLane rejected native Promise is observed and cannot advance construction
+  ---
+  duration_ms: 28.064542
+  type: 'test'
+  ...
+# Subtest: unissued createHost stops before later factories
+ok 484 - unissued createHost stops before later factories
+  ---
+  duration_ms: 27.906792
+  type: 'test'
+  ...
+# Subtest: unissued createOracle stops before later factories
+ok 485 - unissued createOracle stops before later factories
+  ---
+  duration_ms: 28.745792
+  type: 'test'
+  ...
+# Subtest: downstream admission refusal closes the original unused lane without model requests
+ok 486 - downstream admission refusal closes the original unused lane without model requests
+  ---
+  duration_ms: 29.817042
+  type: 'test'
+  ...
+# Subtest: changed injected build after preflight refuses before session creation
+ok 487 - changed injected build after preflight refuses before session creation
+  ---
+  duration_ms: 2.36775
+  type: 'test'
+  ...
+# Subtest: malformed returned lane cannot report cleanup confirmed or continue
+ok 488 - malformed returned lane cannot report cleanup confirmed or continue
+  ---
+  duration_ms: 27.06625
+  type: 'test'
+  ...
+# Subtest: isolated construction-only four: original issued intents and fresh identities, no execution
+ok 489 - isolated construction-only four: original issued intents and fresh identities, no execution
+  ---
+  duration_ms: 65.214959
+  type: 'test'
+  ...
+# Subtest: isolated construction-only copy: original issued intents and fresh identities, no execution
+ok 490 - isolated construction-only copy: original issued intents and fresh identities, no execution
+  ---
+  duration_ms: 45.810958
+  type: 'test'
+  ...
+# Subtest: isolated construction-only out-of-order: original issued intents and fresh identities, no execution
+ok 491 - isolated construction-only out-of-order: original issued intents and fresh identities, no execution
+  ---
+  duration_ms: 44.000375
+  type: 'test'
+  ...
+# Subtest: isolated construction-only duplicate: original issued intents and fresh identities, no execution
+ok 492 - isolated construction-only duplicate: original issued intents and fresh identities, no execution
+  ---
+  duration_ms: 45.878916
+  type: 'test'
+  ...
+# Subtest: state root identity change after session creation refuses before first owner construction, with no retry
+ok 493 - state root identity change after session creation refuses before first owner construction, with no retry
+  ---
+  duration_ms: 19.349708
+  type: 'test'
+  ...
+# Subtest: constructor snapshots selection, budgets, plan and factory methods before later caller mutation
+ok 494 - constructor snapshots selection, budgets, plan and factory methods before later caller mutation
+  ---
+  duration_ms: 449.222375
+  type: 'test'
+  ...
+# Subtest: setup signal and in-flight user stop close only original owners
+ok 495 - setup signal and in-flight user stop close only original owners
+  ---
+  duration_ms: 98.336042
+  type: 'test'
+  ...
+1..495
+# tests 573
+# suites 0
+# pass 573
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 44979.633042

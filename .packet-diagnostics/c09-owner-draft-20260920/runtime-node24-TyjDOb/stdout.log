@@ -1,0 +1,1 @@
+{"status":"PASS_SCOPED","evidence":"/Users/louiscalata/nisi/.build/private-package-aHhVwX","archive":{"path":"/Users/louiscalata/nisi/.build/private-package-aHhVwX/nisi-0.2.0-private.0.tgz","sha256":"f79c9f133966b4258953021ea2d107bad991121704ce9d9c299090eba7879972"},"negativeControls":{"expected":73,"observed":73,"allExpectedLocationsDetected":true},"failure":null}

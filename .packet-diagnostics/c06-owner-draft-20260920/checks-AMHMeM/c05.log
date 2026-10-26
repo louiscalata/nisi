@@ -1,0 +1,683 @@
+TAP version 13
+# Subtest: C03 boundary control: actual runner preserves the C02 original-evidence receipt gate
+ok 1 - C03 boundary control: actual runner preserves the C02 original-evidence receipt gate
+  ---
+  duration_ms: 85.32225
+  type: 'test'
+  ...
+# Subtest: C03 boundary rejects every false completion clause at the actual runner
+ok 2 - C03 boundary rejects every false completion clause at the actual runner
+  ---
+  duration_ms: 481.207459
+  type: 'test'
+  ...
+# Subtest: C03 boundary prefers DEADLINE_EXCEEDED over a conflicting bundle error
+ok 3 - C03 boundary prefers DEADLINE_EXCEEDED over a conflicting bundle error
+  ---
+  duration_ms: 82.088375
+  type: 'test'
+  ...
+# Subtest: C03 boundary preserves genuine cancellation after the real tests phase
+ok 4 - C03 boundary preserves genuine cancellation after the real tests phase
+  ---
+  duration_ms: 77.662709
+  type: 'test'
+  ...
+# Subtest: C03 boundary preserves cancellation plus a failed removal as adverse cleanup evidence
+ok 5 - C03 boundary preserves cancellation plus a failed removal as adverse cleanup evidence
+  ---
+  duration_ms: 80.740292
+  type: 'test'
+  ...
+# Subtest: C03 boundary preserves timeout precedence plus an unverifiable post-removal lstat
+ok 6 - C03 boundary preserves timeout precedence plus an unverifiable post-removal lstat
+  ---
+  duration_ms: 79.610209
+  type: 'test'
+  ...
+# Subtest: C03 lifecycle distinguishes none
+ok 7 - C03 lifecycle distinguishes none
+  ---
+  duration_ms: 82.058917
+  type: 'test'
+  ...
+# Subtest: C03 lifecycle distinguishes wrong-profile
+ok 8 - C03 lifecycle distinguishes wrong-profile
+  ---
+  duration_ms: 31.934458
+  type: 'test'
+  ...
+# Subtest: C03 lifecycle distinguishes allocation
+ok 9 - C03 lifecycle distinguishes allocation
+  ---
+  duration_ms: 36.030416
+  type: 'test'
+  ...
+# Subtest: C03 lifecycle distinguishes rm-reject
+ok 10 - C03 lifecycle distinguishes rm-reject
+  ---
+  duration_ms: 81.967042
+  type: 'test'
+  ...
+# Subtest: C03 lifecycle distinguishes rm-noop
+ok 11 - C03 lifecycle distinguishes rm-noop
+  ---
+  duration_ms: 80.78625
+  type: 'test'
+  ...
+# Subtest: C03 lifecycle distinguishes rm-then-reject
+ok 12 - C03 lifecycle distinguishes rm-then-reject
+  ---
+  duration_ms: 81.618166
+  type: 'test'
+  ...
+# Subtest: C03 lifecycle distinguishes lstat-unverified
+ok 13 - C03 lifecycle distinguishes lstat-unverified
+  ---
+  duration_ms: 82.992541
+  type: 'test'
+  ...
+# Subtest: C03 completion reader accepts only the ordinary own-data positive control
+ok 14 - C03 completion reader accepts only the ordinary own-data positive control
+  ---
+  duration_ms: 0.564583
+  type: 'test'
+  ...
+# Subtest: C03 completion reader rejects host Symbol.toStringTag without invoking it
+ok 15 - C03 completion reader rejects host Symbol.toStringTag without invoking it
+  ---
+  duration_ms: 0.058375
+  type: 'test'
+  ...
+# Subtest: C03 completion reader rejects report Symbol.toStringTag without invoking it
+ok 16 - C03 completion reader rejects report Symbol.toStringTag without invoking it
+  ---
+  duration_ms: 0.036958
+  type: 'test'
+  ...
+# Subtest: C03 completion reader rejects bundleError Symbol.toStringTag without invoking it
+ok 17 - C03 completion reader rejects bundleError Symbol.toStringTag without invoking it
+  ---
+  duration_ms: 0.0395
+  type: 'test'
+  ...
+# Subtest: C03 completion reader rejects host data tag without trusting its label
+ok 18 - C03 completion reader rejects host data tag without trusting its label
+  ---
+  duration_ms: 0.046167
+  type: 'test'
+  ...
+# Subtest: C03 completion reader rejects report data tag without trusting its label
+ok 19 - C03 completion reader rejects report data tag without trusting its label
+  ---
+  duration_ms: 0.029291
+  type: 'test'
+  ...
+# Subtest: C03 completion reader rejects bundleError data tag without trusting its label
+ok 20 - C03 completion reader rejects bundleError data tag without trusting its label
+  ---
+  duration_ms: 0.02575
+  type: 'test'
+  ...
+# Subtest: C03 completion reader treats host.state accessor as absent without invoking it
+ok 21 - C03 completion reader treats host.state accessor as absent without invoking it
+  ---
+  duration_ms: 0.05775
+  type: 'test'
+  ...
+# Subtest: C03 completion reader treats report.outcome accessor as absent without invoking it
+ok 22 - C03 completion reader treats report.outcome accessor as absent without invoking it
+  ---
+  duration_ms: 0.045667
+  type: 'test'
+  ...
+# Subtest: C03 completion reader treats bundleError.code accessor as absent without invoking it
+ok 23 - C03 completion reader treats bundleError.code accessor as absent without invoking it
+  ---
+  duration_ms: 0.061917
+  type: 'test'
+  ...
+# Subtest: C03 completion reader ignores inherited evidence without discarding own clauses
+ok 24 - C03 completion reader ignores inherited evidence without discarding own clauses
+  ---
+  duration_ms: 0.05025
+  type: 'test'
+  ...
+# Subtest: C03 completion reader rejects host Proxy before any trap
+ok 25 - C03 completion reader rejects host Proxy before any trap
+  ---
+  duration_ms: 0.042792
+  type: 'test'
+  ...
+# Subtest: C03 completion reader rejects report Proxy before any trap
+ok 26 - C03 completion reader rejects report Proxy before any trap
+  ---
+  duration_ms: 0.031167
+  type: 'test'
+  ...
+# Subtest: C03 completion reader rejects bundleError Proxy before any trap
+ok 27 - C03 completion reader rejects bundleError Proxy before any trap
+  ---
+  duration_ms: 0.025291
+  type: 'test'
+  ...
+# Subtest: C03 completion reader rejects a revoked host Proxy without throwing
+ok 28 - C03 completion reader rejects a revoked host Proxy without throwing
+  ---
+  duration_ms: 0.054208
+  type: 'test'
+  ...
+# Subtest: C02 completion dependency seam preserves a real successful product run
+ok 29 - C02 completion dependency seam preserves a real successful product run
+  ---
+  duration_ms: 83.671875
+  type: 'test'
+  ...
+# Subtest: C02 completion refuses cancel-after-tests after owner settlement
+ok 30 - C02 completion refuses cancel-after-tests after owner settlement
+  ---
+  duration_ms: 77.950458
+  type: 'test'
+  ...
+# Subtest: C02 completion refuses report-not-completed after owner settlement
+ok 31 - C02 completion refuses report-not-completed after owner settlement
+  ---
+  duration_ms: 79.961583
+  type: 'test'
+  ...
+# Subtest: C02 completion refuses report-wrong-run after owner settlement
+ok 32 - C02 completion refuses report-wrong-run after owner settlement
+  ---
+  duration_ms: 80.327042
+  type: 'test'
+  ...
+# Subtest: C02 completion refuses report-stale-candidate after owner settlement
+ok 33 - C02 completion refuses report-stale-candidate after owner settlement
+  ---
+  duration_ms: 79.374083
+  type: 'test'
+  ...
+# Subtest: C02 completion refuses fabricated-bundle after owner settlement
+ok 34 - C02 completion refuses fabricated-bundle after owner settlement
+  ---
+  duration_ms: 79.945
+  type: 'test'
+  ...
+# Subtest: C02 completion refuses summary-final-checks-false after owner settlement
+ok 35 - C02 completion refuses summary-final-checks-false after owner settlement
+  ---
+  duration_ms: 83.314875
+  type: 'test'
+  ...
+# Subtest: C02 completion refuses summary-wrong-run after owner settlement
+ok 36 - C02 completion refuses summary-wrong-run after owner settlement
+  ---
+  duration_ms: 83.241541
+  type: 'test'
+  ...
+# Subtest: C02 completion refuses summary-stale-candidate after owner settlement
+ok 37 - C02 completion refuses summary-stale-candidate after owner settlement
+  ---
+  duration_ms: 82.719333
+  type: 'test'
+  ...
+# Subtest: control: the default run is COMPLETED only with a verified removal: cleaned from the post-removal lstat, no cleanup error, no residue
+ok 38 - control: the default run is COMPLETED only with a verified removal: cleaned from the post-removal lstat, no cleanup error, no residue
+  ---
+  duration_ms: 60.538083
+  type: 'test'
+  ...
+# Subtest: finding 2: a real removal failure (unremovable planted subtree) is never COMPLETED: cleaned false, the rm error preserved, residue captured, receipt withdrawn
+ok 39 - finding 2: a real removal failure (unremovable planted subtree) is never COMPLETED: cleaned false, the rm error preserved, residue captured, receipt withdrawn
+  ---
+  duration_ms: 38.298084
+  type: 'test'
+  ...
+# Subtest: finding 2: an injected removal rejection keeps every retained byte on disk and reports the receipt among the residue
+ok 40 - finding 2: an injected removal rejection keeps every retained byte on disk and reports the receipt among the residue
+  ---
+  duration_ms: 41.775375
+  type: 'test'
+  ...
+# Subtest: finding 2: a removal that is REJECTED after it emptied the root is never cleaned: the rm code and the lstat ENOENT are both preserved, the receipt withdrawn
+ok 41 - finding 2: a removal that is REJECTED after it emptied the root is never cleaned: the rm code and the lstat ENOENT are both preserved, the receipt withdrawn
+  ---
+  duration_ms: 37.991
+  type: 'test'
+  ...
+# Subtest: finding 2: a removal rejected part-way (the receipt bytes gone, the rest present) lists what is REALLY left after the rm, not what was there before it
+ok 42 - finding 2: a removal rejected part-way (the receipt bytes gone, the rest present) lists what is REALLY left after the rm, not what was there before it
+  ---
+  duration_ms: 40.133917
+  type: 'test'
+  ...
+# Subtest: finding 2: a post-removal lstat error other than ENOENT never establishes cleaned:true, even when the root is gone
+ok 43 - finding 2: a post-removal lstat error other than ENOENT never establishes cleaned:true, even when the root is gone
+  ---
+  duration_ms: 36.519833
+  type: 'test'
+  ...
+# Subtest: finding 2: a removal that resolves without removing anything is OWNED_ROOT_RETAINED, not cleaned
+ok 44 - finding 2: a removal that resolves without removing anything is OWNED_ROOT_RETAINED, not cleaned
+  ---
+  duration_ms: 36.8455
+  type: 'test'
+  ...
+# Subtest: finding 2: cleanup failure on an already adverse run preserves the primary adverse status and reason beside the cleanup error
+ok 45 - finding 2: cleanup failure on an already adverse run preserves the primary adverse status and reason beside the cleanup error
+  ---
+  duration_ms: 2.151375
+  type: 'test'
+  ...
+# Subtest: finding 7: a parent that refuses mkdtemp is REFUSED OWNED_ROOT_UNAVAILABLE with the OS code, no root, no writes, nothing left behind
+ok 46 - finding 7: a parent that refuses mkdtemp is REFUSED OWNED_ROOT_UNAVAILABLE with the OS code, no root, no writes, nothing left behind
+  ---
+  duration_ms: 0.891958
+  type: 'test'
+  ...
+# Subtest: finding 7: an injected mkdtemp rejection (runs under any euid) is REFUSED OWNED_ROOT_UNAVAILABLE with the injected code, no root, no writes, nothing left behind
+ok 47 - finding 7: an injected mkdtemp rejection (runs under any euid) is REFUSED OWNED_ROOT_UNAVAILABLE with the injected code, no root, no writes, nothing left behind
+  ---
+  duration_ms: 0.777625
+  type: 'test'
+  ...
+# Subtest: finding 7: a chmod failure after mkdtemp is REFUSED OWNED_ROOT_UNAVAILABLE, retains the exact owned root, and still removes it
+ok 48 - finding 7: a chmod failure after mkdtemp is REFUSED OWNED_ROOT_UNAVAILABLE, retains the exact owned root, and still removes it
+  ---
+  duration_ms: 0.964542
+  type: 'test'
+  ...
+# Subtest: finding 7: a chmod that resolves but leaves the root at another mode is REFUSED OWNED_ROOT_UNAVAILABLE cause OWNED_ROOT_MODE: nothing is written into a root the runner alone cannot enter
+ok 49 - finding 7: a chmod that resolves but leaves the root at another mode is REFUSED OWNED_ROOT_UNAVAILABLE cause OWNED_ROOT_MODE: nothing is written into a root the runner alone cannot enter
+  ---
+  duration_ms: 1.000375
+  type: 'test'
+  ...
+# Subtest: finding 7: an owned root swapped for a symlink to the caller parent before chmod is REFUSED cause OWNED_ROOT_NOT_DIRECTORY: nothing is written through it, only the link is removed, the parent is untouched
+ok 50 - finding 7: an owned root swapped for a symlink to the caller parent before chmod is REFUSED cause OWNED_ROOT_NOT_DIRECTORY: nothing is written through it, only the link is removed, the parent is untouched
+  ---
+  duration_ms: 1.266292
+  type: 'test'
+  ...
+# Subtest: finding 8: a pre-aborted signal is CANCELLED with reason ABORTED (the engine code, not the host bundle error), no receipt, verified clean root
+ok 51 - finding 8: a pre-aborted signal is CANCELLED with reason ABORTED (the engine code, not the host bundle error), no receipt, verified clean root
+  ---
+  duration_ms: 1.867125
+  type: 'test'
+  ...
+# Subtest: finding 5: cancellation timing sweep — COMPLETED, workflowOutcome COMPLETED, a receipt and a retained receipt are one and the same fact at every abort point
+ok 52 - finding 5: cancellation timing sweep — COMPLETED, workflowOutcome COMPLETED, a receipt and a retained receipt are one and the same fact at every abort point
+  ---
+  duration_ms: 262.312917
+  type: 'test'
+  ...
+# Subtest: finding 5: a settlement rejection is UNCONFIRMED with the owner's own code, no receipt, verified clean root
+ok 53 - finding 5: a settlement rejection is UNCONFIRMED with the owner's own code, no receipt, verified clean root
+  ---
+  duration_ms: 19.840292
+  type: 'test'
+  ...
+# Subtest: finding 5: each clause of the completion predicate refuses on its own and names itself; only all five together complete
+ok 54 - finding 5: each clause of the completion predicate refuses on its own and names itself; only all five together complete
+  ---
+  duration_ms: 38.337209
+  type: 'test'
+  ...
+# Subtest: finding 7: refusals before any root exists (PROFILE_REQUIRED, SOURCE_DRIFT) allocate nothing: no mkdtemp, no write, no removal, the caller parent untouched, ownedRoot null
+ok 55 - finding 7: refusals before any root exists (PROFILE_REQUIRED, SOURCE_DRIFT) allocate nothing: no mkdtemp, no write, no removal, the caller parent untouched, ownedRoot null
+  ---
+  duration_ms: 0.974375
+  type: 'test'
+  ...
+# Subtest: finding 2: the result is built after cleanup — the cleanup verdict, not a constant, is what the frozen result carries
+ok 56 - finding 2: the result is built after cleanup — the cleanup verdict, not a constant, is what the frozen result carries
+  ---
+  duration_ms: 73.380917
+  type: 'test'
+  ...
+# Subtest: positive control admits exact allocation, descendant materialization, handles, and sync writes
+ok 57 - positive control admits exact allocation, descendant materialization, handles, and sync writes
+  ---
+  duration_ms: 5.395375
+  type: 'test'
+  ...
+# Subtest: pre-readiness and wrong-profile states cannot allocate or write
+ok 58 - pre-readiness and wrong-profile states cannot allocate or write
+  ---
+  duration_ms: 1.987791
+  type: 'test'
+  ...
+# Subtest: only one exact top-level allocation is admitted; stale readiness cannot authorize a later guard
+ok 59 - only one exact top-level allocation is admitted; stale readiness cannot authorize a later guard
+  ---
+  duration_ms: 2.311916
+  type: 'test'
+  ...
+# Subtest: promise, callback, and synchronous file mutators reject escape paths
+ok 60 - promise, callback, and synchronous file mutators reject escape paths
+  ---
+  duration_ms: 7.710833
+  type: 'test'
+  ...
+# Subtest: write-capable open flags are rejected while read-only outside opens remain usable
+ok 61 - write-capable open flags are rejected while read-only outside opens remain usable
+  ---
+  duration_ms: 5.069291
+  type: 'test'
+  ...
+# Subtest: both operands of two-path operations and symlink targets must be descendants
+ok 62 - both operands of two-path operations and symlink targets must be descendants
+  ---
+  duration_ms: 10.837042
+  type: 'test'
+  ...
+# Subtest: physical symlink ancestor and raw link/.. traversal are rejected
+ok 63 - physical symlink ancestor and raw link/.. traversal are rejected
+  ---
+  duration_ms: 2.98025
+  type: 'test'
+  ...
+# Subtest: final symlink to an owned file is refused without altering the target
+ok 64 - final symlink to an owned file is refused without altering the target
+  ---
+  duration_ms: 1.2215
+  type: 'test'
+  ...
+# Subtest: nested allocations reject outside, symlinked, and non-directory returns
+ok 65 - nested allocations reject outside, symlinked, and non-directory returns
+  ---
+  duration_ms: 4.496167
+  type: 'test'
+  ...
+# Subtest: runner refuses outside workspace before invoking its executor
+ok 66 - runner refuses outside workspace before invoking its executor
+  ---
+  duration_ms: 63.580709
+  type: 'test'
+  ...
+# Subtest: runner refuses root-itself workspace before invoking its executor
+ok 67 - runner refuses root-itself workspace before invoking its executor
+  ---
+  duration_ms: 62.591791
+  type: 'test'
+  ...
+# Subtest: runner refuses symlink workspace before invoking its executor
+ok 68 - runner refuses symlink workspace before invoking its executor
+  ---
+  duration_ms: 63.0135
+  type: 'test'
+  ...
+# Subtest: streams may be refused outright and patches are restored after close
+ok 69 - streams may be refused outright and patches are restored after close
+  ---
+  duration_ms: 4.652958
+  type: 'test'
+  ...
+# (node:96506) ExperimentalWarning: Module mocking is an experimental feature and might change at any time
+# (Use `node --trace-warnings ...` to show where the warning was created)
+# (node:96506) DeprecationWarning: mock.module(): options.namedExports is deprecated. Use options.exports instead.
+# (node:96506) DeprecationWarning: mock.module(): options.defaultExport is deprecated. Use options.exports.default instead.
+# Subtest: malformed outer records reject before getters, proxies, or filesystem calls
+ok 70 - malformed outer records reject before getters, proxies, or filesystem calls
+  ---
+  duration_ms: 4.712666
+  type: 'test'
+  ...
+# Subtest: named ignored controls and nested injection controls are closed before I/O
+ok 71 - named ignored controls and nested injection controls are closed before I/O
+  ---
+  duration_ms: 0.473667
+  type: 'test'
+  ...
+# Subtest: invalid signal records reject without traversing public getters; genuine signal is retained
+ok 72 - invalid signal records reject without traversing public getters; genuine signal is retained
+  ---
+  duration_ms: 53.238625
+  type: 'test'
+  ...
+# Subtest: null-prototype records and empty injection records remain no-op compatibility controls
+ok 73 - null-prototype records and empty injection records remain no-op compatibility controls
+  ---
+  duration_ms: 298.984584
+  type: 'test'
+  ...
+# Subtest: all nested records reject descriptor and prototype surprises before I/O
+ok 74 - all nested records reject descriptor and prototype surprises before I/O
+  ---
+  duration_ms: 0.745792
+  type: 'test'
+  ...
+# Subtest: Buffer brands, shared backing, and detached backing are rejected before I/O
+ok 75 - Buffer brands, shared backing, and detached backing are rejected before I/O
+  ---
+  duration_ms: 0.486458
+  type: 'test'
+  ...
+# Subtest: nested injection is captured before an asynchronous caller change
+ok 76 - nested injection is captured before an asynchronous caller change
+  ---
+  duration_ms: 38.599666
+  type: 'test'
+  ...
+# Subtest: exact source buffers, pooled slices, and post-call mutation are snapshot-safe
+ok 77 - exact source buffers, pooled slices, and post-call mutation are snapshot-safe
+  ---
+  duration_ms: 37.912
+  type: 'test'
+  ...
+# Subtest: source type and pin failures retain the historical RUNNER_ARGS/SOURCE_DRIFT split
+ok 78 - source type and pin failures retain the historical RUNNER_ARGS/SOURCE_DRIFT split
+  ---
+  duration_ms: 0.616792
+  type: 'test'
+  ...
+# Subtest: settled injection remains the only supported override and preserves adverse semantics
+ok 79 - settled injection remains the only supported override and preserves adverse semantics
+  ---
+  duration_ms: 19.287084
+  type: 'test'
+  ...
+# Subtest: actual runner has the exact frozen direct import surface
+ok 80 - actual runner has the exact frozen direct import surface
+  ---
+  duration_ms: 10.474208
+  type: 'test'
+  ...
+# Subtest: AST surface mutants are rejected without regex false positives
+ok 81 - AST surface mutants are rejected without regex false positives
+  ---
+  duration_ms: 1.064167
+  type: 'test'
+  ...
+# Subtest: AST oracle bounds primitive source input and does not accept parse failures as kills
+ok 82 - AST oracle bounds primitive source input and does not accept parse failures as kills
+  ---
+  duration_ms: 0.338541
+  type: 'test'
+  ...
+# Subtest: network guard exact families and transactional restoration: coverage
+ok 83 - network guard exact families and transactional restoration: coverage
+  ---
+  duration_ms: 116.231292
+  type: 'test'
+  ...
+# Subtest: network guard exact families and transactional restoration: missing
+ok 84 - network guard exact families and transactional restoration: missing
+  ---
+  duration_ms: 116.149209
+  type: 'test'
+  ...
+# Subtest: normal runner execution makes no guarded network attempt
+ok 85 - normal runner execution makes no guarded network attempt
+  ---
+  duration_ms: 41.396291
+  type: 'test'
+  ...
+# Subtest: F1: the surfaced bundle re-reads CONSISTENT through the product reader from an independent fixture instance
+ok 86 - F1: the surfaced bundle re-reads CONSISTENT through the product reader from an independent fixture instance
+  ---
+  duration_ms: 64.854334
+  type: 'test'
+  ...
+# Subtest: F1: a fabricated or tampered surfaced bundle is rejected by the product reader
+ok 87 - F1: a fabricated or tampered surfaced bundle is rejected by the product reader
+  ---
+  duration_ms: 42.890125
+  type: 'test'
+  ...
+# Subtest: F4: the receipt binds runId, the repaired candidate, the reviewed sources and the product bundle, with review defaults off
+ok 88 - F4: the receipt binds runId, the repaired candidate, the reviewed sources and the product bundle, with review defaults off
+  ---
+  duration_ms: 43.519834
+  type: 'test'
+  ...
+# Subtest: F4: a completed run retains exactly preflight, engine report, host result and receipt, exclusively, digests from the written bytes
+ok 89 - F4: a completed run retains exactly preflight, engine report, host result and receipt, exclusively, digests from the written bytes
+  ---
+  duration_ms: 38.695792
+  type: 'test'
+  ...
+# Subtest: F4: a pre-existing runner-receipt.json is never overwritten: EEXIST is reported, no receipt, retained equals the written set
+ok 90 - F4: a pre-existing runner-receipt.json is never overwritten: EEXIST is reported, no receipt, retained equals the written set
+  ---
+  duration_ms: 38.700833
+  type: 'test'
+  ...
+# Subtest: F4: a pre-existing preflight.json stops the run before any host work: nothing retained, no preflight, no workspace, no receipt
+ok 91 - F4: a pre-existing preflight.json stops the run before any host work: nothing retained, no preflight, no workspace, no receipt
+  ---
+  duration_ms: 1.384208
+  type: 'test'
+  ...
+# Subtest: F4: a preflight read-back failure stops before host work and preserves only the physical file
+ok 92 - F4: a preflight read-back failure stops before host work and preserves only the physical file
+  ---
+  duration_ms: 1.296916
+  type: 'test'
+  ...
+# Subtest: F4: a torn read-back of host-result.json is RETAINED_READBACK: the record is derived from re-read bytes, and the receipt is never written
+ok 93 - F4: a torn read-back of host-result.json is RETAINED_READBACK: the record is derived from re-read bytes, and the receipt is never written
+  ---
+  duration_ms: 34.406834
+  type: 'test'
+  ...
+# Subtest: F4: a truncated write of engine-report.json is RETAINED_READBACK: retained stops at preflight.json and no later record is attempted
+ok 94 - F4: a truncated write of engine-report.json is RETAINED_READBACK: retained stops at preflight.json and no later record is attempted
+  ---
+  duration_ms: 33.620042
+  type: 'test'
+  ...
+# Subtest: F4: a non-EEXIST write failure is RETAINED_WRITE_FAILED with the OS code as reasonDetail, never mistaken for a planted file
+ok 95 - F4: a non-EEXIST write failure is RETAINED_WRITE_FAILED with the OS code as reasonDetail, never mistaken for a planted file
+  ---
+  duration_ms: 34.759459
+  type: 'test'
+  ...
+# Subtest: F4: a read-back failure is RETAINED_READBACK with the read error code, never mislabelled as a write failure
+ok 96 - F4: a read-back failure is RETAINED_READBACK with the read error code, never mislabelled as a write failure
+  ---
+  duration_ms: 36.876667
+  type: 'test'
+  ...
+# Subtest: F4: a receipt read-back failure leaves the settled host diagnostic but never claims a receipt
+ok 97 - F4: a receipt read-back failure leaves the settled host diagnostic but never claims a receipt
+  ---
+  duration_ms: 39.9005
+  type: 'test'
+  ...
+# Subtest: F4: a host that refuses to settle retains preflight, engine report and host result with true digests, and no receipt
+ok 98 - F4: a host that refuses to settle retains preflight, engine report and host result with true digests, and no receipt
+  ---
+  duration_ms: 23.796791
+  type: 'test'
+  ...
+# Subtest: F4: a cancelled run retains preflight, engine report and host result with true digests, and no receipt
+ok 99 - F4: a cancelled run retains preflight, engine report and host result with true digests, and no receipt
+  ---
+  duration_ms: 2.1735
+  type: 'test'
+  ...
+# (node:96522) ExperimentalWarning: Module mocking is an experimental feature and might change at any time
+# (Use `node --trace-warnings ...` to show where the warning was created)
+# (node:96522) DeprecationWarning: mock.module(): options.namedExports is deprecated. Use options.exports instead.
+# Subtest: default run completes with repair, exact manifest, settled host before receipt, and cleaned owned root
+ok 100 - default run completes with repair, exact manifest, settled host before receipt, and cleaned owned root
+  ---
+  duration_ms: 63.393459
+  type: 'test'
+  ...
+# Subtest: result and receipt are deeply frozen and repeatable up to the random runId
+ok 101 - result and receipt are deeply frozen and repeatable up to the random runId
+  ---
+  duration_ms: 79.362041
+  type: 'test'
+  ...
+# Subtest: cancelled signal yields an adverse CANCELLED result with no receipt and cleaned root
+ok 102 - cancelled signal yields an adverse CANCELLED result with no receipt and cleaned root
+  ---
+  duration_ms: 2.739459
+  type: 'test'
+  ...
+# Subtest: wrong profile is refused before any run, with no owned root
+ok 103 - wrong profile is refused before any run, with no owned root
+  ---
+  duration_ms: 0.689166
+  type: 'test'
+  ...
+# Subtest: a host that refuses to settle is UNCONFIRMED: no receipt, cleaned root, QUARANTINED host result
+ok 104 - a host that refuses to settle is UNCONFIRMED: no receipt, cleaned root, QUARANTINED host result
+  ---
+  duration_ms: 24.338458
+  type: 'test'
+  ...
+# Subtest: source-pin drift: a tampered pinned source refuses before any run
+ok 105 - source-pin drift: a tampered pinned source refuses before any run
+  ---
+  duration_ms: 1.036375
+  type: 'test'
+  ...
+# Subtest: source-pin drift: five exact entries plus one unknown entry refuses before any run
+ok 106 - source-pin drift: five exact entries plus one unknown entry refuses before any run
+  ---
+  duration_ms: 0.893541
+  type: 'test'
+  ...
+# Subtest: positive sources control: the exact five pinned buffers complete with the same manifest
+ok 107 - positive sources control: the exact five pinned buffers complete with the same manifest
+  ---
+  duration_ms: 40.545042
+  type: 'test'
+  ...
+# Subtest: argument shape errors throw RUNNER_ARGS before any side effect
+ok 108 - argument shape errors throw RUNNER_ARGS before any side effect
+  ---
+  duration_ms: 1.004417
+  type: 'test'
+  ...
+# Subtest: no allocation while source admission is pending
+ok 109 - no allocation while source admission is pending
+  ---
+  duration_ms: 41.634708
+  type: 'test'
+  ...
+# Subtest: no allocation while source admission is pending or rejected
+ok 110 - no allocation while source admission is pending or rejected
+  ---
+  duration_ms: 0.674417
+  type: 'test'
+  ...
+# Subtest: runner imports only the exact approved modules and no indirect loader syntax
+ok 111 - runner imports only the exact approved modules and no indirect loader syntax
+  ---
+  duration_ms: 10.14575
+  type: 'test'
+  ...
+1..111
+# tests 111
+# suites 0
+# pass 111
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 5032.098208

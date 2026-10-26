@@ -1,0 +1,21 @@
+{
+  "sourceHashes": {
+    "history/host-journal-bundle.mjs": "e2954caeaa987993fd17e1904d4222e5b030b29e7f028c816809fe83ae0ace6b",
+    "work-orders/v02-finish-cluster-v1/restart/host-bundle-integration.test.mjs": "b24f8c1d8599fd91b636e960fb2dc841d646ca0347b3be075457ab7195e03817",
+    "tests/host-journal-bundle.test.mjs": "815556218a0ef5907f11acdf4de22259ca171e3725be977e08c2fa7001a3dabf"
+  },
+  "exitCode": 0,
+  "error": null,
+  "signal": null,
+  "unchanged": true,
+  "ok": true,
+  "binding": {
+    "taskFingerprint": "8511e736f489998fdf02bcea16510bf54e9aca6fbb75b910777e2deb347501f0",
+    "candidateFingerprint": "d97d4154937d0bf43e3fca1e5c465c6bfd4f7116417ebde206d24486cb958450",
+    "reviewedCandidateSha256": null,
+    "reviewBindingMatches": false
+  },
+  "logSha256": "6d4d7a764d566c8a8b1ca604afbb2b0fb0c0258bbabca464022064c85993b324",
+  "inference": "NOT_RUN",
+  "implementationAccepted": false
+}

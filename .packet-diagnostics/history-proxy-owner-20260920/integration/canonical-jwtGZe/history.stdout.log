@@ -1,0 +1,934 @@
+TAP version 13
+# Subtest: malformed envelopes, hidden fields, symbols and accessors refuse without getter invocation
+ok 1 - malformed envelopes, hidden fields, symbols and accessors refuse without getter invocation
+  ---
+  duration_ms: 1.357666
+  type: 'test'
+  ...
+# Subtest: invalid times and fabricated handles are INVALID_INPUT with no snapshot
+ok 2 - invalid times and fabricated handles are INVALID_INPUT with no snapshot
+  ---
+  duration_ms: 0.231458
+  type: 'test'
+  ...
+# Subtest: plain and null-prototype exact envelopes are accepted
+ok 3 - plain and null-prototype exact envelopes are accepted
+  ---
+  duration_ms: 0.790916
+  type: 'test'
+  ...
+# Subtest: SEALED owner refusal preserves its snapshot and performs no IO
+ok 4 - SEALED owner refusal preserves its snapshot and performs no IO
+  ---
+  duration_ms: 0.479791
+  type: 'test'
+  ...
+# Subtest: COMMIT_UNCERTAIN owner refusal preserves quarantine and performs no IO
+ok 5 - COMMIT_UNCERTAIN owner refusal preserves quarantine and performs no IO
+  ---
+  duration_ms: 0.377625
+  type: 'test'
+  ...
+# Subtest: empty NEW owner persists a complete header/footer without synthetic observations
+ok 6 - empty NEW owner persists a complete header/footer without synthetic observations
+  ---
+  duration_ms: 0.217583
+  type: 'test'
+  ...
+# Subtest: same-watermark repeat verifies disk and returns UNCHANGED without durability claim
+ok 7 - same-watermark repeat verifies disk and returns UNCHANGED without durability claim
+  ---
+  duration_ms: 0.246292
+  type: 'test'
+  ...
+# Subtest: later maintenance advances serialized watermark even when no payload expires
+ok 8 - later maintenance advances serialized watermark even when no payload expires
+  ---
+  duration_ms: 0.249458
+  type: 'test'
+  ...
+# Subtest: backward maintenance time refuses TIME and preserves exact prior snapshot and disk
+ok 9 - backward maintenance time refuses TIME and preserves exact prior snapshot and disk
+  ---
+  duration_ms: 0.484166
+  type: 'test'
+  ...
+# Subtest: payload is retained immediately before TTL boundary
+ok 10 - payload is retained immediately before TTL boundary
+  ---
+  duration_ms: 0.423
+  type: 'test'
+  ...
+# Subtest: payload is removed exactly at TTL while identity and fingerprint remain
+ok 11 - payload is removed exactly at TTL while identity and fingerprint remain
+  ---
+  duration_ms: 0.44075
+  type: 'test'
+  ...
+# Subtest: revocation expires before its target without undoing revoked liveness after reopen
+ok 12 - revocation expires before its target without undoing revoked liveness after reopen
+  ---
+  duration_ms: 0.948833
+  type: 'test'
+  ...
+# Subtest: capacity eviction of target and revocation payloads preserves their relation
+ok 13 - capacity eviction of target and revocation payloads preserves their relation
+  ---
+  duration_ms: 0.827708
+  type: 'test'
+  ...
+# Subtest: same-watermark maintenance does not conceal disk drift behind unchanged private bytes
+ok 14 - same-watermark maintenance does not conceal disk drift behind unchanged private bytes
+  ---
+  duration_ms: 0.439459
+  type: 'test'
+  ...
+# Subtest: open-time private pruning is durably persisted even without newly expired payload
+ok 15 - open-time private pruning is durably persisted even without newly expired payload
+  ---
+  duration_ms: 0.254291
+  type: 'test'
+  ...
+# Subtest: maintenance preserves already-redacted payload and never restores caller secret
+ok 16 - maintenance preserves already-redacted payload and never restores caller secret
+  ---
+  duration_ms: 0.239625
+  type: 'test'
+  ...
+# Subtest: durable REVOKED row removes target liveness but preserves target payload before TTL
+ok 17 - durable REVOKED row removes target liveness but preserves target payload before TTL
+  ---
+  duration_ms: 0.488708
+  type: 'test'
+  ...
+# Subtest: revocation relation and both identities survive target TTL pruning and reopen
+ok 18 - revocation relation and both identities survive target TTL pruning and reopen
+  ---
+  duration_ms: 0.444334
+  type: 'test'
+  ...
+# Subtest: replaying an expired target is DUPLICATE while changed content remains CONFLICT
+ok 19 - replaying an expired target is DUPLICATE while changed content remains CONFLICT
+  ---
+  duration_ms: 0.264958
+  type: 'test'
+  ...
+# Subtest: replaying a durable revocation is DUPLICATE and conflicting revocation is CONFLICT
+ok 20 - replaying a durable revocation is DUPLICATE and conflicting revocation is CONFLICT
+  ---
+  duration_ms: 0.496042
+  type: 'test'
+  ...
+# Subtest: REVOKED row validation still requires prior target and top-level revokes metadata
+ok 21 - REVOKED row validation still requires prior target and top-level revokes metadata
+  ---
+  duration_ms: 0.201709
+  type: 'test'
+  ...
+# Subtest: capacity pruning removes oldest payloads but conserves every accepted ID
+ok 22 - capacity pruning removes oldest payloads but conserves every accepted ID
+  ---
+  duration_ms: 3.555125
+  type: 'test'
+  ...
+# Subtest: stale owner maintenance detects changed disk and preserves its prior snapshot
+ok 23 - stale owner maintenance detects changed disk and preserves its prior snapshot
+  ---
+  duration_ms: 0.289583
+  type: 'test'
+  ...
+# Subtest: concurrent NEW owners accept identical bytes as verified UNCHANGED and reject different bytes
+ok 24 - concurrent NEW owners accept identical bytes as verified UNCHANGED and reject different bytes
+  ---
+  duration_ms: 0.208833
+  type: 'test'
+  ...
+# Subtest: precommit rename failure rolls back staged pruning and preserves disk bytes
+ok 25 - precommit rename failure rolls back staged pruning and preserves disk bytes
+  ---
+  duration_ms: 0.269834
+  type: 'test'
+  ...
+# Subtest: postcommit readback failure quarantines owner and fresh reopen reconciles committed maintenance
+ok 26 - postcommit readback failure quarantines owner and fresh reopen reconciles committed maintenance
+  ---
+  duration_ms: 0.321833
+  type: 'test'
+  ...
+# Subtest: missing fsync truthfully succeeds as non-durable MAINTAINED
+ok 27 - missing fsync truthfully succeeds as non-durable MAINTAINED
+  ---
+  duration_ms: 0.14875
+  type: 'test'
+  ...
+# Subtest: coherent fsync faults remain verified non-durable success rather than uncertainty
+ok 28 - coherent fsync faults remain verified non-durable success rather than uncertainty
+  ---
+  duration_ms: 0.117584
+  type: 'test'
+  ...
+# Subtest: maintenance holds the shared busy guard against reentrant record
+ok 29 - maintenance holds the shared busy guard against reentrant record
+  ---
+  duration_ms: 0.128209
+  type: 'test'
+  ...
+# Subtest: record holds the shared busy guard against reentrant maintenance
+ok 30 - record holds the shared busy guard against reentrant maintenance
+  ---
+  duration_ms: 0.133334
+  type: 'test'
+  ...
+# Subtest: busy guard is released after failed maintenance
+ok 31 - busy guard is released after failed maintenance
+  ---
+  duration_ms: 0.125667
+  type: 'test'
+  ...
+# Subtest: maintenance snapshots are immutable and older returned payload snapshots are not erased retroactively
+ok 32 - maintenance snapshots are immutable and older returned payload snapshots are not erased retroactively
+  ---
+  duration_ms: 0.392166
+  type: 'test'
+  ...
+# Subtest: explicit private dependency-free module and four named APIs
+ok 33 - explicit private dependency-free module and four named APIs
+  ---
+  duration_ms: 0.572459
+  type: 'test'
+  ...
+# Subtest: reviewed Proxy-hardened journal and unchanged store source
+ok 34 - reviewed Proxy-hardened journal and unchanged store source
+  ---
+  duration_ms: 0.285125
+  type: 'test'
+  ...
+# Subtest: hash pins bind the reviewed owner, frozen dependencies and memfs context
+ok 35 - hash pins bind the reviewed owner, frozen dependencies and memfs context
+  ---
+  duration_ms: 0.645708
+  type: 'test'
+  ...
+# Subtest: post-store extra-key response seals uncertainty and fresh open reconciles committed bytes
+ok 36 - post-store extra-key response seals uncertainty and fresh open reconciles committed bytes
+  ---
+  duration_ms: 4.223833
+  type: 'test'
+  ...
+# Subtest: post-store wrong-hash response seals uncertainty and fresh open reconciles committed bytes
+ok 37 - post-store wrong-hash response seals uncertainty and fresh open reconciles committed bytes
+  ---
+  duration_ms: 3.31675
+  type: 'test'
+  ...
+# Subtest: post-store wrong-bytes response seals uncertainty and fresh open reconciles committed bytes
+ok 38 - post-store wrong-bytes response seals uncertainty and fresh open reconciles committed bytes
+  ---
+  duration_ms: 3.341292
+  type: 'test'
+  ...
+# Subtest: post-store written-uncommitted response seals uncertainty and fresh open reconciles committed bytes
+ok 39 - post-store written-uncommitted response seals uncertainty and fresh open reconciles committed bytes
+  ---
+  duration_ms: 2.886792
+  type: 'test'
+  ...
+# Subtest: post-store fsync-contradiction response seals uncertainty and fresh open reconciles committed bytes
+ok 40 - post-store fsync-contradiction response seals uncertainty and fresh open reconciles committed bytes
+  ---
+  duration_ms: 2.823
+  type: 'test'
+  ...
+# Subtest: post-store bad-cleanup response seals uncertainty and fresh open reconciles committed bytes
+ok 41 - post-store bad-cleanup response seals uncertainty and fresh open reconciles committed bytes
+  ---
+  duration_ms: 2.86725
+  type: 'test'
+  ...
+# Subtest: unrepresentable post-store malformed-null response is not copied or exposed
+ok 42 - unrepresentable post-store malformed-null response is not copied or exposed
+  ---
+  duration_ms: 2.786
+  type: 'test'
+  ...
+# Subtest: unrepresentable post-store accessor response is not copied or exposed
+ok 43 - unrepresentable post-store accessor response is not copied or exposed
+  ---
+  duration_ms: 2.621375
+  type: 'test'
+  ...
+# Subtest: unrepresentable post-store function response is not copied or exposed
+ok 44 - unrepresentable post-store function response is not copied or exposed
+  ---
+  duration_ms: 3.219792
+  type: 'test'
+  ...
+# Subtest: unrepresentable post-store buffer response is not copied or exposed
+ok 45 - unrepresentable post-store buffer response is not copied or exposed
+  ---
+  duration_ms: 2.784458
+  type: 'test'
+  ...
+# Subtest: direct wrapper throw before the pinned store still seals because the owner crossed storeEntered
+ok 46 - direct wrapper throw before the pinned store still seals because the owner crossed storeEntered
+  ---
+  duration_ms: 2.386375
+  type: 'test'
+  ...
+# Subtest: direct wrapper throw after the pinned store seals and fresh open finds actual committed bytes
+ok 47 - direct wrapper throw after the pinned store seals and fresh open finds actual committed bytes
+  ---
+  duration_ms: 2.992417
+  type: 'test'
+  ...
+# Subtest: normal pinned store accepts missing fsync as explicit non-durable success
+ok 48 - normal pinned store accepts missing fsync as explicit non-durable success
+  ---
+  duration_ms: 0.623375
+  type: 'test'
+  ...
+# Subtest: normal pinned store accepts coherent fsync errors as non-durable committed success
+ok 49 - normal pinned store accepts coherent fsync errors as non-durable committed success
+  ---
+  duration_ms: 0.264458
+  type: 'test'
+  ...
+# Subtest: normal pinned cleanupError refusal remains precommit and preserves the previous snapshot
+ok 50 - normal pinned cleanupError refusal remains precommit and preserves the previous snapshot
+  ---
+  duration_ms: 0.257083
+  type: 'test'
+  ...
+# Subtest: NEW open returns an opaque unique owner and exact frozen empty snapshot
+ok 51 - NEW open returns an opaque unique owner and exact frozen empty snapshot
+  ---
+  duration_ms: 1.50675
+  type: 'test'
+  ...
+# Subtest: inspection is nonmutating and may return the same latest snapshot reference
+ok 52 - inspection is nonmutating and may return the same latest snapshot reference
+  ---
+  duration_ms: 0.142292
+  type: 'test'
+  ...
+# Subtest: request envelopes reject extra, hidden, symbol, accessor, array and exotic forms without invoking getters
+ok 53 - request envelopes reject extra, hidden, symbol, accessor, array and exotic forms without invoking getters
+  ---
+  duration_ms: 0.1055
+  type: 'test'
+  ...
+# Subtest: manufactured, copied and JSON-roundtripped handles are refused
+ok 54 - manufactured, copied and JSON-roundtripped handles are refused
+  ---
+  duration_ms: 0.189583
+  type: 'test'
+  ...
+# Subtest: open validates path, time, fs and exact config without throwing
+ok 55 - open validates path, time, fs and exact config without throwing
+  ---
+  duration_ms: 0.08925
+  type: 'test'
+  ...
+# Subtest: open copies configuration and is not changed by later caller mutation
+ok 56 - open copies configuration and is not changed by later caller mutation
+  ---
+  duration_ms: 0.877667
+  type: 'test'
+  ...
+# Subtest: read failures, non-Buffer reads, invalid UTF-8 and size limit refuse without owner exposure
+ok 57 - read failures, non-Buffer reads, invalid UTF-8 and size limit refuse without owner exposure
+  ---
+  duration_ms: 5.540291
+  type: 'test'
+  ...
+# Subtest: bad UTF-8 suffix after a valid prefix never exposes a lossy recovered row
+ok 58 - bad UTF-8 suffix after a valid prefix never exposes a lossy recovered row
+  ---
+  duration_ms: 0.233667
+  type: 'test'
+  ...
+# Subtest: wrong-project COMPLETE, INCOMPLETE and INVALID journals all refuse before prefix exposure
+ok 59 - wrong-project COMPLETE, INCOMPLETE and INVALID journals all refuse before prefix exposure
+  ---
+  duration_ms: 0.509417
+  type: 'test'
+  ...
+# Subtest: matching project with any other persisted config difference refuses policy drift
+ok 60 - matching project with any other persisted config difference refuses policy drift
+  ---
+  duration_ms: 0.436708
+  type: 'test'
+  ...
+# Subtest: open refuses a clock behind the persisted journal watermark
+ok 61 - open refuses a clock behind the persisted journal watermark
+  ---
+  duration_ms: 0.148167
+  type: 'test'
+  ...
+# Subtest: COMPLETE recovery binds exact raw digest and publishes historical entries
+ok 62 - COMPLETE recovery binds exact raw digest and publishes historical entries
+  ---
+  duration_ms: 0.295291
+  type: 'test'
+  ...
+# Subtest: matching damaged prefixes open SEALED with verified prefix only and cannot record
+ok 63 - matching damaged prefixes open SEALED with verified prefix only and cannot record
+  ---
+  duration_ms: 0.319791
+  type: 'test'
+  ...
+# Subtest: NEW record writes, publishes exact staged evidence, redacts payload and freezes all returned evidence
+ok 64 - NEW record writes, publishes exact staged evidence, redacts payload and freezes all returned evidence
+  ---
+  duration_ms: 0.28
+  type: 'test'
+  ...
+# Subtest: current fixed-XPC projected observation is inert history payload, not authority
+ok 65 - current fixed-XPC projected observation is inert history payload, not authority
+  ---
+  duration_ms: 0.32775
+  type: 'test'
+  ...
+# Subtest: RUNNING stale observation is listed as interrupted only when UNKNOWN and active
+ok 66 - RUNNING stale observation is listed as interrupted only when UNKNOWN and active
+  ---
+  duration_ms: 0.161041
+  type: 'test'
+  ...
+# Subtest: revocation removes an UNKNOWN RUNNING observation from interrupted without granting authority
+ok 67 - revocation removes an UNKNOWN RUNNING observation from interrupted without granting authority
+  ---
+  duration_ms: 0.36675
+  type: 'test'
+  ...
+# Subtest: duplicate returns original accepted snapshot and conflict performs no storage
+ok 68 - duplicate returns original accepted snapshot and conflict performs no storage
+  ---
+  duration_ms: 0.263042
+  type: 'test'
+  ...
+# Subtest: entry refusal and time failure preserve the accepted snapshot and do not escape
+ok 69 - entry refusal and time failure preserve the accepted snapshot and do not escape
+  ---
+  duration_ms: 0.2395
+  type: 'test'
+  ...
+# Subtest: malformed record envelopes and accessor entry fields refuse without getter execution
+ok 70 - malformed record envelopes and accessor entry fields refuse without getter execution
+  ---
+  duration_ms: 0.135084
+  type: 'test'
+  ...
+# Subtest: pre-rename store failure rolls back staged append and pruning exactly
+ok 71 - pre-rename store failure rolls back staged append and pruning exactly
+  ---
+  duration_ms: 0.678541
+  type: 'test'
+  ...
+# Subtest: genuine stale owner detects STORE_CONFLICT despite public mutation attempts
+ok 72 - genuine stale owner detects STORE_CONFLICT despite public mutation attempts
+  ---
+  duration_ms: 0.784333
+  type: 'test'
+  ...
+# Subtest: post-rename readback mismatch seals COMMIT_UNCERTAIN without stale publication
+ok 73 - post-rename readback mismatch seals COMMIT_UNCERTAIN without stale publication
+  ---
+  duration_ms: 0.3115
+  type: 'test'
+  ...
+# Subtest: post-rename final-read exception is reconciled as COMMIT_UNCERTAIN, not rollback
+ok 74 - post-rename final-read exception is reconciled as COMMIT_UNCERTAIN, not rollback
+  ---
+  duration_ms: 0.396333
+  type: 'test'
+  ...
+# Subtest: reentrant record is OWNER_BUSY and performs no nested filesystem IO
+ok 75 - reentrant record is OWNER_BUSY and performs no nested filesystem IO
+  ---
+  duration_ms: 0.160583
+  type: 'test'
+  ...
+# Subtest: successful write without fsync remains explicitly non-durable
+ok 76 - successful write without fsync remains explicitly non-durable
+  ---
+  duration_ms: 0.176083
+  type: 'test'
+  ...
+# Subtest: previous snapshots remain frozen historical values after later publication
+ok 77 - previous snapshots remain frozen historical values after later publication
+  ---
+  duration_ms: 0.268584
+  type: 'test'
+  ...
+# Subtest: real temporary filesystem bytes recover in a fresh Node process boundary
+ok 78 - real temporary filesystem bytes recover in a fresh Node process boundary
+  ---
+  duration_ms: 34.892583
+  type: 'test'
+  ...
+# Subtest: throwing Proxy request: open refuses without traps or IO
+ok 79 - throwing Proxy request: open refuses without traps or IO
+  ---
+  duration_ms: 1.380208
+  type: 'test'
+  ...
+# Subtest: throwing Proxy request: inspect refuses without traps or IO
+ok 80 - throwing Proxy request: inspect refuses without traps or IO
+  ---
+  duration_ms: 0.152042
+  type: 'test'
+  ...
+# Subtest: throwing Proxy request: record refuses without traps or IO
+ok 81 - throwing Proxy request: record refuses without traps or IO
+  ---
+  duration_ms: 0.136917
+  type: 'test'
+  ...
+# Subtest: throwing Proxy request: maintain refuses without traps or IO
+ok 82 - throwing Proxy request: maintain refuses without traps or IO
+  ---
+  duration_ms: 0.121208
+  type: 'test'
+  ...
+# Subtest: throwing Proxy config: owner and direct journal reject before traps
+ok 83 - throwing Proxy config: owner and direct journal reject before traps
+  ---
+  duration_ms: 0.196375
+  type: 'test'
+  ...
+# Subtest: throwing Proxy redactPaths: owner and direct journal reject before traps
+ok 84 - throwing Proxy redactPaths: owner and direct journal reject before traps
+  ---
+  duration_ms: 0.060709
+  type: 'test'
+  ...
+# Subtest: throwing Proxy entry: owner and direct journal reject before traps
+ok 85 - throwing Proxy entry: owner and direct journal reject before traps
+  ---
+  duration_ms: 0.915334
+  type: 'test'
+  ...
+# Subtest: throwing Proxy payload: owner and direct journal reject before traps
+ok 86 - throwing Proxy payload: owner and direct journal reject before traps
+  ---
+  duration_ms: 0.358208
+  type: 'test'
+  ...
+# Subtest: throwing Proxy nestedObject: owner and direct journal reject before traps
+ok 87 - throwing Proxy nestedObject: owner and direct journal reject before traps
+  ---
+  duration_ms: 0.300375
+  type: 'test'
+  ...
+# Subtest: throwing Proxy nestedArray: owner and direct journal reject before traps
+ok 88 - throwing Proxy nestedArray: owner and direct journal reject before traps
+  ---
+  duration_ms: 0.638458
+  type: 'test'
+  ...
+# Subtest: throwing Proxy filesystem object: reject capability wrapper without traps
+ok 89 - throwing Proxy filesystem object: reject capability wrapper without traps
+  ---
+  duration_ms: 0.07375
+  type: 'test'
+  ...
+# Subtest: throwing Proxy filesystem function: reject capability wrapper without traps
+ok 90 - throwing Proxy filesystem function: reject capability wrapper without traps
+  ---
+  duration_ms: 0.033084
+  type: 'test'
+  ...
+# Subtest: throwing Proxy forged owner handle: remains invalid without traps
+ok 91 - throwing Proxy forged owner handle: remains invalid without traps
+  ---
+  duration_ms: 0.131958
+  type: 'test'
+  ...
+# Subtest: transparent Proxy request: open refuses without traps or IO
+ok 92 - transparent Proxy request: open refuses without traps or IO
+  ---
+  duration_ms: 0.081209
+  type: 'test'
+  ...
+# Subtest: transparent Proxy request: inspect refuses without traps or IO
+ok 93 - transparent Proxy request: inspect refuses without traps or IO
+  ---
+  duration_ms: 0.047042
+  type: 'test'
+  ...
+# Subtest: transparent Proxy request: record refuses without traps or IO
+ok 94 - transparent Proxy request: record refuses without traps or IO
+  ---
+  duration_ms: 0.040583
+  type: 'test'
+  ...
+# Subtest: transparent Proxy request: maintain refuses without traps or IO
+ok 95 - transparent Proxy request: maintain refuses without traps or IO
+  ---
+  duration_ms: 0.042708
+  type: 'test'
+  ...
+# Subtest: transparent Proxy config: owner and direct journal reject before traps
+ok 96 - transparent Proxy config: owner and direct journal reject before traps
+  ---
+  duration_ms: 0.032667
+  type: 'test'
+  ...
+# Subtest: transparent Proxy redactPaths: owner and direct journal reject before traps
+ok 97 - transparent Proxy redactPaths: owner and direct journal reject before traps
+  ---
+  duration_ms: 0.035917
+  type: 'test'
+  ...
+# Subtest: transparent Proxy entry: owner and direct journal reject before traps
+ok 98 - transparent Proxy entry: owner and direct journal reject before traps
+  ---
+  duration_ms: 0.286708
+  type: 'test'
+  ...
+# Subtest: transparent Proxy payload: owner and direct journal reject before traps
+ok 99 - transparent Proxy payload: owner and direct journal reject before traps
+  ---
+  duration_ms: 0.237583
+  type: 'test'
+  ...
+# Subtest: transparent Proxy nestedObject: owner and direct journal reject before traps
+ok 100 - transparent Proxy nestedObject: owner and direct journal reject before traps
+  ---
+  duration_ms: 0.252917
+  type: 'test'
+  ...
+# Subtest: transparent Proxy nestedArray: owner and direct journal reject before traps
+ok 101 - transparent Proxy nestedArray: owner and direct journal reject before traps
+  ---
+  duration_ms: 0.192041
+  type: 'test'
+  ...
+# Subtest: transparent Proxy filesystem object: reject capability wrapper without traps
+ok 102 - transparent Proxy filesystem object: reject capability wrapper without traps
+  ---
+  duration_ms: 0.023042
+  type: 'test'
+  ...
+# Subtest: transparent Proxy filesystem function: reject capability wrapper without traps
+ok 103 - transparent Proxy filesystem function: reject capability wrapper without traps
+  ---
+  duration_ms: 0.218834
+  type: 'test'
+  ...
+# Subtest: transparent Proxy forged owner handle: remains invalid without traps
+ok 104 - transparent Proxy forged owner handle: remains invalid without traps
+  ---
+  duration_ms: 0.061542
+  type: 'test'
+  ...
+# Subtest: revoked Proxy request: open refuses without traps or IO
+ok 105 - revoked Proxy request: open refuses without traps or IO
+  ---
+  duration_ms: 0.051208
+  type: 'test'
+  ...
+# Subtest: revoked Proxy request: inspect refuses without traps or IO
+ok 106 - revoked Proxy request: inspect refuses without traps or IO
+  ---
+  duration_ms: 0.055875
+  type: 'test'
+  ...
+# Subtest: revoked Proxy request: record refuses without traps or IO
+ok 107 - revoked Proxy request: record refuses without traps or IO
+  ---
+  duration_ms: 0.040333
+  type: 'test'
+  ...
+# Subtest: revoked Proxy request: maintain refuses without traps or IO
+ok 108 - revoked Proxy request: maintain refuses without traps or IO
+  ---
+  duration_ms: 0.038458
+  type: 'test'
+  ...
+# Subtest: revoked Proxy config: owner and direct journal reject before traps
+ok 109 - revoked Proxy config: owner and direct journal reject before traps
+  ---
+  duration_ms: 0.038417
+  type: 'test'
+  ...
+# Subtest: revoked Proxy redactPaths: owner and direct journal reject before traps
+ok 110 - revoked Proxy redactPaths: owner and direct journal reject before traps
+  ---
+  duration_ms: 0.034458
+  type: 'test'
+  ...
+# Subtest: revoked Proxy entry: owner and direct journal reject before traps
+ok 111 - revoked Proxy entry: owner and direct journal reject before traps
+  ---
+  duration_ms: 0.245958
+  type: 'test'
+  ...
+# Subtest: revoked Proxy payload: owner and direct journal reject before traps
+ok 112 - revoked Proxy payload: owner and direct journal reject before traps
+  ---
+  duration_ms: 0.200042
+  type: 'test'
+  ...
+# Subtest: revoked Proxy nestedObject: owner and direct journal reject before traps
+ok 113 - revoked Proxy nestedObject: owner and direct journal reject before traps
+  ---
+  duration_ms: 0.1555
+  type: 'test'
+  ...
+# Subtest: revoked Proxy nestedArray: owner and direct journal reject before traps
+ok 114 - revoked Proxy nestedArray: owner and direct journal reject before traps
+  ---
+  duration_ms: 0.158208
+  type: 'test'
+  ...
+# Subtest: revoked Proxy filesystem object: reject capability wrapper without traps
+ok 115 - revoked Proxy filesystem object: reject capability wrapper without traps
+  ---
+  duration_ms: 0.017875
+  type: 'test'
+  ...
+# Subtest: revoked Proxy filesystem function: reject capability wrapper without traps
+ok 116 - revoked Proxy filesystem function: reject capability wrapper without traps
+  ---
+  duration_ms: 0.018208
+  type: 'test'
+  ...
+# Subtest: revoked Proxy forged owner handle: remains invalid without traps
+ok 117 - revoked Proxy forged owner handle: remains invalid without traps
+  ---
+  duration_ms: 0.05625
+  type: 'test'
+  ...
+# Subtest: valid null-prototype config and nested entry data preserve serialization and redaction
+ok 118 - valid null-prototype config and nested entry data preserve serialization and redaction
+  ---
+  duration_ms: 0.323958
+  type: 'test'
+  ...
+# Subtest: clock refusal precedes invalid entry as before and touches no Proxy traps
+ok 119 - clock refusal precedes invalid entry as before and touches no Proxy traps
+  ---
+  duration_ms: 0.204958
+  type: 'test'
+  ...
+# Subtest: raw UTF-8 round trip preserves bytes and records successful file and directory fsync
+ok 120 - raw UTF-8 round trip preserves bytes and records successful file and directory fsync
+  ---
+  duration_ms: 9.937667
+  type: 'test'
+  ...
+# Subtest: exclusive same-directory temp, file sync and temp verification precede rename; directory sync and final verification follow
+ok 121 - exclusive same-directory temp, file sync and temp verification precede rename; directory sync and final verification follow
+  ---
+  duration_ms: 7.952083
+  type: 'test'
+  ...
+# Subtest: short writes are completed; zero progress is refused and the owned temp is cleaned
+ok 122 - short writes are completed; zero progress is refused and the owned temp is cleaned
+  ---
+  duration_ms: 8.371959
+  type: 'test'
+  ...
+# Subtest: file fsync failure is recorded, still writes and verifies, and cannot claim durability
+ok 123 - file fsync failure is recorded, still writes and verifies, and cannot claim durability
+  ---
+  duration_ms: 4.778375
+  type: 'test'
+  ...
+# Subtest: directory fsync or directory-open failure records a committed but non-durable write
+ok 124 - directory fsync or directory-open failure records a committed but non-durable write
+  ---
+  duration_ms: 8.126583
+  type: 'test'
+  ...
+# Subtest: absent fsync support is recorded for both attempts and never upgraded to durable
+ok 125 - absent fsync support is recorded for both attempts and never upgraded to durable
+  ---
+  duration_ms: 0.650834
+  type: 'test'
+  ...
+# Subtest: different existing content needs exact previous sha256; conflicts preserve bytes without opening any file
+ok 126 - different existing content needs exact previous sha256; conflicts preserve bytes without opening any file
+  ---
+  duration_ms: 8.2025
+  type: 'test'
+  ...
+# Subtest: same bytes are an explicit non-durable no-op; supplied stale expected hash still refuses
+ok 127 - same bytes are an explicit non-durable no-op; supplied stale expected hash still refuses
+  ---
+  duration_ms: 1.000416
+  type: 'test'
+  ...
+# Subtest: read refuses every truncated prefix, including complete-line boundaries, and never returns partial data
+ok 128 - read refuses every truncated prefix, including complete-line boundaries, and never returns partial data
+  ---
+  duration_ms: 40.996791
+  type: 'test'
+  ...
+# Subtest: read refuses malformed UTF-8, corrupt chain/footer/schema, trailing data and noncanonical JSON
+ok 129 - read refuses malformed UTF-8, corrupt chain/footer/schema, trailing data and noncanonical JSON
+  ---
+  duration_ms: 2.274666
+  type: 'test'
+  ...
+# Subtest: write validates strings, framing and expected hash before mutation; corrupt existing data stays intact
+ok 130 - write validates strings, framing and expected hash before mutation; corrupt existing data stays intact
+  ---
+  duration_ms: 0.5505
+  type: 'test'
+  ...
+# Subtest: missing and unreadable files are refusals, and read never attempts mutations or sync
+ok 131 - missing and unreadable files are refusals, and read never attempts mutations or sync
+  ---
+  duration_ms: 0.429625
+  type: 'test'
+  ...
+# Subtest: write and rename failures preserve old bytes, close descriptors and clean only the owned temp
+ok 132 - write and rename failures preserve old bytes, close descriptors and clean only the owned temp
+  ---
+  duration_ms: 6.4665
+  type: 'test'
+  ...
+# Subtest: temp read-back mismatch refuses before rename and final mismatch never reports durable success
+ok 133 - temp read-back mismatch refuses before rename and final mismatch never reports durable success
+  ---
+  duration_ms: 24.231541
+  type: 'test'
+  ...
+# Subtest: destination is rechecked before rename and an observed concurrent change is preserved
+ok 134 - destination is rechecked before rename and an observed concurrent change is preserved
+  ---
+  duration_ms: 4.636958
+  type: 'test'
+  ...
+# Subtest: file close failure refuses before rename, preserves destination and cannot claim durability
+ok 135 - file close failure refuses before rename, preserves destination and cannot claim durability
+  ---
+  duration_ms: 3.929084
+  type: 'test'
+  ...
+# Subtest: combined directory fsync and close failures preserve both codes in a committed non-durable write
+ok 136 - combined directory fsync and close failures preserve both codes in a committed non-durable write
+  ---
+  duration_ms: 4.191041
+  type: 'test'
+  ...
+# Subtest: 01 exact synchronous API, empty complete framing and non-authority
+ok 137 - 01 exact synchronous API, empty complete framing and non-authority
+  ---
+  duration_ms: 1.562208
+  type: 'test'
+  ...
+# Subtest: 02 closed configuration and entry schemas reject malformed data atomically
+ok 138 - 02 closed configuration and entry schemas reject malformed data atomically
+  ---
+  duration_ms: 0.575041
+  type: 'test'
+  ...
+# Subtest: 03 full attribution retained and cross-project input refused
+ok 139 - 03 full attribution retained and cross-project input refused
+  ---
+  duration_ms: 0.205208
+  type: 'test'
+  ...
+# Subtest: 04 canonical exact replay is idempotent across object key order and capacity
+ok 140 - 04 canonical exact replay is idempotent across object key order and capacity
+  ---
+  duration_ms: 0.218166
+  type: 'test'
+  ...
+# Subtest: 05 same id with changed binding, lifecycle or redacted content is CONFLICT
+ok 141 - 05 same id with changed binding, lifecycle or redacted content is CONFLICT
+  ---
+  duration_ms: 0.253
+  type: 'test'
+  ...
+# Subtest: 06 terminal replay never becomes new work; retries need new id and valid citation
+ok 142 - 06 terminal replay never becomes new work; retries need new id and valid citation
+  ---
+  duration_ms: 0.154666
+  type: 'test'
+  ...
+# Subtest: 07 TTL boundary, irreversible payload retention and caller time validation
+ok 143 - 07 TTL boundary, irreversible payload retention and caller time validation
+  ---
+  duration_ms: 0.143666
+  type: 'test'
+  ...
+# Subtest: 08 stale heartbeat is UNKNOWN and never sufficient for retry
+ok 144 - 08 stale heartbeat is UNKNOWN and never sufficient for retry
+  ---
+  duration_ms: 0.181291
+  type: 'test'
+  ...
+# Subtest: 09 maxEntries bounds retained payloads in insertion order but never forgets ids
+ok 145 - 09 maxEntries bounds retained payloads in insertion order but never forgets ids
+  ---
+  duration_ms: 0.333083
+  type: 'test'
+  ...
+# Subtest: 10 revocation cites an existing exact attempt and candidate without deleting it
+ok 146 - 10 revocation cites an existing exact attempt and candidate without deleting it
+  ---
+  duration_ms: 0.217916
+  type: 'test'
+  ...
+# Subtest: 11 revocation survives tombstones, expiry, revoker revocation and reopen
+ok 147 - 11 revocation survives tombstones, expiry, revoker revocation and reopen
+  ---
+  duration_ms: 0.391792
+  type: 'test'
+  ...
+# Subtest: 12 declared payload paths redact nested values and arrays before exposure
+ok 148 - 12 declared payload paths redact nested values and arrays before exposure
+  ---
+  duration_ms: 0.333625
+  type: 'test'
+  ...
+# Subtest: 13 complete persisted reopen is historical through replay and serialization cycles
+ok 149 - 13 complete persisted reopen is historical through replay and serialization cycles
+  ---
+  duration_ms: 0.273583
+  type: 'test'
+  ...
+# Subtest: 14 truncation recovers only committed prefix and cannot be resealed or appended
+ok 150 - 14 truncation recovers only committed prefix and cannot be resealed or appended
+  ---
+  duration_ms: 0.269208
+  type: 'test'
+  ...
+# Subtest: 15 invalid line stops recovery; deletion or reordering cannot bless later entries
+ok 151 - 15 invalid line stops recovery; deletion or reordering cannot bless later entries
+  ---
+  duration_ms: 0.207959
+  type: 'test'
+  ...
+# Subtest: 16 footer mismatches and data after footer report uncertainty without losing recovered ids
+ok 152 - 16 footer mismatches and data after footer report uncertainty without losing recovered ids
+  ---
+  duration_ms: 0.448458
+  type: 'test'
+  ...
+# Subtest: 17 closed persisted schema rejects profiles, duplicate ids and semantically invalid records
+ok 153 - 17 closed persisted schema rejects profiles, duplicate ids and semantically invalid records
+  ---
+  duration_ms: 1.017125
+  type: 'test'
+  ...
+# Subtest: 18 snapshots are deeply frozen, caller-independent and serialization is deterministic
+ok 154 - 18 snapshots are deeply frozen, caller-independent and serialization is deterministic
+  ---
+  duration_ms: 0.230834
+  type: 'test'
+  ...
+1..154
+# tests 154
+# suites 0
+# pass 154
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 484.352542

@@ -1,0 +1,31 @@
+{
+  "schema": "nisi.c07.owner-control-review.v1",
+  "reviewerTask": "/root/sharedchami_cleanup_daybreak_review",
+  "modelActuallyServed": "UNKNOWN",
+  "verdict": "PASS",
+  "scope": "C07_ACCEPTANCE_CONTROLS_NODE_ONLY",
+  "sourceHashes": {
+    "work-orders/v02-finish-cluster-v1/check-c07.mjs": "0f72677cb023e50eda6f53fd7fb9563f3466ad379b8eb4253d23b5993f13d93f",
+    "work-orders/v02-finish-cluster-v1/check-c06.mjs": "20ff0d8ffe3cd9572603545ee89ab13d483659086b74ed2b437871e67862b4a2",
+    "work-orders/v02-finish-cluster-v1/check-cluster.mjs": "f10d524ad894f14378977e95b1804edb4bb925673cfe363791022be599929e1c",
+    "tests/finish-cluster-c07.test.mjs": "ef1f216c2e086786117e65617b086a9b952a6b5d03ab77411a2648bd8169560e",
+    "tests/finish-cluster-c06.test.mjs": "b6330bf0fc401ec9cc41bfc792586e8bd23ba40be99e441e3653b87f8e4b2f13",
+    "tests/finish-cluster-inventory.test.mjs": "9337355e24a3400a7a41f29ba8accc0e4b3faaad46972d09bfda3b0f53fcbc5b",
+    "tests/finish-cluster-dispatch.test.mjs": "5e4e93af24edbbcc68c0b303550154057aedb3b42747c002ca436455d822d9b4"
+  },
+  "reviewerExecutedTests": false,
+  "findings": [],
+  "resolvedFindings": [
+    "Three predecessor closures pin the transitioned file. C04/C05/C06 now share the same fully verified exact transition; old maps and acceptance history remain unchanged.",
+    "Scratch fixtures preserve actual predecessor bytes. Generated canonical-write and unsupported receipt-schema drafts were rejected before execution.",
+    "Integration review receives semantic assertions in addition to its immutable digest."
+  ],
+  "implementationAccepted": false,
+  "nativeBuildAccepted": false,
+  "nativeExecutionAttested": false,
+  "publicationAuthorized": false,
+  "sourceAuthenticityAttested": false,
+  "resumeGranted": false,
+  "openCodeExecuted": false,
+  "inference": "NOT_RUN"
+}

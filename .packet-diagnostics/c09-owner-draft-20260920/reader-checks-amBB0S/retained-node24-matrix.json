@@ -1,0 +1,110 @@
+{
+  "schema": "nisi-private-runtime-matrix-v1",
+  "status": "INCOMPLETE",
+  "complete": false,
+  "authorizing": false,
+  "executionAttested": false,
+  "sourceAuthenticityAttested": false,
+  "scope": "CALLER_SUPPLIED_REHEARSAL_EVIDENCE_ONLY",
+  "runtimes": [
+    "node22",
+    "node24"
+  ],
+  "archive": {
+    "sha256": "f79c9f133966b4258953021ea2d107bad991121704ce9d9c299090eba7879972",
+    "byteLength": 43624,
+    "entries": 29
+  },
+  "reasons": [
+    "node22:RUNTIME_NOT_INSTALLED"
+  ],
+  "rows": {
+    "node22": {
+      "runtime": "node22",
+      "major": 22,
+      "status": "NOT_RUN",
+      "reason": "RUNTIME_NOT_INSTALLED",
+      "prerequisite": "An approved Node 22 runtime is not installed on this host. Prerequisite: the owner places an approved Node 22 binary in an isolated prefix outside the checkout (no package-manager or network fetch by this tool), then runs the existing rehearsal under that binary from the checkout root: PATH=<node22-prefix>/bin:$PATH NISI_INSTALLED_ARCHIVE_CHECK=1 <node22-prefix>/bin/node scripts/check-private-package.mjs, and supplies the retained receipt.json as this row.",
+      "receiptSha256": null,
+      "receiptByteLength": null,
+      "node": null,
+      "archive": null,
+      "evidence": null,
+      "observedAt": null,
+      "completedAt": null,
+      "toolchain": null,
+      "typescript": null,
+      "negativeControls": null,
+      "runtimeTests": null,
+      "durations": {
+        "packMs": null,
+        "installMs": null,
+        "typescriptMs": null,
+        "negativeControlsMs": null,
+        "runtimeMs": null,
+        "wallClockMs": null
+      },
+      "tokens": null,
+      "failure": null
+    },
+    "node24": {
+      "runtime": "node24",
+      "major": 24,
+      "status": "PASS",
+      "reason": null,
+      "prerequisite": null,
+      "receiptSha256": "412e2fa843ca3cda318f419a582451c73b40169f6da6b712e1ef7a17f0fdb584",
+      "receiptByteLength": 251535,
+      "node": {
+        "version": "v24.18.0",
+        "path": "/usr/local/bin/node",
+        "sha256": "bf0cea6ab3631b6b53a9709ed54d62608dd0725187426d34d4d6af6644c5197f"
+      },
+      "archive": {
+        "path": "/Users/louiscalata/nisi/.build/private-package-aHhVwX/nisi-0.2.0-private.0.tgz",
+        "sha256": "f79c9f133966b4258953021ea2d107bad991121704ce9d9c299090eba7879972",
+        "byteLength": 43624,
+        "entries": 29
+      },
+      "evidence": {
+        "path": "/Users/louiscalata/nisi/.build/private-package-aHhVwX",
+        "root": "/Users/louiscalata/nisi"
+      },
+      "observedAt": "2026-09-20T14:38:17.428Z",
+      "completedAt": "2026-09-20T14:38:19.468Z",
+      "toolchain": {
+        "typescript": "6.0.3",
+        "nodeTypes": "24.13.3",
+        "compilerEntrySha256": "8d5fa5bd883fec0979fc2004f1fe1d99aef40570155d550eadc0b03b55513bf0",
+        "lockSha256": "bb677e234c47798b323e8a9a4643ef64bc174729c950094b43d3b00c0dfc0233"
+      },
+      "typescript": {
+        "cases": 8,
+        "exitCode": 0
+      },
+      "negativeControls": {
+        "expected": 73,
+        "observed": 73,
+        "allExpectedLocationsDetected": true
+      },
+      "runtimeTests": {
+        "tests": 11,
+        "pass": 11,
+        "fail": 0,
+        "cancelled": 0,
+        "skipped": 0,
+        "todo": 0
+      },
+      "durations": {
+        "packMs": 280,
+        "installMs": 154,
+        "typescriptMs": 722,
+        "negativeControlsMs": 611,
+        "runtimeMs": 75,
+        "wallClockMs": 2040
+      },
+      "tokens": null,
+      "failure": null
+    }
+  }
+}

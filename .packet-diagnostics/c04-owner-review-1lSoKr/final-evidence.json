@@ -1,0 +1,26 @@
+{
+  "schema": "nisi.c04.evidence-binding.v1",
+  "scope": "INERT_FIXTURE_WRITE_GUARD_NODE_ONLY",
+  "sourceHashes": {
+    "work-orders/parallel-seven-tracks-v1/track1/fixture-write-guard.mjs": "407eb2f1506b6756add1b6f86e6b3fc343df566aef9a38cdaf39ad9695d14682",
+    "work-orders/parallel-seven-tracks-v1/track1/repository-fixture-runner.mjs": "a928400e7d0c075c8865259102c4177f2139c68ae39bce88374462cb47804e42",
+    "work-orders/parallel-seven-tracks-v1/track1/repository-fixture-runner.test.mjs": "aecb01ec2889498af1482ea1145c709a46b1b0afa296359e47528818f9934f39",
+    "work-orders/parallel-seven-tracks-v1/track1/findings-cluster-containment.test.mjs": "ae2c1880cfe725c1c4eab3efc4766ee12c231a3c73f0ff0db19ea2cf5f4f1754"
+  },
+  "review": {
+    "path": ".packet-diagnostics/c04-owner-review-1lSoKr/daybreak-c04-source-review.json",
+    "sha256": "5952794fd873fd409f5916ff500168a89dd3482d631a0481ce2c4dbb2cda3e3a"
+  },
+  "checkpoint": {
+    "path": ".packet-diagnostics/c04-owner-review-1lSoKr/checkpoint-UdmDjm/checkpoint.json",
+    "sha256": "ef7f08ddc12f92235b226ab19d25c0411624521836af9e7f05e561e46aa07d92"
+  },
+  "mutations": {
+    "path": ".packet-diagnostics/c04-owner-review-1lSoKr/mutations-BXckZW/mutation-results.json",
+    "sha256": "479835520f7ee5222b1acd778e21897bd50fab9712f2f542a8bd7f98524b2ef0"
+  },
+  "openCodeExecuted": false,
+  "nativeBuildAccepted": false,
+  "publicationAuthorized": false,
+  "note": "Evidence binding only. Owner control review and exact ledger integration are separate. Checkpoint itself does not claim mutation acceptance; the separate mutation record supplies it."
+}

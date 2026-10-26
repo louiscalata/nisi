@@ -1,0 +1,409 @@
+TAP version 13
+# Subtest: positive exact writer-shaped receipt and honest missing Node22 row
+not ok 1 - positive exact writer-shaped receipt and honest missing Node22 row
+  ---
+  duration_ms: 0.669042
+  type: 'test'
+  location: '/Users/louiscalata/nisi/.packet-diagnostics/c09-owner-draft-20260920/reader-checks-x6pwsb/before/work-orders/v02-finish-cluster-v1/consumer/runtime-matrix-v1.test.mjs:45:1'
+  failureType: 'testCodeFailure'
+  error: 'MATRIX_EXPECTED_SCHEMA: unknown field'
+  code: 'MATRIX_EXPECTED_SCHEMA'
+  name: 'RuntimeMatrixError'
+  stack: |-
+    refuse (file:///Users/louiscalata/nisi/.packet-diagnostics/c09-owner-draft-20260920/reader-checks-x6pwsb/before/work-orders/v02-finish-cluster-v1/consumer/runtime-matrix-v1.mjs:28:36)
+    fields (file:///Users/louiscalata/nisi/.packet-diagnostics/c09-owner-draft-20260920/reader-checks-x6pwsb/before/work-orders/v02-finish-cluster-v1/consumer/runtime-matrix-v1.mjs:39:87)
+    readExpected (file:///Users/louiscalata/nisi/.packet-diagnostics/c09-owner-draft-20260920/reader-checks-x6pwsb/before/work-orders/v02-finish-cluster-v1/consumer/runtime-matrix-v1.mjs:240:49)
+    createRuntimeMatrix (file:///Users/louiscalata/nisi/.packet-diagnostics/c09-owner-draft-20260920/reader-checks-x6pwsb/before/work-orders/v02-finish-cluster-v1/consumer/runtime-matrix-v1.mjs:251:78)
+    matrix (file:///Users/louiscalata/nisi/.packet-diagnostics/c09-owner-draft-20260920/reader-checks-x6pwsb/before/work-orders/v02-finish-cluster-v1/consumer/runtime-matrix-v1.test.mjs:43:60)
+    TestContext.<anonymous> (file:///Users/louiscalata/nisi/.packet-diagnostics/c09-owner-draft-20260920/reader-checks-x6pwsb/before/work-orders/v02-finish-cluster-v1/consumer/runtime-matrix-v1.test.mjs:45:88)
+    Test.runInAsyncScope (node:async_hooks:227:14)
+    Test.run (node:internal/test_runner/test:1325:25)
+    Test.start (node:internal/test_runner/test:1191:17)
+    startSubtestAfterBootstrap (node:internal/test_runner/harness:385:17)
+  ...
+# Subtest: independent two-runtime proof is scoped to the same archive
+not ok 2 - independent two-runtime proof is scoped to the same archive
+  ---
+  duration_ms: 0.294083
+  type: 'test'
+  location: '/Users/louiscalata/nisi/.packet-diagnostics/c09-owner-draft-20260920/reader-checks-x6pwsb/before/work-orders/v02-finish-cluster-v1/consumer/runtime-matrix-v1.test.mjs:46:1'
+  failureType: 'testCodeFailure'
+  error: 'MATRIX_EXPECTED_SCHEMA: unknown field'
+  code: 'MATRIX_EXPECTED_SCHEMA'
+  name: 'RuntimeMatrixError'
+  stack: |-
+    refuse (file:///Users/louiscalata/nisi/.packet-diagnostics/c09-owner-draft-20260920/reader-checks-x6pwsb/before/work-orders/v02-finish-cluster-v1/consumer/runtime-matrix-v1.mjs:28:36)
+    fields (file:///Users/louiscalata/nisi/.packet-diagnostics/c09-owner-draft-20260920/reader-checks-x6pwsb/before/work-orders/v02-finish-cluster-v1/consumer/runtime-matrix-v1.mjs:39:87)
+    readExpected (file:///Users/louiscalata/nisi/.packet-diagnostics/c09-owner-draft-20260920/reader-checks-x6pwsb/before/work-orders/v02-finish-cluster-v1/consumer/runtime-matrix-v1.mjs:240:49)
+    createRuntimeMatrix (file:///Users/louiscalata/nisi/.packet-diagnostics/c09-owner-draft-20260920/reader-checks-x6pwsb/before/work-orders/v02-finish-cluster-v1/consumer/runtime-matrix-v1.mjs:251:78)
+    matrix (file:///Users/louiscalata/nisi/.packet-diagnostics/c09-owner-draft-20260920/reader-checks-x6pwsb/before/work-orders/v02-finish-cluster-v1/consumer/runtime-matrix-v1.test.mjs:43:60)
+    TestContext.<anonymous> (file:///Users/louiscalata/nisi/.packet-diagnostics/c09-owner-draft-20260920/reader-checks-x6pwsb/before/work-orders/v02-finish-cluster-v1/consumer/runtime-matrix-v1.test.mjs:46:81)
+    Test.runInAsyncScope (node:async_hooks:227:14)
+    Test.run (node:internal/test_runner/test:1325:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:911:18)
+    Test.postRun (node:internal/test_runner/test:1465:19)
+  ...
+# Subtest: proof hash, length, node path/version and archive claims are independently checked
+not ok 3 - proof hash, length, node path/version and archive claims are independently checked
+  ---
+  duration_ms: 0.17075
+  type: 'test'
+  location: '/Users/louiscalata/nisi/.packet-diagnostics/c09-owner-draft-20260920/reader-checks-x6pwsb/before/work-orders/v02-finish-cluster-v1/consumer/runtime-matrix-v1.test.mjs:47:1'
+  failureType: 'testCodeFailure'
+  error: 'MATRIX_EXPECTED_SCHEMA: unknown field'
+  code: 'MATRIX_EXPECTED_SCHEMA'
+  name: 'RuntimeMatrixError'
+  stack: |-
+    refuse (file:///Users/louiscalata/nisi/.packet-diagnostics/c09-owner-draft-20260920/reader-checks-x6pwsb/before/work-orders/v02-finish-cluster-v1/consumer/runtime-matrix-v1.mjs:28:36)
+    fields (file:///Users/louiscalata/nisi/.packet-diagnostics/c09-owner-draft-20260920/reader-checks-x6pwsb/before/work-orders/v02-finish-cluster-v1/consumer/runtime-matrix-v1.mjs:39:87)
+    readExpected (file:///Users/louiscalata/nisi/.packet-diagnostics/c09-owner-draft-20260920/reader-checks-x6pwsb/before/work-orders/v02-finish-cluster-v1/consumer/runtime-matrix-v1.mjs:240:49)
+    createRuntimeMatrix (file:///Users/louiscalata/nisi/.packet-diagnostics/c09-owner-draft-20260920/reader-checks-x6pwsb/before/work-orders/v02-finish-cluster-v1/consumer/runtime-matrix-v1.mjs:251:78)
+    TestContext.<anonymous> (file:///Users/louiscalata/nisi/.packet-diagnostics/c09-owner-draft-20260920/reader-checks-x6pwsb/before/work-orders/v02-finish-cluster-v1/consumer/runtime-matrix-v1.test.mjs:47:200)
+    Test.runInAsyncScope (node:async_hooks:227:14)
+    Test.run (node:internal/test_runner/test:1325:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:911:18)
+    Test.postRun (node:internal/test_runner/test:1465:19)
+    Test.run (node:internal/test_runner/test:1390:12)
+  ...
+# Subtest: missing, duplicate and wrong tar evidence cannot pass
+not ok 4 - missing, duplicate and wrong tar evidence cannot pass
+  ---
+  duration_ms: 0.161625
+  type: 'test'
+  location: '/Users/louiscalata/nisi/.packet-diagnostics/c09-owner-draft-20260920/reader-checks-x6pwsb/before/work-orders/v02-finish-cluster-v1/consumer/runtime-matrix-v1.test.mjs:48:1'
+  failureType: 'testCodeFailure'
+  error: 'MATRIX_EXPECTED_SCHEMA: unknown field'
+  code: 'MATRIX_EXPECTED_SCHEMA'
+  name: 'RuntimeMatrixError'
+  stack: |-
+    refuse (file:///Users/louiscalata/nisi/.packet-diagnostics/c09-owner-draft-20260920/reader-checks-x6pwsb/before/work-orders/v02-finish-cluster-v1/consumer/runtime-matrix-v1.mjs:28:36)
+    fields (file:///Users/louiscalata/nisi/.packet-diagnostics/c09-owner-draft-20260920/reader-checks-x6pwsb/before/work-orders/v02-finish-cluster-v1/consumer/runtime-matrix-v1.mjs:39:87)
+    readExpected (file:///Users/louiscalata/nisi/.packet-diagnostics/c09-owner-draft-20260920/reader-checks-x6pwsb/before/work-orders/v02-finish-cluster-v1/consumer/runtime-matrix-v1.mjs:240:49)
+    createRuntimeMatrix (file:///Users/louiscalata/nisi/.packet-diagnostics/c09-owner-draft-20260920/reader-checks-x6pwsb/before/work-orders/v02-finish-cluster-v1/consumer/runtime-matrix-v1.mjs:251:78)
+    matrix (file:///Users/louiscalata/nisi/.packet-diagnostics/c09-owner-draft-20260920/reader-checks-x6pwsb/before/work-orders/v02-finish-cluster-v1/consumer/runtime-matrix-v1.test.mjs:43:60)
+    TestContext.<anonymous> (file:///Users/louiscalata/nisi/.packet-diagnostics/c09-owner-draft-20260920/reader-checks-x6pwsb/before/work-orders/v02-finish-cluster-v1/consumer/runtime-matrix-v1.test.mjs:48:387)
+    Test.runInAsyncScope (node:async_hooks:227:14)
+    Test.run (node:internal/test_runner/test:1325:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:911:18)
+    Test.postRun (node:internal/test_runner/test:1465:19)
+  ...
+# Subtest: strict flags, all roles and command order are binding
+not ok 5 - strict flags, all roles and command order are binding
+  ---
+  duration_ms: 0.179416
+  type: 'test'
+  location: '/Users/louiscalata/nisi/.packet-diagnostics/c09-owner-draft-20260920/reader-checks-x6pwsb/before/work-orders/v02-finish-cluster-v1/consumer/runtime-matrix-v1.test.mjs:49:1'
+  failureType: 'testCodeFailure'
+  error: 'MATRIX_EXPECTED_SCHEMA: unknown field'
+  code: 'MATRIX_EXPECTED_SCHEMA'
+  name: 'RuntimeMatrixError'
+  stack: |-
+    refuse (file:///Users/louiscalata/nisi/.packet-diagnostics/c09-owner-draft-20260920/reader-checks-x6pwsb/before/work-orders/v02-finish-cluster-v1/consumer/runtime-matrix-v1.mjs:28:36)
+    fields (file:///Users/louiscalata/nisi/.packet-diagnostics/c09-owner-draft-20260920/reader-checks-x6pwsb/before/work-orders/v02-finish-cluster-v1/consumer/runtime-matrix-v1.mjs:39:87)
+    readExpected (file:///Users/louiscalata/nisi/.packet-diagnostics/c09-owner-draft-20260920/reader-checks-x6pwsb/before/work-orders/v02-finish-cluster-v1/consumer/runtime-matrix-v1.mjs:240:49)
+    createRuntimeMatrix (file:///Users/louiscalata/nisi/.packet-diagnostics/c09-owner-draft-20260920/reader-checks-x6pwsb/before/work-orders/v02-finish-cluster-v1/consumer/runtime-matrix-v1.mjs:251:78)
+    matrix (file:///Users/louiscalata/nisi/.packet-diagnostics/c09-owner-draft-20260920/reader-checks-x6pwsb/before/work-orders/v02-finish-cluster-v1/consumer/runtime-matrix-v1.test.mjs:43:60)
+    TestContext.<anonymous> (file:///Users/louiscalata/nisi/.packet-diagnostics/c09-owner-draft-20260920/reader-checks-x6pwsb/before/work-orders/v02-finish-cluster-v1/consumer/runtime-matrix-v1.test.mjs:49:249)
+    Test.runInAsyncScope (node:async_hooks:227:14)
+    Test.run (node:internal/test_runner/test:1325:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:911:18)
+    Test.postRun (node:internal/test_runner/test:1465:19)
+  ...
+# Subtest: case hashes and inclusive cutoff are binding
+not ok 6 - case hashes and inclusive cutoff are binding
+  ---
+  duration_ms: 0.312625
+  type: 'test'
+  location: '/Users/louiscalata/nisi/.packet-diagnostics/c09-owner-draft-20260920/reader-checks-x6pwsb/before/work-orders/v02-finish-cluster-v1/consumer/runtime-matrix-v1.test.mjs:50:1'
+  failureType: 'testCodeFailure'
+  error: 'MATRIX_EXPECTED_SCHEMA: unknown field'
+  code: 'MATRIX_EXPECTED_SCHEMA'
+  name: 'RuntimeMatrixError'
+  stack: |-
+    refuse (file:///Users/louiscalata/nisi/.packet-diagnostics/c09-owner-draft-20260920/reader-checks-x6pwsb/before/work-orders/v02-finish-cluster-v1/consumer/runtime-matrix-v1.mjs:28:36)
+    fields (file:///Users/louiscalata/nisi/.packet-diagnostics/c09-owner-draft-20260920/reader-checks-x6pwsb/before/work-orders/v02-finish-cluster-v1/consumer/runtime-matrix-v1.mjs:39:87)
+    readExpected (file:///Users/louiscalata/nisi/.packet-diagnostics/c09-owner-draft-20260920/reader-checks-x6pwsb/before/work-orders/v02-finish-cluster-v1/consumer/runtime-matrix-v1.mjs:240:49)
+    createRuntimeMatrix (file:///Users/louiscalata/nisi/.packet-diagnostics/c09-owner-draft-20260920/reader-checks-x6pwsb/before/work-orders/v02-finish-cluster-v1/consumer/runtime-matrix-v1.mjs:251:78)
+    matrix (file:///Users/louiscalata/nisi/.packet-diagnostics/c09-owner-draft-20260920/reader-checks-x6pwsb/before/work-orders/v02-finish-cluster-v1/consumer/runtime-matrix-v1.test.mjs:43:60)
+    TestContext.<anonymous> (file:///Users/louiscalata/nisi/.packet-diagnostics/c09-owner-draft-20260920/reader-checks-x6pwsb/before/work-orders/v02-finish-cluster-v1/consumer/runtime-matrix-v1.test.mjs:50:136)
+    Test.runInAsyncScope (node:async_hooks:227:14)
+    Test.run (node:internal/test_runner/test:1325:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:911:18)
+    Test.postRun (node:internal/test_runner/test:1465:19)
+  ...
+# Subtest: negative locations and duplicate TAP/diagnostics are binding
+not ok 7 - negative locations and duplicate TAP/diagnostics are binding
+  ---
+  duration_ms: 0.186584
+  type: 'test'
+  location: '/Users/louiscalata/nisi/.packet-diagnostics/c09-owner-draft-20260920/reader-checks-x6pwsb/before/work-orders/v02-finish-cluster-v1/consumer/runtime-matrix-v1.test.mjs:51:1'
+  failureType: 'testCodeFailure'
+  error: 'MATRIX_EXPECTED_SCHEMA: unknown field'
+  code: 'MATRIX_EXPECTED_SCHEMA'
+  name: 'RuntimeMatrixError'
+  stack: |-
+    refuse (file:///Users/louiscalata/nisi/.packet-diagnostics/c09-owner-draft-20260920/reader-checks-x6pwsb/before/work-orders/v02-finish-cluster-v1/consumer/runtime-matrix-v1.mjs:28:36)
+    fields (file:///Users/louiscalata/nisi/.packet-diagnostics/c09-owner-draft-20260920/reader-checks-x6pwsb/before/work-orders/v02-finish-cluster-v1/consumer/runtime-matrix-v1.mjs:39:87)
+    readExpected (file:///Users/louiscalata/nisi/.packet-diagnostics/c09-owner-draft-20260920/reader-checks-x6pwsb/before/work-orders/v02-finish-cluster-v1/consumer/runtime-matrix-v1.mjs:240:49)
+    createRuntimeMatrix (file:///Users/louiscalata/nisi/.packet-diagnostics/c09-owner-draft-20260920/reader-checks-x6pwsb/before/work-orders/v02-finish-cluster-v1/consumer/runtime-matrix-v1.mjs:251:78)
+    matrix (file:///Users/louiscalata/nisi/.packet-diagnostics/c09-owner-draft-20260920/reader-checks-x6pwsb/before/work-orders/v02-finish-cluster-v1/consumer/runtime-matrix-v1.test.mjs:43:60)
+    TestContext.<anonymous> (file:///Users/louiscalata/nisi/.packet-diagnostics/c09-owner-draft-20260920/reader-checks-x6pwsb/before/work-orders/v02-finish-cluster-v1/consumer/runtime-matrix-v1.test.mjs:51:228)
+    Test.runInAsyncScope (node:async_hooks:227:14)
+    Test.run (node:internal/test_runner/test:1325:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:911:18)
+    Test.postRun (node:internal/test_runner/test:1465:19)
+  ...
+# Subtest: parsed objects cannot earn public PASS; reader remains inspectable
+not ok 8 - parsed objects cannot earn public PASS; reader remains inspectable
+  ---
+  duration_ms: 1.160833
+  type: 'test'
+  location: '/Users/louiscalata/nisi/.packet-diagnostics/c09-owner-draft-20260920/reader-checks-x6pwsb/before/work-orders/v02-finish-cluster-v1/consumer/runtime-matrix-v1.test.mjs:52:1'
+  failureType: 'testCodeFailure'
+  error: 'MATRIX_EXPECTED_SCHEMA: unknown field'
+  code: 'MATRIX_EXPECTED_SCHEMA'
+  name: 'RuntimeMatrixError'
+  stack: |-
+    refuse (file:///Users/louiscalata/nisi/.packet-diagnostics/c09-owner-draft-20260920/reader-checks-x6pwsb/before/work-orders/v02-finish-cluster-v1/consumer/runtime-matrix-v1.mjs:28:36)
+    fields (file:///Users/louiscalata/nisi/.packet-diagnostics/c09-owner-draft-20260920/reader-checks-x6pwsb/before/work-orders/v02-finish-cluster-v1/consumer/runtime-matrix-v1.mjs:39:87)
+    readExpected (file:///Users/louiscalata/nisi/.packet-diagnostics/c09-owner-draft-20260920/reader-checks-x6pwsb/before/work-orders/v02-finish-cluster-v1/consumer/runtime-matrix-v1.mjs:240:49)
+    createRuntimeMatrix (file:///Users/louiscalata/nisi/.packet-diagnostics/c09-owner-draft-20260920/reader-checks-x6pwsb/before/work-orders/v02-finish-cluster-v1/consumer/runtime-matrix-v1.mjs:251:78)
+    TestContext.<anonymous> (file:///Users/louiscalata/nisi/.packet-diagnostics/c09-owner-draft-20260920/reader-checks-x6pwsb/before/work-orders/v02-finish-cluster-v1/consumer/runtime-matrix-v1.test.mjs:52:163)
+    Test.runInAsyncScope (node:async_hooks:227:14)
+    Test.run (node:internal/test_runner/test:1325:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:911:18)
+    Test.postRun (node:internal/test_runner/test:1465:19)
+    Test.run (node:internal/test_runner/test:1390:12)
+  ...
+# Subtest: nested and revoked proxies are refused before traps; resource bounds refuse
+not ok 9 - nested and revoked proxies are refused before traps; resource bounds refuse
+  ---
+  duration_ms: 0.653875
+  type: 'test'
+  location: '/Users/louiscalata/nisi/.packet-diagnostics/c09-owner-draft-20260920/reader-checks-x6pwsb/before/work-orders/v02-finish-cluster-v1/consumer/runtime-matrix-v1.test.mjs:53:1'
+  failureType: 'testCodeFailure'
+  error: 'Missing expected exception.'
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected:
+    code: 'RECEIPT_SCHEMA'
+  operator: 'throws'
+  stack: |-
+    TestContext.<anonymous> (file:///Users/louiscalata/nisi/.packet-diagnostics/c09-owner-draft-20260920/reader-checks-x6pwsb/before/work-orders/v02-finish-cluster-v1/consumer/runtime-matrix-v1.test.mjs:53:325)
+    Test.runInAsyncScope (node:async_hooks:227:14)
+    Test.run (node:internal/test_runner/test:1325:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:911:18)
+    Test.postRun (node:internal/test_runner/test:1465:19)
+    Test.run (node:internal/test_runner/test:1390:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:911:7)
+  ...
+# Subtest: rehearsal command documentation preserves offline script-disabled route
+ok 10 - rehearsal command documentation preserves offline script-disabled route
+  ---
+  duration_ms: 0.199292
+  type: 'test'
+  ...
+# Subtest: every independent owner proof field is binding
+not ok 11 - every independent owner proof field is binding
+  ---
+  duration_ms: 0.271
+  type: 'test'
+  location: '/Users/louiscalata/nisi/.packet-diagnostics/c09-owner-draft-20260920/reader-checks-x6pwsb/before/work-orders/v02-finish-cluster-v1/consumer/runtime-matrix-v1.test.mjs:56:1'
+  failureType: 'testCodeFailure'
+  error: 'MATRIX_EXPECTED_SCHEMA: unknown field'
+  code: 'MATRIX_EXPECTED_SCHEMA'
+  name: 'RuntimeMatrixError'
+  stack: |-
+    refuse (file:///Users/louiscalata/nisi/.packet-diagnostics/c09-owner-draft-20260920/reader-checks-x6pwsb/before/work-orders/v02-finish-cluster-v1/consumer/runtime-matrix-v1.mjs:28:36)
+    fields (file:///Users/louiscalata/nisi/.packet-diagnostics/c09-owner-draft-20260920/reader-checks-x6pwsb/before/work-orders/v02-finish-cluster-v1/consumer/runtime-matrix-v1.mjs:39:87)
+    readExpected (file:///Users/louiscalata/nisi/.packet-diagnostics/c09-owner-draft-20260920/reader-checks-x6pwsb/before/work-orders/v02-finish-cluster-v1/consumer/runtime-matrix-v1.mjs:240:49)
+    createRuntimeMatrix (file:///Users/louiscalata/nisi/.packet-diagnostics/c09-owner-draft-20260920/reader-checks-x6pwsb/before/work-orders/v02-finish-cluster-v1/consumer/runtime-matrix-v1.mjs:251:78)
+    matrix (file:///Users/louiscalata/nisi/.packet-diagnostics/c09-owner-draft-20260920/reader-checks-x6pwsb/before/work-orders/v02-finish-cluster-v1/consumer/runtime-matrix-v1.test.mjs:43:60)
+    TestContext.<anonymous> (file:///Users/louiscalata/nisi/.packet-diagnostics/c09-owner-draft-20260920/reader-checks-x6pwsb/before/work-orders/v02-finish-cluster-v1/consumer/runtime-matrix-v1.test.mjs:58:271)
+    Test.runInAsyncScope (node:async_hooks:227:14)
+    Test.run (node:internal/test_runner/test:1325:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:911:18)
+    Test.postRun (node:internal/test_runner/test:1465:19)
+  ...
+# Subtest: expected pins are closed, required, and do not self-pin the receipt
+not ok 12 - expected pins are closed, required, and do not self-pin the receipt
+  ---
+  duration_ms: 1.131833
+  type: 'test'
+  location: '/Users/louiscalata/nisi/.packet-diagnostics/c09-owner-draft-20260920/reader-checks-x6pwsb/before/work-orders/v02-finish-cluster-v1/consumer/runtime-matrix-v1.test.mjs:61:1'
+  failureType: 'testCodeFailure'
+  error: 'MATRIX_EXPECTED_SCHEMA: unknown field'
+  code: 'MATRIX_EXPECTED_SCHEMA'
+  name: 'RuntimeMatrixError'
+  stack: |-
+    refuse (file:///Users/louiscalata/nisi/.packet-diagnostics/c09-owner-draft-20260920/reader-checks-x6pwsb/before/work-orders/v02-finish-cluster-v1/consumer/runtime-matrix-v1.mjs:28:36)
+    fields (file:///Users/louiscalata/nisi/.packet-diagnostics/c09-owner-draft-20260920/reader-checks-x6pwsb/before/work-orders/v02-finish-cluster-v1/consumer/runtime-matrix-v1.mjs:39:87)
+    readExpected (file:///Users/louiscalata/nisi/.packet-diagnostics/c09-owner-draft-20260920/reader-checks-x6pwsb/before/work-orders/v02-finish-cluster-v1/consumer/runtime-matrix-v1.mjs:240:49)
+    createRuntimeMatrix (file:///Users/louiscalata/nisi/.packet-diagnostics/c09-owner-draft-20260920/reader-checks-x6pwsb/before/work-orders/v02-finish-cluster-v1/consumer/runtime-matrix-v1.mjs:251:78)
+    matrix (file:///Users/louiscalata/nisi/.packet-diagnostics/c09-owner-draft-20260920/reader-checks-x6pwsb/before/work-orders/v02-finish-cluster-v1/consumer/runtime-matrix-v1.test.mjs:43:60)
+    TestContext.<anonymous> (file:///Users/louiscalata/nisi/.packet-diagnostics/c09-owner-draft-20260920/reader-checks-x6pwsb/before/work-orders/v02-finish-cluster-v1/consumer/runtime-matrix-v1.test.mjs:63:82)
+    Test.runInAsyncScope (node:async_hooks:227:14)
+    Test.run (node:internal/test_runner/test:1325:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:911:18)
+    Test.postRun (node:internal/test_runner/test:1465:19)
+  ...
+# Subtest: cutoff comparisons are inclusive and inverted windows refuse
+not ok 13 - cutoff comparisons are inclusive and inverted windows refuse
+  ---
+  duration_ms: 0.242792
+  type: 'test'
+  location: '/Users/louiscalata/nisi/.packet-diagnostics/c09-owner-draft-20260920/reader-checks-x6pwsb/before/work-orders/v02-finish-cluster-v1/consumer/runtime-matrix-v1.test.mjs:66:1'
+  failureType: 'testCodeFailure'
+  error: 'MATRIX_EXPECTED_SCHEMA: unknown field'
+  code: 'MATRIX_EXPECTED_SCHEMA'
+  name: 'RuntimeMatrixError'
+  stack: |-
+    refuse (file:///Users/louiscalata/nisi/.packet-diagnostics/c09-owner-draft-20260920/reader-checks-x6pwsb/before/work-orders/v02-finish-cluster-v1/consumer/runtime-matrix-v1.mjs:28:36)
+    fields (file:///Users/louiscalata/nisi/.packet-diagnostics/c09-owner-draft-20260920/reader-checks-x6pwsb/before/work-orders/v02-finish-cluster-v1/consumer/runtime-matrix-v1.mjs:39:87)
+    readExpected (file:///Users/louiscalata/nisi/.packet-diagnostics/c09-owner-draft-20260920/reader-checks-x6pwsb/before/work-orders/v02-finish-cluster-v1/consumer/runtime-matrix-v1.mjs:240:49)
+    createRuntimeMatrix (file:///Users/louiscalata/nisi/.packet-diagnostics/c09-owner-draft-20260920/reader-checks-x6pwsb/before/work-orders/v02-finish-cluster-v1/consumer/runtime-matrix-v1.mjs:251:78)
+    matrix (file:///Users/louiscalata/nisi/.packet-diagnostics/c09-owner-draft-20260920/reader-checks-x6pwsb/before/work-orders/v02-finish-cluster-v1/consumer/runtime-matrix-v1.test.mjs:43:60)
+    TestContext.<anonymous> (file:///Users/louiscalata/nisi/.packet-diagnostics/c09-owner-draft-20260920/reader-checks-x6pwsb/before/work-orders/v02-finish-cluster-v1/consumer/runtime-matrix-v1.test.mjs:67:125)
+    Test.runInAsyncScope (node:async_hooks:227:14)
+    Test.run (node:internal/test_runner/test:1325:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:911:18)
+    Test.postRun (node:internal/test_runner/test:1465:19)
+  ...
+# Subtest: all 35 check roles require exact order, executable, cwd, argv, clean termination and exit
+not ok 14 - all 35 check roles require exact order, executable, cwd, argv, clean termination and exit
+  ---
+  duration_ms: 0.224167
+  type: 'test'
+  location: '/Users/louiscalata/nisi/.packet-diagnostics/c09-owner-draft-20260920/reader-checks-x6pwsb/before/work-orders/v02-finish-cluster-v1/consumer/runtime-matrix-v1.test.mjs:73:1'
+  failureType: 'testCodeFailure'
+  error: 'MATRIX_EXPECTED_SCHEMA: unknown field'
+  code: 'MATRIX_EXPECTED_SCHEMA'
+  name: 'RuntimeMatrixError'
+  stack: |-
+    refuse (file:///Users/louiscalata/nisi/.packet-diagnostics/c09-owner-draft-20260920/reader-checks-x6pwsb/before/work-orders/v02-finish-cluster-v1/consumer/runtime-matrix-v1.mjs:28:36)
+    fields (file:///Users/louiscalata/nisi/.packet-diagnostics/c09-owner-draft-20260920/reader-checks-x6pwsb/before/work-orders/v02-finish-cluster-v1/consumer/runtime-matrix-v1.mjs:39:87)
+    readExpected (file:///Users/louiscalata/nisi/.packet-diagnostics/c09-owner-draft-20260920/reader-checks-x6pwsb/before/work-orders/v02-finish-cluster-v1/consumer/runtime-matrix-v1.mjs:240:49)
+    createRuntimeMatrix (file:///Users/louiscalata/nisi/.packet-diagnostics/c09-owner-draft-20260920/reader-checks-x6pwsb/before/work-orders/v02-finish-cluster-v1/consumer/runtime-matrix-v1.mjs:251:78)
+    matrix (file:///Users/louiscalata/nisi/.packet-diagnostics/c09-owner-draft-20260920/reader-checks-x6pwsb/before/work-orders/v02-finish-cluster-v1/consumer/runtime-matrix-v1.test.mjs:43:60)
+    TestContext.<anonymous> (file:///Users/louiscalata/nisi/.packet-diagnostics/c09-owner-draft-20260920/reader-checks-x6pwsb/before/work-orders/v02-finish-cluster-v1/consumer/runtime-matrix-v1.test.mjs:79:80)
+    Test.runInAsyncScope (node:async_hooks:227:14)
+    Test.run (node:internal/test_runner/test:1325:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:911:18)
+    Test.postRun (node:internal/test_runner/test:1465:19)
+  ...
+# Subtest: all 29 extraction stdout digests and inventory/pack evidence are checked
+not ok 15 - all 29 extraction stdout digests and inventory/pack evidence are checked
+  ---
+  duration_ms: 0.146292
+  type: 'test'
+  location: '/Users/louiscalata/nisi/.packet-diagnostics/c09-owner-draft-20260920/reader-checks-x6pwsb/before/work-orders/v02-finish-cluster-v1/consumer/runtime-matrix-v1.test.mjs:82:1'
+  failureType: 'testCodeFailure'
+  error: 'MATRIX_EXPECTED_SCHEMA: unknown field'
+  code: 'MATRIX_EXPECTED_SCHEMA'
+  name: 'RuntimeMatrixError'
+  stack: |-
+    refuse (file:///Users/louiscalata/nisi/.packet-diagnostics/c09-owner-draft-20260920/reader-checks-x6pwsb/before/work-orders/v02-finish-cluster-v1/consumer/runtime-matrix-v1.mjs:28:36)
+    fields (file:///Users/louiscalata/nisi/.packet-diagnostics/c09-owner-draft-20260920/reader-checks-x6pwsb/before/work-orders/v02-finish-cluster-v1/consumer/runtime-matrix-v1.mjs:39:87)
+    readExpected (file:///Users/louiscalata/nisi/.packet-diagnostics/c09-owner-draft-20260920/reader-checks-x6pwsb/before/work-orders/v02-finish-cluster-v1/consumer/runtime-matrix-v1.mjs:240:49)
+    createRuntimeMatrix (file:///Users/louiscalata/nisi/.packet-diagnostics/c09-owner-draft-20260920/reader-checks-x6pwsb/before/work-orders/v02-finish-cluster-v1/consumer/runtime-matrix-v1.mjs:251:78)
+    matrix (file:///Users/louiscalata/nisi/.packet-diagnostics/c09-owner-draft-20260920/reader-checks-x6pwsb/before/work-orders/v02-finish-cluster-v1/consumer/runtime-matrix-v1.test.mjs:43:60)
+    TestContext.<anonymous> (file:///Users/louiscalata/nisi/.packet-diagnostics/c09-owner-draft-20260920/reader-checks-x6pwsb/before/work-orders/v02-finish-cluster-v1/consumer/runtime-matrix-v1.test.mjs:83:135)
+    Test.runInAsyncScope (node:async_hooks:227:14)
+    Test.run (node:internal/test_runner/test:1325:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:911:18)
+    Test.postRun (node:internal/test_runner/test:1465:19)
+  ...
+# Subtest: negative locations require exact expected coverage and bounded diagnostics
+not ok 16 - negative locations require exact expected coverage and bounded diagnostics
+  ---
+  duration_ms: 0.211792
+  type: 'test'
+  location: '/Users/louiscalata/nisi/.packet-diagnostics/c09-owner-draft-20260920/reader-checks-x6pwsb/before/work-orders/v02-finish-cluster-v1/consumer/runtime-matrix-v1.test.mjs:87:1'
+  failureType: 'testCodeFailure'
+  error: 'MATRIX_EXPECTED_SCHEMA: unknown field'
+  code: 'MATRIX_EXPECTED_SCHEMA'
+  name: 'RuntimeMatrixError'
+  stack: |-
+    refuse (file:///Users/louiscalata/nisi/.packet-diagnostics/c09-owner-draft-20260920/reader-checks-x6pwsb/before/work-orders/v02-finish-cluster-v1/consumer/runtime-matrix-v1.mjs:28:36)
+    fields (file:///Users/louiscalata/nisi/.packet-diagnostics/c09-owner-draft-20260920/reader-checks-x6pwsb/before/work-orders/v02-finish-cluster-v1/consumer/runtime-matrix-v1.mjs:39:87)
+    readExpected (file:///Users/louiscalata/nisi/.packet-diagnostics/c09-owner-draft-20260920/reader-checks-x6pwsb/before/work-orders/v02-finish-cluster-v1/consumer/runtime-matrix-v1.mjs:240:49)
+    createRuntimeMatrix (file:///Users/louiscalata/nisi/.packet-diagnostics/c09-owner-draft-20260920/reader-checks-x6pwsb/before/work-orders/v02-finish-cluster-v1/consumer/runtime-matrix-v1.mjs:251:78)
+    matrix (file:///Users/louiscalata/nisi/.packet-diagnostics/c09-owner-draft-20260920/reader-checks-x6pwsb/before/work-orders/v02-finish-cluster-v1/consumer/runtime-matrix-v1.test.mjs:43:60)
+    TestContext.<anonymous> (file:///Users/louiscalata/nisi/.packet-diagnostics/c09-owner-draft-20260920/reader-checks-x6pwsb/before/work-orders/v02-finish-cluster-v1/consumer/runtime-matrix-v1.test.mjs:88:443)
+    Test.runInAsyncScope (node:async_hooks:227:14)
+    Test.run (node:internal/test_runner/test:1325:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:911:18)
+    Test.postRun (node:internal/test_runner/test:1465:19)
+  ...
+# Subtest: TAP duplicate, failure, skip and contradictory summaries remain non-PASS
+not ok 17 - TAP duplicate, failure, skip and contradictory summaries remain non-PASS
+  ---
+  duration_ms: 0.133875
+  type: 'test'
+  location: '/Users/louiscalata/nisi/.packet-diagnostics/c09-owner-draft-20260920/reader-checks-x6pwsb/before/work-orders/v02-finish-cluster-v1/consumer/runtime-matrix-v1.test.mjs:91:1'
+  failureType: 'testCodeFailure'
+  error: 'MATRIX_EXPECTED_SCHEMA: unknown field'
+  code: 'MATRIX_EXPECTED_SCHEMA'
+  name: 'RuntimeMatrixError'
+  stack: |-
+    refuse (file:///Users/louiscalata/nisi/.packet-diagnostics/c09-owner-draft-20260920/reader-checks-x6pwsb/before/work-orders/v02-finish-cluster-v1/consumer/runtime-matrix-v1.mjs:28:36)
+    fields (file:///Users/louiscalata/nisi/.packet-diagnostics/c09-owner-draft-20260920/reader-checks-x6pwsb/before/work-orders/v02-finish-cluster-v1/consumer/runtime-matrix-v1.mjs:39:87)
+    readExpected (file:///Users/louiscalata/nisi/.packet-diagnostics/c09-owner-draft-20260920/reader-checks-x6pwsb/before/work-orders/v02-finish-cluster-v1/consumer/runtime-matrix-v1.mjs:240:49)
+    createRuntimeMatrix (file:///Users/louiscalata/nisi/.packet-diagnostics/c09-owner-draft-20260920/reader-checks-x6pwsb/before/work-orders/v02-finish-cluster-v1/consumer/runtime-matrix-v1.mjs:251:78)
+    matrix (file:///Users/louiscalata/nisi/.packet-diagnostics/c09-owner-draft-20260920/reader-checks-x6pwsb/before/work-orders/v02-finish-cluster-v1/consumer/runtime-matrix-v1.test.mjs:43:60)
+    TestContext.<anonymous> (file:///Users/louiscalata/nisi/.packet-diagnostics/c09-owner-draft-20260920/reader-checks-x6pwsb/before/work-orders/v02-finish-cluster-v1/consumer/runtime-matrix-v1.test.mjs:91:273)
+    Test.runInAsyncScope (node:async_hooks:227:14)
+    Test.run (node:internal/test_runner/test:1325:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:911:18)
+    Test.postRun (node:internal/test_runner/test:1465:19)
+  ...
+# Subtest: accessors, malformed/unsupported/partial-failed receipts, and flags are explicit
+not ok 18 - accessors, malformed/unsupported/partial-failed receipts, and flags are explicit
+  ---
+  duration_ms: 0.509833
+  type: 'test'
+  location: '/Users/louiscalata/nisi/.packet-diagnostics/c09-owner-draft-20260920/reader-checks-x6pwsb/before/work-orders/v02-finish-cluster-v1/consumer/runtime-matrix-v1.test.mjs:93:1'
+  failureType: 'testCodeFailure'
+  error: 'MATRIX_EXPECTED_SCHEMA: unknown field'
+  code: 'MATRIX_EXPECTED_SCHEMA'
+  name: 'RuntimeMatrixError'
+  stack: |-
+    refuse (file:///Users/louiscalata/nisi/.packet-diagnostics/c09-owner-draft-20260920/reader-checks-x6pwsb/before/work-orders/v02-finish-cluster-v1/consumer/runtime-matrix-v1.mjs:28:36)
+    fields (file:///Users/louiscalata/nisi/.packet-diagnostics/c09-owner-draft-20260920/reader-checks-x6pwsb/before/work-orders/v02-finish-cluster-v1/consumer/runtime-matrix-v1.mjs:39:87)
+    readExpected (file:///Users/louiscalata/nisi/.packet-diagnostics/c09-owner-draft-20260920/reader-checks-x6pwsb/before/work-orders/v02-finish-cluster-v1/consumer/runtime-matrix-v1.mjs:240:49)
+    createRuntimeMatrix (file:///Users/louiscalata/nisi/.packet-diagnostics/c09-owner-draft-20260920/reader-checks-x6pwsb/before/work-orders/v02-finish-cluster-v1/consumer/runtime-matrix-v1.mjs:251:78)
+    matrix (file:///Users/louiscalata/nisi/.packet-diagnostics/c09-owner-draft-20260920/reader-checks-x6pwsb/before/work-orders/v02-finish-cluster-v1/consumer/runtime-matrix-v1.test.mjs:43:60)
+    TestContext.<anonymous> (file:///Users/louiscalata/nisi/.packet-diagnostics/c09-owner-draft-20260920/reader-checks-x6pwsb/before/work-orders/v02-finish-cluster-v1/consumer/runtime-matrix-v1.test.mjs:96:16)
+    Test.runInAsyncScope (node:async_hooks:227:14)
+    Test.run (node:internal/test_runner/test:1325:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:911:18)
+    Test.postRun (node:internal/test_runner/test:1465:19)
+  ...
+# Subtest: resource caps and zero-trap proxy boundaries are represented
+not ok 19 - resource caps and zero-trap proxy boundaries are represented
+  ---
+  duration_ms: 0.081291
+  type: 'test'
+  location: '/Users/louiscalata/nisi/.packet-diagnostics/c09-owner-draft-20260920/reader-checks-x6pwsb/before/work-orders/v02-finish-cluster-v1/consumer/runtime-matrix-v1.test.mjs:101:1'
+  failureType: 'testCodeFailure'
+  error: "Cannot set properties of undefined (setting 'stdout')"
+  code: 'ERR_TEST_FAILURE'
+  name: 'TypeError'
+  stack: |-
+    TestContext.<anonymous> (file:///Users/louiscalata/nisi/.packet-diagnostics/c09-owner-draft-20260920/reader-checks-x6pwsb/before/work-orders/v02-finish-cluster-v1/consumer/runtime-matrix-v1.test.mjs:102:79)
+    Test.runInAsyncScope (node:async_hooks:227:14)
+    Test.run (node:internal/test_runner/test:1325:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:911:18)
+    Test.postRun (node:internal/test_runner/test:1465:19)
+    Test.run (node:internal/test_runner/test:1390:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:911:7)
+  ...
+1..19
+# tests 19
+# suites 0
+# pass 1
+# fail 18
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 40.995625

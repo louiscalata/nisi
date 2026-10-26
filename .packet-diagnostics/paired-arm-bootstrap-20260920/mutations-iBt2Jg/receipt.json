@@ -1,0 +1,181 @@
+{
+  "scope": "PRIVATE_BOOTSTRAP_FOUR_FAULTS",
+  "node": "v24.18.0",
+  "before": {
+    "hosts/repository/reviewed-paired-arm-bootstrap-v1.mjs": "e8d52c134a53f53dab756adef35a0c8da7b456055c25893abc7c5989be7b0008",
+    "hosts/repository/reviewed-live-model-v4.mjs": "0e02eedd8ab34a3e10ee61c8294542a8c18d15ebae09a0fa79e170dea18f511d",
+    "hosts/repository/paired-trial-projection-v2.mjs": "c062ed8c639892c623c87c780be6f6b9df6767c6d9c2b1dcbb59c811209f7026",
+    "tests/reviewed-paired-arm-bootstrap-v1.test.mjs": "44064d5f02e05abef98e11436a5d507046112c81fa3b919d95e6f95ea75ecf99",
+    "tests/paired-arm-bootstrap-constructor-fault.test.mjs": "697af8057a7798a1879fd1fc15d1b8bcb54b07f08efb08752836131ba95a5403",
+    "tests/helpers/paired-arm-bootstrap-constructor-child.mjs": "ac60621447957494734639db8b5e7273828ef6dcf4297c394fed3e8c515baa18",
+    "tests/helpers/paired-arm-bootstrap-construction-child.mjs": "ff89ba12db37f86e5066b83f112f5fc6718b68a52a5d9b620f6b926399e21c14",
+    "tests/helpers/paired-arm-bootstrap-fixture.mjs": "c2faaf7d0f37d5a566194cbe474fca62ee8db4088198ef8998e3cb2b09f596f2"
+  },
+  "after": {
+    "hosts/repository/reviewed-paired-arm-bootstrap-v1.mjs": "e8d52c134a53f53dab756adef35a0c8da7b456055c25893abc7c5989be7b0008",
+    "hosts/repository/reviewed-live-model-v4.mjs": "0e02eedd8ab34a3e10ee61c8294542a8c18d15ebae09a0fa79e170dea18f511d",
+    "hosts/repository/paired-trial-projection-v2.mjs": "c062ed8c639892c623c87c780be6f6b9df6767c6d9c2b1dcbb59c811209f7026",
+    "tests/reviewed-paired-arm-bootstrap-v1.test.mjs": "44064d5f02e05abef98e11436a5d507046112c81fa3b919d95e6f95ea75ecf99",
+    "tests/paired-arm-bootstrap-constructor-fault.test.mjs": "697af8057a7798a1879fd1fc15d1b8bcb54b07f08efb08752836131ba95a5403",
+    "tests/helpers/paired-arm-bootstrap-constructor-child.mjs": "ac60621447957494734639db8b5e7273828ef6dcf4297c394fed3e8c515baa18",
+    "tests/helpers/paired-arm-bootstrap-construction-child.mjs": "ff89ba12db37f86e5066b83f112f5fc6718b68a52a5d9b620f6b926399e21c14",
+    "tests/helpers/paired-arm-bootstrap-fixture.mjs": "c2faaf7d0f37d5a566194cbe474fca62ee8db4088198ef8998e3cb2b09f596f2"
+  },
+  "unchanged": true,
+  "results": [
+    {
+      "fault": "control-before",
+      "command": [
+        "/usr/local/bin/node",
+        "--test",
+        "--test-reporter=tap",
+        "--test-concurrency=1",
+        "tests/reviewed-paired-arm-bootstrap-v1.test.mjs",
+        "tests/paired-arm-bootstrap-constructor-fault.test.mjs"
+      ],
+      "exitCode": 0,
+      "signal": null,
+      "error": null,
+      "counts": {
+        "tests": 38,
+        "pass": 38,
+        "fail": 0,
+        "skipped": 0,
+        "cancelled": 0,
+        "todo": 0
+      },
+      "detected": true,
+      "stdoutSha256": "af0c32ee19d32411bcac6b860cca80e6acfa1b86307a52ee007cbb4bf943ae1f",
+      "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "fault": "rollback",
+      "command": [
+        "/usr/local/bin/node",
+        "--test",
+        "--test-reporter=tap",
+        "--test-concurrency=1",
+        "tests/reviewed-paired-arm-bootstrap-v1.test.mjs",
+        "tests/paired-arm-bootstrap-constructor-fault.test.mjs"
+      ],
+      "exitCode": 1,
+      "signal": null,
+      "error": null,
+      "counts": {
+        "tests": 38,
+        "pass": 36,
+        "fail": 2,
+        "skipped": 0,
+        "cancelled": 0,
+        "todo": 0
+      },
+      "detected": true,
+      "stdoutSha256": "e33b78276a26c2130f3b367d94be74f1acc3cb225cd8d16693fe5cc08b555dbe",
+      "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "fault": "construction",
+      "command": [
+        "/usr/local/bin/node",
+        "--test",
+        "--test-reporter=tap",
+        "--test-concurrency=1",
+        "tests/reviewed-paired-arm-bootstrap-v1.test.mjs",
+        "tests/paired-arm-bootstrap-constructor-fault.test.mjs"
+      ],
+      "exitCode": 1,
+      "signal": null,
+      "error": null,
+      "counts": {
+        "tests": 38,
+        "pass": 30,
+        "fail": 8,
+        "skipped": 0,
+        "cancelled": 0,
+        "todo": 0
+      },
+      "detected": true,
+      "stdoutSha256": "ca5af10869619ab27978dc743b98e59568917b93d5d2f0e9daa98a2446e193df",
+      "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "fault": "revocation",
+      "command": [
+        "/usr/local/bin/node",
+        "--test",
+        "--test-reporter=tap",
+        "--test-concurrency=1",
+        "tests/reviewed-paired-arm-bootstrap-v1.test.mjs",
+        "tests/paired-arm-bootstrap-constructor-fault.test.mjs"
+      ],
+      "exitCode": 1,
+      "signal": null,
+      "error": null,
+      "counts": {
+        "tests": 38,
+        "pass": 35,
+        "fail": 3,
+        "skipped": 0,
+        "cancelled": 0,
+        "todo": 0
+      },
+      "detected": true,
+      "stdoutSha256": "60f402fc10716dfbd1d741cb69c7e77dc12d4b59247e5f1ad06ef99a7d6eaad4",
+      "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "fault": "environment",
+      "command": [
+        "/usr/local/bin/node",
+        "--test",
+        "--test-reporter=tap",
+        "--test-concurrency=1",
+        "tests/reviewed-paired-arm-bootstrap-v1.test.mjs",
+        "tests/paired-arm-bootstrap-constructor-fault.test.mjs"
+      ],
+      "exitCode": 1,
+      "signal": null,
+      "error": null,
+      "counts": {
+        "tests": 38,
+        "pass": 36,
+        "fail": 2,
+        "skipped": 0,
+        "cancelled": 0,
+        "todo": 0
+      },
+      "detected": true,
+      "stdoutSha256": "b501225e64e0bd969f6522e0c3df77868435cd7fea9af6fa2c6e3111627bcac3",
+      "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "fault": "control-after",
+      "command": [
+        "/usr/local/bin/node",
+        "--test",
+        "--test-reporter=tap",
+        "--test-concurrency=1",
+        "tests/reviewed-paired-arm-bootstrap-v1.test.mjs",
+        "tests/paired-arm-bootstrap-constructor-fault.test.mjs"
+      ],
+      "exitCode": 0,
+      "signal": null,
+      "error": null,
+      "counts": {
+        "tests": 38,
+        "pass": 38,
+        "fail": 0,
+        "skipped": 0,
+        "cancelled": 0,
+        "todo": 0
+      },
+      "detected": true,
+      "stdoutSha256": "c9950743bca10fd82a9400a5d86900668b26de829f52e2c685642c5b634e7fa9",
+      "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    }
+  ],
+  "passed": true,
+  "models": "NOT_RUN",
+  "native": "NOT_RUN",
+  "releaseAccepted": false
+}

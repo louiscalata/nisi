@@ -1,0 +1,322 @@
+TAP version 13
+# Subtest: every response has the exact key set, and an inspect of an absent file is NEW from a fresh process
+ok 1 - every response has the exact key set, and an inspect of an absent file is NEW from a fresh process
+  ---
+  duration_ms: 24.949375
+  type: 'test'
+  ...
+# Subtest: a record in one process is read back by a different process as historical, with the bytes and hash unchanged
+ok 2 - a record in one process is read back by a different process as historical, with the bytes and hash unchanged
+  ---
+  duration_ms: 60.349167
+  type: 'test'
+  ...
+# Subtest: the same run replayed from a third process is DUPLICATE and touches nothing; different content under the same identity is CONFLICT
+ok 3 - the same run replayed from a third process is DUPLICATE and touches nothing; different content under the same identity is CONFLICT
+  ---
+  duration_ms: 86.52875
+  type: 'test'
+  ...
+# Subtest: two records across three processes chain on disk; the third process sees both in order with the second FAILED
+ok 4 - two records across three processes chain on disk; the third process sees both in order with the second FAILED
+  ---
+  duration_ms: 99.907375
+  type: 'test'
+  ...
+# Subtest: interrupted work persisted by one process is reported by the next: a stale RUNNING row is interrupted, and a record can still be added beside it
+ok 5 - interrupted work persisted by one process is reported by the next: a stale RUNNING row is interrupted, and a record can still be added beside it
+  ---
+  duration_ms: 89.313
+  type: 'test'
+  ...
+# Subtest: a truncated file opens SEALED in a fresh process: the recovered prefix is reported, a record is refused, and nothing is rewritten
+ok 6 - a truncated file opens SEALED in a fresh process: the recovered prefix is reported, a record is refused, and nothing is rewritten
+  ---
+  duration_ms: 120.936625
+  type: 'test'
+  ...
+# Subtest: a journal for another project is refused at open by a fresh process and never adopted
+ok 7 - a journal for another project is refused at open by a fresh process and never adopted
+  ---
+  duration_ms: 53.201375
+  type: 'test'
+  ...
+# Subtest: requests outside the owned scratch directory, through a symlink, or malformed are refused without touching the filesystem
+ok 8 - requests outside the owned scratch directory, through a symlink, or malformed are refused without touching the filesystem
+  ---
+  duration_ms: 479.854583
+  type: 'test'
+  ...
+# Subtest: demo module imports only the frozen bundle plus node:path and node:url for the scratch boundary, and passes real node:fs to the bundle
+ok 9 - demo module imports only the frozen bundle plus node:path and node:url for the scratch boundary, and passes real node:fs to the bundle
+  ---
+  duration_ms: 3.316625
+  type: 'test'
+  ...
+# Subtest: T1 restart baseline: fully settled journal, no checkpoint, fresh run id → SAFE_RESTART with the fixed shape
+ok 10 - T1 restart baseline: fully settled journal, no checkpoint, fresh run id → SAFE_RESTART with the fixed shape
+  ---
+  duration_ms: 1.202333
+  type: 'test'
+  ...
+# Subtest: T3 uncertain writes seal the decision before anything is echoed
+ok 11 - T3 uncertain writes seal the decision before anything is echoed
+  ---
+  duration_ms: 0.363667
+  type: 'test'
+  ...
+# Subtest: T4 foreign project is caught at the header, even when empty; rows under a foreign header are invalid input
+ok 12 - T4 foreign project is caught at the header, even when empty; rows under a foreign header are invalid input
+  ---
+  duration_ms: 0.390792
+  type: 'test'
+  ...
+# Subtest: T5 live heartbeat refuses; stale heartbeat needs a terminal sibling of the same run/attempt/candidate; revoked and expired rows are settled
+ok 13 - T5 live heartbeat refuses; stale heartbeat needs a terminal sibling of the same run/attempt/candidate; revoked and expired rows are settled
+  ---
+  duration_ms: 0.310458
+  type: 'test'
+  ...
+# Subtest: T6 QUEUED rows never block a restart
+ok 14 - T6 QUEUED rows never block a restart
+  ---
+  duration_ms: 0.078459
+  type: 'test'
+  ...
+# Subtest: T7 consent is checked after history, on both paths, with the admission vocabulary
+ok 15 - T7 consent is checked after history, on both paths, with the admission vocabulary
+  ---
+  duration_ms: 0.190167
+  type: 'test'
+  ...
+# Subtest: T8 fixed order: the first failing check is the reason and later cells stay NOT_EVALUATED
+ok 16 - T8 fixed order: the first failing check is the reason and later cells stay NOT_EVALUATED
+  ---
+  duration_ms: 0.208917
+  type: 'test'
+  ...
+# Subtest: T9 resume baseline: a v1 checkpoint that cites the last interrupted row and confirms every PASS → RESUME_ELIGIBLE, not granted
+ok 17 - T9 resume baseline: a v1 checkpoint that cites the last interrupted row and confirms every PASS → RESUME_ELIGIBLE, not granted
+  ---
+  duration_ms: 0.066125
+  type: 'test'
+  ...
+# Subtest: T10 checkpoint schema version is read first and pinned exactly
+ok 18 - T10 checkpoint schema version is read first and pinned exactly
+  ---
+  duration_ms: 0.192042
+  type: 'test'
+  ...
+# Subtest: T11 checkpoint identity: one drifted pin of N, reordered or missing pins, profile, project and consent grant all refuse
+ok 19 - T11 checkpoint identity: one drifted pin of N, reordered or missing pins, profile, project and consent grant all refuse
+  ---
+  duration_ms: 0.27775
+  type: 'test'
+  ...
+# Subtest: T12 a stored report is not a checkpoint: only an interrupted row can be cited
+ok 20 - T12 a stored report is not a checkpoint: only an interrupted row can be cited
+  ---
+  duration_ms: 0.198875
+  type: 'test'
+  ...
+# Subtest: T13 supersession and staleness: the cited row must be the newest record and the checkpoint no older than it
+ok 21 - T13 supersession and staleness: the cited row must be the newest record and the checkpoint no older than it
+  ---
+  duration_ms: 0.310958
+  type: 'test'
+  ...
+# Subtest: T14 identity: restart needs a fresh run id; resume needs the cited run id and a strictly newer, unused attempt
+ok 22 - T14 identity: restart needs a fresh run id; resume needs the cited run id and a strictly newer, unused attempt
+  ---
+  duration_ms: 0.155375
+  type: 'test'
+  ...
+# Subtest: T15 every claimed PASS must be a confirmed, unrevoked, unexpired SUCCEEDED row of that run created before the checkpoint; no PASS may go unclaimed
+ok 23 - T15 every claimed PASS must be a confirmed, unrevoked, unexpired SUCCEEDED row of that run created before the checkpoint; no PASS may go unclaimed
+  ---
+  duration_ms: 0.258292
+  type: 'test'
+  ...
+# Subtest: T16 no silent downgrade: a refused checkpoint never yields SAFE_RESTART, and the restart verdict must be asked for explicitly
+ok 24 - T16 no silent downgrade: a refused checkpoint never yields SAFE_RESTART, and the restart verdict must be asked for explicitly
+  ---
+  duration_ms: 0.138833
+  type: 'test'
+  ...
+# Subtest: T17 payload is opaque: any data value leaves the decision unchanged; an accessor is invalid input
+ok 25 - T17 payload is opaque: any data value leaves the decision unchanged; an accessor is invalid input
+  ---
+  duration_ms: 0.181708
+  type: 'test'
+  ...
+# Subtest: T18 invalid-input battery: every shape or coherence violation is INVALID_INPUT with nothing evaluated
+ok 26 - T18 invalid-input battery: every shape or coherence violation is INVALID_INPUT with nothing evaluated
+  ---
+  duration_ms: 1.245375
+  type: 'test'
+  ...
+# Subtest: T19 purity and closed vocabulary: inputs untouched, no imports or clock in the source, exactly one export, statuses and reasons closed
+ok 27 - T19 purity and closed vocabulary: inputs untouched, no imports or clock in the source, exactly one export, statuses and reasons closed
+  ---
+  duration_ms: 3.353333
+  type: 'test'
+  ...
+# Subtest: T5+ sibling settlement: only a later SUCCEEDED/FAILED/CANCELLED row of the same run/attempt/candidate settles; QUEUED, UNKNOWN and REVOKED siblings do not; the stage is irrelevant
+ok 28 - T5+ sibling settlement: only a later SUCCEEDED/FAILED/CANCELLED row of the same run/attempt/candidate settles; QUEUED, UNKNOWN and REVOKED siblings do not; the stage is irrelevant
+  ---
+  duration_ms: 0.1385
+  type: 'test'
+  ...
+# Subtest: T15+ claim identity is runId + attempt + candidateId; the unclaimed scan covers every candidate of the cited run/attempt; claims are checked one at a time in order
+ok 29 - T15+ claim identity is runId + attempt + candidateId; the unclaimed scan covers every candidate of the cited run/attempt; claims are checked one at a time in order
+  ---
+  duration_ms: 0.116333
+  type: 'test'
+  ...
+# Subtest: T14+ restart identity: any persisted row with the run id refuses, whatever its attempt or liveness; a revoked tail still supersedes a checkpoint
+ok 30 - T14+ restart identity: any persisted row with the run id refuses, whatever its attempt or liveness; a revoked tail still supersedes a checkpoint
+  ---
+  duration_ms: 0.076708
+  type: 'test'
+  ...
+# Subtest: T11+/T14+ checkpoint binding: profile.id drift refuses; a resume attempt not newer than the cited attempt refuses
+ok 31 - T11+/T14+ checkpoint binding: profile.id drift refuses; a resume attempt not newer than the cited attempt refuses
+  ---
+  duration_ms: 0.102083
+  type: 'test'
+  ...
+# Subtest: T18+ row coherence is pinned in both directions, one invariant at a time
+ok 32 - T18+ row coherence is pinned in both directions, one invariant at a time
+  ---
+  duration_ms: 12.563958
+  type: 'test'
+  ...
+# Subtest: T19+ never throws on hostile objects: revoked proxies, throwing traps, descriptor tricks
+ok 33 - T19+ never throws on hostile objects: revoked proxies, throwing traps, descriptor tricks
+  ---
+  duration_ms: 0.246375
+  type: 'test'
+  ...
+# Subtest: writer exits then a new reader recovers exact ordered observations and bytes
+ok 34 - writer exits then a new reader recovers exact ordered observations and bytes
+  ---
+  duration_ms: 60.941167
+  type: 'test'
+  ...
+# Subtest: an empty serialized journal survives a fresh process without invented observations
+ok 35 - an empty serialized journal survives a fresh process without invented observations
+  ---
+  duration_ms: 60.532042
+  type: 'test'
+  ...
+# Subtest: fresh-process replay is duplicate/conflict only and never updates persisted bytes
+ok 36 - fresh-process replay is duplicate/conflict only and never updates persisted bytes
+  ---
+  duration_ms: 113.608584
+  type: 'test'
+  ...
+# Subtest: wrong-project complete and truncated streams expose no rows and are not rewritten
+ok 37 - wrong-project complete and truncated streams expose no rows and are not rewritten
+  ---
+  duration_ms: 83.030708
+  type: 'test'
+  ...
+# Subtest: fresh processes classify RUNNING as fresh, then UNKNOWN, then expired without retrying
+ok 38 - fresh processes classify RUNNING as fresh, then UNKNOWN, then expired without retrying
+  ---
+  duration_ms: 110.35525
+  type: 'test'
+  ...
+# Subtest: redaction and revocation persist across process boundaries without disclosing original payload
+ok 39 - redaction and revocation persist across process boundaries without disclosing original payload
+  ---
+  duration_ms: 59.517834
+  type: 'test'
+  ...
+# Subtest: truncated verified prefixes stay sealed and cannot be replayed or replaced
+ok 40 - truncated verified prefixes stay sealed and cannot be replayed or replaced
+  ---
+  duration_ms: 188.873958
+  type: 'test'
+  ...
+# Subtest: corrupt chain and malformed UTF8 are not treated as absent or accepted
+ok 41 - corrupt chain and malformed UTF8 are not treated as absent or accepted
+  ---
+  duration_ms: 83.64225
+  type: 'test'
+  ...
+# Subtest: structurally rehashed but semantically invalid journals are sealed by authoritative reopen
+ok 42 - structurally rehashed but semantically invalid journals are sealed by authoritative reopen
+  ---
+  duration_ms: 162.826083
+  type: 'test'
+  ...
+# Subtest: missing path, malformed requests and backwards time refuse without fabricated recovery
+ok 43 - missing path, malformed requests and backwards time refuse without fabricated recovery
+  ---
+  duration_ms: 180.8325
+  type: 'test'
+  ...
+# Subtest: T1 exact settled run/bundle identity: the observation binds runId, attempt, candidate, bundle fingerprint and reportSha256 from the settled record and nothing else
+ok 44 - T1 exact settled run/bundle identity: the observation binds runId, attempt, candidate, bundle fingerprint and reportSha256 from the settled record and nothing else
+  ---
+  duration_ms: 61.625875
+  type: 'test'
+  ...
+# Subtest: T2 an unsettled, mismatched, flagged or mis-shaped host record is refused with a named code and nothing is written
+ok 45 - T2 an unsettled, mismatched, flagged or mis-shaped host record is refused with a named code and nothing is written
+  ---
+  duration_ms: 0.893917
+  type: 'test'
+  ...
+# Subtest: T3 storage is an explicit choice: the seam accepts only bundle/settled/now/ttlMs, never adopts another project, and time cannot run backwards
+ok 46 - T3 storage is an explicit choice: the seam accepts only bundle/settled/now/ttlMs, never adopts another project, and time cannot run backwards
+  ---
+  duration_ms: 13.657709
+  type: 'test'
+  ...
+# Subtest: T3a issued identity does not make mutable public bundle fields authoritative
+ok 47 - T3a issued identity does not make mutable public bundle fields authoritative
+  ---
+  duration_ms: 0.17825
+  type: 'test'
+  ...
+# Subtest: T3b every valid workflow terminal outcome maps behaviorally to one terminal journal state
+ok 48 - T3b every valid workflow terminal outcome maps behaviorally to one terminal journal state
+  ---
+  duration_ms: 1.533166
+  type: 'test'
+  ...
+# Subtest: T4 fresh-process reread: two existing readers in different processes recover the observation as historical with the same bytes and hash
+ok 49 - T4 fresh-process reread: two existing readers in different processes recover the observation as historical with the same bytes and hash
+  ---
+  duration_ms: 86.503125
+  type: 'test'
+  ...
+# Subtest: T5 an interrupted or truncated write remains adverse: truncated file seals, leftover temp is never adopted, stale expectation conflicts, nothing is repaired
+ok 50 - T5 an interrupted or truncated write remains adverse: truncated file seals, leftover temp is never adopted, stale expectation conflicts, nothing is repaired
+  ---
+  duration_ms: 64.102916
+  type: 'test'
+  ...
+# Subtest: T6 no rerun, no restored consent, no promoted learning: the settled record is read as data, the classifier refuses consent it was never given and never grants resume
+ok 51 - T6 no rerun, no restored consent, no promoted learning: the settled record is read as data, the classifier refuses consent it was never given and never grants resume
+  ---
+  duration_ms: 57.568
+  type: 'test'
+  ...
+# Subtest: T7 a bundle-shaped object that openJournalBundle did not issue is refused
+ok 52 - T7 a bundle-shaped object that openJournalBundle did not issue is refused
+  ---
+  duration_ms: 0.095875
+  type: 'test'
+  ...
+1..52
+# tests 52
+# suites 0
+# pass 52
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 2564.569708

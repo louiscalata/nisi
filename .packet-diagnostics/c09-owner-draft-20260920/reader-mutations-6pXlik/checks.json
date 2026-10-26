@@ -1,0 +1,210 @@
+{
+  "schema": "nisi.c09.reader-mutations.v1",
+  "output": "/Users/louiscalata/nisi/.packet-diagnostics/c09-owner-draft-20260920/reader-mutations-6pXlik",
+  "source": {
+    "work-orders/v02-finish-cluster-v1/consumer/runtime-matrix-v1.mjs": "18cf428f02e64a3df15e9fe6fde41410541bf8d40131f2d55c74b8b59d2c73e0",
+    "work-orders/v02-finish-cluster-v1/consumer/runtime-matrix-v1.test.mjs": "890e2203265e3fa62a3ad65c751b73c24a084f033489a69b20ad0e2c7eee2b92",
+    "work-orders/v02-finish-cluster-v1/consumer/README.md": "6b43eece10644cf420068345dcf1e9e5eec971fcd89f2a40c2c77486d534255c",
+    "scripts/private-package-contract.mjs": "1983f133f4580bbca58fdefbc4b60431c462b8507b48aff1e45f9b72fd3b112c",
+    "scripts/check-private-package.mjs": "bf342e5e1b1c75bc89d8481ea0e20ca1641a23a60ff426b3ec10974a75806c69",
+    "tests/private-consumer/adoption-reviewed.mts": "39a2ca04a008d41be1a5a4d4aff8f9c38f9171fbfa1040829a61cca9ff4c694b",
+    "tests/private-consumer/baseline.mts": "6c99646cb0c846ee09cd70fd0c1d38ffa11514c2ba913aa690002da2d0090990",
+    "tests/private-consumer/declaration-regressions.mts": "6176b259f151c0dce32f17da6787a6fcfc6edaea40b86d5fdf60ba78ced4fcaf",
+    "tests/private-consumer/declaration-regressions.test.mjs": "8eb8c04e7b265021ec9dd3aa580da7088fb41c8c4da9f18bbcb5433e84eeefd2",
+    "tests/private-consumer/edge-cases.mts": "457ee56a0127e81703fb72eb2c943e6341dd1316d7fc1fadf3fe64ef5ef54af7",
+    "tests/private-consumer/local-chat-reasoning-effort.mts": "8d5ad6f7782bfa0ddf264e2eac4e751880ebee804a7046b0fc0169560ad3cc58",
+    "tests/private-consumer/native-chat-runtime.test.mjs": "ecdf8d7db5094fd95d586ef34554aa810d4e10aabc487fea2f40a53ff0a62f87",
+    "tests/private-consumer/native-chat.mts": "37316bce9129a94ba487fc905c16e419155f3b20f6f1441c3f8d50e07503df26",
+    "tests/private-consumer/output-mode-types.mts": "0eedf2ea1f7e4c30a71765129ef1ffcf4f2d9e69fdbbf02dc8685b8fcffea1ba",
+    "tests/private-consumer/repair-guidance-runtime.test.mjs": "e9f30f8330385fda7d506cb7a55292064f163c62eb4265dc79f6b9ce134b533b",
+    "tests/private-consumer/repair-guidance.mts": "a8b1c54e93a37c03a46cd1873340ed4dcc01f05c2e09be4bb21c6b656ce70aae",
+    "tests/private-consumer/runtime.test.mjs": "10a7eb74391501c754ad919d29af6a47c4823a3bb6cefe8a0462a9e7c82bc23c"
+  },
+  "sourceUnchanged": true,
+  "status": "PASS_SCOPED",
+  "rows": [
+    {
+      "name": "control-before",
+      "exitCode": 0,
+      "signal": null,
+      "error": null,
+      "counts": {
+        "tests": 153,
+        "pass": 153,
+        "fail": 0,
+        "skipped": 0,
+        "cancelled": 0,
+        "todo": 0
+      },
+      "assertionFailures": 0,
+      "moduleSha256": "18cf428f02e64a3df15e9fe6fde41410541bf8d40131f2d55c74b8b59d2c73e0",
+      "stdoutSha256": "27b83ef2c574f069e56fdf91193098a1fa4aee995188a06887ae6c81d28e7ada",
+      "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "name": "receipt-proof-hash",
+      "exitCode": 1,
+      "signal": null,
+      "error": null,
+      "counts": {
+        "tests": 153,
+        "pass": 151,
+        "fail": 2,
+        "skipped": 0,
+        "cancelled": 0,
+        "todo": 0
+      },
+      "assertionFailures": 2,
+      "moduleSha256": "c6bf77f0b4bfaf0086bd48f2d7fdfe77a2ab361287f8b802ec5467f1f90f3e65",
+      "stdoutSha256": "0dc6083d4e872a63eb03083e0f5fff18513ceba60fb175a4d5b65659a4972ba4",
+      "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "name": "case-freshness",
+      "exitCode": 1,
+      "signal": null,
+      "error": null,
+      "counts": {
+        "tests": 153,
+        "pass": 150,
+        "fail": 3,
+        "skipped": 0,
+        "cancelled": 0,
+        "todo": 0
+      },
+      "assertionFailures": 3,
+      "moduleSha256": "bb04f419f9e01ef314b9241b5ae7f4524cedec457be4859259ef4f8777cb03f8",
+      "stdoutSha256": "afe4ba7ad03baf7cae769e2eb618c9286bb4a7d336c1b1e2e20d630836efc71e",
+      "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "name": "ordered-command-argv",
+      "exitCode": 1,
+      "signal": null,
+      "error": null,
+      "counts": {
+        "tests": 153,
+        "pass": 149,
+        "fail": 4,
+        "skipped": 0,
+        "cancelled": 0,
+        "todo": 0
+      },
+      "assertionFailures": 4,
+      "moduleSha256": "65eb4618394619aa9964a334fc2fa317af94a9dff484b26efe6601a268a0a9df",
+      "stdoutSha256": "eceeec7bbf670cb2143b62cbf0b054bb7efbdbd18c4a594c1fe644a513f64635",
+      "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "name": "extraction-hash",
+      "exitCode": 1,
+      "signal": null,
+      "error": null,
+      "counts": {
+        "tests": 153,
+        "pass": 151,
+        "fail": 2,
+        "skipped": 0,
+        "cancelled": 0,
+        "todo": 0
+      },
+      "assertionFailures": 2,
+      "moduleSha256": "497a8b70d45ed23e190b4bb61e6f61c27cefdc10b3010fe37f2384bde115d1de",
+      "stdoutSha256": "c49609aea4fd5ee510f3831e1885af2e20b3fe9671e2561042fd4c5b2d734eb2",
+      "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "name": "proxy-first",
+      "exitCode": 1,
+      "signal": null,
+      "error": null,
+      "counts": {
+        "tests": 153,
+        "pass": 96,
+        "fail": 57,
+        "skipped": 0,
+        "cancelled": 0,
+        "todo": 0
+      },
+      "assertionFailures": 57,
+      "moduleSha256": "45bb0b69d704057c41a3e53571b340703b76672175a03bccd07e67a239bf2983",
+      "stdoutSha256": "db9782b7ea5400c2920476f273c5d8ecb21cb450ed4df7bf8468dbd38a2188fb",
+      "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "name": "manifest-accessor",
+      "exitCode": 1,
+      "signal": null,
+      "error": null,
+      "counts": {
+        "tests": 153,
+        "pass": 152,
+        "fail": 1,
+        "skipped": 0,
+        "cancelled": 0,
+        "todo": 0
+      },
+      "assertionFailures": 1,
+      "moduleSha256": "e6542adc26ea1c64aa34c5da1c1d5a4b60420e5380c643e3b8c159ac0911d431",
+      "stdoutSha256": "b5bf3b4c0f95ca443de669d6570b81e1eb844cac4ab3631b190532f28b14d8e8",
+      "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "name": "extra-diagnostic-file",
+      "exitCode": 1,
+      "signal": null,
+      "error": null,
+      "counts": {
+        "tests": 153,
+        "pass": 151,
+        "fail": 2,
+        "skipped": 0,
+        "cancelled": 0,
+        "todo": 0
+      },
+      "assertionFailures": 2,
+      "moduleSha256": "e1b47688189dc4f552d69e112e799994f7455ec7967c7e5e65c8999aab73f23a",
+      "stdoutSha256": "e54607f77523b644721c45993e9047705d2015f689521be9ff758ba8669d0641",
+      "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "name": "tap-counter-uniqueness",
+      "exitCode": 1,
+      "signal": null,
+      "error": null,
+      "counts": {
+        "tests": 153,
+        "pass": 152,
+        "fail": 1,
+        "skipped": 0,
+        "cancelled": 0,
+        "todo": 0
+      },
+      "assertionFailures": 1,
+      "moduleSha256": "0229575a4791d2eb123756111dc630ff45c4cc9c70830ce28c4244df3242e755",
+      "stdoutSha256": "8462915d3b4ebf6709593006399aadd5bc7ad1d06ddc98f6c8c82152c3b95db4",
+      "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "name": "control-after",
+      "exitCode": 0,
+      "signal": null,
+      "error": null,
+      "counts": {
+        "tests": 153,
+        "pass": 153,
+        "fail": 0,
+        "skipped": 0,
+        "cancelled": 0,
+        "todo": 0
+      },
+      "assertionFailures": 0,
+      "moduleSha256": "18cf428f02e64a3df15e9fe6fde41410541bf8d40131f2d55c74b8b59d2c73e0",
+      "stdoutSha256": "01f9152a523b373eaf1c1a4855044c91a04f5eacf42ff597b0675126837c0685",
+      "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    }
+  ],
+  "accepted": false,
+  "scope": "SYNTHETIC_READER_GUARD_REGRESSIONS_ONLY",
+  "node22": "NOT_RUN"
+}

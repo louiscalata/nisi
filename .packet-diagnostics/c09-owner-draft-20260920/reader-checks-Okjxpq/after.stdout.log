@@ -1,0 +1,976 @@
+TAP version 13
+# Subtest: positive exact writer-shaped receipt and honest missing Node22 row
+ok 1 - positive exact writer-shaped receipt and honest missing Node22 row
+  ---
+  duration_ms: 3.911708
+  type: 'test'
+  ...
+# Subtest: independent two-runtime proof is scoped to the same archive
+ok 2 - independent two-runtime proof is scoped to the same archive
+  ---
+  duration_ms: 3.082583
+  type: 'test'
+  ...
+# Subtest: proof hash, length, node path/version and archive claims are independently checked
+ok 3 - proof hash, length, node path/version and archive claims are independently checked
+  ---
+  duration_ms: 0.928083
+  type: 'test'
+  ...
+# Subtest: missing, duplicate and wrong tar evidence cannot pass
+ok 4 - missing, duplicate and wrong tar evidence cannot pass
+  ---
+  duration_ms: 2.583083
+  type: 'test'
+  ...
+# Subtest: strict flags, all roles and command order are binding
+ok 5 - strict flags, all roles and command order are binding
+  ---
+  duration_ms: 0.592875
+  type: 'test'
+  ...
+# Subtest: case hashes and inclusive cutoff are binding
+ok 6 - case hashes and inclusive cutoff are binding
+  ---
+  duration_ms: 1.239333
+  type: 'test'
+  ...
+# Subtest: negative locations and duplicate TAP/diagnostics are binding
+ok 7 - negative locations and duplicate TAP/diagnostics are binding
+  ---
+  duration_ms: 1.232833
+  type: 'test'
+  ...
+# Subtest: parsed objects cannot earn public PASS; reader remains inspectable
+ok 8 - parsed objects cannot earn public PASS; reader remains inspectable
+  ---
+  duration_ms: 0.384458
+  type: 'test'
+  ...
+# Subtest: nested and revoked proxies are refused before traps; resource bounds refuse
+ok 9 - nested and revoked proxies are refused before traps; resource bounds refuse
+  ---
+  duration_ms: 0.643583
+  type: 'test'
+  ...
+# Subtest: rehearsal command documentation preserves offline script-disabled route
+ok 10 - rehearsal command documentation preserves offline script-disabled route
+  ---
+  duration_ms: 0.136417
+  type: 'test'
+  ...
+# Subtest: every independent owner proof field is binding
+ok 11 - every independent owner proof field is binding
+  ---
+  duration_ms: 4.278667
+  type: 'test'
+  ...
+# Subtest: expected pins are closed, required, and do not self-pin the receipt
+ok 12 - expected pins are closed, required, and do not self-pin the receipt
+  ---
+  duration_ms: 1.64825
+  type: 'test'
+  ...
+# Subtest: cutoff comparisons are inclusive and inverted windows refuse
+ok 13 - cutoff comparisons are inclusive and inverted windows refuse
+  ---
+  duration_ms: 1.872208
+  type: 'test'
+  ...
+# Subtest: all 35 check roles require exact order, executable, cwd, argv, clean termination and exit
+ok 14 - all 35 check roles require exact order, executable, cwd, argv, clean termination and exit
+  ---
+  duration_ms: 119.26825
+  type: 'test'
+  ...
+# Subtest: all 29 extraction stdout digests and inventory/pack evidence are checked
+ok 15 - all 29 extraction stdout digests and inventory/pack evidence are checked
+  ---
+  duration_ms: 14.28975
+  type: 'test'
+  ...
+# Subtest: negative locations require exact expected coverage and bounded diagnostics
+ok 16 - negative locations require exact expected coverage and bounded diagnostics
+  ---
+  duration_ms: 2.547208
+  type: 'test'
+  ...
+# Subtest: TAP duplicate, failure, skip and contradictory summaries remain non-PASS
+ok 17 - TAP duplicate, failure, skip and contradictory summaries remain non-PASS
+  ---
+  duration_ms: 1.837917
+  type: 'test'
+  ...
+# Subtest: accessors, malformed/unsupported/partial-failed receipts, and flags are explicit
+ok 18 - accessors, malformed/unsupported/partial-failed receipts, and flags are explicit
+  ---
+  duration_ms: 1.806916
+  type: 'test'
+  ...
+# Subtest: resource caps and zero-trap proxy boundaries are represented
+ok 19 - resource caps and zero-trap proxy boundaries are represented
+  ---
+  duration_ms: 10.90025
+  type: 'test'
+  ...
+# Subtest: adverse: schema absent
+ok 20 - adverse: schema absent
+  ---
+  duration_ms: 0.365041
+  type: 'test'
+  ...
+# Subtest: adverse: extra top-level field
+ok 21 - adverse: extra top-level field
+  ---
+  duration_ms: 0.335583
+  type: 'test'
+  ...
+# Subtest: adverse: missing completion
+ok 22 - adverse: missing completion
+  ---
+  duration_ms: 0.330584
+  type: 'test'
+  ...
+# Subtest: adverse: unknown status
+ok 23 - adverse: unknown status
+  ---
+  duration_ms: 0.336291
+  type: 'test'
+  ...
+# Subtest: adverse: network boundary
+ok 24 - adverse: network boundary
+  ---
+  duration_ms: 0.435583
+  type: 'test'
+  ...
+# Subtest: adverse: lifecycle boundary
+ok 25 - adverse: lifecycle boundary
+  ---
+  duration_ms: 0.427625
+  type: 'test'
+  ...
+# Subtest: adverse: publication boundary
+ok 26 - adverse: publication boundary
+  ---
+  duration_ms: 0.382042
+  type: 'test'
+  ...
+# Subtest: adverse: boundary not boolean
+ok 27 - adverse: boundary not boolean
+  ---
+  duration_ms: 0.427583
+  type: 'test'
+  ...
+# Subtest: adverse: node hash short
+not ok 28 - adverse: node hash short
+  ---
+  duration_ms: 0.31175
+  type: 'test'
+  location: '/Users/louiscalata/nisi/.packet-diagnostics/c09-owner-draft-20260920/reader-checks-Okjxpq/after/work-orders/v02-finish-cluster-v1/consumer/runtime-matrix-v1.test.mjs:180:43'
+  failureType: 'testCodeFailure'
+  error: 'MATRIX_EXPECTED_SCHEMA: observation.node.sha256'
+  code: 'MATRIX_EXPECTED_SCHEMA'
+  name: 'RuntimeMatrixError'
+  stack: |-
+    refuse (file:///Users/louiscalata/nisi/.packet-diagnostics/c09-owner-draft-20260920/reader-checks-Okjxpq/after/work-orders/v02-finish-cluster-v1/consumer/runtime-matrix-v1.mjs:33:36)
+    hex (file:///Users/louiscalata/nisi/.packet-diagnostics/c09-owner-draft-20260920/reader-checks-Okjxpq/after/work-orders/v02-finish-cluster-v1/consumer/runtime-matrix-v1.mjs:69:66)
+    readExpected (file:///Users/louiscalata/nisi/.packet-diagnostics/c09-owner-draft-20260920/reader-checks-Okjxpq/after/work-orders/v02-finish-cluster-v1/consumer/runtime-matrix-v1.mjs:288:696)
+    createRuntimeMatrix (file:///Users/louiscalata/nisi/.packet-diagnostics/c09-owner-draft-20260920/reader-checks-Okjxpq/after/work-orders/v02-finish-cluster-v1/consumer/runtime-matrix-v1.mjs:297:78)
+    matrix (file:///Users/louiscalata/nisi/.packet-diagnostics/c09-owner-draft-20260920/reader-checks-Okjxpq/after/work-orders/v02-finish-cluster-v1/consumer/runtime-matrix-v1.test.mjs:45:60)
+    TestContext.<anonymous> (file:///Users/louiscalata/nisi/.packet-diagnostics/c09-owner-draft-20260920/reader-checks-Okjxpq/after/work-orders/v02-finish-cluster-v1/consumer/runtime-matrix-v1.test.mjs:181:43)
+    Test.runInAsyncScope (node:async_hooks:227:14)
+    Test.run (node:internal/test_runner/test:1325:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:911:18)
+    Test.postRun (node:internal/test_runner/test:1465:19)
+  ...
+# Subtest: adverse: archive hash uppercase
+not ok 29 - adverse: archive hash uppercase
+  ---
+  duration_ms: 0.259458
+  type: 'test'
+  location: '/Users/louiscalata/nisi/.packet-diagnostics/c09-owner-draft-20260920/reader-checks-Okjxpq/after/work-orders/v02-finish-cluster-v1/consumer/runtime-matrix-v1.test.mjs:180:43'
+  failureType: 'testCodeFailure'
+  error: 'MATRIX_EXPECTED_SCHEMA: observation.archive.sha256'
+  code: 'MATRIX_EXPECTED_SCHEMA'
+  name: 'RuntimeMatrixError'
+  stack: |-
+    refuse (file:///Users/louiscalata/nisi/.packet-diagnostics/c09-owner-draft-20260920/reader-checks-Okjxpq/after/work-orders/v02-finish-cluster-v1/consumer/runtime-matrix-v1.mjs:33:36)
+    hex (file:///Users/louiscalata/nisi/.packet-diagnostics/c09-owner-draft-20260920/reader-checks-Okjxpq/after/work-orders/v02-finish-cluster-v1/consumer/runtime-matrix-v1.mjs:69:66)
+    readExpected (file:///Users/louiscalata/nisi/.packet-diagnostics/c09-owner-draft-20260920/reader-checks-Okjxpq/after/work-orders/v02-finish-cluster-v1/consumer/runtime-matrix-v1.mjs:288:793)
+    createRuntimeMatrix (file:///Users/louiscalata/nisi/.packet-diagnostics/c09-owner-draft-20260920/reader-checks-Okjxpq/after/work-orders/v02-finish-cluster-v1/consumer/runtime-matrix-v1.mjs:297:78)
+    matrix (file:///Users/louiscalata/nisi/.packet-diagnostics/c09-owner-draft-20260920/reader-checks-Okjxpq/after/work-orders/v02-finish-cluster-v1/consumer/runtime-matrix-v1.test.mjs:45:60)
+    TestContext.<anonymous> (file:///Users/louiscalata/nisi/.packet-diagnostics/c09-owner-draft-20260920/reader-checks-Okjxpq/after/work-orders/v02-finish-cluster-v1/consumer/runtime-matrix-v1.test.mjs:181:43)
+    Test.runInAsyncScope (node:async_hooks:227:14)
+    Test.run (node:internal/test_runner/test:1325:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:911:18)
+    Test.postRun (node:internal/test_runner/test:1465:19)
+  ...
+# Subtest: adverse: archive extra field
+ok 30 - adverse: archive extra field
+  ---
+  duration_ms: 0.406125
+  type: 'test'
+  ...
+# Subtest: adverse: missing check exit
+ok 31 - adverse: missing check exit
+  ---
+  duration_ms: 0.517
+  type: 'test'
+  ...
+# Subtest: adverse: missing ran stdout
+ok 32 - adverse: missing ran stdout
+  ---
+  duration_ms: 0.338917
+  type: 'test'
+  ...
+# Subtest: adverse: missing ran stderr
+ok 33 - adverse: missing ran stderr
+  ---
+  duration_ms: 0.48
+  type: 'test'
+  ...
+# Subtest: adverse: non-string argument
+ok 34 - adverse: non-string argument
+  ---
+  duration_ms: 0.310791
+  type: 'test'
+  ...
+# Subtest: adverse: fractional duration
+ok 35 - adverse: fractional duration
+  ---
+  duration_ms: 0.311333
+  type: 'test'
+  ...
+# Subtest: adverse: negative duration
+ok 36 - adverse: negative duration
+  ---
+  duration_ms: 0.302417
+  type: 'test'
+  ...
+# Subtest: adverse: invalid source hash
+ok 37 - adverse: invalid source hash
+  ---
+  duration_ms: 0.416083
+  type: 'test'
+  ...
+# Subtest: adverse: reversed timestamps
+ok 38 - adverse: reversed timestamps
+  ---
+  duration_ms: 0.405708
+  type: 'test'
+  ...
+# Subtest: adverse: non-ISO timestamp
+ok 39 - adverse: non-ISO timestamp
+  ---
+  duration_ms: 0.400291
+  type: 'test'
+  ...
+# Subtest: adverse: invalid negative flag
+ok 40 - adverse: invalid negative flag
+  ---
+  duration_ms: 0.407625
+  type: 'test'
+  ...
+# Subtest: adverse: invalid failure shape
+ok 41 - adverse: invalid failure shape
+  ---
+  duration_ms: 0.497291
+  type: 'test'
+  ...
+# Subtest: adverse: unpaired surrogate
+ok 42 - adverse: unpaired surrogate
+  ---
+  duration_ms: 0.442958
+  type: 'test'
+  ...
+# Subtest: adverse: missing archive
+ok 43 - adverse: missing archive
+  ---
+  duration_ms: 0.48475
+  type: 'test'
+  ...
+# Subtest: adverse: missing installed
+ok 44 - adverse: missing installed
+  ---
+  duration_ms: 0.468542
+  type: 'test'
+  ...
+# Subtest: adverse: missing toolchain
+ok 45 - adverse: missing toolchain
+  ---
+  duration_ms: 0.433625
+  type: 'test'
+  ...
+# Subtest: adverse: missing negatives
+ok 46 - adverse: missing negatives
+  ---
+  duration_ms: 0.454959
+  type: 'test'
+  ...
+# Subtest: adverse: inexact installed copy
+ok 47 - adverse: inexact installed copy
+  ---
+  duration_ms: 0.46325
+  type: 'test'
+  ...
+# Subtest: adverse: wrong installed path
+ok 48 - adverse: wrong installed path
+  ---
+  duration_ms: 0.462542
+  type: 'test'
+  ...
+# Subtest: adverse: wrong archive path
+ok 49 - adverse: wrong archive path
+  ---
+  duration_ms: 0.597
+  type: 'test'
+  ...
+# Subtest: adverse: outside evidence root
+ok 50 - adverse: outside evidence root
+  ---
+  duration_ms: 0.4765
+  type: 'test'
+  ...
+# Subtest: adverse: source inventory short
+ok 51 - adverse: source inventory short
+  ---
+  duration_ms: 0.511416
+  type: 'test'
+  ...
+# Subtest: adverse: archive extra file
+ok 52 - adverse: archive extra file
+  ---
+  duration_ms: 0.44775
+  type: 'test'
+  ...
+# Subtest: adverse: stage archive drift
+ok 53 - adverse: stage archive drift
+  ---
+  duration_ms: 0.450334
+  type: 'test'
+  ...
+# Subtest: adverse: source pin stale
+ok 54 - adverse: source pin stale
+  ---
+  duration_ms: 0.438584
+  type: 'test'
+  ...
+# Subtest: adverse: stage pin stale
+ok 55 - adverse: stage pin stale
+  ---
+  duration_ms: 0.447458
+  type: 'test'
+  ...
+# Subtest: adverse: case pin stale
+ok 56 - adverse: case pin stale
+  ---
+  duration_ms: 0.450333
+  type: 'test'
+  ...
+# Subtest: adverse: toolchain pin stale
+ok 57 - adverse: toolchain pin stale
+  ---
+  duration_ms: 0.455583
+  type: 'test'
+  ...
+# Subtest: adverse: unclaimed extra TS file
+ok 58 - adverse: unclaimed extra TS file
+  ---
+  duration_ms: 0.61275
+  type: 'test'
+  ...
+# Subtest: adverse: global TS diagnostic
+ok 59 - adverse: global TS diagnostic
+  ---
+  duration_ms: 0.471292
+  type: 'test'
+  ...
+# Subtest: adverse: wrong negative location
+ok 60 - adverse: wrong negative location
+  ---
+  duration_ms: 0.462417
+  type: 'test'
+  ...
+# Subtest: adverse: duplicate substitutes missing location
+ok 61 - adverse: duplicate substitutes missing location
+  ---
+  duration_ms: 0.480542
+  type: 'test'
+  ...
+# Subtest: adverse: observed count mismatch
+ok 62 - adverse: observed count mismatch
+  ---
+  duration_ms: 0.476416
+  type: 'test'
+  ...
+# Subtest: adverse: diagnostic count above bound
+ok 63 - adverse: diagnostic count above bound
+  ---
+  duration_ms: 0.448625
+  type: 'test'
+  ...
+# Subtest: adverse: diagnostic text above bound
+ok 64 - adverse: diagnostic text above bound
+  ---
+  duration_ms: 0.665416
+  type: 'test'
+  ...
+# Subtest: adverse: TAP cancellation
+ok 65 - adverse: TAP cancellation
+  ---
+  duration_ms: 0.604542
+  type: 'test'
+  ...
+# Subtest: adverse: TAP todo
+ok 66 - adverse: TAP todo
+  ---
+  duration_ms: 0.515917
+  type: 'test'
+  ...
+# Subtest: adverse: TAP no summary
+ok 67 - adverse: TAP no summary
+  ---
+  duration_ms: 0.481042
+  type: 'test'
+  ...
+# Subtest: adverse: TAP wrong plan
+ok 68 - adverse: TAP wrong plan
+  ---
+  duration_ms: 0.48325
+  type: 'test'
+  ...
+# Subtest: adverse: TAP duplicate plan
+ok 69 - adverse: TAP duplicate plan
+  ---
+  duration_ms: 0.48075
+  type: 'test'
+  ...
+# Subtest: adverse: TAP duplicate one counter
+ok 70 - adverse: TAP duplicate one counter
+  ---
+  duration_ms: 0.476417
+  type: 'test'
+  ...
+# Subtest: adverse: pack JSON syntax
+ok 71 - adverse: pack JSON syntax
+  ---
+  duration_ms: 0.475
+  type: 'test'
+  ...
+# Subtest: adverse: pack duplicate entry
+ok 72 - adverse: pack duplicate entry
+  ---
+  duration_ms: 0.483291
+  type: 'test'
+  ...
+# Subtest: adverse: tar duplicate entry
+ok 73 - adverse: tar duplicate entry
+  ---
+  duration_ms: 0.585583
+  type: 'test'
+  ...
+# Subtest: fixture mutations cannot leak across records or independent expected pins
+ok 74 - fixture mutations cannot leak across records or independent expected pins
+  ---
+  duration_ms: 0.618125
+  type: 'test'
+  ...
+# Subtest: null proof and absent expected contract stay non-PASS
+ok 75 - null proof and absent expected contract stay non-PASS
+  ---
+  duration_ms: 0.70275
+  type: 'test'
+  ...
+# Subtest: coherent non-metadata stage/source substitution still fails
+ok 76 - coherent non-metadata stage/source substitution still fails
+  ---
+  duration_ms: 0.522916
+  type: 'test'
+  ...
+# Subtest: extra diagnostics at known locations retain truthful counts
+ok 77 - extra diagnostics at known locations retain truthful counts
+  ---
+  duration_ms: 0.479625
+  type: 'test'
+  ...
+# Subtest: timestamps alone do not imply shared execution; reused identities do
+ok 78 - timestamps alone do not imply shared execution; reused identities do
+  ---
+  duration_ms: 4.281333
+  type: 'test'
+  ...
+# Subtest: runtime relabeling, unsupported major and malformed version remain explicit
+not ok 79 - runtime relabeling, unsupported major and malformed version remain explicit
+  ---
+  duration_ms: 1.082958
+  type: 'test'
+  location: '/Users/louiscalata/nisi/.packet-diagnostics/c09-owner-draft-20260920/reader-checks-Okjxpq/after/work-orders/v02-finish-cluster-v1/consumer/runtime-matrix-v1.test.mjs:213:1'
+  failureType: 'testCodeFailure'
+  error: 'MATRIX_EXPECTED_SCHEMA: observation.node.version'
+  code: 'MATRIX_EXPECTED_SCHEMA'
+  name: 'RuntimeMatrixError'
+  stack: |-
+    refuse (file:///Users/louiscalata/nisi/.packet-diagnostics/c09-owner-draft-20260920/reader-checks-Okjxpq/after/work-orders/v02-finish-cluster-v1/consumer/runtime-matrix-v1.mjs:33:36)
+    readExpected (file:///Users/louiscalata/nisi/.packet-diagnostics/c09-owner-draft-20260920/reader-checks-Okjxpq/after/work-orders/v02-finish-cluster-v1/consumer/runtime-matrix-v1.mjs:288:397)
+    createRuntimeMatrix (file:///Users/louiscalata/nisi/.packet-diagnostics/c09-owner-draft-20260920/reader-checks-Okjxpq/after/work-orders/v02-finish-cluster-v1/consumer/runtime-matrix-v1.mjs:297:78)
+    matrix (file:///Users/louiscalata/nisi/.packet-diagnostics/c09-owner-draft-20260920/reader-checks-Okjxpq/after/work-orders/v02-finish-cluster-v1/consumer/runtime-matrix-v1.test.mjs:45:60)
+    TestContext.<anonymous> (file:///Users/louiscalata/nisi/.packet-diagnostics/c09-owner-draft-20260920/reader-checks-Okjxpq/after/work-orders/v02-finish-cluster-v1/consumer/runtime-matrix-v1.test.mjs:217:18)
+    Test.runInAsyncScope (node:async_hooks:227:14)
+    Test.run (node:internal/test_runner/test:1325:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:911:18)
+    Test.postRun (node:internal/test_runner/test:1465:19)
+    Test.run (node:internal/test_runner/test:1390:12)
+  ...
+# Subtest: unknown durations remain null, zero remains zero, and output is deeply frozen
+ok 80 - unknown durations remain null, zero remains zero, and output is deeply frozen
+  ---
+  duration_ms: 0.832125
+  type: 'test'
+  ...
+# Subtest: spawn failure without output retains the actual failure, not invented TAP
+ok 81 - spawn failure without output retains the actual failure, not invented TAP
+  ---
+  duration_ms: 0.322834
+  type: 'test'
+  ...
+# Subtest: zero-trap live proxy: record
+ok 82 - zero-trap live proxy: record
+  ---
+  duration_ms: 0.083125
+  type: 'test'
+  ...
+# Subtest: zero-trap revoked proxy: record
+ok 83 - zero-trap revoked proxy: record
+  ---
+  duration_ms: 0.053958
+  type: 'test'
+  ...
+# Subtest: zero-trap live proxy: node
+ok 84 - zero-trap live proxy: node
+  ---
+  duration_ms: 0.062125
+  type: 'test'
+  ...
+# Subtest: zero-trap revoked proxy: node
+ok 85 - zero-trap revoked proxy: node
+  ---
+  duration_ms: 0.053834
+  type: 'test'
+  ...
+# Subtest: zero-trap live proxy: checks
+ok 86 - zero-trap live proxy: checks
+  ---
+  duration_ms: 0.059291
+  type: 'test'
+  ...
+# Subtest: zero-trap revoked proxy: checks
+ok 87 - zero-trap revoked proxy: checks
+  ---
+  duration_ms: 0.053542
+  type: 'test'
+  ...
+# Subtest: zero-trap live proxy: check
+ok 88 - zero-trap live proxy: check
+  ---
+  duration_ms: 0.06075
+  type: 'test'
+  ...
+# Subtest: zero-trap revoked proxy: check
+ok 89 - zero-trap revoked proxy: check
+  ---
+  duration_ms: 0.055625
+  type: 'test'
+  ...
+# Subtest: zero-trap live proxy: args
+ok 90 - zero-trap live proxy: args
+  ---
+  duration_ms: 0.062334
+  type: 'test'
+  ...
+# Subtest: zero-trap revoked proxy: args
+ok 91 - zero-trap revoked proxy: args
+  ---
+  duration_ms: 0.075375
+  type: 'test'
+  ...
+# Subtest: zero-trap live proxy: source
+ok 92 - zero-trap live proxy: source
+  ---
+  duration_ms: 0.181833
+  type: 'test'
+  ...
+# Subtest: zero-trap revoked proxy: source
+ok 93 - zero-trap revoked proxy: source
+  ---
+  duration_ms: 0.152959
+  type: 'test'
+  ...
+# Subtest: zero-trap live proxy: stage
+ok 94 - zero-trap live proxy: stage
+  ---
+  duration_ms: 0.163209
+  type: 'test'
+  ...
+# Subtest: zero-trap revoked proxy: stage
+ok 95 - zero-trap revoked proxy: stage
+  ---
+  duration_ms: 0.158667
+  type: 'test'
+  ...
+# Subtest: zero-trap live proxy: cases
+ok 96 - zero-trap live proxy: cases
+  ---
+  duration_ms: 0.169458
+  type: 'test'
+  ...
+# Subtest: zero-trap revoked proxy: cases
+ok 97 - zero-trap revoked proxy: cases
+  ---
+  duration_ms: 0.167625
+  type: 'test'
+  ...
+# Subtest: zero-trap live proxy: archive
+ok 98 - zero-trap live proxy: archive
+  ---
+  duration_ms: 0.140666
+  type: 'test'
+  ...
+# Subtest: zero-trap revoked proxy: archive
+ok 99 - zero-trap revoked proxy: archive
+  ---
+  duration_ms: 0.136875
+  type: 'test'
+  ...
+# Subtest: zero-trap live proxy: entries
+ok 100 - zero-trap live proxy: entries
+  ---
+  duration_ms: 0.139958
+  type: 'test'
+  ...
+# Subtest: zero-trap revoked proxy: entries
+ok 101 - zero-trap revoked proxy: entries
+  ---
+  duration_ms: 0.13775
+  type: 'test'
+  ...
+# Subtest: zero-trap live proxy: installed
+ok 102 - zero-trap live proxy: installed
+  ---
+  duration_ms: 0.148667
+  type: 'test'
+  ...
+# Subtest: zero-trap revoked proxy: installed
+ok 103 - zero-trap revoked proxy: installed
+  ---
+  duration_ms: 0.146
+  type: 'test'
+  ...
+# Subtest: zero-trap live proxy: toolchain
+ok 104 - zero-trap live proxy: toolchain
+  ---
+  duration_ms: 0.16375
+  type: 'test'
+  ...
+# Subtest: zero-trap revoked proxy: toolchain
+ok 105 - zero-trap revoked proxy: toolchain
+  ---
+  duration_ms: 0.15575
+  type: 'test'
+  ...
+# Subtest: zero-trap live proxy: typeRoots
+ok 106 - zero-trap live proxy: typeRoots
+  ---
+  duration_ms: 0.158875
+  type: 'test'
+  ...
+# Subtest: zero-trap revoked proxy: typeRoots
+ok 107 - zero-trap revoked proxy: typeRoots
+  ---
+  duration_ms: 0.151417
+  type: 'test'
+  ...
+# Subtest: zero-trap live proxy: negative
+ok 108 - zero-trap live proxy: negative
+  ---
+  duration_ms: 0.163
+  type: 'test'
+  ...
+# Subtest: zero-trap revoked proxy: negative
+ok 109 - zero-trap revoked proxy: negative
+  ---
+  duration_ms: 0.1495
+  type: 'test'
+  ...
+# Subtest: zero-trap live proxy: boundary
+ok 110 - zero-trap live proxy: boundary
+  ---
+  duration_ms: 0.139541
+  type: 'test'
+  ...
+# Subtest: zero-trap revoked proxy: boundary
+ok 111 - zero-trap revoked proxy: boundary
+  ---
+  duration_ms: 0.273291
+  type: 'test'
+  ...
+# Subtest: zero-trap live proxy: failure
+ok 112 - zero-trap live proxy: failure
+  ---
+  duration_ms: 0.19675
+  type: 'test'
+  ...
+# Subtest: zero-trap revoked proxy: failure
+ok 113 - zero-trap revoked proxy: failure
+  ---
+  duration_ms: 0.166833
+  type: 'test'
+  ...
+# Subtest: matrix zero-trap live proxy: input
+ok 114 - matrix zero-trap live proxy: input
+  ---
+  duration_ms: 0.207417
+  type: 'test'
+  ...
+# Subtest: matrix zero-trap revoked proxy: input
+ok 115 - matrix zero-trap revoked proxy: input
+  ---
+  duration_ms: 0.169458
+  type: 'test'
+  ...
+# Subtest: matrix zero-trap live proxy: rows
+ok 116 - matrix zero-trap live proxy: rows
+  ---
+  duration_ms: 0.249917
+  type: 'test'
+  ...
+# Subtest: matrix zero-trap revoked proxy: rows
+ok 117 - matrix zero-trap revoked proxy: rows
+  ---
+  duration_ms: 0.235
+  type: 'test'
+  ...
+# Subtest: matrix zero-trap live proxy: row
+ok 118 - matrix zero-trap live proxy: row
+  ---
+  duration_ms: 0.237083
+  type: 'test'
+  ...
+# Subtest: matrix zero-trap revoked proxy: row
+ok 119 - matrix zero-trap revoked proxy: row
+  ---
+  duration_ms: 0.230916
+  type: 'test'
+  ...
+# Subtest: matrix zero-trap live proxy: expected
+ok 120 - matrix zero-trap live proxy: expected
+  ---
+  duration_ms: 0.159916
+  type: 'test'
+  ...
+# Subtest: matrix zero-trap revoked proxy: expected
+ok 121 - matrix zero-trap revoked proxy: expected
+  ---
+  duration_ms: 0.156375
+  type: 'test'
+  ...
+# Subtest: matrix zero-trap live proxy: source
+ok 122 - matrix zero-trap live proxy: source
+  ---
+  duration_ms: 0.178709
+  type: 'test'
+  ...
+# Subtest: matrix zero-trap revoked proxy: source
+ok 123 - matrix zero-trap revoked proxy: source
+  ---
+  duration_ms: 0.180084
+  type: 'test'
+  ...
+# Subtest: matrix zero-trap live proxy: stage
+ok 124 - matrix zero-trap live proxy: stage
+  ---
+  duration_ms: 0.169583
+  type: 'test'
+  ...
+# Subtest: matrix zero-trap revoked proxy: stage
+ok 125 - matrix zero-trap revoked proxy: stage
+  ---
+  duration_ms: 0.173417
+  type: 'test'
+  ...
+# Subtest: matrix zero-trap live proxy: cases
+ok 126 - matrix zero-trap live proxy: cases
+  ---
+  duration_ms: 0.182833
+  type: 'test'
+  ...
+# Subtest: matrix zero-trap revoked proxy: cases
+ok 127 - matrix zero-trap revoked proxy: cases
+  ---
+  duration_ms: 0.183292
+  type: 'test'
+  ...
+# Subtest: matrix zero-trap live proxy: toolchain
+ok 128 - matrix zero-trap live proxy: toolchain
+  ---
+  duration_ms: 0.188083
+  type: 'test'
+  ...
+# Subtest: matrix zero-trap revoked proxy: toolchain
+ok 129 - matrix zero-trap revoked proxy: toolchain
+  ---
+  duration_ms: 0.183917
+  type: 'test'
+  ...
+# Subtest: matrix zero-trap live proxy: typeRoots
+ok 130 - matrix zero-trap live proxy: typeRoots
+  ---
+  duration_ms: 0.201625
+  type: 'test'
+  ...
+# Subtest: matrix zero-trap revoked proxy: typeRoots
+ok 131 - matrix zero-trap revoked proxy: typeRoots
+  ---
+  duration_ms: 0.18575
+  type: 'test'
+  ...
+# Subtest: matrix zero-trap live proxy: locations
+ok 132 - matrix zero-trap live proxy: locations
+  ---
+  duration_ms: 0.185291
+  type: 'test'
+  ...
+# Subtest: matrix zero-trap revoked proxy: locations
+ok 133 - matrix zero-trap revoked proxy: locations
+  ---
+  duration_ms: 0.31575
+  type: 'test'
+  ...
+# Subtest: matrix zero-trap live proxy: location
+ok 134 - matrix zero-trap live proxy: location
+  ---
+  duration_ms: 0.217791
+  type: 'test'
+  ...
+# Subtest: matrix zero-trap revoked proxy: location
+ok 135 - matrix zero-trap revoked proxy: location
+  ---
+  duration_ms: 0.193958
+  type: 'test'
+  ...
+# Subtest: matrix zero-trap live proxy: observations
+ok 136 - matrix zero-trap live proxy: observations
+  ---
+  duration_ms: 0.232292
+  type: 'test'
+  ...
+# Subtest: matrix zero-trap revoked proxy: observations
+ok 137 - matrix zero-trap revoked proxy: observations
+  ---
+  duration_ms: 0.241542
+  type: 'test'
+  ...
+# Subtest: matrix zero-trap live proxy: proof
+ok 138 - matrix zero-trap live proxy: proof
+  ---
+  duration_ms: 0.237375
+  type: 'test'
+  ...
+# Subtest: matrix zero-trap revoked proxy: proof
+ok 139 - matrix zero-trap revoked proxy: proof
+  ---
+  duration_ms: 0.225875
+  type: 'test'
+  ...
+# Subtest: matrix zero-trap live proxy: node
+ok 140 - matrix zero-trap live proxy: node
+  ---
+  duration_ms: 0.235458
+  type: 'test'
+  ...
+# Subtest: matrix zero-trap revoked proxy: node
+ok 141 - matrix zero-trap revoked proxy: node
+  ---
+  duration_ms: 0.229375
+  type: 'test'
+  ...
+# Subtest: matrix zero-trap live proxy: archive
+ok 142 - matrix zero-trap live proxy: archive
+  ---
+  duration_ms: 0.232458
+  type: 'test'
+  ...
+# Subtest: matrix zero-trap revoked proxy: archive
+ok 143 - matrix zero-trap revoked proxy: archive
+  ---
+  duration_ms: 0.2265
+  type: 'test'
+  ...
+# Subtest: descriptor, prototype, symbol and sparse-array guards preserve zero access
+ok 144 - descriptor, prototype, symbol and sparse-array guards preserve zero access
+  ---
+  duration_ms: 0.894375
+  type: 'test'
+  ...
+# Subtest: resource bound: schema
+ok 145 - resource bound: schema
+  ---
+  duration_ms: 0.067167
+  type: 'test'
+  ...
+# Subtest: resource bound: status
+ok 146 - resource bound: status
+  ---
+  duration_ms: 0.058917
+  type: 'test'
+  ...
+# Subtest: resource bound: UTF8 string bytes
+ok 147 - resource bound: UTF8 string bytes
+  ---
+  duration_ms: 0.188708
+  type: 'test'
+  ...
+# Subtest: resource bound: stderr
+ok 148 - resource bound: stderr
+  ---
+  duration_ms: 0.124708
+  type: 'test'
+  ...
+# Subtest: resource bound: argument count
+ok 149 - resource bound: argument count
+  ---
+  duration_ms: 0.063417
+  type: 'test'
+  ...
+# Subtest: resource bound: manifest key
+ok 150 - resource bound: manifest key
+  ---
+  duration_ms: 0.192041
+  type: 'test'
+  ...
+# Subtest: resource bound: record keys
+ok 151 - resource bound: record keys
+  ---
+  duration_ms: 0.1055
+  type: 'test'
+  ...
+# Subtest: matrix input and expected-contract bounds cannot be bypassed
+ok 152 - matrix input and expected-contract bounds cannot be bypassed
+  ---
+  duration_ms: 3.326208
+  type: 'test'
+  ...
+# Subtest: malformed text keeps no invented evidence and all-unrun input stays incomplete
+ok 153 - malformed text keeps no invented evidence and all-unrun input stays incomplete
+  ---
+  duration_ms: 1.042417
+  type: 'test'
+  ...
+1..153
+# tests 153
+# suites 0
+# pass 150
+# fail 3
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 269.072125

@@ -1,0 +1,70 @@
+TAP version 13
+# Subtest: semantic lifecycle flags refuse even when temporary-copy pins are refreshed
+ok 1 - semantic lifecycle flags refuse even when temporary-copy pins are refreshed
+  ---
+  duration_ms: 10.767
+  type: 'test'
+  ...
+# Subtest: an unmodified owned temporary copy preserves the positive contract
+ok 2 - an unmodified owned temporary copy preserves the positive contract
+  ---
+  duration_ms: 5.886833
+  type: 'test'
+  ...
+# Subtest: temporary-copy source contracts cannot pass by refreshing caller pins
+ok 3 - temporary-copy source contracts cannot pass by refreshing caller pins
+  ---
+  duration_ms: 10.318875
+  type: 'test'
+  ...
+# Subtest: temporary-copy archive bytes remain bound to receipt metadata
+ok 4 - temporary-copy archive bytes remain bound to receipt metadata
+  ---
+  duration_ms: 2.509125
+  type: 'test'
+  ...
+# Subtest: required after/retained descriptors cannot be omitted in a refreshed copy
+ok 5 - required after/retained descriptors cannot be omitted in a refreshed copy
+  ---
+  duration_ms: 24.650458
+  type: 'test'
+  ...
+# Subtest: caller contract validation rejects accessors, toJSON, and revoked proxies without traps
+ok 6 - caller contract validation rejects accessors, toJSON, and revoked proxies without traps
+  ---
+  duration_ms: 0.876792
+  type: 'test'
+  ...
+# Subtest: retained owner bundle is checked as Node24-only and never accepted
+ok 7 - retained owner bundle is checked as Node24-only and never accepted
+  ---
+  duration_ms: 3.108042
+  type: 'test'
+  ...
+# Subtest: any external seven-file pin mismatch refuses without reading an alternate path
+ok 8 - any external seven-file pin mismatch refuses without reading an alternate path
+  ---
+  duration_ms: 0.803709
+  type: 'test'
+  ...
+# Subtest: fixed-root and closed-pin boundaries refuse safely
+ok 9 - fixed-root and closed-pin boundaries refuse safely
+  ---
+  duration_ms: 0.894375
+  type: 'test'
+  ...
+# Subtest: checker remains a bounded reader with no execution/network/model surface
+ok 10 - checker remains a bounded reader with no execution/network/model surface
+  ---
+  duration_ms: 0.161
+  type: 'test'
+  ...
+1..10
+# tests 10
+# suites 0
+# pass 10
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 98.937375

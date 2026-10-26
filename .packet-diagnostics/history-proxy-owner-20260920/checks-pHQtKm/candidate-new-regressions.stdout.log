@@ -1,0 +1,256 @@
+TAP version 13
+# Subtest: throwing Proxy request: open refuses without traps or IO
+ok 1 - throwing Proxy request: open refuses without traps or IO
+  ---
+  duration_ms: 1.301833
+  type: 'test'
+  ...
+# Subtest: throwing Proxy request: inspect refuses without traps or IO
+ok 2 - throwing Proxy request: inspect refuses without traps or IO
+  ---
+  duration_ms: 0.158083
+  type: 'test'
+  ...
+# Subtest: throwing Proxy request: record refuses without traps or IO
+ok 3 - throwing Proxy request: record refuses without traps or IO
+  ---
+  duration_ms: 0.135625
+  type: 'test'
+  ...
+# Subtest: throwing Proxy request: maintain refuses without traps or IO
+ok 4 - throwing Proxy request: maintain refuses without traps or IO
+  ---
+  duration_ms: 0.119292
+  type: 'test'
+  ...
+# Subtest: throwing Proxy config: owner and direct journal reject before traps
+ok 5 - throwing Proxy config: owner and direct journal reject before traps
+  ---
+  duration_ms: 0.191542
+  type: 'test'
+  ...
+# Subtest: throwing Proxy redactPaths: owner and direct journal reject before traps
+ok 6 - throwing Proxy redactPaths: owner and direct journal reject before traps
+  ---
+  duration_ms: 0.055417
+  type: 'test'
+  ...
+# Subtest: throwing Proxy entry: owner and direct journal reject before traps
+ok 7 - throwing Proxy entry: owner and direct journal reject before traps
+  ---
+  duration_ms: 0.905291
+  type: 'test'
+  ...
+# Subtest: throwing Proxy payload: owner and direct journal reject before traps
+ok 8 - throwing Proxy payload: owner and direct journal reject before traps
+  ---
+  duration_ms: 0.342708
+  type: 'test'
+  ...
+# Subtest: throwing Proxy nestedObject: owner and direct journal reject before traps
+ok 9 - throwing Proxy nestedObject: owner and direct journal reject before traps
+  ---
+  duration_ms: 0.309333
+  type: 'test'
+  ...
+# Subtest: throwing Proxy nestedArray: owner and direct journal reject before traps
+ok 10 - throwing Proxy nestedArray: owner and direct journal reject before traps
+  ---
+  duration_ms: 0.610875
+  type: 'test'
+  ...
+# Subtest: throwing Proxy filesystem object: reject capability wrapper without traps
+ok 11 - throwing Proxy filesystem object: reject capability wrapper without traps
+  ---
+  duration_ms: 0.086833
+  type: 'test'
+  ...
+# Subtest: throwing Proxy filesystem function: reject capability wrapper without traps
+ok 12 - throwing Proxy filesystem function: reject capability wrapper without traps
+  ---
+  duration_ms: 0.037667
+  type: 'test'
+  ...
+# Subtest: throwing Proxy forged owner handle: remains invalid without traps
+ok 13 - throwing Proxy forged owner handle: remains invalid without traps
+  ---
+  duration_ms: 0.1275
+  type: 'test'
+  ...
+# Subtest: transparent Proxy request: open refuses without traps or IO
+ok 14 - transparent Proxy request: open refuses without traps or IO
+  ---
+  duration_ms: 0.079625
+  type: 'test'
+  ...
+# Subtest: transparent Proxy request: inspect refuses without traps or IO
+ok 15 - transparent Proxy request: inspect refuses without traps or IO
+  ---
+  duration_ms: 0.047875
+  type: 'test'
+  ...
+# Subtest: transparent Proxy request: record refuses without traps or IO
+ok 16 - transparent Proxy request: record refuses without traps or IO
+  ---
+  duration_ms: 0.041875
+  type: 'test'
+  ...
+# Subtest: transparent Proxy request: maintain refuses without traps or IO
+ok 17 - transparent Proxy request: maintain refuses without traps or IO
+  ---
+  duration_ms: 0.042292
+  type: 'test'
+  ...
+# Subtest: transparent Proxy config: owner and direct journal reject before traps
+ok 18 - transparent Proxy config: owner and direct journal reject before traps
+  ---
+  duration_ms: 0.03325
+  type: 'test'
+  ...
+# Subtest: transparent Proxy redactPaths: owner and direct journal reject before traps
+ok 19 - transparent Proxy redactPaths: owner and direct journal reject before traps
+  ---
+  duration_ms: 0.036125
+  type: 'test'
+  ...
+# Subtest: transparent Proxy entry: owner and direct journal reject before traps
+ok 20 - transparent Proxy entry: owner and direct journal reject before traps
+  ---
+  duration_ms: 0.285458
+  type: 'test'
+  ...
+# Subtest: transparent Proxy payload: owner and direct journal reject before traps
+ok 21 - transparent Proxy payload: owner and direct journal reject before traps
+  ---
+  duration_ms: 0.242667
+  type: 'test'
+  ...
+# Subtest: transparent Proxy nestedObject: owner and direct journal reject before traps
+ok 22 - transparent Proxy nestedObject: owner and direct journal reject before traps
+  ---
+  duration_ms: 0.245208
+  type: 'test'
+  ...
+# Subtest: transparent Proxy nestedArray: owner and direct journal reject before traps
+ok 23 - transparent Proxy nestedArray: owner and direct journal reject before traps
+  ---
+  duration_ms: 0.20525
+  type: 'test'
+  ...
+# Subtest: transparent Proxy filesystem object: reject capability wrapper without traps
+ok 24 - transparent Proxy filesystem object: reject capability wrapper without traps
+  ---
+  duration_ms: 0.023208
+  type: 'test'
+  ...
+# Subtest: transparent Proxy filesystem function: reject capability wrapper without traps
+ok 25 - transparent Proxy filesystem function: reject capability wrapper without traps
+  ---
+  duration_ms: 0.019583
+  type: 'test'
+  ...
+# Subtest: transparent Proxy forged owner handle: remains invalid without traps
+ok 26 - transparent Proxy forged owner handle: remains invalid without traps
+  ---
+  duration_ms: 0.3095
+  type: 'test'
+  ...
+# Subtest: revoked Proxy request: open refuses without traps or IO
+ok 27 - revoked Proxy request: open refuses without traps or IO
+  ---
+  duration_ms: 0.069291
+  type: 'test'
+  ...
+# Subtest: revoked Proxy request: inspect refuses without traps or IO
+ok 28 - revoked Proxy request: inspect refuses without traps or IO
+  ---
+  duration_ms: 0.060584
+  type: 'test'
+  ...
+# Subtest: revoked Proxy request: record refuses without traps or IO
+ok 29 - revoked Proxy request: record refuses without traps or IO
+  ---
+  duration_ms: 0.044084
+  type: 'test'
+  ...
+# Subtest: revoked Proxy request: maintain refuses without traps or IO
+ok 30 - revoked Proxy request: maintain refuses without traps or IO
+  ---
+  duration_ms: 0.043292
+  type: 'test'
+  ...
+# Subtest: revoked Proxy config: owner and direct journal reject before traps
+ok 31 - revoked Proxy config: owner and direct journal reject before traps
+  ---
+  duration_ms: 0.043667
+  type: 'test'
+  ...
+# Subtest: revoked Proxy redactPaths: owner and direct journal reject before traps
+ok 32 - revoked Proxy redactPaths: owner and direct journal reject before traps
+  ---
+  duration_ms: 0.038667
+  type: 'test'
+  ...
+# Subtest: revoked Proxy entry: owner and direct journal reject before traps
+ok 33 - revoked Proxy entry: owner and direct journal reject before traps
+  ---
+  duration_ms: 0.288875
+  type: 'test'
+  ...
+# Subtest: revoked Proxy payload: owner and direct journal reject before traps
+ok 34 - revoked Proxy payload: owner and direct journal reject before traps
+  ---
+  duration_ms: 0.199792
+  type: 'test'
+  ...
+# Subtest: revoked Proxy nestedObject: owner and direct journal reject before traps
+ok 35 - revoked Proxy nestedObject: owner and direct journal reject before traps
+  ---
+  duration_ms: 0.155958
+  type: 'test'
+  ...
+# Subtest: revoked Proxy nestedArray: owner and direct journal reject before traps
+ok 36 - revoked Proxy nestedArray: owner and direct journal reject before traps
+  ---
+  duration_ms: 0.158709
+  type: 'test'
+  ...
+# Subtest: revoked Proxy filesystem object: reject capability wrapper without traps
+ok 37 - revoked Proxy filesystem object: reject capability wrapper without traps
+  ---
+  duration_ms: 0.0175
+  type: 'test'
+  ...
+# Subtest: revoked Proxy filesystem function: reject capability wrapper without traps
+ok 38 - revoked Proxy filesystem function: reject capability wrapper without traps
+  ---
+  duration_ms: 0.0185
+  type: 'test'
+  ...
+# Subtest: revoked Proxy forged owner handle: remains invalid without traps
+ok 39 - revoked Proxy forged owner handle: remains invalid without traps
+  ---
+  duration_ms: 0.058167
+  type: 'test'
+  ...
+# Subtest: valid null-prototype config and nested entry data preserve serialization and redaction
+ok 40 - valid null-prototype config and nested entry data preserve serialization and redaction
+  ---
+  duration_ms: 0.375916
+  type: 'test'
+  ...
+# Subtest: clock refusal precedes invalid entry as before and touches no Proxy traps
+ok 41 - clock refusal precedes invalid entry as before and touches no Proxy traps
+  ---
+  duration_ms: 0.269667
+  type: 'test'
+  ...
+1..41
+# tests 41
+# suites 0
+# pass 41
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 43.336458

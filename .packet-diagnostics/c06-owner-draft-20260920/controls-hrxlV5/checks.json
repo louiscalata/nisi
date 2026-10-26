@@ -1,0 +1,140 @@
+{
+  "schema": "nisi.c06.owner-controls.v1",
+  "at": "2026-09-20T13:14:18.128Z",
+  "sourceHashes": {
+    "work-orders/v02-finish-cluster-v1/check-c06.mjs": "9c792a59a8574fb413a4430c98eeca3c24d3547ecf4c77ca07a2746c32855dec",
+    "tests/finish-cluster-c06.test.mjs": "a9291a63d527249e1e1c8a583294b5a508d71637ff43519048a8cc3e8d7b00e3",
+    "work-orders/v02-finish-cluster-v1/check-cluster.mjs": "678a92113e4ec1e57c7a05403ba3ac8e85f6e1f2602e971bbafb157516285c9b",
+    "tests/finish-cluster-inventory.test.mjs": "41b188dc6471c66227bd772a28df149d24380d1c48d5b11d541221a5526c265a",
+    "tests/finish-cluster-dispatch.test.mjs": "70b9eb06fa11114434509e5195fdff23b8122ce55ef9b4e911aa30be4a0e195d"
+  },
+  "sourceUnchanged": true,
+  "checks": [
+    {
+      "name": "mutant-guard-disabled",
+      "command": [
+        "/usr/local/bin/node",
+        "--test-reporter=tap",
+        "--test",
+        "tests/finish-cluster-c06.test.mjs"
+      ],
+      "cwd": "/Users/louiscalata/nisi/.packet-diagnostics/c06-owner-draft-20260920/controls-hrxlV5/mutant",
+      "exitCode": 1,
+      "error": null,
+      "signal": null,
+      "counts": {
+        "tests": 25,
+        "pass": 1,
+        "fail": 24,
+        "skipped": 0,
+        "cancelled": 0,
+        "todo": 0
+      },
+      "logPath": ".packet-diagnostics/c06-owner-draft-20260920/controls-hrxlV5/mutant-guard-disabled.log",
+      "logSha256": "2f0fd10a8d8eddbe3b3ffda0196162a81697a22b5c7be8e73a820f99260c52f0",
+      "ok": true
+    },
+    {
+      "name": "c06-controls",
+      "command": [
+        "/usr/local/bin/node",
+        "--test-reporter=tap",
+        "--test",
+        "tests/finish-cluster-c06.test.mjs"
+      ],
+      "cwd": "/Users/louiscalata/nisi",
+      "exitCode": 0,
+      "error": null,
+      "signal": null,
+      "counts": {
+        "tests": 25,
+        "pass": 25,
+        "fail": 0,
+        "skipped": 0,
+        "cancelled": 0,
+        "todo": 0
+      },
+      "logPath": ".packet-diagnostics/c06-owner-draft-20260920/controls-hrxlV5/c06-controls.log",
+      "logSha256": "d0945ca168611e263271c49be0b70376d75c399241ab3d44da53acc0bbb0c988",
+      "ok": true
+    },
+    {
+      "name": "baseline",
+      "command": [
+        "/usr/local/bin/node",
+        "--test-reporter=tap",
+        "--test-concurrency=1",
+        "--test",
+        "../../tests/workflow.test.mjs",
+        "../../tests/veritas-import.test.mjs",
+        "../../tests/finish-cluster-dispatch.test.mjs",
+        "../../tests/finish-cluster-inventory.test.mjs",
+        "../../tests/native-overlay-final-snapshot.test.mjs"
+      ],
+      "cwd": "/Users/louiscalata/nisi/work-orders/v02-finish-cluster-v1",
+      "exitCode": 0,
+      "error": null,
+      "signal": null,
+      "counts": {
+        "tests": 84,
+        "pass": 84,
+        "fail": 0,
+        "skipped": 0,
+        "cancelled": 0,
+        "todo": 0
+      },
+      "logPath": ".packet-diagnostics/c06-owner-draft-20260920/controls-hrxlV5/baseline.log",
+      "logSha256": "6307a9d2be010195c61918d187fabb6af663bda712bf8c9a0e6d3bd2daf15403",
+      "ok": true
+    },
+    {
+      "name": "c01",
+      "command": [
+        "/usr/local/bin/node",
+        "--test-reporter=tap",
+        "--test-concurrency=1",
+        "--test",
+        "../../tests/native-overlay-inventory-v1.test.mjs",
+        "../../tests/nisi-native-overlay.test.mjs",
+        "../../tests/veritas-import.test.mjs",
+        "../../tests/finish-cluster-dispatch.test.mjs",
+        "../../tests/finish-cluster-inventory.test.mjs",
+        "../../tests/native-overlay-final-snapshot.test.mjs"
+      ],
+      "cwd": "/Users/louiscalata/nisi/work-orders/v02-finish-cluster-v1",
+      "exitCode": 0,
+      "error": null,
+      "signal": null,
+      "counts": {
+        "tests": 79,
+        "pass": 79,
+        "fail": 0,
+        "skipped": 0,
+        "cancelled": 0,
+        "todo": 0
+      },
+      "logPath": ".packet-diagnostics/c06-owner-draft-20260920/controls-hrxlV5/c01.log",
+      "logSha256": "b9b3607e2da6faba8340e33bda3c771c4304fb50b48855054989df071f981685",
+      "ok": true
+    }
+  ],
+  "validation": {
+    "exitCode": 0,
+    "error": null,
+    "signal": null,
+    "ok": true,
+    "path": ".packet-diagnostics/c06-owner-draft-20260920/controls-hrxlV5/nisi-validation.log",
+    "sha256": "2cc856839fa5845cd452debb352b2cf2ac305d8b0b43c9c95115c8a3482b8a32",
+    "binding": {
+      "taskFingerprint": "213446bc39214fe15fa729cb3a6f29a9fdb4c9e4196250cb02536ed4792f0afd",
+      "candidateFingerprint": "bb5cde691629faa6b1e32972a6f2272b71169e5d2ac0a4c45a0527223e0e6669",
+      "reviewedCandidateSha256": null,
+      "reviewBindingMatches": false
+    }
+  },
+  "inference": "NOT_RUN",
+  "implementationAccepted": false,
+  "nativeBuildAccepted": false,
+  "publicationAuthorized": false,
+  "ok": true
+}

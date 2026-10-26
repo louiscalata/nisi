@@ -1,0 +1,119 @@
+TAP version 13
+# Subtest: semantic lifecycle flags refuse even when temporary-copy pins are refreshed
+not ok 1 - semantic lifecycle flags refuse even when temporary-copy pins are refreshed
+  ---
+  duration_ms: 2.933458
+  type: 'test'
+  location: '/Users/louiscalata/nisi/.packet-diagnostics/c09-owner-draft-20260920/capture-controls/c09-owner-capture-check.test.mjs:26:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    accepted flag
+    + actual - expected
+    
+    + 'CAPTURE_PATH'
+    - 'CAPTURE_LIFECYCLE'
+               ^
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: 'CAPTURE_LIFECYCLE'
+  actual: 'CAPTURE_PATH'
+  operator: 'strictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///Users/louiscalata/nisi/.packet-diagnostics/c09-owner-draft-20260920/capture-controls/c09-owner-capture-check.test.mjs:34:56)
+    Test.runInAsyncScope (node:async_hooks:227:14)
+    Test.run (node:internal/test_runner/test:1325:25)
+    Test.start (node:internal/test_runner/test:1191:17)
+    startSubtestAfterBootstrap (node:internal/test_runner/harness:385:17)
+  ...
+# Subtest: temporary-copy source contracts cannot pass by refreshing caller pins
+not ok 2 - temporary-copy source contracts cannot pass by refreshing caller pins
+  ---
+  duration_ms: 1.53475
+  type: 'test'
+  location: '/Users/louiscalata/nisi/.packet-diagnostics/c09-owner-draft-20260920/capture-controls/c09-owner-capture-check.test.mjs:38:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    intent source mismatch
+    + actual - expected
+    
+    + 'CAPTURE_PATH'
+    - 'CAPTURE_INTENT'
+               ^
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: 'CAPTURE_INTENT'
+  actual: 'CAPTURE_PATH'
+  operator: 'strictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///Users/louiscalata/nisi/.packet-diagnostics/c09-owner-draft-20260920/capture-controls/c09-owner-capture-check.test.mjs:47:56)
+    Test.runInAsyncScope (node:async_hooks:227:14)
+    Test.run (node:internal/test_runner/test:1325:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:911:18)
+    Test.postRun (node:internal/test_runner/test:1465:19)
+    Test.run (node:internal/test_runner/test:1390:12)
+    async startSubtestAfterBootstrap (node:internal/test_runner/harness:385:3)
+  ...
+# Subtest: temporary-copy archive bytes remain bound to receipt metadata
+not ok 3 - temporary-copy archive bytes remain bound to receipt metadata
+  ---
+  duration_ms: 1.441542
+  type: 'test'
+  location: '/Users/louiscalata/nisi/.packet-diagnostics/c09-owner-draft-20260920/capture-controls/c09-owner-capture-check.test.mjs:51:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly equal:
+    + actual - expected
+    
+    + 'CAPTURE_PATH'
+    - 'CAPTURE_ARCHIVE'
+               ^
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: 'CAPTURE_ARCHIVE'
+  actual: 'CAPTURE_PATH'
+  operator: 'strictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///Users/louiscalata/nisi/.packet-diagnostics/c09-owner-draft-20260920/capture-controls/c09-owner-capture-check.test.mjs:57:48)
+    Test.runInAsyncScope (node:async_hooks:227:14)
+    Test.run (node:internal/test_runner/test:1325:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:911:18)
+    Test.postRun (node:internal/test_runner/test:1465:19)
+    Test.run (node:internal/test_runner/test:1390:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:911:7)
+  ...
+# Subtest: retained owner bundle is checked as Node24-only and never accepted
+ok 4 - retained owner bundle is checked as Node24-only and never accepted
+  ---
+  duration_ms: 4.830042
+  type: 'test'
+  ...
+# Subtest: any external seven-file pin mismatch refuses without reading an alternate path
+ok 5 - any external seven-file pin mismatch refuses without reading an alternate path
+  ---
+  duration_ms: 0.669709
+  type: 'test'
+  ...
+# Subtest: fixed-root and closed-pin boundaries refuse safely
+ok 6 - fixed-root and closed-pin boundaries refuse safely
+  ---
+  duration_ms: 1.186666
+  type: 'test'
+  ...
+# Subtest: checker remains a bounded reader with no execution/network/model surface
+ok 7 - checker remains a bounded reader with no execution/network/model surface
+  ---
+  duration_ms: 0.160459
+  type: 'test'
+  ...
+1..7
+# tests 7
+# suites 0
+# pass 4
+# fail 3
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 45.303375

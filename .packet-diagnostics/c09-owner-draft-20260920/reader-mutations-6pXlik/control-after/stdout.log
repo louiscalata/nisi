@@ -1,0 +1,928 @@
+TAP version 13
+# Subtest: positive exact writer-shaped receipt and honest missing Node22 row
+ok 1 - positive exact writer-shaped receipt and honest missing Node22 row
+  ---
+  duration_ms: 3.860542
+  type: 'test'
+  ...
+# Subtest: independent two-runtime proof is scoped to the same archive
+ok 2 - independent two-runtime proof is scoped to the same archive
+  ---
+  duration_ms: 3.007334
+  type: 'test'
+  ...
+# Subtest: proof hash, length, node path/version and archive claims are independently checked
+ok 3 - proof hash, length, node path/version and archive claims are independently checked
+  ---
+  duration_ms: 0.867917
+  type: 'test'
+  ...
+# Subtest: missing, duplicate and wrong tar evidence cannot pass
+ok 4 - missing, duplicate and wrong tar evidence cannot pass
+  ---
+  duration_ms: 2.497458
+  type: 'test'
+  ...
+# Subtest: strict flags, all roles and command order are binding
+ok 5 - strict flags, all roles and command order are binding
+  ---
+  duration_ms: 0.550291
+  type: 'test'
+  ...
+# Subtest: case hashes and inclusive cutoff are binding
+ok 6 - case hashes and inclusive cutoff are binding
+  ---
+  duration_ms: 1.1985
+  type: 'test'
+  ...
+# Subtest: negative locations and duplicate TAP/diagnostics are binding
+ok 7 - negative locations and duplicate TAP/diagnostics are binding
+  ---
+  duration_ms: 1.227875
+  type: 'test'
+  ...
+# Subtest: parsed objects cannot earn public PASS; reader remains inspectable
+ok 8 - parsed objects cannot earn public PASS; reader remains inspectable
+  ---
+  duration_ms: 0.368958
+  type: 'test'
+  ...
+# Subtest: nested and revoked proxies are refused before traps; resource bounds refuse
+ok 9 - nested and revoked proxies are refused before traps; resource bounds refuse
+  ---
+  duration_ms: 0.635834
+  type: 'test'
+  ...
+# Subtest: rehearsal command documentation preserves offline script-disabled route
+ok 10 - rehearsal command documentation preserves offline script-disabled route
+  ---
+  duration_ms: 0.138875
+  type: 'test'
+  ...
+# Subtest: every independent owner proof field is binding
+ok 11 - every independent owner proof field is binding
+  ---
+  duration_ms: 4.360708
+  type: 'test'
+  ...
+# Subtest: expected pins are closed, required, and do not self-pin the receipt
+ok 12 - expected pins are closed, required, and do not self-pin the receipt
+  ---
+  duration_ms: 1.641708
+  type: 'test'
+  ...
+# Subtest: cutoff comparisons are inclusive and inverted windows refuse
+ok 13 - cutoff comparisons are inclusive and inverted windows refuse
+  ---
+  duration_ms: 1.821166
+  type: 'test'
+  ...
+# Subtest: all 35 check roles require exact order, executable, cwd, argv, clean termination and exit
+ok 14 - all 35 check roles require exact order, executable, cwd, argv, clean termination and exit
+  ---
+  duration_ms: 118.94525
+  type: 'test'
+  ...
+# Subtest: all 29 extraction stdout digests and inventory/pack evidence are checked
+ok 15 - all 29 extraction stdout digests and inventory/pack evidence are checked
+  ---
+  duration_ms: 14.267167
+  type: 'test'
+  ...
+# Subtest: negative locations require exact expected coverage and bounded diagnostics
+ok 16 - negative locations require exact expected coverage and bounded diagnostics
+  ---
+  duration_ms: 2.442667
+  type: 'test'
+  ...
+# Subtest: TAP duplicate, failure, skip and contradictory summaries remain non-PASS
+ok 17 - TAP duplicate, failure, skip and contradictory summaries remain non-PASS
+  ---
+  duration_ms: 1.920583
+  type: 'test'
+  ...
+# Subtest: accessors, malformed/unsupported/partial-failed receipts, and flags are explicit
+ok 18 - accessors, malformed/unsupported/partial-failed receipts, and flags are explicit
+  ---
+  duration_ms: 1.808125
+  type: 'test'
+  ...
+# Subtest: resource caps and zero-trap proxy boundaries are represented
+ok 19 - resource caps and zero-trap proxy boundaries are represented
+  ---
+  duration_ms: 10.965125
+  type: 'test'
+  ...
+# Subtest: adverse: schema absent
+ok 20 - adverse: schema absent
+  ---
+  duration_ms: 0.418292
+  type: 'test'
+  ...
+# Subtest: adverse: extra top-level field
+ok 21 - adverse: extra top-level field
+  ---
+  duration_ms: 0.394375
+  type: 'test'
+  ...
+# Subtest: adverse: missing completion
+ok 22 - adverse: missing completion
+  ---
+  duration_ms: 0.408583
+  type: 'test'
+  ...
+# Subtest: adverse: unknown status
+ok 23 - adverse: unknown status
+  ---
+  duration_ms: 0.406709
+  type: 'test'
+  ...
+# Subtest: adverse: network boundary
+ok 24 - adverse: network boundary
+  ---
+  duration_ms: 0.527917
+  type: 'test'
+  ...
+# Subtest: adverse: lifecycle boundary
+ok 25 - adverse: lifecycle boundary
+  ---
+  duration_ms: 0.466416
+  type: 'test'
+  ...
+# Subtest: adverse: publication boundary
+ok 26 - adverse: publication boundary
+  ---
+  duration_ms: 0.541625
+  type: 'test'
+  ...
+# Subtest: adverse: boundary not boolean
+ok 27 - adverse: boundary not boolean
+  ---
+  duration_ms: 0.469167
+  type: 'test'
+  ...
+# Subtest: adverse: node hash short
+ok 28 - adverse: node hash short
+  ---
+  duration_ms: 0.6775
+  type: 'test'
+  ...
+# Subtest: adverse: archive hash uppercase
+ok 29 - adverse: archive hash uppercase
+  ---
+  duration_ms: 0.518042
+  type: 'test'
+  ...
+# Subtest: adverse: archive extra field
+ok 30 - adverse: archive extra field
+  ---
+  duration_ms: 0.492375
+  type: 'test'
+  ...
+# Subtest: adverse: missing check exit
+ok 31 - adverse: missing check exit
+  ---
+  duration_ms: 0.380667
+  type: 'test'
+  ...
+# Subtest: adverse: missing ran stdout
+ok 32 - adverse: missing ran stdout
+  ---
+  duration_ms: 0.365333
+  type: 'test'
+  ...
+# Subtest: adverse: missing ran stderr
+ok 33 - adverse: missing ran stderr
+  ---
+  duration_ms: 0.50125
+  type: 'test'
+  ...
+# Subtest: adverse: non-string argument
+ok 34 - adverse: non-string argument
+  ---
+  duration_ms: 0.36925
+  type: 'test'
+  ...
+# Subtest: adverse: fractional duration
+ok 35 - adverse: fractional duration
+  ---
+  duration_ms: 0.372167
+  type: 'test'
+  ...
+# Subtest: adverse: negative duration
+ok 36 - adverse: negative duration
+  ---
+  duration_ms: 0.360292
+  type: 'test'
+  ...
+# Subtest: adverse: invalid source hash
+ok 37 - adverse: invalid source hash
+  ---
+  duration_ms: 0.601709
+  type: 'test'
+  ...
+# Subtest: adverse: reversed timestamps
+ok 38 - adverse: reversed timestamps
+  ---
+  duration_ms: 0.462083
+  type: 'test'
+  ...
+# Subtest: adverse: non-ISO timestamp
+ok 39 - adverse: non-ISO timestamp
+  ---
+  duration_ms: 0.4805
+  type: 'test'
+  ...
+# Subtest: adverse: invalid negative flag
+ok 40 - adverse: invalid negative flag
+  ---
+  duration_ms: 0.470542
+  type: 'test'
+  ...
+# Subtest: adverse: invalid failure shape
+ok 41 - adverse: invalid failure shape
+  ---
+  duration_ms: 0.469625
+  type: 'test'
+  ...
+# Subtest: adverse: unpaired surrogate
+ok 42 - adverse: unpaired surrogate
+  ---
+  duration_ms: 0.502542
+  type: 'test'
+  ...
+# Subtest: adverse: missing archive
+ok 43 - adverse: missing archive
+  ---
+  duration_ms: 0.531541
+  type: 'test'
+  ...
+# Subtest: adverse: missing installed
+ok 44 - adverse: missing installed
+  ---
+  duration_ms: 0.526083
+  type: 'test'
+  ...
+# Subtest: adverse: missing toolchain
+ok 45 - adverse: missing toolchain
+  ---
+  duration_ms: 0.596833
+  type: 'test'
+  ...
+# Subtest: adverse: missing negatives
+ok 46 - adverse: missing negatives
+  ---
+  duration_ms: 0.5275
+  type: 'test'
+  ...
+# Subtest: adverse: inexact installed copy
+ok 47 - adverse: inexact installed copy
+  ---
+  duration_ms: 0.523625
+  type: 'test'
+  ...
+# Subtest: adverse: wrong installed path
+ok 48 - adverse: wrong installed path
+  ---
+  duration_ms: 0.5115
+  type: 'test'
+  ...
+# Subtest: adverse: wrong archive path
+ok 49 - adverse: wrong archive path
+  ---
+  duration_ms: 0.533459
+  type: 'test'
+  ...
+# Subtest: adverse: outside evidence root
+ok 50 - adverse: outside evidence root
+  ---
+  duration_ms: 0.493875
+  type: 'test'
+  ...
+# Subtest: adverse: source inventory short
+ok 51 - adverse: source inventory short
+  ---
+  duration_ms: 0.54775
+  type: 'test'
+  ...
+# Subtest: adverse: archive extra file
+ok 52 - adverse: archive extra file
+  ---
+  duration_ms: 0.595667
+  type: 'test'
+  ...
+# Subtest: adverse: stage archive drift
+ok 53 - adverse: stage archive drift
+  ---
+  duration_ms: 0.521916
+  type: 'test'
+  ...
+# Subtest: adverse: source pin stale
+ok 54 - adverse: source pin stale
+  ---
+  duration_ms: 0.496958
+  type: 'test'
+  ...
+# Subtest: adverse: stage pin stale
+ok 55 - adverse: stage pin stale
+  ---
+  duration_ms: 0.497291
+  type: 'test'
+  ...
+# Subtest: adverse: case pin stale
+ok 56 - adverse: case pin stale
+  ---
+  duration_ms: 0.511917
+  type: 'test'
+  ...
+# Subtest: adverse: toolchain pin stale
+ok 57 - adverse: toolchain pin stale
+  ---
+  duration_ms: 0.497042
+  type: 'test'
+  ...
+# Subtest: adverse: unclaimed extra TS file
+ok 58 - adverse: unclaimed extra TS file
+  ---
+  duration_ms: 0.581375
+  type: 'test'
+  ...
+# Subtest: adverse: global TS diagnostic
+ok 59 - adverse: global TS diagnostic
+  ---
+  duration_ms: 0.683208
+  type: 'test'
+  ...
+# Subtest: adverse: wrong negative location
+ok 60 - adverse: wrong negative location
+  ---
+  duration_ms: 0.566875
+  type: 'test'
+  ...
+# Subtest: adverse: duplicate substitutes missing location
+ok 61 - adverse: duplicate substitutes missing location
+  ---
+  duration_ms: 0.563917
+  type: 'test'
+  ...
+# Subtest: adverse: observed count mismatch
+ok 62 - adverse: observed count mismatch
+  ---
+  duration_ms: 0.543042
+  type: 'test'
+  ...
+# Subtest: adverse: diagnostic count above bound
+ok 63 - adverse: diagnostic count above bound
+  ---
+  duration_ms: 0.519791
+  type: 'test'
+  ...
+# Subtest: adverse: diagnostic text above bound
+ok 64 - adverse: diagnostic text above bound
+  ---
+  duration_ms: 0.7435
+  type: 'test'
+  ...
+# Subtest: adverse: TAP cancellation
+ok 65 - adverse: TAP cancellation
+  ---
+  duration_ms: 0.720292
+  type: 'test'
+  ...
+# Subtest: adverse: TAP todo
+ok 66 - adverse: TAP todo
+  ---
+  duration_ms: 0.587125
+  type: 'test'
+  ...
+# Subtest: adverse: TAP no summary
+ok 67 - adverse: TAP no summary
+  ---
+  duration_ms: 0.56325
+  type: 'test'
+  ...
+# Subtest: adverse: TAP wrong plan
+ok 68 - adverse: TAP wrong plan
+  ---
+  duration_ms: 0.560875
+  type: 'test'
+  ...
+# Subtest: adverse: TAP duplicate plan
+ok 69 - adverse: TAP duplicate plan
+  ---
+  duration_ms: 0.575708
+  type: 'test'
+  ...
+# Subtest: adverse: TAP duplicate one counter
+ok 70 - adverse: TAP duplicate one counter
+  ---
+  duration_ms: 0.562416
+  type: 'test'
+  ...
+# Subtest: adverse: pack JSON syntax
+ok 71 - adverse: pack JSON syntax
+  ---
+  duration_ms: 0.534334
+  type: 'test'
+  ...
+# Subtest: adverse: pack duplicate entry
+ok 72 - adverse: pack duplicate entry
+  ---
+  duration_ms: 0.637917
+  type: 'test'
+  ...
+# Subtest: adverse: tar duplicate entry
+ok 73 - adverse: tar duplicate entry
+  ---
+  duration_ms: 0.533708
+  type: 'test'
+  ...
+# Subtest: fixture mutations cannot leak across records or independent expected pins
+ok 74 - fixture mutations cannot leak across records or independent expected pins
+  ---
+  duration_ms: 0.61125
+  type: 'test'
+  ...
+# Subtest: null proof and absent expected contract stay non-PASS
+ok 75 - null proof and absent expected contract stay non-PASS
+  ---
+  duration_ms: 0.699167
+  type: 'test'
+  ...
+# Subtest: coherent non-metadata stage/source substitution still fails
+ok 76 - coherent non-metadata stage/source substitution still fails
+  ---
+  duration_ms: 0.516
+  type: 'test'
+  ...
+# Subtest: extra diagnostics at known locations retain truthful counts
+ok 77 - extra diagnostics at known locations retain truthful counts
+  ---
+  duration_ms: 0.478917
+  type: 'test'
+  ...
+# Subtest: timestamps alone do not imply shared execution; reused identities do
+ok 78 - timestamps alone do not imply shared execution; reused identities do
+  ---
+  duration_ms: 4.191875
+  type: 'test'
+  ...
+# Subtest: runtime relabeling, unsupported major and malformed version remain explicit
+ok 79 - runtime relabeling, unsupported major and malformed version remain explicit
+  ---
+  duration_ms: 2.501416
+  type: 'test'
+  ...
+# Subtest: unknown durations remain null, zero remains zero, and output is deeply frozen
+ok 80 - unknown durations remain null, zero remains zero, and output is deeply frozen
+  ---
+  duration_ms: 0.753042
+  type: 'test'
+  ...
+# Subtest: spawn failure without output retains the actual failure, not invented TAP
+ok 81 - spawn failure without output retains the actual failure, not invented TAP
+  ---
+  duration_ms: 0.34925
+  type: 'test'
+  ...
+# Subtest: zero-trap live proxy: record
+ok 82 - zero-trap live proxy: record
+  ---
+  duration_ms: 0.081334
+  type: 'test'
+  ...
+# Subtest: zero-trap revoked proxy: record
+ok 83 - zero-trap revoked proxy: record
+  ---
+  duration_ms: 0.053875
+  type: 'test'
+  ...
+# Subtest: zero-trap live proxy: node
+ok 84 - zero-trap live proxy: node
+  ---
+  duration_ms: 0.063667
+  type: 'test'
+  ...
+# Subtest: zero-trap revoked proxy: node
+ok 85 - zero-trap revoked proxy: node
+  ---
+  duration_ms: 0.054458
+  type: 'test'
+  ...
+# Subtest: zero-trap live proxy: checks
+ok 86 - zero-trap live proxy: checks
+  ---
+  duration_ms: 0.0595
+  type: 'test'
+  ...
+# Subtest: zero-trap revoked proxy: checks
+ok 87 - zero-trap revoked proxy: checks
+  ---
+  duration_ms: 0.053209
+  type: 'test'
+  ...
+# Subtest: zero-trap live proxy: check
+ok 88 - zero-trap live proxy: check
+  ---
+  duration_ms: 0.061084
+  type: 'test'
+  ...
+# Subtest: zero-trap revoked proxy: check
+ok 89 - zero-trap revoked proxy: check
+  ---
+  duration_ms: 0.05625
+  type: 'test'
+  ...
+# Subtest: zero-trap live proxy: args
+ok 90 - zero-trap live proxy: args
+  ---
+  duration_ms: 0.064458
+  type: 'test'
+  ...
+# Subtest: zero-trap revoked proxy: args
+ok 91 - zero-trap revoked proxy: args
+  ---
+  duration_ms: 0.075125
+  type: 'test'
+  ...
+# Subtest: zero-trap live proxy: source
+ok 92 - zero-trap live proxy: source
+  ---
+  duration_ms: 0.1745
+  type: 'test'
+  ...
+# Subtest: zero-trap revoked proxy: source
+ok 93 - zero-trap revoked proxy: source
+  ---
+  duration_ms: 0.151042
+  type: 'test'
+  ...
+# Subtest: zero-trap live proxy: stage
+ok 94 - zero-trap live proxy: stage
+  ---
+  duration_ms: 0.161416
+  type: 'test'
+  ...
+# Subtest: zero-trap revoked proxy: stage
+ok 95 - zero-trap revoked proxy: stage
+  ---
+  duration_ms: 0.155792
+  type: 'test'
+  ...
+# Subtest: zero-trap live proxy: cases
+ok 96 - zero-trap live proxy: cases
+  ---
+  duration_ms: 0.173416
+  type: 'test'
+  ...
+# Subtest: zero-trap revoked proxy: cases
+ok 97 - zero-trap revoked proxy: cases
+  ---
+  duration_ms: 0.167959
+  type: 'test'
+  ...
+# Subtest: zero-trap live proxy: archive
+ok 98 - zero-trap live proxy: archive
+  ---
+  duration_ms: 0.136334
+  type: 'test'
+  ...
+# Subtest: zero-trap revoked proxy: archive
+ok 99 - zero-trap revoked proxy: archive
+  ---
+  duration_ms: 0.656166
+  type: 'test'
+  ...
+# Subtest: zero-trap live proxy: entries
+ok 100 - zero-trap live proxy: entries
+  ---
+  duration_ms: 0.193875
+  type: 'test'
+  ...
+# Subtest: zero-trap revoked proxy: entries
+ok 101 - zero-trap revoked proxy: entries
+  ---
+  duration_ms: 0.147625
+  type: 'test'
+  ...
+# Subtest: zero-trap live proxy: installed
+ok 102 - zero-trap live proxy: installed
+  ---
+  duration_ms: 0.161083
+  type: 'test'
+  ...
+# Subtest: zero-trap revoked proxy: installed
+ok 103 - zero-trap revoked proxy: installed
+  ---
+  duration_ms: 0.155709
+  type: 'test'
+  ...
+# Subtest: zero-trap live proxy: toolchain
+ok 104 - zero-trap live proxy: toolchain
+  ---
+  duration_ms: 0.165709
+  type: 'test'
+  ...
+# Subtest: zero-trap revoked proxy: toolchain
+ok 105 - zero-trap revoked proxy: toolchain
+  ---
+  duration_ms: 0.167458
+  type: 'test'
+  ...
+# Subtest: zero-trap live proxy: typeRoots
+ok 106 - zero-trap live proxy: typeRoots
+  ---
+  duration_ms: 0.157209
+  type: 'test'
+  ...
+# Subtest: zero-trap revoked proxy: typeRoots
+ok 107 - zero-trap revoked proxy: typeRoots
+  ---
+  duration_ms: 0.153166
+  type: 'test'
+  ...
+# Subtest: zero-trap live proxy: negative
+ok 108 - zero-trap live proxy: negative
+  ---
+  duration_ms: 0.161459
+  type: 'test'
+  ...
+# Subtest: zero-trap revoked proxy: negative
+ok 109 - zero-trap revoked proxy: negative
+  ---
+  duration_ms: 0.147042
+  type: 'test'
+  ...
+# Subtest: zero-trap live proxy: boundary
+ok 110 - zero-trap live proxy: boundary
+  ---
+  duration_ms: 0.134542
+  type: 'test'
+  ...
+# Subtest: zero-trap revoked proxy: boundary
+ok 111 - zero-trap revoked proxy: boundary
+  ---
+  duration_ms: 0.135709
+  type: 'test'
+  ...
+# Subtest: zero-trap live proxy: failure
+ok 112 - zero-trap live proxy: failure
+  ---
+  duration_ms: 0.160875
+  type: 'test'
+  ...
+# Subtest: zero-trap revoked proxy: failure
+ok 113 - zero-trap revoked proxy: failure
+  ---
+  duration_ms: 0.147959
+  type: 'test'
+  ...
+# Subtest: matrix zero-trap live proxy: input
+ok 114 - matrix zero-trap live proxy: input
+  ---
+  duration_ms: 0.230042
+  type: 'test'
+  ...
+# Subtest: matrix zero-trap revoked proxy: input
+ok 115 - matrix zero-trap revoked proxy: input
+  ---
+  duration_ms: 0.161417
+  type: 'test'
+  ...
+# Subtest: matrix zero-trap live proxy: rows
+ok 116 - matrix zero-trap live proxy: rows
+  ---
+  duration_ms: 0.255
+  type: 'test'
+  ...
+# Subtest: matrix zero-trap revoked proxy: rows
+ok 117 - matrix zero-trap revoked proxy: rows
+  ---
+  duration_ms: 0.236458
+  type: 'test'
+  ...
+# Subtest: matrix zero-trap live proxy: row
+ok 118 - matrix zero-trap live proxy: row
+  ---
+  duration_ms: 0.241
+  type: 'test'
+  ...
+# Subtest: matrix zero-trap revoked proxy: row
+ok 119 - matrix zero-trap revoked proxy: row
+  ---
+  duration_ms: 0.2355
+  type: 'test'
+  ...
+# Subtest: matrix zero-trap live proxy: expected
+ok 120 - matrix zero-trap live proxy: expected
+  ---
+  duration_ms: 0.190875
+  type: 'test'
+  ...
+# Subtest: matrix zero-trap revoked proxy: expected
+ok 121 - matrix zero-trap revoked proxy: expected
+  ---
+  duration_ms: 0.176292
+  type: 'test'
+  ...
+# Subtest: matrix zero-trap live proxy: source
+ok 122 - matrix zero-trap live proxy: source
+  ---
+  duration_ms: 0.179541
+  type: 'test'
+  ...
+# Subtest: matrix zero-trap revoked proxy: source
+ok 123 - matrix zero-trap revoked proxy: source
+  ---
+  duration_ms: 0.187625
+  type: 'test'
+  ...
+# Subtest: matrix zero-trap live proxy: stage
+ok 124 - matrix zero-trap live proxy: stage
+  ---
+  duration_ms: 0.192375
+  type: 'test'
+  ...
+# Subtest: matrix zero-trap revoked proxy: stage
+ok 125 - matrix zero-trap revoked proxy: stage
+  ---
+  duration_ms: 0.1865
+  type: 'test'
+  ...
+# Subtest: matrix zero-trap live proxy: cases
+ok 126 - matrix zero-trap live proxy: cases
+  ---
+  duration_ms: 0.213417
+  type: 'test'
+  ...
+# Subtest: matrix zero-trap revoked proxy: cases
+ok 127 - matrix zero-trap revoked proxy: cases
+  ---
+  duration_ms: 0.225625
+  type: 'test'
+  ...
+# Subtest: matrix zero-trap live proxy: toolchain
+ok 128 - matrix zero-trap live proxy: toolchain
+  ---
+  duration_ms: 0.207833
+  type: 'test'
+  ...
+# Subtest: matrix zero-trap revoked proxy: toolchain
+ok 129 - matrix zero-trap revoked proxy: toolchain
+  ---
+  duration_ms: 0.199875
+  type: 'test'
+  ...
+# Subtest: matrix zero-trap live proxy: typeRoots
+ok 130 - matrix zero-trap live proxy: typeRoots
+  ---
+  duration_ms: 0.208542
+  type: 'test'
+  ...
+# Subtest: matrix zero-trap revoked proxy: typeRoots
+ok 131 - matrix zero-trap revoked proxy: typeRoots
+  ---
+  duration_ms: 0.196791
+  type: 'test'
+  ...
+# Subtest: matrix zero-trap live proxy: locations
+ok 132 - matrix zero-trap live proxy: locations
+  ---
+  duration_ms: 0.218458
+  type: 'test'
+  ...
+# Subtest: matrix zero-trap revoked proxy: locations
+ok 133 - matrix zero-trap revoked proxy: locations
+  ---
+  duration_ms: 0.198292
+  type: 'test'
+  ...
+# Subtest: matrix zero-trap live proxy: location
+ok 134 - matrix zero-trap live proxy: location
+  ---
+  duration_ms: 0.206416
+  type: 'test'
+  ...
+# Subtest: matrix zero-trap revoked proxy: location
+ok 135 - matrix zero-trap revoked proxy: location
+  ---
+  duration_ms: 0.203875
+  type: 'test'
+  ...
+# Subtest: matrix zero-trap live proxy: observations
+ok 136 - matrix zero-trap live proxy: observations
+  ---
+  duration_ms: 0.256625
+  type: 'test'
+  ...
+# Subtest: matrix zero-trap revoked proxy: observations
+ok 137 - matrix zero-trap revoked proxy: observations
+  ---
+  duration_ms: 0.248333
+  type: 'test'
+  ...
+# Subtest: matrix zero-trap live proxy: proof
+ok 138 - matrix zero-trap live proxy: proof
+  ---
+  duration_ms: 0.264291
+  type: 'test'
+  ...
+# Subtest: matrix zero-trap revoked proxy: proof
+ok 139 - matrix zero-trap revoked proxy: proof
+  ---
+  duration_ms: 0.25425
+  type: 'test'
+  ...
+# Subtest: matrix zero-trap live proxy: node
+ok 140 - matrix zero-trap live proxy: node
+  ---
+  duration_ms: 0.270708
+  type: 'test'
+  ...
+# Subtest: matrix zero-trap revoked proxy: node
+ok 141 - matrix zero-trap revoked proxy: node
+  ---
+  duration_ms: 0.289583
+  type: 'test'
+  ...
+# Subtest: matrix zero-trap live proxy: archive
+ok 142 - matrix zero-trap live proxy: archive
+  ---
+  duration_ms: 0.274917
+  type: 'test'
+  ...
+# Subtest: matrix zero-trap revoked proxy: archive
+ok 143 - matrix zero-trap revoked proxy: archive
+  ---
+  duration_ms: 0.420459
+  type: 'test'
+  ...
+# Subtest: descriptor, prototype, symbol and sparse-array guards preserve zero access
+ok 144 - descriptor, prototype, symbol and sparse-array guards preserve zero access
+  ---
+  duration_ms: 0.896083
+  type: 'test'
+  ...
+# Subtest: resource bound: schema
+ok 145 - resource bound: schema
+  ---
+  duration_ms: 0.067292
+  type: 'test'
+  ...
+# Subtest: resource bound: status
+ok 146 - resource bound: status
+  ---
+  duration_ms: 0.058917
+  type: 'test'
+  ...
+# Subtest: resource bound: UTF8 string bytes
+ok 147 - resource bound: UTF8 string bytes
+  ---
+  duration_ms: 0.18775
+  type: 'test'
+  ...
+# Subtest: resource bound: stderr
+ok 148 - resource bound: stderr
+  ---
+  duration_ms: 0.126833
+  type: 'test'
+  ...
+# Subtest: resource bound: argument count
+ok 149 - resource bound: argument count
+  ---
+  duration_ms: 0.064333
+  type: 'test'
+  ...
+# Subtest: resource bound: manifest key
+ok 150 - resource bound: manifest key
+  ---
+  duration_ms: 0.190208
+  type: 'test'
+  ...
+# Subtest: resource bound: record keys
+ok 151 - resource bound: record keys
+  ---
+  duration_ms: 0.107459
+  type: 'test'
+  ...
+# Subtest: matrix input and expected-contract bounds cannot be bypassed
+ok 152 - matrix input and expected-contract bounds cannot be bypassed
+  ---
+  duration_ms: 3.342208
+  type: 'test'
+  ...
+# Subtest: malformed text keeps no invented evidence and all-unrun input stays incomplete
+ok 153 - malformed text keeps no invented evidence and all-unrun input stays incomplete
+  ---
+  duration_ms: 1.17225
+  type: 'test'
+  ...
+1..153
+# tests 153
+# suites 0
+# pass 153
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 273.869875

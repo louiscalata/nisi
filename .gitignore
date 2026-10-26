@@ -23,3 +23,6 @@ __pycache__/
 .build/
 node_modules/
 *.tgz
+
+# Only the owner-frozen evidence files already tracked under .packet-diagnostics/ are
+# published (the acceptance tests read them); the rest of that directory stays local.

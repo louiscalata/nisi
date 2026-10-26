@@ -1,0 +1,354 @@
+TAP version 13
+# Subtest: V4 partial construction: author-adapter
+ok 1 - V4 partial construction: author-adapter
+  ---
+  duration_ms: 34.212375
+  type: 'test'
+  ...
+# Subtest: V4 partial construction: reviewer-owner
+ok 2 - V4 partial construction: reviewer-owner
+  ---
+  duration_ms: 33.044292
+  type: 'test'
+  ...
+# Subtest: V4 partial construction: reviewer-adapter
+ok 3 - V4 partial construction: reviewer-adapter
+  ---
+  duration_ms: 33.580291
+  type: 'test'
+  ...
+# Subtest: V4 partial construction: rollback-throw
+ok 4 - V4 partial construction: rollback-throw
+  ---
+  duration_ms: 33.255291
+  type: 'test'
+  ...
+# Subtest: V4 partial construction: rollback-idle
+ok 5 - V4 partial construction: rollback-idle
+  ---
+  duration_ms: 32.647542
+  type: 'test'
+  ...
+# Subtest: NATIVE_API/OFF: original owners run one fixed arm, retain it, and stop on unknown synthetic budget
+ok 6 - NATIVE_API/OFF: original owners run one fixed arm, retain it, and stop on unknown synthetic budget
+  ---
+  duration_ms: 490.59825
+  type: 'test'
+  ...
+# Subtest: NATIVE_API/ON: original owners run one fixed arm, retain it, and stop on unknown synthetic budget
+ok 7 - NATIVE_API/ON: original owners run one fixed arm, retain it, and stop on unknown synthetic budget
+  ---
+  duration_ms: 459.917
+  type: 'test'
+  ...
+# Subtest: CHAT_COMPLETIONS/OFF: original owners run one fixed arm, retain it, and stop on unknown synthetic budget
+ok 8 - CHAT_COMPLETIONS/OFF: original owners run one fixed arm, retain it, and stop on unknown synthetic budget
+  ---
+  duration_ms: 455.598542
+  type: 'test'
+  ...
+# Subtest: CHAT_COMPLETIONS/ON: original owners run one fixed arm, retain it, and stop on unknown synthetic budget
+ok 9 - CHAT_COMPLETIONS/ON: original owners run one fixed arm, retain it, and stop on unknown synthetic budget
+  ---
+  duration_ms: 460.061416
+  type: 'test'
+  ...
+# Subtest: preflight rejects extra key without owner construction, callbacks, storage or listeners
+ok 10 - preflight rejects extra key without owner construction, callbacks, storage or listeners
+  ---
+  duration_ms: 1.771917
+  type: 'test'
+  ...
+# Subtest: preflight rejects selection without owner construction, callbacks, storage or listeners
+ok 11 - preflight rejects selection without owner construction, callbacks, storage or listeners
+  ---
+  duration_ms: 1.324541
+  type: 'test'
+  ...
+# Subtest: preflight rejects treatment without owner construction, callbacks, storage or listeners
+ok 12 - preflight rejects treatment without owner construction, callbacks, storage or listeners
+  ---
+  duration_ms: 1.459417
+  type: 'test'
+  ...
+# Subtest: preflight rejects budget without owner construction, callbacks, storage or listeners
+ok 13 - preflight rejects budget without owner construction, callbacks, storage or listeners
+  ---
+  duration_ms: 1.854875
+  type: 'test'
+  ...
+# Subtest: preflight rejects environment without owner construction, callbacks, storage or listeners
+ok 14 - preflight rejects environment without owner construction, callbacks, storage or listeners
+  ---
+  duration_ms: 1.354958
+  type: 'test'
+  ...
+# Subtest: preflight rejects approval without owner construction, callbacks, storage or listeners
+ok 15 - preflight rejects approval without owner construction, callbacks, storage or listeners
+  ---
+  duration_ms: 1.258125
+  type: 'test'
+  ...
+# Subtest: preflight rejects state path without owner construction, callbacks, storage or listeners
+ok 16 - preflight rejects state path without owner construction, callbacks, storage or listeners
+  ---
+  duration_ms: 1.636
+  type: 'test'
+  ...
+# Subtest: preflight rejects signals without owner construction, callbacks, storage or listeners
+ok 17 - preflight rejects signals without owner construction, callbacks, storage or listeners
+  ---
+  duration_ms: 1.226208
+  type: 'test'
+  ...
+# Subtest: production path rejects test fixture build/profile without executing or allocating
+ok 18 - production path rejects test fixture build/profile without executing or allocating
+  ---
+  duration_ms: 1.621042
+  type: 'test'
+  ...
+# Subtest: checkBuild resolved native Promise is observed and cannot advance construction
+ok 19 - checkBuild resolved native Promise is observed and cannot advance construction
+  ---
+  duration_ms: 1.437875
+  type: 'test'
+  ...
+# Subtest: createHost resolved native Promise is observed and cannot advance construction
+ok 20 - createHost resolved native Promise is observed and cannot advance construction
+  ---
+  duration_ms: 27.089666
+  type: 'test'
+  ...
+# Subtest: createOracle resolved native Promise is observed and cannot advance construction
+ok 21 - createOracle resolved native Promise is observed and cannot advance construction
+  ---
+  duration_ms: 31.353833
+  type: 'test'
+  ...
+# Subtest: createLane resolved native Promise is observed and cannot advance construction
+ok 22 - createLane resolved native Promise is observed and cannot advance construction
+  ---
+  duration_ms: 30.930042
+  type: 'test'
+  ...
+# Subtest: checkBuild rejected native Promise is observed and cannot advance construction
+ok 23 - checkBuild rejected native Promise is observed and cannot advance construction
+  ---
+  duration_ms: 1.888167
+  type: 'test'
+  ...
+# Subtest: createHost rejected native Promise is observed and cannot advance construction
+ok 24 - createHost rejected native Promise is observed and cannot advance construction
+  ---
+  duration_ms: 31.661
+  type: 'test'
+  ...
+# Subtest: createOracle rejected native Promise is observed and cannot advance construction
+ok 25 - createOracle rejected native Promise is observed and cannot advance construction
+  ---
+  duration_ms: 31.333083
+  type: 'test'
+  ...
+# Subtest: createLane rejected native Promise is observed and cannot advance construction
+ok 26 - createLane rejected native Promise is observed and cannot advance construction
+  ---
+  duration_ms: 32.150834
+  type: 'test'
+  ...
+# Subtest: unissued createHost stops before later factories
+ok 27 - unissued createHost stops before later factories
+  ---
+  duration_ms: 23.587208
+  type: 'test'
+  ...
+# Subtest: unissued createOracle stops before later factories
+ok 28 - unissued createOracle stops before later factories
+  ---
+  duration_ms: 30.281042
+  type: 'test'
+  ...
+# Subtest: downstream admission refusal closes the original unused lane without model requests
+not ok 29 - downstream admission refusal closes the original unused lane without model requests
+  ---
+  duration_ms: 33.569417
+  type: 'test'
+  location: '/Users/louiscalata/nisi/.packet-diagnostics/paired-arm-bootstrap-20260920/mutations-iBt2Jg/revocation/tests/reviewed-paired-arm-bootstrap-v1.test.mjs:87:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly equal:
+    
+    0 !== 1
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: 1
+  actual: 0
+  operator: 'strictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///Users/louiscalata/nisi/.packet-diagnostics/paired-arm-bootstrap-20260920/mutations-iBt2Jg/revocation/tests/reviewed-paired-arm-bootstrap-v1.test.mjs:91:46)
+    async Test.run (node:internal/test_runner/test:1332:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:911:7)
+  ...
+# Subtest: changed injected build after preflight refuses before session creation
+ok 30 - changed injected build after preflight refuses before session creation
+  ---
+  duration_ms: 2.346292
+  type: 'test'
+  ...
+# node:internal/modules/run_main:107
+#     triggerUncaughtException(
+#     ^
+# AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+# 0 !== 4
+#     at file:///Users/louiscalata/nisi/.packet-diagnostics/paired-arm-bootstrap-20260920/mutations-iBt2Jg/revocation/tests/helpers/paired-arm-bootstrap-construction-child.mjs:46:94 {
+#   generatedMessage: true,
+#   code: 'ERR_ASSERTION',
+#   actual: 0,
+#   expected: 4,
+#   operator: 'strictEqual',
+#   diff: 'simple'
+# }
+# Node.js v24.18.0
+# node:internal/modules/run_main:107
+#     triggerUncaughtException(
+#     ^
+# AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+# 0 !== 1
+#     at file:///Users/louiscalata/nisi/.packet-diagnostics/paired-arm-bootstrap-20260920/mutations-iBt2Jg/revocation/tests/helpers/paired-arm-bootstrap-construction-child.mjs:46:94 {
+#   generatedMessage: true,
+#   code: 'ERR_ASSERTION',
+#   actual: 0,
+#   expected: 1,
+#   operator: 'strictEqual',
+#   diff: 'simple'
+# }
+# Node.js v24.18.0
+# Subtest: malformed returned lane cannot report cleanup confirmed or continue
+ok 31 - malformed returned lane cannot report cleanup confirmed or continue
+  ---
+  duration_ms: 32.050875
+  type: 'test'
+  ...
+# Subtest: isolated construction-only four: original issued intents and fresh identities, no execution
+not ok 32 - isolated construction-only four: original issued intents and fresh identities, no execution
+  ---
+  duration_ms: 54.645042
+  type: 'test'
+  location: '/Users/louiscalata/nisi/.packet-diagnostics/paired-arm-bootstrap-20260920/mutations-iBt2Jg/revocation/tests/reviewed-paired-arm-bootstrap-v1.test.mjs:108:62'
+  failureType: 'testCodeFailure'
+  error: |-
+    Command failed: /usr/local/bin/node /Users/louiscalata/nisi/.packet-diagnostics/paired-arm-bootstrap-20260920/mutations-iBt2Jg/revocation/tests/helpers/paired-arm-bootstrap-construction-child.mjs four
+    node:internal/modules/run_main:107
+        triggerUncaughtException(
+        ^
+    
+    AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+    
+    0 !== 4
+    
+        at file:///Users/louiscalata/nisi/.packet-diagnostics/paired-arm-bootstrap-20260920/mutations-iBt2Jg/revocation/tests/helpers/paired-arm-bootstrap-construction-child.mjs:46:94 {
+      generatedMessage: true,
+      code: 'ERR_ASSERTION',
+      actual: 0,
+      expected: 4,
+      operator: 'strictEqual',
+      diff: 'simple'
+    }
+    
+    Node.js v24.18.0
+    
+  code: 'ERR_TEST_FAILURE'
+  stack: |-
+    file:///Users/louiscalata/nisi/.packet-diagnostics/paired-arm-bootstrap-20260920/mutations-iBt2Jg/revocation/tests/helpers/paired-arm-bootstrap-construction-child.mjs:46:94 {
+    genericNodeError (node:internal/errors:985:15)
+    wrappedFn (node:internal/errors:539:14)
+    checkExecSyncError (node:child_process:925:11)
+    execFileSync (node:child_process:961:15)
+    TestContext.<anonymous> (file:///Users/louiscalata/nisi/.packet-diagnostics/paired-arm-bootstrap-20260920/mutations-iBt2Jg/revocation/tests/reviewed-paired-arm-bootstrap-v1.test.mjs:109:16)
+    Test.runInAsyncScope (node:async_hooks:227:14)
+    Test.run (node:internal/test_runner/test:1325:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:911:18)
+    Test.postRun (node:internal/test_runner/test:1465:19)
+    Test.run (node:internal/test_runner/test:1390:12)
+  ...
+# Subtest: isolated construction-only copy: original issued intents and fresh identities, no execution
+ok 33 - isolated construction-only copy: original issued intents and fresh identities, no execution
+  ---
+  duration_ms: 45.365375
+  type: 'test'
+  ...
+# Subtest: isolated construction-only out-of-order: original issued intents and fresh identities, no execution
+ok 34 - isolated construction-only out-of-order: original issued intents and fresh identities, no execution
+  ---
+  duration_ms: 46.886833
+  type: 'test'
+  ...
+# Subtest: isolated construction-only duplicate: original issued intents and fresh identities, no execution
+not ok 35 - isolated construction-only duplicate: original issued intents and fresh identities, no execution
+  ---
+  duration_ms: 46.886959
+  type: 'test'
+  location: '/Users/louiscalata/nisi/.packet-diagnostics/paired-arm-bootstrap-20260920/mutations-iBt2Jg/revocation/tests/reviewed-paired-arm-bootstrap-v1.test.mjs:108:62'
+  failureType: 'testCodeFailure'
+  error: |-
+    Command failed: /usr/local/bin/node /Users/louiscalata/nisi/.packet-diagnostics/paired-arm-bootstrap-20260920/mutations-iBt2Jg/revocation/tests/helpers/paired-arm-bootstrap-construction-child.mjs duplicate
+    node:internal/modules/run_main:107
+        triggerUncaughtException(
+        ^
+    
+    AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+    
+    0 !== 1
+    
+        at file:///Users/louiscalata/nisi/.packet-diagnostics/paired-arm-bootstrap-20260920/mutations-iBt2Jg/revocation/tests/helpers/paired-arm-bootstrap-construction-child.mjs:46:94 {
+      generatedMessage: true,
+      code: 'ERR_ASSERTION',
+      actual: 0,
+      expected: 1,
+      operator: 'strictEqual',
+      diff: 'simple'
+    }
+    
+    Node.js v24.18.0
+    
+  code: 'ERR_TEST_FAILURE'
+  stack: |-
+    file:///Users/louiscalata/nisi/.packet-diagnostics/paired-arm-bootstrap-20260920/mutations-iBt2Jg/revocation/tests/helpers/paired-arm-bootstrap-construction-child.mjs:46:94 {
+    genericNodeError (node:internal/errors:985:15)
+    wrappedFn (node:internal/errors:539:14)
+    checkExecSyncError (node:child_process:925:11)
+    execFileSync (node:child_process:961:15)
+    TestContext.<anonymous> (file:///Users/louiscalata/nisi/.packet-diagnostics/paired-arm-bootstrap-20260920/mutations-iBt2Jg/revocation/tests/reviewed-paired-arm-bootstrap-v1.test.mjs:109:16)
+    Test.runInAsyncScope (node:async_hooks:227:14)
+    Test.run (node:internal/test_runner/test:1325:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:911:18)
+    Test.postRun (node:internal/test_runner/test:1465:19)
+    Test.run (node:internal/test_runner/test:1390:12)
+  ...
+# Subtest: state root identity change after session creation refuses before first owner construction, with no retry
+ok 36 - state root identity change after session creation refuses before first owner construction, with no retry
+  ---
+  duration_ms: 19.574666
+  type: 'test'
+  ...
+# Subtest: constructor snapshots selection, budgets, plan and factory methods before later caller mutation
+ok 37 - constructor snapshots selection, budgets, plan and factory methods before later caller mutation
+  ---
+  duration_ms: 430.7585
+  type: 'test'
+  ...
+# Subtest: setup signal and in-flight user stop close only original owners
+ok 38 - setup signal and in-flight user stop close only original owners
+  ---
+  duration_ms: 93.481958
+  type: 'test'
+  ...
+1..38
+# tests 38
+# suites 0
+# pass 35
+# fail 3
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 3174.606875

@@ -1,0 +1,38 @@
+{
+  "schema": "nisi.c07.owner-retained-source-review.v1",
+  "reviewerTask": "/root/sharedchami_cleanup_daybreak_review",
+  "modelActuallyServed": "UNKNOWN",
+  "scope": "CALLER_SUPPLIED_NATIVE_INCIDENT_EVIDENCE_NODE_ONLY",
+  "supersededReview": "daybreak-review-third.json",
+  "supersedingFindings": [
+    {"priority": "P1", "code": "PRIVATE_PAYLOAD_HAS_NO_SELECTION", "summary": "Every genuine admission refused because the private source-input body has no selection property."},
+    {"priority": "P1", "code": "HISTORICAL_DIGEST_WRONG_NESTING", "summary": "Terminal output read undefined receipt/expectation fingerprints instead of source.source identities."},
+    {"priority": "P1", "code": "WRONG_ISSUED_TEST_PLAN", "summary": "The receipt fixture requires the original issued Swift plan, not the incident source plan."},
+    {"priority": "P2", "code": "IGNORED_EXPECTATION_POISON", "summary": "The test put its expectation override in an ignored helper argument."},
+    {"priority": "P2", "code": "REVERSED_ADMISSION_CLOCK", "summary": "Binding did not reject times earlier than successful admission."}
+  ],
+  "correctedCodeReview": {
+    "verdict": "NO_P1_P2_FOUND_CODE_ONLY",
+    "sourceHashes": {
+      "candidate/hosts/repository/native-incident-admission-v1.mjs": "c7fc24bdb573f620693371ba351dc4a8a152eebc27e7d49d6d9ac51fd491663f"
+    },
+    "resolved": [
+      "Actual private body and split row/source identity mapping",
+      "Nested historical digests and selected artifact path",
+      "Consumed reversed-clock binding",
+      "Inert report snapshot only for downstream classification",
+      "Receipt stream lengths/hashes and canonical raw-report reconciliation",
+      "Original request identity including paired-substitution refusal",
+      "Fixed outcome inventory and recomputed aggregate status",
+      "Receipt/report status agreement and ID/status outcome comparison",
+      "Caller-supplied evidence remains NOT_RUN and non-authorizing"
+    ],
+    "oracleReviewed": false,
+    "reason": "Luna was still editing the oracle; the reviewer explicitly excluded it."
+  },
+  "reviewerExecutedTests": false,
+  "implementationAccepted": false,
+  "nativeBuildAccepted": false,
+  "nativeExecutionAttested": false,
+  "publicationAuthorized": false
+}

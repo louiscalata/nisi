@@ -1,0 +1,192 @@
+{
+  "schema": "nisi.history-proxy-owner-check/v1",
+  "scope": "ISOLATED_NODE_HISTORY_PROXY_BOUNDARIES",
+  "node": "v24.18.0",
+  "runtimeSha256": "bf0cea6ab3631b6b53a9709ed54d62608dd0725187426d34d4d6af6644c5197f",
+  "checkedAt": "2026-09-20T15:24:13.030Z",
+  "initial": {
+    "canonical": {
+      "history/journal-owner-v2.mjs": "b64e21ae717870faf220baf3f0ddc9c44841f0492415805f7b75b812828e7184",
+      "history/run-journal-v1.mjs": "dee9f490c091000b2560cd9464d945885e7f341091b87dde9ae4f2b7cdbd359e",
+      "history/run-journal-store-v1.mjs": "1356028b65f9f8b96e3b9ec8ba3bfbb4968092af53d00e8b5dfdb11b161f4792",
+      "tests/journal-owner-v2.helper.mjs": "06a5efb201111b9033789f253cac29bd410654ddde54d3ffa42cba7de8a1a47f",
+      "tests/journal-owner-v2.memfs.mjs": "e202da18a120645ccdf6c51da48843f64ca90b6af48e87d3fdcb5cda0f9319c0",
+      "tests/journal-maintenance-v1.test.mjs": "98b273f0fe3afb2be177f2999a5356e549a29a142afb5946457666774d3451d2",
+      "tests/journal-owner-v2.test.mjs": "35b2bb69e7053fd1c65648e621ad3fb04430e8a7adeb78fa559ee346f295692c",
+      "tests/run-journal.test.mjs": "2d46da21f23b6d58156db162ca5dfd45ca78b095c383411f9ac858cb20aeb12a",
+      "tests/run-journal-store.test.mjs": "f1caa70d02795044583ed1c872657970662f527afd1dee7eb788d31e59254360"
+    },
+    "before": {
+      "history/journal-owner-v2.mjs": "b64e21ae717870faf220baf3f0ddc9c44841f0492415805f7b75b812828e7184",
+      "history/run-journal-v1.mjs": "dee9f490c091000b2560cd9464d945885e7f341091b87dde9ae4f2b7cdbd359e",
+      "history/run-journal-store-v1.mjs": "1356028b65f9f8b96e3b9ec8ba3bfbb4968092af53d00e8b5dfdb11b161f4792",
+      "tests/journal-owner-v2.helper.mjs": "06a5efb201111b9033789f253cac29bd410654ddde54d3ffa42cba7de8a1a47f",
+      "tests/journal-owner-v2.memfs.mjs": "e202da18a120645ccdf6c51da48843f64ca90b6af48e87d3fdcb5cda0f9319c0",
+      "tests/journal-maintenance-v1.test.mjs": "98b273f0fe3afb2be177f2999a5356e549a29a142afb5946457666774d3451d2",
+      "tests/journal-owner-v2.test.mjs": "35b2bb69e7053fd1c65648e621ad3fb04430e8a7adeb78fa559ee346f295692c",
+      "tests/run-journal.test.mjs": "2d46da21f23b6d58156db162ca5dfd45ca78b095c383411f9ac858cb20aeb12a",
+      "tests/run-journal-store.test.mjs": "f1caa70d02795044583ed1c872657970662f527afd1dee7eb788d31e59254360",
+      "tests/journal-proxy-boundaries.test.mjs": "4608d36de36c91b0318889b712e78f4971d7a2ea5c6093112e9975553ce8a1cb"
+    },
+    "candidate": {
+      "history/journal-owner-v2.mjs": "2120bf0c75d9aa6122c06a2b34d55b3256a08f024d0e5fa43d8877e4eb67e44f",
+      "history/run-journal-v1.mjs": "0164f10da27f6d12cfd1f3d443bd8e0f7c237b46363353570ae4a759a97f749b",
+      "history/run-journal-store-v1.mjs": "1356028b65f9f8b96e3b9ec8ba3bfbb4968092af53d00e8b5dfdb11b161f4792",
+      "tests/journal-owner-v2.helper.mjs": "06a5efb201111b9033789f253cac29bd410654ddde54d3ffa42cba7de8a1a47f",
+      "tests/journal-owner-v2.memfs.mjs": "e202da18a120645ccdf6c51da48843f64ca90b6af48e87d3fdcb5cda0f9319c0",
+      "tests/journal-maintenance-v1.test.mjs": "98b273f0fe3afb2be177f2999a5356e549a29a142afb5946457666774d3451d2",
+      "tests/journal-owner-v2.test.mjs": "35b2bb69e7053fd1c65648e621ad3fb04430e8a7adeb78fa559ee346f295692c",
+      "tests/run-journal.test.mjs": "2d46da21f23b6d58156db162ca5dfd45ca78b095c383411f9ac858cb20aeb12a",
+      "tests/run-journal-store.test.mjs": "f1caa70d02795044583ed1c872657970662f527afd1dee7eb788d31e59254360",
+      "tests/journal-proxy-boundaries.test.mjs": "4608d36de36c91b0318889b712e78f4971d7a2ea5c6093112e9975553ce8a1cb"
+    }
+  },
+  "final": {
+    "canonical": {
+      "history/journal-owner-v2.mjs": "b64e21ae717870faf220baf3f0ddc9c44841f0492415805f7b75b812828e7184",
+      "history/run-journal-v1.mjs": "dee9f490c091000b2560cd9464d945885e7f341091b87dde9ae4f2b7cdbd359e",
+      "history/run-journal-store-v1.mjs": "1356028b65f9f8b96e3b9ec8ba3bfbb4968092af53d00e8b5dfdb11b161f4792",
+      "tests/journal-owner-v2.helper.mjs": "06a5efb201111b9033789f253cac29bd410654ddde54d3ffa42cba7de8a1a47f",
+      "tests/journal-owner-v2.memfs.mjs": "e202da18a120645ccdf6c51da48843f64ca90b6af48e87d3fdcb5cda0f9319c0",
+      "tests/journal-maintenance-v1.test.mjs": "98b273f0fe3afb2be177f2999a5356e549a29a142afb5946457666774d3451d2",
+      "tests/journal-owner-v2.test.mjs": "35b2bb69e7053fd1c65648e621ad3fb04430e8a7adeb78fa559ee346f295692c",
+      "tests/run-journal.test.mjs": "2d46da21f23b6d58156db162ca5dfd45ca78b095c383411f9ac858cb20aeb12a",
+      "tests/run-journal-store.test.mjs": "f1caa70d02795044583ed1c872657970662f527afd1dee7eb788d31e59254360"
+    },
+    "before": {
+      "history/journal-owner-v2.mjs": "b64e21ae717870faf220baf3f0ddc9c44841f0492415805f7b75b812828e7184",
+      "history/run-journal-v1.mjs": "dee9f490c091000b2560cd9464d945885e7f341091b87dde9ae4f2b7cdbd359e",
+      "history/run-journal-store-v1.mjs": "1356028b65f9f8b96e3b9ec8ba3bfbb4968092af53d00e8b5dfdb11b161f4792",
+      "tests/journal-owner-v2.helper.mjs": "06a5efb201111b9033789f253cac29bd410654ddde54d3ffa42cba7de8a1a47f",
+      "tests/journal-owner-v2.memfs.mjs": "e202da18a120645ccdf6c51da48843f64ca90b6af48e87d3fdcb5cda0f9319c0",
+      "tests/journal-maintenance-v1.test.mjs": "98b273f0fe3afb2be177f2999a5356e549a29a142afb5946457666774d3451d2",
+      "tests/journal-owner-v2.test.mjs": "35b2bb69e7053fd1c65648e621ad3fb04430e8a7adeb78fa559ee346f295692c",
+      "tests/run-journal.test.mjs": "2d46da21f23b6d58156db162ca5dfd45ca78b095c383411f9ac858cb20aeb12a",
+      "tests/run-journal-store.test.mjs": "f1caa70d02795044583ed1c872657970662f527afd1dee7eb788d31e59254360",
+      "tests/journal-proxy-boundaries.test.mjs": "4608d36de36c91b0318889b712e78f4971d7a2ea5c6093112e9975553ce8a1cb"
+    },
+    "candidate": {
+      "history/journal-owner-v2.mjs": "2120bf0c75d9aa6122c06a2b34d55b3256a08f024d0e5fa43d8877e4eb67e44f",
+      "history/run-journal-v1.mjs": "0164f10da27f6d12cfd1f3d443bd8e0f7c237b46363353570ae4a759a97f749b",
+      "history/run-journal-store-v1.mjs": "1356028b65f9f8b96e3b9ec8ba3bfbb4968092af53d00e8b5dfdb11b161f4792",
+      "tests/journal-owner-v2.helper.mjs": "06a5efb201111b9033789f253cac29bd410654ddde54d3ffa42cba7de8a1a47f",
+      "tests/journal-owner-v2.memfs.mjs": "e202da18a120645ccdf6c51da48843f64ca90b6af48e87d3fdcb5cda0f9319c0",
+      "tests/journal-maintenance-v1.test.mjs": "98b273f0fe3afb2be177f2999a5356e549a29a142afb5946457666774d3451d2",
+      "tests/journal-owner-v2.test.mjs": "35b2bb69e7053fd1c65648e621ad3fb04430e8a7adeb78fa559ee346f295692c",
+      "tests/run-journal.test.mjs": "2d46da21f23b6d58156db162ca5dfd45ca78b095c383411f9ac858cb20aeb12a",
+      "tests/run-journal-store.test.mjs": "f1caa70d02795044583ed1c872657970662f527afd1dee7eb788d31e59254360",
+      "tests/journal-proxy-boundaries.test.mjs": "4608d36de36c91b0318889b712e78f4971d7a2ea5c6093112e9975553ce8a1cb"
+    }
+  },
+  "unchanged": true,
+  "results": [
+    {
+      "name": "before-existing",
+      "command": [
+        "/usr/local/bin/node",
+        "--test-reporter=tap",
+        "--test-concurrency=1",
+        "--test",
+        "tests/journal-maintenance-v1.test.mjs",
+        "tests/journal-owner-v2.test.mjs",
+        "tests/run-journal.test.mjs",
+        "tests/run-journal-store.test.mjs"
+      ],
+      "cwd": "/Users/louiscalata/nisi/.packet-diagnostics/history-proxy-owner-20260920/before",
+      "exitCode": 0,
+      "signal": null,
+      "error": null,
+      "counts": {
+        "tests": 95,
+        "pass": 95,
+        "fail": 0,
+        "cancelled": 0,
+        "skipped": 0,
+        "todo": 0
+      },
+      "stdoutSha256": "ba2eeac0d29dfa7be0652a4c8a1a4f30f68733b426faa318576afbbf631a6c35",
+      "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "name": "before-new-regressions",
+      "command": [
+        "/usr/local/bin/node",
+        "--test-reporter=tap",
+        "--test-concurrency=1",
+        "--test",
+        "tests/journal-proxy-boundaries.test.mjs"
+      ],
+      "cwd": "/Users/louiscalata/nisi/.packet-diagnostics/history-proxy-owner-20260920/before",
+      "exitCode": 1,
+      "signal": null,
+      "error": null,
+      "counts": {
+        "tests": 41,
+        "pass": 11,
+        "fail": 30,
+        "cancelled": 0,
+        "skipped": 0,
+        "todo": 0
+      },
+      "stdoutSha256": "471c06f01ea6dcb1d4fdbc8a373d0e33f5485d2903b25fae07be918348d4782a",
+      "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "name": "candidate-existing",
+      "command": [
+        "/usr/local/bin/node",
+        "--test-reporter=tap",
+        "--test-concurrency=1",
+        "--test",
+        "tests/journal-maintenance-v1.test.mjs",
+        "tests/journal-owner-v2.test.mjs",
+        "tests/run-journal.test.mjs",
+        "tests/run-journal-store.test.mjs"
+      ],
+      "cwd": "/Users/louiscalata/nisi/.packet-diagnostics/history-proxy-owner-20260920/candidate",
+      "exitCode": 0,
+      "signal": null,
+      "error": null,
+      "counts": {
+        "tests": 95,
+        "pass": 95,
+        "fail": 0,
+        "cancelled": 0,
+        "skipped": 0,
+        "todo": 0
+      },
+      "stdoutSha256": "e1b34f161974c9acce24d8c7ac099d1ebd0b98ba4957d77319b500636672091d",
+      "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "name": "candidate-new-regressions",
+      "command": [
+        "/usr/local/bin/node",
+        "--test-reporter=tap",
+        "--test-concurrency=1",
+        "--test",
+        "tests/journal-proxy-boundaries.test.mjs"
+      ],
+      "cwd": "/Users/louiscalata/nisi/.packet-diagnostics/history-proxy-owner-20260920/candidate",
+      "exitCode": 0,
+      "signal": null,
+      "error": null,
+      "counts": {
+        "tests": 41,
+        "pass": 41,
+        "fail": 0,
+        "cancelled": 0,
+        "skipped": 0,
+        "todo": 0
+      },
+      "stdoutSha256": "f4d30971d7554df71a09364a9754abb88f80c6568e744e88490a60a2e7c30ece",
+      "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    }
+  ],
+  "passed": true,
+  "implementationAccepted": false,
+  "nativeBuildAccepted": false,
+  "publicationAuthorized": false,
+  "inference": "NOT_RUN",
+  "canonicalIntegration": "NOT_RUN"
+}

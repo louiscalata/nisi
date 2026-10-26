@@ -1,0 +1,36 @@
+{
+  "schema": "nisi.c04.independent-controls-review.v1",
+  "reviewer": {
+    "modelRequested": "gpt-daybreak-blue-latest",
+    "modelActuallyServed": "UNKNOWN",
+    "reviewerTask": "/root/sharedchami_cleanup_daybreak_review"
+  },
+  "verdict": "PASS",
+  "scope": "C04_ACCEPTANCE_CONTROLS_AND_EVIDENCE_BINDING_ONLY",
+  "reviewedHashes": {
+    "work-orders/v02-finish-cluster-v1/check-cluster.mjs": "4a3d15a681f1db288a7b5134482333f2a45ba07d0448da09cd9da4a385eedf4e",
+    "tests/finish-cluster-inventory.test.mjs": "b64e51e8547025c9f673a46a5a49f2d6c9231ab4eabe3a7ddf76f393caa06cb1",
+    "tests/finish-cluster-dispatch.test.mjs": "b8ca32dd4a38a6e8eb912ac9cc8d4457cd2e29a917d315ba0cae33def1f99686",
+    ".packet-diagnostics/c04-owner-review-1lSoKr/accepted-cluster-proposal.json": "770065aa34374a568a1d57c2dd968de9e5a3da55f2ad259dd70a72253f24b649",
+    ".packet-diagnostics/c04-owner-review-1lSoKr/final-evidence.json": "eb47554c6435d8ae786321d88e0ced41e7a786697b01342cae11e02c3748e368",
+    ".packet-diagnostics/c04-owner-review-1lSoKr/daybreak-c04-source-review.json": "5952794fd873fd409f5916ff500168a89dd3482d631a0481ce2c4dbb2cda3e3a",
+    ".packet-diagnostics/c04-owner-review-1lSoKr/controls-NBbEix/checks.json": "702f07c75ddac1389066e9da1dc0e0ec1dae0e2529a2da4e569811e063690181"
+  },
+  "findings": [],
+  "confirmedControls": [
+    "The evidence receipt binds the separate exact-source Daybreak review artifact by path and SHA-256, and the checker validates its schema, requested model label, canonical reviewer task, scope, verdict, and four source hashes.",
+    "The checker requires the exact nine semantic mutant names and two named controls, with expected failure classification and assertion-based rather than runtime-error credit.",
+    "A synchronized semantic-evidence regression recomputes nested receipt and ledger digests and still proves that an arbitrary replacement mutant name is refused.",
+    "The checkpoint validation status, source-inspection fact, inference refusal, native refusal, publication refusal, package hash, dependency closure, graded counts, skips, cancellations, signals, and errors are checked.",
+    "The C02 original revalidation record and the prior C02 and C03 acceptance snapshots remain append-only while only the shared C04 source hashes advance.",
+    "Overall NX milestones remain 3 of 10, or 30 percent; the separate finish-packet implementation count becomes 4 of 10, or 40 percent.",
+    "C04 remains held from dispatch and no other unfinished packet is granted implementation acceptance."
+  ],
+  "limits": [
+    "This review establishes consistency of the exact hashed local controls and retained evidence; SHA-256 integrity binding is not cryptographic authorship or authenticity attestation.",
+    "The reviewer did not execute the retained tests and relies on the bound checks record for reported 16-of-16 controls, 52-of-52 baseline, and 47-of-47 C01 results.",
+    "No native execution or native acceptance is established.",
+    "No model inference, OpenCode execution, publication, or release authorization is established.",
+    "The proposed ledger was reviewed before canonical application; this artifact does not itself apply or authorize that write."
+  ]
+}

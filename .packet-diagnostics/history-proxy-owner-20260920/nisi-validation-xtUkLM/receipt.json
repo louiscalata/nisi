@@ -1,0 +1,22 @@
+{
+  "command": [
+    "/Users/louiscalata/bin/initiate-online-code-mode",
+    "--nisi",
+    "validate"
+  ],
+  "exitCode": 0,
+  "signal": null,
+  "error": null,
+  "inputSha256": "64d66e2d5050b1e0c571aa30577a334c2014b53747aa60c3f5187869a319f393",
+  "stdoutSha256": "9cb3f855a6fe4e57ee54338886410b7fc73105b33b2f8f4e0fd26e179eeb1ae9",
+  "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+  "unchanged": true,
+  "sourceHashes": {
+    "history/journal-owner-v2.mjs": "2120bf0c75d9aa6122c06a2b34d55b3256a08f024d0e5fa43d8877e4eb67e44f",
+    "history/run-journal-v1.mjs": "0164f10da27f6d12cfd1f3d443bd8e0f7c237b46363353570ae4a759a97f749b",
+    "tests/journal-proxy-boundaries.test.mjs": "4608d36de36c91b0318889b712e78f4971d7a2ea5c6093112e9975553ce8a1cb"
+  },
+  "behavioralTests": "NOT_RUN_BY_THIS_HELPER",
+  "modelInference": "NOT_RUN",
+  "implementationAccepted": false
+}

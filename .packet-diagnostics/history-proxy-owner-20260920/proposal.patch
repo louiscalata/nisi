@@ -1,0 +1,59 @@
+diff --git a/history/journal-owner-v2.mjs b/history/journal-owner-v2.mjs
+--- a/history/journal-owner-v2.mjs
++++ b/history/journal-owner-v2.mjs
+@@ -1,4 +1,5 @@
+ import {createHash} from 'node:crypto';
++import {types as nodeTypes} from 'node:util';
+ import {createRunJournal, reopen} from './run-journal-v1.mjs';
+ import {writeSerializedJournal} from './run-journal-store-v1.mjs';
+@@ -35,6 +36,7 @@ const own = (o, k) => Object.prototype.hasOwnProperty.call(o, k);
+ // Exact request envelope reader. Never invokes getters: values are taken from
+ // own data descriptors only. Returns a plain object of values or null.
+ function envelope(input, keys) {
++  if (input !== null && typeof input === 'object' && nodeTypes.isProxy(input)) return null;
+   if (input === null || typeof input !== 'object' || Array.isArray(input)) return null;
+   const proto = Object.getPrototypeOf(input);
+@@ -63,6 +65,7 @@ function plainCopy(value, stack = new Set()) {
+     if (!Number.isSafeInteger(value) || Object.is(value, -0)) throw fail('PLAIN_DATA');
+     return value;
+   }
++  if (value !== null && typeof value === 'object' && nodeTypes.isProxy(value)) throw fail('PLAIN_DATA');
+   if (typeof value !== 'object' || stack.has(value)) throw fail('PLAIN_DATA');
+   const proto = Object.getPrototypeOf(value);
+diff --git a/tests/journal-maintenance-v1.test.mjs b/tests/journal-maintenance-v1.test.mjs
+--- a/tests/journal-maintenance-v1.test.mjs
++++ b/tests/journal-maintenance-v1.test.mjs
+@@ -27,6 +27,35 @@ test('malformed envelopes, hidden fields, symbols and accessors refuse without
+   assert.equal(calls, 0);
+ });
+
++test('ordinary and revoked proxies are refused before any proxy trap at every owner boundary', () => {
++  const opened = open(memfs());
++  let traps = 0;
++  const trap = () => { traps++; throw Error('proxy trap must not run'); };
++  const top = new Proxy({owner: opened.owner, now: 100}, {get: trap, ownKeys: trap,
++    getOwnPropertyDescriptor: trap, getPrototypeOf: trap});
++  assertResult(maintainJournalOwner(top), 'REFUSED', 'INVALID_INPUT', null);
++  const revokedTop = Proxy.revocable({owner: opened.owner, now: 100}, {});
++  revokedTop.revoke();
++  assertResult(maintainJournalOwner(revokedTop.proxy), 'REFUSED', 'INVALID_INPUT', null);
++
++  const config = new Proxy({...CONFIG}, {get: trap, ownKeys: trap,
++    getOwnPropertyDescriptor: trap, getPrototypeOf: trap});
++  const configResult = open(memfs(), 100, config);
++  assert.equal(configResult.status, 'REFUSED'); assert.equal(configResult.reason, 'INVALID_INPUT');
++  const revokedConfig = Proxy.revocable({...CONFIG}, {});
++  revokedConfig.revoke();
++  const revokedConfigResult = open(memfs(), 100, revokedConfig.proxy);
++  assert.equal(revokedConfigResult.status, 'REFUSED'); assert.equal(revokedConfigResult.reason, 'INVALID_INPUT');
++
++  const nestedEntry = new Proxy(entry('proxy-entry'), {get: trap, ownKeys: trap,
++    getOwnPropertyDescriptor: trap, getPrototypeOf: trap});
++  const nestedResult = record(opened.owner, nestedEntry, 100);
++  assert.equal(nestedResult.status, 'REFUSED'); assert.equal(nestedResult.reason, 'ENTRY');
++  const revokedEntry = Proxy.revocable(entry('revoked-entry'), {});
++  revokedEntry.revoke();
++  const revokedResult = record(opened.owner, revokedEntry.proxy, 100);
++  assert.equal(revokedResult.status, 'REFUSED'); assert.equal(revokedResult.reason, 'ENTRY');
++  assert.equal(traps, 0);
++});

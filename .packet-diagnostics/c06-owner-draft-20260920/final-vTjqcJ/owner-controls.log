@@ -1,0 +1,5 @@
+{"name":"mutant-guard-disabled","counts":{"tests":25,"pass":1,"fail":24,"skipped":0,"cancelled":0,"todo":0},"ok":true}
+{"name":"c06-controls","counts":{"tests":25,"pass":25,"fail":0,"skipped":0,"cancelled":0,"todo":0},"ok":true}
+{"name":"baseline","counts":{"tests":84,"pass":84,"fail":0,"skipped":0,"cancelled":0,"todo":0},"ok":true}
+{"name":"c01","counts":{"tests":79,"pass":79,"fail":0,"skipped":0,"cancelled":0,"todo":0},"ok":true}
+{"output":"/Users/louiscalata/nisi/.packet-diagnostics/c06-owner-draft-20260920/controls-hrxlV5","ok":true,"sourceUnchanged":true,"validationOk":true}

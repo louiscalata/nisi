@@ -1,0 +1,255 @@
+{
+  "schema": "nisi.c07.owner-controls.v1",
+  "at": "2026-09-20T14:15:41.109Z",
+  "sourceHashes": {
+    "work-orders/v02-finish-cluster-v1/check-c07.mjs": "0f72677cb023e50eda6f53fd7fb9563f3466ad379b8eb4253d23b5993f13d93f",
+    "work-orders/v02-finish-cluster-v1/check-c06.mjs": "20ff0d8ffe3cd9572603545ee89ab13d483659086b74ed2b437871e67862b4a2",
+    "work-orders/v02-finish-cluster-v1/check-cluster.mjs": "f10d524ad894f14378977e95b1804edb4bb925673cfe363791022be599929e1c",
+    "tests/finish-cluster-c07.test.mjs": "ef1f216c2e086786117e65617b086a9b952a6b5d03ab77411a2648bd8169560e",
+    "tests/finish-cluster-c06.test.mjs": "b6330bf0fc401ec9cc41bfc792586e8bd23ba40be99e441e3653b87f8e4b2f13",
+    "tests/finish-cluster-inventory.test.mjs": "9337355e24a3400a7a41f29ba8accc0e4b3faaad46972d09bfda3b0f53fcbc5b",
+    "tests/finish-cluster-dispatch.test.mjs": "5e4e93af24edbbcc68c0b303550154057aedb3b42747c002ca436455d822d9b4"
+  },
+  "sourceUnchanged": true,
+  "checks": [
+    {
+      "name": "mutant-guard-disabled",
+      "command": [
+        "/usr/local/bin/node",
+        "--test-reporter=tap",
+        "--test",
+        "tests/finish-cluster-c07.test.mjs"
+      ],
+      "cwd": "/Users/louiscalata/nisi/.packet-diagnostics/c07-owner-draft-20260920/controls-fHpNaX/mutant",
+      "exitCode": 1,
+      "error": null,
+      "signal": null,
+      "counts": {
+        "tests": 31,
+        "pass": 4,
+        "fail": 27,
+        "skipped": 0,
+        "cancelled": 0,
+        "todo": 0
+      },
+      "logPath": ".packet-diagnostics/c07-owner-draft-20260920/controls-fHpNaX/mutant-guard-disabled.log",
+      "logSha256": "d0662217a9b667eeea020c499a7244c0a0e190f3c2964925437965bb710374fc",
+      "ok": true
+    },
+    {
+      "name": "c07-controls",
+      "command": [
+        "/usr/local/bin/node",
+        "--test-reporter=tap",
+        "--test",
+        "tests/finish-cluster-c07.test.mjs"
+      ],
+      "cwd": "/Users/louiscalata/nisi",
+      "exitCode": 0,
+      "error": null,
+      "signal": null,
+      "counts": {
+        "tests": 31,
+        "pass": 31,
+        "fail": 0,
+        "skipped": 0,
+        "cancelled": 0,
+        "todo": 0
+      },
+      "logPath": ".packet-diagnostics/c07-owner-draft-20260920/controls-fHpNaX/c07-controls.log",
+      "logSha256": "38cdcddef6bd7c885060ac86dc16eaaf9b1d8e31136f584c251b90ffd1d31900",
+      "ok": true
+    },
+    {
+      "name": "c06-controls",
+      "command": [
+        "/usr/local/bin/node",
+        "--test-reporter=tap",
+        "--test",
+        "tests/finish-cluster-c06.test.mjs"
+      ],
+      "cwd": "/Users/louiscalata/nisi",
+      "exitCode": 0,
+      "error": null,
+      "signal": null,
+      "counts": {
+        "tests": 25,
+        "pass": 25,
+        "fail": 0,
+        "skipped": 0,
+        "cancelled": 0,
+        "todo": 0
+      },
+      "logPath": ".packet-diagnostics/c07-owner-draft-20260920/controls-fHpNaX/c06-controls.log",
+      "logSha256": "51ffdc73101e94df8c4204cc05bdff81f2c76d9feb5b7beb8c9e6b1abf6dc118",
+      "ok": true
+    },
+    {
+      "name": "baseline",
+      "command": [
+        "/usr/local/bin/node",
+        "--test-reporter=tap",
+        "--test-concurrency=1",
+        "--test",
+        "../../tests/workflow.test.mjs",
+        "../../tests/veritas-import.test.mjs",
+        "../../tests/finish-cluster-dispatch.test.mjs",
+        "../../tests/finish-cluster-inventory.test.mjs",
+        "../../tests/native-overlay-final-snapshot.test.mjs"
+      ],
+      "cwd": "/Users/louiscalata/nisi/work-orders/v02-finish-cluster-v1",
+      "exitCode": 0,
+      "error": null,
+      "signal": null,
+      "counts": {
+        "tests": 117,
+        "pass": 117,
+        "fail": 0,
+        "skipped": 0,
+        "cancelled": 0,
+        "todo": 0
+      },
+      "logPath": ".packet-diagnostics/c07-owner-draft-20260920/controls-fHpNaX/baseline.log",
+      "logSha256": "1b64031d65c1fb122b7fe9418d83d2eb986ba9183f7b53454f0b35080e851e83",
+      "ok": true
+    },
+    {
+      "name": "c01",
+      "command": [
+        "/usr/local/bin/node",
+        "--test-reporter=tap",
+        "--test-concurrency=1",
+        "--test",
+        "../../tests/native-overlay-inventory-v1.test.mjs",
+        "../../tests/nisi-native-overlay.test.mjs",
+        "../../tests/veritas-import.test.mjs",
+        "../../tests/finish-cluster-dispatch.test.mjs",
+        "../../tests/finish-cluster-inventory.test.mjs",
+        "../../tests/native-overlay-final-snapshot.test.mjs"
+      ],
+      "cwd": "/Users/louiscalata/nisi/work-orders/v02-finish-cluster-v1",
+      "exitCode": 0,
+      "error": null,
+      "signal": null,
+      "counts": {
+        "tests": 112,
+        "pass": 112,
+        "fail": 0,
+        "skipped": 0,
+        "cancelled": 0,
+        "todo": 0
+      },
+      "logPath": ".packet-diagnostics/c07-owner-draft-20260920/controls-fHpNaX/c01.log",
+      "logSha256": "5a43036ff840545520633009ee5e93b1e7a82a9791f9dd555b380b8dc4d188c6",
+      "ok": true
+    }
+  ],
+  "validation": {
+    "exitCode": 0,
+    "error": null,
+    "signal": null,
+    "ok": true,
+    "path": ".packet-diagnostics/c07-owner-draft-20260920/controls-fHpNaX/nisi-validation.log",
+    "sha256": "d0eab6f88274aaa59bfaef6d507af6796666fcd12f3b0a8b66180c0a127b5ca2",
+    "binding": {
+      "taskFingerprint": "65b32ab7f08953d88267d6be19c9f8b6d8bcebf2e282472b51eb2a4f4abc186b",
+      "candidateFingerprint": "49a0b13b851963296c0c3e6c5c85e8fd4babcad8fe0d1789337e8a61099cee96",
+      "reviewedCandidateSha256": null,
+      "reviewBindingMatches": false
+    }
+  },
+  "acceptanceObservations": [
+    {
+      "name": "inventory",
+      "command": [
+        "/usr/local/bin/node",
+        "work-orders/v02-finish-cluster-v1/check-cluster.mjs"
+      ],
+      "exitCode": 0,
+      "error": null,
+      "signal": null,
+      "logPath": ".packet-diagnostics/c07-owner-draft-20260920/controls-fHpNaX/inventory.log",
+      "logSha256": "87fa5876e16442fc6a43662cfaba1c44d9db5f1b14bd03efcd6cde70a0e067c6",
+      "value": {
+        "status": "PASS_PACKET_INVENTORY_ONLY",
+        "authored": 10,
+        "fableAssignments": 7,
+        "released": [
+          "C01"
+        ],
+        "executedByThisCheck": 0,
+        "implementationAccepted": 7,
+        "fixtureReceiptAccepted": true,
+        "fixtureCleanupAccepted": true,
+        "fixtureContainmentAccepted": true,
+        "fixtureInputImportsAccepted": true,
+        "hostObservationAccepted": true,
+        "nativeIncidentBindingAccepted": true,
+        "finishPacketPercent": 70,
+        "acceptedScopes": [
+          {
+            "id": "C01",
+            "scope": "TRUSTED_LOCAL_CHECKOUT_NODE_ONLY"
+          },
+          {
+            "id": "C02",
+            "scope": "INERT_FIXTURE_RECEIPT_NODE_ONLY"
+          },
+          {
+            "id": "C03",
+            "scope": "INERT_FIXTURE_CLEANUP_NODE_ONLY"
+          },
+          {
+            "id": "C04",
+            "scope": "INERT_FIXTURE_WRITE_GUARD_NODE_ONLY"
+          },
+          {
+            "id": "C05",
+            "scope": "INERT_FIXTURE_INPUT_IMPORTS_NODE_ONLY"
+          },
+          {
+            "id": "C06",
+            "scope": "CALLER_SUPPLIED_HOST_OBSERVATION_NODE_ONLY"
+          },
+          {
+            "id": "C07",
+            "scope": "CALLER_SUPPLIED_NATIVE_INCIDENT_EVIDENCE_NODE_ONLY"
+          }
+        ],
+        "acceptanceScope": "TRUSTED_LOCAL_CHECKOUT_NODE_ONLY",
+        "nativeBuildAccepted": false,
+        "overallMilestonePercent": 30,
+        "dispatchApproved": []
+      },
+      "ok": true
+    },
+    {
+      "name": "dispatch",
+      "command": [
+        "/usr/local/bin/node",
+        "work-orders/v02-finish-cluster-v1/dispatch-check.mjs",
+        "C07"
+      ],
+      "exitCode": 2,
+      "error": null,
+      "signal": null,
+      "logPath": ".packet-diagnostics/c07-owner-draft-20260920/controls-fHpNaX/dispatch.log",
+      "logSha256": "bbcec76559e906b261992bcddecc5648316cd10daca40d2ac6596b4e0cdb086f",
+      "value": {
+        "status": "HELD",
+        "code": "NODE_IMPLEMENTATION_ACCEPTED",
+        "packet": "C07",
+        "dispatchApproved": false,
+        "publicationAuthorized": false,
+        "reason": "Implementation already accepted in its recorded scope; repeat dispatch is closed. Native and release acceptance remain separate."
+      },
+      "ok": true
+    }
+  ],
+  "ledgerSha256": "fe86aa96ac1c551199ff897eb42a706429c3cee022655f558c6f2209415d6383",
+  "inference": "NOT_RUN",
+  "implementationAccepted": false,
+  "nativeBuildAccepted": false,
+  "publicationAuthorized": false,
+  "ok": true
+}

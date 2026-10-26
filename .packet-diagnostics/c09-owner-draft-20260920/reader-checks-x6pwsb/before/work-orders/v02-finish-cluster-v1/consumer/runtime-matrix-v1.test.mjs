@@ -1,0 +1,108 @@
+// PRIVATE C09 oracle. Synthetic receipts mirror the exact writer schema and
+// command/stdout contract; no child process, installer, network, or model runs.
+import test from 'node:test';
+import assert from 'node:assert/strict';
+import {createHash} from 'node:crypto';
+import fs from 'node:fs';
+import {PRIVATE_PACKAGE_FILES} from '../../../scripts/private-package-contract.mjs';
+import {createRuntimeMatrix,readRehearsalRecord,rehearsalCommands,NODE22_PREREQUISITE,REHEARSAL_SCHEMA,RUNTIME_MATRIX_SCHEMA,RuntimeMatrixError} from './runtime-matrix-v1.mjs';
+
+const sha=v=>createHash('sha256').update(v,'utf8').digest('hex');
+const hex=c=>c.repeat(64);
+const CASES=fs.readdirSync(new URL('../../../tests/private-consumer/',import.meta.url)).sort();
+const MTS=CASES.filter(x=>x.endsWith('.mts')),RUNTIME=CASES.filter(x=>x.endsWith('.test.mjs'));
+assert.equal(PRIVATE_PACKAGE_FILES.length,29);assert.equal(CASES.length,12);assert.equal(MTS.length,8);assert.equal(RUNTIME.length,4);
+const ROOT='/repo',EVIDENCE='/repo/.build/private-package-AAAAAA',CONSUMER=EVIDENCE+'/consumer',ARCHIVE=EVIDENCE+'/nisi-0.2.0-private.0.tgz',TSC=ROOT+'/node_modules/typescript/bin/tsc';
+const sourceManifest=Object.fromEntries(PRIVATE_PACKAGE_FILES.map(f=>[f,sha('source:'+f)]));
+const stageManifest=Object.fromEntries(PRIVATE_PACKAGE_FILES.map(f=>[f,f==='package.json'?sha('metadata:'+f):sourceManifest[f]]));
+const caseManifest=Object.fromEntries(CASES.map(f=>[f,sha('case:'+f)]));
+const TOOLCHAIN={compilerPath:TSC,compilerEntrySha256:hex('d'),typescript:'6.0.3',nodeTypes:'24.13.3',lockSha256:hex('e'),typeRoots:[ROOT+'/node_modules/@types']};
+const locations=Array.from({length:73},(_,i)=>({file:'negative-'+MTS[i%MTS.length],line:i+2}));
+const tap=`TAP version 13\n1..11\n# tests 11\n# suites 0\n# pass 11\n# fail 0\n# cancelled 0\n# skipped 0\n# todo 0\n# duration_ms 1\n`;
+const negativeStdout=locations.map(x=>`${x.file}(${x.line},5): error TS2322: Type 'x' is not assignable.\n`).join('');
+const flags=['--noEmit','--ignoreConfig','--strict','--exactOptionalPropertyTypes','--noUncheckedIndexedAccess','--module','NodeNext','--target','ES2022','--types','node','--typeRoots',TOOLCHAIN.typeRoots[0]];
+const node24={version:'v24.18.0',path:'/usr/local/bin/node',sha256:hex('b')},node22={version:'v22.12.0',path:'/opt/node22/bin/node',sha256:hex('c')};
+const archives=Object.fromEntries(PRIVATE_PACKAGE_FILES.map(f=>[f,stageManifest[f]]));
+const jsonFiles=JSON.stringify(PRIVATE_PACKAGE_FILES.map(path=>({path:'package/'+path})),null,0);
+const check=(name,exe,args,cwd,exitCode=0,stdout='')=>({name,exe,args,cwd,elapsedMs:1,exitCode,signal:null,error:null,stdout,stderr:''});
+function record({node=node24,evidence=EVIDENCE,archiveSha=hex('a'),observedAt='2026-09-20T06:41:25.000Z',completedAt='2026-09-20T06:41:27.000Z',status='PASS_SCOPED',failure,checks,source=sourceManifest,stage=stageManifest,cases=caseManifest,tapText=tap,negativeText=negativeStdout}={}){
+  const archive=evidence+'/nisi-0.2.0-private.0.tgz',consumer=evidence+'/consumer';
+  const cs=checks??[
+    check('pack exact staged tree','npm',['pack','--offline','--ignore-scripts','--no-audit','--no-fund','--cache',evidence+'/npm-cache','--json','--pack-destination',evidence],evidence+'/stage',0,JSON.stringify([{filename:'nisi-0.2.0-private.0.tgz',files:PRIVATE_PACKAGE_FILES.map(path=>({path}))}])),
+    check('actual archive inventory','tar',['-tzf',archive],consumer,0,PRIVATE_PACKAGE_FILES.map(f=>'package/'+f).sort().join('\n')+'\n'),
+    ...PRIVATE_PACKAGE_FILES.map(f=>check('archive bytes '+f,'tar',['-xOf',archive,'package/'+f],consumer,0,f==='package.json'?'metadata:'+f:'source:'+f)),
+    check('offline script-disabled archive install','npm',['install',archive,'--offline','--ignore-scripts','--no-audit','--no-fund','--cache',evidence+'/npm-cache','--package-lock=false'],consumer),
+    check('eight installed-package TypeScript consumers',node.path,[TSC,...flags,...MTS],consumer),
+    check('negative controls without suppression must fail',node.path,[TSC,...flags,...MTS.map(f=>'negative-'+f)],consumer,2,negativeText),
+    check('eleven fixed installed runtime checks',node.path,['--test','--test-reporter=tap',...RUNTIME],consumer,0,tapText),
+  ];
+  return {...{schema:REHEARSAL_SCHEMA,status,observedAt,root:ROOT,evidence,node,checks:cs,sourceManifest:source,stageManifest:stage,caseManifest:cases,boundaries:{stagedArchiveOnly:true,canonicalRootPackSupported:false,networkAllowed:false,lifecycleScriptsAllowed:false,modelInference:false,nativeExecution:false,published:false,fullMerger:false,hostileWriterIsolation:false},archive:{path:archive,sha256:archiveSha,byteLength:43624,entries:archives},installed:{path:consumer+'/node_modules/nisi',exactArchiveMatch:true},toolchain:TOOLCHAIN,negativeControls:{expected:73,observed:73,allExpectedLocationsDetected:true},completedAt},...(failure===undefined?{}:{failure})};
+}
+const text=r=>JSON.stringify(r,null,2)+'\n';
+function expected(r24,r22=null){const t=x=>x===null?null:text(x);const proof=(r,x)=>x===null?null:{receiptSha256:sha(t(x)),receiptByteLength:Buffer.byteLength(t(x)),node:x.node,archive:{sha256:x.archive.sha256,byteLength:x.archive.byteLength}};return {sourceManifest,stageManifest,caseManifest,toolchain:TOOLCHAIN,negativeLocations:locations,notBefore:'2026-09-20T00:00:00.000Z',notAfter:'2026-09-21T00:00:00.000Z',observations:{node22:proof(t,r22),node24:proof(t,r24)}};}
+function matrix(r24,r22=null,exp=expected(r24,r22)){return createRuntimeMatrix({rows:[{runtime:'node22',receipt:r22===null?null:text(r22),prerequisite:r22===null?NODE22_PREREQUISITE:null},{runtime:'node24',receipt:text(r24)}],expected:exp});}
+
+test('positive exact writer-shaped receipt and honest missing Node22 row',()=>{const m=matrix(record());assert.equal(m.schema,RUNTIME_MATRIX_SCHEMA);assert.equal(m.status,'INCOMPLETE');assert.equal(m.rows.node22.status,'NOT_RUN');assert.equal(m.rows.node24.status,'PASS');assert.equal(m.rows.node24.receiptByteLength,Buffer.byteLength(text(record())));assert.equal(m.authorizing,false);assert.equal(m.executionAttested,false);});
+test('independent two-runtime proof is scoped to the same archive',()=>{const m=matrix(record(),record({node:node22,evidence:ROOT+'/.build/private-package-BBBBBB',observedAt:'2026-09-20T07:00:00.000Z',completedAt:'2026-09-20T07:00:02.000Z'}));assert.equal(m.status,'PASS_SCOPED');const swapped=matrix(record({archiveSha:hex('f')}),record({node:node22,evidence:ROOT+'/.build/private-package-BBBBBB'}));assert.equal(swapped.status,'FAIL');});
+test('proof hash, length, node path/version and archive claims are independently checked',()=>{const r=record(),t=text(r),e=expected(r,null);e.observations.node24.receiptSha256=hex('f');assert.equal(createRuntimeMatrix({rows:[{runtime:'node22',receipt:null,prerequisite:NODE22_PREREQUISITE},{runtime:'node24',receipt:t}],expected:e}).rows.node24.status,'STALE');});
+test('missing, duplicate and wrong tar evidence cannot pass',()=>{for(const mutate of [r=>r.checks=r.checks.filter(c=>c.name!=='actual archive inventory'),r=>r.checks.push({...r.checks[1]}),r=>r.checks.find(c=>c.name==='archive bytes index.mjs').stdout='wrong',r=>r.checks.find(c=>c.name==='actual archive inventory').args.push('--verbose')]){const r=record();mutate(r);assert.notEqual(matrix(r).rows.node24.status,'PASS');}});
+test('strict flags, all roles and command order are binding',()=>{const r=record();r.checks.find(c=>c.name.includes('TypeScript consumers')).args=r.checks.find(c=>c.name.includes('TypeScript consumers')).args.filter(x=>x!=='--strict');assert.equal(matrix(r).rows.node24.status,'FAIL');});
+test('case hashes and inclusive cutoff are binding',()=>{const r=record(),e=expected(r);e.caseManifest[CASES[0]]=hex('f');assert.equal(matrix(r,null,e).rows.node24.status,'STALE');const edge=record({observedAt:e.notBefore,completedAt:e.notBefore});assert.equal(matrix(edge,null,expected(edge)).rows.node24.status,'PASS');});
+test('negative locations and duplicate TAP/diagnostics are binding',()=>{const r=record();r.checks.find(c=>c.name.startsWith('negative')).stdout=negativeStdout+'negative-'+MTS[0]+'(2,5): error TS2322: duplicate\n';assert.equal(matrix(r).rows.node24.status,'FAIL');const q=record();q.checks.find(c=>c.name.startsWith('eleven')).stdout=tap+tap;assert.equal(matrix(q).rows.node24.status,'FAIL');});
+test('parsed objects cannot earn public PASS; reader remains inspectable',()=>{const r=record();assert.equal(readRehearsalRecord(r).status,'PASS_SCOPED');const m=createRuntimeMatrix({rows:[{runtime:'node22',receipt:null,prerequisite:NODE22_PREREQUISITE},{runtime:'node24',receipt:r}],expected:expected(r)});assert.equal(m.rows.node24.reason,'RECEIPT_TEXT_REQUIRED');});
+test('nested and revoked proxies are refused before traps; resource bounds refuse',()=>{const r=record();class P extends Array{};const p=P.from(r.checks);assert.throws(()=>readRehearsalRecord({...r,checks:p}),{code:'RECEIPT_SCHEMA'});const target={...r};const proxy=new Proxy(target,{get(){throw new Error('trap')}});assert.throws(()=>readRehearsalRecord(proxy),{code:'RECEIPT_SCHEMA'});const revoked=Proxy.revocable({...r},{});revoked.revoke();assert.throws(()=>readRehearsalRecord(revoked),{code:'RECEIPT_SCHEMA'});assert.throws(()=>createRuntimeMatrix({rows:[{runtime:'node22',receipt:null,prerequisite:'x'},{runtime:'node24',receipt:text(r)}],expected:expected(r)}),{code:'MATRIX_ROW_SCHEMA'});});
+test('rehearsal command documentation preserves offline script-disabled route',()=>{const c=rehearsalCommands({evidence:EVIDENCE,node:'/opt/node22/bin/node',checkout:ROOT});assert.equal(c.pack.args.includes('--offline'),true);assert.equal(c.install.args.includes('--ignore-scripts'),true);assert.throws(()=>rehearsalCommands({evidence:'/e',node:ROOT+'/node_modules/.bin/node',checkout:ROOT}),{code:'COMMAND_ARGS'});});
+
+test('every independent owner proof field is binding',()=>{
+  const fields=[['receiptSha256',()=>hex('f')],['receiptByteLength',()=>999],['node.version',()=> 'v22.12.0'],['node.path',()=>'/other/node'],['node.sha256',()=>hex('f')],['archive.sha256',()=>hex('f')],['archive.byteLength',()=>999]];
+  for(const [name,value] of fields){const r=record(),e=structuredClone(expected(r));const p=e.observations.node24;if(name.startsWith('node.'))p.node[name.slice(5)]=value();else if(name.startsWith('archive.'))p.archive[name.slice(8)]=value();else p[name]=value();const m=matrix(r,null,e);assert.equal(m.rows.node24.status,'STALE',name);}
+});
+
+test('expected pins are closed, required, and do not self-pin the receipt',()=>{
+  const r=record();for(const key of ['sourceManifest','stageManifest','caseManifest','toolchain','negativeLocations','notBefore','notAfter','observations']){const e=expected(r);delete e[key];assert.throws(()=>matrix(r,null,e),{code:'MATRIX_EXPECTED_SCHEMA'},key);}
+  const stale=record({cases:{...caseManifest,[CASES[0]]:hex('f')}});assert.equal(matrix(stale).rows.node24.status,'STALE');
+});
+
+test('cutoff comparisons are inclusive and inverted windows refuse',()=>{
+  const r=record({observedAt:'2026-09-20T00:00:00.000Z',completedAt:'2026-09-21T00:00:00.000Z'}),e=expected(r);assert.equal(matrix(r,null,e).rows.node24.status,'PASS');
+  const before=record({observedAt:'2026-09-19T23:59:59.999Z'});assert.equal(matrix(before).rows.node24.reason,'OBSERVATION_OUTSIDE_WINDOW');
+  const after=record({completedAt:'2026-09-21T00:00:00.001Z'});assert.equal(matrix(after).rows.node24.reason,'OBSERVATION_OUTSIDE_WINDOW');
+  const inverted=expected(record());inverted.notBefore='2026-09-21T00:00:00.000Z';inverted.notAfter='2026-09-20T00:00:00.000Z';assert.throws(()=>matrix(record(),null,inverted),{code:'MATRIX_EXPECTED_SCHEMA'});
+});
+
+test('all 35 check roles require exact order, executable, cwd, argv, clean termination and exit',()=>{
+  const edits=[];
+  edits.push(['omit',r=>{r.checks.splice(0,1);}]);edits.push(['duplicate',r=>{r.checks.push({...r.checks[0]});}]);
+  for(const [i,c] of record().checks.entries()){
+    edits.push(['exe-'+i,r=>{r.checks[i].exe='/wrong';}]);edits.push(['cwd-'+i,r=>{r.checks[i].cwd='/wrong';}]);edits.push(['argv-'+i,r=>{r.checks[i].args=[...r.checks[i].args,'--wrong'];}]);edits.push(['exit-'+i,r=>{r.checks[i].exitCode=1;}]);edits.push(['abort-'+i,r=>{r.checks[i].signal='SIGKILL';}]);
+  }
+  for(const [name,mutate] of edits){const r=record();mutate(r);assert.notEqual(matrix(r).rows.node24.status,'PASS',name);}
+});
+
+test('all 29 extraction stdout digests and inventory/pack evidence are checked',()=>{
+  for(const f of PRIVATE_PACKAGE_FILES){const r=record();r.checks.find(c=>c.name==='archive bytes '+f).stdout='wrong';assert.notEqual(matrix(r).rows.node24.status,'PASS',f);}
+  for(const mutate of [r=>{r.checks[0].stdout='[]';},r=>{r.checks[0].stdout=JSON.stringify([{filename:'other.tgz',files:[]}]);},r=>{r.checks[1].stdout='wrong';},r=>{r.checks[1].args[1]='/other.tgz';}]){const r=record();mutate(r);assert.notEqual(matrix(r).rows.node24.status,'PASS');}
+});
+
+test('negative locations require exact expected coverage and bounded diagnostics',()=>{
+  for(const mutate of [r=>{r.checks.find(c=>c.name.startsWith('negative')).stdout=negativeStdout.replace(/negative-[^\n]+\n/,'');},r=>{r.checks.find(c=>c.name.startsWith('negative')).stdout+='stranger.mts(1,1): error TS2322: x\n';},r=>{r.checks.find(c=>c.name.startsWith('negative')).stdout=negativeStdout+negativeStdout;},r=>{r.negativeControls.observed=72;},r=>{r.negativeControls.expected=72;}]){const r=record();mutate(r);assert.notEqual(matrix(r).rows.node24.status,'PASS');}
+});
+
+test('TAP duplicate, failure, skip and contradictory summaries remain non-PASS',()=>{for(const tapText of [tap+tap,tap.replace('# fail 0','# fail 1'),tap.replace('# skipped 0','# skipped 1'),tap.replace('# pass 11','# pass 10')]){const r=record({tapText});assert.notEqual(matrix(r).rows.node24.status,'PASS');}});
+
+test('accessors, malformed/unsupported/partial-failed receipts, and flags are explicit',()=>{
+  const r=record(),source={...r.sourceManifest};Object.defineProperty(source,'index.mjs',{get(){throw new Error('getter');},enumerable:true});assert.throws(()=>readRehearsalRecord({...r,sourceManifest:source}),{code:'RECEIPT_SCHEMA'});
+  const entries={...r.archive.entries};Object.defineProperty(entries,'index.mjs',{get(){throw new Error('getter');},enumerable:true});assert.throws(()=>readRehearsalRecord({...r,archive:{...r.archive,entries}}),{code:'RECEIPT_SCHEMA'});
+  assert.equal(matrix({...r,schema:'other'}).rows.node24.status,'UNSUPPORTED');assert.equal(matrix({...r,status:'INCOMPLETE'}).rows.node24.status,'FAIL');
+  const failed=record({status:'FAIL',failure:{name:'Error',message:'spawn failed',code:'ENOENT'},checks:[{...record().checks[0],error:'ENOENT',exitCode:null,stdout:undefined,stderr:undefined}]});const fm=matrix(failed).rows.node24;assert.equal(fm.status,'FAIL');assert.equal(fm.reason,'REHEARSAL_FAILED');
+  const m=matrix(r);assert.equal(Object.isFrozen(m),true);assert.equal(Object.isFrozen(m.rows.node24),true);assert.equal(m.authorizing,false);assert.equal(m.executionAttested,false);
+});
+
+test('resource caps and zero-trap proxy boundaries are represented',()=>{
+  const huge=record();huge.checks.find(c=>c.name.startsWith('runtime')).stdout='x'.repeat(2*1024*1024+1);assert.equal(matrix(huge).rows.node24.status,'MALFORMED');
+  const many=record();many.checks=Array.from({length:129},()=>many.checks[0]);assert.equal(matrix(many).rows.node24.status,'MALFORMED');
+  const manyKeys=record();manyKeys.sourceManifest={...manyKeys.sourceManifest,...Object.fromEntries(Array.from({length:40},(_,i)=>['x'+i,hex('a')]))};assert.equal(matrix(manyKeys).rows.node24.status,'MALFORMED');
+  const long=record();long.root='x'.repeat(8193);assert.equal(matrix(long).rows.node24.status,'MALFORMED');
+  const giant=text(record())+'x'.repeat(4*1024*1024);assert.equal(createRuntimeMatrix({rows:[{runtime:'node22',receipt:null,prerequisite:NODE22_PREREQUISITE},{runtime:'node24',receipt:giant}],expected:expected(record())}).rows.node24.status,'MALFORMED');
+  const trap=()=>{throw new Error('trap');};const nested=new Proxy({archive:new Proxy({}, {get:trap})},{get:trap});assert.throws(()=>readRehearsalRecord(nested),{code:'RECEIPT_SCHEMA'});const revoked=Proxy.revocable({},{});revoked.revoke();assert.throws(()=>readRehearsalRecord(revoked),{code:'RECEIPT_SCHEMA'});
+});

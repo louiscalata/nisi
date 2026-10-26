@@ -1,0 +1,26 @@
+{
+  "schema": "nisi.c05.owner-retained-controls-review.v1",
+  "reviewerTask": "/root/sharedchami_cleanup_daybreak_review",
+  "requestedModel": "gpt-daybreak-blue-latest",
+  "modelActuallyServed": "UNKNOWN",
+  "verdict": "PASS",
+  "scope": "Corrected C05 acceptance-control delta, conditional on exact owner integration",
+  "sourceHashes": {
+    "work-orders/v02-finish-cluster-v1/check-cluster.mjs": "f06e422daca5cd8bc01803b227504909f9fb09eeb91e2c922b6a1342bb883249",
+    "tests/finish-cluster-inventory.test.mjs": "832fa34aba5b85eb4a23840f4730b42fa168e3a3aefd4e186d363ed005a1e045",
+    "tests/finish-cluster-dispatch.test.mjs": "bff65647fe5496fa664b1219005e7a593d401fadcf94329c1a2ca255e2b6890f",
+    "work-orders/v02-finish-cluster-v1/cluster.json": "4fd2dbdfe2d200d6071481711b173cbfa321a58b670c96adf47d33a89bbf4278",
+    ".packet-diagnostics/c05-owner-review-PeEuLA/final-evidence.json": "64c4a986fde4787743365cb2e7352d95b535ed6fec6cff1be664313b0779db9f",
+    ".packets/nisi-v02-c05-fixture-input-imports.packet.md": "83eb02d2e231699bc4af5bf780e18a4ad4be886bfcc94af0b1871c6968e35c80"
+  },
+  "resolvedFindings": [
+    "Require UNKNOWN served-model identity; reject invented identity even with recomputed evidence hashes.",
+    "Bind full packet contract to path, declared root-line-only normalization and frozen reviewed digest; reject missing, altered and rehashed references."
+  ],
+  "reviewerExecutedTests": false,
+  "ownerIntegrationReceipt": ".packet-diagnostics/c05-owner-review-PeEuLA/final-QSAA2T/final-graded-gates.json",
+  "implementationAccepted": false,
+  "nativeBuildAccepted": false,
+  "publicationAuthorized": false,
+  "note": "Owner transcription of the actual independent agent reply. Not a provider-issued model identity or execution receipt. Owner acceptance is recorded separately in the canonical ledger."
+}

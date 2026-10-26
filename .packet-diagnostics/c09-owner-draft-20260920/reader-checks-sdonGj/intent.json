@@ -1,0 +1,25 @@
+{
+  "startedAt": "2026-09-20T14:55:24.719Z",
+  "node": "/usr/local/bin/node",
+  "version": "v24.18.0",
+  "files": {
+    "work-orders/v02-finish-cluster-v1/consumer/runtime-matrix-v1.mjs": "18cf428f02e64a3df15e9fe6fde41410541bf8d40131f2d55c74b8b59d2c73e0",
+    "work-orders/v02-finish-cluster-v1/consumer/runtime-matrix-v1.test.mjs": "5b06d51db01b0ffb4977354545e0efca03bc9ecc98f22fea9928a18af4a9d648",
+    "work-orders/v02-finish-cluster-v1/consumer/README.md": "6b43eece10644cf420068345dcf1e9e5eec971fcd89f2a40c2c77486d534255c",
+    "scripts/private-package-contract.mjs": "1983f133f4580bbca58fdefbc4b60431c462b8507b48aff1e45f9b72fd3b112c",
+    "scripts/check-private-package.mjs": "bf342e5e1b1c75bc89d8481ea0e20ca1641a23a60ff426b3ec10974a75806c69",
+    "tests/private-consumer/adoption-reviewed.mts": "39a2ca04a008d41be1a5a4d4aff8f9c38f9171fbfa1040829a61cca9ff4c694b",
+    "tests/private-consumer/baseline.mts": "6c99646cb0c846ee09cd70fd0c1d38ffa11514c2ba913aa690002da2d0090990",
+    "tests/private-consumer/declaration-regressions.mts": "6176b259f151c0dce32f17da6787a6fcfc6edaea40b86d5fdf60ba78ced4fcaf",
+    "tests/private-consumer/declaration-regressions.test.mjs": "8eb8c04e7b265021ec9dd3aa580da7088fb41c8c4da9f18bbcb5433e84eeefd2",
+    "tests/private-consumer/edge-cases.mts": "457ee56a0127e81703fb72eb2c943e6341dd1316d7fc1fadf3fe64ef5ef54af7",
+    "tests/private-consumer/local-chat-reasoning-effort.mts": "8d5ad6f7782bfa0ddf264e2eac4e751880ebee804a7046b0fc0169560ad3cc58",
+    "tests/private-consumer/native-chat-runtime.test.mjs": "ecdf8d7db5094fd95d586ef34554aa810d4e10aabc487fea2f40a53ff0a62f87",
+    "tests/private-consumer/native-chat.mts": "37316bce9129a94ba487fc905c16e419155f3b20f6f1441c3f8d50e07503df26",
+    "tests/private-consumer/output-mode-types.mts": "0eedf2ea1f7e4c30a71765129ef1ffcf4f2d9e69fdbbf02dc8685b8fcffea1ba",
+    "tests/private-consumer/repair-guidance-runtime.test.mjs": "e9f30f8330385fda7d506cb7a55292064f163c62eb4265dc79f6b9ce134b533b",
+    "tests/private-consumer/repair-guidance.mts": "a8b1c54e93a37c03a46cd1873340ed4dcc01f05c2e09be4bb21c6b656ce70aae",
+    "tests/private-consumer/runtime.test.mjs": "10a7eb74391501c754ad919d29af6a47c4823a3bb6cefe8a0462a9e7c82bc23c"
+  },
+  "accepted": false
+}

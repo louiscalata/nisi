@@ -1,0 +1,22 @@
+TAP version 13
+# Subtest: additive execution identity is exact issued expectation data and leaves v1 projections byte-compatible
+ok 1 - additive execution identity is exact issued expectation data and leaves v1 projections byte-compatible
+  ---
+  duration_ms: 22.280542
+  type: 'test'
+  ...
+# Subtest: execution identity is issued-object bound and rejects clones, hashes, and accessor inputs without traversal
+ok 2 - execution identity is issued-object bound and rejects clones, hashes, and accessor inputs without traversal
+  ---
+  duration_ms: 16.583708
+  type: 'test'
+  ...
+1..2
+# tests 2
+# suites 0
+# pass 2
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 76.893

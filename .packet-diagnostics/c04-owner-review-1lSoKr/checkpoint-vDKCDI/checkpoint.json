@@ -1,0 +1,115 @@
+{
+  "at": "2026-09-20T11:10:21.628Z",
+  "node": "v24.18.0",
+  "output": "/Users/louiscalata/nisi/.packet-diagnostics/c04-owner-review-1lSoKr/checkpoint-vDKCDI",
+  "sourceHashes": {
+    "work-orders/parallel-seven-tracks-v1/track1/fixture-write-guard.mjs": "407eb2f1506b6756add1b6f86e6b3fc343df566aef9a38cdaf39ad9695d14682",
+    "work-orders/parallel-seven-tracks-v1/track1/repository-fixture-runner.mjs": "a928400e7d0c075c8865259102c4177f2139c68ae39bce88374462cb47804e42",
+    "work-orders/parallel-seven-tracks-v1/track1/repository-fixture-runner.test.mjs": "aecb01ec2889498af1482ea1145c709a46b1b0afa296359e47528818f9934f39",
+    "work-orders/parallel-seven-tracks-v1/track1/findings-cluster-containment.test.mjs": "ae2c1880cfe725c1c4eab3efc4766ee12c231a3c73f0ff0db19ea2cf5f4f1754",
+    "work-orders/v02-finish-cluster-v1/check-cluster.mjs": "4a3d15a681f1db288a7b5134482333f2a45ba07d0448da09cd9da4a385eedf4e",
+    "tests/finish-cluster-inventory.test.mjs": "b64e51e8547025c9f673a46a5a49f2d6c9231ab4eabe3a7ddf76f393caa06cb1",
+    "tests/finish-cluster-dispatch.test.mjs": "b8ca32dd4a38a6e8eb912ac9cc8d4457cd2e29a917d315ba0cae33def1f99686"
+  },
+  "packageSha256": "5a648d3057b70061e6947c895981df7ce9308b4a01c578e4e3abd31aff85f935",
+  "checks": [
+    {
+      "name": "c04",
+      "command": [
+        "/usr/local/bin/node",
+        "--test-reporter=tap",
+        "--test-concurrency=1",
+        "--experimental-test-module-mocks",
+        "--test",
+        "../../work-orders/parallel-seven-tracks-v1/track1/repository-fixture-runner.test.mjs",
+        "../../work-orders/parallel-seven-tracks-v1/track1/findings-cluster-containment.test.mjs",
+        "../../tests/fixture-receipt-completion.test.mjs",
+        "../../work-orders/parallel-seven-tracks-v1/track1/findings-cluster-receipt.test.mjs",
+        "../../tests/fixture-cleanup-boundaries.test.mjs",
+        "../../tests/fixture-cleanup-state.test.mjs",
+        "../../tests/fixture-completion-reader.test.mjs",
+        "../../work-orders/parallel-seven-tracks-v1/track1/findings-cluster-cleanup.test.mjs"
+      ],
+      "cwd": "/Users/louiscalata/nisi/work-orders/v02-finish-cluster-v1",
+      "exitCode": 0,
+      "signal": null,
+      "error": null,
+      "counts": {
+        "tests": 95,
+        "pass": 95,
+        "fail": 0,
+        "skipped": 0,
+        "cancelled": 0
+      },
+      "ok": true,
+      "logSha256": "272ddc52cf28b74f0139ada5142d079dfbc7f112fc5bee18bcc5ba1a69bd21bc"
+    },
+    {
+      "name": "c03",
+      "command": [
+        "/usr/local/bin/node",
+        "--test-reporter=tap",
+        "--test-concurrency=1",
+        "--experimental-test-module-mocks",
+        "--test",
+        "../../work-orders/parallel-seven-tracks-v1/track1/repository-fixture-runner.test.mjs",
+        "../../work-orders/parallel-seven-tracks-v1/track1/findings-cluster-receipt.test.mjs",
+        "../../work-orders/parallel-seven-tracks-v1/track1/findings-cluster-cleanup.test.mjs",
+        "../../tests/fixture-receipt-completion.test.mjs",
+        "../../tests/fixture-cleanup-boundaries.test.mjs",
+        "../../tests/fixture-cleanup-state.test.mjs",
+        "../../tests/fixture-completion-reader.test.mjs"
+      ],
+      "cwd": "/Users/louiscalata/nisi/work-orders/v02-finish-cluster-v1",
+      "exitCode": 0,
+      "signal": null,
+      "error": null,
+      "counts": {
+        "tests": 82,
+        "pass": 82,
+        "fail": 0,
+        "skipped": 0,
+        "cancelled": 0
+      },
+      "ok": true,
+      "logSha256": "7ca9874df240105ea382359618b229504bfe37df332a41f2a42c0f4f7901a404"
+    },
+    {
+      "name": "c02",
+      "command": [
+        "/usr/local/bin/node",
+        "--test-reporter=tap",
+        "--test-concurrency=1",
+        "--experimental-test-module-mocks",
+        "--test",
+        "../../work-orders/parallel-seven-tracks-v1/track1/repository-fixture-runner.test.mjs",
+        "../../work-orders/parallel-seven-tracks-v1/track1/findings-cluster-receipt.test.mjs",
+        "../../tests/fixture-receipt-completion.test.mjs"
+      ],
+      "cwd": "/Users/louiscalata/nisi/work-orders/v02-finish-cluster-v1",
+      "exitCode": 0,
+      "signal": null,
+      "error": null,
+      "counts": {
+        "tests": 35,
+        "pass": 35,
+        "fail": 0,
+        "skipped": 0,
+        "cancelled": 0
+      },
+      "ok": true,
+      "logSha256": "13dc20b3f67ce2433d92a1650cb67af518075efe03b126086d6aad0b6ddc8f15"
+    }
+  ],
+  "unchanged": true,
+  "validationExitCode": 0,
+  "validationError": null,
+  "validationSignal": null,
+  "validationLogSha256": "f16809b4ccb0f51615a0334214027d18a433c6adc4bc0e67f6fcaf09b3aa7a81",
+  "sourceInspected": true,
+  "inference": "NOT_RUN",
+  "mutationAcceptance": "NOT_RUN",
+  "implementationAccepted": false,
+  "nativeAcceptance": false,
+  "publicationAuthorized": false
+}

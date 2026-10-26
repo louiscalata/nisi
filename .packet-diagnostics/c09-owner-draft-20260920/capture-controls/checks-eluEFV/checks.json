@@ -1,0 +1,57 @@
+{
+  "scope": "ISOLATED_C09_CAPTURE_CONTROL_TESTS",
+  "command": [
+    "/usr/local/bin/node",
+    "--test-reporter=tap",
+    "--test-concurrency=1",
+    "--test",
+    "c09-owner-capture-check.test.mjs"
+  ],
+  "cwd": "/Users/louiscalata/nisi/.packet-diagnostics/c09-owner-draft-20260920/capture-controls",
+  "node": "v24.18.0",
+  "exitCode": 1,
+  "signal": null,
+  "error": null,
+  "before": {
+    "c09-owner-capture-check.mjs": "8c492476b9d3660aa81f4f6b4caded7bc4aaab90bb57448bfd08ce57850e274e",
+    "c09-owner-capture-check.test.mjs": "5f561fb1e468c077161d9b146a43952f8aded079f2457caf78a891f8e3b7557d",
+    "../candidate/work-orders/v02-finish-cluster-v1/consumer/runtime-matrix-v1.mjs": "18cf428f02e64a3df15e9fe6fde41410541bf8d40131f2d55c74b8b59d2c73e0",
+    "../candidate/scripts/private-package-contract.mjs": "1983f133f4580bbca58fdefbc4b60431c462b8507b48aff1e45f9b72fd3b112c",
+    "../runtime-node24-TyjDOb/capture.json": "38ce097e799806bea4ae87a9e9a9abae76cb191d16786a7444b5c07c59738888",
+    "../runtime-node24-TyjDOb/intent.json": "37218d8094254050adfb59a8190d7bd6ecaa61ff5be283d9a9a8a4c2c70d65ed",
+    "../runtime-node24-TyjDOb/receipt.json": "412e2fa843ca3cda318f419a582451c73b40169f6da6b712e1ef7a17f0fdb584",
+    "../runtime-node24-TyjDOb/archive.tgz": "f79c9f133966b4258953021ea2d107bad991121704ce9d9c299090eba7879972",
+    "../runtime-node24-TyjDOb/expected.json": "5d2e8c383606414677d6d0c900bed22300504612c51412842b709de02bf7d622",
+    "../runtime-node24-TyjDOb/stdout.log": "adcf879341ab37a914911e32f030b56b17529dbc849dfcd9b0401543de0fd597",
+    "../runtime-node24-TyjDOb/stderr.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  "after": {
+    "c09-owner-capture-check.mjs": "8c492476b9d3660aa81f4f6b4caded7bc4aaab90bb57448bfd08ce57850e274e",
+    "c09-owner-capture-check.test.mjs": "5f561fb1e468c077161d9b146a43952f8aded079f2457caf78a891f8e3b7557d",
+    "../candidate/work-orders/v02-finish-cluster-v1/consumer/runtime-matrix-v1.mjs": "18cf428f02e64a3df15e9fe6fde41410541bf8d40131f2d55c74b8b59d2c73e0",
+    "../candidate/scripts/private-package-contract.mjs": "1983f133f4580bbca58fdefbc4b60431c462b8507b48aff1e45f9b72fd3b112c",
+    "../runtime-node24-TyjDOb/capture.json": "38ce097e799806bea4ae87a9e9a9abae76cb191d16786a7444b5c07c59738888",
+    "../runtime-node24-TyjDOb/intent.json": "37218d8094254050adfb59a8190d7bd6ecaa61ff5be283d9a9a8a4c2c70d65ed",
+    "../runtime-node24-TyjDOb/receipt.json": "412e2fa843ca3cda318f419a582451c73b40169f6da6b712e1ef7a17f0fdb584",
+    "../runtime-node24-TyjDOb/archive.tgz": "f79c9f133966b4258953021ea2d107bad991121704ce9d9c299090eba7879972",
+    "../runtime-node24-TyjDOb/expected.json": "5d2e8c383606414677d6d0c900bed22300504612c51412842b709de02bf7d622",
+    "../runtime-node24-TyjDOb/stdout.log": "adcf879341ab37a914911e32f030b56b17529dbc849dfcd9b0401543de0fd597",
+    "../runtime-node24-TyjDOb/stderr.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  "unchanged": true,
+  "counts": {
+    "tests": 7,
+    "pass": 4,
+    "fail": 3,
+    "skipped": 0,
+    "cancelled": 0,
+    "todo": 0
+  },
+  "passed": false,
+  "stdoutSha256": "8c7b175392cf140833ec83f91b4f28532ccd7d138cee47748e80aabacd50543a",
+  "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+  "accepted": false,
+  "nativeExecution": "NOT_RUN",
+  "inference": "NOT_RUN",
+  "node22": "NOT_RUN"
+}

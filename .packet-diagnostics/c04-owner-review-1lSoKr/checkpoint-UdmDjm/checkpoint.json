@@ -1,0 +1,112 @@
+{
+  "at": "2026-09-20T10:49:53.597Z",
+  "node": "v24.18.0",
+  "output": "/Users/louiscalata/nisi/.packet-diagnostics/c04-owner-review-1lSoKr/checkpoint-UdmDjm",
+  "sourceHashes": {
+    "work-orders/parallel-seven-tracks-v1/track1/fixture-write-guard.mjs": "407eb2f1506b6756add1b6f86e6b3fc343df566aef9a38cdaf39ad9695d14682",
+    "work-orders/parallel-seven-tracks-v1/track1/repository-fixture-runner.mjs": "a928400e7d0c075c8865259102c4177f2139c68ae39bce88374462cb47804e42",
+    "work-orders/parallel-seven-tracks-v1/track1/repository-fixture-runner.test.mjs": "aecb01ec2889498af1482ea1145c709a46b1b0afa296359e47528818f9934f39",
+    "work-orders/parallel-seven-tracks-v1/track1/findings-cluster-containment.test.mjs": "ae2c1880cfe725c1c4eab3efc4766ee12c231a3c73f0ff0db19ea2cf5f4f1754"
+  },
+  "packageSha256": "5a648d3057b70061e6947c895981df7ce9308b4a01c578e4e3abd31aff85f935",
+  "checks": [
+    {
+      "name": "c04",
+      "command": [
+        "/usr/local/bin/node",
+        "--test-reporter=tap",
+        "--test-concurrency=1",
+        "--experimental-test-module-mocks",
+        "--test",
+        "../../work-orders/parallel-seven-tracks-v1/track1/repository-fixture-runner.test.mjs",
+        "../../work-orders/parallel-seven-tracks-v1/track1/findings-cluster-containment.test.mjs",
+        "../../tests/fixture-receipt-completion.test.mjs",
+        "../../work-orders/parallel-seven-tracks-v1/track1/findings-cluster-receipt.test.mjs",
+        "../../tests/fixture-cleanup-boundaries.test.mjs",
+        "../../tests/fixture-cleanup-state.test.mjs",
+        "../../tests/fixture-completion-reader.test.mjs",
+        "../../work-orders/parallel-seven-tracks-v1/track1/findings-cluster-cleanup.test.mjs"
+      ],
+      "cwd": "/Users/louiscalata/nisi/work-orders/v02-finish-cluster-v1",
+      "exitCode": 0,
+      "signal": null,
+      "error": null,
+      "counts": {
+        "tests": 95,
+        "pass": 95,
+        "fail": 0,
+        "skipped": 0,
+        "cancelled": 0
+      },
+      "ok": true,
+      "logSha256": "e47658db41a9d627c0298d3f7feb3445c0589eeb02c4f559c091fdf6eb1534af"
+    },
+    {
+      "name": "c03",
+      "command": [
+        "/usr/local/bin/node",
+        "--test-reporter=tap",
+        "--test-concurrency=1",
+        "--experimental-test-module-mocks",
+        "--test",
+        "../../work-orders/parallel-seven-tracks-v1/track1/repository-fixture-runner.test.mjs",
+        "../../work-orders/parallel-seven-tracks-v1/track1/findings-cluster-receipt.test.mjs",
+        "../../work-orders/parallel-seven-tracks-v1/track1/findings-cluster-cleanup.test.mjs",
+        "../../tests/fixture-receipt-completion.test.mjs",
+        "../../tests/fixture-cleanup-boundaries.test.mjs",
+        "../../tests/fixture-cleanup-state.test.mjs",
+        "../../tests/fixture-completion-reader.test.mjs"
+      ],
+      "cwd": "/Users/louiscalata/nisi/work-orders/v02-finish-cluster-v1",
+      "exitCode": 0,
+      "signal": null,
+      "error": null,
+      "counts": {
+        "tests": 82,
+        "pass": 82,
+        "fail": 0,
+        "skipped": 0,
+        "cancelled": 0
+      },
+      "ok": true,
+      "logSha256": "60c6f76b1832dc49f28c285b021f2438ecb8bc1601f25a5e08c18feb7431646b"
+    },
+    {
+      "name": "c02",
+      "command": [
+        "/usr/local/bin/node",
+        "--test-reporter=tap",
+        "--test-concurrency=1",
+        "--experimental-test-module-mocks",
+        "--test",
+        "../../work-orders/parallel-seven-tracks-v1/track1/repository-fixture-runner.test.mjs",
+        "../../work-orders/parallel-seven-tracks-v1/track1/findings-cluster-receipt.test.mjs",
+        "../../tests/fixture-receipt-completion.test.mjs"
+      ],
+      "cwd": "/Users/louiscalata/nisi/work-orders/v02-finish-cluster-v1",
+      "exitCode": 0,
+      "signal": null,
+      "error": null,
+      "counts": {
+        "tests": 35,
+        "pass": 35,
+        "fail": 0,
+        "skipped": 0,
+        "cancelled": 0
+      },
+      "ok": true,
+      "logSha256": "e8fb8d917179de56ffe66702ef3d4921a09b7ff63b981f915bdd51926174773c"
+    }
+  ],
+  "unchanged": true,
+  "validationExitCode": 0,
+  "validationError": null,
+  "validationSignal": null,
+  "validationLogSha256": "fe81b9ea7a32c7e744800ceb8c00bb3c369c90c36fd030b5d06b0133328296f1",
+  "sourceInspected": true,
+  "inference": "NOT_RUN",
+  "mutationAcceptance": "NOT_RUN",
+  "implementationAccepted": false,
+  "nativeAcceptance": false,
+  "publicationAuthorized": false
+}

@@ -1,0 +1,1952 @@
+TAP version 13
+# Subtest: positive exact writer-shaped receipt and honest missing Node22 row
+ok 1 - positive exact writer-shaped receipt and honest missing Node22 row
+  ---
+  duration_ms: 3.827417
+  type: 'test'
+  ...
+# Subtest: independent two-runtime proof is scoped to the same archive
+ok 2 - independent two-runtime proof is scoped to the same archive
+  ---
+  duration_ms: 2.990458
+  type: 'test'
+  ...
+# Subtest: proof hash, length, node path/version and archive claims are independently checked
+ok 3 - proof hash, length, node path/version and archive claims are independently checked
+  ---
+  duration_ms: 0.885875
+  type: 'test'
+  ...
+# Subtest: missing, duplicate and wrong tar evidence cannot pass
+ok 4 - missing, duplicate and wrong tar evidence cannot pass
+  ---
+  duration_ms: 2.434084
+  type: 'test'
+  ...
+# Subtest: strict flags, all roles and command order are binding
+ok 5 - strict flags, all roles and command order are binding
+  ---
+  duration_ms: 0.524875
+  type: 'test'
+  ...
+# Subtest: case hashes and inclusive cutoff are binding
+ok 6 - case hashes and inclusive cutoff are binding
+  ---
+  duration_ms: 1.201625
+  type: 'test'
+  ...
+# Subtest: negative locations and duplicate TAP/diagnostics are binding
+ok 7 - negative locations and duplicate TAP/diagnostics are binding
+  ---
+  duration_ms: 1.289583
+  type: 'test'
+  ...
+# Subtest: parsed objects cannot earn public PASS; reader remains inspectable
+ok 8 - parsed objects cannot earn public PASS; reader remains inspectable
+  ---
+  duration_ms: 0.378166
+  type: 'test'
+  ...
+# Subtest: nested and revoked proxies are refused before traps; resource bounds refuse
+not ok 9 - nested and revoked proxies are refused before traps; resource bounds refuse
+  ---
+  duration_ms: 0.7255
+  type: 'test'
+  location: '/Users/louiscalata/nisi/.packet-diagnostics/c09-owner-draft-20260920/reader-mutations-6pXlik/proxy-first/work-orders/v02-finish-cluster-v1/consumer/runtime-matrix-v1.test.mjs:55:1'
+  failureType: 'testCodeFailure'
+  error: 'Missing expected exception.'
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected:
+    code: 'RECEIPT_SCHEMA'
+  operator: 'throws'
+  stack: |-
+    TestContext.<anonymous> (file:///Users/louiscalata/nisi/.packet-diagnostics/c09-owner-draft-20260920/reader-mutations-6pXlik/proxy-first/work-orders/v02-finish-cluster-v1/consumer/runtime-matrix-v1.test.mjs:55:325)
+    Test.runInAsyncScope (node:async_hooks:227:14)
+    Test.run (node:internal/test_runner/test:1325:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:911:18)
+    Test.postRun (node:internal/test_runner/test:1465:19)
+    Test.run (node:internal/test_runner/test:1390:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:911:7)
+  ...
+# Subtest: rehearsal command documentation preserves offline script-disabled route
+ok 10 - rehearsal command documentation preserves offline script-disabled route
+  ---
+  duration_ms: 0.127542
+  type: 'test'
+  ...
+# Subtest: every independent owner proof field is binding
+ok 11 - every independent owner proof field is binding
+  ---
+  duration_ms: 4.100625
+  type: 'test'
+  ...
+# Subtest: expected pins are closed, required, and do not self-pin the receipt
+ok 12 - expected pins are closed, required, and do not self-pin the receipt
+  ---
+  duration_ms: 1.66575
+  type: 'test'
+  ...
+# Subtest: cutoff comparisons are inclusive and inverted windows refuse
+ok 13 - cutoff comparisons are inclusive and inverted windows refuse
+  ---
+  duration_ms: 1.851084
+  type: 'test'
+  ...
+# Subtest: all 35 check roles require exact order, executable, cwd, argv, clean termination and exit
+ok 14 - all 35 check roles require exact order, executable, cwd, argv, clean termination and exit
+  ---
+  duration_ms: 120.025166
+  type: 'test'
+  ...
+# Subtest: all 29 extraction stdout digests and inventory/pack evidence are checked
+ok 15 - all 29 extraction stdout digests and inventory/pack evidence are checked
+  ---
+  duration_ms: 14.151417
+  type: 'test'
+  ...
+# Subtest: negative locations require exact expected coverage and bounded diagnostics
+ok 16 - negative locations require exact expected coverage and bounded diagnostics
+  ---
+  duration_ms: 2.59175
+  type: 'test'
+  ...
+# Subtest: TAP duplicate, failure, skip and contradictory summaries remain non-PASS
+ok 17 - TAP duplicate, failure, skip and contradictory summaries remain non-PASS
+  ---
+  duration_ms: 1.902583
+  type: 'test'
+  ...
+# Subtest: accessors, malformed/unsupported/partial-failed receipts, and flags are explicit
+ok 18 - accessors, malformed/unsupported/partial-failed receipts, and flags are explicit
+  ---
+  duration_ms: 2.029459
+  type: 'test'
+  ...
+# Subtest: resource caps and zero-trap proxy boundaries are represented
+ok 19 - resource caps and zero-trap proxy boundaries are represented
+  ---
+  duration_ms: 11.10825
+  type: 'test'
+  ...
+# Subtest: adverse: schema absent
+ok 20 - adverse: schema absent
+  ---
+  duration_ms: 0.43725
+  type: 'test'
+  ...
+# Subtest: adverse: extra top-level field
+ok 21 - adverse: extra top-level field
+  ---
+  duration_ms: 0.404417
+  type: 'test'
+  ...
+# Subtest: adverse: missing completion
+ok 22 - adverse: missing completion
+  ---
+  duration_ms: 0.415208
+  type: 'test'
+  ...
+# Subtest: adverse: unknown status
+ok 23 - adverse: unknown status
+  ---
+  duration_ms: 0.3985
+  type: 'test'
+  ...
+# Subtest: adverse: network boundary
+ok 24 - adverse: network boundary
+  ---
+  duration_ms: 0.525333
+  type: 'test'
+  ...
+# Subtest: adverse: lifecycle boundary
+ok 25 - adverse: lifecycle boundary
+  ---
+  duration_ms: 0.503208
+  type: 'test'
+  ...
+# Subtest: adverse: publication boundary
+ok 26 - adverse: publication boundary
+  ---
+  duration_ms: 0.445667
+  type: 'test'
+  ...
+# Subtest: adverse: boundary not boolean
+ok 27 - adverse: boundary not boolean
+  ---
+  duration_ms: 0.465958
+  type: 'test'
+  ...
+# Subtest: adverse: node hash short
+ok 28 - adverse: node hash short
+  ---
+  duration_ms: 0.64025
+  type: 'test'
+  ...
+# Subtest: adverse: archive hash uppercase
+ok 29 - adverse: archive hash uppercase
+  ---
+  duration_ms: 0.489209
+  type: 'test'
+  ...
+# Subtest: adverse: archive extra field
+ok 30 - adverse: archive extra field
+  ---
+  duration_ms: 0.494958
+  type: 'test'
+  ...
+# Subtest: adverse: missing check exit
+ok 31 - adverse: missing check exit
+  ---
+  duration_ms: 0.442542
+  type: 'test'
+  ...
+# Subtest: adverse: missing ran stdout
+ok 32 - adverse: missing ran stdout
+  ---
+  duration_ms: 0.415834
+  type: 'test'
+  ...
+# Subtest: adverse: missing ran stderr
+ok 33 - adverse: missing ran stderr
+  ---
+  duration_ms: 0.517583
+  type: 'test'
+  ...
+# Subtest: adverse: non-string argument
+ok 34 - adverse: non-string argument
+  ---
+  duration_ms: 0.376084
+  type: 'test'
+  ...
+# Subtest: adverse: fractional duration
+ok 35 - adverse: fractional duration
+  ---
+  duration_ms: 0.384042
+  type: 'test'
+  ...
+# Subtest: adverse: negative duration
+ok 36 - adverse: negative duration
+  ---
+  duration_ms: 0.364042
+  type: 'test'
+  ...
+# Subtest: adverse: invalid source hash
+ok 37 - adverse: invalid source hash
+  ---
+  duration_ms: 0.581916
+  type: 'test'
+  ...
+# Subtest: adverse: reversed timestamps
+ok 38 - adverse: reversed timestamps
+  ---
+  duration_ms: 0.462625
+  type: 'test'
+  ...
+# Subtest: adverse: non-ISO timestamp
+ok 39 - adverse: non-ISO timestamp
+  ---
+  duration_ms: 0.467417
+  type: 'test'
+  ...
+# Subtest: adverse: invalid negative flag
+ok 40 - adverse: invalid negative flag
+  ---
+  duration_ms: 0.478583
+  type: 'test'
+  ...
+# Subtest: adverse: invalid failure shape
+ok 41 - adverse: invalid failure shape
+  ---
+  duration_ms: 0.472625
+  type: 'test'
+  ...
+# Subtest: adverse: unpaired surrogate
+ok 42 - adverse: unpaired surrogate
+  ---
+  duration_ms: 0.516375
+  type: 'test'
+  ...
+# Subtest: adverse: missing archive
+ok 43 - adverse: missing archive
+  ---
+  duration_ms: 0.536459
+  type: 'test'
+  ...
+# Subtest: adverse: missing installed
+ok 44 - adverse: missing installed
+  ---
+  duration_ms: 0.528292
+  type: 'test'
+  ...
+# Subtest: adverse: missing toolchain
+ok 45 - adverse: missing toolchain
+  ---
+  duration_ms: 0.609458
+  type: 'test'
+  ...
+# Subtest: adverse: missing negatives
+ok 46 - adverse: missing negatives
+  ---
+  duration_ms: 0.538834
+  type: 'test'
+  ...
+# Subtest: adverse: inexact installed copy
+ok 47 - adverse: inexact installed copy
+  ---
+  duration_ms: 0.53025
+  type: 'test'
+  ...
+# Subtest: adverse: wrong installed path
+ok 48 - adverse: wrong installed path
+  ---
+  duration_ms: 0.518167
+  type: 'test'
+  ...
+# Subtest: adverse: wrong archive path
+ok 49 - adverse: wrong archive path
+  ---
+  duration_ms: 0.532333
+  type: 'test'
+  ...
+# Subtest: adverse: outside evidence root
+ok 50 - adverse: outside evidence root
+  ---
+  duration_ms: 0.49575
+  type: 'test'
+  ...
+# Subtest: adverse: source inventory short
+ok 51 - adverse: source inventory short
+  ---
+  duration_ms: 0.549459
+  type: 'test'
+  ...
+# Subtest: adverse: archive extra file
+ok 52 - adverse: archive extra file
+  ---
+  duration_ms: 0.609916
+  type: 'test'
+  ...
+# Subtest: adverse: stage archive drift
+ok 53 - adverse: stage archive drift
+  ---
+  duration_ms: 0.521167
+  type: 'test'
+  ...
+# Subtest: adverse: source pin stale
+ok 54 - adverse: source pin stale
+  ---
+  duration_ms: 0.504625
+  type: 'test'
+  ...
+# Subtest: adverse: stage pin stale
+ok 55 - adverse: stage pin stale
+  ---
+  duration_ms: 0.501166
+  type: 'test'
+  ...
+# Subtest: adverse: case pin stale
+ok 56 - adverse: case pin stale
+  ---
+  duration_ms: 0.500208
+  type: 'test'
+  ...
+# Subtest: adverse: toolchain pin stale
+ok 57 - adverse: toolchain pin stale
+  ---
+  duration_ms: 0.50725
+  type: 'test'
+  ...
+# Subtest: adverse: unclaimed extra TS file
+ok 58 - adverse: unclaimed extra TS file
+  ---
+  duration_ms: 0.612625
+  type: 'test'
+  ...
+# Subtest: adverse: global TS diagnostic
+ok 59 - adverse: global TS diagnostic
+  ---
+  duration_ms: 0.632542
+  type: 'test'
+  ...
+# Subtest: adverse: wrong negative location
+ok 60 - adverse: wrong negative location
+  ---
+  duration_ms: 0.5305
+  type: 'test'
+  ...
+# Subtest: adverse: duplicate substitutes missing location
+ok 61 - adverse: duplicate substitutes missing location
+  ---
+  duration_ms: 0.546958
+  type: 'test'
+  ...
+# Subtest: adverse: observed count mismatch
+ok 62 - adverse: observed count mismatch
+  ---
+  duration_ms: 0.533584
+  type: 'test'
+  ...
+# Subtest: adverse: diagnostic count above bound
+ok 63 - adverse: diagnostic count above bound
+  ---
+  duration_ms: 0.515666
+  type: 'test'
+  ...
+# Subtest: adverse: diagnostic text above bound
+ok 64 - adverse: diagnostic text above bound
+  ---
+  duration_ms: 0.739
+  type: 'test'
+  ...
+# Subtest: adverse: TAP cancellation
+ok 65 - adverse: TAP cancellation
+  ---
+  duration_ms: 0.769875
+  type: 'test'
+  ...
+# Subtest: adverse: TAP todo
+ok 66 - adverse: TAP todo
+  ---
+  duration_ms: 0.638166
+  type: 'test'
+  ...
+# Subtest: adverse: TAP no summary
+ok 67 - adverse: TAP no summary
+  ---
+  duration_ms: 0.583292
+  type: 'test'
+  ...
+# Subtest: adverse: TAP wrong plan
+ok 68 - adverse: TAP wrong plan
+  ---
+  duration_ms: 0.570667
+  type: 'test'
+  ...
+# Subtest: adverse: TAP duplicate plan
+ok 69 - adverse: TAP duplicate plan
+  ---
+  duration_ms: 0.563834
+  type: 'test'
+  ...
+# Subtest: adverse: TAP duplicate one counter
+ok 70 - adverse: TAP duplicate one counter
+  ---
+  duration_ms: 0.560583
+  type: 'test'
+  ...
+# Subtest: adverse: pack JSON syntax
+ok 71 - adverse: pack JSON syntax
+  ---
+  duration_ms: 0.537292
+  type: 'test'
+  ...
+# Subtest: adverse: pack duplicate entry
+ok 72 - adverse: pack duplicate entry
+  ---
+  duration_ms: 0.680375
+  type: 'test'
+  ...
+# Subtest: adverse: tar duplicate entry
+ok 73 - adverse: tar duplicate entry
+  ---
+  duration_ms: 0.512208
+  type: 'test'
+  ...
+# Subtest: fixture mutations cannot leak across records or independent expected pins
+ok 74 - fixture mutations cannot leak across records or independent expected pins
+  ---
+  duration_ms: 0.629834
+  type: 'test'
+  ...
+# Subtest: null proof and absent expected contract stay non-PASS
+ok 75 - null proof and absent expected contract stay non-PASS
+  ---
+  duration_ms: 0.695459
+  type: 'test'
+  ...
+# Subtest: coherent non-metadata stage/source substitution still fails
+ok 76 - coherent non-metadata stage/source substitution still fails
+  ---
+  duration_ms: 0.525083
+  type: 'test'
+  ...
+# Subtest: extra diagnostics at known locations retain truthful counts
+ok 77 - extra diagnostics at known locations retain truthful counts
+  ---
+  duration_ms: 0.476084
+  type: 'test'
+  ...
+# Subtest: timestamps alone do not imply shared execution; reused identities do
+ok 78 - timestamps alone do not imply shared execution; reused identities do
+  ---
+  duration_ms: 4.1975
+  type: 'test'
+  ...
+# Subtest: runtime relabeling, unsupported major and malformed version remain explicit
+ok 79 - runtime relabeling, unsupported major and malformed version remain explicit
+  ---
+  duration_ms: 2.558417
+  type: 'test'
+  ...
+# Subtest: unknown durations remain null, zero remains zero, and output is deeply frozen
+ok 80 - unknown durations remain null, zero remains zero, and output is deeply frozen
+  ---
+  duration_ms: 0.775125
+  type: 'test'
+  ...
+# Subtest: spawn failure without output retains the actual failure, not invented TAP
+ok 81 - spawn failure without output retains the actual failure, not invented TAP
+  ---
+  duration_ms: 0.347667
+  type: 'test'
+  ...
+# Subtest: zero-trap live proxy: record
+not ok 82 - zero-trap live proxy: record
+  ---
+  duration_ms: 0.148667
+  type: 'test'
+  location: '/Users/louiscalata/nisi/.packet-diagnostics/c09-owner-draft-20260920/reader-mutations-6pXlik/proxy-first/work-orders/v02-finish-cluster-v1/consumer/runtime-matrix-v1.test.mjs:251:79'
+  failureType: 'testCodeFailure'
+  error: |-
+    The error is expected to be an instance of "RuntimeMatrixError". Received "Error"
+    
+    Error message:
+    
+    trap executed
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  stack: |-
+    TestContext.<anonymous> (file:///Users/louiscalata/nisi/.packet-diagnostics/c09-owner-draft-20260920/reader-mutations-6pXlik/proxy-first/work-orders/v02-finish-cluster-v1/consumer/runtime-matrix-v1.test.mjs:254:32)
+    Test.runInAsyncScope (node:async_hooks:227:14)
+    Test.run (node:internal/test_runner/test:1325:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:911:18)
+    Test.postRun (node:internal/test_runner/test:1465:19)
+    Test.run (node:internal/test_runner/test:1390:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:911:7)
+  ...
+# Subtest: zero-trap revoked proxy: record
+not ok 83 - zero-trap revoked proxy: record
+  ---
+  duration_ms: 0.085292
+  type: 'test'
+  location: '/Users/louiscalata/nisi/.packet-diagnostics/c09-owner-draft-20260920/reader-mutations-6pXlik/proxy-first/work-orders/v02-finish-cluster-v1/consumer/runtime-matrix-v1.test.mjs:251:79'
+  failureType: 'testCodeFailure'
+  error: |-
+    The error is expected to be an instance of "RuntimeMatrixError". Received "TypeError"
+    
+    Error message:
+    
+    Cannot perform 'IsArray' on a proxy that has been revoked
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  stack: |-
+    TestContext.<anonymous> (file:///Users/louiscalata/nisi/.packet-diagnostics/c09-owner-draft-20260920/reader-mutations-6pXlik/proxy-first/work-orders/v02-finish-cluster-v1/consumer/runtime-matrix-v1.test.mjs:254:32)
+    Test.runInAsyncScope (node:async_hooks:227:14)
+    Test.run (node:internal/test_runner/test:1325:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:911:18)
+    Test.postRun (node:internal/test_runner/test:1465:19)
+    Test.run (node:internal/test_runner/test:1390:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:911:7)
+  ...
+# Subtest: zero-trap live proxy: node
+not ok 84 - zero-trap live proxy: node
+  ---
+  duration_ms: 0.08475
+  type: 'test'
+  location: '/Users/louiscalata/nisi/.packet-diagnostics/c09-owner-draft-20260920/reader-mutations-6pXlik/proxy-first/work-orders/v02-finish-cluster-v1/consumer/runtime-matrix-v1.test.mjs:251:79'
+  failureType: 'testCodeFailure'
+  error: |-
+    The error is expected to be an instance of "RuntimeMatrixError". Received "Error"
+    
+    Error message:
+    
+    trap executed
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  stack: |-
+    TestContext.<anonymous> (file:///Users/louiscalata/nisi/.packet-diagnostics/c09-owner-draft-20260920/reader-mutations-6pXlik/proxy-first/work-orders/v02-finish-cluster-v1/consumer/runtime-matrix-v1.test.mjs:254:32)
+    Test.runInAsyncScope (node:async_hooks:227:14)
+    Test.run (node:internal/test_runner/test:1325:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:911:18)
+    Test.postRun (node:internal/test_runner/test:1465:19)
+    Test.run (node:internal/test_runner/test:1390:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:911:7)
+  ...
+# Subtest: zero-trap revoked proxy: node
+not ok 85 - zero-trap revoked proxy: node
+  ---
+  duration_ms: 0.075958
+  type: 'test'
+  location: '/Users/louiscalata/nisi/.packet-diagnostics/c09-owner-draft-20260920/reader-mutations-6pXlik/proxy-first/work-orders/v02-finish-cluster-v1/consumer/runtime-matrix-v1.test.mjs:251:79'
+  failureType: 'testCodeFailure'
+  error: |-
+    The error is expected to be an instance of "RuntimeMatrixError". Received "TypeError"
+    
+    Error message:
+    
+    Cannot perform 'IsArray' on a proxy that has been revoked
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  stack: |-
+    TestContext.<anonymous> (file:///Users/louiscalata/nisi/.packet-diagnostics/c09-owner-draft-20260920/reader-mutations-6pXlik/proxy-first/work-orders/v02-finish-cluster-v1/consumer/runtime-matrix-v1.test.mjs:254:32)
+    Test.runInAsyncScope (node:async_hooks:227:14)
+    Test.run (node:internal/test_runner/test:1325:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:911:18)
+    Test.postRun (node:internal/test_runner/test:1465:19)
+    Test.run (node:internal/test_runner/test:1390:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:911:7)
+  ...
+# Subtest: zero-trap live proxy: checks
+ok 86 - zero-trap live proxy: checks
+  ---
+  duration_ms: 0.063125
+  type: 'test'
+  ...
+# Subtest: zero-trap revoked proxy: checks
+not ok 87 - zero-trap revoked proxy: checks
+  ---
+  duration_ms: 0.073708
+  type: 'test'
+  location: '/Users/louiscalata/nisi/.packet-diagnostics/c09-owner-draft-20260920/reader-mutations-6pXlik/proxy-first/work-orders/v02-finish-cluster-v1/consumer/runtime-matrix-v1.test.mjs:251:79'
+  failureType: 'testCodeFailure'
+  error: |-
+    The error is expected to be an instance of "RuntimeMatrixError". Received "TypeError"
+    
+    Error message:
+    
+    Cannot perform 'IsArray' on a proxy that has been revoked
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  stack: |-
+    TestContext.<anonymous> (file:///Users/louiscalata/nisi/.packet-diagnostics/c09-owner-draft-20260920/reader-mutations-6pXlik/proxy-first/work-orders/v02-finish-cluster-v1/consumer/runtime-matrix-v1.test.mjs:254:32)
+    Test.runInAsyncScope (node:async_hooks:227:14)
+    Test.run (node:internal/test_runner/test:1325:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:911:18)
+    Test.postRun (node:internal/test_runner/test:1465:19)
+    Test.run (node:internal/test_runner/test:1390:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:911:7)
+  ...
+# Subtest: zero-trap live proxy: check
+not ok 88 - zero-trap live proxy: check
+  ---
+  duration_ms: 0.080333
+  type: 'test'
+  location: '/Users/louiscalata/nisi/.packet-diagnostics/c09-owner-draft-20260920/reader-mutations-6pXlik/proxy-first/work-orders/v02-finish-cluster-v1/consumer/runtime-matrix-v1.test.mjs:251:79'
+  failureType: 'testCodeFailure'
+  error: |-
+    The error is expected to be an instance of "RuntimeMatrixError". Received "Error"
+    
+    Error message:
+    
+    trap executed
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  stack: |-
+    TestContext.<anonymous> (file:///Users/louiscalata/nisi/.packet-diagnostics/c09-owner-draft-20260920/reader-mutations-6pXlik/proxy-first/work-orders/v02-finish-cluster-v1/consumer/runtime-matrix-v1.test.mjs:254:32)
+    Test.runInAsyncScope (node:async_hooks:227:14)
+    Test.run (node:internal/test_runner/test:1325:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:911:18)
+    Test.postRun (node:internal/test_runner/test:1465:19)
+    Test.run (node:internal/test_runner/test:1390:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:911:7)
+  ...
+# Subtest: zero-trap revoked proxy: check
+not ok 89 - zero-trap revoked proxy: check
+  ---
+  duration_ms: 0.075208
+  type: 'test'
+  location: '/Users/louiscalata/nisi/.packet-diagnostics/c09-owner-draft-20260920/reader-mutations-6pXlik/proxy-first/work-orders/v02-finish-cluster-v1/consumer/runtime-matrix-v1.test.mjs:251:79'
+  failureType: 'testCodeFailure'
+  error: |-
+    The error is expected to be an instance of "RuntimeMatrixError". Received "TypeError"
+    
+    Error message:
+    
+    Cannot perform 'IsArray' on a proxy that has been revoked
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  stack: |-
+    TestContext.<anonymous> (file:///Users/louiscalata/nisi/.packet-diagnostics/c09-owner-draft-20260920/reader-mutations-6pXlik/proxy-first/work-orders/v02-finish-cluster-v1/consumer/runtime-matrix-v1.test.mjs:254:32)
+    Test.runInAsyncScope (node:async_hooks:227:14)
+    Test.run (node:internal/test_runner/test:1325:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:911:18)
+    Test.postRun (node:internal/test_runner/test:1465:19)
+    Test.run (node:internal/test_runner/test:1390:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:911:7)
+  ...
+# Subtest: zero-trap live proxy: args
+ok 90 - zero-trap live proxy: args
+  ---
+  duration_ms: 0.063125
+  type: 'test'
+  ...
+# Subtest: zero-trap revoked proxy: args
+not ok 91 - zero-trap revoked proxy: args
+  ---
+  duration_ms: 0.09975
+  type: 'test'
+  location: '/Users/louiscalata/nisi/.packet-diagnostics/c09-owner-draft-20260920/reader-mutations-6pXlik/proxy-first/work-orders/v02-finish-cluster-v1/consumer/runtime-matrix-v1.test.mjs:251:79'
+  failureType: 'testCodeFailure'
+  error: |-
+    The error is expected to be an instance of "RuntimeMatrixError". Received "TypeError"
+    
+    Error message:
+    
+    Cannot perform 'IsArray' on a proxy that has been revoked
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  stack: |-
+    TestContext.<anonymous> (file:///Users/louiscalata/nisi/.packet-diagnostics/c09-owner-draft-20260920/reader-mutations-6pXlik/proxy-first/work-orders/v02-finish-cluster-v1/consumer/runtime-matrix-v1.test.mjs:254:32)
+    Test.runInAsyncScope (node:async_hooks:227:14)
+    Test.run (node:internal/test_runner/test:1325:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:911:18)
+    Test.postRun (node:internal/test_runner/test:1465:19)
+    Test.run (node:internal/test_runner/test:1390:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:911:7)
+  ...
+# Subtest: zero-trap live proxy: source
+not ok 92 - zero-trap live proxy: source
+  ---
+  duration_ms: 0.20675
+  type: 'test'
+  location: '/Users/louiscalata/nisi/.packet-diagnostics/c09-owner-draft-20260920/reader-mutations-6pXlik/proxy-first/work-orders/v02-finish-cluster-v1/consumer/runtime-matrix-v1.test.mjs:251:79'
+  failureType: 'testCodeFailure'
+  error: |-
+    The error is expected to be an instance of "RuntimeMatrixError". Received "Error"
+    
+    Error message:
+    
+    trap executed
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  stack: |-
+    TestContext.<anonymous> (file:///Users/louiscalata/nisi/.packet-diagnostics/c09-owner-draft-20260920/reader-mutations-6pXlik/proxy-first/work-orders/v02-finish-cluster-v1/consumer/runtime-matrix-v1.test.mjs:254:32)
+    Test.runInAsyncScope (node:async_hooks:227:14)
+    Test.run (node:internal/test_runner/test:1325:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:911:18)
+    Test.postRun (node:internal/test_runner/test:1465:19)
+    Test.run (node:internal/test_runner/test:1390:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:911:7)
+  ...
+# Subtest: zero-trap revoked proxy: source
+not ok 93 - zero-trap revoked proxy: source
+  ---
+  duration_ms: 0.178625
+  type: 'test'
+  location: '/Users/louiscalata/nisi/.packet-diagnostics/c09-owner-draft-20260920/reader-mutations-6pXlik/proxy-first/work-orders/v02-finish-cluster-v1/consumer/runtime-matrix-v1.test.mjs:251:79'
+  failureType: 'testCodeFailure'
+  error: |-
+    The error is expected to be an instance of "RuntimeMatrixError". Received "TypeError"
+    
+    Error message:
+    
+    Cannot perform 'IsArray' on a proxy that has been revoked
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  stack: |-
+    TestContext.<anonymous> (file:///Users/louiscalata/nisi/.packet-diagnostics/c09-owner-draft-20260920/reader-mutations-6pXlik/proxy-first/work-orders/v02-finish-cluster-v1/consumer/runtime-matrix-v1.test.mjs:254:32)
+    Test.runInAsyncScope (node:async_hooks:227:14)
+    Test.run (node:internal/test_runner/test:1325:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:911:18)
+    Test.postRun (node:internal/test_runner/test:1465:19)
+    Test.run (node:internal/test_runner/test:1390:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:911:7)
+  ...
+# Subtest: zero-trap live proxy: stage
+not ok 94 - zero-trap live proxy: stage
+  ---
+  duration_ms: 0.195958
+  type: 'test'
+  location: '/Users/louiscalata/nisi/.packet-diagnostics/c09-owner-draft-20260920/reader-mutations-6pXlik/proxy-first/work-orders/v02-finish-cluster-v1/consumer/runtime-matrix-v1.test.mjs:251:79'
+  failureType: 'testCodeFailure'
+  error: |-
+    The error is expected to be an instance of "RuntimeMatrixError". Received "Error"
+    
+    Error message:
+    
+    trap executed
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  stack: |-
+    TestContext.<anonymous> (file:///Users/louiscalata/nisi/.packet-diagnostics/c09-owner-draft-20260920/reader-mutations-6pXlik/proxy-first/work-orders/v02-finish-cluster-v1/consumer/runtime-matrix-v1.test.mjs:254:32)
+    Test.runInAsyncScope (node:async_hooks:227:14)
+    Test.run (node:internal/test_runner/test:1325:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:911:18)
+    Test.postRun (node:internal/test_runner/test:1465:19)
+    Test.run (node:internal/test_runner/test:1390:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:911:7)
+  ...
+# Subtest: zero-trap revoked proxy: stage
+not ok 95 - zero-trap revoked proxy: stage
+  ---
+  duration_ms: 0.1825
+  type: 'test'
+  location: '/Users/louiscalata/nisi/.packet-diagnostics/c09-owner-draft-20260920/reader-mutations-6pXlik/proxy-first/work-orders/v02-finish-cluster-v1/consumer/runtime-matrix-v1.test.mjs:251:79'
+  failureType: 'testCodeFailure'
+  error: |-
+    The error is expected to be an instance of "RuntimeMatrixError". Received "TypeError"
+    
+    Error message:
+    
+    Cannot perform 'IsArray' on a proxy that has been revoked
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  stack: |-
+    TestContext.<anonymous> (file:///Users/louiscalata/nisi/.packet-diagnostics/c09-owner-draft-20260920/reader-mutations-6pXlik/proxy-first/work-orders/v02-finish-cluster-v1/consumer/runtime-matrix-v1.test.mjs:254:32)
+    Test.runInAsyncScope (node:async_hooks:227:14)
+    Test.run (node:internal/test_runner/test:1325:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:911:18)
+    Test.postRun (node:internal/test_runner/test:1465:19)
+    Test.run (node:internal/test_runner/test:1390:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:911:7)
+  ...
+# Subtest: zero-trap live proxy: cases
+not ok 96 - zero-trap live proxy: cases
+  ---
+  duration_ms: 0.187334
+  type: 'test'
+  location: '/Users/louiscalata/nisi/.packet-diagnostics/c09-owner-draft-20260920/reader-mutations-6pXlik/proxy-first/work-orders/v02-finish-cluster-v1/consumer/runtime-matrix-v1.test.mjs:251:79'
+  failureType: 'testCodeFailure'
+  error: |-
+    The error is expected to be an instance of "RuntimeMatrixError". Received "Error"
+    
+    Error message:
+    
+    trap executed
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  stack: |-
+    TestContext.<anonymous> (file:///Users/louiscalata/nisi/.packet-diagnostics/c09-owner-draft-20260920/reader-mutations-6pXlik/proxy-first/work-orders/v02-finish-cluster-v1/consumer/runtime-matrix-v1.test.mjs:254:32)
+    Test.runInAsyncScope (node:async_hooks:227:14)
+    Test.run (node:internal/test_runner/test:1325:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:911:18)
+    Test.postRun (node:internal/test_runner/test:1465:19)
+    Test.run (node:internal/test_runner/test:1390:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:911:7)
+  ...
+# Subtest: zero-trap revoked proxy: cases
+not ok 97 - zero-trap revoked proxy: cases
+  ---
+  duration_ms: 0.181917
+  type: 'test'
+  location: '/Users/louiscalata/nisi/.packet-diagnostics/c09-owner-draft-20260920/reader-mutations-6pXlik/proxy-first/work-orders/v02-finish-cluster-v1/consumer/runtime-matrix-v1.test.mjs:251:79'
+  failureType: 'testCodeFailure'
+  error: |-
+    The error is expected to be an instance of "RuntimeMatrixError". Received "TypeError"
+    
+    Error message:
+    
+    Cannot perform 'IsArray' on a proxy that has been revoked
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  stack: |-
+    TestContext.<anonymous> (file:///Users/louiscalata/nisi/.packet-diagnostics/c09-owner-draft-20260920/reader-mutations-6pXlik/proxy-first/work-orders/v02-finish-cluster-v1/consumer/runtime-matrix-v1.test.mjs:254:32)
+    Test.runInAsyncScope (node:async_hooks:227:14)
+    Test.run (node:internal/test_runner/test:1325:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:911:18)
+    Test.postRun (node:internal/test_runner/test:1465:19)
+    Test.run (node:internal/test_runner/test:1390:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:911:7)
+  ...
+# Subtest: zero-trap live proxy: archive
+not ok 98 - zero-trap live proxy: archive
+  ---
+  duration_ms: 0.280584
+  type: 'test'
+  location: '/Users/louiscalata/nisi/.packet-diagnostics/c09-owner-draft-20260920/reader-mutations-6pXlik/proxy-first/work-orders/v02-finish-cluster-v1/consumer/runtime-matrix-v1.test.mjs:251:79'
+  failureType: 'testCodeFailure'
+  error: |-
+    The error is expected to be an instance of "RuntimeMatrixError". Received "Error"
+    
+    Error message:
+    
+    trap executed
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  stack: |-
+    TestContext.<anonymous> (file:///Users/louiscalata/nisi/.packet-diagnostics/c09-owner-draft-20260920/reader-mutations-6pXlik/proxy-first/work-orders/v02-finish-cluster-v1/consumer/runtime-matrix-v1.test.mjs:254:32)
+    Test.runInAsyncScope (node:async_hooks:227:14)
+    Test.run (node:internal/test_runner/test:1325:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:911:18)
+    Test.postRun (node:internal/test_runner/test:1465:19)
+    Test.run (node:internal/test_runner/test:1390:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:911:7)
+  ...
+# Subtest: zero-trap revoked proxy: archive
+not ok 99 - zero-trap revoked proxy: archive
+  ---
+  duration_ms: 0.172292
+  type: 'test'
+  location: '/Users/louiscalata/nisi/.packet-diagnostics/c09-owner-draft-20260920/reader-mutations-6pXlik/proxy-first/work-orders/v02-finish-cluster-v1/consumer/runtime-matrix-v1.test.mjs:251:79'
+  failureType: 'testCodeFailure'
+  error: |-
+    The error is expected to be an instance of "RuntimeMatrixError". Received "TypeError"
+    
+    Error message:
+    
+    Cannot perform 'IsArray' on a proxy that has been revoked
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  stack: |-
+    TestContext.<anonymous> (file:///Users/louiscalata/nisi/.packet-diagnostics/c09-owner-draft-20260920/reader-mutations-6pXlik/proxy-first/work-orders/v02-finish-cluster-v1/consumer/runtime-matrix-v1.test.mjs:254:32)
+    Test.runInAsyncScope (node:async_hooks:227:14)
+    Test.run (node:internal/test_runner/test:1325:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:911:18)
+    Test.postRun (node:internal/test_runner/test:1465:19)
+    Test.run (node:internal/test_runner/test:1390:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:911:7)
+  ...
+# Subtest: zero-trap live proxy: entries
+not ok 100 - zero-trap live proxy: entries
+  ---
+  duration_ms: 0.169625
+  type: 'test'
+  location: '/Users/louiscalata/nisi/.packet-diagnostics/c09-owner-draft-20260920/reader-mutations-6pXlik/proxy-first/work-orders/v02-finish-cluster-v1/consumer/runtime-matrix-v1.test.mjs:251:79'
+  failureType: 'testCodeFailure'
+  error: |-
+    The error is expected to be an instance of "RuntimeMatrixError". Received "Error"
+    
+    Error message:
+    
+    trap executed
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  stack: |-
+    TestContext.<anonymous> (file:///Users/louiscalata/nisi/.packet-diagnostics/c09-owner-draft-20260920/reader-mutations-6pXlik/proxy-first/work-orders/v02-finish-cluster-v1/consumer/runtime-matrix-v1.test.mjs:254:32)
+    Test.runInAsyncScope (node:async_hooks:227:14)
+    Test.run (node:internal/test_runner/test:1325:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:911:18)
+    Test.postRun (node:internal/test_runner/test:1465:19)
+    Test.run (node:internal/test_runner/test:1390:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:911:7)
+  ...
+# Subtest: zero-trap revoked proxy: entries
+not ok 101 - zero-trap revoked proxy: entries
+  ---
+  duration_ms: 0.159875
+  type: 'test'
+  location: '/Users/louiscalata/nisi/.packet-diagnostics/c09-owner-draft-20260920/reader-mutations-6pXlik/proxy-first/work-orders/v02-finish-cluster-v1/consumer/runtime-matrix-v1.test.mjs:251:79'
+  failureType: 'testCodeFailure'
+  error: |-
+    The error is expected to be an instance of "RuntimeMatrixError". Received "TypeError"
+    
+    Error message:
+    
+    Cannot perform 'IsArray' on a proxy that has been revoked
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  stack: |-
+    TestContext.<anonymous> (file:///Users/louiscalata/nisi/.packet-diagnostics/c09-owner-draft-20260920/reader-mutations-6pXlik/proxy-first/work-orders/v02-finish-cluster-v1/consumer/runtime-matrix-v1.test.mjs:254:32)
+    Test.runInAsyncScope (node:async_hooks:227:14)
+    Test.run (node:internal/test_runner/test:1325:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:911:18)
+    Test.postRun (node:internal/test_runner/test:1465:19)
+    Test.run (node:internal/test_runner/test:1390:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:911:7)
+  ...
+# Subtest: zero-trap live proxy: installed
+not ok 102 - zero-trap live proxy: installed
+  ---
+  duration_ms: 0.171
+  type: 'test'
+  location: '/Users/louiscalata/nisi/.packet-diagnostics/c09-owner-draft-20260920/reader-mutations-6pXlik/proxy-first/work-orders/v02-finish-cluster-v1/consumer/runtime-matrix-v1.test.mjs:251:79'
+  failureType: 'testCodeFailure'
+  error: |-
+    The error is expected to be an instance of "RuntimeMatrixError". Received "Error"
+    
+    Error message:
+    
+    trap executed
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  stack: |-
+    TestContext.<anonymous> (file:///Users/louiscalata/nisi/.packet-diagnostics/c09-owner-draft-20260920/reader-mutations-6pXlik/proxy-first/work-orders/v02-finish-cluster-v1/consumer/runtime-matrix-v1.test.mjs:254:32)
+    Test.runInAsyncScope (node:async_hooks:227:14)
+    Test.run (node:internal/test_runner/test:1325:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:911:18)
+    Test.postRun (node:internal/test_runner/test:1465:19)
+    Test.run (node:internal/test_runner/test:1390:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:911:7)
+  ...
+# Subtest: zero-trap revoked proxy: installed
+not ok 103 - zero-trap revoked proxy: installed
+  ---
+  duration_ms: 0.165625
+  type: 'test'
+  location: '/Users/louiscalata/nisi/.packet-diagnostics/c09-owner-draft-20260920/reader-mutations-6pXlik/proxy-first/work-orders/v02-finish-cluster-v1/consumer/runtime-matrix-v1.test.mjs:251:79'
+  failureType: 'testCodeFailure'
+  error: |-
+    The error is expected to be an instance of "RuntimeMatrixError". Received "TypeError"
+    
+    Error message:
+    
+    Cannot perform 'IsArray' on a proxy that has been revoked
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  stack: |-
+    TestContext.<anonymous> (file:///Users/louiscalata/nisi/.packet-diagnostics/c09-owner-draft-20260920/reader-mutations-6pXlik/proxy-first/work-orders/v02-finish-cluster-v1/consumer/runtime-matrix-v1.test.mjs:254:32)
+    Test.runInAsyncScope (node:async_hooks:227:14)
+    Test.run (node:internal/test_runner/test:1325:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:911:18)
+    Test.postRun (node:internal/test_runner/test:1465:19)
+    Test.run (node:internal/test_runner/test:1390:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:911:7)
+  ...
+# Subtest: zero-trap live proxy: toolchain
+not ok 104 - zero-trap live proxy: toolchain
+  ---
+  duration_ms: 0.178666
+  type: 'test'
+  location: '/Users/louiscalata/nisi/.packet-diagnostics/c09-owner-draft-20260920/reader-mutations-6pXlik/proxy-first/work-orders/v02-finish-cluster-v1/consumer/runtime-matrix-v1.test.mjs:251:79'
+  failureType: 'testCodeFailure'
+  error: |-
+    The error is expected to be an instance of "RuntimeMatrixError". Received "Error"
+    
+    Error message:
+    
+    trap executed
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  stack: |-
+    TestContext.<anonymous> (file:///Users/louiscalata/nisi/.packet-diagnostics/c09-owner-draft-20260920/reader-mutations-6pXlik/proxy-first/work-orders/v02-finish-cluster-v1/consumer/runtime-matrix-v1.test.mjs:254:32)
+    Test.runInAsyncScope (node:async_hooks:227:14)
+    Test.run (node:internal/test_runner/test:1325:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:911:18)
+    Test.postRun (node:internal/test_runner/test:1465:19)
+    Test.run (node:internal/test_runner/test:1390:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:911:7)
+  ...
+# Subtest: zero-trap revoked proxy: toolchain
+not ok 105 - zero-trap revoked proxy: toolchain
+  ---
+  duration_ms: 0.18675
+  type: 'test'
+  location: '/Users/louiscalata/nisi/.packet-diagnostics/c09-owner-draft-20260920/reader-mutations-6pXlik/proxy-first/work-orders/v02-finish-cluster-v1/consumer/runtime-matrix-v1.test.mjs:251:79'
+  failureType: 'testCodeFailure'
+  error: |-
+    The error is expected to be an instance of "RuntimeMatrixError". Received "TypeError"
+    
+    Error message:
+    
+    Cannot perform 'IsArray' on a proxy that has been revoked
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  stack: |-
+    TestContext.<anonymous> (file:///Users/louiscalata/nisi/.packet-diagnostics/c09-owner-draft-20260920/reader-mutations-6pXlik/proxy-first/work-orders/v02-finish-cluster-v1/consumer/runtime-matrix-v1.test.mjs:254:32)
+    Test.runInAsyncScope (node:async_hooks:227:14)
+    Test.run (node:internal/test_runner/test:1325:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:911:18)
+    Test.postRun (node:internal/test_runner/test:1465:19)
+    Test.run (node:internal/test_runner/test:1390:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:911:7)
+  ...
+# Subtest: zero-trap live proxy: typeRoots
+ok 106 - zero-trap live proxy: typeRoots
+  ---
+  duration_ms: 0.160334
+  type: 'test'
+  ...
+# Subtest: zero-trap revoked proxy: typeRoots
+not ok 107 - zero-trap revoked proxy: typeRoots
+  ---
+  duration_ms: 0.178125
+  type: 'test'
+  location: '/Users/louiscalata/nisi/.packet-diagnostics/c09-owner-draft-20260920/reader-mutations-6pXlik/proxy-first/work-orders/v02-finish-cluster-v1/consumer/runtime-matrix-v1.test.mjs:251:79'
+  failureType: 'testCodeFailure'
+  error: |-
+    The error is expected to be an instance of "RuntimeMatrixError". Received "TypeError"
+    
+    Error message:
+    
+    Cannot perform 'IsArray' on a proxy that has been revoked
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  stack: |-
+    TestContext.<anonymous> (file:///Users/louiscalata/nisi/.packet-diagnostics/c09-owner-draft-20260920/reader-mutations-6pXlik/proxy-first/work-orders/v02-finish-cluster-v1/consumer/runtime-matrix-v1.test.mjs:254:32)
+    Test.runInAsyncScope (node:async_hooks:227:14)
+    Test.run (node:internal/test_runner/test:1325:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:911:18)
+    Test.postRun (node:internal/test_runner/test:1465:19)
+    Test.run (node:internal/test_runner/test:1390:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:911:7)
+  ...
+# Subtest: zero-trap live proxy: negative
+not ok 108 - zero-trap live proxy: negative
+  ---
+  duration_ms: 0.170125
+  type: 'test'
+  location: '/Users/louiscalata/nisi/.packet-diagnostics/c09-owner-draft-20260920/reader-mutations-6pXlik/proxy-first/work-orders/v02-finish-cluster-v1/consumer/runtime-matrix-v1.test.mjs:251:79'
+  failureType: 'testCodeFailure'
+  error: |-
+    The error is expected to be an instance of "RuntimeMatrixError". Received "Error"
+    
+    Error message:
+    
+    trap executed
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  stack: |-
+    TestContext.<anonymous> (file:///Users/louiscalata/nisi/.packet-diagnostics/c09-owner-draft-20260920/reader-mutations-6pXlik/proxy-first/work-orders/v02-finish-cluster-v1/consumer/runtime-matrix-v1.test.mjs:254:32)
+    Test.runInAsyncScope (node:async_hooks:227:14)
+    Test.run (node:internal/test_runner/test:1325:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:911:18)
+    Test.postRun (node:internal/test_runner/test:1465:19)
+    Test.run (node:internal/test_runner/test:1390:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:911:7)
+  ...
+# Subtest: zero-trap revoked proxy: negative
+not ok 109 - zero-trap revoked proxy: negative
+  ---
+  duration_ms: 0.169791
+  type: 'test'
+  location: '/Users/louiscalata/nisi/.packet-diagnostics/c09-owner-draft-20260920/reader-mutations-6pXlik/proxy-first/work-orders/v02-finish-cluster-v1/consumer/runtime-matrix-v1.test.mjs:251:79'
+  failureType: 'testCodeFailure'
+  error: |-
+    The error is expected to be an instance of "RuntimeMatrixError". Received "TypeError"
+    
+    Error message:
+    
+    Cannot perform 'IsArray' on a proxy that has been revoked
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  stack: |-
+    TestContext.<anonymous> (file:///Users/louiscalata/nisi/.packet-diagnostics/c09-owner-draft-20260920/reader-mutations-6pXlik/proxy-first/work-orders/v02-finish-cluster-v1/consumer/runtime-matrix-v1.test.mjs:254:32)
+    Test.runInAsyncScope (node:async_hooks:227:14)
+    Test.run (node:internal/test_runner/test:1325:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:911:18)
+    Test.postRun (node:internal/test_runner/test:1465:19)
+    Test.run (node:internal/test_runner/test:1390:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:911:7)
+  ...
+# Subtest: zero-trap live proxy: boundary
+not ok 110 - zero-trap live proxy: boundary
+  ---
+  duration_ms: 0.154125
+  type: 'test'
+  location: '/Users/louiscalata/nisi/.packet-diagnostics/c09-owner-draft-20260920/reader-mutations-6pXlik/proxy-first/work-orders/v02-finish-cluster-v1/consumer/runtime-matrix-v1.test.mjs:251:79'
+  failureType: 'testCodeFailure'
+  error: |-
+    The error is expected to be an instance of "RuntimeMatrixError". Received "Error"
+    
+    Error message:
+    
+    trap executed
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  stack: |-
+    TestContext.<anonymous> (file:///Users/louiscalata/nisi/.packet-diagnostics/c09-owner-draft-20260920/reader-mutations-6pXlik/proxy-first/work-orders/v02-finish-cluster-v1/consumer/runtime-matrix-v1.test.mjs:254:32)
+    Test.runInAsyncScope (node:async_hooks:227:14)
+    Test.run (node:internal/test_runner/test:1325:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:911:18)
+    Test.postRun (node:internal/test_runner/test:1465:19)
+    Test.run (node:internal/test_runner/test:1390:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:911:7)
+  ...
+# Subtest: zero-trap revoked proxy: boundary
+not ok 111 - zero-trap revoked proxy: boundary
+  ---
+  duration_ms: 0.148792
+  type: 'test'
+  location: '/Users/louiscalata/nisi/.packet-diagnostics/c09-owner-draft-20260920/reader-mutations-6pXlik/proxy-first/work-orders/v02-finish-cluster-v1/consumer/runtime-matrix-v1.test.mjs:251:79'
+  failureType: 'testCodeFailure'
+  error: |-
+    The error is expected to be an instance of "RuntimeMatrixError". Received "TypeError"
+    
+    Error message:
+    
+    Cannot perform 'IsArray' on a proxy that has been revoked
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  stack: |-
+    TestContext.<anonymous> (file:///Users/louiscalata/nisi/.packet-diagnostics/c09-owner-draft-20260920/reader-mutations-6pXlik/proxy-first/work-orders/v02-finish-cluster-v1/consumer/runtime-matrix-v1.test.mjs:254:32)
+    Test.runInAsyncScope (node:async_hooks:227:14)
+    Test.run (node:internal/test_runner/test:1325:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:911:18)
+    Test.postRun (node:internal/test_runner/test:1465:19)
+    Test.run (node:internal/test_runner/test:1390:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:911:7)
+  ...
+# Subtest: zero-trap live proxy: failure
+not ok 112 - zero-trap live proxy: failure
+  ---
+  duration_ms: 0.169916
+  type: 'test'
+  location: '/Users/louiscalata/nisi/.packet-diagnostics/c09-owner-draft-20260920/reader-mutations-6pXlik/proxy-first/work-orders/v02-finish-cluster-v1/consumer/runtime-matrix-v1.test.mjs:251:79'
+  failureType: 'testCodeFailure'
+  error: |-
+    The error is expected to be an instance of "RuntimeMatrixError". Received "Error"
+    
+    Error message:
+    
+    trap executed
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  stack: |-
+    TestContext.<anonymous> (file:///Users/louiscalata/nisi/.packet-diagnostics/c09-owner-draft-20260920/reader-mutations-6pXlik/proxy-first/work-orders/v02-finish-cluster-v1/consumer/runtime-matrix-v1.test.mjs:254:32)
+    Test.runInAsyncScope (node:async_hooks:227:14)
+    Test.run (node:internal/test_runner/test:1325:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:911:18)
+    Test.postRun (node:internal/test_runner/test:1465:19)
+    Test.run (node:internal/test_runner/test:1390:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:911:7)
+  ...
+# Subtest: zero-trap revoked proxy: failure
+not ok 113 - zero-trap revoked proxy: failure
+  ---
+  duration_ms: 0.169625
+  type: 'test'
+  location: '/Users/louiscalata/nisi/.packet-diagnostics/c09-owner-draft-20260920/reader-mutations-6pXlik/proxy-first/work-orders/v02-finish-cluster-v1/consumer/runtime-matrix-v1.test.mjs:251:79'
+  failureType: 'testCodeFailure'
+  error: |-
+    The error is expected to be an instance of "RuntimeMatrixError". Received "TypeError"
+    
+    Error message:
+    
+    Cannot perform 'IsArray' on a proxy that has been revoked
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  stack: |-
+    TestContext.<anonymous> (file:///Users/louiscalata/nisi/.packet-diagnostics/c09-owner-draft-20260920/reader-mutations-6pXlik/proxy-first/work-orders/v02-finish-cluster-v1/consumer/runtime-matrix-v1.test.mjs:254:32)
+    Test.runInAsyncScope (node:async_hooks:227:14)
+    Test.run (node:internal/test_runner/test:1325:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:911:18)
+    Test.postRun (node:internal/test_runner/test:1465:19)
+    Test.run (node:internal/test_runner/test:1390:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:911:7)
+  ...
+# Subtest: matrix zero-trap live proxy: input
+not ok 114 - matrix zero-trap live proxy: input
+  ---
+  duration_ms: 0.226167
+  type: 'test'
+  location: '/Users/louiscalata/nisi/.packet-diagnostics/c09-owner-draft-20260920/reader-mutations-6pXlik/proxy-first/work-orders/v02-finish-cluster-v1/consumer/runtime-matrix-v1.test.mjs:266:78'
+  failureType: 'testCodeFailure'
+  error: |-
+    The error is expected to be an instance of "RuntimeMatrixError". Received "Error"
+    
+    Error message:
+    
+    trap executed
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  stack: |-
+    TestContext.<anonymous> (file:///Users/louiscalata/nisi/.packet-diagnostics/c09-owner-draft-20260920/reader-mutations-6pXlik/proxy-first/work-orders/v02-finish-cluster-v1/consumer/runtime-matrix-v1.test.mjs:269:32)
+    Test.runInAsyncScope (node:async_hooks:227:14)
+    Test.run (node:internal/test_runner/test:1325:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:911:18)
+    Test.postRun (node:internal/test_runner/test:1465:19)
+    Test.run (node:internal/test_runner/test:1390:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:911:7)
+  ...
+# Subtest: matrix zero-trap revoked proxy: input
+not ok 115 - matrix zero-trap revoked proxy: input
+  ---
+  duration_ms: 0.177875
+  type: 'test'
+  location: '/Users/louiscalata/nisi/.packet-diagnostics/c09-owner-draft-20260920/reader-mutations-6pXlik/proxy-first/work-orders/v02-finish-cluster-v1/consumer/runtime-matrix-v1.test.mjs:266:78'
+  failureType: 'testCodeFailure'
+  error: |-
+    The error is expected to be an instance of "RuntimeMatrixError". Received "TypeError"
+    
+    Error message:
+    
+    Cannot perform 'IsArray' on a proxy that has been revoked
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  stack: |-
+    TestContext.<anonymous> (file:///Users/louiscalata/nisi/.packet-diagnostics/c09-owner-draft-20260920/reader-mutations-6pXlik/proxy-first/work-orders/v02-finish-cluster-v1/consumer/runtime-matrix-v1.test.mjs:269:32)
+    Test.runInAsyncScope (node:async_hooks:227:14)
+    Test.run (node:internal/test_runner/test:1325:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:911:18)
+    Test.postRun (node:internal/test_runner/test:1465:19)
+    Test.run (node:internal/test_runner/test:1390:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:911:7)
+  ...
+# Subtest: matrix zero-trap live proxy: rows
+ok 116 - matrix zero-trap live proxy: rows
+  ---
+  duration_ms: 0.2505
+  type: 'test'
+  ...
+# Subtest: matrix zero-trap revoked proxy: rows
+not ok 117 - matrix zero-trap revoked proxy: rows
+  ---
+  duration_ms: 0.252166
+  type: 'test'
+  location: '/Users/louiscalata/nisi/.packet-diagnostics/c09-owner-draft-20260920/reader-mutations-6pXlik/proxy-first/work-orders/v02-finish-cluster-v1/consumer/runtime-matrix-v1.test.mjs:266:78'
+  failureType: 'testCodeFailure'
+  error: |-
+    The error is expected to be an instance of "RuntimeMatrixError". Received "TypeError"
+    
+    Error message:
+    
+    Cannot perform 'IsArray' on a proxy that has been revoked
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  stack: |-
+    TestContext.<anonymous> (file:///Users/louiscalata/nisi/.packet-diagnostics/c09-owner-draft-20260920/reader-mutations-6pXlik/proxy-first/work-orders/v02-finish-cluster-v1/consumer/runtime-matrix-v1.test.mjs:269:32)
+    Test.runInAsyncScope (node:async_hooks:227:14)
+    Test.run (node:internal/test_runner/test:1325:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:911:18)
+    Test.postRun (node:internal/test_runner/test:1465:19)
+    Test.run (node:internal/test_runner/test:1390:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:911:7)
+  ...
+# Subtest: matrix zero-trap live proxy: row
+not ok 118 - matrix zero-trap live proxy: row
+  ---
+  duration_ms: 0.262625
+  type: 'test'
+  location: '/Users/louiscalata/nisi/.packet-diagnostics/c09-owner-draft-20260920/reader-mutations-6pXlik/proxy-first/work-orders/v02-finish-cluster-v1/consumer/runtime-matrix-v1.test.mjs:266:78'
+  failureType: 'testCodeFailure'
+  error: |-
+    The error is expected to be an instance of "RuntimeMatrixError". Received "Error"
+    
+    Error message:
+    
+    trap executed
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  stack: |-
+    TestContext.<anonymous> (file:///Users/louiscalata/nisi/.packet-diagnostics/c09-owner-draft-20260920/reader-mutations-6pXlik/proxy-first/work-orders/v02-finish-cluster-v1/consumer/runtime-matrix-v1.test.mjs:269:32)
+    Test.runInAsyncScope (node:async_hooks:227:14)
+    Test.run (node:internal/test_runner/test:1325:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:911:18)
+    Test.postRun (node:internal/test_runner/test:1465:19)
+    Test.run (node:internal/test_runner/test:1390:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:911:7)
+  ...
+# Subtest: matrix zero-trap revoked proxy: row
+not ok 119 - matrix zero-trap revoked proxy: row
+  ---
+  duration_ms: 0.252167
+  type: 'test'
+  location: '/Users/louiscalata/nisi/.packet-diagnostics/c09-owner-draft-20260920/reader-mutations-6pXlik/proxy-first/work-orders/v02-finish-cluster-v1/consumer/runtime-matrix-v1.test.mjs:266:78'
+  failureType: 'testCodeFailure'
+  error: |-
+    The error is expected to be an instance of "RuntimeMatrixError". Received "TypeError"
+    
+    Error message:
+    
+    Cannot perform 'IsArray' on a proxy that has been revoked
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  stack: |-
+    TestContext.<anonymous> (file:///Users/louiscalata/nisi/.packet-diagnostics/c09-owner-draft-20260920/reader-mutations-6pXlik/proxy-first/work-orders/v02-finish-cluster-v1/consumer/runtime-matrix-v1.test.mjs:269:32)
+    Test.runInAsyncScope (node:async_hooks:227:14)
+    Test.run (node:internal/test_runner/test:1325:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:911:18)
+    Test.postRun (node:internal/test_runner/test:1465:19)
+    Test.run (node:internal/test_runner/test:1390:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:911:7)
+  ...
+# Subtest: matrix zero-trap live proxy: expected
+not ok 120 - matrix zero-trap live proxy: expected
+  ---
+  duration_ms: 0.20325
+  type: 'test'
+  location: '/Users/louiscalata/nisi/.packet-diagnostics/c09-owner-draft-20260920/reader-mutations-6pXlik/proxy-first/work-orders/v02-finish-cluster-v1/consumer/runtime-matrix-v1.test.mjs:266:78'
+  failureType: 'testCodeFailure'
+  error: |-
+    The error is expected to be an instance of "RuntimeMatrixError". Received "Error"
+    
+    Error message:
+    
+    trap executed
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  stack: |-
+    TestContext.<anonymous> (file:///Users/louiscalata/nisi/.packet-diagnostics/c09-owner-draft-20260920/reader-mutations-6pXlik/proxy-first/work-orders/v02-finish-cluster-v1/consumer/runtime-matrix-v1.test.mjs:269:32)
+    Test.runInAsyncScope (node:async_hooks:227:14)
+    Test.run (node:internal/test_runner/test:1325:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:911:18)
+    Test.postRun (node:internal/test_runner/test:1465:19)
+    Test.run (node:internal/test_runner/test:1390:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:911:7)
+  ...
+# Subtest: matrix zero-trap revoked proxy: expected
+not ok 121 - matrix zero-trap revoked proxy: expected
+  ---
+  duration_ms: 0.768709
+  type: 'test'
+  location: '/Users/louiscalata/nisi/.packet-diagnostics/c09-owner-draft-20260920/reader-mutations-6pXlik/proxy-first/work-orders/v02-finish-cluster-v1/consumer/runtime-matrix-v1.test.mjs:266:78'
+  failureType: 'testCodeFailure'
+  error: |-
+    The error is expected to be an instance of "RuntimeMatrixError". Received "TypeError"
+    
+    Error message:
+    
+    Cannot perform 'IsArray' on a proxy that has been revoked
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  stack: |-
+    TestContext.<anonymous> (file:///Users/louiscalata/nisi/.packet-diagnostics/c09-owner-draft-20260920/reader-mutations-6pXlik/proxy-first/work-orders/v02-finish-cluster-v1/consumer/runtime-matrix-v1.test.mjs:269:32)
+    Test.runInAsyncScope (node:async_hooks:227:14)
+    Test.run (node:internal/test_runner/test:1325:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:911:18)
+    Test.postRun (node:internal/test_runner/test:1465:19)
+    Test.run (node:internal/test_runner/test:1390:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:911:7)
+  ...
+# Subtest: matrix zero-trap live proxy: source
+not ok 122 - matrix zero-trap live proxy: source
+  ---
+  duration_ms: 0.210084
+  type: 'test'
+  location: '/Users/louiscalata/nisi/.packet-diagnostics/c09-owner-draft-20260920/reader-mutations-6pXlik/proxy-first/work-orders/v02-finish-cluster-v1/consumer/runtime-matrix-v1.test.mjs:266:78'
+  failureType: 'testCodeFailure'
+  error: |-
+    The error is expected to be an instance of "RuntimeMatrixError". Received "Error"
+    
+    Error message:
+    
+    trap executed
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  stack: |-
+    TestContext.<anonymous> (file:///Users/louiscalata/nisi/.packet-diagnostics/c09-owner-draft-20260920/reader-mutations-6pXlik/proxy-first/work-orders/v02-finish-cluster-v1/consumer/runtime-matrix-v1.test.mjs:269:32)
+    Test.runInAsyncScope (node:async_hooks:227:14)
+    Test.run (node:internal/test_runner/test:1325:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:911:18)
+    Test.postRun (node:internal/test_runner/test:1465:19)
+    Test.run (node:internal/test_runner/test:1390:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:911:7)
+  ...
+# Subtest: matrix zero-trap revoked proxy: source
+not ok 123 - matrix zero-trap revoked proxy: source
+  ---
+  duration_ms: 0.183667
+  type: 'test'
+  location: '/Users/louiscalata/nisi/.packet-diagnostics/c09-owner-draft-20260920/reader-mutations-6pXlik/proxy-first/work-orders/v02-finish-cluster-v1/consumer/runtime-matrix-v1.test.mjs:266:78'
+  failureType: 'testCodeFailure'
+  error: |-
+    The error is expected to be an instance of "RuntimeMatrixError". Received "TypeError"
+    
+    Error message:
+    
+    Cannot perform 'IsArray' on a proxy that has been revoked
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  stack: |-
+    TestContext.<anonymous> (file:///Users/louiscalata/nisi/.packet-diagnostics/c09-owner-draft-20260920/reader-mutations-6pXlik/proxy-first/work-orders/v02-finish-cluster-v1/consumer/runtime-matrix-v1.test.mjs:269:32)
+    Test.runInAsyncScope (node:async_hooks:227:14)
+    Test.run (node:internal/test_runner/test:1325:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:911:18)
+    Test.postRun (node:internal/test_runner/test:1465:19)
+    Test.run (node:internal/test_runner/test:1390:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:911:7)
+  ...
+# Subtest: matrix zero-trap live proxy: stage
+not ok 124 - matrix zero-trap live proxy: stage
+  ---
+  duration_ms: 0.191916
+  type: 'test'
+  location: '/Users/louiscalata/nisi/.packet-diagnostics/c09-owner-draft-20260920/reader-mutations-6pXlik/proxy-first/work-orders/v02-finish-cluster-v1/consumer/runtime-matrix-v1.test.mjs:266:78'
+  failureType: 'testCodeFailure'
+  error: |-
+    The error is expected to be an instance of "RuntimeMatrixError". Received "Error"
+    
+    Error message:
+    
+    trap executed
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  stack: |-
+    TestContext.<anonymous> (file:///Users/louiscalata/nisi/.packet-diagnostics/c09-owner-draft-20260920/reader-mutations-6pXlik/proxy-first/work-orders/v02-finish-cluster-v1/consumer/runtime-matrix-v1.test.mjs:269:32)
+    Test.runInAsyncScope (node:async_hooks:227:14)
+    Test.run (node:internal/test_runner/test:1325:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:911:18)
+    Test.postRun (node:internal/test_runner/test:1465:19)
+    Test.run (node:internal/test_runner/test:1390:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:911:7)
+  ...
+# Subtest: matrix zero-trap revoked proxy: stage
+not ok 125 - matrix zero-trap revoked proxy: stage
+  ---
+  duration_ms: 0.184
+  type: 'test'
+  location: '/Users/louiscalata/nisi/.packet-diagnostics/c09-owner-draft-20260920/reader-mutations-6pXlik/proxy-first/work-orders/v02-finish-cluster-v1/consumer/runtime-matrix-v1.test.mjs:266:78'
+  failureType: 'testCodeFailure'
+  error: |-
+    The error is expected to be an instance of "RuntimeMatrixError". Received "TypeError"
+    
+    Error message:
+    
+    Cannot perform 'IsArray' on a proxy that has been revoked
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  stack: |-
+    TestContext.<anonymous> (file:///Users/louiscalata/nisi/.packet-diagnostics/c09-owner-draft-20260920/reader-mutations-6pXlik/proxy-first/work-orders/v02-finish-cluster-v1/consumer/runtime-matrix-v1.test.mjs:269:32)
+    Test.runInAsyncScope (node:async_hooks:227:14)
+    Test.run (node:internal/test_runner/test:1325:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:911:18)
+    Test.postRun (node:internal/test_runner/test:1465:19)
+    Test.run (node:internal/test_runner/test:1390:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:911:7)
+  ...
+# Subtest: matrix zero-trap live proxy: cases
+not ok 126 - matrix zero-trap live proxy: cases
+  ---
+  duration_ms: 0.193125
+  type: 'test'
+  location: '/Users/louiscalata/nisi/.packet-diagnostics/c09-owner-draft-20260920/reader-mutations-6pXlik/proxy-first/work-orders/v02-finish-cluster-v1/consumer/runtime-matrix-v1.test.mjs:266:78'
+  failureType: 'testCodeFailure'
+  error: |-
+    The error is expected to be an instance of "RuntimeMatrixError". Received "Error"
+    
+    Error message:
+    
+    trap executed
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  stack: |-
+    TestContext.<anonymous> (file:///Users/louiscalata/nisi/.packet-diagnostics/c09-owner-draft-20260920/reader-mutations-6pXlik/proxy-first/work-orders/v02-finish-cluster-v1/consumer/runtime-matrix-v1.test.mjs:269:32)
+    Test.runInAsyncScope (node:async_hooks:227:14)
+    Test.run (node:internal/test_runner/test:1325:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:911:18)
+    Test.postRun (node:internal/test_runner/test:1465:19)
+    Test.run (node:internal/test_runner/test:1390:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:911:7)
+  ...
+# Subtest: matrix zero-trap revoked proxy: cases
+not ok 127 - matrix zero-trap revoked proxy: cases
+  ---
+  duration_ms: 0.188375
+  type: 'test'
+  location: '/Users/louiscalata/nisi/.packet-diagnostics/c09-owner-draft-20260920/reader-mutations-6pXlik/proxy-first/work-orders/v02-finish-cluster-v1/consumer/runtime-matrix-v1.test.mjs:266:78'
+  failureType: 'testCodeFailure'
+  error: |-
+    The error is expected to be an instance of "RuntimeMatrixError". Received "TypeError"
+    
+    Error message:
+    
+    Cannot perform 'IsArray' on a proxy that has been revoked
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  stack: |-
+    TestContext.<anonymous> (file:///Users/louiscalata/nisi/.packet-diagnostics/c09-owner-draft-20260920/reader-mutations-6pXlik/proxy-first/work-orders/v02-finish-cluster-v1/consumer/runtime-matrix-v1.test.mjs:269:32)
+    Test.runInAsyncScope (node:async_hooks:227:14)
+    Test.run (node:internal/test_runner/test:1325:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:911:18)
+    Test.postRun (node:internal/test_runner/test:1465:19)
+    Test.run (node:internal/test_runner/test:1390:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:911:7)
+  ...
+# Subtest: matrix zero-trap live proxy: toolchain
+not ok 128 - matrix zero-trap live proxy: toolchain
+  ---
+  duration_ms: 0.200167
+  type: 'test'
+  location: '/Users/louiscalata/nisi/.packet-diagnostics/c09-owner-draft-20260920/reader-mutations-6pXlik/proxy-first/work-orders/v02-finish-cluster-v1/consumer/runtime-matrix-v1.test.mjs:266:78'
+  failureType: 'testCodeFailure'
+  error: |-
+    The error is expected to be an instance of "RuntimeMatrixError". Received "Error"
+    
+    Error message:
+    
+    trap executed
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  stack: |-
+    TestContext.<anonymous> (file:///Users/louiscalata/nisi/.packet-diagnostics/c09-owner-draft-20260920/reader-mutations-6pXlik/proxy-first/work-orders/v02-finish-cluster-v1/consumer/runtime-matrix-v1.test.mjs:269:32)
+    Test.runInAsyncScope (node:async_hooks:227:14)
+    Test.run (node:internal/test_runner/test:1325:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:911:18)
+    Test.postRun (node:internal/test_runner/test:1465:19)
+    Test.run (node:internal/test_runner/test:1390:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:911:7)
+  ...
+# Subtest: matrix zero-trap revoked proxy: toolchain
+not ok 129 - matrix zero-trap revoked proxy: toolchain
+  ---
+  duration_ms: 0.197167
+  type: 'test'
+  location: '/Users/louiscalata/nisi/.packet-diagnostics/c09-owner-draft-20260920/reader-mutations-6pXlik/proxy-first/work-orders/v02-finish-cluster-v1/consumer/runtime-matrix-v1.test.mjs:266:78'
+  failureType: 'testCodeFailure'
+  error: |-
+    The error is expected to be an instance of "RuntimeMatrixError". Received "TypeError"
+    
+    Error message:
+    
+    Cannot perform 'IsArray' on a proxy that has been revoked
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  stack: |-
+    TestContext.<anonymous> (file:///Users/louiscalata/nisi/.packet-diagnostics/c09-owner-draft-20260920/reader-mutations-6pXlik/proxy-first/work-orders/v02-finish-cluster-v1/consumer/runtime-matrix-v1.test.mjs:269:32)
+    Test.runInAsyncScope (node:async_hooks:227:14)
+    Test.run (node:internal/test_runner/test:1325:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:911:18)
+    Test.postRun (node:internal/test_runner/test:1465:19)
+    Test.run (node:internal/test_runner/test:1390:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:911:7)
+  ...
+# Subtest: matrix zero-trap live proxy: typeRoots
+ok 130 - matrix zero-trap live proxy: typeRoots
+  ---
+  duration_ms: 0.185959
+  type: 'test'
+  ...
+# Subtest: matrix zero-trap revoked proxy: typeRoots
+not ok 131 - matrix zero-trap revoked proxy: typeRoots
+  ---
+  duration_ms: 0.196167
+  type: 'test'
+  location: '/Users/louiscalata/nisi/.packet-diagnostics/c09-owner-draft-20260920/reader-mutations-6pXlik/proxy-first/work-orders/v02-finish-cluster-v1/consumer/runtime-matrix-v1.test.mjs:266:78'
+  failureType: 'testCodeFailure'
+  error: |-
+    The error is expected to be an instance of "RuntimeMatrixError". Received "TypeError"
+    
+    Error message:
+    
+    Cannot perform 'IsArray' on a proxy that has been revoked
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  stack: |-
+    TestContext.<anonymous> (file:///Users/louiscalata/nisi/.packet-diagnostics/c09-owner-draft-20260920/reader-mutations-6pXlik/proxy-first/work-orders/v02-finish-cluster-v1/consumer/runtime-matrix-v1.test.mjs:269:32)
+    Test.runInAsyncScope (node:async_hooks:227:14)
+    Test.run (node:internal/test_runner/test:1325:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:911:18)
+    Test.postRun (node:internal/test_runner/test:1465:19)
+    Test.run (node:internal/test_runner/test:1390:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:911:7)
+  ...
+# Subtest: matrix zero-trap live proxy: locations
+ok 132 - matrix zero-trap live proxy: locations
+  ---
+  duration_ms: 0.183166
+  type: 'test'
+  ...
+# Subtest: matrix zero-trap revoked proxy: locations
+not ok 133 - matrix zero-trap revoked proxy: locations
+  ---
+  duration_ms: 0.195916
+  type: 'test'
+  location: '/Users/louiscalata/nisi/.packet-diagnostics/c09-owner-draft-20260920/reader-mutations-6pXlik/proxy-first/work-orders/v02-finish-cluster-v1/consumer/runtime-matrix-v1.test.mjs:266:78'
+  failureType: 'testCodeFailure'
+  error: |-
+    The error is expected to be an instance of "RuntimeMatrixError". Received "TypeError"
+    
+    Error message:
+    
+    Cannot perform 'IsArray' on a proxy that has been revoked
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  stack: |-
+    TestContext.<anonymous> (file:///Users/louiscalata/nisi/.packet-diagnostics/c09-owner-draft-20260920/reader-mutations-6pXlik/proxy-first/work-orders/v02-finish-cluster-v1/consumer/runtime-matrix-v1.test.mjs:269:32)
+    Test.runInAsyncScope (node:async_hooks:227:14)
+    Test.run (node:internal/test_runner/test:1325:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:911:18)
+    Test.postRun (node:internal/test_runner/test:1465:19)
+    Test.run (node:internal/test_runner/test:1390:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:911:7)
+  ...
+# Subtest: matrix zero-trap live proxy: location
+not ok 134 - matrix zero-trap live proxy: location
+  ---
+  duration_ms: 0.207625
+  type: 'test'
+  location: '/Users/louiscalata/nisi/.packet-diagnostics/c09-owner-draft-20260920/reader-mutations-6pXlik/proxy-first/work-orders/v02-finish-cluster-v1/consumer/runtime-matrix-v1.test.mjs:266:78'
+  failureType: 'testCodeFailure'
+  error: |-
+    The error is expected to be an instance of "RuntimeMatrixError". Received "Error"
+    
+    Error message:
+    
+    trap executed
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  stack: |-
+    TestContext.<anonymous> (file:///Users/louiscalata/nisi/.packet-diagnostics/c09-owner-draft-20260920/reader-mutations-6pXlik/proxy-first/work-orders/v02-finish-cluster-v1/consumer/runtime-matrix-v1.test.mjs:269:32)
+    Test.runInAsyncScope (node:async_hooks:227:14)
+    Test.run (node:internal/test_runner/test:1325:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:911:18)
+    Test.postRun (node:internal/test_runner/test:1465:19)
+    Test.run (node:internal/test_runner/test:1390:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:911:7)
+  ...
+# Subtest: matrix zero-trap revoked proxy: location
+not ok 135 - matrix zero-trap revoked proxy: location
+  ---
+  duration_ms: 0.2035
+  type: 'test'
+  location: '/Users/louiscalata/nisi/.packet-diagnostics/c09-owner-draft-20260920/reader-mutations-6pXlik/proxy-first/work-orders/v02-finish-cluster-v1/consumer/runtime-matrix-v1.test.mjs:266:78'
+  failureType: 'testCodeFailure'
+  error: |-
+    The error is expected to be an instance of "RuntimeMatrixError". Received "TypeError"
+    
+    Error message:
+    
+    Cannot perform 'IsArray' on a proxy that has been revoked
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  stack: |-
+    TestContext.<anonymous> (file:///Users/louiscalata/nisi/.packet-diagnostics/c09-owner-draft-20260920/reader-mutations-6pXlik/proxy-first/work-orders/v02-finish-cluster-v1/consumer/runtime-matrix-v1.test.mjs:269:32)
+    Test.runInAsyncScope (node:async_hooks:227:14)
+    Test.run (node:internal/test_runner/test:1325:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:911:18)
+    Test.postRun (node:internal/test_runner/test:1465:19)
+    Test.run (node:internal/test_runner/test:1390:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:911:7)
+  ...
+# Subtest: matrix zero-trap live proxy: observations
+not ok 136 - matrix zero-trap live proxy: observations
+  ---
+  duration_ms: 0.243375
+  type: 'test'
+  location: '/Users/louiscalata/nisi/.packet-diagnostics/c09-owner-draft-20260920/reader-mutations-6pXlik/proxy-first/work-orders/v02-finish-cluster-v1/consumer/runtime-matrix-v1.test.mjs:266:78'
+  failureType: 'testCodeFailure'
+  error: |-
+    The error is expected to be an instance of "RuntimeMatrixError". Received "Error"
+    
+    Error message:
+    
+    trap executed
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  stack: |-
+    TestContext.<anonymous> (file:///Users/louiscalata/nisi/.packet-diagnostics/c09-owner-draft-20260920/reader-mutations-6pXlik/proxy-first/work-orders/v02-finish-cluster-v1/consumer/runtime-matrix-v1.test.mjs:269:32)
+    Test.runInAsyncScope (node:async_hooks:227:14)
+    Test.run (node:internal/test_runner/test:1325:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:911:18)
+    Test.postRun (node:internal/test_runner/test:1465:19)
+    Test.run (node:internal/test_runner/test:1390:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:911:7)
+  ...
+# Subtest: matrix zero-trap revoked proxy: observations
+not ok 137 - matrix zero-trap revoked proxy: observations
+  ---
+  duration_ms: 0.239709
+  type: 'test'
+  location: '/Users/louiscalata/nisi/.packet-diagnostics/c09-owner-draft-20260920/reader-mutations-6pXlik/proxy-first/work-orders/v02-finish-cluster-v1/consumer/runtime-matrix-v1.test.mjs:266:78'
+  failureType: 'testCodeFailure'
+  error: |-
+    The error is expected to be an instance of "RuntimeMatrixError". Received "TypeError"
+    
+    Error message:
+    
+    Cannot perform 'IsArray' on a proxy that has been revoked
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  stack: |-
+    TestContext.<anonymous> (file:///Users/louiscalata/nisi/.packet-diagnostics/c09-owner-draft-20260920/reader-mutations-6pXlik/proxy-first/work-orders/v02-finish-cluster-v1/consumer/runtime-matrix-v1.test.mjs:269:32)
+    Test.runInAsyncScope (node:async_hooks:227:14)
+    Test.run (node:internal/test_runner/test:1325:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:911:18)
+    Test.postRun (node:internal/test_runner/test:1465:19)
+    Test.run (node:internal/test_runner/test:1390:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:911:7)
+  ...
+# Subtest: matrix zero-trap live proxy: proof
+not ok 138 - matrix zero-trap live proxy: proof
+  ---
+  duration_ms: 0.254333
+  type: 'test'
+  location: '/Users/louiscalata/nisi/.packet-diagnostics/c09-owner-draft-20260920/reader-mutations-6pXlik/proxy-first/work-orders/v02-finish-cluster-v1/consumer/runtime-matrix-v1.test.mjs:266:78'
+  failureType: 'testCodeFailure'
+  error: |-
+    The error is expected to be an instance of "RuntimeMatrixError". Received "Error"
+    
+    Error message:
+    
+    trap executed
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  stack: |-
+    TestContext.<anonymous> (file:///Users/louiscalata/nisi/.packet-diagnostics/c09-owner-draft-20260920/reader-mutations-6pXlik/proxy-first/work-orders/v02-finish-cluster-v1/consumer/runtime-matrix-v1.test.mjs:269:32)
+    Test.runInAsyncScope (node:async_hooks:227:14)
+    Test.run (node:internal/test_runner/test:1325:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:911:18)
+    Test.postRun (node:internal/test_runner/test:1465:19)
+    Test.run (node:internal/test_runner/test:1390:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:911:7)
+  ...
+# Subtest: matrix zero-trap revoked proxy: proof
+not ok 139 - matrix zero-trap revoked proxy: proof
+  ---
+  duration_ms: 0.250375
+  type: 'test'
+  location: '/Users/louiscalata/nisi/.packet-diagnostics/c09-owner-draft-20260920/reader-mutations-6pXlik/proxy-first/work-orders/v02-finish-cluster-v1/consumer/runtime-matrix-v1.test.mjs:266:78'
+  failureType: 'testCodeFailure'
+  error: |-
+    The error is expected to be an instance of "RuntimeMatrixError". Received "TypeError"
+    
+    Error message:
+    
+    Cannot perform 'IsArray' on a proxy that has been revoked
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  stack: |-
+    TestContext.<anonymous> (file:///Users/louiscalata/nisi/.packet-diagnostics/c09-owner-draft-20260920/reader-mutations-6pXlik/proxy-first/work-orders/v02-finish-cluster-v1/consumer/runtime-matrix-v1.test.mjs:269:32)
+    Test.runInAsyncScope (node:async_hooks:227:14)
+    Test.run (node:internal/test_runner/test:1325:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:911:18)
+    Test.postRun (node:internal/test_runner/test:1465:19)
+    Test.run (node:internal/test_runner/test:1390:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:911:7)
+  ...
+# Subtest: matrix zero-trap live proxy: node
+not ok 140 - matrix zero-trap live proxy: node
+  ---
+  duration_ms: 0.263208
+  type: 'test'
+  location: '/Users/louiscalata/nisi/.packet-diagnostics/c09-owner-draft-20260920/reader-mutations-6pXlik/proxy-first/work-orders/v02-finish-cluster-v1/consumer/runtime-matrix-v1.test.mjs:266:78'
+  failureType: 'testCodeFailure'
+  error: |-
+    The error is expected to be an instance of "RuntimeMatrixError". Received "Error"
+    
+    Error message:
+    
+    trap executed
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  stack: |-
+    TestContext.<anonymous> (file:///Users/louiscalata/nisi/.packet-diagnostics/c09-owner-draft-20260920/reader-mutations-6pXlik/proxy-first/work-orders/v02-finish-cluster-v1/consumer/runtime-matrix-v1.test.mjs:269:32)
+    Test.runInAsyncScope (node:async_hooks:227:14)
+    Test.run (node:internal/test_runner/test:1325:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:911:18)
+    Test.postRun (node:internal/test_runner/test:1465:19)
+    Test.run (node:internal/test_runner/test:1390:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:911:7)
+  ...
+# Subtest: matrix zero-trap revoked proxy: node
+not ok 141 - matrix zero-trap revoked proxy: node
+  ---
+  duration_ms: 0.306958
+  type: 'test'
+  location: '/Users/louiscalata/nisi/.packet-diagnostics/c09-owner-draft-20260920/reader-mutations-6pXlik/proxy-first/work-orders/v02-finish-cluster-v1/consumer/runtime-matrix-v1.test.mjs:266:78'
+  failureType: 'testCodeFailure'
+  error: |-
+    The error is expected to be an instance of "RuntimeMatrixError". Received "TypeError"
+    
+    Error message:
+    
+    Cannot perform 'IsArray' on a proxy that has been revoked
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  stack: |-
+    TestContext.<anonymous> (file:///Users/louiscalata/nisi/.packet-diagnostics/c09-owner-draft-20260920/reader-mutations-6pXlik/proxy-first/work-orders/v02-finish-cluster-v1/consumer/runtime-matrix-v1.test.mjs:269:32)
+    Test.runInAsyncScope (node:async_hooks:227:14)
+    Test.run (node:internal/test_runner/test:1325:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:911:18)
+    Test.postRun (node:internal/test_runner/test:1465:19)
+    Test.run (node:internal/test_runner/test:1390:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:911:7)
+  ...
+# Subtest: matrix zero-trap live proxy: archive
+not ok 142 - matrix zero-trap live proxy: archive
+  ---
+  duration_ms: 0.29775
+  type: 'test'
+  location: '/Users/louiscalata/nisi/.packet-diagnostics/c09-owner-draft-20260920/reader-mutations-6pXlik/proxy-first/work-orders/v02-finish-cluster-v1/consumer/runtime-matrix-v1.test.mjs:266:78'
+  failureType: 'testCodeFailure'
+  error: |-
+    The error is expected to be an instance of "RuntimeMatrixError". Received "Error"
+    
+    Error message:
+    
+    trap executed
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  stack: |-
+    TestContext.<anonymous> (file:///Users/louiscalata/nisi/.packet-diagnostics/c09-owner-draft-20260920/reader-mutations-6pXlik/proxy-first/work-orders/v02-finish-cluster-v1/consumer/runtime-matrix-v1.test.mjs:269:32)
+    Test.runInAsyncScope (node:async_hooks:227:14)
+    Test.run (node:internal/test_runner/test:1325:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:911:18)
+    Test.postRun (node:internal/test_runner/test:1465:19)
+    Test.run (node:internal/test_runner/test:1390:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:911:7)
+  ...
+# Subtest: matrix zero-trap revoked proxy: archive
+not ok 143 - matrix zero-trap revoked proxy: archive
+  ---
+  duration_ms: 0.298208
+  type: 'test'
+  location: '/Users/louiscalata/nisi/.packet-diagnostics/c09-owner-draft-20260920/reader-mutations-6pXlik/proxy-first/work-orders/v02-finish-cluster-v1/consumer/runtime-matrix-v1.test.mjs:266:78'
+  failureType: 'testCodeFailure'
+  error: |-
+    The error is expected to be an instance of "RuntimeMatrixError". Received "TypeError"
+    
+    Error message:
+    
+    Cannot perform 'IsArray' on a proxy that has been revoked
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  stack: |-
+    TestContext.<anonymous> (file:///Users/louiscalata/nisi/.packet-diagnostics/c09-owner-draft-20260920/reader-mutations-6pXlik/proxy-first/work-orders/v02-finish-cluster-v1/consumer/runtime-matrix-v1.test.mjs:269:32)
+    Test.runInAsyncScope (node:async_hooks:227:14)
+    Test.run (node:internal/test_runner/test:1325:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:911:18)
+    Test.postRun (node:internal/test_runner/test:1465:19)
+    Test.run (node:internal/test_runner/test:1390:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:911:7)
+  ...
+# Subtest: descriptor, prototype, symbol and sparse-array guards preserve zero access
+ok 144 - descriptor, prototype, symbol and sparse-array guards preserve zero access
+  ---
+  duration_ms: 1.000959
+  type: 'test'
+  ...
+# Subtest: resource bound: schema
+ok 145 - resource bound: schema
+  ---
+  duration_ms: 0.07575
+  type: 'test'
+  ...
+# Subtest: resource bound: status
+ok 146 - resource bound: status
+  ---
+  duration_ms: 0.069834
+  type: 'test'
+  ...
+# Subtest: resource bound: UTF8 string bytes
+ok 147 - resource bound: UTF8 string bytes
+  ---
+  duration_ms: 0.226208
+  type: 'test'
+  ...
+# Subtest: resource bound: stderr
+ok 148 - resource bound: stderr
+  ---
+  duration_ms: 0.141084
+  type: 'test'
+  ...
+# Subtest: resource bound: argument count
+ok 149 - resource bound: argument count
+  ---
+  duration_ms: 0.08
+  type: 'test'
+  ...
+# Subtest: resource bound: manifest key
+ok 150 - resource bound: manifest key
+  ---
+  duration_ms: 0.2255
+  type: 'test'
+  ...
+# Subtest: resource bound: record keys
+ok 151 - resource bound: record keys
+  ---
+  duration_ms: 0.114208
+  type: 'test'
+  ...
+# Subtest: matrix input and expected-contract bounds cannot be bypassed
+ok 152 - matrix input and expected-contract bounds cannot be bypassed
+  ---
+  duration_ms: 3.723667
+  type: 'test'
+  ...
+# Subtest: malformed text keeps no invented evidence and all-unrun input stays incomplete
+ok 153 - malformed text keeps no invented evidence and all-unrun input stays incomplete
+  ---
+  duration_ms: 0.974584
+  type: 'test'
+  ...
+1..153
+# tests 153
+# suites 0
+# pass 96
+# fail 57
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 278.140125

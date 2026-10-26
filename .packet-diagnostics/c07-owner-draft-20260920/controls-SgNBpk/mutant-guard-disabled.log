@@ -1,0 +1,535 @@
+TAP version 13
+# Subtest: C07 exact owner-frozen evidence and five-file scope pass the additive guard
+ok 1 - C07 exact owner-frozen evidence and five-file scope pass the additive guard
+  ---
+  duration_ms: 32.234292
+  type: 'test'
+  ...
+# Subtest: C07 rejects accepted source drift and missing source closure
+    # Subtest: accepted source drift
+    not ok 1 - accepted source drift
+      ---
+      duration_ms: 30.869583
+      type: 'test'
+      location: '/Users/louiscalata/nisi/.packet-diagnostics/c07-owner-draft-20260920/controls-SgNBpk/mutant/tests/finish-cluster-c07.test.mjs:117:11'
+      failureType: 'testCodeFailure'
+      error: 'Missing expected exception.'
+      code: 'ERR_ASSERTION'
+      name: 'AssertionError'
+      stack: |-
+        refuses (file:///Users/louiscalata/nisi/.packet-diagnostics/c07-owner-draft-20260920/controls-SgNBpk/mutant/tests/finish-cluster-c07.test.mjs:106:10)
+        TestContext.<anonymous> (file:///Users/louiscalata/nisi/.packet-diagnostics/c07-owner-draft-20260920/controls-SgNBpk/mutant/tests/finish-cluster-c07.test.mjs:117:46)
+        Test.runInAsyncScope (node:async_hooks:227:14)
+        Test.run (node:internal/test_runner/test:1325:25)
+        Test.start (node:internal/test_runner/test:1191:17)
+        TestContext.test (node:internal/test_runner/test:382:20)
+        TestContext.<anonymous> (file:///Users/louiscalata/nisi/.packet-diagnostics/c07-owner-draft-20260920/controls-SgNBpk/mutant/tests/finish-cluster-c07.test.mjs:117:11)
+        Test.runInAsyncScope (node:async_hooks:227:14)
+        Test.run (node:internal/test_runner/test:1325:25)
+        Test.processPendingSubtests (node:internal/test_runner/test:911:18)
+      ...
+    # Subtest: accepted documentation omitted
+    not ok 2 - accepted documentation omitted
+      ---
+      duration_ms: 29.06875
+      type: 'test'
+      location: '/Users/louiscalata/nisi/.packet-diagnostics/c07-owner-draft-20260920/controls-SgNBpk/mutant/tests/finish-cluster-c07.test.mjs:121:11'
+      failureType: 'testCodeFailure'
+      error: 'Missing expected exception.'
+      code: 'ERR_ASSERTION'
+      name: 'AssertionError'
+      stack: |-
+        refuses (file:///Users/louiscalata/nisi/.packet-diagnostics/c07-owner-draft-20260920/controls-SgNBpk/mutant/tests/finish-cluster-c07.test.mjs:106:10)
+        TestContext.<anonymous> (file:///Users/louiscalata/nisi/.packet-diagnostics/c07-owner-draft-20260920/controls-SgNBpk/mutant/tests/finish-cluster-c07.test.mjs:121:55)
+        Test.runInAsyncScope (node:async_hooks:227:14)
+        Test.run (node:internal/test_runner/test:1325:25)
+        Test.start (node:internal/test_runner/test:1191:17)
+        TestContext.test (node:internal/test_runner/test:382:20)
+        TestContext.<anonymous> (file:///Users/louiscalata/nisi/.packet-diagnostics/c07-owner-draft-20260920/controls-SgNBpk/mutant/tests/finish-cluster-c07.test.mjs:121:11)
+        async Test.run (node:internal/test_runner/test:1332:7)
+        async Test.processPendingSubtests (node:internal/test_runner/test:911:7)
+      ...
+    # Subtest: dependency removed from canonical receipt
+    not ok 3 - dependency removed from canonical receipt
+      ---
+      duration_ms: 28.484625
+      type: 'test'
+      location: '/Users/louiscalata/nisi/.packet-diagnostics/c07-owner-draft-20260920/controls-SgNBpk/mutant/tests/finish-cluster-c07.test.mjs:125:11'
+      failureType: 'testCodeFailure'
+      error: 'Missing expected exception.'
+      code: 'ERR_ASSERTION'
+      name: 'AssertionError'
+      stack: |-
+        refuses (file:///Users/louiscalata/nisi/.packet-diagnostics/c07-owner-draft-20260920/controls-SgNBpk/mutant/tests/finish-cluster-c07.test.mjs:106:10)
+        TestContext.<anonymous> (file:///Users/louiscalata/nisi/.packet-diagnostics/c07-owner-draft-20260920/controls-SgNBpk/mutant/tests/finish-cluster-c07.test.mjs:125:66)
+        Test.runInAsyncScope (node:async_hooks:227:14)
+        Test.run (node:internal/test_runner/test:1325:25)
+        Test.start (node:internal/test_runner/test:1191:17)
+        TestContext.test (node:internal/test_runner/test:382:20)
+        TestContext.<anonymous> (file:///Users/louiscalata/nisi/.packet-diagnostics/c07-owner-draft-20260920/controls-SgNBpk/mutant/tests/finish-cluster-c07.test.mjs:125:11)
+        async Test.run (node:internal/test_runner/test:1332:7)
+        async Test.processPendingSubtests (node:internal/test_runner/test:911:7)
+      ...
+    1..3
+not ok 2 - C07 rejects accepted source drift and missing source closure
+  ---
+  duration_ms: 88.758667
+  type: 'test'
+  location: '/Users/louiscalata/nisi/.packet-diagnostics/c07-owner-draft-20260920/controls-SgNBpk/mutant/tests/finish-cluster-c07.test.mjs:116:1'
+  failureType: 'subtestsFailed'
+  error: '3 subtests failed'
+  code: 'ERR_TEST_FAILURE'
+  ...
+# Subtest: C07 rejects recomputed but contradictory receipts
+    # Subtest: checkpoint count rebinding
+    not ok 1 - checkpoint count rebinding
+      ---
+      duration_ms: 30.366209
+      type: 'test'
+      location: '/Users/louiscalata/nisi/.packet-diagnostics/c07-owner-draft-20260920/controls-SgNBpk/mutant/tests/finish-cluster-c07.test.mjs:131:11'
+      failureType: 'testCodeFailure'
+      error: 'Missing expected exception.'
+      code: 'ERR_ASSERTION'
+      name: 'AssertionError'
+      stack: |-
+        refuses (file:///Users/louiscalata/nisi/.packet-diagnostics/c07-owner-draft-20260920/controls-SgNBpk/mutant/tests/finish-cluster-c07.test.mjs:106:10)
+        TestContext.<anonymous> (file:///Users/louiscalata/nisi/.packet-diagnostics/c07-owner-draft-20260920/controls-SgNBpk/mutant/tests/finish-cluster-c07.test.mjs:131:51)
+        Test.runInAsyncScope (node:async_hooks:227:14)
+        Test.run (node:internal/test_runner/test:1325:25)
+        Test.start (node:internal/test_runner/test:1191:17)
+        TestContext.test (node:internal/test_runner/test:382:20)
+        TestContext.<anonymous> (file:///Users/louiscalata/nisi/.packet-diagnostics/c07-owner-draft-20260920/controls-SgNBpk/mutant/tests/finish-cluster-c07.test.mjs:131:11)
+        Test.runInAsyncScope (node:async_hooks:227:14)
+        Test.run (node:internal/test_runner/test:1325:25)
+        Test.processPendingSubtests (node:internal/test_runner/test:911:18)
+      ...
+    # Subtest: canonical check rebinding
+    not ok 2 - canonical check rebinding
+      ---
+      duration_ms: 27.813459
+      type: 'test'
+      location: '/Users/louiscalata/nisi/.packet-diagnostics/c07-owner-draft-20260920/controls-SgNBpk/mutant/tests/finish-cluster-c07.test.mjs:134:11'
+      failureType: 'testCodeFailure'
+      error: 'Missing expected exception.'
+      code: 'ERR_ASSERTION'
+      name: 'AssertionError'
+      stack: |-
+        refuses (file:///Users/louiscalata/nisi/.packet-diagnostics/c07-owner-draft-20260920/controls-SgNBpk/mutant/tests/finish-cluster-c07.test.mjs:106:10)
+        TestContext.<anonymous> (file:///Users/louiscalata/nisi/.packet-diagnostics/c07-owner-draft-20260920/controls-SgNBpk/mutant/tests/finish-cluster-c07.test.mjs:134:50)
+        Test.runInAsyncScope (node:async_hooks:227:14)
+        Test.run (node:internal/test_runner/test:1325:25)
+        Test.start (node:internal/test_runner/test:1191:17)
+        TestContext.test (node:internal/test_runner/test:382:20)
+        TestContext.<anonymous> (file:///Users/louiscalata/nisi/.packet-diagnostics/c07-owner-draft-20260920/controls-SgNBpk/mutant/tests/finish-cluster-c07.test.mjs:134:11)
+        async Test.run (node:internal/test_runner/test:1332:7)
+        async Test.processPendingSubtests (node:internal/test_runner/test:911:7)
+      ...
+    # Subtest: review verdict rebinding
+    not ok 3 - review verdict rebinding
+      ---
+      duration_ms: 27.691875
+      type: 'test'
+      location: '/Users/louiscalata/nisi/.packet-diagnostics/c07-owner-draft-20260920/controls-SgNBpk/mutant/tests/finish-cluster-c07.test.mjs:138:11'
+      failureType: 'testCodeFailure'
+      error: 'Missing expected exception.'
+      code: 'ERR_ASSERTION'
+      name: 'AssertionError'
+      stack: |-
+        refuses (file:///Users/louiscalata/nisi/.packet-diagnostics/c07-owner-draft-20260920/controls-SgNBpk/mutant/tests/finish-cluster-c07.test.mjs:106:10)
+        TestContext.<anonymous> (file:///Users/louiscalata/nisi/.packet-diagnostics/c07-owner-draft-20260920/controls-SgNBpk/mutant/tests/finish-cluster-c07.test.mjs:138:49)
+        Test.runInAsyncScope (node:async_hooks:227:14)
+        Test.run (node:internal/test_runner/test:1325:25)
+        Test.start (node:internal/test_runner/test:1191:17)
+        TestContext.test (node:internal/test_runner/test:382:20)
+        TestContext.<anonymous> (file:///Users/louiscalata/nisi/.packet-diagnostics/c07-owner-draft-20260920/controls-SgNBpk/mutant/tests/finish-cluster-c07.test.mjs:138:11)
+        async Test.run (node:internal/test_runner/test:1332:7)
+        async Test.processPendingSubtests (node:internal/test_runner/test:911:7)
+      ...
+    # Subtest: validation authority rebinding
+    not ok 4 - validation authority rebinding
+      ---
+      duration_ms: 27.737542
+      type: 'test'
+      location: '/Users/louiscalata/nisi/.packet-diagnostics/c07-owner-draft-20260920/controls-SgNBpk/mutant/tests/finish-cluster-c07.test.mjs:141:11'
+      failureType: 'testCodeFailure'
+      error: 'Missing expected exception.'
+      code: 'ERR_ASSERTION'
+      name: 'AssertionError'
+      stack: |-
+        refuses (file:///Users/louiscalata/nisi/.packet-diagnostics/c07-owner-draft-20260920/controls-SgNBpk/mutant/tests/finish-cluster-c07.test.mjs:106:10)
+        TestContext.<anonymous> (file:///Users/louiscalata/nisi/.packet-diagnostics/c07-owner-draft-20260920/controls-SgNBpk/mutant/tests/finish-cluster-c07.test.mjs:141:55)
+        Test.runInAsyncScope (node:async_hooks:227:14)
+        Test.run (node:internal/test_runner/test:1325:25)
+        Test.start (node:internal/test_runner/test:1191:17)
+        TestContext.test (node:internal/test_runner/test:382:20)
+        TestContext.<anonymous> (file:///Users/louiscalata/nisi/.packet-diagnostics/c07-owner-draft-20260920/controls-SgNBpk/mutant/tests/finish-cluster-c07.test.mjs:141:11)
+        async Test.run (node:internal/test_runner/test:1332:7)
+        async Test.processPendingSubtests (node:internal/test_runner/test:911:7)
+      ...
+    1..4
+not ok 3 - C07 rejects recomputed but contradictory receipts
+  ---
+  duration_ms: 113.944792
+  type: 'test'
+  location: '/Users/louiscalata/nisi/.packet-diagnostics/c07-owner-draft-20260920/controls-SgNBpk/mutant/tests/finish-cluster-c07.test.mjs:130:1'
+  failureType: 'subtestsFailed'
+  error: '4 subtests failed'
+  code: 'ERR_TEST_FAILURE'
+  ...
+# Subtest: C07 preserves C06 history and refuses authority or supersession rebinding
+    # Subtest: C06 immutable owner evidence changed
+    not ok 1 - C06 immutable owner evidence changed
+      ---
+      duration_ms: 26.910458
+      type: 'test'
+      location: '/Users/louiscalata/nisi/.packet-diagnostics/c07-owner-draft-20260920/controls-SgNBpk/mutant/tests/finish-cluster-c07.test.mjs:155:11'
+      failureType: 'testCodeFailure'
+      error: 'Missing expected exception.'
+      code: 'ERR_ASSERTION'
+      name: 'AssertionError'
+      stack: |-
+        refuses (file:///Users/louiscalata/nisi/.packet-diagnostics/c07-owner-draft-20260920/controls-SgNBpk/mutant/tests/finish-cluster-c07.test.mjs:106:10)
+        TestContext.<anonymous> (file:///Users/louiscalata/nisi/.packet-diagnostics/c07-owner-draft-20260920/controls-SgNBpk/mutant/tests/finish-cluster-c07.test.mjs:155:61)
+        Test.runInAsyncScope (node:async_hooks:227:14)
+        Test.run (node:internal/test_runner/test:1325:25)
+        Test.start (node:internal/test_runner/test:1191:17)
+        TestContext.test (node:internal/test_runner/test:382:20)
+        TestContext.<anonymous> (file:///Users/louiscalata/nisi/.packet-diagnostics/c07-owner-draft-20260920/controls-SgNBpk/mutant/tests/finish-cluster-c07.test.mjs:155:11)
+        Test.runInAsyncScope (node:async_hooks:227:14)
+        Test.run (node:internal/test_runner/test:1325:25)
+        Test.processPendingSubtests (node:internal/test_runner/test:911:18)
+      ...
+    # Subtest: C07 native authority
+    not ok 2 - C07 native authority
+      ---
+      duration_ms: 27.04525
+      type: 'test'
+      location: '/Users/louiscalata/nisi/.packet-diagnostics/c07-owner-draft-20260920/controls-SgNBpk/mutant/tests/finish-cluster-c07.test.mjs:158:11'
+      failureType: 'testCodeFailure'
+      error: 'Missing expected exception.'
+      code: 'ERR_ASSERTION'
+      name: 'AssertionError'
+      stack: |-
+        refuses (file:///Users/louiscalata/nisi/.packet-diagnostics/c07-owner-draft-20260920/controls-SgNBpk/mutant/tests/finish-cluster-c07.test.mjs:106:10)
+        TestContext.<anonymous> (file:///Users/louiscalata/nisi/.packet-diagnostics/c07-owner-draft-20260920/controls-SgNBpk/mutant/tests/finish-cluster-c07.test.mjs:158:45)
+        Test.runInAsyncScope (node:async_hooks:227:14)
+        Test.run (node:internal/test_runner/test:1325:25)
+        Test.start (node:internal/test_runner/test:1191:17)
+        TestContext.test (node:internal/test_runner/test:382:20)
+        TestContext.<anonymous> (file:///Users/louiscalata/nisi/.packet-diagnostics/c07-owner-draft-20260920/controls-SgNBpk/mutant/tests/finish-cluster-c07.test.mjs:158:11)
+        async Test.run (node:internal/test_runner/test:1332:7)
+        async Test.processPendingSubtests (node:internal/test_runner/test:911:7)
+      ...
+    # Subtest: dependency supersession changed
+    not ok 3 - dependency supersession changed
+      ---
+      duration_ms: 27.458083
+      type: 'test'
+      location: '/Users/louiscalata/nisi/.packet-diagnostics/c07-owner-draft-20260920/controls-SgNBpk/mutant/tests/finish-cluster-c07.test.mjs:162:11'
+      failureType: 'testCodeFailure'
+      error: 'Missing expected exception.'
+      code: 'ERR_ASSERTION'
+      name: 'AssertionError'
+      stack: |-
+        refuses (file:///Users/louiscalata/nisi/.packet-diagnostics/c07-owner-draft-20260920/controls-SgNBpk/mutant/tests/finish-cluster-c07.test.mjs:106:10)
+        TestContext.<anonymous> (file:///Users/louiscalata/nisi/.packet-diagnostics/c07-owner-draft-20260920/controls-SgNBpk/mutant/tests/finish-cluster-c07.test.mjs:162:56)
+        Test.runInAsyncScope (node:async_hooks:227:14)
+        Test.run (node:internal/test_runner/test:1325:25)
+        Test.start (node:internal/test_runner/test:1191:17)
+        TestContext.test (node:internal/test_runner/test:382:20)
+        TestContext.<anonymous> (file:///Users/louiscalata/nisi/.packet-diagnostics/c07-owner-draft-20260920/controls-SgNBpk/mutant/tests/finish-cluster-c07.test.mjs:162:11)
+        async Test.run (node:internal/test_runner/test:1332:7)
+        async Test.processPendingSubtests (node:internal/test_runner/test:911:7)
+      ...
+    # Subtest: predecessor metadata changed
+    not ok 4 - predecessor metadata changed
+      ---
+      duration_ms: 26.67
+      type: 'test'
+      location: '/Users/louiscalata/nisi/.packet-diagnostics/c07-owner-draft-20260920/controls-SgNBpk/mutant/tests/finish-cluster-c07.test.mjs:165:11'
+      failureType: 'testCodeFailure'
+      error: 'Missing expected exception.'
+      code: 'ERR_ASSERTION'
+      name: 'AssertionError'
+      stack: |-
+        refuses (file:///Users/louiscalata/nisi/.packet-diagnostics/c07-owner-draft-20260920/controls-SgNBpk/mutant/tests/finish-cluster-c07.test.mjs:106:10)
+        TestContext.<anonymous> (file:///Users/louiscalata/nisi/.packet-diagnostics/c07-owner-draft-20260920/controls-SgNBpk/mutant/tests/finish-cluster-c07.test.mjs:165:53)
+        Test.runInAsyncScope (node:async_hooks:227:14)
+        Test.run (node:internal/test_runner/test:1325:25)
+        Test.start (node:internal/test_runner/test:1191:17)
+        TestContext.test (node:internal/test_runner/test:382:20)
+        TestContext.<anonymous> (file:///Users/louiscalata/nisi/.packet-diagnostics/c07-owner-draft-20260920/controls-SgNBpk/mutant/tests/finish-cluster-c07.test.mjs:165:11)
+        async Test.run (node:internal/test_runner/test:1332:7)
+        async Test.processPendingSubtests (node:internal/test_runner/test:911:7)
+      ...
+    # Subtest: accepted file inventory changed
+    not ok 5 - accepted file inventory changed
+      ---
+      duration_ms: 27.149375
+      type: 'test'
+      location: '/Users/louiscalata/nisi/.packet-diagnostics/c07-owner-draft-20260920/controls-SgNBpk/mutant/tests/finish-cluster-c07.test.mjs:168:11'
+      failureType: 'testCodeFailure'
+      error: 'Missing expected exception.'
+      code: 'ERR_ASSERTION'
+      name: 'AssertionError'
+      stack: |-
+        refuses (file:///Users/louiscalata/nisi/.packet-diagnostics/c07-owner-draft-20260920/controls-SgNBpk/mutant/tests/finish-cluster-c07.test.mjs:106:10)
+        TestContext.<anonymous> (file:///Users/louiscalata/nisi/.packet-diagnostics/c07-owner-draft-20260920/controls-SgNBpk/mutant/tests/finish-cluster-c07.test.mjs:168:56)
+        Test.runInAsyncScope (node:async_hooks:227:14)
+        Test.run (node:internal/test_runner/test:1325:25)
+        Test.start (node:internal/test_runner/test:1191:17)
+        TestContext.test (node:internal/test_runner/test:382:20)
+        TestContext.<anonymous> (file:///Users/louiscalata/nisi/.packet-diagnostics/c07-owner-draft-20260920/controls-SgNBpk/mutant/tests/finish-cluster-c07.test.mjs:168:11)
+        async Test.run (node:internal/test_runner/test:1332:7)
+        async Test.processPendingSubtests (node:internal/test_runner/test:911:7)
+      ...
+    1..5
+not ok 4 - C07 preserves C06 history and refuses authority or supersession rebinding
+  ---
+  duration_ms: 135.562125
+  type: 'test'
+  location: '/Users/louiscalata/nisi/.packet-diagnostics/c07-owner-draft-20260920/controls-SgNBpk/mutant/tests/finish-cluster-c07.test.mjs:154:1'
+  failureType: 'subtestsFailed'
+  error: '5 subtests failed'
+  code: 'ERR_TEST_FAILURE'
+  ...
+# Subtest: C07 binds raw evidence, current dependencies and declared authority
+    # Subtest: unrelated live dependency
+    not ok 1 - unrelated live dependency
+      ---
+      duration_ms: 27.50775
+      type: 'test'
+      location: '/Users/louiscalata/nisi/.packet-diagnostics/c07-owner-draft-20260920/controls-SgNBpk/mutant/tests/finish-cluster-c07.test.mjs:174:11'
+      failureType: 'testCodeFailure'
+      error: 'Missing expected exception.'
+      code: 'ERR_ASSERTION'
+      name: 'AssertionError'
+      stack: |-
+        refuses (file:///Users/louiscalata/nisi/.packet-diagnostics/c07-owner-draft-20260920/controls-SgNBpk/mutant/tests/finish-cluster-c07.test.mjs:106:10)
+        TestContext.<anonymous> (file:///Users/louiscalata/nisi/.packet-diagnostics/c07-owner-draft-20260920/controls-SgNBpk/mutant/tests/finish-cluster-c07.test.mjs:174:50)
+        Test.runInAsyncScope (node:async_hooks:227:14)
+        Test.run (node:internal/test_runner/test:1325:25)
+        Test.start (node:internal/test_runner/test:1191:17)
+        TestContext.test (node:internal/test_runner/test:382:20)
+        TestContext.<anonymous> (file:///Users/louiscalata/nisi/.packet-diagnostics/c07-owner-draft-20260920/controls-SgNBpk/mutant/tests/finish-cluster-c07.test.mjs:174:11)
+        Test.runInAsyncScope (node:async_hooks:227:14)
+        Test.run (node:internal/test_runner/test:1325:25)
+        Test.processPendingSubtests (node:internal/test_runner/test:911:18)
+      ...
+    # Subtest: raw checkpoint log
+    not ok 2 - raw checkpoint log
+      ---
+      duration_ms: 26.725209
+      type: 'test'
+      location: '/Users/louiscalata/nisi/.packet-diagnostics/c07-owner-draft-20260920/controls-SgNBpk/mutant/tests/finish-cluster-c07.test.mjs:177:11'
+      failureType: 'testCodeFailure'
+      error: 'Missing expected exception.'
+      code: 'ERR_ASSERTION'
+      name: 'AssertionError'
+      stack: |-
+        refuses (file:///Users/louiscalata/nisi/.packet-diagnostics/c07-owner-draft-20260920/controls-SgNBpk/mutant/tests/finish-cluster-c07.test.mjs:106:10)
+        TestContext.<anonymous> (file:///Users/louiscalata/nisi/.packet-diagnostics/c07-owner-draft-20260920/controls-SgNBpk/mutant/tests/finish-cluster-c07.test.mjs:177:43)
+        Test.runInAsyncScope (node:async_hooks:227:14)
+        Test.run (node:internal/test_runner/test:1325:25)
+        Test.start (node:internal/test_runner/test:1191:17)
+        TestContext.test (node:internal/test_runner/test:382:20)
+        TestContext.<anonymous> (file:///Users/louiscalata/nisi/.packet-diagnostics/c07-owner-draft-20260920/controls-SgNBpk/mutant/tests/finish-cluster-c07.test.mjs:177:11)
+        async Test.run (node:internal/test_runner/test:1332:7)
+        async Test.processPendingSubtests (node:internal/test_runner/test:911:7)
+      ...
+    # Subtest: missing mutation log
+    not ok 3 - missing mutation log
+      ---
+      duration_ms: 26.737042
+      type: 'test'
+      location: '/Users/louiscalata/nisi/.packet-diagnostics/c07-owner-draft-20260920/controls-SgNBpk/mutant/tests/finish-cluster-c07.test.mjs:181:11'
+      failureType: 'testCodeFailure'
+      error: 'Missing expected exception.'
+      code: 'ERR_ASSERTION'
+      name: 'AssertionError'
+      stack: |-
+        refuses (file:///Users/louiscalata/nisi/.packet-diagnostics/c07-owner-draft-20260920/controls-SgNBpk/mutant/tests/finish-cluster-c07.test.mjs:106:10)
+        TestContext.<anonymous> (file:///Users/louiscalata/nisi/.packet-diagnostics/c07-owner-draft-20260920/controls-SgNBpk/mutant/tests/finish-cluster-c07.test.mjs:181:45)
+        Test.runInAsyncScope (node:async_hooks:227:14)
+        Test.run (node:internal/test_runner/test:1325:25)
+        Test.start (node:internal/test_runner/test:1191:17)
+        TestContext.test (node:internal/test_runner/test:382:20)
+        TestContext.<anonymous> (file:///Users/louiscalata/nisi/.packet-diagnostics/c07-owner-draft-20260920/controls-SgNBpk/mutant/tests/finish-cluster-c07.test.mjs:181:11)
+        async Test.run (node:internal/test_runner/test:1332:7)
+        async Test.processPendingSubtests (node:internal/test_runner/test:911:7)
+      ...
+    # Subtest: declared dependency omitted
+    not ok 4 - declared dependency omitted
+      ---
+      duration_ms: 27.131125
+      type: 'test'
+      location: '/Users/louiscalata/nisi/.packet-diagnostics/c07-owner-draft-20260920/controls-SgNBpk/mutant/tests/finish-cluster-c07.test.mjs:185:11'
+      failureType: 'testCodeFailure'
+      error: 'Missing expected exception.'
+      code: 'ERR_ASSERTION'
+      name: 'AssertionError'
+      stack: |-
+        refuses (file:///Users/louiscalata/nisi/.packet-diagnostics/c07-owner-draft-20260920/controls-SgNBpk/mutant/tests/finish-cluster-c07.test.mjs:106:10)
+        TestContext.<anonymous> (file:///Users/louiscalata/nisi/.packet-diagnostics/c07-owner-draft-20260920/controls-SgNBpk/mutant/tests/finish-cluster-c07.test.mjs:185:52)
+        Test.runInAsyncScope (node:async_hooks:227:14)
+        Test.run (node:internal/test_runner/test:1325:25)
+        Test.start (node:internal/test_runner/test:1191:17)
+        TestContext.test (node:internal/test_runner/test:382:20)
+        TestContext.<anonymous> (file:///Users/louiscalata/nisi/.packet-diagnostics/c07-owner-draft-20260920/controls-SgNBpk/mutant/tests/finish-cluster-c07.test.mjs:185:11)
+        async Test.run (node:internal/test_runner/test:1332:7)
+        async Test.processPendingSubtests (node:internal/test_runner/test:911:7)
+      ...
+    # Subtest: row-level authority
+    not ok 5 - row-level authority
+      ---
+      duration_ms: 27.3795
+      type: 'test'
+      location: '/Users/louiscalata/nisi/.packet-diagnostics/c07-owner-draft-20260920/controls-SgNBpk/mutant/tests/finish-cluster-c07.test.mjs:186:11'
+      failureType: 'testCodeFailure'
+      error: 'Missing expected exception.'
+      code: 'ERR_ASSERTION'
+      name: 'AssertionError'
+      stack: |-
+        refuses (file:///Users/louiscalata/nisi/.packet-diagnostics/c07-owner-draft-20260920/controls-SgNBpk/mutant/tests/finish-cluster-c07.test.mjs:106:10)
+        TestContext.<anonymous> (file:///Users/louiscalata/nisi/.packet-diagnostics/c07-owner-draft-20260920/controls-SgNBpk/mutant/tests/finish-cluster-c07.test.mjs:188:7)
+        Test.runInAsyncScope (node:async_hooks:227:14)
+        Test.run (node:internal/test_runner/test:1325:25)
+        Test.start (node:internal/test_runner/test:1191:17)
+        TestContext.test (node:internal/test_runner/test:382:20)
+        TestContext.<anonymous> (file:///Users/louiscalata/nisi/.packet-diagnostics/c07-owner-draft-20260920/controls-SgNBpk/mutant/tests/finish-cluster-c07.test.mjs:186:11)
+        async Test.run (node:internal/test_runner/test:1332:7)
+        async Test.processPendingSubtests (node:internal/test_runner/test:911:7)
+      ...
+    # Subtest: extra transition
+    not ok 6 - extra transition
+      ---
+      duration_ms: 27.912291
+      type: 'test'
+      location: '/Users/louiscalata/nisi/.packet-diagnostics/c07-owner-draft-20260920/controls-SgNBpk/mutant/tests/finish-cluster-c07.test.mjs:190:11'
+      failureType: 'testCodeFailure'
+      error: 'Missing expected exception.'
+      code: 'ERR_ASSERTION'
+      name: 'AssertionError'
+      stack: |-
+        refuses (file:///Users/louiscalata/nisi/.packet-diagnostics/c07-owner-draft-20260920/controls-SgNBpk/mutant/tests/finish-cluster-c07.test.mjs:106:10)
+        TestContext.<anonymous> (file:///Users/louiscalata/nisi/.packet-diagnostics/c07-owner-draft-20260920/controls-SgNBpk/mutant/tests/finish-cluster-c07.test.mjs:190:39)
+        Test.runInAsyncScope (node:async_hooks:227:14)
+        Test.run (node:internal/test_runner/test:1325:25)
+        Test.start (node:internal/test_runner/test:1191:17)
+        TestContext.test (node:internal/test_runner/test:382:20)
+        TestContext.<anonymous> (file:///Users/louiscalata/nisi/.packet-diagnostics/c07-owner-draft-20260920/controls-SgNBpk/mutant/tests/finish-cluster-c07.test.mjs:190:11)
+        async Test.run (node:internal/test_runner/test:1332:7)
+        async Test.processPendingSubtests (node:internal/test_runner/test:911:7)
+      ...
+    # Subtest: false transition evidence
+    not ok 7 - false transition evidence
+      ---
+      duration_ms: 27.49
+      type: 'test'
+      location: '/Users/louiscalata/nisi/.packet-diagnostics/c07-owner-draft-20260920/controls-SgNBpk/mutant/tests/finish-cluster-c07.test.mjs:191:11'
+      failureType: 'testCodeFailure'
+      error: 'Missing expected exception.'
+      code: 'ERR_ASSERTION'
+      name: 'AssertionError'
+      stack: |-
+        refuses (file:///Users/louiscalata/nisi/.packet-diagnostics/c07-owner-draft-20260920/controls-SgNBpk/mutant/tests/finish-cluster-c07.test.mjs:106:10)
+        TestContext.<anonymous> (file:///Users/louiscalata/nisi/.packet-diagnostics/c07-owner-draft-20260920/controls-SgNBpk/mutant/tests/finish-cluster-c07.test.mjs:191:48)
+        Test.runInAsyncScope (node:async_hooks:227:14)
+        Test.run (node:internal/test_runner/test:1325:25)
+        Test.start (node:internal/test_runner/test:1191:17)
+        TestContext.test (node:internal/test_runner/test:382:20)
+        TestContext.<anonymous> (file:///Users/louiscalata/nisi/.packet-diagnostics/c07-owner-draft-20260920/controls-SgNBpk/mutant/tests/finish-cluster-c07.test.mjs:191:11)
+        async Test.run (node:internal/test_runner/test:1332:7)
+        async Test.processPendingSubtests (node:internal/test_runner/test:911:7)
+      ...
+    # Subtest: unaccepted predecessor
+    not ok 8 - unaccepted predecessor
+      ---
+      duration_ms: 28.532
+      type: 'test'
+      location: '/Users/louiscalata/nisi/.packet-diagnostics/c07-owner-draft-20260920/controls-SgNBpk/mutant/tests/finish-cluster-c07.test.mjs:192:11'
+      failureType: 'testCodeFailure'
+      error: 'Missing expected exception.'
+      code: 'ERR_ASSERTION'
+      name: 'AssertionError'
+      stack: |-
+        refuses (file:///Users/louiscalata/nisi/.packet-diagnostics/c07-owner-draft-20260920/controls-SgNBpk/mutant/tests/finish-cluster-c07.test.mjs:106:10)
+        TestContext.<anonymous> (file:///Users/louiscalata/nisi/.packet-diagnostics/c07-owner-draft-20260920/controls-SgNBpk/mutant/tests/finish-cluster-c07.test.mjs:192:45)
+        Test.runInAsyncScope (node:async_hooks:227:14)
+        Test.run (node:internal/test_runner/test:1325:25)
+        Test.start (node:internal/test_runner/test:1191:17)
+        TestContext.test (node:internal/test_runner/test:382:20)
+        TestContext.<anonymous> (file:///Users/louiscalata/nisi/.packet-diagnostics/c07-owner-draft-20260920/controls-SgNBpk/mutant/tests/finish-cluster-c07.test.mjs:192:11)
+        async Test.run (node:internal/test_runner/test:1332:7)
+        async Test.processPendingSubtests (node:internal/test_runner/test:911:7)
+      ...
+    1..8
+not ok 5 - C07 binds raw evidence, current dependencies and declared authority
+  ---
+  duration_ms: 219.884625
+  type: 'test'
+  location: '/Users/louiscalata/nisi/.packet-diagnostics/c07-owner-draft-20260920/controls-SgNBpk/mutant/tests/finish-cluster-c07.test.mjs:173:1'
+  failureType: 'subtestsFailed'
+  error: '8 subtests failed'
+  code: 'ERR_TEST_FAILURE'
+  ...
+# Subtest: C06 admits only the complete C07 one-dependency transition
+    # Subtest: complete exact transition
+    ok 1 - complete exact transition
+      ---
+      duration_ms: 35.054125
+      type: 'test'
+      ...
+    # Subtest: flag alone with missing evidence
+    not ok 2 - flag alone with missing evidence
+      ---
+      duration_ms: 35.292833
+      type: 'test'
+      location: '/Users/louiscalata/nisi/.packet-diagnostics/c07-owner-draft-20260920/controls-SgNBpk/mutant/tests/finish-cluster-c07.test.mjs:199:11'
+      failureType: 'testCodeFailure'
+      error: 'Missing expected exception.'
+      code: 'ERR_ASSERTION'
+      name: 'AssertionError'
+      expected:
+      operator: 'throws'
+      stack: |-
+        TestContext.<anonymous> (file:///Users/louiscalata/nisi/.packet-diagnostics/c07-owner-draft-20260920/controls-SgNBpk/mutant/tests/finish-cluster-c07.test.mjs:201:12)
+        Test.runInAsyncScope (node:async_hooks:227:14)
+        Test.run (node:internal/test_runner/test:1325:25)
+        Test.start (node:internal/test_runner/test:1191:17)
+        TestContext.test (node:internal/test_runner/test:382:20)
+        TestContext.<anonymous> (file:///Users/louiscalata/nisi/.packet-diagnostics/c07-owner-draft-20260920/controls-SgNBpk/mutant/tests/finish-cluster-c07.test.mjs:199:11)
+        async Test.run (node:internal/test_runner/test:1332:7)
+        async Test.processPendingSubtests (node:internal/test_runner/test:911:7)
+      ...
+    # Subtest: unaccepted C07 cannot activate a record
+    ok 3 - unaccepted C07 cannot activate a record
+      ---
+      duration_ms: 31.957041
+      type: 'test'
+      ...
+    # Subtest: new bytes alone cannot pass historical C06
+    ok 4 - new bytes alone cannot pass historical C06
+      ---
+      duration_ms: 32.141541
+      type: 'test'
+      ...
+    1..4
+not ok 6 - C06 admits only the complete C07 one-dependency transition
+  ---
+  duration_ms: 134.685167
+  type: 'test'
+  location: '/Users/louiscalata/nisi/.packet-diagnostics/c07-owner-draft-20260920/controls-SgNBpk/mutant/tests/finish-cluster-c07.test.mjs:195:1'
+  failureType: 'subtestsFailed'
+  error: '1 subtest failed'
+  code: 'ERR_TEST_FAILURE'
+  ...
+1..6
+# tests 30
+# suites 0
+# pass 4
+# fail 26
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 762.920292

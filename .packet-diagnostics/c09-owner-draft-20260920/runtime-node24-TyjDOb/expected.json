@@ -1,0 +1,400 @@
+{
+  "sourceManifest": {
+    "adapters/apple-foundation-models.mjs": "311f4898c31b4e0693093361fc19c344086c1f24946909fe134c14d37e25d080",
+    "adapters/local-chat.mjs": "83e7af06515387273c11bf8595be5f1bf8c2520000704be12acb274dd49a37a9",
+    "adapters/native-chat-protocol-v1.mjs": "44468cb8b6ebc97e1821405a5add4916a97bf82b0ffeaa2076f85e79e12255f3",
+    "adapters/native-chat-v1.mjs": "05db89079e5a167c6cb48018c659e514d573d3b7e95a3ce8282f2803e0bc024c",
+    "adapters/repair-guidance-v1.mjs": "d4421a3c6dc57ab20e9ad2cbae57e07280c34bcdadb72fcf3caf017dd88759e0",
+    "canonical/canonical-json-v1.mjs": "d1049a26d2bea0d14e959c0af22af15b975345091c5fa5360e8bd685637f8e59",
+    "gate/afm-content-executor.mjs": "29955d7e80d7b7fdc0bdb88fbd24e782a317b4bdc78548b56f3b48598d21e74d",
+    "gate/content-consent.mjs": "a735eb35cb1373b3f3744dc7b3caa8b24ebbf394babba53d4f722136c72a0820",
+    "hosts/repository/snapshot-contract.mjs": "2b52c23bac3a817769b7892eed71baba79cb81954b6a63724d107a9c258ba13f",
+    "hosts/swift-verifier/owned-child.mjs": "bb5386e1d7e3f90bbb75ccdc6340a394aea56f429f88530f128018c0fa6566e5",
+    "hosts/swift-verifier/protocol.mjs": "7557d81836f263c13e06ac7613ebfa61ce7fbeeb7b0f7db98889473806f322cc",
+    "index.mjs": "066c90d65209854cd6aeb838924ce28dca90d7dc75d0cd533d17fbba8e1c3db7",
+    "package.json": "adeab157ab448d1bc2a40793c6b127fd74bb2c64339b6e3c419ae29fcb3fd7e1",
+    "policy/file-access.mjs": "92f9f60220e1869ad0d6571ae2b5a8ddc9259b2463c4cf617d4cecee6eacc1d3",
+    "serialization/canonical-json-v1.mjs": "1e5eb6222da2c7baae3cd45a5077ccc1e8ae25b5bc184646d9e55170dec53625",
+    "types/afm-content-executor.d.ts": "05d4dc617ba58abc67f2469d912a0cc0a025a06bae784be263ea67b286504b94",
+    "types/apple-foundation-models.d.ts": "09086a14ea7e0441df3cbe4e414f00e6aa6d3d8e8a53dfb812d5c13d1d97a90d",
+    "types/canonical.d.ts": "8fb8a3a402d2f4e9a24ad945705d407ddde9f1a5555c23ae53db7075e0f101f4",
+    "types/content-consent.d.ts": "94b27ebef08df7e85a22ca8b1bf7d84d88fcc79e5145981e827bdc9aeb78f7c9",
+    "types/contracts.d.ts": "6ad05a1db5d18de910a22cc696257fb0b2d2b7a8cfe875090f0c3b6b70658c15",
+    "types/index.d.ts": "b12ba5fb5f8d15efd89ee8ca263d0ca8c97e228059ab98ee78a42446b101fab6",
+    "types/local-chat.d.ts": "7f9eaca08254bc29c2efd23c95ad88c2be325b37a6e352e773c608adadcf7b6c",
+    "types/native-chat.d.ts": "46a299418a9ac712a539ba95e55db27abc7a44d1f61b53ad4e8607739c026fbc",
+    "types/policy.d.ts": "843edb85c40728778e1a76763dd90b8b560e89cdd716d7ff8a5f8c19dc460f80",
+    "types/repair-guidance.d.ts": "77a7605b921fd6a8ceaae41b771ef0d20439559ec33555bbf5835dddde9c1ddf",
+    "types/serialization.d.ts": "c699b39740237933ded4b7afea48fe20d9c0eb2f8bbcecdad472f9f0bca05084",
+    "types/workflow.d.ts": "92d155a41afa9734bdf333419fb8d1bc5c129d4d5724979c8f3dd82a09e7dd18",
+    "workflow/contracts.mjs": "c28a3ee3db6e9a936cd58fca8b8ee3f2744ca25c259e2ea278b3b09cdbb73d82",
+    "workflow/engine.mjs": "c67c63baeadc725a8487af7108b01d3a38dd50e64ff35f1be66471c81e5f979b"
+  },
+  "stageManifest": {
+    "adapters/apple-foundation-models.mjs": "311f4898c31b4e0693093361fc19c344086c1f24946909fe134c14d37e25d080",
+    "adapters/local-chat.mjs": "83e7af06515387273c11bf8595be5f1bf8c2520000704be12acb274dd49a37a9",
+    "adapters/native-chat-protocol-v1.mjs": "44468cb8b6ebc97e1821405a5add4916a97bf82b0ffeaa2076f85e79e12255f3",
+    "adapters/native-chat-v1.mjs": "05db89079e5a167c6cb48018c659e514d573d3b7e95a3ce8282f2803e0bc024c",
+    "adapters/repair-guidance-v1.mjs": "d4421a3c6dc57ab20e9ad2cbae57e07280c34bcdadb72fcf3caf017dd88759e0",
+    "canonical/canonical-json-v1.mjs": "d1049a26d2bea0d14e959c0af22af15b975345091c5fa5360e8bd685637f8e59",
+    "gate/afm-content-executor.mjs": "29955d7e80d7b7fdc0bdb88fbd24e782a317b4bdc78548b56f3b48598d21e74d",
+    "gate/content-consent.mjs": "a735eb35cb1373b3f3744dc7b3caa8b24ebbf394babba53d4f722136c72a0820",
+    "hosts/repository/snapshot-contract.mjs": "2b52c23bac3a817769b7892eed71baba79cb81954b6a63724d107a9c258ba13f",
+    "hosts/swift-verifier/owned-child.mjs": "bb5386e1d7e3f90bbb75ccdc6340a394aea56f429f88530f128018c0fa6566e5",
+    "hosts/swift-verifier/protocol.mjs": "7557d81836f263c13e06ac7613ebfa61ce7fbeeb7b0f7db98889473806f322cc",
+    "index.mjs": "066c90d65209854cd6aeb838924ce28dca90d7dc75d0cd533d17fbba8e1c3db7",
+    "package.json": "90495708650a7723dbf27d0d89ad1ae7f4b73dc6a02ccf10ca2dd5e7ca412874",
+    "policy/file-access.mjs": "92f9f60220e1869ad0d6571ae2b5a8ddc9259b2463c4cf617d4cecee6eacc1d3",
+    "serialization/canonical-json-v1.mjs": "1e5eb6222da2c7baae3cd45a5077ccc1e8ae25b5bc184646d9e55170dec53625",
+    "types/afm-content-executor.d.ts": "05d4dc617ba58abc67f2469d912a0cc0a025a06bae784be263ea67b286504b94",
+    "types/apple-foundation-models.d.ts": "09086a14ea7e0441df3cbe4e414f00e6aa6d3d8e8a53dfb812d5c13d1d97a90d",
+    "types/canonical.d.ts": "8fb8a3a402d2f4e9a24ad945705d407ddde9f1a5555c23ae53db7075e0f101f4",
+    "types/content-consent.d.ts": "94b27ebef08df7e85a22ca8b1bf7d84d88fcc79e5145981e827bdc9aeb78f7c9",
+    "types/contracts.d.ts": "6ad05a1db5d18de910a22cc696257fb0b2d2b7a8cfe875090f0c3b6b70658c15",
+    "types/index.d.ts": "b12ba5fb5f8d15efd89ee8ca263d0ca8c97e228059ab98ee78a42446b101fab6",
+    "types/local-chat.d.ts": "7f9eaca08254bc29c2efd23c95ad88c2be325b37a6e352e773c608adadcf7b6c",
+    "types/native-chat.d.ts": "46a299418a9ac712a539ba95e55db27abc7a44d1f61b53ad4e8607739c026fbc",
+    "types/policy.d.ts": "843edb85c40728778e1a76763dd90b8b560e89cdd716d7ff8a5f8c19dc460f80",
+    "types/repair-guidance.d.ts": "77a7605b921fd6a8ceaae41b771ef0d20439559ec33555bbf5835dddde9c1ddf",
+    "types/serialization.d.ts": "c699b39740237933ded4b7afea48fe20d9c0eb2f8bbcecdad472f9f0bca05084",
+    "types/workflow.d.ts": "92d155a41afa9734bdf333419fb8d1bc5c129d4d5724979c8f3dd82a09e7dd18",
+    "workflow/contracts.mjs": "c28a3ee3db6e9a936cd58fca8b8ee3f2744ca25c259e2ea278b3b09cdbb73d82",
+    "workflow/engine.mjs": "c67c63baeadc725a8487af7108b01d3a38dd50e64ff35f1be66471c81e5f979b"
+  },
+  "caseManifest": {
+    "adoption-reviewed.mts": "39a2ca04a008d41be1a5a4d4aff8f9c38f9171fbfa1040829a61cca9ff4c694b",
+    "baseline.mts": "6c99646cb0c846ee09cd70fd0c1d38ffa11514c2ba913aa690002da2d0090990",
+    "declaration-regressions.mts": "6176b259f151c0dce32f17da6787a6fcfc6edaea40b86d5fdf60ba78ced4fcaf",
+    "declaration-regressions.test.mjs": "8eb8c04e7b265021ec9dd3aa580da7088fb41c8c4da9f18bbcb5433e84eeefd2",
+    "edge-cases.mts": "457ee56a0127e81703fb72eb2c943e6341dd1316d7fc1fadf3fe64ef5ef54af7",
+    "local-chat-reasoning-effort.mts": "8d5ad6f7782bfa0ddf264e2eac4e751880ebee804a7046b0fc0169560ad3cc58",
+    "native-chat-runtime.test.mjs": "ecdf8d7db5094fd95d586ef34554aa810d4e10aabc487fea2f40a53ff0a62f87",
+    "native-chat.mts": "37316bce9129a94ba487fc905c16e419155f3b20f6f1441c3f8d50e07503df26",
+    "output-mode-types.mts": "0eedf2ea1f7e4c30a71765129ef1ffcf4f2d9e69fdbbf02dc8685b8fcffea1ba",
+    "repair-guidance-runtime.test.mjs": "e9f30f8330385fda7d506cb7a55292064f163c62eb4265dc79f6b9ce134b533b",
+    "repair-guidance.mts": "a8b1c54e93a37c03a46cd1873340ed4dcc01f05c2e09be4bb21c6b656ce70aae",
+    "runtime.test.mjs": "10a7eb74391501c754ad919d29af6a47c4823a3bb6cefe8a0462a9e7c82bc23c"
+  },
+  "toolchain": {
+    "compilerPath": "/Users/louiscalata/nisi/node_modules/typescript/bin/tsc",
+    "compilerEntrySha256": "8d5fa5bd883fec0979fc2004f1fe1d99aef40570155d550eadc0b03b55513bf0",
+    "typescript": "6.0.3",
+    "nodeTypes": "24.13.3",
+    "lockSha256": "bb677e234c47798b323e8a9a4643ef64bc174729c950094b43d3b00c0dfc0233",
+    "typeRoots": [
+      "/Users/louiscalata/nisi/node_modules/@types"
+    ]
+  },
+  "negativeLocations": [
+    {
+      "file": "negative-declaration-regressions.mts",
+      "line": 16
+    },
+    {
+      "file": "negative-declaration-regressions.mts",
+      "line": 18
+    },
+    {
+      "file": "negative-declaration-regressions.mts",
+      "line": 20
+    },
+    {
+      "file": "negative-declaration-regressions.mts",
+      "line": 22
+    },
+    {
+      "file": "negative-declaration-regressions.mts",
+      "line": 26
+    },
+    {
+      "file": "negative-declaration-regressions.mts",
+      "line": 28
+    },
+    {
+      "file": "negative-declaration-regressions.mts",
+      "line": 30
+    },
+    {
+      "file": "negative-declaration-regressions.mts",
+      "line": 46
+    },
+    {
+      "file": "negative-declaration-regressions.mts",
+      "line": 48
+    },
+    {
+      "file": "negative-edge-cases.mts",
+      "line": 7
+    },
+    {
+      "file": "negative-edge-cases.mts",
+      "line": 9
+    },
+    {
+      "file": "negative-edge-cases.mts",
+      "line": 11
+    },
+    {
+      "file": "negative-edge-cases.mts",
+      "line": 13
+    },
+    {
+      "file": "negative-edge-cases.mts",
+      "line": 18
+    },
+    {
+      "file": "negative-edge-cases.mts",
+      "line": 20
+    },
+    {
+      "file": "negative-edge-cases.mts",
+      "line": 22
+    },
+    {
+      "file": "negative-edge-cases.mts",
+      "line": 24
+    },
+    {
+      "file": "negative-edge-cases.mts",
+      "line": 26
+    },
+    {
+      "file": "negative-edge-cases.mts",
+      "line": 28
+    },
+    {
+      "file": "negative-edge-cases.mts",
+      "line": 30
+    },
+    {
+      "file": "negative-edge-cases.mts",
+      "line": 32
+    },
+    {
+      "file": "negative-edge-cases.mts",
+      "line": 34
+    },
+    {
+      "file": "negative-edge-cases.mts",
+      "line": 37
+    },
+    {
+      "file": "negative-edge-cases.mts",
+      "line": 46
+    },
+    {
+      "file": "negative-edge-cases.mts",
+      "line": 48
+    },
+    {
+      "file": "negative-edge-cases.mts",
+      "line": 51
+    },
+    {
+      "file": "negative-local-chat-reasoning-effort.mts",
+      "line": 77
+    },
+    {
+      "file": "negative-local-chat-reasoning-effort.mts",
+      "line": 79
+    },
+    {
+      "file": "negative-local-chat-reasoning-effort.mts",
+      "line": 81
+    },
+    {
+      "file": "negative-local-chat-reasoning-effort.mts",
+      "line": 83
+    },
+    {
+      "file": "negative-local-chat-reasoning-effort.mts",
+      "line": 85
+    },
+    {
+      "file": "negative-local-chat-reasoning-effort.mts",
+      "line": 87
+    },
+    {
+      "file": "negative-local-chat-reasoning-effort.mts",
+      "line": 89
+    },
+    {
+      "file": "negative-local-chat-reasoning-effort.mts",
+      "line": 92
+    },
+    {
+      "file": "negative-local-chat-reasoning-effort.mts",
+      "line": 94
+    },
+    {
+      "file": "negative-local-chat-reasoning-effort.mts",
+      "line": 96
+    },
+    {
+      "file": "negative-local-chat-reasoning-effort.mts",
+      "line": 98
+    },
+    {
+      "file": "negative-local-chat-reasoning-effort.mts",
+      "line": 100
+    },
+    {
+      "file": "negative-local-chat-reasoning-effort.mts",
+      "line": 102
+    },
+    {
+      "file": "negative-local-chat-reasoning-effort.mts",
+      "line": 104
+    },
+    {
+      "file": "negative-local-chat-reasoning-effort.mts",
+      "line": 106
+    },
+    {
+      "file": "negative-local-chat-reasoning-effort.mts",
+      "line": 108
+    },
+    {
+      "file": "negative-local-chat-reasoning-effort.mts",
+      "line": 110
+    },
+    {
+      "file": "negative-local-chat-reasoning-effort.mts",
+      "line": 112
+    },
+    {
+      "file": "negative-local-chat-reasoning-effort.mts",
+      "line": 115
+    },
+    {
+      "file": "negative-local-chat-reasoning-effort.mts",
+      "line": 117
+    },
+    {
+      "file": "negative-local-chat-reasoning-effort.mts",
+      "line": 119
+    },
+    {
+      "file": "negative-local-chat-reasoning-effort.mts",
+      "line": 121
+    },
+    {
+      "file": "negative-local-chat-reasoning-effort.mts",
+      "line": 123
+    },
+    {
+      "file": "negative-local-chat-reasoning-effort.mts",
+      "line": 125
+    },
+    {
+      "file": "negative-local-chat-reasoning-effort.mts",
+      "line": 127
+    },
+    {
+      "file": "negative-native-chat.mts",
+      "line": 76
+    },
+    {
+      "file": "negative-native-chat.mts",
+      "line": 78
+    },
+    {
+      "file": "negative-native-chat.mts",
+      "line": 80
+    },
+    {
+      "file": "negative-native-chat.mts",
+      "line": 82
+    },
+    {
+      "file": "negative-native-chat.mts",
+      "line": 84
+    },
+    {
+      "file": "negative-native-chat.mts",
+      "line": 86
+    },
+    {
+      "file": "negative-native-chat.mts",
+      "line": 88
+    },
+    {
+      "file": "negative-native-chat.mts",
+      "line": 90
+    },
+    {
+      "file": "negative-native-chat.mts",
+      "line": 92
+    },
+    {
+      "file": "negative-native-chat.mts",
+      "line": 94
+    },
+    {
+      "file": "negative-output-mode-types.mts",
+      "line": 15
+    },
+    {
+      "file": "negative-output-mode-types.mts",
+      "line": 17
+    },
+    {
+      "file": "negative-output-mode-types.mts",
+      "line": 19
+    },
+    {
+      "file": "negative-repair-guidance.mts",
+      "line": 85
+    },
+    {
+      "file": "negative-repair-guidance.mts",
+      "line": 87
+    },
+    {
+      "file": "negative-repair-guidance.mts",
+      "line": 89
+    },
+    {
+      "file": "negative-repair-guidance.mts",
+      "line": 91
+    },
+    {
+      "file": "negative-repair-guidance.mts",
+      "line": 95
+    },
+    {
+      "file": "negative-repair-guidance.mts",
+      "line": 97
+    },
+    {
+      "file": "negative-repair-guidance.mts",
+      "line": 99
+    },
+    {
+      "file": "negative-repair-guidance.mts",
+      "line": 102
+    },
+    {
+      "file": "negative-repair-guidance.mts",
+      "line": 104
+    }
+  ],
+  "notBefore": "2026-09-20T14:38:17.400Z",
+  "notAfter": "2026-09-20T14:38:19.474Z",
+  "observations": {
+    "node22": null,
+    "node24": {
+      "receiptSha256": "412e2fa843ca3cda318f419a582451c73b40169f6da6b712e1ef7a17f0fdb584",
+      "receiptByteLength": 251535,
+      "node": {
+        "version": "v24.18.0",
+        "path": "/usr/local/bin/node",
+        "sha256": "bf0cea6ab3631b6b53a9709ed54d62608dd0725187426d34d4d6af6644c5197f"
+      },
+      "archive": {
+        "sha256": "f79c9f133966b4258953021ea2d107bad991121704ce9d9c299090eba7879972",
+        "byteLength": 43624
+      }
+    }
+  }
+}
