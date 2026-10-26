@@ -1,0 +1,105 @@
+{
+  "summary": "Critique + minimal contract for an opt-in `--review-history` path in the private live-demo CLI. Recommendation: keep the terminal adapter dumb (returns raw outcome/text), do the exact-match parse inside one small pure `reviewHistoryForStorage()` function (not in CLI orchestration, not in the adapter), open the owner only after a positive exact match and a digest recheck, call `captureHistory` once, and treat the moment of that call as the point of no return. Default CLI behavior and summary shape are byte-identical when the flag is absent. Not executed; contract only.",
+  "deliverable": "## 1. Critique of the proposal (keep / change)\n\nKeep: wrapper parser before untouched `parseLiveDemoArguments`; no open/create before positive answer; full-digest typing; per-review declaration ID; one-attempt capture; summary key only when requested.\n\nChange / tighten:\n1. **Who parses the answer.** Do not let the terminal adapter return `approved:true` (that is consent inference inside an injected dependency) and do not parse in `runPrivateLiveDemo` (untestable, mixes lifecycle with policy). Put the exact-match rule in the small review function; the adapter only returns raw outcome. Orchestration never sees the typed text.\n2. **Wrapper parser must be strict.** Accept only the bare token `--review-history` (reject `--review-history=x`, reject duplicates), remove it, pass the remaining array unchanged to `parseLiveDemoArguments`. Anything else is a legacy/V3 concern and must not be interpreted by the wrapper.\n3. **\"Retention 14 days\" is a declaration, not enforcement.** There is no sweeper; the prompt must say \"declared retention 14 days; nothing deletes it automatically\". Otherwise the UI overstates a guarantee.\n4. **Hashes \u2260 anonymization.** Metadata still links run\u2192task/baseline/candidate identity. Prompt text must say the journal is linkable to this task, not \"anonymous\".\n5. **Rendering safety.** Preview strings (task ids etc.) are rendered with `JSON.stringify` + control-char/ANSI escaping; never `console.log(obj)`. Show the digest as the host gave it (`sha256`) and, if the review function can compute a canonical digest of the copied preview, verify equality before showing; if it cannot, treat `sha256` as opaque and only recheck for equality later.\n6. **1-minute expiry vs 64-hex typing.** Expiry must be stamped *after* the positive answer (at declaration mint time), not before prompting, or slow typists will always expire. Do not re-mint and retry on `EXPIRED`.\n7. **Cancellation after admission.** Define the point of no return as \"`captureHistory` invoked\". After that, cancellation/deadline are *recorded* in the result, never used to discard, retry, or delete.\n8. **Signal/listener hygiene.** The prompt registers its own `SIGINT`/`SIGTERM` handlers and removes exactly those (by reference) in `finally`; it must never call `removeAllListeners` or touch the CLI's existing deadline/cancel machinery. Close readline / release stdin (`pause()`) so the process can exit.\n\n## 2. API contract (small, host-facing, injected deps)\n\n```ts\n// examples/private-history-review.mjs (new, called by repository-live-model.mjs)\n\ntype PromptOutcome =\n  | { kind: 'answer'; text: string }          // one line, raw, untrimmed\n  | { kind: 'eof' } | { kind: 'signal'; name: string }\n  | { kind: 'timeout' } | { kind: 'no-tty' };\n\ntype TerminalAdapter = {\n  isInteractive(): boolean;                                 // stdin+stdout TTY\n  show(lines: string[]): Promise<void>;                     // already-escaped text\n  ask(question: string, opts: { timeoutMs: number; signal: AbortSignal }): Promise<PromptOutcome>;\n};\n\ntype OpenOwner = (dest: { runDir: string; journalPath: string }) => Promise<Owner>; // trusted Node fs, root-supplied\n// Owner is the existing storage owner (open/record/inspect/maintenance). Review uses only: pass to captureHistory, then close().\n\ntype ReviewDeps = {\n  terminal: TerminalAdapter;\n  openOwner: OpenOwner;\n  clock: () => Date;                 // trusted wall clock, injected for tests\n  mintDeclarationId: () => string;   // uuid; minted only after approval\n  cancellation: AbortSignal;         // existing CLI cancel\n  deadlineAt: number;                // existing CLI deadline (epoch ms)\n  promptTimeoutMs?: number;          // default 120_000\n};\n\nexport async function reviewHistoryForStorage(host, runDir, deps): Promise<ReviewResult>;\n```\n\nFixed inputs derived inside (no caller choice): `journalPath = path.join(runDir, 'history-journal.json')`, `retentionDays = 14`, `expiryMs = 60_000`, `projectId = 'task:' + taskFingerprint(preview)`.\n\n```ts\ntype ReviewResult =\n  | { status: 'NOT_STORED'; reason: 'NO_TTY'|'EOF'|'SIGNAL'|'TIMEOUT'|'DECLINED'|'MALFORMED'|'CANCELLED'|'DEADLINE'|'PREVIEW_UNAVAILABLE'|'PREVIEW_INVALID'|'DIGEST_CHANGED'|'OPEN_FAILED';\n      previewSha256: string|null; journalPath: string; recordAttempted: false }\n  | { status: 'RECORDED'|'REJECTED'|'UNCERTAIN'; reason: string; previewSha256: string;\n      journalPath: string; declarationId: string; recordAttempted: true;\n      consumed: boolean; journal: unknown|null; cancelledAfterAdmission: boolean };\n```\n\nDeclaration passed to `captureHistory` (written form, separate from preview):\n```json\n{ \"declarationId\": \"<uuid>\", \"projectId\": \"task:<fp>\", \"previewSha256\": \"<64hex>\",\n  \"text\": \"Operator typed STORE plus full digest at local terminal; authorizes ONLY additional metadata journal at <journalPath>; declared retention 14 days, no sweeper; no learning/publication.\",\n  \"actor\": \"local-terminal-operator\", \"authenticated\": false,\n  \"issuedAt\": \"<iso>\", \"expiresAt\": \"<iso +60s>\", \"retentionDays\": 14, \"schemaVersion\": 1 }\n```\nNot included anywhere: the typed answer, raw preview copy outside the host, source/paths/errors.\n\nExact-match rule (pure, unit-tested): `text.trimEnd() === 'STORE ' + previewSha256` (single space, lowercase hex as shown, no other normalization). Anything else \u2192 `MALFORMED` or, for `n`/`no`/empty, `DECLINED` (both are NOT_STORED; distinction is cosmetic).\n\n## 3. State machine\n\n```\nS0 IDLE \u2500\u2500flag absent\u2500\u2500\u25b6 SKIPPED (summary unchanged, no key)\nS0 \u2500\u2500flag\u2500\u2500\u25b6 (after collectLiveHostEvidenceV1 returned) S1\nS1 GATE: cancellation.aborted \u2192 NOT_STORED/CANCELLED ; clock()>deadline \u2192 NOT_STORED/DEADLINE\nS2 PREVIEW: host.historyPreview()\n     throws/status!=='available' \u2192 PREVIEW_UNAVAILABLE\n     schemaVersion mismatch, authorizing!==false, sha256 not 64hex, preview not plain JSON \u2192 PREVIEW_INVALID\n     shown = deepFreeze(structuredClone(preview)); shownSha = sha256\nS3 TTY: !terminal.isInteractive() \u2192 NOT_STORED/NO_TTY (nothing shown)\nS4 SHOW: escaped metadata, shownSha, journalPath, \"declared 14d, no sweeper\",\n         \"no learning/publication\", \"this demo ALREADY retains raw run evidence in <runDir>;\n         this choice governs ONLY the additional metadata journal\", \"linkable to task, hashes are not anonymization\"\nS5 ASK (timeout, abort on cancellation): outcome \u2192 eof/signal/timeout/no-tty \u2192 NOT_STORED/<reason>\n     answer \u2260 exact \u2192 DECLINED|MALFORMED\nS6 GATE again (cancellation, deadline) \u2192 NOT_STORED/CANCELLED|DEADLINE\nS7 RECHECK: host.historyPreview().sha256 !== shownSha \u2192 NOT_STORED/DIGEST_CHANGED\nS8 MINT: declarationId, issuedAt=clock(), expiresAt=+60s\nS9 OPEN: owner = await openOwner({runDir, journalPath}); throw \u2192 NOT_STORED/OPEN_FAILED (owner never opened)\nS10 CAPTURE (point of no return): r = await host.captureHistory({owner, declaration, clock})\n     \u2014 exactly one call; no catch-and-retry; cancellation after this only sets cancelledAfterAdmission\n     map r \u2192 RECORDED | REJECTED | UNCERTAIN (INTERNAL_ERROR \u21d2 consumed:true, journal:null preserved as returned)\nS11 CLEANUP (finally, from S4 onward): remove own signal listeners, close readline, stdin.pause();\n     from S9 onward: await owner.close?.() best-effort, errors appended to result.reason not thrown\n```\n\nInvariants: no `fs` call before S9; no second `captureHistory`; `shown` is the only object rendered and the only source of `shownSha`; host preview is re-read (S7) but never re-rendered; review function has no reference to model/Swift/shell.\n\n## 4. CLI integration (runPrivateLiveDemo)\n\n```\nconst { reviewHistory, rest } = parseReviewHistoryFlag(argv);     // new wrapper\nconst args = parseLiveDemoArguments(rest);                        // unchanged\n... existing build/host/run/collect ...\nlet historyReview;\nif (reviewHistory) historyReview = await reviewHistoryForStorage(host, runDir, {\n  terminal: realTerminalAdapter(process), openOwner: realStorageOpener, clock: () => new Date(),\n  mintDeclarationId: randomUUID, cancellation, deadlineAt });\nwriteReceipt(...);   // unchanged content\nsummary = reviewHistory ? { ...legacySummary, historyReview } : legacySummary;\n```\nReceipt and engine/host reports are not modified by the review outcome. The journal, if any, is a separate file inside the owned run directory.\n\n## 5. Callback vs. text parsing \u2014 decision\n\nUse an **injected terminal adapter returning raw outcomes**, with the **exact-match parse inside `reviewHistoryForStorage`**. Rationale: (a) the adapter cannot fabricate approval; (b) the match rule is a pure function under test with fixtures; (c) orchestration never touches user text or fs; (d) tests can drive every branch with a scripted adapter and a temp-dir opener without TTY, models, or Swift. Reject the alternative \"approval callback returning boolean\" because it moves the trust decision into replaceable code, and reject \"parse in orchestration\" because it couples lifecycle code to prompt format.\n\n## 6. Top failure cases (\u22645)\n\n1. **Digest drift** \u2014 host re-settles or preview changes between S4 and S10. Mitigation: S7 recheck; any mismatch aborts before open. Residual: change between S7 and S10 is caught by `captureHistory`'s own digest binding (REJECTED), which is reported, not retried.\n2. **Cancellation/deadline after admission** \u2014 signal arrives during S10. Must not abort, delete, or retry; result reports RECORDED/UNCERTAIN with `cancelledAfterAdmission:true`. Test: abort during a fake owner's slow write.\n3. **Prompt hang / process not exiting** \u2014 readline keeps stdin open, or stale listeners. Mitigation: bounded timeout, `finally` cleanup of only own listeners, `stdin.pause()`. Test: assert listener counts before/after equal.\n4. **UNCERTAIN INTERNAL_ERROR after open** \u2014 journal file may exist partially written, `journal:null`, `consumed:true`. Report as is; do not touch the file; summary states uncertainty. Test: fake owner whose `record` throws post-admission.\n5. **Expiry race** \u2014 slow `openOwner` pushes past 60 s \u2192 REJECTED/EXPIRED. Do not re-mint. Report; operator reruns the whole demo if desired. Test: injected clock jump between S8 and S10.\n\n## 7. Boundaries made explicit\n\n- Data: preview metadata only (hashed diagnostics, identities, counts, flags); typed answer never stored; raw evidence retention is pre-existing and unaffected.\n- Provenance: declaration carries `actor:'local-terminal-operator', authenticated:false`; it is a trusted host declaration, not identity.\n- Authorization: the flag enables review only; storage requires exact typed match; owner is opened only after that; host's one-attempt consumption is unchanged and not wrapped.",
+  "risks": [
+    "Uncertain: whether the host exposes enough for the review function to recompute the preview digest; if not, the `sha256` field is treated as opaque and only equality-rechecked, which relies on the host's own integrity.",
+    "Uncertain: exact shape of `captureHistory` results (field names for consumed/journal/reason) \u2014 mapping in S10 must be aligned with the real host before merging.",
+    "Owner close semantics after UNCERTAIN are unspecified; best-effort close could itself throw and must not be allowed to mask the capture result.",
+    "Typing 64 hex characters is high friction; a copy-paste-friendly terminal is assumed, and a mistyped digest simply yields NOT_STORED (acceptable but may frustrate).",
+    "The 14-day retention is declarative only (no sweeper); if a later sweeper is added it must read the declaration, not assume the number.",
+    "Wrapper parser could accidentally swallow a legitimately identical token in future legacy/V3 grammars; guard with a test that all existing fixtures parse identically with and without the wrapper."
+  ],
+  "verification": [
+    "Argument tests: every existing legacy/V3 fixture invocation yields identical parse output through the wrapper; `--review-history=x` and duplicate flags are rejected; absent flag yields `reviewHistory:false`.",
+    "Adapter-driven branch tests in a temp dir with a fake host: eof, signal, timeout, no-tty, declined, malformed, wrong-digest, cancelled-before, deadline-before \u2192 assert no file created under runDir and `recordAttempted:false`.",
+    "Positive path test: scripted answer `STORE <sha>` \u2192 assert openOwner called once with journalPath inside runDir, captureHistory called exactly once, declaration contains previewSha256/projectId/expiresAt=+60s/retentionDays 14 and no raw answer.",
+    "Digest-drift test: fake host returns a different sha256 on second historyPreview \u2192 NOT_STORED/DIGEST_CHANGED, opener never called.",
+    "Post-admission cancellation test: abort the signal while fake owner's record is pending \u2192 result RECORDED/UNCERTAIN with cancelledAfterAdmission true, no second capture, no deletion.",
+    "Listener hygiene test: process listener counts for SIGINT/SIGTERM and stdin state are identical before and after review in every branch.",
+    "Summary shape test: without the flag the final summary object deep-equals the legacy summary; with the flag it adds only `historyReview`.",
+    "Manual review: confirm rendered prompt text escapes control/ANSI sequences and contains the raw-evidence-already-retained warning and the no-sweeper statement."
+  ],
+  "invocation_status": "succeeded",
+  "status": "succeeded",
+  "model_usage": {
+    "claude-haiku-4-5-20251001": {
+      "inputTokens": 1832,
+      "outputTokens": 15,
+      "cacheReadInputTokens": 0,
+      "cacheCreationInputTokens": 0,
+      "webSearchRequests": 0,
+      "costUSD": 0.001907,
+      "contextWindow": 200000,
+      "maxOutputTokens": 32000,
+      "thinkingTokens": 0,
+      "canonicalModel": "claude-haiku-4-5",
+      "provider": "firstParty",
+      "costBasis": "list"
+    },
+    "claude-opus-5": {
+      "inputTokens": 2,
+      "outputTokens": 7093,
+      "cacheReadInputTokens": 737,
+      "cacheCreationInputTokens": 1963,
+      "webSearchRequests": 0,
+      "costUSD": 0.19733350000000002,
+      "contextWindow": 1000000,
+      "maxOutputTokens": 64000,
+      "thinkingTokens": 1559,
+      "canonicalModel": "claude-opus-5",
+      "provider": "firstParty",
+      "costBasis": "list"
+    }
+  },
+  "reported_models": [
+    "claude-haiku-4-5-20251001",
+    "claude-opus-5"
+  ],
+  "usage": {
+    "input_tokens": 2,
+    "cache_creation_input_tokens": 1963,
+    "cache_read_input_tokens": 737,
+    "output_tokens": 7093,
+    "output_tokens_details": {
+      "thinking_tokens": 1559
+    },
+    "server_tool_use": {
+      "web_search_requests": 0,
+      "web_fetch_requests": 0
+    },
+    "service_tier": "standard",
+    "cache_creation": {
+      "ephemeral_1h_input_tokens": 1963,
+      "ephemeral_5m_input_tokens": 0
+    },
+    "inference_geo": "not_available",
+    "iterations": [
+      {
+        "input_tokens": 2,
+        "output_tokens": 7093,
+        "cache_read_input_tokens": 737,
+        "cache_creation_input_tokens": 1963,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 1963
+        },
+        "type": "message"
+      }
+    ],
+    "speed": "standard"
+  },
+  "total_cost_usd": 0.19924050000000001,
+  "duration_ms": 96819,
+  "tools_enabled": false,
+  "session_persisted": false,
+  "write_owner": "codex",
+  "requested_model": "opus",
+  "mode": "delegate",
+  "attempts": 1,
+  "wall_seconds": 98.637,
+  "created_at": "2026-09-14T02:57:46.211131+00:00",
+  "prior_attempts": [],
+  "total_wall_seconds": 98.637,
+  "prior_attempt_usage": [],
+  "total_usage_complete": true
+}

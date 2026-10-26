@@ -1,0 +1,104 @@
+{
+  "summary": "Scope is close to minimal but conflates three separable fixes (permission drift for online code mode; packet/queue terminal-failure semantics; new local draft/review tool). Recommend splitting into three small, independently revertable changes, landing the config/permission and failure-receipt fixes first, and gating the new tool behind a local smoke test because there is no evidence the resident models can currently answer at all. Biggest pitfalls: client-side \"no load/unload\" cannot be guaranteed against an auto-loading local server; advisory envelope must not be readable as certification; changing queue exit codes may break callers.",
+  "deliverable": "## Is this the smallest defensible scope?\n\nAlmost. It is defensible, but it is not one change\u2014it is three. Ship them as separate, ordered, revertable commits from the single write owner:\n\nA. Online code mode repair (config only). The \"bash denied\" message vs. live agent allowing bash means two permission sources of truth. Fix = pick one source (agent config), make the command read it, and delete the stale message path. No new code paths.\n\nB. Packet/queue terminal semantics (small runtime fix). On timeout/nonzero: write a terminal failure receipt (status=failed, reason, exit code, deadline hit, stage), transition packet out of \"executing\", and return nonzero from the queue when all attempts fail. Default route = local only. Historical records: never rewritten; add the new status only for new runs (version the receipt schema).\n\nC. Local draft/review tool (the only genuinely new surface). Keep it to one function with a hardcoded loopback endpoint constant, an explicit allow-list of model names supplied by the caller, sequential draft\u2192review, fixed deadlines, cancellation that actually aborts the HTTP request, and the versioned advisory envelope. No skill polish until C passes local smoke.\n\nWhat to cut from the proposal for v1:\n- The \"real skill\" with resident-safe rules: defer to after smoke; a short doc in the agent command is enough initially.\n- Any per-call configurability beyond model name(s) and deadline. No prompt templates registry, no retries.\n\n## Minimal implementation plan\n\n0. Verify before coding (no assumptions): actual agent model in config (is it really opencode/big-pickle?); whether local-builder/local-verify roles resolve to a real endpoint/model; which local server is on loopback and whether it auto-loads models on request (keep_alive / on-demand load behavior); why the two 900s attempts timed out (server not running? model not resident? request too large?).\n1. Change A: unify permission source; add one test asserting command and agent agree on bash allow/deny.\n2. Change B: add terminal failure receipt writer to packet runner; queue returns nonzero on all-fail; default route local only behind the existing route config (free\u2192go removed from default, not deleted from code). Add schema version field so old receipts remain parseable.\n3. Change C, minimal:\n   - Preflight: GET loaded-models list from loopback; refuse (error in envelope, no request sent) if requested model not already resident. Do not send any load/keep_alive/unload parameters.\n   - Input: run_id, task_id, candidate_id, candidate bytes (SHA256 computed by tool), model_draft, model_review (optional), prompt cap, output cap, deadline.\n   - Execution: sequential; each stage bounded by its own deadline and total deadline; cancellation propagates to the HTTP client.\n   - Envelope v1: identifiers, candidate_sha256, requested_model, reported_model (or \"unknown\"), model_match (true/false/unknown), per-stage status (ok/timeout/cancelled/malformed/error), usage or \"unknown\", raw error strings, and a fixed field advisory_only=true. No pass/fail verdict field.\n   - Models get no tools, no file paths, no write ability; the tool never writes outside its output envelope.\n4. Wire into the online agent command as a read-only advisory step; Nisi continues to require deterministic host checks (lint/tests/SHA match) before accepting anything.\n5. Tests: malformed JSON/truncated output \u2192 stage=malformed, no crash; reported_model \u2260 requested \u2192 model_match=false and envelope still emitted; timeout \u2192 stage=timeout and packet receipt=failed; route scope \u2192 any non-loopback host rejected at construction; candidate binding \u2192 altered bytes change SHA and envelope; local smoke \u2192 one tiny prompt against a resident model, recorded as the first inference evidence.\n\n## Pitfalls\n- Treating \"no load/unload\" as a client-side property: many local servers load on first request and evict others. Only a resident-check preflight plus absent keep_alive params makes this defensible; document that the server's own policy is out of scope.\n- Envelope drift into certification: keep no verdict field; any consumer parsing \"review says OK\" as acceptance defeats the design.\n- Queue exit-code change: callers that relied on return 0 will now see failures\u2014audit callers before landing B.\n- Model mismatch when the server does not report model: must be \"unknown,\" never assumed match.\n- Building C before confirming the server answers at all: the two 900s timeouts may mean nothing is resident; smoke first, or C ships untested.\n- No performance or cost claims should accompany this; there is no inference evidence to support them.",
+  "risks": [
+    "Permission drift persists: fixing only the command message or only the agent config leaves two sources of truth; online code mode may still deny/allow inconsistently. Mitigate with a single config read path and a test asserting agreement.",
+    "Resident-safety cannot be guaranteed client-side: a local server that auto-loads on request may evict the resident OpenCode parent when a non-resident model is named. Mitigate with a loaded-models preflight refusing non-resident models and no keep_alive/load params.",
+    "Terminal-state and exit-code changes can break callers: returning nonzero from the queue on all-fail and adding a 'failed' status may surprise existing consumers or tooling that parses receipts. Mitigate with schema versioning, no rewrite of historical records, and a caller audit.",
+    "Advisory envelope misread as certification: Nisi or a downstream step may treat a 'review ok' stage as acceptance. Mitigate by omitting any verdict field, setting advisory_only=true, and keeping deterministic host checks mandatory.",
+    "No inference evidence: the two 900s timeouts suggest the local endpoint may not answer at all; building the tool and skill before a smoke test risks shipping an untested path and misdiagnosing failures as tool bugs."
+  ],
+  "verification": [
+    "Confirm actual agent model and permission source in installed config; run one command-vs-agent bash permission check after change A.",
+    "Confirm which local server listens on loopback and whether it auto-loads/evicts models; document its keep_alive default.",
+    "Run local smoke: tiny prompt to a confirmed-resident model with a short deadline; record reported model and usage as the first inference evidence.",
+    "Force a timeout and a nonzero exit in packet runner; verify packet leaves 'executing', a terminal failure receipt exists, and queue returns nonzero when all routes fail.",
+    "Feed malformed/truncated model output and a mismatched reported model; verify envelope still emits with stage=malformed / model_match=false and no crash.",
+    "Attempt to construct the tool with a non-loopback URL and with an altered candidate; verify rejection and SHA change respectively.",
+    "Verify old receipts and historical queue results parse unchanged after schema version bump."
+  ],
+  "invocation_status": "succeeded",
+  "status": "succeeded",
+  "model_usage": {
+    "claude-haiku-4-5-20251001": {
+      "inputTokens": 1334,
+      "outputTokens": 17,
+      "cacheReadInputTokens": 0,
+      "cacheCreationInputTokens": 0,
+      "webSearchRequests": 0,
+      "costUSD": 0.001419,
+      "contextWindow": 200000,
+      "maxOutputTokens": 32000,
+      "thinkingTokens": 0,
+      "canonicalModel": "claude-haiku-4-5",
+      "provider": "firstParty",
+      "costBasis": "list"
+    },
+    "claude-fable-5-1": {
+      "inputTokens": 2,
+      "outputTokens": 3401,
+      "cacheReadInputTokens": 737,
+      "cacheCreationInputTokens": 1186,
+      "webSearchRequests": 0,
+      "costUSD": 0.19397425,
+      "contextWindow": 1000000,
+      "maxOutputTokens": 64000,
+      "thinkingTokens": 841,
+      "canonicalModel": "claude-fable-5-1",
+      "provider": "firstParty",
+      "costBasis": "list"
+    }
+  },
+  "reported_models": [
+    "claude-haiku-4-5-20251001",
+    "claude-fable-5-1"
+  ],
+  "usage": {
+    "input_tokens": 2,
+    "cache_creation_input_tokens": 1186,
+    "cache_read_input_tokens": 737,
+    "output_tokens": 3401,
+    "output_tokens_details": {
+      "thinking_tokens": 841
+    },
+    "server_tool_use": {
+      "web_search_requests": 0,
+      "web_fetch_requests": 0
+    },
+    "service_tier": "standard",
+    "cache_creation": {
+      "ephemeral_1h_input_tokens": 1186,
+      "ephemeral_5m_input_tokens": 0
+    },
+    "inference_geo": "not_available",
+    "iterations": [
+      {
+        "input_tokens": 2,
+        "output_tokens": 3401,
+        "cache_read_input_tokens": 737,
+        "cache_creation_input_tokens": 1186,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 1186
+        },
+        "type": "message",
+        "model": null
+      }
+    ],
+    "speed": "standard"
+  },
+  "total_cost_usd": 0.19539325,
+  "duration_ms": 51630,
+  "tools_enabled": false,
+  "session_persisted": false,
+  "write_owner": "codex",
+  "requested_model": "fable",
+  "mode": "delegate",
+  "attempts": 1,
+  "wall_seconds": 52.365,
+  "created_at": "2026-09-18T23:04:52.154198+00:00",
+  "prior_attempts": [],
+  "total_wall_seconds": 52.366,
+  "prior_attempt_usage": [],
+  "total_usage_complete": true
+}

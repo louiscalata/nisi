@@ -1,0 +1,32 @@
+✔ constants are frozen and complete (0.634916ms)
+✔ defaults apply and empty loop is done (Python-faithful) (0.0965ms)
+✔ add throws on duplicate id (0.188541ms)
+✔ add throws when tile names itself (neighbours or children) (0.056042ms)
+✔ add throws on unknown neighbour or unknown child (0.064625ms)
+✔ add throws when child already has a parent (0.058208ms)
+✔ unknown tile operations throw (0.133833ms)
+✔ leaf render returns RENDERED (0.523833ms)
+✔ leaf verify PASS promotes and records output (0.216959ms)
+✔ identity excludes attempt: same key used across attempts, fails, tombstone and re-promote (0.271625ms)
+✔ replay: identical resubmit promotes instantly with REPLAY (0.113334ms)
+✔ tombstone blocks replay until re-verified (0.117833ms)
+✔ parent render requires all children promoted (0.1205ms)
+✔ parent verify PASS promotes after children (0.105042ms)
+✔ apron stale returns to OPEN without spending an attempt (0.088125ms)
+✔ validity failure increments attempt and returns to OPEN (0.039042ms)
+✔ quality failure increments attempt and returns to OPEN (0.035666ms)
+✔ attempt ceiling quarantines after max attempts (0.076959ms)
+✔ reviewer must differ from source (0.058125ms)
+✔ reopen cascades upward only; siblings and children untouched (0.19225ms)
+✔ reopen ceiling quarantines after max reopens (0.087167ms)
+✔ reopen requires a reason (0.055583ms)
+✔ shared journal replays a whole shot across jobs (0.05625ms)
+✔ snapshot reports states and is deeply frozen (0.09425ms)
+ℹ tests 24
+ℹ suites 0
+ℹ pass 24
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 44.318625

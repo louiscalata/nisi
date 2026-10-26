@@ -1,0 +1,24 @@
+{
+  "name": "nisi-private-v02-finish-cluster",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "license": "UNLICENSED",
+  "scripts": {
+    "test": "node --test ../../tests/workflow.test.mjs ../../tests/veritas-import.test.mjs ../../tests/finish-cluster-dispatch.test.mjs ../../tests/finish-cluster-inventory.test.mjs ../../tests/native-overlay-final-snapshot.test.mjs",
+    "test:inventory": "node check-cluster.mjs",
+    "test:dispatch": "node dispatch-check.mjs",
+    "test:dispatch-regression": "node --test ../../tests/finish-cluster-dispatch.test.mjs",
+    "test:c01": "node --test ../../tests/native-overlay-inventory-v1.test.mjs ../../tests/nisi-native-overlay.test.mjs ../../tests/veritas-import.test.mjs ../../tests/finish-cluster-dispatch.test.mjs ../../tests/finish-cluster-inventory.test.mjs ../../tests/native-overlay-final-snapshot.test.mjs",
+    "test:oracle": "node --test ../../tests/native-overlay-inventory-v1.test.mjs",
+    "test:c02": "node --experimental-test-module-mocks --test ../../work-orders/parallel-seven-tracks-v1/track1/repository-fixture-runner.test.mjs ../../work-orders/parallel-seven-tracks-v1/track1/findings-cluster-receipt.test.mjs ../../tests/fixture-receipt-completion.test.mjs",
+    "test:c03": "node --experimental-test-module-mocks --test ../../work-orders/parallel-seven-tracks-v1/track1/repository-fixture-runner.test.mjs ../../work-orders/parallel-seven-tracks-v1/track1/findings-cluster-receipt.test.mjs ../../work-orders/parallel-seven-tracks-v1/track1/findings-cluster-cleanup.test.mjs ../../tests/fixture-receipt-completion.test.mjs ../../tests/fixture-cleanup-boundaries.test.mjs ../../tests/fixture-cleanup-state.test.mjs ../../tests/fixture-completion-reader.test.mjs",
+    "test:c04": "node --experimental-test-module-mocks --test ../../work-orders/parallel-seven-tracks-v1/track1/repository-fixture-runner.test.mjs ../../work-orders/parallel-seven-tracks-v1/track1/findings-cluster-containment.test.mjs ../../tests/fixture-receipt-completion.test.mjs ../../work-orders/parallel-seven-tracks-v1/track1/findings-cluster-receipt.test.mjs ../../tests/fixture-cleanup-boundaries.test.mjs ../../tests/fixture-cleanup-state.test.mjs ../../tests/fixture-completion-reader.test.mjs ../../work-orders/parallel-seven-tracks-v1/track1/findings-cluster-cleanup.test.mjs",
+    "test:c05": "node --experimental-test-module-mocks --test ../../work-orders/parallel-seven-tracks-v1/track1/repository-fixture-runner.test.mjs ../../work-orders/parallel-seven-tracks-v1/track1/findings-cluster-receipt.test.mjs ../../work-orders/parallel-seven-tracks-v1/track1/findings-cluster-cleanup.test.mjs ../../work-orders/parallel-seven-tracks-v1/track1/findings-cluster-containment.test.mjs ../../work-orders/parallel-seven-tracks-v1/track1/findings-cluster-input-imports.test.mjs ../../tests/fixture-receipt-completion.test.mjs ../../tests/fixture-cleanup-boundaries.test.mjs ../../tests/fixture-cleanup-state.test.mjs ../../tests/fixture-completion-reader.test.mjs",
+    "test:c06": "node --test ../../work-orders/v02-finish-cluster-v1/restart/host-bundle-integration.test.mjs ../../tests/bundle-restart-demo.test.mjs ../../tests/journal-restart-recovery.test.mjs ../../tests/interrupted-run-decision.test.mjs",
+    "test:c07": "node --test ../../work-orders/v02-finish-cluster-v1/native-incident/admission-integration.test.mjs ../../tests/native-incident-source.test.mjs ../../tests/native-incident-source-host.test.mjs ../../tests/native-incident-source-boundaries.test.mjs",
+    "test:c08": "node --test ../../work-orders/v02-finish-cluster-v1/agent/agent-evidence-v1.test.mjs ../../tests/opencode-orchestration-v1.test.mjs",
+    "test:c09": "node --test ../../work-orders/v02-finish-cluster-v1/consumer/runtime-matrix-v1.test.mjs ../../tests/private-package-contract.test.mjs ../../tests/private-consumer.test.mjs",
+    "test:c10": "node --test ../../work-orders/v02-finish-cluster-v1/finish/evidence-index-v1.test.mjs ../../work-orders/parallel-seven-tracks-v1/track6/check-product-readiness.test.mjs ../../work-orders/parallel-seven-tracks-v1/track6/check-product-readiness.hardening.test.mjs ../../work-orders/parallel-seven-tracks-v1/track7/check-release-readiness.test.mjs ../../work-orders/parallel-seven-tracks-v1/track7/check-release-readiness.hardening.test.mjs"
+  }
+}

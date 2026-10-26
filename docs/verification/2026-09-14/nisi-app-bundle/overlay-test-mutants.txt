@@ -1,0 +1,21 @@
+# tests/nisi-native-overlay.test.mjs mutant run — 2026-09-14T08:32Z
+# test sha256 902409e430267d15d6d0078da0d0ef9c6b8b84bfff63c7a12dfdfd08ca33da46
+# scratch copies (never the real tree) of native/, integrations/veritas/ (complete, 225-file manifest verifies), scripts/verify-veritas-import.mjs, build-nisi-macos.mjs; one single-change mutant per copy
+
+pristine copy: ℹ pass 8 ℹ fail 0 
+mutant 1 (sabotaged branded line): ℹ pass 7 ℹ fail 1 
+mutant 2 (extra frozen app file): ℹ pass 6 ℹ fail 2 
+mutant 3 (extra product): ℹ pass 7 ℹ fail 1 
+mutant 4 (extra target): ℹ pass 7 ℹ fail 1 
+mutant 5 (LSBackgroundOnly): ℹ pass 7 ℹ fail 1 
+mutant 6 (script launches the executable): ℹ pass 7 ℹ fail 1 
+mutant 7 (script signs with -s): ℹ pass 7 ℹ fail 1 
+mutant 8 (CODE_SIGNING_ALLOWED flipped): ℹ pass 7 ℹ fail 1 
+mutant 9 (symlink replaced by identical copy): ℹ pass 6 ℹ fail 2 
+mutant 10 (identity string rebranded (platform prefix)): ℹ pass 7 ℹ fail 1 
+mutant 11 (R1: Evil.swift under VeritasCore/DerivedData (verifier-excluded name)): ℹ pass 7 ℹ fail 1 
+mutant 12 (R1b: one frozen source byte edited): ℹ pass 7 ℹ fail 1 
+mutant 13 (dot-dir source under a mirrored target): ℹ pass 7 ℹ fail 1 
+
+# receipt script (v3) against mutant 11 in its scratch copy (no swift build reached): status FAIL, failure IMPORT_UNEXPECTED_EXCLUSION
+# (the compiled-source manifest walk would refuse it too: COMPILED_SOURCE_NOT_IN_MANIFEST)

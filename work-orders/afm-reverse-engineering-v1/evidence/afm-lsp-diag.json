@@ -1,0 +1,1 @@
+{"test":"lsp-diag","file":"/tmp/test-lsp.py","language":"python","errors":["error L2:14 Type Literal[\"not an int\"] not assignable to int","error L5:5 Expected 0 positional arguments"],"status":"PASS"}

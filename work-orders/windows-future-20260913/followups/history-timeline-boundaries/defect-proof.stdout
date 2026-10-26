@@ -1,0 +1,34 @@
+✔ buildTimeline: exactly 200 events with bounded fields (1.162584ms)
+✔ buildTimeline: 128-char strings accepted unchanged (0.0645ms)
+✔ buildTimeline: MAX_SAFE attempt and createdAt (0.05625ms)
+✔ buildTimeline: large finite durations preserved (0.057708ms)
+✖ buildTimeline: out-of-order events sorted correctly (0.434042ms)
+ℹ tests 5
+ℹ suites 0
+ℹ pass 4
+ℹ fail 1
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 35.235333
+
+✖ failing tests:
+
+test at tests/windows-boundaries.test.mjs:97:1
+✖ buildTimeline: out-of-order events sorted correctly (0.434042ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly deep-equal:
+  + actual - expected
+  
+    [
+  -   'FAIL',
+      'INCONCLUSIVE',
+      'PASS',
+  +   'FAIL'
+    ]
+
+Deliberate isolated defect:
+-  checked.sort((a, b) => a.attempt - b.attempt || a.createdAt - b.createdAt || a.index - b.index);
++  checked.sort((a, b) => b.attempt - a.attempt || a.createdAt - b.createdAt || a.index - b.index);
+
+Exit 1. The retained isolated copy is `/tmp/nisi-history-boundary-defect.IgIeZb`.
+The pack source remained SHA-256 `a3c770f6534c7b2243bca1288fd642627294bf54203f432df702a07173960f79`.

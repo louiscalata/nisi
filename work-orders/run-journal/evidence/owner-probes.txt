@@ -1,0 +1,84 @@
+// Supplemental owner probes for independent-review gaps; never part of the executor's oracle.
+// Run from the isolated work-order root via node --input-type=module on stdin.
+import test from 'node:test';
+import assert from 'node:assert/strict';
+import {createHash} from 'node:crypto';
+import {createRunJournal,reopen} from './src/run-journal-v1.mjs';
+const cfg = p => ({projectId:'p',maxEntries:8,heartbeatTtlMs:10,redactPaths:[],...p});
+const e = (id='a',p={}) => ({id,projectId:'p',runId:'r',attempt:0,candidateId:'c',stage:'tests',receiptId:null,
+  createdAt:100,ttlMs:100,state:'SUCCEEDED',heartbeatAt:null,retryOf:null,revokes:null,payload:{x:1},...p});
+const C = x => Array.isArray(x) ? '['+x.map(C).join(',')+']' : x && typeof x==='object'
+  ? '{'+Object.keys(x).sort().map(k=>JSON.stringify(k)+':'+C(x[k])).join(',')+'}' : JSON.stringify(x);
+const H = x => createHash('sha256').update(x).digest('hex');
+function data(options) {const j=createRunJournal(cfg(options));j.append(e(),100);j.append(e('b'),100);return j.serialize();}
+const rows = s => s.trimEnd().split('\n').map(JSON.parse);
+function rehash(v) {
+  let previousHash=H('nisi-run-journal/header/v1\n'+C(v[0]));
+  for(let i=1;i<v.length-1;i++) {
+    v[i].seq=i;v[i].previousHash=previousHash;
+    v[i].hash=H('nisi-run-journal/record/v1\n'+C({seq:i,previousHash,record:v[i].record}));
+    previousHash=v[i].hash;
+  }
+  v.at(-1).count=v.length-2;v.at(-1).lastHash=previousHash;
+  return v.map(C).join('\n')+'\n';
+}
+function sealed(r) {
+  assert.ok(r.journal);
+  for(const id of ['a','new']) assert.deepEqual(r.journal.append(e(id),100),{status:'REFUSED',id,reason:'SEALED'});
+  assert.throws(()=>r.journal.serialize(),x=>x.code==='SEALED');
+}
+test('owner: all footer and record damage seals the recovered journal',()=>{
+  const d=data();const v=rows(d);v.at(-1).count=99;
+  for(const s of [v.map(C).join('\n')+'\n',d+'garbage',d+'\n',d.replace('candidate-no-match','candidate-no-match').replace('"x":1','"x":2')]) {
+    const r=reopen(s);assert.equal(r.report.status,'INVALID');sealed(r);
+  }
+});
+test('owner: reopened retry relationships are checked against earlier prefix',()=>{
+  const bad=[{retryOf:'missing',attempt:1,state:'QUEUED'}, {retryOf:'a',attempt:1,state:'QUEUED',runId:'other'},
+    {retryOf:'a',attempt:0,state:'QUEUED'}, {retryOf:'a',attempt:1,state:'RUNNING'}];
+  for(const patch of bad) {
+    const v=rows(data());Object.assign(v[2].record.entry,patch);const r=reopen(rehash(v));
+    assert.deepEqual(r.report,{status:'INVALID',recoveredIds:['a'],rejectedLine:3,reason:'RECORD',authorizing:false});sealed(r);
+  }
+  const v=rows(data());v[1].record.entry.state='RUNNING';v[1].record.entry.heartbeatAt=90;
+  Object.assign(v[2].record.entry,{retryOf:'a',attempt:1,state:'QUEUED'});
+  assert.equal(reopen(rehash(v)).report.reason,'RECORD');
+});
+test('owner: persisted TTL, retention capacity and redaction markers each fail closed',()=>{
+  for(const change of [v=>{v[0].now=200;},v=>{v[0].config.maxEntries=1;},
+    v=>{v[0].config.redactPaths=['payload.x'];}]) {
+    const v=rows(data());change(v);const r=reopen(rehash(v));
+    assert.equal(r.report.status,'INVALID');assert.equal(r.report.reason,'RECORD');
+    // Header time may differ, so use that time for the sealed-append probe.
+    assert.equal(r.journal.append(e('new'),v[0].now).reason,'SEALED');
+    assert.throws(()=>r.journal.serialize(),x=>x.code==='SEALED');
+  }
+});
+test('owner: duplicate, conflict, refusals and exceptions never advance time',()=>{
+  for(const operation of [j=>j.append(e(),150),j=>j.append(e('a',{payload:{x:2}}),150),
+    j=>j.append(e('foreign',{projectId:'other'}),150),
+    j=>j.append(e('retry',{retryOf:'missing',attempt:1,state:'QUEUED'}),150),
+    j=>assert.throws(()=>j.append(e('bad',{createdAt:151}),150),x=>x.code==='ENTRY')]) {
+    const j=createRunJournal(cfg());j.append(e(),100);const before=j.serialize();operation(j);
+    assert.equal(j.serialize(),before);assert.equal(j.list(100).length,1);
+  }
+});
+test('owner: parseable unterminated records are uncommitted and sealed',()=>{
+  const v=data().trimEnd().split('\n');const r=reopen(v.slice(0,2).join('\n'));
+  assert.deepEqual(r.report,{status:'INCOMPLETE',recoveredIds:[],rejectedLine:2,reason:'TRUNCATED',authorizing:false});sealed(r);
+});
+test('owner: accessor and cyclic intake is rejected without invocation or mutation',()=>{
+  const j=createRunJournal(cfg());let calls=0;const a=e();Object.defineProperty(a.payload,'getter',{enumerable:true,get(){calls++;return 5;}});
+  assert.throws(()=>j.append(a,100),x=>x.code==='ENTRY');assert.equal(calls,0);
+  const b=e('b');b.payload.cycle=b;assert.throws(()=>j.append(b,100),x=>x.code==='ENTRY');
+  for(const payload of [{x:'\ud800'},{x:-0},[,1]]) assert.throws(()=>j.append(e('bad',{payload}),100),x=>x.code==='ENTRY');
+  assert.deepEqual(j.list(0),[]);
+});
+test('owner: lexical canonical keys and strict serialized field validation',()=>{
+  const j=createRunJournal(cfg());const a=e('a',{payload:{'2':'two','10':'ten'}});j.append(a,100);
+  const r=rows(j.serialize());
+  assert.equal(r[1].record.fingerprint,H('nisi-run-journal/input/v1\n'+C(a)));
+  const s=j.serialize();assert.equal(reopen(s).report.status,'COMPLETE');
+  const duplicate=s.replace('"schema":"nisi-run-journal-v1"','"schema":"wrong","schema":"nisi-run-journal-v1"');
+  assert.equal(reopen(duplicate).report.reason,'HEADER');
+});

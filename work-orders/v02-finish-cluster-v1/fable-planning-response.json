@@ -1,0 +1,102 @@
+{
+  "summary": "Proposed ten bounded OpenCode packets for private Nisi v0.2: each adds nonoverlapping tests, harnesses, manifests or pure modules with fail-before/pass-after acceptance, no edits to the 225 frozen files, and no shared owner integration. Seven Fable 5.1 coauthor/review assignments target pure-module and test-heavy packets; owner keeps fixture inspection, consumer install rehearsal and the milestone ledger. The cluster prepares NX04\u2013NX09 but cannot complete live-model demos, native wiring, signing, real trials or the external NX10 decision; milestone credit stays 30% until owners accept those gates.",
+  "deliverable": "# Nisi v0.2 private packet cluster (proposal, unverified)\n\nPrinciple: every packet adds files only (new tests/harness/manifest/pure module), one writer, single allowlisted commands, scoped regression green before start, new acceptance red before / green after. Nothing here touches the 225 frozen hashed files, existing dirty edits, or historical failed packets. No packet is an execution queue or publication trigger.\n\n## Ten-row scope/dependency table\n\n| # | Packet | Milestone | Scope (exact additions) | Deterministic acceptance | Depends on | Writer / Fable role |\n|---|--------|-----------|-------------------------|--------------------------|------------|---------------------|\n| P01 | Overlay-failure diagnostic harness | baseline (1780/1782) | New test file that reruns the 2 native-overlay tests under a capture wrapper and emits a structured diagnostic record (env, overlay path, type-prereq state, error class). No fix attempted. | New check fails (no record schema) before; passes after. Scoped regression: portable suite minus overlay. | none | OpenCode writer; Fable reviews |\n| P02 | NX04 fixture ledger | NX04 | Manifest of inspected repository fixtures with hashes; classification of every author/reviewer callback as `fixture` vs `live` (all currently `fixture`). Read-only checker. | Ledger check fails before (missing manifest); passes after. | none | Owner-led writer (requires fixture inspection); no Fable |\n| P03 | NX05 crash-recovery test harness | NX05 | Synthetic interrupted-write fixtures (truncated/partial metadata records) + pure read-only recovery classifier with revoke/expiry rules re-asserted. No native reconstruction, no authority. | Recovery tests fail before; pass after. Assert \"saved observations cannot authorize learning\" as a test. | none | OpenCode; Fable coauthor |\n| P04 | NX06 matched-trial record schema + adjudication validator | NX06 | Pure schema + validator for trial pairs, independent-adjudicator identity field (must differ from author/reviewer), reversibility flag. Test pins learning default OFF. | Validator tests fail before; pass after. No real trials run. | none | OpenCode; Fable coauthor |\n| P05 | NX07 truthful-drain state table | NX07 | Pure state-transition table + fixtures for interrupted-run decisions (drain requested / in-flight / refused / completed) with tests that a \"drained\" state cannot be reported while work is in flight. No process/provider wiring. | New table tests fail before; pass after. | none | OpenCode; Fable coauthor |\n| P06 | NX08 controlled-activation predicate | NX08 | Pure predicate over registry entries: default deny; activation requires explicit operator token field + no learning claim. Tests. No plugin/traveler/graph integration. | Predicate tests fail before; pass after. | none | OpenCode; Fable coauthor |\n| P07 | NX09 consumer rehearsal skeleton | NX09 | Minimal clean Node 22/TypeScript consumer fixture importing the private package (draft/check contracts only) + exact-tree listing script (lists, does not accept) + OFF/ON evaluation manifest template. | Consumer typecheck fails before (fixture absent); passes after. Install rehearsal itself stays owner-run. | P10 (hash list) | Owner-led writer; no Fable |\n| P08 | Advisory-bridge credit labeling | bridge / NX04 | Add `reviewIndependence` field to candidate output (`self-review` when author model == reviewer model); test that independent credit is refused for same-Qwen pairs. Extends existing 141 checks; does not qualify the end-to-end agent task. | New tests fail before; pass after; 141 + 10 runner tests still pass. | none | OpenCode; Fable coauthor |\n| P09 | Readiness honesty fields | NX07/bridge | Readiness report adds `inventoryOnly: true`, `inferenceVerified` (only true after fresh residency check), explicit `windowsWorker: unavailable`; test that 9 advertised models are never reported as inference-ready. No hot-swap logic. | Report-shape tests fail before; pass after. | none | OpenCode; Fable coauthor |\n| P10 | Milestone + preservation ledger | NX01\u2013NX10 | Status doc (30% = 3/10 equal-weight; NX04\u2013NX09 partial/open; NX10 external) + read-only check that all 225 frozen hashes are unchanged and prior dirty edits/failed packets are enumerated, not removed. | Hash/ledger check fails before; passes after. | none | OpenCode writer; Fable reviews |\n\nParallelism: P01\u2013P06, P08\u2013P10 are file-disjoint and can run concurrently; P07 waits on P10's hash list. Shared integration (wiring P05/P06 into coordinator/registry, using P03 in native storage) is deferred to owner-led reviewed work after exact candidate review.\n\n## Seven Fable 5.1 assignments (\u224870%)\n1. P01 \u2014 review diagnostic record schema; verify no overlay \"fix\" slipped in.\n2. P03 \u2014 coauthor recovery classifier + fixtures.\n3. P04 \u2014 coauthor trial schema/adjudicator validator.\n4. P05 \u2014 coauthor drain state table + fixtures.\n5. P06 \u2014 coauthor activation predicate.\n6. P08 \u2014 coauthor credit-labeling field/tests.\n7. P09 \u2014 coauthor readiness honesty fields.\n(P02, P07, P10 stay owner-led or owner-reviewed: they require fixture inspection, real install, or authority over the milestone ledger.)\n\n## What ten packets cannot complete\n- NX04: live-model real-repository demo and execution isolation.\n- NX05: native reconstruction, crash-safe recovery in the real store, authenticated authority.\n- NX06: real matched trials, independent adjudication, reversible influence acceptance.\n- NX07: native/process/provider wiring, signed install, app integration, live user acceptance.\n- NX08: plugin/traveler/graph integration and accepted controlled activation.\n- NX09: exact-tree acceptance, real install rehearsal, matched OFF/ON evaluation, usefulness evaluation.\n- NX10: external engineering/legal release decision.\n- Overlay failure root cause (P01 only makes it diagnosable).\nMilestone credit stays 30% until owners accept those gates; these packets change readiness, not the percentage.\n\n## Cautions (5)\n1. Do not let \"harness\"/\"validator\" packets be relabeled as milestone completion; they are preparatory and milestone count remains 3/10.\n2. Any packet touching frozen files or re-pinning hashes must be rejected; P10's check should be the first packet merged.\n3. P08/P09 modify existing bridge/readiness output shapes\u2014confirm no consumer of the 141 checks depends on exact old shape; otherwise split into additive fields only.\n4. Same-Qwen author/reviewer remains self-review; Fable coauthoring does not itself confer independent review credit unless the owner records it as such.\n5. Do not run packets while concurrent users hold resident models; no hot-swap, no automatic model management.",
+  "risks": [
+    "Packet outputs may be misread as milestone progress; percentage must stay 30% until owner acceptance.",
+    "P08/P09 alter existing output shapes and could break current 141/10 checks if not purely additive.",
+    "Overlay failure cause remains unknown; P01 may reveal environmental rather than code causes, requiring owner-led work.",
+    "Frozen 225-file set and prior dirty edits could be accidentally touched by an overbroad allowed-file list.",
+    "Fable coauthoring on 7 packets does not provide independent review credit for the Qwen self-review issue."
+  ],
+  "verification": [
+    "For each packet, confirm acceptance command is red on a clean checkout before work and green after; scoped regression green before start.",
+    "Run P10 hash check against the 225 frozen files before and after the cluster; any change is a rejection.",
+    "Rerun the full 141 focused checks and 10 packet runner tests after P08/P09 merge.",
+    "Owner confirms allowed-file lists are disjoint across P01\u2013P10 before enabling parallel writers.",
+    "Owner reviews milestone ledger (P10) to confirm no NX04\u2013NX10 status upgrade is implied."
+  ],
+  "invocation_status": "succeeded",
+  "status": "succeeded",
+  "model_usage": {
+    "claude-haiku-4-5-20251001": {
+      "inputTokens": 1824,
+      "outputTokens": 20,
+      "cacheReadInputTokens": 0,
+      "cacheCreationInputTokens": 0,
+      "webSearchRequests": 0,
+      "costUSD": 0.0019240000000000001,
+      "contextWindow": 200000,
+      "maxOutputTokens": 32000,
+      "thinkingTokens": 0,
+      "canonicalModel": "claude-haiku-4-5",
+      "provider": "firstParty",
+      "costBasis": "list"
+    },
+    "claude-fable-5-1": {
+      "inputTokens": 2,
+      "outputTokens": 4155,
+      "cacheReadInputTokens": 737,
+      "cacheCreationInputTokens": 1922,
+      "webSearchRequests": 0,
+      "costUSD": 0.24639424999999998,
+      "contextWindow": 1000000,
+      "maxOutputTokens": 64000,
+      "thinkingTokens": 981,
+      "canonicalModel": "claude-fable-5-1",
+      "provider": "firstParty",
+      "costBasis": "list"
+    }
+  },
+  "reported_models": [
+    "claude-haiku-4-5-20251001",
+    "claude-fable-5-1"
+  ],
+  "usage": {
+    "input_tokens": 2,
+    "cache_creation_input_tokens": 1922,
+    "cache_read_input_tokens": 737,
+    "output_tokens": 4155,
+    "output_tokens_details": {
+      "thinking_tokens": 981
+    },
+    "server_tool_use": {
+      "web_search_requests": 0,
+      "web_fetch_requests": 0
+    },
+    "service_tier": "standard",
+    "cache_creation": {
+      "ephemeral_1h_input_tokens": 1922,
+      "ephemeral_5m_input_tokens": 0
+    },
+    "inference_geo": "not_available",
+    "iterations": [
+      {
+        "input_tokens": 2,
+        "output_tokens": 4155,
+        "cache_read_input_tokens": 737,
+        "cache_creation_input_tokens": 1922,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 1922
+        },
+        "type": "message",
+        "model": null
+      }
+    ],
+    "speed": "standard"
+  },
+  "total_cost_usd": 0.24831825,
+  "duration_ms": 55905,
+  "tools_enabled": false,
+  "session_persisted": false,
+  "write_owner": "codex",
+  "requested_model": "claude-fable-5-1",
+  "mode": "delegate",
+  "attempts": 1,
+  "wall_seconds": 56.874,
+  "created_at": "2026-09-18T23:58:08.585231+00:00",
+  "prior_attempts": [],
+  "total_wall_seconds": 56.875,
+  "prior_attempt_usage": [],
+  "total_usage_complete": true
+}

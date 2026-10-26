@@ -1,0 +1,146 @@
+--- before/roadmap.md
++++ roadmap.md
+@@ -9,6 +9,16 @@
+ Include this progress measure in every future development update and recompute it
+ from the canonical NX checklist whenever a milestone is accepted or reopened.
+ 
++**September 13 — five accepted work orders integrated as partial U02-02/03/04
++checkpoints.** Louis authorized Astra as the sole product writer (~12:00 PDT,
++"Go for it", in the Claude session). The formatter, canary adjudicator, vocabulary
++adapter, native-chat declarations and pure run journal now have product paths.
++The dated work-order acceptance/integration records supersede the unfinished
++formatter status from the earlier attempt below. The product milestone count
++is unchanged; Claude Fable 5.1's post-integration review remains pending.
++See [integration evidence](docs/verification/2026-09-13/five-work-order-integration/receipt.json)
++and the scoped U02 checkpoints below.
++
+ **Executed September 13: [OpenCode native-summary packet](work-orders/native-probe-summary/.packets/nisi-native-probe-summary.packet.md)
+ — BLOCKED: the selected local model returned `Model is unloaded.`** One exact
+ wrapper attempt finished in 17.942 seconds with exit 1. The local route's model
+@@ -16,8 +26,8 @@
+ session reports `lmstudio/qwen/qwen3.8-27b`, an error, and no completed inference
+ or code-editing tool call. Zero-filled usage fields are not a complete usage claim.
+ 
+-The formatter remains the exact empty-string placeholder. Independent reruns
+-confirm **baseline 2/2 PASS; formatter 0/13 PASS (13 expected unfinished failures)**,
++At that blocked attempt, the formatter was the exact empty-string placeholder.
++Independent reruns confirmed **baseline 2/2 PASS; formatter 0/13 PASS (13 expected unfinished failures)**,
+ with no skipped/cancelled tests. During the wrapper attempt, tests, package and
+ workspace roadmap stayed unchanged; only packet status/terminal whitespace and
+ the new receipt changed. All 141 previously pinned canonical sources still match.
+@@ -35,7 +45,9 @@
+ - [x] Validate the packet's green baseline and discriminating unfinished-work checks.
+ - [x] Execute one requested local attempt and retain its BLOCKED receipt and empty source diff.
+ - [ ] Resolve local model availability, then obtain direction before another attempt.
+-- [ ] Review implementation and protected hashes before separate product integration.
++- [x] Review implementation and protected hashes before separate product integration.
++  September 13: accepted formatter integrated at `hosts/macos-xpc/native-probe-summary.mjs`;
++  13/13 relocated formatter tests pass with unchanged assertions.
+ - [x] Mirror this handoff and failed execution in the existing `SYSTEM-EQUATION.md`.
+ 
+ > [!CAUTION]
+@@ -3924,6 +3936,31 @@
+ 
+ #### U02-02 — make one repository change end to end
+ 
++**September 13 partial integration checkpoint — native display and canary data.**
++Accepted modules were copied byte-for-byte, with source SHA256 checked before and
++after placement. Only module/read-fixture paths changed in relocated tests:
++
++| Product module | SHA256 before = after | Relocated tests passing |
++|---|---|---|
++| `hosts/macos-xpc/native-probe-summary.mjs` | `c048df362405ffbd3053de93aedd05a0b51ec5c64417d19c9ee5ea22a6d90056` | 13/13 |
++| `hosts/macos-xpc/native-canary-adjudicator.mjs` | `cf875eaa7adf335ceab49ae16f9941e2d9b5b9780f5ca15c22eea4c97405de00` | 19/19 (11 adjudication + 6 table + 2 baseline) |
++| `hosts/macos-xpc/native-canary-adapter.mjs` | `ac9c9cfaacfad91a27f08d2daee461b1f0580892509dc76693ccd36bd35a5c8f` | 17/17 (14 adapter + 3 baseline) |
++
++- [x] **Pure native display/canary modules in the product tree:** the reviewed
++  exports and 49 relocated tests pass. Frozen stdout is retained at
++  `tests/fixtures/native-canary/inherit-run-node.stdout` (781 bytes; SHA256
++  `51612e7ba818bfe7dd2a42d46e8c0cf8e84332d63f2562132842e9879bc3dddc`).
++  Two unchanged work-order package fixtures preserve baseline test assertions.
++  The adapter/adjudicator tests exercise the product sibling modules together.
++
++This is module placement and fixed-data verification. No native launcher/UI was
++wired or executed. Future host wiring must retain raw stdout and the mapping
++report, supply trusted same-run identities, use the complete fixed v1 matrix and
++preserve `isolationAccepted: false`. Extra metadata remains outside adjudication.
++Generated-code isolation, service/descendant settlement and U02-02 acceptance
++remain open. Exact test path substitutions and before/after hashes are retained
++in the [placement manifest](docs/verification/2026-09-13/five-work-order-integration/placement-manifest.json).
++
+ The first inspected example now exists: a dependency-free Node retry-setting
+ project with configuration, source, Markdown instructions and ten fixed behavior
+ checks. The one-file correction preserves configured zero retries; configuration,
+@@ -3990,9 +4027,30 @@
+ 
+ #### U02-03 — make the implemented library usable and packageable privately
+ 
+-- [x] **Portable typed-consumer slice, Node 24:** ten integrated declarations,
+-  explicit 16-path mapping, exact staged private archive, offline script-disabled
++- [x] **Portable typed-consumer slice, Node 24:** eleven integrated declarations,
++  explicit 18-path mapping, exact staged private archive, offline script-disabled
+   install, positive/negative TypeScript and fixed runtime checks with source pins.
++- [x] **September 13 native-chat typed package slice:** accepted
++  `types/native-chat.d.ts` copied unchanged; SHA256 before/after
++  `4513f9e6e75f94b34f6216fae05a5f22e2c7c7baf8aa7dfd51f43fedcfbfbf51`.
++  Both `./adapters/native-chat` and `./adapters/native-chat-v1.mjs` have matching
++  type/default exports. The runtime, protocol dependency and declaration are in
++  the exact package/contract allowlists. The unchanged consumer oracle uses
++  package self-reference imports; a new synthetic alias/lifecycle runtime check
++  runs in the checkout and installed package without model/native execution.
++  `npm run test:types` passes six consumers; `npm run check:private-package`
++  passes with 27 archive files, 39/39 negative controls and 8/8 runtime tests.
++  The archive inventory and receipt were inspected and hashes match installed
++  bytes. This is still a portable Node 24 partial checkpoint.
++
++The product suite's existing exact-inventory test expects 24 files; the required
++three native-chat files make 27. Initial integrated `npm run check` reports
++1,159/1,160 passing, solely this stale cardinality assertion. A narrow Louis
++decision is pending for the two literal changes `24` to `27`; no protected
++work-order assertion changed. Baseline was 1,092/1,092; 67 work-order tests and
++one new package runtime test were added. Structural verification passed 8/8
++mutation fixtures and 8/8 allowed fixtures, with zero source findings.
++
+ - [ ] **Remaining complete consumer scope:** supported Node 22 lane, intentional
+   native artifact inventory/installation, complete merged feature exports and
+   cold-start product rehearsal. The portable package is not the native Nisi app.
+@@ -4018,6 +4076,26 @@
+ No registry or Git publication is part of this work package.
+ 
+ #### U02-04 — persist trustworthy history and recover honestly
++
++- [x] **September 13 pure run-journal contract checkpoint:**
++  `history/run-journal-v1.mjs` is the reviewed reference copied unchanged,
++  SHA256 before/after
++  `dee9f490c091000b2560cd9464d945885e7f341091b87dde9ae4f2b7cdbd359e`.
++  `tests/run-journal.test.mjs` passes 18/18; only its module import changed.
++  The prepared runner is now `scripts/test-history-mutants.mjs`, adapted for
++  the product source/oracle paths, relocated oracle hash and `.build` evidence.
++  `node scripts/test-history-mutants.mjs` caught 8/8 one-site mutants against
++  18 tests each. Failed-test counts by mutant, in runner order: 6, 3, 1, 5,
++  1, 1, 1, 1; zero skipped or cancelled. Accepted source and oracle remain intact.
++
++This checkpoint covers pure observations, duplicate/conflict handling,
++retention/redaction/revocation and serialized-prefix refusal. Host integration,
++filesystem storage, read-back/locking/fsync durability, fresh-process persisted
++reopen, crash qualification and incident admission remain open. Payload-count
++retention does not bound permanent identity metadata or payload byte/depth cost.
++Serialized history is non-authorizing; this does not close U02-04/NX-05.
++Measured mutation evidence is retained in
++`.build/history-mutants-dee9f490c091/summary.json` and the integration receipt.
+ 
+ - Build the host journal/bundle storage and adapt qualified observations to the
+   retained incident-ledger contract. Specify atomicity, read-back, locking,
+@@ -4099,9 +4177,10 @@
+ |---|---|---|
+ | Host/receipt schema absent | Codex drafts U02-00; bounded independent reviewer challenges bindings/refusals | Contract and fixture design, no model execution needed |
+ | Native gate not connected; imported tooling dependencies unprovisioned | Prepare a reviewed private build overlay/runtime; preserve freeze and dependency pins | Host runner and declaration work can proceed independently |
+-| Candidate execution isolation unresolved | Define trusted fixture scope first; obtain an exact approval/isolation decision before executing generated code | Deterministic fixture lane and read-only adapter review |
++| Candidate execution isolation unresolved | Define trusted fixture scope first; obtain an exact approval/isolation decision before executing generated code; integrated formatter/canary data modules do not grant isolation | Product fixed-data tests pass; host wiring, trusted same-run identities, raw evidence retention and complete execution boundary remain open |
+ | Claude previously failed OAuth; local fallback previously timed out | User resolves authentication normally if desired; a fresh bounded successful call is required for participation | Codex/Luna planning review; no fabricated Claude sign-off or blocking every coding task on it |
+-| No integrated prevention evidence | Implement U02-04/05 and run held-out trials | Record diagnostics/proposals with influence OFF |
++| No integrated prevention evidence; durable history and incident admission remain open | Pure journal module and 18/18 tests plus 8/8 mutants are integrated; implement U02-04 host storage/durability/incident qualification, then U02-05 held-out trials | Exercise the non-authorizing journal contract and record diagnostics/proposals with influence OFF |
++| Native-chat archive inventory count needs an explicit test update | Louis decides the narrow existing test change from 24 to 27 files; product suite currently 1,159/1,160, with this sole failure | Types and exact 27-file private archive rehearsal pass; all 67 relocated tests pass |
+ | Native OS support and release gates unresolved | Native owner tests exact SDK/OS lanes; Louis/counsel handle retained disclosure/filing decisions | Private engineering only; no promise of macOS 26.x support from a 27-target manifest |
+ | Prerequisite accepted as measured; generated-code isolation acceptance remains open (separate decision) | Louis, 2026-09-13 ~11:10 PDT: "Approve both, have Astra run the retention pass". Fable reviewed the retained receipts; FIXED_EMBEDDED_NODE_OBSERVED under Node exactly app-sandbox + inherit, host/service app-sandbox only. [Measured inherit checkpoint with corrections](docs/verification/2026-09-13/u02-xpc-embedded-node-inherit-checkpoint.json) | Files-only retention/documentation pass authorized; fresh first-attempt unified-log capture blocked by session sandbox. Launch authorization consumed. Generated-code suitability, DNSConfiguration mach-lookup review, broader XPC-service/escaped-descendant settlement and isolation acceptance remain open |
+ 

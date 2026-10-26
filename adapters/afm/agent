@@ -1,0 +1,18 @@
+#!/bin/zsh
+# adapters/afm/agent — on-device tool-augmented answer via the AFM agent CLI.
+# Usage:
+#   adapters/afm/agent "What time is it in UTC?"
+#   adapters/afm/agent "count the words in 'one two three'"
+# First run compiles the bridge (public FoundationModels API); subsequent runs
+# reuse the binary. Safe/read-only: no persistence, no network egress.
+set -u
+DIR="${0:A:h}"
+BIN="$DIR/.afm-agent-bin"
+SRC="$DIR/afm-agent.swift"
+
+if [ ! -x "$BIN" ] || [ "$SRC" -nt "$BIN" ]; then
+  echo "building afm-agent (one-time)..." >&2
+  xcrun swiftc -parse-as-library -O -o "$BIN" "$SRC" || { echo "build failed" >&2; exit 1; }
+fi
+if [ $# -eq 0 ]; then echo "usage: agent \"<question>\"" >&2; exit 2; fi
+"$BIN" "$@"

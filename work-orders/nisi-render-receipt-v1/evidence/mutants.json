@@ -1,0 +1,98 @@
+{
+ "M1-author-reviews-own-pass": {
+  "caught": true,
+  "fail_line": "\u2139 fail 1"
+ },
+ "M2-fail-without-code-allowed": {
+  "caught": true,
+  "fail_line": "\u2139 fail 1"
+ },
+ "M3-replay-with-checks-allowed": {
+  "caught": true,
+  "fail_line": "\u2139 fail 1"
+ },
+ "M4-duplicate-checkid-allowed": {
+  "caught": true,
+  "fail_line": "\u2139 fail 1"
+ },
+ "M5-pass-without-quality-check": {
+  "caught": true,
+  "fail_line": "\u2139 fail 1"
+ },
+ "M6-measure-float-allowed": {
+  "caught": true,
+  "fail_line": "\u2139 fail 1"
+ },
+ "M7-date-is-plain": {
+  "caught": true,
+  "fail_line": "\u2139 fail 1"
+ },
+ "M8-text-not-wellformed": {
+  "caught": true,
+  "fail_line": "\u2139 fail 1"
+ },
+ "M9-accessor-accepted-root-and-nested": {
+  "caught": true,
+  "fail_line": "\u2139 fail 1"
+ },
+ "M9b-accessor-allowed-below-root": {
+  "caught": true,
+  "fail_line": "\u2139 fail 1"
+ },
+ "M10-code-length-off": {
+  "caught": true,
+  "fail_line": "\u2139 fail 1"
+ },
+ "M11-source-model-off-by-one": {
+  "caught": true,
+  "fail_line": "\u2139 fail 1"
+ },
+ "M12-exotic-array-accepted": {
+  "caught": true,
+  "fail_line": "\u2139 fail 1"
+ },
+ "M13-rule1-after-rule2": {
+  "caught": true,
+  "fail_line": "\u2139 fail 1"
+ },
+ "M14-seen-never-released": {
+  "caught": true,
+  "fail_line": "\u2139 fail 1"
+ },
+ "M15-snapshot-depth-63": {
+  "caught": true,
+  "fail_line": "\u2139 fail 1"
+ },
+ "M16-snapshot-depth-65": {
+  "caught": true,
+  "fail_line": "\u2139 fail 1"
+ },
+ "M17-text-code-points": {
+  "caught": true,
+  "fail_line": "\u2139 fail 1"
+ },
+ "M18-idlen-127": {
+  "caught": true,
+  "fail_line": "\u2139 fail 1"
+ },
+ "M19-block-nonstring": {
+  "caught": true,
+  "fail_line": "\u2139 fail 1"
+ },
+ "M20-kinds-unfrozen": {
+  "caught": true,
+  "fail_line": "\u2139 fail 1"
+ },
+ "M21-no-key-cap": {
+  "caught": true,
+  "fail_line": "\u2139 fail 1"
+ },
+ "M22-no-payload-budget": {
+  "caught": true,
+  "fail_line": "\u2139 fail 1"
+ },
+ "M23-rule4-reviewer-first": {
+  "caught": true,
+  "fail_line": "\u2139 fail 1"
+ }
+}

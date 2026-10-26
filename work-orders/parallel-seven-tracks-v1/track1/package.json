@@ -1,0 +1,11 @@
+{
+  "name": "nisi-track1-repository-fixture-runner",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "license": "UNLICENSED",
+  "scripts": {
+    "test": "node --experimental-test-module-mocks --test repository-fixture-runner.test.mjs",
+    "test:hardening": "node --experimental-test-module-mocks --test repository-fixture-runner.test.mjs"
+  }
+}

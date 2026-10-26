@@ -1,0 +1,47 @@
+PRIVATE authorized bounded SOURCE review. Tool-disabled, Codex sole writer. Review only the real read-and-close function below; not a full-source audit. Prior scope review accepted operator-trusted STATIC LOCAL fixture input before any generated code. No malicious parent-race containment, atomic snapshot, sandbox, secret screening, mount locality detection or enforceable I/O timeout is claimed. Input metadata from lstat(bigint:true) is verified as regular nlink=1 <=1MiB, full manifest <=8MiB, before this function. matches compares dev/ino/mode/nlink/size/mtimeNs/ctimeNs. regular rechecks file/nlink/size. ioError redacts raw filesystem messages. Final separate manifest sweep rechecks paths after all handles closed. Fifteen real filesystem tests pass incl UTF8/BOM, symlinks, FIFO, short reads, mutations and close uncertainty. No public changes. Please identify concrete bugs in bounded read, UTF8 byte preservation or exception/close handling only; concise review schema.
+
+  try {
+    handle = await fs.open(absolute, constants.O_RDONLY | constants.O_NOFOLLOW | constants.O_NONBLOCK);
+    const opened = await handle.stat({ bigint: true }); regular(opened);
+    if (!matches(before, opened)) refuse('DISK_CAPTURE_CHANGED');
+    // One extra byte detects growth. Fixed buffers and explicit positions bound
+    // the amount read; partial reads are normal and must not truncate content.
+    const bytes = Buffer.alloc(Number(opened.size) + 1);
+    let used = 0;
+    while (used < bytes.length) {
+      const { bytesRead } = await handle.read(bytes, used, Math.min(65_536, bytes.length - used), used);
+      if (bytesRead === 0) break;
+      used += bytesRead;
+    }
+    if (used !== Number(opened.size)) refuse('DISK_CAPTURE_CHANGED');
+    const after = await handle.stat({ bigint: true }); regular(after);
+    if (!matches(opened, after)) refuse('DISK_CAPTURE_CHANGED');
+    try {
+      // ignoreBOM=true preserves U+FEFF in content instead of dropping real bytes.
+      content = new TextDecoder('utf-8', { fatal: true, ignoreBOM: true }).decode(bytes.subarray(0, used));
+    } catch { refuse('DISK_CAPTURE_UTF8_INVALID'); }
+    if (content.includes('\0')) refuse('DISK_CAPTURE_BINARY_UNSUPPORTED');
+    if (!Buffer.from(content, 'utf8').equals(bytes.subarray(0, used))) refuse('DISK_CAPTURE_BYTE_ROUNDTRIP');
+  } catch (error) { failure = ioError(error); }
+  finally {
+    if (handle) try { await handle.close(); }
+    catch { failure = new RepositoryCaptureError('DISK_CAPTURE_CLOSE_UNCONFIRMED', { priorCode: failure?.code ?? null }); }
+  }
+  if (failure) throw failure;
+  return content;
+}
+
+export async function captureRepositoryFromDisk(value) {
+  const input = inputFrom(value);
+  if (!['darwin', 'linux'].includes(process.platform) || !Number.isInteger(constants.O_NOFOLLOW) ||
+      !Number.isInteger(constants.O_NONBLOCK)) refuse('DISK_CAPTURE_PLATFORM_UNSUPPORTED');
+  try {
+    directory(await fs.lstat(input.root, { bigint: true }));
+    // Resolving the operator-selected root accommodates canonical OS aliases
+    // above it (e.g. /var). No symlink below the resulting root is supported.
+    const root = await fs.realpath(input.root);
+    const rootStat = await fs.lstat(root, { bigint: true }); directory(rootStat);
+    const observed = new Map([[root, { stat: rootStat, kind: 'directory' }]]);
+    const admitted = [];
+    let totalBytes = 0;
+

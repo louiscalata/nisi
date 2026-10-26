@@ -1,0 +1,104 @@
+{
+  "summary": "Review of the native-incident-source-v1 plan against the supplied evidence. The design is sound in scope (data selection only, private WeakMap-issued input, regenerated-preview rebinding). Five material corrections: (1) cap/empty-artifact semantics must refuse-over-cap and explicitly admit zero-byte sources; (2) private input must be captured and verified at plan creation and re-verified at accessor time, never re-derived from bundle state; (3) preview regeneration comparison must be over a canonical deterministic digest with row order preserved, and mismatch/nondeterminism must refuse; (4) all refusals must be enumerated reason codes with helper exceptions mapped, never thrown from the host wrapper and never carrying content; (5) profile must be derived from fixedProfile with unknown IDs refused, and sourcePlanDigest/inputDigest framing must be unambiguous and include previewSha256 and rules fingerprint with an explicit \"bridge unproven\" marker.",
+  "deliverable": "## Material corrections (max five)\n\n### 1. Cap and empty-artifact semantics are underspecified \u2014 make them refusal-or-admit, never truncation\n- The \"explicit cap 1MiB\" must be a hard refusal: `byteLength > 1_048_576` \u2192 `REFUSED: SOURCE_EXCEEDS_CAP`. Never truncate, because the public plan advertises the original sha256/byteLength and the private inputDigest must bind the whole original bytes; a truncated payload would silently break the bridge's transcript comparison.\n- Zero-byte sources must be admitted: `byteLength === 0` with sha256 of the empty string is a legitimate recorded static FAIL. Add public `emptyArtifact: true|false` and a note that the future bridge must use the `ArtifactSnapshot` direct initializer (the snapshotter helper rejects empty input). Add a fixture: empty file, static FAIL, plan SOURCE_BOUND, accessor returns `content: \"\"`.\n- The cap check must run against the *issued preparation's* recorded byteLength and the actual `content` length (UTF-8 bytes), both, and refuse on disagreement (`SOURCE_LENGTH_MISMATCH`).\n\n### 2. Private input must be captured at plan creation, not re-derived at accessor time\n- `createNativeIncidentSourcePlanV1` must do all verification (bytes/length/sha256, request header, expectation/profile/preparation, group+receipt+evidence digests, native stdout read with original request) and then store a frozen `{binding, relativePath, content, sha256, byteLength, profile, priorReport}` in the module-private WeakMap keyed by the frozen plan object.\n- `readNativeIncidentSourceInputV1({plan})` must accept only `{plan}` (no bundle/context), look up the WeakMap, and re-hash the stored `content`/transcript and compare to the plan's public `sourceSha256`, `byteLength`, `priorTranscriptDigest`, and `inputDigest` before returning. Any miss \u2192 `REFUSED: PLAN_NOT_ISSUED` (clone/spread/structuredClone) or `PRIVATE_INPUT_DIGEST_MISMATCH`.\n- Return a fresh frozen copy each call (content string, not a shared mutable buffer); never attach the private object to the plan.\n- Host: \"preserve collected bundle/context after successful settlement\" should retain references only (no re-serialization, no disk) and only when status is SETTLED; freshness field must be the literal `freshness: \"ORIGINAL_SNAPSHOT_ONLY\"` so callers cannot mistake it for live repository state.\n\n### 3. Preview regeneration comparison must be canonical, deterministic, and order-sensitive\n- Brand check (`WeakSet.has(preview)`) is necessary but not sufficient; the plan already says regenerate against original bundle/context and compare \"entire digest/data\". Specify: canonical JSON (sorted keys, stable array order) over all row fields \u2192 `previewSha256`; compare to the same digest of the supplied preview; any difference \u2192 `REFUSED: PREVIEW_MISMATCH`.\n- If `createRepositoryIncidentPreviewV1` includes any non-deterministic field (generation timestamp, random id), the comparison will always fail; either the preview is already deterministic (verify) or the digest must be defined over the deterministic row data only, with that exclusion documented. Do not silently strip fields.\n- Row lookup must be exact `rowId` string equality over the *regenerated* preview, refuse partial/prefix matches, and refuse if 0 or >1 rows match (`ROW_NOT_FOUND` / `ROW_AMBIGUOUS`). Reorder/crossrun fixtures should fail on the digest step, not merely on row lookup.\n\n### 4. Refusals must be a closed enumerated set, helper exceptions mapped, host wrapper never throws\n- Define the reason enum up front (e.g. `PREVIEW_NOT_BRANDED, PREVIEW_MISMATCH, ROW_NOT_FOUND, ROW_AMBIGUOUS, NOT_STATIC_STAGE, NOT_RECORDED_FAILURE, RESULT_NOT_RECORDED, OPERATIONAL_OR_INTERRUPTED, PLAN_NOT_LOCATED, CHECK_INDEX_MISMATCH, PATH_HASH_MISMATCH, CONTENT_HASH_MISMATCH, SOURCE_LENGTH_MISMATCH, SOURCE_EXCEEDS_CAP, REQUEST_HEADER_MISMATCH, PROFILE_UNSUPPORTED, DIGEST_REBIND_MISMATCH, NATIVE_REPORT_UNREADABLE, PLAN_NOT_ISSUED, PRIVATE_INPUT_DIGEST_MISMATCH, NOT_SETTLED, PROJECTION_UNAVAILABLE`).\n- Exceptions from `issuedSwiftChecksV1`, `readNativeArtifactReport`, `readRepositoryRunBundleV1` must be caught and mapped to a reason code; the refusal object must carry only `{status:\"REFUSED\", reason, rowId?}` \u2014 no `error.message`, since helper messages may embed file paths or content excerpts.\n- Stage gating must check the row's stage identifier against the static-stage constant and the row's `checkIndex` against the static check list of the located plan; do not infer stage from checkIndex. Test-stage rows classified as failure must still refuse (`NOT_STATIC_STAGE`).\n- Host `nativeIncidentSourcePlan({rowId})`: check `SETTLED` first, then that `incidentPreview` and the retained context exist (`PROJECTION_UNAVAILABLE` if the optional projection failed), and return the refusal object rather than throwing. The settled workflow result object must be identical before/after this call (assert deep-equal in tests).\n\n### 5. Profile derivation and digest framing\n- Do not hardcode the three-entry mapping in the new module. Call `fixedProfile(profileId)`; if it returns nothing for the row's profile \u2192 `PROFILE_UNSUPPORTED`. Build the native CheckProfile from its output (`id`, `requiredSections`, `allowedAdvisoryDimensions:[]`, `modelParticipationRequired:false`, `maximumAdvisoryDimensions:0`). The expected mapping (json/none, markdown/Testing+Rollback, text/none) belongs in tests as an assertion, not as a second table.\n- `inputDigest = sha256(canonical({sourceSha256, byteLength, transcriptSha256, transcriptByteLength}) )` computed over length-prefixed or field-named framing \u2014 never a raw concatenation of content+transcript, which is ambiguous.\n- `sourcePlanDigest` must bind: rowId, row fingerprint, previewSha256, planFingerprint, checkIndex, pathHash, contentHash, group/receipt/evidence digests, request header digest, profile id + rules fingerprint, priorTranscriptDigest, cap, emptyArtifact, and inputDigest. Add public `bridgeExecutable: \"UNPROVEN\"` alongside `nativeRerun: \"NOT_RUN\"` so the rules fingerprint is not read as proof the Swift bridge will run.\n\n## Minor notes (not counted)\n- Naming: spec says `issuedSwiftChecksV1(plan)` but gating says \"staticChecks only\" \u2014 confirm these refer to the same list; if not, the check-index binding is wrong.\n- Constant invariants (`rawContentIncluded:false, persistable:false, authorizing:false, learningEligible:false, requiresSeparateAdmission:true`) should be literal in the frozen public plan and asserted in a test that also walks the public object for any key named `content`/`stdout`/`transcript`.",
+  "risks": [
+    "Preview regeneration may be non-deterministic (timestamps/ids); if so, digest comparison always refuses and the feature is dead \u2014 must be verified against createRepositoryIncidentPreviewV1's actual output.",
+    "Retaining bundle/context in the host after settlement extends the lifetime of large in-memory objects; acceptable if references only, but must not be serialized or leaked into history/capture.",
+    "readNativeArtifactReport error messages may include stdout excerpts; if passed through unmapped, raw transcript could leak into logs.",
+    "If issuedSwiftChecksV1 and the 'static' stage are not the same check list, checkIndex binding silently targets the wrong check.",
+    "Empty-artifact handling depends on the future bridge using ArtifactSnapshot's direct initializer; the JS side can only flag it, not enforce it."
+  ],
+  "verification": [
+    "Confirm createRepositoryIncidentPreviewV1 output is deterministic for the same bundle/context (run twice, compare canonical digest) before relying on PREVIEW_MISMATCH gating.",
+    "Fixture: same path fails static check in attempt 1 and passes after repair in attempt 2; assert plan's contentHash equals attempt-1 preparation.materialized.files sha256, not the final candidate.",
+    "Fixture: zero-byte artifact with static FAIL \u2192 SOURCE_BOUND with emptyArtifact:true; 1MiB+1 byte artifact \u2192 REFUSED SOURCE_EXCEEDS_CAP; exactly 1MiB \u2192 SOURCE_BOUND.",
+    "Walk the public plan and refusal objects recursively asserting no key holds the source content, stdout, or transcript; assert JSON.stringify(plan) contains no substring of the fixture content.",
+    "Accessor tests: {...plan}, structuredClone(plan), Object.create(plan) all \u2192 PLAN_NOT_ISSUED; original plan \u2192 payload whose sha256(content) equals plan.sourceSha256 and whose transcript digest equals plan.priorTranscriptDigest.",
+    "Host: deep-equal the settled result, report, proposal, history/capture and journals before and after calling nativeIncidentSourcePlan, including when the incident projection was forced to fail.",
+    "Confirm fixedProfile(profileId) output shape supplies id and required sections for the three IDs and returns undefined/throws for unknown IDs so PROFILE_UNSUPPORTED is reachable.",
+    "Verify issuedSwiftChecksV1(plan) is the list the static-stage checkIndex indexes into (same ordering as the preview rows)."
+  ],
+  "invocation_status": "succeeded",
+  "status": "succeeded",
+  "model_usage": {
+    "claude-haiku-4-5-20251001": {
+      "inputTokens": 2219,
+      "outputTokens": 12,
+      "cacheReadInputTokens": 0,
+      "cacheCreationInputTokens": 0,
+      "webSearchRequests": 0,
+      "costUSD": 0.002279,
+      "contextWindow": 200000,
+      "maxOutputTokens": 32000,
+      "thinkingTokens": 0,
+      "canonicalModel": "claude-haiku-4-5",
+      "provider": "firstParty",
+      "costBasis": "list"
+    },
+    "claude-opus-5": {
+      "inputTokens": 2,
+      "outputTokens": 6761,
+      "cacheReadInputTokens": 737,
+      "cacheCreationInputTokens": 2476,
+      "webSearchRequests": 0,
+      "costUSD": 0.1941635,
+      "contextWindow": 1000000,
+      "maxOutputTokens": 64000,
+      "thinkingTokens": 2710,
+      "canonicalModel": "claude-opus-5",
+      "provider": "firstParty",
+      "costBasis": "list"
+    }
+  },
+  "reported_models": [
+    "claude-haiku-4-5-20251001",
+    "claude-opus-5"
+  ],
+  "usage": {
+    "input_tokens": 2,
+    "cache_creation_input_tokens": 2476,
+    "cache_read_input_tokens": 737,
+    "output_tokens": 6761,
+    "output_tokens_details": {
+      "thinking_tokens": 2710
+    },
+    "server_tool_use": {
+      "web_search_requests": 0,
+      "web_fetch_requests": 0
+    },
+    "service_tier": "standard",
+    "cache_creation": {
+      "ephemeral_1h_input_tokens": 2476,
+      "ephemeral_5m_input_tokens": 0
+    },
+    "inference_geo": "not_available",
+    "iterations": [
+      {
+        "input_tokens": 2,
+        "output_tokens": 6761,
+        "cache_read_input_tokens": 737,
+        "cache_creation_input_tokens": 2476,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 2476
+        },
+        "type": "message"
+      }
+    ],
+    "speed": "standard"
+  },
+  "total_cost_usd": 0.1964425,
+  "duration_ms": 84681,
+  "tools_enabled": false,
+  "session_persisted": false,
+  "write_owner": "codex",
+  "requested_model": "opus",
+  "mode": "delegate",
+  "attempts": 1,
+  "wall_seconds": 85.479,
+  "created_at": "2026-09-14T04:47:47.203337+00:00",
+  "prior_attempts": [],
+  "total_wall_seconds": 85.479,
+  "prior_attempt_usage": [],
+  "total_usage_complete": true
+}

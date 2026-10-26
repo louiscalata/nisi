@@ -1,0 +1,247 @@
+{
+  "schemaVersion": "nisi-paired-accounting-checkpoint-v1",
+  "observedAt": "2026-09-13T01:35:13.297Z",
+  "status": "PASS_SCOPED",
+  "scope": "PURE_TRUSTED_HOST_PAIRED_DATA_ACCOUNTING_SYNTHETIC_TESTS",
+  "roadmapProgress": {
+    "percent": 30,
+    "closedMajorMilestones": 3,
+    "totalMajorMilestones": 10,
+    "basis": "equal-weight NX gate closure, not effort or release readiness"
+  },
+  "tests": {
+    "focused": {
+      "tests": 27,
+      "passed": 27,
+      "failed": 0,
+      "skipped": 0,
+      "cancelled": 0,
+      "durationMs": 70,
+      "path": "/Users/louiscalata/nisi-next-private/.build/evaluation-contract-l5NSvq/check-tHW9l4/focused.json",
+      "sha256": "3cc9f1687492ccb237f7fed385881d4b678264965f559a4fdf7050c5b4c826c8"
+    },
+    "portable": {
+      "tests": 506,
+      "passed": 506,
+      "failed": 0,
+      "skipped": 0,
+      "cancelled": 0,
+      "durationMs": 7062,
+      "path": "/Users/louiscalata/nisi-next-private/.build/evaluation-contract-l5NSvq/check-tHW9l4/portable.json",
+      "sha256": "ba1f2ccea8dc7e17132c0bce1862f326e6421b478d3c8fd88cc5c2ea5566b700"
+    }
+  },
+  "sourceManifest": {
+    "hosts/swift-verifier/check-plan-v1.mjs": "a30ff5596e2bebc376cfa0da84be1c00eca8443cc2b37f5b1b7da42ef44b658a",
+    "receipts/swift-static-group-v1.mjs": "e07e9a361ef808f8d652f1542fec54085d4f341fd093a582f2e86baf77e4cdbb",
+    "receipts/swift-static-run-v1.mjs": "454e8657a2a2aaf6a016de5d09c5d65512d53ffb9db2a6843e05471450f8c8ef",
+    "hosts/swift-verifier/group-adapter-v1.mjs": "471ae91cfc78a82abcb425ed75cd16aec2a76d8123cdc9b3e4063c536382e774",
+    "hosts/swift-verifier/group-contract-utils.mjs": "8fc51ac107abd68adb1c72683ccfa2af9c74ac077c5506bf89525f972b14ac82",
+    "hosts/swift-verifier/executor.mjs": "3b233203d7e9d2c2e1f5aa3c458685e86f15d40fc07b2542e7b6bb48a2555db4",
+    "hosts/swift-verifier/protocol.mjs": "7557d81836f263c13e06ac7613ebfa61ce7fbeeb7b0f7db98889473806f322cc",
+    "hosts/swift-verifier/build.mjs": "ae063b627e853fc0b651e3db103dd1af01c6815374d36781e79270b7d48934fb",
+    "hosts/swift-verifier/owned-child.mjs": "ff9bbef97b3401afd394a98c8bff4fe273a4b6af3a1f852bdf5bf872fd4474df",
+    "hosts/swift-verifier/reservation.mjs": "6d7573d23a3d2b0ecdb4b396cb58f4f9ae8e5997190616c08c1b93bd0ab376fd",
+    "hosts/swift-verifier/main.swift": "0d4e15b22b3231d990cfd5e7de1c52f4fdfebf4f4ab6da15b0ae22c74cea910c",
+    "hosts/repository/snapshot-contract.mjs": "2b52c23bac3a817769b7892eed71baba79cb81954b6a63724d107a9c258ba13f",
+    "hosts/repository/disk-capture.mjs": "972c8cd690a3f34253c9f4722c336b6e847dffe1b0c924aa8492384c800ae547",
+    "receipts/host-run-bundle-v2.mjs": "406936e6523f58323634fab1c9f560d671d58e1c343d2082f081f8a7810061fe",
+    "receipts/repository-execution-v1.mjs": "7317e06c094bdf33e51645ce39348fc9e2d5a11ad0921af87434e34c45828cc2",
+    "workflow/engine.mjs": "c67c63baeadc725a8487af7108b01d3a38dd50e64ff35f1be66471c81e5f979b",
+    "workflow/contracts.mjs": "c28a3ee3db6e9a936cd58fca8b8ee3f2744ca25c259e2ea278b3b09cdbb73d82",
+    "hosts/swift-verifier/adapter.mjs": "c92c21fcbf7fe91d949f60bc51a96d4cb5f185be9172d0a214c4e87d2b649388",
+    "integrity/record-utils.mjs": "e46eb1a01170231bd6873771cd256740fd3dde6bcb01d418f6f7d7a75e6139ff",
+    "tests/swift-static-group.test.mjs": "9bf196d7f2ddad0d4968515e5413cfeb01f334f6d9ad90ec007234539b24015d",
+    "tests/swift-static-run.test.mjs": "d9f747a328e44966c5e88128c3b9edf2d07a1c6dc4e818a91d44164aac78a791",
+    "tests/swift-group-owner.test.mjs": "8c7c83e52873c0d6b9a76cda4746dd1ded3c09583ac1d5c34d681023e2a159d3",
+    "tests/host-run-bundle-v2.test.mjs": "ba3f06af454abd31b2b7426aedc7b04b63e7efea19696df7c24a6ff187d112cb",
+    "tests/repository-execution-receipt.test.mjs": "1075990a6f96276df2057f525df9914bb56a5c1da43d7d544956c86567ad983d",
+    "tests/native/swift-kernel.test.mjs": "e6726c94a1b7359c2e3042a0e8ddb71973255088da82373f7988cd3bb6873699",
+    "tests/native/swift-executor.test.mjs": "97f93d9bb32ebcc262c5d2f915eb549f3cc187feec9b2636b7ac617047176cc1",
+    "tests/native/swift-group.test.mjs": "980ad1fbb2dae8eb5394b300a547f41ed34d4ab6b20db4f4335c467f5ac6a5d9",
+    "integrations/veritas/native/macos/CodenameVeritasFramework/Sources/VeritasCore/ArtifactSnapshot.swift": "013e796d11a844dda345f223894a8d76713b19b0f46f6a7f84019aa5b7bc0f22",
+    "integrations/veritas/native/macos/CodenameVeritasFramework/Sources/VeritasCore/StrictJSONDocumentValidator.swift": "bd6173e012890f2fde2e26be94c5e577cd9e098841bdad98a377b1c88dff1b2c",
+    "integrations/veritas/native/macos/CodenameVeritasFramework/Sources/VeritasCore/DeterministicChecks.swift": "4d234fd389895cf0a55bf7daf0f5d082077ab3677880165f7d0e1236a88be474",
+    "tests/helpers/swift-group-fixture.mjs": "2f8e5b98fbf2fb1757fe25bc2d78b427e30cccbdaccb64d618922f925e077d60",
+    "package.json": "6b5c0271f5ad95d62af409c9782a2abb0b18a9844356c01a2fcf469063f7897f",
+    "package-lock.json": "396284ceeb20491293a83094a9558cb32368bb9ccc71b75e0d10da52e86b0912",
+    "hosts/repository/task-workspace-v1.mjs": "08fdb59d15d21e94914d00390e8f73ee6245b0eabec64e7c052585f23638f963",
+    "tests/task-workspace.test.mjs": "d9df1ee4dc36b5a239a5a70847c6d4c53abe2164cf484712666635f1be9a2ef1",
+    "tests/repository-fixture.test.mjs": "4febfb12c46f3bbcd5f26612475aef6103c6cba876b82ab26cdcb7b9ffe39b20",
+    "examples/repository-task/fixtures/baseline/retry-settings.mjs": "c4932fa2ce0c73c52d385d25aeab64bed602179abced3b38fd525a31fe47bb10",
+    "examples/repository-task/fixtures/baseline/config.json": "fc2001f12401983fa2632ee17e9879b6a1595f0de616e6e1484083c0c3324f04",
+    "examples/repository-task/fixtures/baseline/README.md": "b6ce54912db6b4605d19e4e0fdce5cc1e680de4a57bb1af82ca7b737ff578011",
+    "examples/repository-task/fixtures/repair/retry-settings.mjs": "7de9f6b2cd29489563930f9131a0e0b077070bb50b52df8b5bd27aaf24b55ffd",
+    "examples/repository-task/fixtures/harness/check-retry-settings.mjs": "e07a9bd6a63a52ac6977734c61ea0a210c71ec2c331951f4d94b44159c8245c5",
+    "hosts/repository/node-suite-v1.mjs": "5ed5cd9ca407b281379d6b67d93df60ab3b3a45676b6a4e82c7bfc474d29e2c2",
+    "hosts/repository/node-executor-v1.mjs": "cd999c0efe061c0706842cc06867f62dc59927553615db9e2f2af24523872258",
+    "hosts/repository/node-adapter-v1.mjs": "6de05634f7cccd774c8072a000b556f49f111ccedfe1e37d19be37dbd036fa5d",
+    "tests/node-suite.test.mjs": "ca26dc4558ef17d2a9df982dfe1634053451580fcbf0228d06369121ff53143e",
+    "tests/node-executor.test.mjs": "87bd39e1b48872de468477c8c8f6fa8f96884c632df58973b0ac1b89bb195e6d",
+    "tests/helpers/node-repository-fixture.mjs": "db034a91d1ad0bfcb2b22df9b598d3e276d260c493002319e9d191e10ce2cd85",
+    "receipts/repository-run-v1.mjs": "50c1e86cec48fc666aae64b3285f9acda8e20968d5f10f0d9313e0e22051d697",
+    "hosts/repository/reviewed-workflow-v1.mjs": "6ecc49425ae28ec1923445c8fbe79df4478b6361a5e2799b82ded24acf74dc33",
+    "hosts/repository/proposed-changes-v1.mjs": "045fe0d77b3b6d4d95c406964b603b09b2aeabe131cde267b41806114379f55d",
+    "tests/helpers/repository-run-fixture.mjs": "2877df81895185e35c5e5dd419dbb161bde5f23529f6459ed5e0128b2780b121",
+    "tests/repository-run.test.mjs": "e1c1f1a9407cfecce5b61359a1822fd542c72626d5969da8e679477c60cf176e",
+    "tests/repository-workflow.test.mjs": "ca455e66b4e97fc8530ef0b2a12d35cd1986d80ab409ef9449a977f047015359",
+    "tests/proposed-changes.test.mjs": "d938037e6f67749f5ef473eaf65a3c5fc054865fed504151c01b0fdfcd33bd39",
+    "tests/native/repository-host.test.mjs": "3e449395b033bf5bfd51c4ce1f2ca847eb27c03b85467a2e24eb40b5ff3f8594",
+    "evaluation/intake-v1.mjs": "7c338bf7419c236bc8a8c912266f470e68ff3711848f777c56e68f0ef7c7912a",
+    "evaluation/metrics-v1.mjs": "a11f1247df37b89c661fe3033e8d88a0c347038114bd9192ac48620d52ba0e91",
+    "evaluation/paired-trial-v1.mjs": "cb75c8ac76deb31280fc356064e448b508e4fb8cc48cddaef03f461a70df943c",
+    "evaluation/fixtures/paired-example-v1.mjs": "2b3fd175c2408737ac8d646a19f576de7ec81a52e5fff61ab80b3fc530d58249",
+    "tests/paired-trial.test.mjs": "979dd5e1dfb7dcdc55f874fdf1e1232a8eea356d0fd856817583921d3d10441b",
+    "tests/trial-intake.test.mjs": "42a93005ab3fc6b0f573cf413bbb03d5ba2a59d40d3280363b741ded813a6c92"
+  },
+  "sourceFileCount": 61,
+  "prior55Unchanged": true,
+  "sourceBefore": {
+    "path": "/Users/louiscalata/nisi-next-private/.build/evaluation-contract-l5NSvq/check-tHW9l4/source-before.json",
+    "sha256": "35fd695a8afefcd81fad8080d81c86b347ccea7b955b4df70baff79377801581"
+  },
+  "sourceAfter": {
+    "path": "/Users/louiscalata/nisi-next-private/.build/evaluation-contract-l5NSvq/check-tHW9l4/source-after.json",
+    "sha256": "35fd695a8afefcd81fad8080d81c86b347ccea7b955b4df70baff79377801581"
+  },
+  "draftFailures": {
+    "reproduced": 2,
+    "total": 2,
+    "path": "/Users/louiscalata/nisi-next-private/.build/evaluation-contract-l5NSvq/check-OHRjAe/draft.json",
+    "sha256": "9c1499fd674ee757cb73c171f8c12dc9381af4d552972bfd643c582b2c2f71f9",
+    "meaning": "expected assertions against retained original collaborator code"
+  },
+  "targetedMutations": {
+    "detected": 13,
+    "total": 13,
+    "path": "/Users/louiscalata/nisi-next-private/.build/evaluation-contract-l5NSvq/mutation-run-yxb0da/summary.json",
+    "sha256": "70ec5d734311aff7ea5c9f6a1f03589affbc74bb14b7ed3244059634052657d5",
+    "exhaustive": false,
+    "harness": {
+      "path": "/Users/louiscalata/nisi-next-private/.build/evaluation-contract-l5NSvq/paired-mutation-harness.mjs",
+      "sha256": "2c29d917dcf67ec49c822581c55487f07f47426f15c2d0fc2118385bab18a72f"
+    },
+    "reporter": {
+      "path": "/Users/louiscalata/nisi-next-private/.build/evaluation-contract-l5NSvq/paired-mutation-reporter.mjs",
+      "sha256": "264796f701afe0f821026dd8f35b299e4d13bbf547d3ae8d98bedb1d44223730"
+    }
+  },
+  "importedFreeze": {
+    "files": 225,
+    "path": "/Users/louiscalata/nisi-next-private/.build/evaluation-contract-l5NSvq/check-tHW9l4/freeze.json",
+    "sha256": "78c7a0645ee52fe66b2e8511a3e440035f8cced1e8c7c237b63e29df035073b1",
+    "originRechecked": false
+  },
+  "nativeTests": {
+    "status": "NOT_RERUN_THIS_PURE_DATA_CHECKPOINT",
+    "previous": {
+      "path": "/Users/louiscalata/nisi-next-private/docs/verification/2026-09-12/u02-combined-host-checkpoint.json",
+      "sha256": "88304d7c76bdd9725d98b3cb1905f53809e34aeae461249c3225331a0b39b8aa"
+    },
+    "previousPassed": 25
+  },
+  "collaboration": {
+    "claude": [
+      {
+        "name": "fable-intake-draft",
+        "path": "/Users/louiscalata/nisi-next-private/.build/evaluation-contract-l5NSvq/fable-intake-draft.json",
+        "sha256": "b0c3ba07a65f2c1b3e3ef4ad308817897c50686614864499e96ab17ec5e2c454",
+        "requestedModel": "fable",
+        "reportedModels": [
+          "claude-haiku-4-5-20251001",
+          "claude-fable-5-1"
+        ],
+        "status": "succeeded",
+        "reportedCostUSD": 0.20785425,
+        "wallSeconds": 42.174,
+        "toolsEnabled": false,
+        "sessionPersisted": false,
+        "prompt": {
+          "path": "/Users/louiscalata/nisi-next-private/.build/evaluation-contract-l5NSvq/fable-intake-draft.md",
+          "sha256": "563768f727cad36df974773d66a2da774d743d6e3209093a6c7ea216010c18fc"
+        }
+      },
+      {
+        "name": "fable-metrics-review",
+        "path": "/Users/louiscalata/nisi-next-private/.build/evaluation-contract-l5NSvq/fable-metrics-review.json",
+        "sha256": "c73406fb2819ae7dc1094b71bd2b78006baa9854a901162ca5799aafc50d692f",
+        "requestedModel": "fable",
+        "reportedModels": [
+          "claude-haiku-4-5-20251001",
+          "claude-fable-5-1"
+        ],
+        "status": "PASS",
+        "reportedCostUSD": 0.10457950000000002,
+        "wallSeconds": 16.841,
+        "toolsEnabled": false,
+        "sessionPersisted": false,
+        "prompt": {
+          "path": "/Users/louiscalata/nisi-next-private/.build/evaluation-contract-l5NSvq/fable-metrics-review.md",
+          "sha256": "e999db3cd9a212b2c22427f6ddc2745384729dbd6c5241e592968f8d42b09798"
+        }
+      }
+    ],
+    "sharedChami": {
+      "path": "/Users/louiscalata/nisi-next-private/.build/evaluation-contract-l5NSvq/worker-metrics.json",
+      "sha256": "1c9fbdbba466e2ae76da156e1db78eb1ebb7fbaee18bf82c6fb717cc7f22e73f",
+      "jobId": "mac-20260912-181432-bb59385e0bacf67fbfb1901aad8237fd",
+      "requestedModel": "qwen3-coder-next",
+      "reportedModel": "Qwen3-Coder-Next 80B-A3B Q4_K_M",
+      "reportedSeconds": 46.1,
+      "tokens": null,
+      "costUSD": null,
+      "taskOnlyServer": "louisaurorar12",
+      "persistentSettingsChanged": false,
+      "nativeWindowsAcceptance": false,
+      "originalDraft": {
+        "path": "/Users/louiscalata/nisi-next-private/.build/evaluation-contract-l5NSvq/metrics-original.mjs",
+        "sha256": "44827cf6c87db83243b1b54633254bced1cf7ee3f02a15c9ef1cc9c48739e9a4"
+      },
+      "integration": "reason/metric structure reused; wrong-arm accumulation, fraction truncation and premature aggregation corrected by Codex"
+    },
+    "opencode": {
+      "path": "/Users/louiscalata/nisi-next-private/.build/opencode-evaluation-fixture-Jwhi7L/.packets/evaluation-fixture.result.md",
+      "sha256": "b02df2f056ffe6d398bb5e8cb67af036cb2d08768d60fcacede75dfaece94416",
+      "route": "free/opencode/big-pickle",
+      "actualServedModel": null,
+      "tokens": null,
+      "costUSD": null,
+      "packet": {
+        "path": "/Users/louiscalata/nisi-next-private/.build/opencode-evaluation-fixture-Jwhi7L/.packets/evaluation-fixture.packet.md",
+        "sha256": "4fd754e63a55fc94a88bf6ad8bda8d481797a4f2d87b1f85846130306d036bac"
+      },
+      "originalFixture": {
+        "path": "/Users/louiscalata/nisi-next-private/.build/opencode-evaluation-fixture-Jwhi7L/evaluation/fixtures/paired-example-v1.mjs",
+        "sha256": "537ea5e02b5ea07364175b473cadd5972491a4ba10025e15868952368e5a297f"
+      },
+      "scope": "fixture-only isolated write, wrapper syntax/baseline checks",
+      "integration": "g..l nonhex placeholders corrected to 4..9 and one terminal LF added in canonical fixture; two baseline test files unchanged"
+    },
+    "internalReview": {
+      "agent": "/root/combined_scope_review",
+      "finding": "no concrete defect in six-file read-only scope",
+      "testsRun": false
+    },
+    "internalMutationWork": {
+      "agent": "/root/live_demo_contract",
+      "canonicalWrites": false
+    },
+    "knownClaudeCostSubtotalUSD": 0.31243375,
+    "allProviderCostKnown": false
+  },
+  "retainedEquationTailSha256": "703bfbd10ad108ac8b18f16e4f6864c69d29f4558794616b81dac7ab9522c4f3",
+  "receiptGenerationNote": "First acceptance attempt refused an exact fixture provenance comparison because the canonical copy also adds one terminal LF. No receipt was written. The exact expected transformation now records that LF explicitly; no tested source changed.",
+  "warnings": [
+    "Supplied hashes correlate records, not execution or model authenticity.",
+    "Synthetic savings are not observed product benefit; no live benchmark ran.",
+    "Any incomplete arm suppresses all aggregate metrics; rows and reasons remain.",
+    "Ordinary data only; hostile Proxies and modified intrinsics excluded.",
+    "General generated-code isolation, native application, durable history and release gates remain open."
+  ],
+  "modelBenchmarkRun": false,
+  "accuracyImprovementMeasured": false,
+  "legalClearance": false,
+  "publicationAuthorized": false,
+  "commitsOrPushes": false,
+  "fullMergerAccepted": false
+}

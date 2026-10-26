@@ -1,0 +1,5 @@
+{"operation":"self_report","outcome":"observed","pid":20280,"ppid":20279,"errno":0,"generatedCodeExecuted":false,"completeIsolation":false,"authorizing":false}
+{"operation":"own_container_write","outcome":"allowed","errno":0,"generatedCodeExecuted":false,"completeIsolation":false,"authorizing":false}
+{"operation":"own_container_read","outcome":"allowed","errno":0,"generatedCodeExecuted":false,"completeIsolation":false,"authorizing":false}
+{"operation":"outside_read","outcome":"error","errno":1,"code":"EPERM","syscall":"open","generatedCodeExecuted":false,"completeIsolation":false,"authorizing":false}
+{"operation":"ipv4_loopback_bind","outcome":"error","errno":1,"code":"EPERM","syscall":"listen","generatedCodeExecuted":false,"completeIsolation":false,"authorizing":false}

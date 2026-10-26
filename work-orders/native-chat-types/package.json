@@ -1,0 +1,11 @@
+{
+  "name": "nisi-private-native-chat-types-draft",
+  "version": "0.0.0-private",
+  "private": true,
+  "type": "module",
+  "license": "UNLICENSED",
+  "scripts": {
+    "test": "node --test --test-timeout=5000 tests/baseline.test.mjs",
+    "test:types": "../../node_modules/.bin/tsc --noEmit --ignoreConfig --strict --exactOptionalPropertyTypes --noUncheckedIndexedAccess --module NodeNext --target ES2022 --types node tests/consumer/native-chat.mts"
+  }
+}

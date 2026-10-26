@@ -1,0 +1,19 @@
+{
+  "status": "PASS_SCOPED",
+  "scope": "isolated lower-layer real-process recovery adapter; not host integration",
+  "source": "src/recovery-worker.mjs",
+  "sourceSha256": "db35691497352c3cdfdf656ad582b1bae327b25cfcfe5b2928d525b9202a8b44",
+  "authors": ["Claude Opus 5 draft through tool-disabled CLI", "Codex source review, installation, command guard and supplemental tests"],
+  "review": "Luna bounded static review and six protected hash checks; speculative requirement to duplicate sealed replay hash at top level not adopted because raw store diagnostics already retained",
+  "checks": {
+    "originalRecoveryAfterOpusDraft": {"tests": 10, "pass": 10, "fail": 0},
+    "supplementalBeforeCommandGuard": {"tests": 5, "pass": 3, "fail": 2},
+    "finalCommand": "node --test --test-timeout=10000 tests/baseline.test.mjs tests/recovery.test.mjs tests/owner-boundaries.test.mjs",
+    "final": {"exitCode": 0, "tests": 17, "pass": 17, "fail": 0, "cancelled": 0, "skipped": 0, "todo": 0, "durationMs": 1442.134959}
+  },
+  "protectedFiles": "package.json, original tests, fixed worker CLI and frozen modules unchanged from pre-execution-hashes.json; five owner tests added separately",
+  "openCodeAttempt": "free/opencode/big-pickle completed without target edits; original BLOCKED receipt preserved, not relabeled as Opus acceptance",
+  "limitations": ["no power-loss or hostile-directory guarantee", "no writer locking", "no host bundle integration", "no incident eligibility or automatic resume", "no generated-code isolation", "no NX milestone closure"],
+  "authorizing": false,
+  "published": false
+}

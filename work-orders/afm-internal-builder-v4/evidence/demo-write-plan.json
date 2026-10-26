@@ -1,0 +1,20 @@
+{
+  "writes": [
+    {
+      "path": "work-orders/afm-internal-builder-v4/evidence/staging/a.swift",
+      "name": "a.swift",
+      "bytes": 2048
+    },
+    {
+      "path": "work-orders/afm-internal-builder-v4/evidence/staging/b.swift",
+      "name": "b.swift",
+      "bytes": 2048
+    }
+  ],
+  "lane": "work-orders/afm-internal-builder-v4/evidence/staging/",
+  "manifestHash": "fffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff0",
+  "packHash": "78253fd56a83fb1ea4f23f75defa66e1cd45e16bdd67aecfb9e4c720df107111",
+  "sourcePlanHash": "53ab2955e3585adffdea2fc7d9b2cc0b92020987f39a2496fbfa53491c7f5b29",
+  "totalBytes": 4096,
+  "stagingHash": "6b29dbc9b7718615b045e5e8e5316f2c4e205bb5acf191afb4b485120b53db9b"
+}

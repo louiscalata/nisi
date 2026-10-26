@@ -1,0 +1,58 @@
+Timestamp               Ty Process[PID:TID]
+2026-09-13 10:41:58.247 Df secinitd[699:a6f41] [com.apple.xpc:connection] [0x793cca8dc0] activating connection: mach=false listener=false peer=true name=com.apple.secinitd.peer[20276].0x793cca8dc0
+2026-09-13 10:41:58.247 I  secinitd[699:a6f41] ProbeHost[20276]: AppSandbox request
+2026-09-13 10:41:58.248 Df secinitd[699:a6f41] ProbeHost[20276]: root path for bundle "<private>" of main executable "<private>"
+2026-09-13 10:41:58.249 E  secinitd[699:a6f41] [com.apple.containermanager:xpc] Unable to obtain persona info for pid 20276: [1: Operation not permitted]
+2026-09-13 10:41:58.249 A  secinitd[699:a6f41] (libsystem_containermanager.dylib) container_query_t
+2026-09-13 10:41:58.249 Df secinitd[699:a6f41] [com.apple.containermanager:query] Query; personaid = 4294967295, type = NOPERSONA, name = <unknown>, origin [pid = 20276, personaid = 4294967295], proximate [pid = 20276, personaid = 4294967295], euid = 501, uid = 501, class = 2, identifier = [(null)](0), gidentifier = [(null)](0), flags = 300000003
+2026-09-13 10:41:58.255 I  secinitd[699:a6f41] [com.apple.containermanager:query] Query result; index [0] <private> <private>
+2026-09-13 10:41:58.255 A  secinitd[699:a6f41] (libsystem_containermanager.dylib) container_copy_object
+2026-09-13 10:41:58.255 E  secinitd[699:a6f41] [com.apple.containermanager:xpc] Unable to obtain persona info for pid 20276: [1: Operation not permitted]
+2026-09-13 10:41:58.255 A  secinitd[699:a6f41] (libsystem_containermanager.dylib) container_query_t
+2026-09-13 10:41:58.255 Df secinitd[699:a6f41] [com.apple.containermanager:query] Query; personaid = 4294967295, type = NOPERSONA, name = <unknown>, origin [pid = 20276, personaid = 4294967295], proximate [pid = 20276, personaid = 4294967295], euid = 501, uid = 501, class = 7, identifier = [(null)](0), gidentifier = [(null)](0), flags = 3000800000001
+2026-09-13 10:41:58.255 Df secinitd[699:a6f41] [com.apple.containermanager:unspecified] container_query_iterate_results_sync: success
+2026-09-13 10:41:58.260 Df secinitd[699:a6f41] (AppSandbox) initializing owners for container ~/Library/Containers/local.nisi.embeddednode.host.r12cc2e70e1a9b8b795274505747a8990.inherit.9u2lavyu/Data with <<local.nisi.embeddednode.host.r12cc2e70e1a9b8b795274505747a8990.inherit.9u2lavyu; signer:none>>
+2026-09-13 10:41:58.260 E  secinitd[699:a865a] (AppSandbox) Failed to set LS data container personality info: <private>
+2026-09-13 10:41:58.260 A  secinitd[699:a6f41] (libsystem_info.dylib) Membership API: translate identifier
+2026-09-13 10:41:58.263 I  secinitd[699:a6f41] (libsandbox.1.dylib) sandbox compile: using compatibility definitions for version 1 (latest version is 3)
+2026-09-13 10:41:58.329 A  secinitd[699:a6f41] (libsystem_containermanager.dylib) container_set_info_value
+2026-09-13 10:41:58.330 Df secinitd[699:a6f41] [com.apple.containermanager:unspecified] container_set_info_value: success
+2026-09-13 10:41:58.330 A  secinitd[699:a6f41] (libsystem_containermanager.dylib) container_set_info_value
+2026-09-13 10:41:58.331 Df secinitd[699:a6f41] [com.apple.containermanager:unspecified] container_set_info_value: success
+2026-09-13 10:41:58.331 A  secinitd[699:a6f41] (libsystem_containermanager.dylib) container_set_info_value
+2026-09-13 10:41:58.332 Df secinitd[699:a6f41] [com.apple.containermanager:unspecified] container_set_info_value: success
+2026-09-13 10:41:58.332 Df secinitd[699:a6f41] ProbeHost[20276]: AppSandbox request successful
+2026-09-13 10:41:58.332 Df secinitd[699:a6f41] [com.apple.xpc:connection] [0x793cca8dc0] invalidated because the client process (pid 20276) either cancelled the connection or exited
+2026-09-13 10:41:58.345 Df secinitd[699:a6f41] [com.apple.xpc:connection] [0x793cca8dc0] activating connection: mach=false listener=false peer=true name=com.apple.secinitd.peer[20279].0x793cca8dc0
+2026-09-13 10:41:58.346 I  secinitd[699:a6f41] ProbeService[20279]: AppSandbox request
+2026-09-13 10:41:58.346 Df secinitd[699:a6f41] ProbeService[20279]: root path for bundle "<private>" of main executable "<private>"
+2026-09-13 10:41:58.347 E  secinitd[699:a6f41] [com.apple.containermanager:xpc] Unable to obtain persona info for pid 20279: [1: Operation not permitted]
+2026-09-13 10:41:58.347 A  secinitd[699:a6f41] (libsystem_containermanager.dylib) container_query_t
+2026-09-13 10:41:58.347 Df secinitd[699:a6f41] [com.apple.containermanager:query] Query; personaid = 4294967295, type = NOPERSONA, name = <unknown>, origin [pid = 20279, personaid = 4294967295], proximate [pid = 20279, personaid = 4294967295], euid = 501, uid = 501, class = 2, identifier = [(null)](0), gidentifier = [(null)](0), flags = 300000003
+2026-09-13 10:41:58.352 I  secinitd[699:a6f41] [com.apple.containermanager:query] Query result; index [0] <private> <private>
+2026-09-13 10:41:58.352 A  secinitd[699:a6f41] (libsystem_containermanager.dylib) container_copy_object
+2026-09-13 10:41:58.352 E  secinitd[699:a6f41] [com.apple.containermanager:xpc] Unable to obtain persona info for pid 20279: [1: Operation not permitted]
+2026-09-13 10:41:58.352 A  secinitd[699:a6f41] (libsystem_containermanager.dylib) container_query_t
+2026-09-13 10:41:58.352 Df secinitd[699:a6f41] [com.apple.containermanager:query] Query; personaid = 4294967295, type = NOPERSONA, name = <unknown>, origin [pid = 20279, personaid = 4294967295], proximate [pid = 20279, personaid = 4294967295], euid = 501, uid = 501, class = 7, identifier = [(null)](0), gidentifier = [(null)](0), flags = 3000800000001
+2026-09-13 10:41:58.353 Df secinitd[699:a6f41] [com.apple.containermanager:unspecified] container_query_iterate_results_sync: success
+2026-09-13 10:41:58.357 Df secinitd[699:a6f41] (AppSandbox) initializing owners for container ~/Library/Containers/local.nisi.embeddednode.service.r12cc2e70e1a9b8b795274505747a8990.inherit.9u2lavyu/Data with <<local.nisi.embeddednode.service.r12cc2e70e1a9b8b795274505747a8990.inherit.9u2lavyu; signer:none>>
+2026-09-13 10:41:58.357 A  secinitd[699:a6f41] (libsystem_info.dylib) Membership API: translate identifier
+2026-09-13 10:41:58.357 E  secinitd[699:a865a] (AppSandbox) Failed to set LS data container personality info: <private>
+2026-09-13 10:41:58.360 I  secinitd[699:a6f41] (libsandbox.1.dylib) sandbox compile: using compatibility definitions for version 1 (latest version is 3)
+2026-09-13 10:41:58.423 A  secinitd[699:a6f41] (libsystem_containermanager.dylib) container_set_info_value
+2026-09-13 10:41:58.424 Df secinitd[699:a6f41] [com.apple.containermanager:unspecified] container_set_info_value: success
+2026-09-13 10:41:58.424 A  secinitd[699:a6f41] (libsystem_containermanager.dylib) container_set_info_value
+2026-09-13 10:41:58.424 Df secinitd[699:a6f41] [com.apple.containermanager:unspecified] container_set_info_value: success
+2026-09-13 10:41:58.424 A  secinitd[699:a6f41] (libsystem_containermanager.dylib) container_set_info_value
+2026-09-13 10:41:58.425 Df secinitd[699:a6f41] [com.apple.containermanager:unspecified] container_set_info_value: success
+2026-09-13 10:41:58.425 Df secinitd[699:a6f41] ProbeService[20279]: AppSandbox request successful
+2026-09-13 10:41:58.425 Df secinitd[699:a6f41] [com.apple.xpc:connection] [0x793cca8dc0] invalidated because the client process (pid 20279) either cancelled the connection or exited
+2026-09-13 10:41:58.443 A  node[20280:a8673] (libsystem_secinit.dylib) AppSandbox
+2026-09-13 10:41:58.444 Df secinitd[699:a6f41] [com.apple.xpc:connection] [0x793cca8dc0] activating connection: mach=false listener=false peer=true name=com.apple.secinitd.peer[20280].0x793cca8dc0
+2026-09-13 10:41:58.444 I  secinitd[699:a6f41] node[20280]: AppSandbox request
+2026-09-13 10:41:58.444 Df secinitd[699:a6f41] node[20280]: root path for bundle "<private>" of main executable "<private>"
+2026-09-13 10:41:58.445 Df secinitd[699:a6f41] node[20280]: AppSandbox request successful
+2026-09-13 10:41:58.445 Df secinitd[699:a6f41] [com.apple.xpc:connection] [0x793cca8dc0] invalidated because the client process (pid 20280) either cancelled the connection or exited
+2026-09-13 10:41:58.446 A  node[20280:a8673] (libsystem_info.dylib) Retrieve User by ID
+2026-09-13 10:41:58.473 Df node[20280:a8673] [com.apple.xpc:connection] [0x10a530180] activating connection: mach=true listener=false peer=false name=com.apple.SystemConfiguration.DNSConfiguration
+2026-09-13 10:41:58.474 Df node[20280:a8673] [com.apple.xpc:connection] [0x10a530180] invalidated after the last release of the connection object

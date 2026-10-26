@@ -1,0 +1,58 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://veritas.invalid/private/schemas/stage5/fi0-evidence-manifest.v1.json",
+  "title": "Veritas FI-0 inert evidence manifest",
+  "description": "Structural fixture shape only. Runtime validation additionally closes the exact ordered evidence-reference set against source-frozen self-administered expectations. It is not an authenticated external manifest and proves no capture, persistence, adjudication, anonymity, or product authority.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schemaVersion",
+    "recordType",
+    "profile",
+    "manifestId",
+    "scopeId",
+    "projectIdDigest",
+    "sourceStreamId",
+    "sourceStreamHeadDigest",
+    "expectedRefCount",
+    "evidenceRefDigests",
+    "evidenceSetDigest",
+    "retentionClass",
+    "contentPolicy",
+    "manifestDigest"
+  ],
+  "properties": {
+    "schemaVersion": { "const": 1 },
+    "recordType": { "const": "FI0_EVIDENCE_MANIFEST" },
+    "profile": { "const": "veritas-fi0-inert-incident-contract-v1" },
+    "manifestId": { "$ref": "#/$defs/fixtureId" },
+    "scopeId": { "$ref": "#/$defs/fixtureId" },
+    "projectIdDigest": { "$ref": "#/$defs/sha256" },
+    "sourceStreamId": { "$ref": "#/$defs/fixtureId" },
+    "sourceStreamHeadDigest": { "$ref": "#/$defs/sha256" },
+    "expectedRefCount": { "type": "integer", "minimum": 1, "maximum": 16 },
+    "evidenceRefDigests": {
+      "type": "array",
+      "minItems": 1,
+      "maxItems": 16,
+      "uniqueItems": true,
+      "items": { "$ref": "#/$defs/sha256" }
+    },
+    "evidenceSetDigest": { "$ref": "#/$defs/sha256" },
+    "retentionClass": { "const": "PRIVATE_REVIEW_OR_EXPIRE_90_DAYS" },
+    "contentPolicy": { "const": "DIGESTS_AND_CODES_ONLY_NO_RAW_CONTENT" },
+    "manifestDigest": { "$ref": "#/$defs/sha256" }
+  },
+  "$defs": {
+    "sha256": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{64}$"
+    },
+    "fixtureId": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 128,
+      "pattern": "^[a-z][a-z0-9]*(?:[.-][a-z0-9]+)*(?:/[a-z][a-z0-9]*(?:[.-][a-z0-9]+)*)*$"
+    }
+  }
+}

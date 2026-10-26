@@ -1,0 +1,65 @@
+{
+  "command": "npm run check:private-package",
+  "exitCode": 0,
+  "elapsedSeconds": 2.049,
+  "summary": {
+    "status": "PASS_SCOPED",
+    "evidence": "/Users/louiscalata/nisi-next-private/.build/private-package-6XXmhf",
+    "archive": {
+      "path": "/Users/louiscalata/nisi-next-private/.build/private-package-6XXmhf/nisi-0.2.0-private.0.tgz",
+      "sha256": "d368985e340002993046fdcba14501ba804993fcdc32154d1f88480339e2cbd3"
+    },
+    "negativeControls": {
+      "expected": 39,
+      "observed": 39,
+      "allExpectedLocationsDetected": true
+    },
+    "failure": null
+  },
+  "accepted": true,
+  "privatePackageFiles": 27,
+  "archiveFiles": [
+    "adapters/apple-foundation-models.mjs",
+    "adapters/local-chat.mjs",
+    "adapters/native-chat-protocol-v1.mjs",
+    "adapters/native-chat-v1.mjs",
+    "canonical/canonical-json-v1.mjs",
+    "gate/afm-content-executor.mjs",
+    "gate/content-consent.mjs",
+    "hosts/repository/snapshot-contract.mjs",
+    "hosts/swift-verifier/owned-child.mjs",
+    "hosts/swift-verifier/protocol.mjs",
+    "index.mjs",
+    "package.json",
+    "policy/file-access.mjs",
+    "serialization/canonical-json-v1.mjs",
+    "types/afm-content-executor.d.ts",
+    "types/apple-foundation-models.d.ts",
+    "types/canonical.d.ts",
+    "types/content-consent.d.ts",
+    "types/contracts.d.ts",
+    "types/index.d.ts",
+    "types/local-chat.d.ts",
+    "types/native-chat.d.ts",
+    "types/policy.d.ts",
+    "types/serialization.d.ts",
+    "types/workflow.d.ts",
+    "workflow/contracts.mjs",
+    "workflow/engine.mjs"
+  ],
+  "excludesMacosXpcAndHistory": true,
+  "negativeControls": {
+    "expected": 39,
+    "observed": 39,
+    "allExpectedLocationsDetected": true
+  },
+  "runtimeCounts": {
+    "tests": 8,
+    "pass": 8,
+    "fail": 0,
+    "cancelled": 0,
+    "skipped": 0,
+    "todo": 0
+  },
+  "typeConsumerFiles": 6
+}

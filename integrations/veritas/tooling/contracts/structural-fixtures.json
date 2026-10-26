@@ -1,0 +1,55 @@
+{
+  "schemaVersion": 1,
+  "mutations": [
+    {
+      "id": "S5-STRUCT-001-SPAWN",
+      "source": "spawnSync('helper', []);",
+      "expectedRule": "process-spawn"
+    },
+    {
+      "id": "S5-STRUCT-002-WRITE",
+      "source": "writeFileSync('result', 'unsafe');",
+      "expectedRule": "filesystem-write"
+    },
+    {
+      "id": "S5-STRUCT-003-NETWORK",
+      "source": "fetch('https://example.invalid');",
+      "expectedRule": "network-effect"
+    },
+    {
+      "id": "S5-STRUCT-004-EVAL",
+      "source": "eval('1 + 1');",
+      "expectedRule": "dynamic-code"
+    },
+    {
+      "id": "S5-STRUCT-005-IMPORT",
+      "source": "void import('node:fs');",
+      "expectedRule": "dynamic-import"
+    },
+    {
+      "id": "S5-STRUCT-006-REQUIRE",
+      "source": "require('node:fs');",
+      "expectedRule": "module-load"
+    },
+    {
+      "id": "S5-STRUCT-007-PROCESS-EXIT",
+      "source": "process.exit(1);",
+      "expectedRule": "process-mutation"
+    },
+    {
+      "id": "S5-STRUCT-008-WORKER",
+      "source": "new Worker('worker.js');",
+      "expectedRule": "dynamic-or-worker-construction"
+    }
+  ],
+  "allowed": [
+    {
+      "id": "S5-STRUCT-ALLOW-001-CANONICAL",
+      "source": "const digest = sha256Canonical({ schemaVersion: 1, trusted: false });"
+    },
+    {
+      "id": "S5-STRUCT-ALLOW-002-VALIDATE",
+      "source": "validateC5F3B2E1Graph(graph);"
+    }
+  ]
+}

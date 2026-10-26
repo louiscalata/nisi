@@ -1,0 +1,497 @@
+<title>Render Engine Reconnaissance</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700&family=Source+Sans+3:wght@400;600&family=JetBrains+Mono:wght@400;500&display=swap">
+<style>
+  :root {
+    --ground: #F4F6F8;
+    --surface: #FFFFFF;
+    --surface-2: #EAEEF2;
+    --ink: #1B2430;
+    --muted: #5B6773;
+    --line: #D5DBE2;
+    --accent: #C9831C;
+    --accent-ink: #8A5A10;
+    --accent-soft: #FBEFD9;
+    --done: #2E9E6B;
+    --cooking: #E39A2E;
+    --failed: #D4534E;
+    --pending: #B7C0C9;
+    --gen: #7C6BD6;
+    --fill: #2A9D8F;
+    --font-display: "Bricolage Grotesque", "Helvetica Neue", Arial, sans-serif;
+    --font-body: "Source Sans 3", "Segoe UI", Helvetica, Arial, sans-serif;
+    --font-mono: "JetBrains Mono", "SF Mono", Menlo, Consolas, monospace;
+    color-scheme: light;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --ground: #141A21;
+      --surface: #1C242D;
+      --surface-2: #242E39;
+      --ink: #E6EBF0;
+      --muted: #9AA6B2;
+      --line: #313C48;
+      --accent: #F2B54B;
+      --accent-ink: #F2B54B;
+      --accent-soft: #3A2E17;
+      --done: #4FBE8B;
+      --cooking: #F2B54B;
+      --failed: #E5736E;
+      --pending: #4B5866;
+      --gen: #9D90E8;
+      --fill: #4DBFB1;
+      color-scheme: dark;
+    }
+  }
+  :root[data-theme="dark"] {
+    --ground: #141A21;
+    --surface: #1C242D;
+    --surface-2: #242E39;
+    --ink: #E6EBF0;
+    --muted: #9AA6B2;
+    --line: #313C48;
+    --accent: #F2B54B;
+    --accent-ink: #F2B54B;
+    --accent-soft: #3A2E17;
+    --done: #4FBE8B;
+    --cooking: #F2B54B;
+    --failed: #E5736E;
+    --pending: #4B5866;
+    --gen: #9D90E8;
+    --fill: #4DBFB1;
+    color-scheme: dark;
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    background: var(--ground);
+    color: var(--ink);
+    font-family: var(--font-body);
+    font-size: 17px;
+    line-height: 1.6;
+    padding-inline: 20px;
+    padding-block: 32px 64px;
+  }
+  a { color: var(--accent-ink); text-decoration-thickness: 1px; text-underline-offset: 2px; }
+  a:focus-visible, button:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+  .page { max-width: 1120px; margin: 0 auto; display: grid; grid-template-columns: 1fr; gap: 32px; }
+  @media (min-width: 940px) { .page { grid-template-columns: 220px minmax(0, 1fr); gap: 48px; } }
+
+  /* rail */
+  .rail { font-size: 14px; }
+  @media (min-width: 940px) { .rail { position: sticky; top: 24px; align-self: start; } }
+  .rail-title { font-family: var(--font-mono); font-size: 11px; letter-spacing: .12em; text-transform: uppercase; color: var(--muted); margin: 0 0 10px; }
+  .rail ol { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 2px; }
+  .rail li a { display: grid; grid-template-columns: 26px 1fr; align-items: baseline; gap: 8px; padding: 6px 8px; border-radius: 4px; color: var(--ink); text-decoration: none; }
+  .rail li a:hover { background: var(--surface-2); }
+  .rail .pass { font-family: var(--font-mono); font-size: 11px; color: var(--muted); }
+  .rail-note { margin-top: 18px; padding-top: 14px; border-top: 1px solid var(--line); color: var(--muted); font-size: 13px; line-height: 1.5; }
+
+  /* main */
+  main { min-width: 0; }
+  h1, h2, h3 { font-family: var(--font-display); font-weight: 700; line-height: 1.1; text-wrap: balance; margin: 0; }
+  h1 { font-size: clamp(34px, 5vw, 52px); letter-spacing: -.01em; }
+  h2 { font-size: 26px; margin-top: 56px; margin-bottom: 14px; padding-top: 18px; border-top: 1px solid var(--line); }
+  h3 { font-size: 18px; font-weight: 700; margin-top: 22px; margin-bottom: 6px; }
+  p { margin: 0 0 14px; max-width: 68ch; }
+  .lede { font-size: 20px; line-height: 1.5; color: var(--ink); max-width: 60ch; }
+  .eyebrow { font-family: var(--font-mono); font-size: 12px; letter-spacing: .12em; text-transform: uppercase; color: var(--accent-ink); margin: 0 0 12px; }
+  .meta { font-family: var(--font-mono); font-size: 12px; color: var(--muted); margin-top: 18px; }
+  ul, ol { max-width: 68ch; padding-left: 22px; margin: 0 0 14px; }
+  li { margin-bottom: 6px; }
+  strong { font-weight: 600; }
+  code, .mono { font-family: var(--font-mono); font-size: .88em; }
+  code { background: var(--surface-2); padding: 1px 5px; border-radius: 3px; }
+
+  /* hero */
+  .hero { display: grid; grid-template-columns: 1fr; gap: 28px; align-items: start; }
+  @media (min-width: 760px) { .hero { grid-template-columns: minmax(0, 1fr) 260px; } }
+  .well { background: var(--surface); border: 1px solid var(--line); border-radius: 6px; padding: 14px; }
+  .well-head { display: flex; justify-content: space-between; align-items: baseline; font-family: var(--font-mono); font-size: 11px; color: var(--muted); margin-bottom: 10px; }
+  .grid { display: grid; grid-template-columns: repeat(8, 1fr); gap: 3px; }
+  .grid span { aspect-ratio: 1.4; border-radius: 2px; background: var(--pending); display: block; }
+  .grid .g { background: var(--gen); }
+  .grid .f { background: var(--fill); }
+  .grid .c { background: var(--done); }
+  .grid .x { background: var(--failed); }
+  .legend { display: flex; flex-wrap: wrap; gap: 10px 14px; font-family: var(--font-mono); font-size: 11px; color: var(--muted); margin-top: 12px; }
+  .legend i { display: inline-block; width: 10px; height: 10px; border-radius: 2px; vertical-align: -1px; margin-right: 5px; }
+
+  /* cards */
+  .cards { display: grid; grid-template-columns: 1fr; gap: 14px; margin: 18px 0 6px; }
+  @media (min-width: 700px) { .cards { grid-template-columns: 1fr 1fr; } }
+  .card { background: var(--surface); border: 1px solid var(--line); border-radius: 6px; padding: 16px 18px; display: flex; flex-direction: column; gap: 6px; }
+  .card h3 { margin: 0; font-size: 17px; }
+  .card .kind { font-family: var(--font-mono); font-size: 11px; letter-spacing: .1em; text-transform: uppercase; color: var(--muted); }
+  .card p { font-size: 15.5px; line-height: 1.5; margin: 0; max-width: none; }
+  .card .mech { border-left: 3px solid var(--accent); padding-left: 10px; color: var(--ink); }
+  .card .mech b { font-weight: 600; }
+  .card .status { font-family: var(--font-mono); font-size: 12px; color: var(--muted); }
+
+  /* matrix */
+  .table-wrap { overflow-x: auto; border: 1px solid var(--line); border-radius: 6px; background: var(--surface); margin: 16px 0 8px; }
+  table { border-collapse: collapse; width: 100%; min-width: 860px; font-size: 14.5px; }
+  th, td { padding: 9px 10px; border-bottom: 1px solid var(--line); text-align: left; vertical-align: top; }
+  thead th { font-family: var(--font-mono); font-size: 11px; letter-spacing: .06em; text-transform: uppercase; color: var(--muted); font-weight: 500; background: var(--surface-2); position: sticky; top: 0; }
+  tbody th { font-weight: 600; width: 230px; }
+  tbody tr:last-child td, tbody tr:last-child th { border-bottom: 0; }
+  td.m { text-align: center; font-family: var(--font-mono); font-size: 15px; }
+  .has { color: var(--done); }
+  .part { color: var(--cooking); }
+  .no { color: var(--pending); }
+  .key { display: flex; gap: 18px; flex-wrap: wrap; font-family: var(--font-mono); font-size: 12px; color: var(--muted); margin-bottom: 10px; }
+
+  /* borrow list */
+  .borrow { display: grid; grid-template-columns: 1fr; gap: 10px; margin: 16px 0; }
+  .borrow div { display: grid; grid-template-columns: 1fr; gap: 4px; padding: 12px 14px; background: var(--surface); border: 1px solid var(--line); border-radius: 6px; }
+  @media (min-width: 700px) { .borrow div { grid-template-columns: 210px 1fr; gap: 16px; } }
+  .borrow .from { font-family: var(--font-mono); font-size: 12.5px; color: var(--accent-ink); line-height: 1.5; }
+  .borrow .to { font-size: 15.5px; line-height: 1.5; }
+
+  /* callouts */
+  .note { background: var(--accent-soft); border-left: 3px solid var(--accent); padding: 12px 16px; border-radius: 0 6px 6px 0; margin: 16px 0; max-width: 68ch; }
+  .note p { margin: 0; }
+  .split { display: grid; grid-template-columns: 1fr; gap: 14px; margin: 16px 0; }
+  @media (min-width: 700px) { .split { grid-template-columns: 1fr 1fr; } }
+  .split .card h3 { font-size: 16px; }
+  .prompts { counter-reset: q; list-style: none; padding: 0; margin: 16px 0; max-width: 72ch; display: flex; flex-direction: column; gap: 10px; }
+  .prompts li { counter-increment: q; display: grid; grid-template-columns: 40px 1fr; gap: 10px; padding: 12px 14px; background: var(--surface); border: 1px solid var(--line); border-radius: 6px; }
+  .prompts li::before { content: "Q" counter(q); font-family: var(--font-mono); font-size: 12px; color: var(--accent-ink); padding-top: 3px; }
+  .sources { font-size: 14px; columns: 1; }
+  @media (min-width: 700px) { .sources { columns: 2; column-gap: 28px; } }
+  .sources li { break-inside: avoid; margin-bottom: 5px; }
+  @media (prefers-reduced-motion: no-preference) { .grid span { transition: background .3s ease; } }
+</style>
+
+<div class="page">
+  <nav class="rail" aria-label="Sections">
+    <p class="rail-title">Passes</p>
+    <ol>
+      <li><a href="#vision"><span class="pass">P0</span>The vision</a></li>
+      <li><a href="#landscape"><span class="pass">P1</span>The field, 2026</a></li>
+      <li><a href="#matrix"><span class="pass">P2</span>Comparison matrix</a></li>
+      <li><a href="#novel"><span class="pass">P3</span>What is actually new</a></li>
+      <li><a href="#borrow"><span class="pass">P4</span>What to borrow</a></li>
+      <li><a href="#fit"><span class="pass">P5</span>Where it fits</a></li>
+      <li><a href="#release"><span class="pass">P6</span>Starting release point</a></li>
+      <li><a href="#soc"><span class="pass">P7</span>The SoC question</a></li>
+      <li><a href="#prompts"><span class="pass">P8</span>Brainstorm prompts</a></li>
+      <li><a href="#panel"><span class="pass">P10</span>The panel</a></li>
+      <li><a href="#sources"><span class="pass">P11</span>Sources</a></li>
+    </ol>
+    <p class="rail-note">Researched 14 Sep 2026 against public docs and release notes. Nisi Render Engine facts are from its README and <code>src/</code> on this Mac. P10 reports a model panel, not a measurement: every claim there is a panelist's or a verifier's.</p>
+  </nav>
+
+  <main>
+    <p class="eyebrow">Research findings · for the brainstorm</p>
+    <div class="hero">
+      <div>
+        <h1>Render Engine Reconnaissance</h1>
+        <p class="lede">What current render engines, farm managers, task graphs and neural renderers already do, set against the layered, model-generated render engine we are designing — and where that design is genuinely new.</p>
+        <p class="meta">8 families surveyed · 8 vision features scored · 1 existing engine of ours as the base · 97-agent panel, 3 rounds</p>
+      </div>
+      <div class="well" aria-label="Bucket grid of a frame in progress, illustrative">
+        <div class="well-head"><span>frame 0412 · iteration 2</span><span>rows 10 × tiles 8</span></div>
+        <div class="grid">
+          <span class="c"></span><span class="c"></span><span class="c"></span><span class="c"></span><span class="c"></span><span class="c"></span><span class="c"></span><span class="c"></span>
+          <span class="c"></span><span class="c"></span><span class="c"></span><span class="c"></span><span class="c"></span><span class="c"></span><span class="c"></span><span class="c"></span>
+          <span class="c"></span><span class="c"></span><span class="c"></span><span class="f"></span><span class="c"></span><span class="c"></span><span class="c"></span><span class="c"></span>
+          <span class="c"></span><span class="c"></span><span class="f"></span><span class="c"></span><span class="c"></span><span class="c"></span><span class="f"></span><span class="c"></span>
+          <span class="c"></span><span class="f"></span><span class="c"></span><span class="c"></span><span class="x"></span><span class="c"></span><span class="c"></span><span class="c"></span>
+          <span class="f"></span><span class="g"></span><span class="c"></span><span class="f"></span><span class="g"></span><span class="f"></span><span class="c"></span><span class="g"></span>
+          <span class="g"></span><span class="f"></span><span class="x"></span><span class="g"></span><span class="g"></span><span class="f"></span><span class="g"></span><span class="g"></span>
+          <span class="x"></span><span class="g"></span><span class="g"></span><span class="f"></span><span class="g"></span><span class="g"></span><span class="x"></span><span class="g"></span>
+          <span class="g"></span><span class="g"></span><span class="f"></span><span class="g"></span><span class="g"></span><span class="g"></span><span class="g"></span><span class="g"></span>
+          <span class="g"></span><span class="g"></span><span class="g"></span><span class="g"></span><span class="g"></span><span class="f"></span><span class="g"></span><span class="g"></span>
+        </div>
+        <div class="legend">
+          <span><i style="background:var(--gen)"></i>generator, coarse</span>
+          <span><i style="background:var(--fill)"></i>denoiser</span>
+          <span><i style="background:var(--failed)"></i>reconciler, conflict</span>
+          <span><i style="background:var(--done)"></i>cleared</span>
+        </div>
+      </div>
+    </div>
+
+    <h2 id="vision">P0 · The vision, stated once</h2>
+    <p>One model renders a frame as ten orthogonal layers — passes, not depth levels. Two other models fill the gaps: one fixes holes and seams inside a layer, the other resolves conflicts between layers. The process repeats until every cell is confident. Every (layer, tile, iteration) job is a processing node that runs in parallel on whatever hardware is free. The engine allocates that hardware and sandboxes it so nodes cannot interfere, and — the latest addition — directs the sandboxed environment like a system-on-chip for speed. Rows behave like Tetris: when a layer is full, an independent checker validates it; a cleared row is immutable and lower rows clear first.</p>
+    <p>That is eight distinct claims. The matrix below scores each one against what exists.</p>
+
+    <h2 id="landscape">P1 · The field, 2026</h2>
+    <p>Eight families do something adjacent to the vision. Each card names the one mechanism worth knowing about, not the product.</p>
+    <div class="cards">
+      <div class="card">
+        <span class="kind">Offline path tracers</span>
+        <h3>Blender Cycles · RenderMan XPU</h3>
+        <p class="mech"><b>Adaptive sampling estimates error by rendering twice</b> — one accumulation with all samples, one with half — and spends further samples only where they disagree. Denoising is a separate pass (Intel Open Image Denoise, now also Unity HDRP's choice) that works better when fed <b>auxiliary passes</b>: albedo and normal. Path guiding learns light directions across iterations.</p>
+        <p>RenderMan 27 (Nov 2025) made XPU, the hybrid CPU+GPU renderer, final-frame capable with multi-GPU scaling — under the constraint that every GPU is identical and holds the full scene. Reported speedups: 1.8–2.3× on CPU, 5–10× on GPU, 6–15× on both.</p>
+        <p class="status">Status: mature. Blender 5.2 LTS manual current.</p>
+      </div>
+      <div class="card">
+        <span class="kind">Real-time engines</span>
+        <h3>Unreal RDG · Unity Render Graph</h3>
+        <p class="mech"><b>A frame is a dependency graph of passes with declared resources and lifetimes.</b> Nothing executes when recorded; once the whole frame is described, the graph is compiled, unused passes culled, transient memory aliased, and passes executed in dependency-sorted order. Unity's version is the only way to extend URP since 6.1 and "automatically optimizes the graph to minimize the number of render passes, and the memory and bandwidth" they use.</p>
+        <p>Both have offline paths: Unreal's Movie Render Pipeline / Movie Render Graph (graph-built render operations, higher quality than real time), Unity's Recorder in batch mode. Unity 6.5 (June 2026) consolidates on URP; HDRP enters maintenance, Built-In phases out.</p>
+        <p class="status">Status: current. UE docs at 5.8; Unity 6.5.</p>
+      </div>
+      <div class="card">
+        <span class="kind">Farm managers</span>
+        <h3>OpenCue · Deadline · Flamenco</h3>
+        <p class="mech"><b>Job → Layer → Frame.</b> In OpenCue a layer is "a frame range and a command to execute" and a frame is "an individual command". Cuebot dispatches frames to hosts whose allocation matches the layer's tag and facility; services carry minimum cores, memory and GPU requirements. Stuck frames are detected by log silence; operators <b>retry, eat, kill, or core up</b>.</p>
+        <p>The vocabulary coincidence matters: "layer" here is organisational, not semantic. Deadline is now also a managed cloud service (AWS Deadline Cloud, 2024). Flamenco is Blender's own.</p>
+        <p class="status">Status: mature, ASWF-hosted (OpenCue).</p>
+      </div>
+      <div class="card">
+        <span class="kind">Task graphs in DCCs</span>
+        <h3>Houdini PDG / TOPs</h3>
+        <p class="mech"><b>A procedural dependency graph of work items.</b> Each TOP node is a set of tasks; a downstream node instantiates its items only after upstream items complete and emit outputs, so the graph itself is generated as it cooks. Schedulers cook items in-process, out-of-process, or on a farm (HQueue, Tractor) — the graph is independent of where it runs.</p>
+        <p>This is the closest existing thing to "processing nodes generated dynamically, then distributed" — minus any notion of a generative model or convergence.</p>
+        <p class="status">Status: mature, in every Houdini.</p>
+      </div>
+      <div class="card">
+        <span class="kind">Neural rendering</span>
+        <h3>NVIDIA DLSS 4.5 · Apple MetalFX (Metal 4)</h3>
+        <p class="mech"><b>Two fillers already ship.</b> DLSS pairs a denoise/super-resolution model with Multi Frame Generation that produces up to five generated frames per rendered frame; 4.5 makes the multiplier dynamic, balancing frame rate, quality and latency. Apple's Metal 4 (WWDC 2025) added MetalFX Frame Interpolation and Denoising, built for unified memory, with ML inference callable inside shaders.</p>
+        <p>NVIDIA's developer page now lists a DLSS 5 with "3D-Guided Neural Rendering" — the generated pass is steered by scene geometry, i.e. by other passes.</p>
+        <p class="status">Status: shipping; hardware-bound (Tensor cores, Apple Silicon).</p>
+      </div>
+      <div class="card">
+        <span class="kind">Layered generative models</span>
+        <h3>LayerDiffuse · LayerFusion · PSDiffusion (WACV 2026)</h3>
+        <p class="mech"><b>Models that emit layers, not one image.</b> LayerDiffuse encodes transparency into a frozen diffusion model's latent space and trains foreground/background LoRAs; the newer work splits into two paths — generate all layers at once, or generate them sequentially — and adds <b>harmonisation between layers</b> (layout and appearance alignment).</p>
+        <p>This is the research literature for "a model generates ten layers", restricted to images and to a handful of layers. Harmonisation is our inter-layer reconciler, in embryo.</p>
+        <p class="status">Status: research → early products (Runware ships LayerDiffuse).</p>
+      </div>
+      <div class="card">
+        <span class="kind">World models</span>
+        <h3>Google DeepMind Genie 3 · Project Genie</h3>
+        <p class="mech"><b>The frame is generated, not rendered.</b> Genie 3 produces interactive worlds at 720p, 20–24 fps, holding continuity over minutes; Project Genie reached AI Ultra subscribers on 29 Jan 2026.</p>
+        <p>No passes, no farm, no verification: the opposite end of the spectrum from a durable queue. Useful as the ceiling of "a model renders" and as a reminder that convergence and correctness are our differentiators, not raw generation.</p>
+        <p class="status">Status: limited release.</p>
+      </div>
+      <div class="card">
+        <span class="kind">Ours, as it stands</span>
+        <h3>Nisi Render Engine</h3>
+        <p class="mech"><b>A durable background render queue for Compositor and Tracker.</b> Job-state machine, idempotent sequenced worker-event reducer, SQLite journal (jobs, attempts, frames, events, outbox), one-frame-per-slot scheduling, frame leases with expiry recovery and late-result rejection, capacity holds that keep uncertain slots, a weighted CPU admission budget with one interactive core reserved, streamed PNG verification with atomic no-overwrite promotion.</p>
+        <p>Already runs one non-render workload (<code>forged.code-build@1</code>). Hardware planning is CPU-slot only by its own claim string; native containment providers are defined and fail-closed.</p>
+        <p class="status">Status: foundation, macOS-tested; Codex is write owner.</p>
+      </div>
+    </div>
+
+    <h2 id="matrix">P2 · Comparison matrix</h2>
+    <p>Rows are the vision's eight claims. A full mark means the family has the mechanism as designed; a half mark means a recognisable piece of it; an empty mark means nothing comparable.</p>
+    <div class="key"><span class="has">● has it</span><span class="part">◐ a piece of it</span><span class="no">○ nothing comparable</span></div>
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th scope="col">Vision claim</th>
+            <th scope="col">Path tracers</th>
+            <th scope="col">Real-time engines</th>
+            <th scope="col">Farm managers</th>
+            <th scope="col">Houdini PDG</th>
+            <th scope="col">Neural rendering</th>
+            <th scope="col">Layered gen.</th>
+            <th scope="col">World models</th>
+            <th scope="col">Nisi RE today</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><th scope="row">1 · Layers as orthogonal passes, generated by a model</th><td class="m part">◐</td><td class="m part">◐</td><td class="m part">◐</td><td class="m part">◐</td><td class="m part">◐</td><td class="m has">●</td><td class="m no">○</td><td class="m no">○</td></tr>
+          <tr><th scope="row">2 · Two gap-fillers: within a layer, between layers</th><td class="m part">◐</td><td class="m part">◐</td><td class="m no">○</td><td class="m no">○</td><td class="m has">●</td><td class="m part">◐</td><td class="m no">○</td><td class="m no">○</td></tr>
+          <tr><th scope="row">3 · Iterate to convergence, adaptively</th><td class="m has">●</td><td class="m no">○</td><td class="m no">○</td><td class="m part">◐</td><td class="m no">○</td><td class="m no">○</td><td class="m no">○</td><td class="m part">◐</td></tr>
+          <tr><th scope="row">4 · Parallel nodes with dependency-ordered commits (Tetris rows)</th><td class="m part">◐</td><td class="m has">●</td><td class="m has">●</td><td class="m has">●</td><td class="m no">○</td><td class="m no">○</td><td class="m no">○</td><td class="m part">◐</td></tr>
+          <tr><th scope="row">5 · Allocation across heterogeneous hardware</th><td class="m has">●</td><td class="m has">●</td><td class="m has">●</td><td class="m part">◐</td><td class="m part">◐</td><td class="m no">○</td><td class="m no">○</td><td class="m part">◐</td></tr>
+          <tr><th scope="row">6 · Sandbox directed like a SoC</th><td class="m no">○</td><td class="m part">◐</td><td class="m part">◐</td><td class="m no">○</td><td class="m no">○</td><td class="m no">○</td><td class="m no">○</td><td class="m part">◐</td></tr>
+          <tr><th scope="row">7 · Durable queue: leases, retries, recovery</th><td class="m no">○</td><td class="m no">○</td><td class="m has">●</td><td class="m part">◐</td><td class="m no">○</td><td class="m no">○</td><td class="m no">○</td><td class="m has">●</td></tr>
+          <tr><th scope="row">8 · Independent checker and verified promotion</th><td class="m no">○</td><td class="m no">○</td><td class="m part">◐</td><td class="m part">◐</td><td class="m no">○</td><td class="m no">○</td><td class="m no">○</td><td class="m has">●</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p>Reading down the columns: path tracers own convergence; real-time engines and PDG own the dependency graph; farm managers own durability; neural rendering owns the two-filler pattern; layered generation owns "a model emits layers". Nobody has rows 1–3 and 7–8 together. Our own engine is strongest exactly where the research families are weakest (7, 8) and empty where they are strong (1, 2).</p>
+
+    <h2 id="novel">P3 · What is actually new</h2>
+    <p>Three things, and only three. Everything else in the vision has a mature reference implementation somewhere in the matrix.</p>
+    <ul>
+      <li><strong>Convergent layered generation on a durable farm.</strong> Adaptive sampling (row 3) exists only inside single-process renderers; durable queues (row 7) exist only for fixed, non-iterative frames. Running "iterate until confident" as leased, recoverable farm work is unclaimed territory.</li>
+      <li><strong>The line check as a commit gate.</strong> Farm managers verify that a frame exited 0; PDG verifies that expected outputs exist; this engine verifies bytes and promotes atomically. None verifies a <em>layer</em> as a unit with an independent reviewer and then commits rows bottom-up. That is the Tetris rule, and it has no analogue.</li>
+      <li><strong>Reviewer independence as a scheduling constraint.</strong> "Author ≠ reviewer" is a property of our V5 pipeline; no render system encodes it, because no render system has models that could review. Making it a worker <em>capability</em> the scheduler enforces is new.</li>
+    </ul>
+    <div class="note"><p>Not new, and worth saying plainly so we don't rebuild it: the dependency graph (Unreal RDG, Unity Render Graph, PDG), the two-filler split (DLSS: reconstruct within, generate between), adaptive error estimation (Cycles), leases and stuck-frame handling (OpenCue), hybrid CPU+GPU placement (XPU), and durable verified promotion (our own engine).</p></div>
+
+    <h2 id="borrow">P4 · What to borrow, by name</h2>
+    <p>Each row is a mechanism that exists today and the exact place it lands in our design.</p>
+    <div class="borrow">
+      <div><span class="from">Cycles adaptive sampling — error from two accumulations</span><span class="to">Confidence for layers with no deterministic signal: two cheap drafts, disagreement = noise (decision E, option 3). Same trick, different medium.</span></div>
+      <div><span class="from">OIDN needs albedo + normal passes</span><span class="to">Feed the denoiser the structural rows (intent, constraints, interfaces) as auxiliary input, not just the row it is fixing. The denoiser's quality is bounded by its passes.</span></div>
+      <div><span class="from">DLSS 4.5 Dynamic Multi Frame Generation</span><span class="to">The filler-to-generator ratio should be dynamic per budget and latency, not a fixed "two fillers per pass". Decision F becomes a dial the scheduler turns.</span></div>
+      <div><span class="from">OpenCue: Job → Layer → Frame, services with min cores/memory/GPU, <em>eat</em></span><span class="to">The manifest shape and the operator verbs. "Eat" — mark a frame done without running it — is our quarantine-and-move-on, already named.</span></div>
+      <div><span class="from">PDG: downstream items instantiated after upstream cooks</span><span class="to">The generator's first pass emits the row list (decision B, option 3): the graph is generated as it cooks, exactly PDG's model.</span></div>
+      <div><span class="from">Render graph compile: cull, alias, sort, overlap</span><span class="to">The SoC placement policy is a render-graph compiler over a block registry: nodes declare inputs and outputs; the engine culls, aliases scratch, sorts by dependency and overlaps lanes. See P7.</span></div>
+      <div><span class="from">RenderMan XPU: identical GPUs, full scene per GPU</span><span class="to">The residency rule: a block must hold the whole context of its work. The PC chiplet gets the entire snapshot pushed ahead of dispatch, or it doesn't get the job.</span></div>
+      <div><span class="from">Nisi RE: leases, expiry, late-result rejection, uncertain capacity kept</span><span class="to">Keep as is. This is the durability layer the research families lack; the layered workload is a client of it, not a replacement.</span></div>
+    </div>
+
+    <h2 id="fit">P5 · Where it fits</h2>
+    <p>The vision is a <strong>second non-render workload type</strong> on the Nisi Render Engine, beside <code>forged.code-build@1</code> — not a new engine. The engine already is the farm; what it lacks is layer semantics, model-role capabilities, adaptive fill and the grid view. The mapping that makes this concrete:</p>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th scope="col">Vision term</th><th scope="col">Engine term</th><th scope="col">Consequence</th></tr></thead>
+        <tbody>
+          <tr><th scope="row">frame (the whole output)</th><td>job (<code>RenderJobManifest</code>)</td><td>rows, tiles, DAG and roles become manifest fields</td></tr>
+          <tr><th scope="row">cell (layer, tile)</th><td>frame</td><td>one frame per slot, leased, late results rejected</td></tr>
+          <tr><th scope="row">processing node</th><td>attempt of a frame</td><td>expiry recovery and restart recovery come free</td></tr>
+          <tr><th scope="row">lane / model</th><td>worker with a capability</td><td>author ≠ reviewer is a capability the preflight checks</td></tr>
+          <tr><th scope="row">merge gate → cleared row</th><td>verification → promotion</td><td>promoted output is immutable, as the Tetris rule requires</td></tr>
+          <tr><th scope="row">re-open</th><td>new attempt superseding the promoted one</td><td>never an overwrite; the journal keeps both</td></tr>
+          <tr><th scope="row">engine reserve</th><td>interactive CPU reservation in the admission budget</td><td>generalise per block (P7)</td></tr>
+          <tr><th scope="row">sandbox ring 2</th><td>containment provider</td><td>fail-closed today; the SoC levers live here</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p>Unit 1 — the row state machine — exists as a Python reference with 19 owner-written tests (88 assertion sites, all passing on the chain's final draft; structural gate PASS; model review unavailable, so <strong>uncertified</strong>). The engine is Node ESM, so the production piece is a JS reducer above the frame reducer; the Python file is the spec by tests for that port.</p>
+
+    <h2 id="release">P6 · Unity and Unreal as the starting release point</h2>
+    <p>Louis's suggestion: ship first as a render engine for Unity and Unreal. Two readings, both credible; they lead to different first releases.</p>
+    <div class="split">
+      <div class="card">
+        <h3>Reading A — a durable queue around their renderers</h3>
+        <p>The Nisi engine accepts Unreal Movie Render Pipeline / Movie Render Graph jobs and Unity Recorder batch jobs as durable background work: leases, recovery, verification, promotion, Tracker outbox — wrapped around the game engine's own renderer, which already produces frame sequences the engine knows how to verify.</p>
+        <p><strong>For:</strong> the largest user base in real-time 3D; both engines have command-line render entry points; it exercises every existing engine component and none of the unbuilt ones. <strong>Against:</strong> headless engine installs are heavy; Unreal is Windows-first for offline quality; GPU contention with the interactive editor is exactly what the interactive reserve exists for, and it is CPU-only today.</p>
+      </div>
+      <div class="card">
+        <h3>Reading B — their render graphs as our reference architecture</h3>
+        <p>Adopt RDG / Unity Render Graph as the model for the layered workload: passes with declared resources, compile-then-execute, transient aliasing, dependency sort. The layered generator becomes "a render graph whose passes are model calls".</p>
+        <p><strong>For:</strong> it is the strongest single borrow in P4 and answers the SoC question with a proven design. <strong>Against:</strong> it is an internal architecture, not a release; on its own it ships nothing a user can point at.</p>
+      </div>
+    </div>
+    <div class="note"><p><strong>Recommendation for the brainstorm:</strong> do both, in that order. Release 1 is Reading A with Unreal Movie Render Graph as the first executor kind (graph-based, CLI-submittable, offline-quality by design) and Unity Recorder second — the engine's durability and verification are the product, the game engines are the renderers. The layered generative workload lands as release 2 on the same queue, built on Reading B. Unity 6.5's consolidation on URP + Render Graph (June 2026) and Unreal's 5.8 documentation make both targets stable for the year.</p></div>
+
+    <h2 id="soc">P7 · The SoC question</h2>
+    <p>"Direct the sandboxed environment like a SoC for faster processing" decomposes into things a scheduler can own. A system-on-chip is heterogeneous blocks, a memory hierarchy, a fabric, DMA engines, power domains and firmware that places work. The field already has the software shape of each:</p>
+    <ul>
+      <li><strong>Blocks and placement</strong> — XPU's hybrid CPU+GPU scheduling and OpenCue's allocations with per-service core/memory/GPU minimums. Ours: a block registry (P-cores, E-cores, GPU, Neural Engine via Apple Foundation Models, the PC's GPU over LAN) with capacity vectors and measured throughput, generalising the engine's CPU-slot plan.</li>
+      <li><strong>Memory hierarchy and aliasing</strong> — render graphs alias transient resources and cull unused passes; Metal 4 is built around unified memory. Ours: node scratch → lane-resident cache (loaded model, prompt prefix) → immutable memory-mapped snapshot → journal.</li>
+      <li><strong>Fabric and DMA</strong> — no render system models the network as a fabric, because farms assume a shared filesystem. Ours must: the PC is a chiplet behind a slow link, so placement prices the hop and stages inputs ahead of dispatch (the adaptive transport ranking already measures the links).</li>
+      <li><strong>Power domains</strong> — the engine's host-power fence and capacity holds are more careful than anything in the survey; DLSS 4.5's dynamic multiplier is the model for adaptive concurrency per block.</li>
+      <li><strong>The levers</strong> — macOS QoS classes and <code>taskpolicy</code> steer to P or E clusters (no core pinning, no GPU partitioning); Linux cgroup v2 gives full control; Windows Job Objects give CPU rate, affinity and memory limits. All of them sit inside the containment providers the engine defines and currently keeps fail-closed.</li>
+    </ul>
+    <p>Where the speed would actually come from: locality (a lane keeps the layer context resident instead of re-sending it), overlap (staging while generating), specialisation (the Neural Engine at 0.6 s for denoise), no contention (a per-block admission budget with an interactive reserve), and cross-device parallelism. What it cannot be: a claim of SoC behaviour before a containment provider proves its controls, or a capacity figure that is configured rather than measured.</p>
+
+    <h2 id="prompts">P8 · Brainstorm prompts</h2>
+    <ol class="prompts">
+      <li>A "layer" means three different things in the field — a Cycles pass, an OpenCue layer (frame range + command), a PDG node. Which one is ours? The manifest schema follows directly from the answer.</li>
+      <li>Is the line check PDG-style ("expected outputs exist") or content verification with a reviewer model? The first is cheap and shippable in release 1; the second is the novelty in P3.</li>
+      <li>DLSS makes the filler ratio dynamic. What signal drives ours — budget, latency, or the well height?</li>
+      <li>Render graphs alias memory because transient resources have known lifetimes. What is the lifetime of a node's scratch, and who declares it?</li>
+      <li>XPU requires every GPU to hold the full scene. Do we accept that for the PC chiplet (push the whole snapshot), or partition the snapshot per row and lose cross-row reconciliation there?</li>
+      <li>OpenCue's <em>eat</em> skips a frame without running it. Is quarantine the same verb, and who is allowed to say it — the engine, or only a person?</li>
+      <li>Release 1 as a queue around Unreal MRG: what is the one real action in the smoke test — submit a graph, watch a frame lease, see it promoted to Tracker?</li>
+      <li>Genie 3 renders at 24 fps with no verification at all. Where on the line between "generated" and "verified" does each of our workload types sit, and does the manifest say so?</li>
+    </ol>
+
+
+    <h2 id="panel">P10 · The panel</h2>
+    <p>After P1–P9, the vision went to a design panel: five Claude lenses (working artist, studio pipeline TD, indie developer, systems architect, sceptic) across Sonnet, Opus and Haiku; then three models running on Louis's own hardware (Apple Foundation Model on-device, Bionic's qwen3.8-27b, the PC worker's Qwen3-Coder-Next 80B); then two late Claude lenses (product strategist, generative-AI-native creator). Every panelist read the others and rebutted; every candidate idea then faced three sceptical verifiers — desirability, feasibility on this design, differentiation — refuted by default when the case was generic. 97 agents, 58 ideas, 25 candidates verified.</p>
+    <div class="note"><p><strong>Headline, held across all three rounds: no idea passed all three verifiers.</strong> The closest ones converge on one artefact — a sidecar written by a closed reader, with the environment (engine build, plugin version, OS + GPU + driver) inside the identity — which the verifiers call the only defensible thing on the board while insisting it is orthogonal to the queue and the tile loop.</p></div>
+
+    <h3>What came closest, narrowed to what the verifiers would allow</h3>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th scope="col">Idea</th><th scope="col">Who</th><th scope="col">Why this design</th><th scope="col">Verifiers' condition</th><th scope="col">Dissent</th></tr></thead>
+        <tbody>
+          <tr><th scope="row">Untouched shots never re-render — shot-as-tile identity with the build in the key</th><td>anyone re-rendering long sequences with unknown blast radius</td><td>the identity primitive; REPLAY only for a wholly untouched shot on the same runner</td><td>drop <code>attempt</code> from identity, add a supersession tombstone (a vetoed attempt can otherwise replay across jobs); closure from the engine's declared dependencies, captured in-plugin; machine class = OS + GPU + driver + engine build; AFM cannot be fingerprinted</td><td>monolithic levels re-render on any save — worth something only in World Partition / One-File-Per-Actor projects; a false REPLAY to a client is worse than the GPU-hours saved</td></tr>
+          <tr><th scope="row">Pass rows as the QC gate — never delivered half-rendered</th><td>teams delivering through MRG or Recorder, no Deadline, at least two people</td><td>the nesting rule makes partial delivery structurally impossible</td><td>lease = MRG frame chunk with warm-up, never "frame" (one editor process per frame is ~100× overhead); FLICKER and BLACK_FRAME are recipe-thresholded warnings (a fade-to-black is exactly zero); encode as an ffmpeg worker job</td><td>on Deadline this is an afternoon's post-job script; the delta is "verified" versus "done"</td></tr>
+          <tr><th scope="row">The frame ledger — one sidecar per shot, three readers</th><td>honestly, a 2–3 person Unity team with no Deadline and no tracker</td><td>build-in-the-identity keeps REPLAY honest without a scene-state digest: the question is "did anything change", not "which frames"</td><td>per-frame fingerprints so drift is computable from sidecars alone; identity captured at submission by the editor button or CI harness; a checked-vs-promoted state for files the engine already wrote; nothing claimed for Unreal until real MRQ output has been read</td><td>standardises existing practice; OpenCue could adopt the spec tomorrow</td></tr>
+          <tr><th scope="row">The delivery is a parent tile</th><td>whoever sends a version number to a client</td><td>the nesting rule at the top scale (unit-02 proves the parent is refused until every child is promoted)</td><td>claim only "contains frames promoted from a single submission snapshot, with a sidecar"; lossless intermediates so the container check can demux-and-digest</td><td>delivered by the Nisi queue's durability — a small demonstration of the gate, not evidence for the tile loop</td></tr>
+          <tr><th scope="row">Two-machine farm below the Deadline/OpenCue floor</th><td>1–3 person teams who have not decided to run a farm</td><td>leases, expiry recovery, late-result rejection, atomic promotion — inherited from the predecessor engine</td><td>jobs pinned to one machine (Metal and D3D12 do not match); the reference's crash posture is manual retry; sleep/wake evidence unavailable</td><td>any engine could build it; the tile loop contributes nothing; the scheduler is priced at zero across the market</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h3>What the local models contributed</h3>
+    <div class="cards">
+      <div class="card">
+        <span class="kind">Bionic · qwen/qwen3.8-27b · open-tooling maintainer</span>
+        <h3>Asked who reads what Nisi writes</h3>
+        <p>A genuinely new axis nobody on the first panel took. Open provenance sidecars drew two votes and became the spine of two merges; refuted as a stand-alone feature (one writer, no consortium; unsigned JSON is documentation; release 1 cannot truthfully fill the fields) and kept alive as the receipt for a narrowed release 1. The open queue protocol was refuted on the design's own contract: the reference queue is same-host by construction. First attempt returned empty content after 3,499 reasoning tokens; the second, with thinking disabled, answered in 365 s.</p>
+      </div>
+      <div class="card">
+        <span class="kind">PC worker · Qwen3-Coder-Next 80B · local-first engineer</span>
+        <h3>Named CI as a persona</h3>
+        <p>Nobody on the first panel did; the late product lens and the TD's merge both built on it. Its "requires" lines — machine pinning, power fence, closed reader — matched the Metal-vs-D3D12 finding independently. "Deterministic VFX revision" drew the artist's vote for naming its own failure mode, then was refuted as the closure idea restated. GPU/NPU lighting split repeats the XPU category error. Answered in 62 s.</p>
+      </div>
+      <div class="card">
+        <span class="kind">Apple Foundation Model · on-device · privacy-first user</span>
+        <h3>The brochure restated</h3>
+        <p>Texture patching, scene evolution and asset restoration: "content-aware fill, but verified" by nothing; a pixel-border apron where textures have UV islands; "iterate lighting until confident" with no metric. Refuted at strength 4–5; two were rebutted in discussion as the refuted round-1 previz-fill idea word for word. The market it found — no byte leaves the machine — is real, and became the TPN/NDA positioning for release 2. Answered in 9.5 s.</p>
+      </div>
+      <div class="card">
+        <span class="kind">Consensus of the local-vs-Claude paragraphs</span>
+        <h3>Nobody has both halves</h3>
+        <p>The locals staffed personas the first panel lacked (privacy, interop, CI) and know the machine and the wire format; the Claude lenses know the design's wounds and the business logic. None of the thirteen local ideas names a decision letter, a SPEC identity field, Lumen, temporal state or the XPU rule — they never saw the report, so the comparison is not fully fair. Six of thirteen carried a release-1 tag for work that needs lanes or closures that do not exist, because the local round had no sceptic. OpenCode's free tier hung twice and is absent.</p>
+      </div>
+    </div>
+
+    <h3>The product lens, and what the verifiers did with it</h3>
+    <p>Facts accepted: Epic's non-game per-seat fee proves a segment pays per seat; Epic maintaining MoviePipelineDeadline proves it needs a queue it does not ship; Fab and the Asset Store bill one-time, so a team tier rides on the Hub entitlement path. Conclusions refuted: "already pays Epic per seat" and "no sunk Deadline investment" pull in opposite directions; Unreal is installed on neither machine and the PC's GPU is the release-2 reconciler lane, so the engine being sold has zero dogfood evidence; a hard delivery gate at the highest-stakes step is the worst place to be a new vendor's first user. What stood: the scheduler is free everywhere (Deadline, OpenCue, Flamenco) and the money sits on the review side; and identity in source-visible software is a record, never an enforcement — the pitch may never say "prevents".</p>
+
+    <h3>Refuted, and the refuting lens</h3>
+    <ul>
+      <li><strong>One bucket-grid Watch panel</strong> — for release 1 it is Deadline Monitor in an editor window; "converging" has no meaning for a binary render (desirability, differentiation).</li>
+      <li><strong>The panel as the only Accept button</strong> — the core has no user identity, and a check in Fab/UPM-distributed source is editable by the person it refuses (feasibility).</li>
+      <li><strong>Local cooperative Mac + PC render of one engine frame</strong> — an engine frame cannot be split across blocks; Metal and D3D12 are not the same build (artist, architect).</li>
+      <li><strong>Release-0 free checker with no daemon</strong> — reads neither engine's default output (the panel reports Recorder defaults to JPEG with Zip EXR on opt-in; MRQ's EXR defaults to PIZ); contradicts the plugin shape; no continuity into the journal (feasibility).</li>
+      <li><strong>CI nightly with commit-level REPLAY</strong> — commit in the key makes REPLAY inert, file-level needs the closure that does not exist; a false REPLAY is a false green, the one thing a CI gate must never produce (feasibility).</li>
+      <li><strong>Confidence-driven previz fill, generative turntables, texture patching</strong> — no image lane, no chosen validity metric; confidence collapses to cross-model disagreement alone, which decision E forbids (sceptic).</li>
+      <li><strong>Open queue protocol</strong> — same-host by construction; OpenCue's protos already exist (feasibility, differentiation).</li>
+      <li><strong>Show the failing check</strong> — survives only as a requirement on the manifest: <code>{check_id, measured, threshold, scope}</code> per attempt, which unit-02 does not record (feasibility).</li>
+    </ul>
+
+    <h3>Three experiments before anything is built</h3>
+    <div class="borrow">
+      <div><span class="from">1 · Closure soundness, no engine — two days</span><span class="to">Extend unit-02 with a stub executor whose inputs are a synthetic per-shot closure; drop <code>attempt</code> from identity; add a supersession tombstone on reopen. Pass: a vetoed attempt-0 identity never replays in a second job; an unchanged resubmit replays 100%; a package re-saved with no content change still replays.</span></div>
+      <div><span class="from">2 · Closed reader and row gate — three days, a week if PIZ is ported</span><span class="to">Step zero: record what each engine actually writes by default and decide PIZ decoder versus <code>UNSUPPORTED_COMPRESSION</code>. Then 200 synthetic frames with injected NaN, missing channel and black frames, 20 legitimately dark frames and a fast cut, plus one real Recorder EXR sequence. Pass: exactly the injected cells quarantined with the right code, the assembly refused, zero false positives.</span></div>
+      <div><span class="from">3 · Run-to-run drift, then temporal isolation — under a week</span><span class="to">Render the same 48-frame Unity shot twice from the same commit on the same Mac, temporal off then on, and diff the sidecars: off must be bit-identical; on sets the drift floor from measurement. Then re-render frames 10–14 in isolation with GI on and measure wall time and seam difference at 9|10 and 14|15 against a threshold chosen beforehand. If either fails, "only changed frames render" leaves the release-1 pitch.</span></div>
+    </div>
+
+    <h3>Questions only Louis can answer</h3>
+    <ol class="prompts">
+      <li>First paying user: the Unreal MRG delivery shop (near-empty, and unreachable without a UE install), the CI engineer, or nobody until release 2?</li>
+      <li>Engine first: Unity is installed and is the free reference; the paying user's engine is installed nowhere. Does an Unreal install on the PC, displacing the reconciler lane, happen before or after release 1?</li>
+      <li>Is "untouched shots never re-render, same runner, World Partition projects" still worth the identity work at that width?</li>
+      <li>Self-accept for solo users — recorded and flagged, the flag being the upsell surface. Confirm?</li>
+      <li>The code gate: a shader/material probe as known-answer assertions is the concrete form of the sceptic's point. Is that a product, or is rendering non-negotiable?</li>
+      <li>Solo free / team paid with the paywall at the second person needs identity in the core, which does not exist, and a Hub-signed entitlement outside the stores. Is that the tier structure — and is a free checker with no queue something Nisi ships at all?</li>
+    </ol>
+    <p>Full reports: <code>render-engine/panel/claude-panel-report.md</code> (round 1) and <code>render-engine/panel/combined-panel-report.md</code> (rounds 1–3), with every local model's raw answer beside them.</p>
+
+    <h2 id="sources">P11 · Sources</h2>
+    <ul class="sources">
+      <li><a href="https://docs.blender.org/manual/en/latest/render/cycles/render_settings/sampling.html">Blender 5.2 LTS manual — Cycles sampling</a></li>
+      <li><a href="https://developer.blender.org/docs/features/cycles/sampling_patterns/">Blender developer docs — sampling patterns</a></li>
+      <li><a href="https://digitalproduction.com/2025/11/14/pixars-renderman-27-0/">RenderMan 27.0 — Digital Production, 14 Nov 2025</a></li>
+      <li><a href="https://diglib.eg.org/items/e4525fbf-0d45-4abd-8a33-77093dc1d081">RenderMan XPU: a hybrid CPU+GPU renderer (HPG 2025)</a></li>
+      <li><a href="https://dev.epicgames.com/documentation/en-us/unreal-engine/render-dependency-graph-in-unreal-engine">Unreal Engine 5.8 — Render Dependency Graph</a></li>
+      <li><a href="https://dev.epicgames.com/documentation/unreal-engine/movie-render-pipeline-in-unreal-engine">Unreal Engine 5.8 — Movie Render Pipeline</a></li>
+      <li><a href="https://docs.unity3d.com/6000.4/Documentation/Manual/urp/render-graph.html">Unity manual — render graph system in URP</a></li>
+      <li><a href="https://unity.com/topics/render-pipelines-strategy-for-2026">Unity — render pipelines strategy for 2026</a></li>
+      <li><a href="https://respawn.outlookindia.com/gaming/gaming-news/unity-6-5-update-unity-rendering-pipeline-all-you-need-to-know">Unity 6.5 update — Outlook Respawn</a></li>
+      <li><a href="https://docs.opencue.io/docs/concepts/glossary/">OpenCue glossary</a></li>
+      <li><a href="https://github.com/AcademySoftwareFoundation/OpenCue">OpenCue on GitHub (ASWF)</a></li>
+      <li><a href="https://aws.amazon.com/about-aws/whats-new/2024/04/announcing-aws-deadline-cloud">AWS Deadline Cloud announcement</a></li>
+      <li><a href="https://www.sidefx.com/docs/houdini/tops/intro.html">SideFX — introduction to PDG and TOPs</a></li>
+      <li><a href="https://www.sidefx.com/docs/houdini/tops/pdg/Scheduler.html">SideFX — pdg.Scheduler</a></li>
+      <li><a href="https://www.nvidia.com/en-us/geforce/news/dlss4-multi-frame-generation-ai-innovations/">NVIDIA — DLSS 4 Multi Frame Generation</a></li>
+      <li><a href="https://www.nvidia.com/en-us/geforce/news/nvidia-app-dlss-4-5-dynamic-multi-frame-generation-available-now/">NVIDIA — DLSS 4.5 Dynamic Multi Frame Generation</a></li>
+      <li><a href="https://developer.nvidia.com/rtx/dlss">NVIDIA Developer — DLSS (mentions DLSS 5)</a></li>
+      <li><a href="https://developer.apple.com/videos/play/wwdc2025/205/">Apple — Discover Metal 4 (WWDC25)</a></li>
+      <li><a href="https://www.developer-tech.com/news/apple-fuses-ai-with-graphics-metal-4-overhaul/">Apple fuses AI with graphics in Metal 4 — Developer Tech</a></li>
+      <li><a href="https://arxiv.org/html/2402.17113v3">LayerDiffuse — transparent image layer diffusion</a></li>
+      <li><a href="https://arxiv.org/pdf/2412.04460">LayerFusion — harmonized multi-layer generation</a></li>
+      <li><a href="https://openaccess.thecvf.com/content/WACV2026/papers/Huang_PSDiffusion_Harmonized_Multi-Layer_Image_Generation_via_Layout_and_Appearance_Alignment_WACV_2026_paper.pdf">PSDiffusion (WACV 2026)</a></li>
+      <li><a href="https://arxiv.org/pdf/2505.22523">PrismLayers — multi-layer transparent image data</a></li>
+      <li><a href="https://deepmind.google/models/genie/">Google DeepMind — Genie 3</a></li>
+      <li><a href="https://9to5google.com/2026/01/29/google-project-genie/">Project Genie rollout — 9to5Google, 29 Jan 2026</a></li>
+    </ul>
+  </main>
+</div>

@@ -1,0 +1,102 @@
+{
+  "summary": "Review of the Private Nisi incident-storage proposal. Five material corrections: (1) entry identity: rowId already binds attempt/candidate so \"changed content CONFLICTs\" only holds within one attempt, and the DUPLICATE/CONFLICT digest must distinguish content identity from envelope identity; (2) admission consumption should not be burned by pre-admission refusals, and revoke-during-BUSY needs defined semantics; (3) REVOKED/NOT_RETAINED/tombstone states have no supplied write path, and the two expiry notions (permit expiresAt vs retention) need separation; (4) reusing original runId/attempt in the journal entry risks existing consumers reading it as a real pipeline failure; (5) \"metadata-only\" must be an explicit allowlist (subject path, failureCodes) and query must never report trust above the stored sourceTrust. Boundary tests listed. Nothing executed; Codex owns implementation.",
+  "deliverable": "## Material corrections (\u22645)\n\n**1. Identity: entry ID stability and the DUPLICATE/CONFLICT digest are under-specified.**\n- rowId is a hash of binding(run/task/baseline/attempt/stage/candidate/checkIndex). Because attempt (and run) are inside rowId, a rerun of the same logical check gets a *new* rowId \u2192 new entryId, not CONFLICT. The stated intent (\"same logical row changed content must CONFLICT\") therefore only holds within one run/attempt. Either state that scope explicitly, or define entryId over a reduced binding (task/stage/candidate/checkIndex) if cross-attempt conflict is actually wanted. Don't leave it implicit.\n- \"Full record input digest gives DUPLICATE or CONFLICT\": if that digest includes declarationId/issuedAt/createdAt/previewSha256, then a second host re-declaring the *same* row content always yields CONFLICT and DUPLICATE is effectively unreachable. Define two digests: a content-identity digest (quoted row + rowFingerprint + preview digest) that decides DUPLICATE vs CONFLICT, and the envelope digest (adds declaration) used for receiptId. Otherwise the query's \"same row, same content\" answer differs by who declared it.\n- projectId `task:<taskFingerprint>` must be derived by the access helper from the selected row's binding.task and compared, not supplied by the caller; otherwise cross-namespace entries are possible with a legitimately branded row.\n\n**2. One-use/reentrancy: admission consumption is too eager, and revoke-during-BUSY is undefined.**\n- \"Refusal/failure consumes admission\" means a pre-admission refusal (clock validation, cross-host permit, unsettled preview, brand miss) permanently makes the row unrecordable for the process lifetime. Split it: refusals raised *before* the journal is touched do not consume; only staging/CAS outcomes (WRITTEN/DUPLICATE/CONFLICT/UNCERTAIN/post-staging REFUSED) consume.\n- Define the BUSY window precisely: admission point = immediately before recordJournalObservation staging. revokeIncidentPermit while BUSY must return a distinct result (\"admission already taken; outcome not affected\") \u2014 never \"prevented\". Likewise, revoke invoked reentrantly from inside a callback (e.g. the preview callback) must see BUSY, not pre-admission state.\n- Per-row \"at most one admitted attempt\" is process-local state on the access instance; state that a second access instance in the same process is a separate scope (or key the guard per host), otherwise \"in this host\" is ambiguous.\n\n**3. Freshness/lifecycle: REVOKED/NOT_RETAINED have no write path, and there are two different \"expiry\" clocks.**\n- The query returns REVOKED and NOT_RETAINED and honours tombstones, but the supplied design has no post-admission write (revoke after admission cannot undo; no sweeper; queries don't write). Either name the existing journal mechanism that produces a revoked flag/tombstone, or mark these outcomes reserved/unreachable in v1. Do not ship a query that documents states nothing can produce.\n- Declaration has permit validity (issuedAt/expiresAt, \u22641h span) and retention (createdAt/retentionMs). Query EXPIRED must be defined solely as now \u2265 createdAt+ttl. Capture must separately enforce issuedAt \u2264 createdAt < expiresAt (pick and document boundary inclusivity) and refuse otherwise. Journal ttl vs payload retentionMs mismatch \u2192 REFUSED (malformed), not \"prefer one\".\n- `now` is caller-supplied; the query result is relative to the caller's clock, not attested. Say so in the result.\n\n**4. Mixing: journal entry keyed on original runId/attempt can be misread as a real pipeline failure.**\n- \"Journal entry runId/attempt/candidateId/stage REPOSITORY_INCIDENT_CANDIDATE_V1, state FAILED\": if runId/attempt reuse the original binding values, any existing journal consumer aggregating by run/attempt (not filtering by stage) will count an extra FAILED stage for the real run \u2014 exactly the \"Node observation presented as PipelineResult\" misrepresentation the brief forbids. Either confirm all existing readers filter by stage, or namespace runId/attempt (e.g. derive from entryId) and keep the original binding only inside the quoted payload.\n- Payload must carry sourceTrust TRUSTED_HOST_STATEMENTS_NOT_ATTESTED verbatim; the query result type should carry it through unchanged so no caller can infer a higher trust from AVAILABLE_OBSERVATION.\n\n**5. Metadata trust: \"metadata-only\" and rawContentPersisted:false need an explicit allowlist; brand does not survive serialization.**\n- subject FILE path and failureCodes are string fields; a path can contain user content. rawContentPersisted:false is only true if the payload is a fixed allowlist (rowId, fingerprint, occurrenceGroupId, binding, source hashes, subject hashes, fixed codes, classification/rawStatus/stageStatus/disposition, flags, sourceTrust) and the path is either documented as persisted or hashed. Reject any extra key on capture.\n- The WeakSet brand is process-local and is not in the stored record. Stored provenance is therefore \"whoever had journal write access\"; query validation is self-consistency only (fingerprint recomputes, digests match, binding.task matches namespace). The result should not expose a field that reads like an attestation of origin.\n\n## Boundary test recommendations (for Codex; not executed)\n- Row selection: FAILURE_CANDIDATE but reason \u2260 RECORDED_FAILURE; rawStatus FAIL with stageStatus \u2260 FAIL; disposition \u2260 RESULT_RECORDED; unbranded structurally identical row; preview callback returning undefined (pre-settlement) \u2192 all refused, none consume admission.\n- Cross-host: permit from access A passed to captureIncident on B \u2192 refused; A's per-row guard unchanged.\n- Times: issuedAt=expiresAt (refuse), expiresAt-issuedAt = 3 600 000 exactly (accept) and +1 (refuse); -0 in every field; retentionMs = 1 day and 90 days exact, 90 days+1ms; createdAt+retentionMs overflowing Number.MAX_SAFE_INTEGER; createdAt = expiresAt (whichever boundary is chosen, test both sides).\n- Preview drift: create permit, host preview changes (previewSha256 mismatch) \u2192 capture refused.\n- Duplicate/conflict: same row, same content, two declarations (expect DUPLICATE if correction 1 adopted); same rowId with changed fingerprint \u2192 CONFLICT, entryId identical; rerun with new attempt \u2192 new entryId (document as expected).\n- Reentrancy: revoke called before capture (prevented), during BUSY from inside preview callback (not prevented, distinct result), after WRITTEN (no effect); second capture on a second permit for the same row after WRITTEN/CONFLICT/UNCERTAIN \u2192 refused without touching disk.\n- UNCERTAIN: journal throws after staging; malformed result object; then fresh query on disk resolves to AVAILABLE_OBSERVATION or MISSING.\n- Durability: WRITTEN with durable=false remains false in every downstream surface.\n- Query freshness: mutate/delete journal file between two queries with a retained owner reference \u2192 second query reflects disk, not cached snapshot; base-hash CAS loses to an external write \u2192 CONFLICT, no partial commit.\n- Query validation: tampered payload fingerprint, wrong task namespace, ttl\u2260retentionMs, tombstone with payload absent \u2192 REVOKED/NOT_RETAINED/REFUSED as specified, never disclosing pruned payload; now = createdAt+ttl exactly \u2192 EXPIRED; revoked+expired \u2192 REVOKED.\n- Journal consumers: existing readers listing FAILED entries must not surface REPOSITORY_INCIDENT_CANDIDATE_V1 as a pipeline stage failure.",
+  "risks": [
+    "Uncertain whether rowId's binding includes attempt in a way that makes cross-attempt CONFLICT impossible; correction 1 assumes the supplied field list is exhaustive.",
+    "No supplied mechanism produces revoked flags or tombstones post-admission; REVOKED/NOT_RETAINED may be unreachable in v1 unless an existing journal feature (not described) supplies them.",
+    "Whether existing journal consumers filter by stage is unknown; if they do not, reusing original runId/attempt misrepresents Node observations as pipeline failures.",
+    "Caller-controlled clock means all declaration times are unattested claims; range validation does not establish authenticity.",
+    "Process-local per-row admission guard does not survive restart; a restarted host can attempt a second record (resolved only by DUPLICATE/CONFLICT on disk).",
+    "Review is based solely on the supplied description; no code, tests or files were inspected or run."
+  ],
+  "verification": [
+    "Confirm from the source projector which binding fields feed rowId and whether existing journal readers filter by stage before adopting corrections 1 and 4.",
+    "Confirm the journal already exposes a revoked/tombstone write path; if not, remove or mark REVOKED/NOT_RETAINED as reserved in the query result type.",
+    "Have Codex implement the listed boundary tests and confirm pre-admission refusals leave the per-row guard untouched.",
+    "Check that the stored payload key set is a closed allowlist and that subject.path handling matches the rawContentPersisted:false claim.",
+    "Verify query results carry sourceTrust and 'now is caller-supplied' unchanged so callers cannot infer attestation."
+  ],
+  "invocation_status": "succeeded",
+  "status": "succeeded",
+  "model_usage": {
+    "claude-haiku-4-5-20251001": {
+      "inputTokens": 2096,
+      "outputTokens": 15,
+      "cacheReadInputTokens": 0,
+      "cacheCreationInputTokens": 0,
+      "webSearchRequests": 0,
+      "costUSD": 0.002171,
+      "contextWindow": 200000,
+      "maxOutputTokens": 32000,
+      "thinkingTokens": 0,
+      "canonicalModel": "claude-haiku-4-5",
+      "provider": "firstParty",
+      "costBasis": "list"
+    },
+    "claude-opus-5": {
+      "inputTokens": 2,
+      "outputTokens": 7399,
+      "cacheReadInputTokens": 737,
+      "cacheCreationInputTokens": 2345,
+      "webSearchRequests": 0,
+      "costUSD": 0.2088035,
+      "contextWindow": 1000000,
+      "maxOutputTokens": 64000,
+      "thinkingTokens": 3604,
+      "canonicalModel": "claude-opus-5",
+      "provider": "firstParty",
+      "costBasis": "list"
+    }
+  },
+  "reported_models": [
+    "claude-haiku-4-5-20251001",
+    "claude-opus-5"
+  ],
+  "usage": {
+    "input_tokens": 2,
+    "cache_creation_input_tokens": 2345,
+    "cache_read_input_tokens": 737,
+    "output_tokens": 7399,
+    "output_tokens_details": {
+      "thinking_tokens": 3604
+    },
+    "server_tool_use": {
+      "web_search_requests": 0,
+      "web_fetch_requests": 0
+    },
+    "service_tier": "standard",
+    "cache_creation": {
+      "ephemeral_1h_input_tokens": 2345,
+      "ephemeral_5m_input_tokens": 0
+    },
+    "inference_geo": "not_available",
+    "iterations": [
+      {
+        "input_tokens": 2,
+        "output_tokens": 7399,
+        "cache_read_input_tokens": 737,
+        "cache_creation_input_tokens": 2345,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 2345
+        },
+        "type": "message"
+      }
+    ],
+    "speed": "standard"
+  },
+  "total_cost_usd": 0.2109745,
+  "duration_ms": 100672,
+  "tools_enabled": false,
+  "session_persisted": false,
+  "write_owner": "codex",
+  "requested_model": "opus",
+  "mode": "delegate",
+  "attempts": 1,
+  "wall_seconds": 101.475,
+  "created_at": "2026-09-14T03:47:18.078676+00:00",
+  "prior_attempts": [],
+  "total_wall_seconds": 101.476,
+  "prior_attempt_usage": [],
+  "total_usage_complete": true
+}

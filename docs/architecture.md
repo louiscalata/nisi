@@ -1,5 +1,10 @@
 # Architecture
 
+**AGIW** (suite name, 2026-09-21, Louis — Filipino for "spiderweb") is the
+whole connected suite; **Nisi is AGIW's inference member** (on-device Mac
+inference suite + Windows worker lane, heterogeneous by design). This document
+describes the web's coordination core.
+
 Nisi separates workflow coordination from the application actions that perform
 file reads, model calls, checks, tests, reviews, and report storage. The orchestrator
 captures task data and supplies frozen snapshots to callbacks. It validates structure,

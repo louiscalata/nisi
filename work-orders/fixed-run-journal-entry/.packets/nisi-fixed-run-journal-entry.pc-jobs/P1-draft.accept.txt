@@ -1,0 +1,165 @@
+exit 1
+
+> nisi-fixed-run-journal-entry@0.0.0 test:entry
+> node --test tests/entry.test.mjs
+
+✖ the observed run becomes a SUCCEEDED fixed-run entry with the exact shape (1.377584ms)
+✖ every NOT_ACCEPTED summary becomes a FAILED entry that keeps its reasons and table (0.952625ms)
+✖ the entry is accepted by the accepted run journal: append, duplicate, conflict, reopen and redaction (0.533166ms)
+✖ non-object input throws TypeError; every field is checked in a fixed order with a named refusal (0.552459ms)
+✖ a summary that does not satisfy the v1 contract is refused before anything is built (1.107791ms)
+✖ a summary the journal cannot hold is refused as PAYLOAD_UNREPRESENTABLE, never coerced (0.150375ms)
+✖ inputs are never mutated, results are fresh and identical across calls (0.167334ms)
+✔ entry module has no imports, exports only the builder and stays pure (4.599958ms)
+ℹ tests 8
+ℹ suites 0
+ℹ pass 1
+ℹ fail 7
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 56.232958
+
+✖ failing tests:
+
+test at tests/entry.test.mjs:26:1
+✖ the observed run becomes a SUCCEEDED fixed-run entry with the exact shape (1.377584ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly deep-equal:
+  + actual - expected
+  
+    [
+      'status',
+  +   'reason',
+  -   'entry',
+      'authorizing'
+    ]
+  
+      at TestContext.<anonymous> (file:///Users/louiscalata/nisi-next-private/work-orders/fixed-run-journal-entry/tests/entry.test.mjs:28:10)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1325:25)
+      at Test.start (node:internal/test_runner/test:1191:17)
+      at startSubtestAfterBootstrap (node:internal/test_runner/harness:385:17) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: [ 'status', 'reason', 'authorizing' ],
+    expected: [ 'status', 'entry', 'authorizing' ],
+    operator: 'deepStrictEqual',
+    diff: 'simple'
+  }
+
+test at tests/entry.test.mjs:68:1
+✖ every NOT_ACCEPTED summary becomes a FAILED entry that keeps its reasons and table (0.952625ms)
+  TypeError: Cannot read properties of undefined (reading 'state')
+      at TestContext.<anonymous> (file:///Users/louiscalata/nisi-next-private/work-orders/fixed-run-journal-entry/tests/entry.test.mjs:70:19)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1325:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:911:18)
+      at Test.postRun (node:internal/test_runner/test:1465:19)
+      at Test.run (node:internal/test_runner/test:1390:12)
+      at async startSubtestAfterBootstrap (node:internal/test_runner/harness:385:3)
+
+test at tests/entry.test.mjs:94:1
+✖ the entry is accepted by the accepted run journal: append, duplicate, conflict, reopen and redaction (0.533166ms)
+  Error: ENTRY
+      at err (file:///Users/louiscalata/nisi-next-private/work-orders/fixed-run-journal-entry/src/run-journal-v1.mjs:11:51)
+      at entryOf (file:///Users/louiscalata/nisi-next-private/work-orders/fixed-run-journal-entry/src/run-journal-v1.mjs:76:53)
+      at Object.append (file:///Users/louiscalata/nisi-next-private/work-orders/fixed-run-journal-entry/src/run-journal-v1.mjs:113:13)
+      at TestContext.<anonymous> (file:///Users/louiscalata/nisi-next-private/work-orders/fixed-run-journal-entry/tests/entry.test.mjs:96:22)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1325:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:911:18)
+      at Test.postRun (node:internal/test_runner/test:1465:19)
+      at Test.run (node:internal/test_runner/test:1390:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:911:7) {
+    code: 'ENTRY'
+  }
+
+test at tests/entry.test.mjs:118:1
+✖ non-object input throws TypeError; every field is checked in a fixed order with a named refusal (0.552459ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  + actual - expected
+  
+  + 'INVALID_SUMMARY'
+  - 'INVALID_PROJECT'
+             ^
+  
+      at refused (file:///Users/louiscalata/nisi-next-private/work-orders/fixed-run-journal-entry/tests/entry.test.mjs:21:10)
+      at TestContext.<anonymous> (file:///Users/louiscalata/nisi-next-private/work-orders/fixed-run-journal-entry/tests/entry.test.mjs:126:76)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1325:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:911:18)
+      at Test.postRun (node:internal/test_runner/test:1465:19)
+      at Test.run (node:internal/test_runner/test:1390:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:911:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 'INVALID_SUMMARY',
+    expected: 'INVALID_PROJECT',
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at tests/entry.test.mjs:148:1
+✖ a summary that does not satisfy the v1 contract is refused before anything is built (1.107791ms)
+  AssertionError [ERR_ASSERTION]: extra adapter/adjudicator fields are not copied and not refused
+  
+  'REFUSED' !== 'ENTRY'
+  
+      at TestContext.<anonymous> (file:///Users/louiscalata/nisi-next-private/work-orders/fixed-run-journal-entry/tests/entry.test.mjs:196:10)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1325:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:911:18)
+      at Test.postRun (node:internal/test_runner/test:1465:19)
+      at Test.run (node:internal/test_runner/test:1390:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:911:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: 'REFUSED',
+    expected: 'ENTRY',
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at tests/entry.test.mjs:199:1
+✖ a summary the journal cannot hold is refused as PAYLOAD_UNREPRESENTABLE, never coerced (0.150375ms)
+  AssertionError [ERR_ASSERTION]: case 0
+  + actual - expected
+  
+  + 'INVALID_SUMMARY'
+  - 'PAYLOAD_UNREPRESENTABLE'
+  
+      at refused (file:///Users/louiscalata/nisi-next-private/work-orders/fixed-run-journal-entry/tests/entry.test.mjs:21:10)
+      at TestContext.<anonymous> (file:///Users/louiscalata/nisi-next-private/work-orders/fixed-run-journal-entry/tests/entry.test.mjs:215:46)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1325:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:911:18)
+      at Test.postRun (node:internal/test_runner/test:1465:19)
+      at Test.run (node:internal/test_runner/test:1390:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:911:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: 'INVALID_SUMMARY',
+    expected: 'PAYLOAD_UNREPRESENTABLE',
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at tests/entry.test.mjs:221:1
+✖ inputs are never mutated, results are fresh and identical across calls (0.167334ms)
+  AssertionError [ERR_ASSERTION]: Expected "actual" to be strictly unequal to:
+  
+  undefined
+      at TestContext.<anonymous> (file:///Users/louiscalata/nisi-next-private/work-orders/fixed-run-journal-entry/tests/entry.test.mjs:228:10)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1325:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:911:18)
+      at Test.postRun (node:internal/test_runner/test:1465:19)
+      at Test.run (node:internal/test_runner/test:1390:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:911:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: undefined,
+    expected: undefined,
+    operator: 'notStrictEqual',
+    diff: 'simple'
+  }

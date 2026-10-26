@@ -1,0 +1,7 @@
+{
+ "model": "opencode/big-pickle",
+ "status": "error",
+ "attempt": 2,
+ "error": "Command '['opencode', 'run', '--pure', '--format', 'json', '-m', 'opencode/big-pickle', 'Subject: the Nisi Render Engine, a future product decided 2026-09-14: a verified, layered render-and-generation queue shipped as an Unreal Engine plugin and a Unity component plugin, both thin clients over one p",
+ "elapsed_s": 240.0
+}

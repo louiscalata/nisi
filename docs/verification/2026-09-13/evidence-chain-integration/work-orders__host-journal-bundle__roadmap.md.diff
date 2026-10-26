@@ -1,0 +1,8 @@
+--- work-orders/host-journal-bundle/roadmap.md (pre-state)
++++ work-orders/host-journal-bundle/roadmap.md
+@@ -44,3 +44,5 @@
+ Only `src/host-journal-bundle.mjs` is an executor edit target. This is a persistence
+ composition exercise, not crash qualification, power-loss durability, cross-process
+ locking, incident admission or milestone closure.
++
++2026-09-13 — integrated (Astra; Louis “Autointegrate”, 2026-09-13 Claude session): `history/host-journal-bundle.mjs` copied byte-for-byte, SHA256 `97b2554b7fe50812fcb0065197964967d2beefc0c8cb322a38154ec16ebb9894`; 17/17 migrated tests (14 functional + 3 baseline), product check 1230/1230 with zero failed/skipped/cancelled/todo, TypeScript PASS and PRIVATE_PACKAGE_FILES 27. Not closed: host wiring of the bundle to the XPC runner, real-filesystem durability, cross-process locking, crash qualification, or incident admission. Progress stays 30% — 3 of 10; no milestone closure. Receipt: `../../docs/verification/2026-09-13/evidence-chain-integration/receipt.json`.

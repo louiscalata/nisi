@@ -1,5 +1,3 @@
-// Copyright 2026 Louis Calata
-// SPDX-License-Identifier: Apache-2.0
 import {createHash} from 'node:crypto';
 import {types as nodeTypes} from 'node:util';
 
@@ -118,9 +116,6 @@ function build(config, watermark = 0, initial = [], sealed = false) {
     const e=entryOf(input,now);
     if (sealed) return freeze({status:'REFUSED',id:e.id,reason:'SEALED'});
     if (e.projectId !== config.projectId) return freeze({status:'REFUSED',id:e.id,reason:'PROJECT'});
-    // Never persist a digest of fields that the caller asked to redact.
-    // Identity is intentionally defined over the retained projection.
-    redact(e,config._paths);
     const fp=H('nisi-run-journal/input/v1\n'+C(e)), old=byId.get(e.id);
     if (old) return freeze(old.fingerprint===fp ? {status:'DUPLICATE',id:e.id} : {status:'CONFLICT',id:e.id,reason:'ID_CONTENT_MISMATCH'});
     if (e.retryOf !== null) {
@@ -128,6 +123,7 @@ function build(config, watermark = 0, initial = [], sealed = false) {
         !(new Set(['SUCCEEDED','FAILED','CANCELLED','REVOKED'])).has(t.entry.state) && !expired(t,now) && !revoked.has(t.entry.id)) return freeze({status:'REFUSED',id:e.id,reason:'RETRY'});
     }
     if (e.revokes !== null) { const t=byId.get(e.revokes); if (!t || t.entry.runId!==e.runId || t.entry.attempt!==e.attempt || t.entry.candidateId!==e.candidateId || t.entry.createdAt>e.createdAt) return freeze({status:'REFUSED',id:e.id,reason:'REVOCATION'}); }
+    redact(e,config._paths);
     const r={entry:e,fingerprint:fp,retained:true,historical:false}; records.push(r); byId.set(e.id,r); if (e.revokes!==null) revoked.add(e.revokes);
     mark=now; prune(now); return freeze({status:'APPENDED',id:e.id});
   };
@@ -169,9 +165,7 @@ function reopenData(serialized) {
         H('nisi-run-journal/record/v1\n'+C({seq:v.seq,previousHash:v.previousHash,record:v.record}))!==v.hash || !exact(v.record,RECORD_KEYS) || typeof v.record.fingerprint!=='string' || !/^[0-9a-f]{64}$/.test(v.record.fingerprint) || typeof v.record.retained!=='boolean') { failAt(n+1); break; }
     let e; try { e=entryOf(v.record.entry,h.now); } catch (_) { failAt(n+1); break; }
     if (e.projectId!==c.projectId || b.byId.has(e.id) || (!v.record.retained && e.payload!==null)) { failAt(n+1); break; }
-    if (v.record.retained) { try { for(const p of c._paths){let x=e;for(const k of p){if(!x||typeof x!=='object'||!own(x,k)||Array.isArray(x)&&!/^(0|[1-9][0-9]*)$/.test(k))throw 0;x=x[k];}if(x!==MARK)throw 0;} } catch (_) { failAt(n+1); break; }
-      if (v.record.fingerprint!==H('nisi-run-journal/input/v1\n'+C(e)) || expired({entry:e},h.now)) { failAt(n+1); break; }
-      retained++; if(retained>c.maxEntries){failAt(n+1);break;} }
+    if (v.record.retained) { try { for(const p of c._paths){let x=e;for(const k of p){if(!x||typeof x!=='object'||!own(x,k)||Array.isArray(x)&&!/^(0|[1-9][0-9]*)$/.test(k))throw 0;x=x[k];}if(x!==MARK)throw 0;} } catch (_) { failAt(n+1); break; } if (expired({entry:e},h.now)) { failAt(n+1); break; } retained++; if(retained>c.maxEntries){failAt(n+1);break;} }
     if (e.retryOf!==null) { const t=b.byId.get(e.retryOf); if(!t || e.state!=='QUEUED' || t.entry.runId!==e.runId || e.attempt<=t.entry.attempt || e.createdAt<t.entry.createdAt || !(new Set(['SUCCEEDED','FAILED','CANCELLED','REVOKED'])).has(t.entry.state) && !expired(t,h.now) && !b.revoked.has(t.entry.id)) { failAt(n+1); break; } }
     if (e.revokes!==null) { const t=b.byId.get(e.revokes); if(!t || t.entry.runId!==e.runId || t.entry.attempt!==e.attempt || t.entry.candidateId!==e.candidateId || t.entry.createdAt>e.createdAt){failAt(n+1);break;} }
     const r={entry:e,fingerprint:v.record.fingerprint,retained:v.record.retained,historical:true}; b.records.push(r); b.byId.set(e.id,r); if(e.revokes!==null)b.revoked.add(e.revokes); prev=v.hash; ids.push(e.id);

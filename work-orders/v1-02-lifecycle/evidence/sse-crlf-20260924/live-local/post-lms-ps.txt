@@ -1,0 +1,4 @@
+
+IDENTIFIER                    MODEL                         STATUS    SIZE        CONTEXT    PARALLEL    DEVICE    TTL
+google/gemma-4-26b-a4b-qat    google/gemma-4-26b-a4b-qat    IDLE      15.64 GB    262144     4           Local        
+

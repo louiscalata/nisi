@@ -1,0 +1,11 @@
+>> lint
+OK: nisi-run-journal — 1 item(s), root /Users/louiscalata/nisi-next-private/work-orders/run-journal
+>> tier preflight: local — lmstudio/qwen/qwen3.8-27b
+tier local route reachable, model lmstudio/qwen/qwen3.8-27b load state: loaded (9 models, 14ms)
+>> opencode (packet agent, tier local) — edits only, capped at 900s
+   [0m
+   [0m→ [0mRead .packets/nisi-run-journal.packet.md
+   [0m→ [0mRead src/run-journal-v1.mjs
+>> receipt (deterministic — accepts run here, not by the model)
+receipt written: outcome=blocked · P1=FAILED · acceptance exit 0
+>> /Users/louiscalata/nisi-next-private/work-orders/run-journal/.packets/nisi-run-journal.result.md

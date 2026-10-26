@@ -1,0 +1,103 @@
+{
+  "actualModels": [
+    "claude-opus-5-5"
+  ],
+  "claudeExit": 0,
+  "durationMs": 162480,
+  "isError": false,
+  "packetBytes": 58640,
+  "packetSha256": "a4e15b93b865fe88732ad7a211baa584540e75b763de1433e5b939952d1901ee",
+  "requestedModel": "claude-opus-5-5",
+  "review": {
+    "confirmedFacts": [
+      "Code (LocalModelBackend.swift:118-122): every byte, CR and LF included, increments totalBytes before any processing, so CRLF normalization cannot bypass the stream cap.",
+      "Code (:125,132-135): CR is appended under the line cap and removed only when LF arrives, so it counts toward maxLineBytes. Only one terminal CR is removed.",
+      "Code (:126-128): strict UTF-8 decoding happens after CR removal. 0x0D cannot be part of a multi-byte UTF-8 sequence, so the removal cannot change validity.",
+      "Inference from code: with a double CR, 'data: [DONE]\\r' is not DONE, because CharacterSet.whitespaces excludes CR, so the stream fails closed with SSE_INCOMPLETE.",
+      "Inference from code: in the mutant without CR removal, JSON content still parses (JSON allows \\r as whitespace) but DONE detection fails. Exactly the checks at NisiSessionCLI.swift:359 and :363 should then fail while the :365-368 line-cap control passes, which matches the reported 2/77 and 2/75 with the control passing.",
+      "Receipt: 640-token CLI turn PASS; reply 'I received your message.' is 24 UTF-16 units, matching replyChars/streamedChars 24; chunks 5; contentPersisted true (set by the CLI after save, NisiSessionCLI.swift:627-628).",
+      "Receipt: 128-token CLI turn EMPTY_REPLY, not persisted. Consistent with the abort path at LocalModelBackend.swift:264-266.",
+      "Receipt: the raw diagnostic was a separate sample at temperature 0.8 (126 events: 125 reasoning, 0 content, finish_reason=length, 254 LF / 0 CRLF, i.e. 127 events \u00d7 2 LF). The receipts correctly call this supporting evidence, not proof.",
+      "The CLI and the window share NisiLocalTurn and SSELineDecoder. The app manifest pins LocalModelBackend.swift at the reviewed 66bcecf8\u2026 hash.",
+      "Manifest/install: the installed executable ff9f\u2026 equals the scratch signed build, and the signed text hash equals the pinned compile's text hash. Per the fresh read-only state, all ten source hashes, the signature, and the inode still match.",
+      "NisiStatusCLI.swift:9,133-134 hardcodes inferenceVerified=false and generationObserved=false. Claim 5 (inventory is not inference proof) holds.",
+      "No document in the packet claims Nisi v1 or v0.2 complete. v1 is 1/8 (roadmap.md:5, RESULT.md:80-81).",
+      "Reported fresh state (2026-09-25): no Nisi window process; LM Studio listening but 0 loaded instances; Gemma installed but unloaded."
+    ],
+    "findings": [
+      {
+        "evidence": "Observed: 'configuredModelLoaded:true', 'runningPid:35630', and the RESULT/README statements describe the state at 2026-09-24 ~04:50-04:55 PDT. Reported fresh state on 2026-09-25: PID 35630 is gone, no nisi-chat-window process is running, and LM Studio has 0 loaded instances. No GUI Send was ever run (install:12). Inference: the receipts support 'repair verified via CLI while the model was explicitly loaded, and app installed/signed/launched once'. They do not support Mac inference being 'activated' as a durable state or 'completed'. As of now the local route has no resident model and the window is not running.",
+        "file_line": "evidence/sse-crlf-20260924/app-install-result.json:5,17; evidence/sse-crlf-20260924/RESULT.md:58-61,73-75; v1-chat-slice/README.md:110-116",
+        "recommendedCorrection": "Restate as: 'CRLF repair verified; CLI local turn PASS on 2026-09-24 at an explicit 640-token request with Gemma manually loaded; signed app installed and launched once; GUI local turn untested; as of 2026-09-25 app not running and model not loaded; v1 acceptance 1/8.' Remove any 'activated/completed' wording and label the status and PID facts with a timestamp.",
+        "severity": "P1"
+      },
+      {
+        "evidence": "Observed: SSEParser reads only choices[0].delta.content and discards finish_reason and reasoning_content. NisiLocalTurn builds TurnEvidence without setting budgetExhausted, yet the 640 receipt prints \"budgetExhausted\":false. Inference: that value is a default rather than an observation, since the TurnEvidence declaration is not in the packet. Consequences: (a) an answer cut off by finish_reason=length is reported PASS and persisted via addAssistant as if complete; (b) reasoning-only exhaustion looks identical to any other empty stream. The 128-token cause could only be inferred from a separate raw sample. The window uses a reasoning model at 1280 tokens (NisiChatWindow.swift:418), so silent truncation in the GUI is plausible but untested.",
+        "file_line": "LocalModelBackend.swift:70-84,239-259; live-local/turn-640-stdout.txt:8",
+        "recommendedCorrection": "Capture the final finish_reason (and optionally count reasoning deltas) in SSECompletion. Set budgetExhausted from that observation, or emit it as 'not-observed' for the local backend. Add a TRUNCATED/BUDGET_EXHAUSTED status that is not persisted as a normal PASS reply. Until then, treat the budgetExhausted field in local receipts as unverified.",
+        "severity": "P1"
+      },
+      {
+        "evidence": "Observed: the header says 'Only already-resident models are used (no cold start, no eviction)', but stream() POSTs directly to /v1/chat/completions with no loaded_instances preflight. Given the current drift (model unloaded), the next Local Send depends on LM Studio JIT/auto-evict settings, which are unverified. It will either fail as a non-200 error (surfacing as a generic stream error) or cold-load a 26B model within the 120 s timeout, contrary to the stated invariant. The comment's 'only model REPORTED_LOADED as of 2026-09-21' is also stale.",
+        "file_line": "LocalModelBackend.swift:10-12,144-186; NisiChatWindow.swift:413-424",
+        "recommendedCorrection": "Add a residency preflight (same /api/v1/models check as NisiStatusCLI) that refuses with MODEL_NOT_LOADED, or amend the comment to say residency is not enforced. Record the LM Studio JIT setting in the evidence.",
+        "severity": "P2"
+      },
+      {
+        "evidence": "Observed: the docs call 640 'Nisi's default' / 'the default 640-token budget', but the window hardcodes maxTokens 1280. The CLI default is not shown in the packet, and the file name request-640.json suggests the budget was set explicitly. The CLI path also passes no referenceContext (NisiSessionCLI.swift:646-651), which the window does pass.",
+        "file_line": "evidence/sse-crlf-20260924/RESULT.md:69; v1-chat-slice/README.md:115-116; NisiChatWindow.swift:418",
+        "recommendedCorrection": "Say 'CLI request with maxTokens=640'. State that the GUI path (1280 tokens, referenceContext) has no live evidence.",
+        "severity": "P2"
+      },
+      {
+        "evidence": "Observed: the 128-token turn returned status=EMPTY_REPLY with CLI exit 0, so exit-code-driven automation would treat a failed turn as success. All local errors collapse to LOCAL_STREAM_ERROR, which hides SSE_INCOMPLETE, LOOPBACK_ONLY, and HTTP failures. This is the same opacity that masked the original CRLF bug.",
+        "file_line": "live-local/RESULT.md:17; NisiSessionCLI.swift:644-655",
+        "recommendedCorrection": "Use a nonzero exit for EMPTY_REPLY (or document that the status field, not the exit code, is authoritative). Include the LocalTurnError code in the failure output.",
+        "severity": "P2"
+      },
+      {
+        "evidence": "Observed: the live CLI was built from 'the documented nine Swift inputs', but the README build line lists eight files and still cites the 2026-09-23 hash 1bdb7016\u2026 and 44/44. Only two CLI source hashes are recorded (RESULT.md:39-40). Inference: the CLI binary 3949\u2026 is not source-pinned to the same standard as the app.",
+        "file_line": "live-local/RESULT.md:8; v1-02-lifecycle/README.md:121-124",
+        "recommendedCorrection": "Record the exact nine-file CLI argv and per-file hashes. Update the README build line, hash, and check count.",
+        "severity": "P2"
+      },
+      {
+        "evidence": "Observed: 'Only LocalModelBackend.swift and NisiSessionCLI.swift changed for this repair', but the installed app also includes other sources modified on 09-24 at 04:06-04:12: ConversationStore, NativeTranscriptBuilder, NisiChatWindow, and TemporaryContextStore. All ten inputs are untracked, and the prior install's inputs were not recorded. The rebuilt app therefore ships changes outside this packet's review scope.",
+        "file_line": "app-build-manifest-preinstall.json:59,62,64-123; RESULT.md:10-11",
+        "recommendedCorrection": "State that the review covers the two repair files only. Record the review status of the other eight inputs. Archive or commit the ten pinned sources so the hashes remain reproducible.",
+        "severity": "P2"
+      },
+      {
+        "evidence": "Observed: the manifest records only the swiftc compile. Bundle assembly (Info.plist, bundle id local.nisi.chat), entitlements, signing identity, and the codesign argv are not recorded, despite 'exact build command'. Mitigating: the signed and unsigned textSha256 values are equal (72763e\u2026, :12,17), which ties the signed code to the pinned compile.",
+        "file_line": "app-build-manifest-preinstall.json:25-46; RESULT.md:54-55",
+        "recommendedCorrection": "Add the bundle and signing steps, the Info.plist/entitlements hashes, and the codesign -dv output to the manifest, or narrow the wording to 'exact compile command'.",
+        "severity": "P2"
+      },
+      {
+        "evidence": "Observed: the visible self-test excerpt has no regression for SSE_INVALID_UTF8, bare-CR line endings, or EOF without a final LF. The Astra probes were external and not retained as tests. The parser silently ignores unparseable 'data:' lines, 'data:' without a space, and in-stream error objects, then reaches [DONE] and returns EMPTY_REPLY rather than an error. All three cases fail closed, so none is a safety break.",
+        "file_line": "LocalModelBackend.swift:72-84,118-137; NisiSessionCLI.swift:347-376",
+        "recommendedCorrection": "Add byte-fed self-tests for invalid UTF-8, bare CR, and missing trailing LF. Consider treating non-JSON data payloads and error objects as stream failures.",
+        "severity": "P2"
+      },
+      {
+        "evidence": "Reported: PID 35630 exited at an unknown time for an unknown reason. The packet has no evidence distinguishing a user quit from a crash of the new ff9f\u2026 build.",
+        "file_line": "app-install-result.json:17 (runtime drift)",
+        "recommendedCorrection": "Read-only check ~/Library/Logs/DiagnosticReports for nisi-chat-window entries after 2026-09-24 04:50 PDT and confirm with the user whether they quit the app, before calling the install stable.",
+        "severity": "P2"
+      }
+    ],
+    "limitations": [
+      "No file or tool access. All receipts are taken as quoted and were not re-executed. selftest.log, the raw SSE stream, post-check.txt, the status JSONs, and codesign output were not supplied, so those claims are unverified rather than failed.",
+      "Only an excerpt of NisiSessionCLI.swift was provided. The TurnEvidence declaration (the budgetExhausted default), the CLI default maxTokens, and any invalid-UTF-8 self-test elsewhere are unseen.",
+      "The LM Studio JIT/auto-evict/TTL settings and the reason the model became unloaded are unknown.",
+      "The exact prior statement that Mac inference was 'activated/completed' is not in the packet. It was judged against the receipts and the reported drift.",
+      "The runtime drift facts are author-reported, not independently observed. Per the packet, no edits or runtime changes were made or recommended for execution under this review."
+    ],
+    "verdict": "ISSUES"
+  },
+  "schemaVersion": 1,
+  "sessionPersisted": false,
+  "subtype": "success",
+  "toolsEnabled": false,
+  "totalCostUSD": 0.5349302
+}

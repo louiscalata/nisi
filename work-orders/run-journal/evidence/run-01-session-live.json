@@ -1,0 +1,442 @@
+{
+  "info": {
+    "id": "ses_f6413a815ffeOkyBrXsat6E9Z4",
+    "slug": "brave-star",
+    "projectID": "df66818655ce46721434dbcf88d859be9349be22",
+    "directory": "/Users/louiscalata/nisi-next-private/work-orders/run-journal",
+    "path": "work-orders/run-journal",
+    "title": "Execute nisi-run-journal packet",
+    "agent": "packet",
+    "model": {
+      "id": "qwen/qwen3.8-27b",
+      "providerID": "lmstudio",
+      "variant": "default"
+    },
+    "version": "1.18.5",
+    "summary": {
+      "additions": 0,
+      "deletions": 0,
+      "files": 0
+    },
+    "cost": 0,
+    "tokens": {
+      "input": 21953,
+      "output": 291,
+      "reasoning": 127,
+      "cache": {
+        "read": 0,
+        "write": 0
+      }
+    },
+    "permission": [
+      {
+        "permission": "question",
+        "pattern": "*",
+        "action": "deny"
+      },
+      {
+        "permission": "plan_enter",
+        "pattern": "*",
+        "action": "deny"
+      },
+      {
+        "permission": "plan_exit",
+        "pattern": "*",
+        "action": "deny"
+      }
+    ],
+    "time": {
+      "created": 1789322352619,
+      "updated": 1789322422726
+    }
+  },
+  "messages": [
+    {
+      "info": {
+        "role": "user",
+        "time": {
+          "created": 1789322353570
+        },
+        "agent": "packet",
+        "model": {
+          "providerID": "lmstudio",
+          "modelID": "qwen/qwen3.8-27b"
+        },
+        "summary": {
+          "diffs": []
+        },
+        "id": "msg_09bec5ba2001x25fuMNP4R1HEl",
+        "sessionID": "ses_f6413a815ffeOkyBrXsat6E9Z4"
+      },
+      "parts": [
+        {
+          "type": "text",
+          "text": "Execute the packet at `/Users/louiscalata/nisi-next-private/work-orders/run-journal/.packets/nisi-run-journal.packet.md` (a `.packets/<slug>.packet.md` path).\n\nYou are the write owner for this packet and nothing else. This contract\nOVERRIDES your general autonomy: a packet is a work order, not a problem to\nsolve creatively. You do not decide whether items passed — the receipt tool\nruns the accept commands and decides. Your job is the edits.\n\nRead the packet once in full. Context is ground truth; do not re-explore\nbeyond opening the files an item names. Constraints are absolute.\n\nFor each item, top to bottom, ONE item at a time:\n- Skip it if any `needs` id is one you could not complete (note why).\n- Make exactly the change `do` describes, in exactly the `files` listed. At\n  most two edit attempts per item. Never touch another path — not even to\n  make something pass. Never install anything. Never change a test the packet\n  did not ask you to write.\n- If you cannot make the change as written, record a one-line note for that\n  item and MOVE ON. Do not improvise around it.\n\nWhen you have attempted every item, stop. The receipt is produced outside\nyou by `packet-run` (it runs every accept and the packet acceptance and\nderives the verdicts from real exit codes). Do NOT call `chami_packet_receipt_write`: it flips the packet's status, which\nchanges the bytes that were hashed at lint time, and the real receipt then\nrefuses to execute anything (exit 125, every item BLOCKED). The receipt is\nproduced for you either way.\n\nNever run accept commands yourself, never use browser or playwright tools,\nnever call `codemode_verify_golden` (it gates verifier changes, not packets),\nnever commit, never push.\n\nReply with ONLY the list of files you changed. No summaries, no next steps —\nthe receipt, not your reply, is the record.",
+          "id": "prt_09bec5baa001dza1n1CRPKjmlz",
+          "sessionID": "ses_f6413a815ffeOkyBrXsat6E9Z4",
+          "messageID": "msg_09bec5ba2001x25fuMNP4R1HEl"
+        }
+      ]
+    },
+    {
+      "info": {
+        "parentID": "msg_09bec5ba2001x25fuMNP4R1HEl",
+        "role": "assistant",
+        "mode": "packet",
+        "agent": "packet",
+        "path": {
+          "cwd": "/Users/louiscalata/nisi-next-private/work-orders/run-journal",
+          "root": "/Users/louiscalata/nisi-next-private"
+        },
+        "cost": 0,
+        "tokens": {
+          "total": 4348,
+          "input": 4254,
+          "output": 50,
+          "reasoning": 44,
+          "cache": {
+            "write": 0,
+            "read": 0
+          }
+        },
+        "modelID": "qwen/qwen3.8-27b",
+        "providerID": "lmstudio",
+        "time": {
+          "created": 1789322353588,
+          "completed": 1789322376689
+        },
+        "finish": "tool-calls",
+        "id": "msg_09bec5bb4001TrDfy4YqWOEokK",
+        "sessionID": "ses_f6413a815ffeOkyBrXsat6E9Z4"
+      },
+      "parts": [
+        {
+          "snapshot": "680ec37387418c0c1e9f0194d3d9e3b17aaa9f27",
+          "type": "step-start",
+          "id": "prt_09bec80cd0010x4gugzZfCety3",
+          "sessionID": "ses_f6413a815ffeOkyBrXsat6E9Z4",
+          "messageID": "msg_09bec5bb4001TrDfy4YqWOEokK"
+        },
+        {
+          "type": "reasoning",
+          "text": "The user is asking me to execute the packet at `/Users/louiscalata/nisi-next-private/work-orders/run-journal/.packets/nisi-run-journal.packet.md`. Let me read the packet first.\n",
+          "time": {
+            "start": 1789322363090,
+            "end": 1789322369617
+          },
+          "id": "prt_09bec80d2001O7EpvW7mDhzj21",
+          "sessionID": "ses_f6413a815ffeOkyBrXsat6E9Z4",
+          "messageID": "msg_09bec5bb4001TrDfy4YqWOEokK"
+        },
+        {
+          "type": "text",
+          "text": "\n\n",
+          "time": {
+            "start": 1789322369620,
+            "end": 1789322376557
+          },
+          "id": "prt_09bec9a54001tTLU6goHMoxbYA",
+          "sessionID": "ses_f6413a815ffeOkyBrXsat6E9Z4",
+          "messageID": "msg_09bec5bb4001TrDfy4YqWOEokK"
+        },
+        {
+          "type": "tool",
+          "tool": "read",
+          "callID": "334893058",
+          "state": {
+            "status": "completed",
+            "input": {
+              "filePath": "/Users/louiscalata/nisi-next-private/work-orders/run-journal/.packets/nisi-run-journal.packet.md"
+            },
+            "output": "<path>/Users/louiscalata/nisi-next-private/work-orders/run-journal/.packets/nisi-run-journal.packet.md</path>\n<type>file</type>\n<content>\n1: ---\n2: packet: nisi-run-journal\n3: project_root: /Users/louiscalata/nisi-next-private/work-orders/run-journal\n4: created_by: codex\n5: created: 2026-09-13T10:58:48-07:00\n6: write_owner: opencode\n7: status: executing\n8: ---\n9: \n10: # Nisi U02-04 — pure observational run journal v1\n11: \n12: ## Context\n13: \n14: This isolated private ESM work order has Node v24.18.0 / npm 11.16.0 and no\n15: dependencies. The owner authored and protected 18 node:test/assert-strict contract\n16: tests. The measured placeholder pre-state is baseline `npm test` PASS 2/2 and\n17: `npm run test:journal` FAIL 18/18, zero skipped/cancelled. This is\n18: test-first-satisfied: tests already exist; the one item implements the contract.\n19: Read only this packet and the listed source/protected tests, never the parent tree.\n20: \n21: The only source is `src/run-journal-v1.mjs`. Export exactly the two synchronous\n22: functions `createRunJournal(config)` and `reopen(serialized)`. Return deeply frozen\n23: snapshots and a frozen journal API with exactly `append`, `list`, `retain`,\n24: `serialize`. There is no execution/issuance/queue dispatch method. An entry is an\n25: immutable OBSERVATION identity, not a mutable job. States describe submitted data;\n26: new observation ids never authorize or execute work. This deliberately does not\n27: implement a job state machine or classify execution-qualified incidents. Nisi\n28: integrity and receipt contracts remain unchanged, opaque payload data here; no\n29: receipt reader, canonical profile or issued-plan WeakSet is copied or replaced.\n30: \n31: ### Closed input and time rules\n32: \n33: Config has exactly `{projectId,maxEntries,heartbeatTtlMs,redactPaths}`. IDs (all\n34: id fields and stage) match `/^[A-Za-z0-9][A-Za-z0-9_.:-]{0,127}$/`. `maxEntries`\n35: is a positive safe integer <=10000, `heartbeatTtlMs` a positive safe integer.\n36: `redactPaths` is an array of distinct dot paths starting `payload.` with at least\n37: one subsequent segment, each segment ASCII identifier `[A-Za-z_][A-Za-z0-9_]*`\n38: or canonical nonnegative array index `0|[1-9][0-9]*`. No `__proto__`, `prototype`,\n39: or `constructor` segments, duplicate paths or ancestor/descendant overlap.\n40: Retain their input order. Invalid config throws Error with `.code === 'CONFIG'`.\n41: \n42: Every entry has exactly these keys, all mandatory:\n43: \n44: ```text\n45: id, projectId, runId, attempt, candidateId, stage, receiptId,\n46: createdAt, ttlMs, state, heartbeatAt, retryOf, revokes, payload\n47: ```\n48: \n49: `attempt` is a nonnegative safe integer. `receiptId`, `retryOf`, `revokes` are\n50: nullable IDs. `state` is one of QUEUED/RUNNING/SUCCEEDED/FAILED/CANCELLED/REVOKED.\n51: `createdAt` is a nonnegative safe integer in caller-defined milliseconds, `ttlMs`\n52: positive safe integer, and their sum must also be safe. `heartbeatAt` is null\n53: or nonnegative safe integer <=createdAt. It can be supplied on any state;\n54: only RUNNING uses it for liveness. REVOKED requires non-null `revokes` and null\n55: `retryOf`; every other state requires null `revokes`. Non-null retryOf requires\n56: QUEUED (a syntactically valid other state returns REFUSED RETRY below).\n57: \n58: Inputs are ordinary trusted data objects, not hostile Proxies. Clone without\n59: executing accessors: reject accessors, symbols, non-enumerable fields, extra array\n60: properties/holes, cycles, non-plain objects, undefined/functions/bigints, non-safe\n61: integer numbers, malformed Unicode strings, negative zero, and dangerous object\n62: keys `__proto__`, `prototype`, `constructor` anywhere. JSON payload may otherwise\n63: be any JSON value. Plain Object.prototype or null-prototype records and dense\n64: arrays are supported. Invalid entry or createdAt > append now throws code ENTRY.\n65: \n66: `append(entry, now)`, `list(now)` and `retain(now)` require a nonnegative safe\n67: integer `now` >= the journal watermark (starts 0). Invalid/backwards now throws\n68: code TIME, without mutation. The watermark advances only on a successful append,\n69: list or retain. DUPLICATE, CONFLICT, REFUSED and thrown calls do not advance time\n70: or change stored records. `serialize()` reads no time. No clock/random/fs/network.\n71: \n72: ### Identity, observations and relationships\n73: \n74: Append first checks time, snapshots/validates the entry and createdAt<=now. A\n75: sealed journal then returns REFUSED SEALED. A projectId different from the config\n76: returns REFUSED PROJECT. Compute original fingerprint H(`nisi-run-journal/input/v1`\n77: + newline + C(entire original entry)), before redaction. If id already exists,\n78: matching fingerprint returns exactly `{status:'DUPLICATE',id}`; differing returns\n79: `{status:'CONFLICT',id,reason:'ID_CONTENT_MISMATCH'}`. Check seen identity BEFORE\n80: redaction path resolution, relationships or retention. Never replace, renew,\n81: un-revoke or resurrect an existing entry, including historical/tombstone entries.\n82: \n83: For an unseen id with retryOf: require QUEUED, earlier target in this journal,\n84: same runId, strictly greater attempt, createdAt>=target.createdAt, and target\n85: terminal (SUCCEEDED/FAILED/CANCELLED/REVOKED), expired at supplied now, or revoked\n86: by a prior entry. Candidate may change on retry. Otherwise REFUSED RETRY.\n87: Stale/missing heartbeat alone is never sufficient. For an unseen revocation:\n88: target must already exist, match runId/attempt/candidateId and have\n89: target.createdAt<=entry.createdAt; otherwise REFUSED REVOCATION. Revoke effects\n90: are monotonic; another revocation may cite an already revoked target, including\n91: a revoking entry, but cannot undo its old effect. All relationship fields stay\n92: in identity metadata when payloads are pruned. There is no deletion operation.\n93: \n94: Every refusal is exactly `{status:'REFUSED',id,reason}`. Otherwise redact/capture,\n95: insert in arrival order, advance watermark, enforce retention, then return\n96: exactly `{status:'APPENDED',id}`. Earlier entries are never modified except for\n97: payload retention. Successful appends can record already-expired observations;\n98: these lose their payload immediately and confer no authority.\n99: \n100: ### Redaction and retention\n101: \n102: For NEW input, every configured redaction path must resolve via own data fields\n103: in that entry; otherwise throw code REDACTION, without mutation. Replace its\n104: entire value (scalar/object/array) by literal `[REDACTED]`. Arrays use canonical\n105: index segments only, and traversal through a primitive is invalid. Capture only\n106: the REDACTED entry plus its original fingerprint; do not retain raw secret\n107: payloads or canonical original strings in the journal closure. Caller objects\n108: are not mutated. Thus getter snapshots AND serialized records are redacted.\n109: Config is fixed for the lifetime and serialized with the journal; it is not part\n110: of entry identity and cannot be edited via API. Fingerprints are equality aids,\n111: not secret protection against guessing or authentication. This isolated sorted\n112: JSON digest profile is NOT the Nisi canonical/integrity/receipt profile.\n113: \n114: Retention prunes only payloads: mark `retained:false`, set `entry.payload:null`,\n115: keep ALL identity/attribution/state/time/links/fingerprint metadata forever.\n116: First prune each retained entry whose `now >= createdAt+ttlMs`; then prune oldest\n117: remaining retained entries by insertion order until retained count<=maxEntries.\n118: Never delete ids; total identity metadata is explicitly unbounded in this v1.\n119: `retain(now)` applies that rule, advances watermark, returns frozen newly-pruned\n120: ids in original insertion order. `list(now)` does the same retention/time work,\n121: then returns a frozen ordered array of exactly these per-entry views:\n122: \n123: ```text\n124: {entry, historical, retained, revoked, expired, liveness, authorizing:false}\n125: ```\n126: \n127: `historical` is false for this instance's fresh appends, true for EVERY reopened\n128: entry, permanently, including DUPLICATE replay. `revoked` means any accepted\n129: entry cites this id via revokes; a REVOKED state's own target does not revoke\n130: itself. `expired` is now>=createdAt+ttlMs even on terminal entries. `liveness`\n131: precedence: revoked -> REVOKED; terminal state -> original state; expired ->\n132: EXPIRED; RUNNING with null heartbeat or now-heartbeatAt>heartbeatTtlMs -> UNKNOWN;\n133: otherwise original state. Equality at heartbeat window is still RUNNING.\n134: No liveness classification grants issuance, retry, or execution authority.\n135: \n136: ### Canonical serialization and prefix reconciliation\n137: \n138: C(value) is compact JSON with recursively sorted object keys (JS default lexical\n139: sort), original array order and JSON escaping; no whitespace, trailing spaces or\n140: raw embedded line breaks. H(text) is lowercase SHA-256 of UTF-8 text. The only\n141: allowed import is `{createHash}` from `node:crypto`, used for deterministic H.\n142: No other export/import or side effects are needed. Checksums detect accidental\n143: damage and ordering errors, not malicious rewriting with recomputed hashes.\n144: \n145: `serialize()` emits canonical newline-delimited JSON, with final newline required\n146: after EVERY line. Exactly one header, all entry records, one footer. Shapes:\n147: \n148: ```text\n149: header = {type:'header',schema:'nisi-run-journal-v1',config,now:watermark}\n150: record = {entry:redactedOrPrunedEntry,fingerprint:originalFingerprint,retained:boolean}\n151: envelope = {type:'entry',seq,previousHash,record,hash}\n152: footer = {type:'footer',count:entryCount,lastHash}\n153: ```\n154: \n155: Initial previousHash=H(`nisi-run-journal/header/v1` + newline + C(header)).\n156: Sequence starts at 1. Envelope hash=H(`nisi-run-journal/record/v1` + newline +\n157: C({seq,previousHash,record})), and becomes next previousHash. Footer lastHash\n158: is final envelope hash (header hash if empty). Store neither historical nor\n159: authority flags in serialized records. Complete reopen then serialize without\n160: mutation MUST return identical bytes. Capture ownership, not serialized input,\n161: sets historical=true. An input payload claiming issued/PASS is still data.\n162: \n163: `reopen(serialized)` takes a string (other types treated as invalid header) and\n164: never throws on malformed serialized data. It returns `{journal,report}`. Report\n165: has exactly `{status,recoveredIds,rejectedLine,reason,authorizing:false}` with\n166: status COMPLETE/INCOMPLETE/INVALID. recoveredIds is the exact valid prefix in\n167: order. No guessed lost count. rejectedLine is 1-based physical line or null.\n168: \n169: Require canonical bytes and exact keys on all parsed objects. JSON duplicate\n170: keys, extra fields, unknown version/status or pretty printing fail the canonical\n171: roundtrip check. Header invalid, missing or not newline-terminated: INVALID,\n172: reason HEADER, rejectedLine 1, recoveredIds [], journal null. A valid header\n173: creates a journal with that config/watermark. Validate each NEWLINE-TERMINATED\n174: record before recovering it: exact schema, entry schema and same project, entry\n175: createdAt<=header.now, fingerprint and hashes lowercase 64-hex, next seq/chain,\n176: unique id, valid earlier retry/revocation target, retained boolean, null payload\n177: if !retained. Retained payload must have all redaction paths already equal to\n178: the marker; pruned payload skips path checks. Retained expired entries and count\n179: beyond maxEntries are invalid. On reopen, fingerprint is opaque original-input\n180: equality metadata: do not recompute it from redacted/pruned payload. Link validity\n181: is checked against prefix using header.now; target metadata and revocation links\n182: are available even after payload pruning. Never recover an offending record.\n183: \n184: Stop at first bad record: INVALID/RECORD at its line, ignore all later lines.\n185: Missing footer after last complete newline: INCOMPLETE/MISSING_FOOTER at next\n186: line. A non-newline-terminated tail after header: INCOMPLETE/TRUNCATED at that\n187: line; even a parseable JSON record without newline is NOT recovered. Footer\n188: shape/count/lastHash mismatch: INVALID/FOOTER at that line. Any bytes after a\n189: valid footer (even another newline or incomplete tail): INVALID/TRAILING_DATA\n190: at the immediately next physical line. Valid footer and end: COMPLETE, null\n191: reason/rejectedLine. All recovered records are historical, including on damage.\n192: \n193: If report is not COMPLETE but header was valid, return the recovered journal\n194: SEALED. It permits list/retain (time still validated) but every syntactically\n195: valid append, even an identical replay, returns REFUSED SEALED. serialize throws\n196: code SEALED. No API clears this seal: absence of a missing id cannot be proven.\n197: Sealing errors and reports never claim file persistence, original authenticity,\n198: reconciled external effects or fresh issued execution evidence.\n199: \n200: ## Constraints\n201: \n202: - Write ONLY `src/run-journal-v1.mjs`; all tests, package.json, roadmap.md,\n203:   evidence and .packets files are protected read-only. No parent/sibling access.\n204: - The protected tests may be read; do not edit, disable, mock or bypass them.\n205:   Do not modify the packet or write a receipt. The outer wrapper owns receipts.\n206: - No dependencies, installation, shell commands/tests from the executor, nested\n207:   packets, filesystem/network/process APIs, clock/random, dynamic code evaluation,\n208:   native processes, generated-task execution, auth/config changes, commit or push.\n209: - Do not include `process`, `require`, `fetch`, `XMLHttpRequest`, `eval`, `Function`,\n210:   `Date`, `performance`, `setTimeout`, `setInterval`, `Math.random`, randomUUID or\n211:   randomBytes in source or comments. The baseline source scan is bounded, not a\n212:   security proof. Exactly the optional deterministic node:crypto import above.\n213: - LOCAL tier only. Never switch provider/model or dispatch a worker from inside\n214:   the packet. Codex owns review/acceptance and may fix authoring between at most\n215:   two authorized reruns after inspecting failures. Only OpenCode writes the source.\n216: - This implements pure data serialization, not durable host storage, queue\n217:   scheduling, state transition enforcement or qualified failure-family evaluation.\n218:   Actual host integration remains dependent on U02-02; this cannot close U02-04.\n219: \n220: ## Items\n221: \n222: ### P1 — Implement the frozen observational journal and strict historical reopen\n223: - **files**: src/run-journal-v1.mjs\n224: - **do**: Replace the placeholder exports with the complete API above, preserving all closed schemas, original fingerprint identity, pure caller-time semantics, monotonic revocation, redaction, payload-only retention, historical reopen and exact prefix recovery/sealing. Keep this one dependency-free source readable and small. Existing protected tests are the owner's oracle; implement the contract without changing any protected file.\n225: - **accept**: npm run test:journal\n226: \n227: ## Packet acceptance\n228: npm test\n\n(End of file - total 228 lines)\n</content>",
+            "metadata": {
+              "preview": "---\npacket: nisi-run-journal\nproject_root: /Users/louiscalata/nisi-next-private/work-orders/run-journal\ncreated_by: codex\ncreated: 2026-09-13T10:58:48-07:00\nwrite_owner: opencode\nstatus: executing\n---\n\n# Nisi U02-04 — pure observational run journal v1\n\n## Context\n\nThis isolated private ESM work order has Node v24.18.0 / npm 11.16.0 and no\ndependencies. The owner authored and protected 18 node:test/assert-strict contract\ntests. The measured placeholder pre-state is baseline `npm test` PASS 2/2 and\n`npm run test:journal` FAIL 18/18, zero skipped/cancelled. This is\ntest-first-satisfied: tests already exist; the one item implements the contract.\nRead only this packet and the listed source/protected tests, never the parent tree.\n",
+              "truncated": false,
+              "loaded": [],
+              "display": {
+                "type": "file",
+                "path": "/Users/louiscalata/nisi-next-private/work-orders/run-journal/.packets/nisi-run-journal.packet.md",
+                "text": "---\npacket: nisi-run-journal\nproject_root: /Users/louiscalata/nisi-next-private/work-orders/run-journal\ncreated_by: codex\ncreated: 2026-09-13T10:58:48-07:00\nwrite_owner: opencode\nstatus: executing\n---\n\n# Nisi U02-04 — pure observational run journal v1\n\n## Context\n\nThis isolated private ESM work order has Node v24.18.0 / npm 11.16.0 and no\ndependencies. The owner authored and protected 18 node:test/assert-strict contract\ntests. The measured placeholder pre-state is baseline `npm test` PASS 2/2 and\n`npm run test:journal` FAIL 18/18, zero skipped/cancelled. This is\ntest-first-satisfied: tests already exist; the one item implements the contract.\nRead only this packet and the listed source/protected tests, never the parent tree.\n\nThe only source is `src/run-journal-v1.mjs`. Export exactly the two synchronous\nfunctions `createRunJournal(config)` and `reopen(serialized)`. Return deeply frozen\nsnapshots and a frozen journal API with exactly `append`, `list`, `retain`,\n`serialize`. There is no execution/issuance/queue dispatch method. An entry is an\nimmutable OBSERVATION identity, not a mutable job. States describe submitted data;\nnew observation ids never authorize or execute work. This deliberately does not\nimplement a job state machine or classify execution-qualified incidents. Nisi\nintegrity and receipt contracts remain unchanged, opaque payload data here; no\nreceipt reader, canonical profile or issued-plan WeakSet is copied or replaced.\n\n### Closed input and time rules\n\nConfig has exactly `{projectId,maxEntries,heartbeatTtlMs,redactPaths}`. IDs (all\nid fields and stage) match `/^[A-Za-z0-9][A-Za-z0-9_.:-]{0,127}$/`. `maxEntries`\nis a positive safe integer <=10000, `heartbeatTtlMs` a positive safe integer.\n`redactPaths` is an array of distinct dot paths starting `payload.` with at least\none subsequent segment, each segment ASCII identifier `[A-Za-z_][A-Za-z0-9_]*`\nor canonical nonnegative array index `0|[1-9][0-9]*`. No `__proto__`, `prototype`,\nor `constructor` segments, duplicate paths or ancestor/descendant overlap.\nRetain their input order. Invalid config throws Error with `.code === 'CONFIG'`.\n\nEvery entry has exactly these keys, all mandatory:\n\n```text\nid, projectId, runId, attempt, candidateId, stage, receiptId,\ncreatedAt, ttlMs, state, heartbeatAt, retryOf, revokes, payload\n```\n\n`attempt` is a nonnegative safe integer. `receiptId`, `retryOf`, `revokes` are\nnullable IDs. `state` is one of QUEUED/RUNNING/SUCCEEDED/FAILED/CANCELLED/REVOKED.\n`createdAt` is a nonnegative safe integer in caller-defined milliseconds, `ttlMs`\npositive safe integer, and their sum must also be safe. `heartbeatAt` is null\nor nonnegative safe integer <=createdAt. It can be supplied on any state;\nonly RUNNING uses it for liveness. REVOKED requires non-null `revokes` and null\n`retryOf`; every other state requires null `revokes`. Non-null retryOf requires\nQUEUED (a syntactically valid other state returns REFUSED RETRY below).\n\nInputs are ordinary trusted data objects, not hostile Proxies. Clone without\nexecuting accessors: reject accessors, symbols, non-enumerable fields, extra array\nproperties/holes, cycles, non-plain objects, undefined/functions/bigints, non-safe\ninteger numbers, malformed Unicode strings, negative zero, and dangerous object\nkeys `__proto__`, `prototype`, `constructor` anywhere. JSON payload may otherwise\nbe any JSON value. Plain Object.prototype or null-prototype records and dense\narrays are supported. Invalid entry or createdAt > append now throws code ENTRY.\n\n`append(entry, now)`, `list(now)` and `retain(now)` require a nonnegative safe\ninteger `now` >= the journal watermark (starts 0). Invalid/backwards now throws\ncode TIME, without mutation. The watermark advances only on a successful append,\nlist or retain. DUPLICATE, CONFLICT, REFUSED and thrown calls do not advance time\nor change stored records. `serialize()` reads no time. No clock/random/fs/network.\n\n### Identity, observations and relationships\n\nAppend first checks time, snapshots/validates the entry and createdAt<=now. A\nsealed journal then returns REFUSED SEALED. A projectId different from the config\nreturns REFUSED PROJECT. Compute original fingerprint H(`nisi-run-journal/input/v1`\n+ newline + C(entire original entry)), before redaction. If id already exists,\nmatching fingerprint returns exactly `{status:'DUPLICATE',id}`; differing returns\n`{status:'CONFLICT',id,reason:'ID_CONTENT_MISMATCH'}`. Check seen identity BEFORE\nredaction path resolution, relationships or retention. Never replace, renew,\nun-revoke or resurrect an existing entry, including historical/tombstone entries.\n\nFor an unseen id with retryOf: require QUEUED, earlier target in this journal,\nsame runId, strictly greater attempt, createdAt>=target.createdAt, and target\nterminal (SUCCEEDED/FAILED/CANCELLED/REVOKED), expired at supplied now, or revoked\nby a prior entry. Candidate may change on retry. Otherwise REFUSED RETRY.\nStale/missing heartbeat alone is never sufficient. For an unseen revocation:\ntarget must already exist, match runId/attempt/candidateId and have\ntarget.createdAt<=entry.createdAt; otherwise REFUSED REVOCATION. Revoke effects\nare monotonic; another revocation may cite an already revoked target, including\na revoking entry, but cannot undo its old effect. All relationship fields stay\nin identity metadata when payloads are pruned. There is no deletion operation.\n\nEvery refusal is exactly `{status:'REFUSED',id,reason}`. Otherwise redact/capture,\ninsert in arrival order, advance watermark, enforce retention, then return\nexactly `{status:'APPENDED',id}`. Earlier entries are never modified except for\npayload retention. Successful appends can record already-expired observations;\nthese lose their payload immediately and confer no authority.\n\n### Redaction and retention\n\nFor NEW input, every configured redaction path must resolve via own data fields\nin that entry; otherwise throw code REDACTION, without mutation. Replace its\nentire value (scalar/object/array) by literal `[REDACTED]`. Arrays use canonical\nindex segments only, and traversal through a primitive is invalid. Capture only\nthe REDACTED entry plus its original fingerprint; do not retain raw secret\npayloads or canonical original strings in the journal closure. Caller objects\nare not mutated. Thus getter snapshots AND serialized records are redacted.\nConfig is fixed for the lifetime and serialized with the journal; it is not part\nof entry identity and cannot be edited via API. Fingerprints are equality aids,\nnot secret protection against guessing or authentication. This isolated sorted\nJSON digest profile is NOT the Nisi canonical/integrity/receipt profile.\n\nRetention prunes only payloads: mark `retained:false`, set `entry.payload:null`,\nkeep ALL identity/attribution/state/time/links/fingerprint metadata forever.\nFirst prune each retained entry whose `now >= createdAt+ttlMs`; then prune oldest\nremaining retained entries by insertion order until retained count<=maxEntries.\nNever delete ids; total identity metadata is explicitly unbounded in this v1.\n`retain(now)` applies that rule, advances watermark, returns frozen newly-pruned\nids in original insertion order. `list(now)` does the same retention/time work,\nthen returns a frozen ordered array of exactly these per-entry views:\n\n```text\n{entry, historical, retained, revoked, expired, liveness, authorizing:false}\n```\n\n`historical` is false for this instance's fresh appends, true for EVERY reopened\nentry, permanently, including DUPLICATE replay. `revoked` means any accepted\nentry cites this id via revokes; a REVOKED state's own target does not revoke\nitself. `expired` is now>=createdAt+ttlMs even on terminal entries. `liveness`\nprecedence: revoked -> REVOKED; terminal state -> original state; expired ->\nEXPIRED; RUNNING with null heartbeat or now-heartbeatAt>heartbeatTtlMs -> UNKNOWN;\notherwise original state. Equality at heartbeat window is still RUNNING.\nNo liveness classification grants issuance, retry, or execution authority.\n\n### Canonical serialization and prefix reconciliation\n\nC(value) is compact JSON with recursively sorted object keys (JS default lexical\nsort), original array order and JSON escaping; no whitespace, trailing spaces or\nraw embedded line breaks. H(text) is lowercase SHA-256 of UTF-8 text. The only\nallowed import is `{createHash}` from `node:crypto`, used for deterministic H.\nNo other export/import or side effects are needed. Checksums detect accidental\ndamage and ordering errors, not malicious rewriting with recomputed hashes.\n\n`serialize()` emits canonical newline-delimited JSON, with final newline required\nafter EVERY line. Exactly one header, all entry records, one footer. Shapes:\n\n```text\nheader = {type:'header',schema:'nisi-run-journal-v1',config,now:watermark}\nrecord = {entry:redactedOrPrunedEntry,fingerprint:originalFingerprint,retained:boolean}\nenvelope = {type:'entry',seq,previousHash,record,hash}\nfooter = {type:'footer',count:entryCount,lastHash}\n```\n\nInitial previousHash=H(`nisi-run-journal/header/v1` + newline + C(header)).\nSequence starts at 1. Envelope hash=H(`nisi-run-journal/record/v1` + newline +\nC({seq,previousHash,record})), and becomes next previousHash. Footer lastHash\nis final envelope hash (header hash if empty). Store neither historical nor\nauthority flags in serialized records. Complete reopen then serialize without\nmutation MUST return identical bytes. Capture ownership, not serialized input,\nsets historical=true. An input payload claiming issued/PASS is still data.\n\n`reopen(serialized)` takes a string (other types treated as invalid header) and\nnever throws on malformed serialized data. It returns `{journal,report}`. Report\nhas exactly `{status,recoveredIds,rejectedLine,reason,authorizing:false}` with\nstatus COMPLETE/INCOMPLETE/INVALID. recoveredIds is the exact valid prefix in\norder. No guessed lost count. rejectedLine is 1-based physical line or null.\n\nRequire canonical bytes and exact keys on all parsed objects. JSON duplicate\nkeys, extra fields, unknown version/status or pretty printing fail the canonical\nroundtrip check. Header invalid, missing or not newline-terminated: INVALID,\nreason HEADER, rejectedLine 1, recoveredIds [], journal null. A valid header\ncreates a journal with that config/watermark. Validate each NEWLINE-TERMINATED\nrecord before recovering it: exact schema, entry schema and same project, entry\ncreatedAt<=header.now, fingerprint and hashes lowercase 64-hex, next seq/chain,\nunique id, valid earlier retry/revocation target, retained boolean, null payload\nif !retained. Retained payload must have all redaction paths already equal to\nthe marker; pruned payload skips path checks. Retained expired entries and count\nbeyond maxEntries are invalid. On reopen, fingerprint is opaque original-input\nequality metadata: do not recompute it from redacted/pruned payload. Link validity\nis checked against prefix using header.now; target metadata and revocation links\nare available even after payload pruning. Never recover an offending record.\n\nStop at first bad record: INVALID/RECORD at its line, ignore all later lines.\nMissing footer after last complete newline: INCOMPLETE/MISSING_FOOTER at next\nline. A non-newline-terminated tail after header: INCOMPLETE/TRUNCATED at that\nline; even a parseable JSON record without newline is NOT recovered. Footer\nshape/count/lastHash mismatch: INVALID/FOOTER at that line. Any bytes after a\nvalid footer (even another newline or incomplete tail): INVALID/TRAILING_DATA\nat the immediately next physical line. Valid footer and end: COMPLETE, null\nreason/rejectedLine. All recovered records are historical, including on damage.\n\nIf report is not COMPLETE but header was valid, return the recovered journal\nSEALED. It permits list/retain (time still validated) but every syntactically\nvalid append, even an identical replay, returns REFUSED SEALED. serialize throws\ncode SEALED. No API clears this seal: absence of a missing id cannot be proven.\nSealing errors and reports never claim file persistence, original authenticity,\nreconciled external effects or fresh issued execution evidence.\n\n## Constraints\n\n- Write ONLY `src/run-journal-v1.mjs`; all tests, package.json, roadmap.md,\n  evidence and .packets files are protected read-only. No parent/sibling access.\n- The protected tests may be read; do not edit, disable, mock or bypass them.\n  Do not modify the packet or write a receipt. The outer wrapper owns receipts.\n- No dependencies, installation, shell commands/tests from the executor, nested\n  packets, filesystem/network/process APIs, clock/random, dynamic code evaluation,\n  native processes, generated-task execution, auth/config changes, commit or push.\n- Do not include `process`, `require`, `fetch`, `XMLHttpRequest`, `eval`, `Function`,\n  `Date`, `performance`, `setTimeout`, `setInterval`, `Math.random`, randomUUID or\n  randomBytes in source or comments. The baseline source scan is bounded, not a\n  security proof. Exactly the optional deterministic node:crypto import above.\n- LOCAL tier only. Never switch provider/model or dispatch a worker from inside\n  the packet. Codex owns review/acceptance and may fix authoring between at most\n  two authorized reruns after inspecting failures. Only OpenCode writes the source.\n- This implements pure data serialization, not durable host storage, queue\n  scheduling, state transition enforcement or qualified failure-family evaluation.\n  Actual host integration remains dependent on U02-02; this cannot close U02-04.\n\n## Items\n\n### P1 — Implement the frozen observational journal and strict historical reopen\n- **files**: src/run-journal-v1.mjs\n- **do**: Replace the placeholder exports with the complete API above, preserving all closed schemas, original fingerprint identity, pure caller-time semantics, monotonic revocation, redaction, payload-only retention, historical reopen and exact prefix recovery/sealing. Keep this one dependency-free source readable and small. Existing protected tests are the owner's oracle; implement the contract without changing any protected file.\n- **accept**: npm run test:journal\n\n## Packet acceptance\nnpm test",
+                "lineStart": 1,
+                "lineEnd": 228,
+                "totalLines": 228,
+                "truncated": false
+              }
+            },
+            "title": "work-orders/run-journal/.packets/nisi-run-journal.packet.md",
+            "time": {
+              "start": 1789322376383,
+              "end": 1789322376393
+            }
+          },
+          "id": "prt_09bec9f7b001uIHgCofqcK0Epk",
+          "sessionID": "ses_f6413a815ffeOkyBrXsat6E9Z4",
+          "messageID": "msg_09bec5bb4001TrDfy4YqWOEokK"
+        },
+        {
+          "reason": "tool-calls",
+          "snapshot": "680ec37387418c0c1e9f0194d3d9e3b17aaa9f27",
+          "type": "step-finish",
+          "tokens": {
+            "total": 4348,
+            "input": 4254,
+            "output": 50,
+            "reasoning": 44,
+            "cache": {
+              "write": 0,
+              "read": 0
+            }
+          },
+          "cost": 0,
+          "id": "prt_09becb5b60019SAg1RhVlDoJmP",
+          "sessionID": "ses_f6413a815ffeOkyBrXsat6E9Z4",
+          "messageID": "msg_09bec5bb4001TrDfy4YqWOEokK"
+        }
+      ]
+    },
+    {
+      "info": {
+        "parentID": "msg_09bec5ba2001x25fuMNP4R1HEl",
+        "role": "assistant",
+        "mode": "packet",
+        "agent": "packet",
+        "path": {
+          "cwd": "/Users/louiscalata/nisi-next-private/work-orders/run-journal",
+          "root": "/Users/louiscalata/nisi-next-private"
+        },
+        "cost": 0,
+        "tokens": {
+          "total": 8673,
+          "input": 8503,
+          "output": 124,
+          "reasoning": 46,
+          "cache": {
+            "write": 0,
+            "read": 0
+          }
+        },
+        "modelID": "qwen/qwen3.8-27b",
+        "providerID": "lmstudio",
+        "time": {
+          "created": 1789322376693,
+          "completed": 1789322410675
+        },
+        "finish": "tool-calls",
+        "id": "msg_09becb5f500138Et0JCV5xr1yK",
+        "sessionID": "ses_f6413a815ffeOkyBrXsat6E9Z4"
+      },
+      "parts": [
+        {
+          "snapshot": "680ec37387418c0c1e9f0194d3d9e3b17aaa9f27",
+          "type": "step-start",
+          "id": "prt_09bececa3001GK1N2FL6c0pIOO",
+          "sessionID": "ses_f6413a815ffeOkyBrXsat6E9Z4",
+          "messageID": "msg_09becb5f500138Et0JCV5xr1yK"
+        },
+        {
+          "type": "reasoning",
+          "text": "Let's read the project structure and understand what's in it. The working directory is `/Users/louiscalata/nisi-next-private/work-orders/run-journal`.\n\nFirst, let me take a look at the files.\n",
+          "time": {
+            "start": 1789322390698,
+            "end": 1789322397240
+          },
+          "id": "prt_09bececaa001hFkDXd3T0CppwW",
+          "sessionID": "ses_f6413a815ffeOkyBrXsat6E9Z4",
+          "messageID": "msg_09becb5f500138Et0JCV5xr1yK"
+        },
+        {
+          "type": "text",
+          "text": "\n\nI've read the packet. Now let me open the existing source placeholder and the protected tests (named by the item).\n\n\n",
+          "time": {
+            "start": 1789322397243,
+            "end": 1789322410604
+          },
+          "id": "prt_09bed063a0019lmBNwuzPOZLm0",
+          "sessionID": "ses_f6413a815ffeOkyBrXsat6E9Z4",
+          "messageID": "msg_09becb5f500138Et0JCV5xr1yK"
+        },
+        {
+          "type": "tool",
+          "tool": "read",
+          "callID": "678401986",
+          "state": {
+            "status": "completed",
+            "input": {
+              "filePath": "/Users/louiscalata/nisi-next-private/work-orders/run-journal/src/run-journal-v1.mjs"
+            },
+            "output": "<path>/Users/louiscalata/nisi-next-private/work-orders/run-journal/src/run-journal-v1.mjs</path>\n<type>file</type>\n<content>\n1: // Placeholder. OpenCode is the sole implementation writer for this work order.\n2: export function createRunJournal() { throw new Error('NOT_IMPLEMENTED'); }\n3: export function reopen() { throw new Error('NOT_IMPLEMENTED'); }\n\n(End of file - total 3 lines)\n</content>",
+            "metadata": {
+              "preview": "// Placeholder. OpenCode is the sole implementation writer for this work order.\nexport function createRunJournal() { throw new Error('NOT_IMPLEMENTED'); }\nexport function reopen() { throw new Error('NOT_IMPLEMENTED'); }",
+              "truncated": false,
+              "loaded": [],
+              "display": {
+                "type": "file",
+                "path": "/Users/louiscalata/nisi-next-private/work-orders/run-journal/src/run-journal-v1.mjs",
+                "text": "// Placeholder. OpenCode is the sole implementation writer for this work order.\nexport function createRunJournal() { throw new Error('NOT_IMPLEMENTED'); }\nexport function reopen() { throw new Error('NOT_IMPLEMENTED'); }",
+                "lineStart": 1,
+                "lineEnd": 3,
+                "totalLines": 3,
+                "truncated": false
+              }
+            },
+            "title": "work-orders/run-journal/src/run-journal-v1.mjs",
+            "time": {
+              "start": 1789322406008,
+              "end": 1789322406015
+            }
+          },
+          "id": "prt_09bed183e001455EXqVEXF01vT",
+          "sessionID": "ses_f6413a815ffeOkyBrXsat6E9Z4",
+          "messageID": "msg_09becb5f500138Et0JCV5xr1yK"
+        },
+        {
+          "type": "tool",
+          "tool": "glob",
+          "callID": "879034133",
+          "state": {
+            "status": "completed",
+            "input": {
+              "pattern": "**/*",
+              "path": "/Users/louiscalata/nisi-next-private/work-orders/run-journal"
+            },
+            "output": "/Users/louiscalata/nisi-next-private/work-orders/run-journal/src/run-journal-v1.mjs\n/Users/louiscalata/nisi-next-private/work-orders/run-journal/package.json\n/Users/louiscalata/nisi-next-private/work-orders/run-journal/roadmap.md\n/Users/louiscalata/nisi-next-private/work-orders/run-journal/.packets/nisi-run-journal.packet.md\n/Users/louiscalata/nisi-next-private/work-orders/run-journal/tests/run-journal.test.mjs\n/Users/louiscalata/nisi-next-private/work-orders/run-journal/tests/baseline.test.mjs\n/Users/louiscalata/nisi-next-private/work-orders/run-journal/evidence/pre-state.json\n/Users/louiscalata/nisi-next-private/work-orders/run-journal/evidence/pre-journal.log\n/Users/louiscalata/nisi-next-private/work-orders/run-journal/evidence/design-decisions.md\n/Users/louiscalata/nisi-next-private/work-orders/run-journal/evidence/run-01.log\n/Users/louiscalata/nisi-next-private/work-orders/run-journal/evidence/pre-baseline.log\n/Users/louiscalata/nisi-next-private/work-orders/run-journal/evidence/source-placeholder.txt\n/Users/louiscalata/nisi-next-private/work-orders/run-journal/evidence/run-01-before.json\n/Users/louiscalata/nisi-next-private/work-orders/run-journal/evidence/lint-01.log\n/Users/louiscalata/nisi-next-private/work-orders/run-journal/evidence/tier-preflight.log\n/Users/louiscalata/nisi-next-private/work-orders/run-journal/evidence/claude-contract-review.json\n/Users/louiscalata/nisi-next-private/work-orders/run-journal/evidence/claude-contract-request.md\n/Users/louiscalata/nisi-next-private/work-orders/run-journal/evidence/run-01.packet.md",
+            "metadata": {
+              "count": 18,
+              "truncated": false
+            },
+            "title": "work-orders/run-journal",
+            "time": {
+              "start": 1789322410546,
+              "end": 1789322410572
+            }
+          },
+          "id": "prt_09bed2e52001nuRnimDkj0vNdi",
+          "sessionID": "ses_f6413a815ffeOkyBrXsat6E9Z4",
+          "messageID": "msg_09becb5f500138Et0JCV5xr1yK"
+        },
+        {
+          "reason": "tool-calls",
+          "snapshot": "680ec37387418c0c1e9f0194d3d9e3b17aaa9f27",
+          "type": "step-finish",
+          "tokens": {
+            "total": 8673,
+            "input": 8503,
+            "output": 124,
+            "reasoning": 46,
+            "cache": {
+              "write": 0,
+              "read": 0
+            }
+          },
+          "cost": 0,
+          "id": "prt_09bed3a910011TKEaMguxVRYau",
+          "sessionID": "ses_f6413a815ffeOkyBrXsat6E9Z4",
+          "messageID": "msg_09becb5f500138Et0JCV5xr1yK"
+        }
+      ]
+    },
+    {
+      "info": {
+        "parentID": "msg_09bec5ba2001x25fuMNP4R1HEl",
+        "role": "assistant",
+        "mode": "packet",
+        "agent": "packet",
+        "path": {
+          "cwd": "/Users/louiscalata/nisi-next-private/work-orders/run-journal",
+          "root": "/Users/louiscalata/nisi-next-private"
+        },
+        "cost": 0,
+        "tokens": {
+          "total": 9350,
+          "input": 9196,
+          "output": 117,
+          "reasoning": 37,
+          "cache": {
+            "write": 0,
+            "read": 0
+          }
+        },
+        "modelID": "qwen/qwen3.8-27b",
+        "providerID": "lmstudio",
+        "time": {
+          "created": 1789322410678,
+          "completed": 1789322422723
+        },
+        "finish": "tool-calls",
+        "id": "msg_09bed3ab6001ZvqGf3iWboyQQ0",
+        "sessionID": "ses_f6413a815ffeOkyBrXsat6E9Z4"
+      },
+      "parts": [
+        {
+          "snapshot": "680ec37387418c0c1e9f0194d3d9e3b17aaa9f27",
+          "type": "step-start",
+          "id": "prt_09bed4672001e3u4omgjbtdyUT",
+          "sessionID": "ses_f6413a815ffeOkyBrXsat6E9Z4",
+          "messageID": "msg_09bed3ab6001ZvqGf3iWboyQQ0"
+        },
+        {
+          "type": "reasoning",
+          "text": "Now, I'll read the protected tests (the owner's oracle) and package.json in order to understand the test scripts. Let's read the main test file and package.json.\n",
+          "time": {
+            "start": 1789322413686,
+            "end": 1789322415877
+          },
+          "id": "prt_09bed4676001ectSiYVLe7679r",
+          "sessionID": "ses_f6413a815ffeOkyBrXsat6E9Z4",
+          "messageID": "msg_09bed3ab6001ZvqGf3iWboyQQ0"
+        },
+        {
+          "type": "text",
+          "text": "\n\nI've reviewed the placeholder and tests against the packet. Now I'll read the protected test file and package.json to get the precise oracle details.\n\n\n",
+          "time": {
+            "start": 1789322415879,
+            "end": 1789322422654
+          },
+          "id": "prt_09bed4f07001rHMCnPfcR704eH",
+          "sessionID": "ses_f6413a815ffeOkyBrXsat6E9Z4",
+          "messageID": "msg_09bed3ab6001ZvqGf3iWboyQQ0"
+        },
+        {
+          "type": "tool",
+          "tool": "read",
+          "callID": "239423882",
+          "state": {
+            "status": "completed",
+            "input": {
+              "filePath": "/Users/louiscalata/nisi-next-private/work-orders/run-journal/package.json"
+            },
+            "output": "<path>/Users/louiscalata/nisi-next-private/work-orders/run-journal/package.json</path>\n<type>file</type>\n<content>\n1: {\n2:   \"name\": \"nisi-private-run-journal-work-order\",\n3:   \"version\": \"0.0.0-private\",\n4:   \"private\": true,\n5:   \"type\": \"module\",\n6:   \"license\": \"UNLICENSED\",\n7:   \"scripts\": {\n8:     \"test\": \"node --test --test-timeout=5000 tests/baseline.test.mjs\",\n9:     \"test:journal\": \"node --test --test-timeout=5000 tests/run-journal.test.mjs\"\n10:   }\n11: }\n\n(End of file - total 11 lines)\n</content>",
+            "metadata": {
+              "preview": "{\n  \"name\": \"nisi-private-run-journal-work-order\",\n  \"version\": \"0.0.0-private\",\n  \"private\": true,\n  \"type\": \"module\",\n  \"license\": \"UNLICENSED\",\n  \"scripts\": {\n    \"test\": \"node --test --test-timeout=5000 tests/baseline.test.mjs\",\n    \"test:journal\": \"node --test --test-timeout=5000 tests/run-journal.test.mjs\"\n  }\n}",
+              "truncated": false,
+              "loaded": [],
+              "display": {
+                "type": "file",
+                "path": "/Users/louiscalata/nisi-next-private/work-orders/run-journal/package.json",
+                "text": "{\n  \"name\": \"nisi-private-run-journal-work-order\",\n  \"version\": \"0.0.0-private\",\n  \"private\": true,\n  \"type\": \"module\",\n  \"license\": \"UNLICENSED\",\n  \"scripts\": {\n    \"test\": \"node --test --test-timeout=5000 tests/baseline.test.mjs\",\n    \"test:journal\": \"node --test --test-timeout=5000 tests/run-journal.test.mjs\"\n  }\n}",
+                "lineStart": 1,
+                "lineEnd": 11,
+                "totalLines": 11,
+                "truncated": false
+              }
+            },
+            "title": "work-orders/run-journal/package.json",
+            "time": {
+              "start": 1789322419846,
+              "end": 1789322419852
+            }
+          },
+          "id": "prt_09bed57c4001C0lom24CC9nRkH",
+          "sessionID": "ses_f6413a815ffeOkyBrXsat6E9Z4",
+          "messageID": "msg_09bed3ab6001ZvqGf3iWboyQQ0"
+        },
+        {
+          "type": "tool",
+          "tool": "read",
+          "callID": "822955929",
+          "state": {
+            "status": "completed",
+            "input": {
+              "filePath": "/Users/louiscalata/nisi-next-private/work-orders/run-journal/tests/run-journal.test.mjs"
+            },
+            "output": "<path>/Users/louiscalata/nisi-next-private/work-orders/run-journal/tests/run-journal.test.mjs</path>\n<type>file</type>\n<content>\n1: // Protected owner-authored contract oracle. OpenCode must not edit this file.\n2: import test from 'node:test';\n3: import assert from 'node:assert/strict';\n4: import { createHash } from 'node:crypto';\n5: import { createRunJournal, reopen } from '../src/run-journal-v1.mjs';\n6: \n7: const config = (patch = {}) => ({projectId: 'project-a', maxEntries: 8, heartbeatTtlMs: 10, redactPaths: [], ...patch});\n8: const entry = (id = 'a', patch = {}) => ({id, projectId: 'project-a', runId: 'run-a', attempt: 0,\n9:   candidateId: 'candidate-a', stage: 'tests', receiptId: 'receipt-a', createdAt: 100, ttlMs: 100,\n10:   state: 'SUCCEEDED', heartbeatAt: null, retryOf: null, revokes: null, payload: {result: 'PASS'}, ...patch});\n11: const make = (patch) => createRunJournal(config(patch));\n12: const row = (j, id, now = 100) => j.list(now).find(x => x.entry.id === id);\n13: const code = expected => e => e instanceof Error && e.code === expected;\n14: const canon = value => JSON.stringify(value, function (_key, x) {\n15:   return x && !Array.isArray(x) && typeof x === 'object'\n16:     ? Object.fromEntries(Object.keys(x).sort().map(k => [k, x[k]])) : x;\n17: });\n18: const hash = text => createHash('sha256').update(text).digest('hex');\n19: const lines = serialized => serialized.trimEnd().split('\\n');\n20: const fixture = () => {\n21:   const j = make();\n22:   for (const id of ['a', 'b', 'c']) j.append(entry(id), 100);\n23:   return j.serialize();\n24: };\n25: function rewrite(serialized, mutate) {\n26:   const values = lines(serialized).map(JSON.parse);\n27:   mutate(values);\n28:   let previousHash = hash('nisi-run-journal/header/v1\\n' + canon(values[0]));\n29:   for (let i = 1; i < values.length - 1; i++) {\n30:     const v = values[i]; v.seq = i; v.previousHash = previousHash;\n31:     v.hash = hash('nisi-run-journal/record/v1\\n' + canon({seq: i, previousHash, record: v.record}));\n32:     previousHash = v.hash;\n33:   }\n34:   values.at(-1).count = values.length - 2;\n35:   values.at(-1).lastHash = previousHash;\n36:   return values.map(canon).join('\\n') + '\\n';\n37: }\n38: \n39: test('01 exact synchronous API, empty complete framing and non-authority', () => {\n40:   const j = make();\n41:   assert.deepEqual(Object.keys(j).sort(), ['append', 'list', 'retain', 'serialize']);\n42:   assert.ok(Object.isFrozen(j));\n43:   assert.deepEqual(j.list(0), []);\n44:   assert.deepEqual(j.retain(0), []);\n45:   const result = reopen(j.serialize());\n46:   assert.deepEqual(result.report, {status: 'COMPLETE', recoveredIds: [], rejectedLine: null, reason: null, authorizing: false});\n47:   assert.equal(result.journal.serialize(), j.serialize());\n48:   assert.deepEqual(lines(j.serialize()).map(x => JSON.parse(x).type), ['header', 'footer']);\n49: });\n50: \n51: test('02 closed configuration and entry schemas reject malformed data atomically', () => {\n52:   for (const patch of [{maxEntries: 0}, {maxEntries: 1.5}, {heartbeatTtlMs: 0}, {projectId: ''}, {extra: true},\n53:     {redactPaths: ['state']}, {redactPaths: ['payload.__proto__.x']}, {redactPaths: ['payload.a', 'payload.a.b']},\n54:     {redactPaths: ['payload.a', 'payload.a']}]) assert.throws(() => createRunJournal(config(patch)), code('CONFIG'));\n55:   const j = make();\n56:   for (const patch of [{id: ''}, {attempt: -1}, {ttlMs: 0}, {ttlMs: 0.5}, {createdAt: 101},\n57:     {createdAt: Number.MAX_SAFE_INTEGER, ttlMs: 2}, {heartbeatAt: 101}, {state: 'PASS'}, {extra: true},\n58:     {receiptId: 7}, {payload: {x: undefined}}, {payload: {x: NaN}}, {payload: {x: 1.25}},\n59:     {payload: {x: new Map()}}, {payload: JSON.parse('{\"__proto__\":{}}')}]) {\n60:     assert.throws(() => j.append(entry('bad', patch), 100), code('ENTRY'));\n61:   }\n62:   assert.throws(() => j.append(entry(), -1), code('TIME'));\n63:   assert.deepEqual(j.list(100), []);\n64: });\n65: \n66: test('03 full attribution retained and cross-project input refused', () => {\n67:   const j = make(); const a = entry();\n68:   assert.deepEqual(j.append(a, 100), {status: 'APPENDED', id: 'a'});\n69:   const view = row(j, 'a');\n70:   assert.deepEqual(view, {entry: a, historical: false, retained: true, revoked: false,\n71:     expired: false, liveness: 'SUCCEEDED', authorizing: false});\n72:   assert.deepEqual(j.append(entry('other', {projectId: 'project-b'}), 100), {status: 'REFUSED', id: 'other', reason: 'PROJECT'});\n73:   const other = make({projectId: 'project-b'});\n74:   assert.equal(other.append(entry('a', {projectId: 'project-b'}), 100).status, 'APPENDED');\n75:   assert.equal(j.list(100).length, 1);\n76: });\n77: \n78: test('04 canonical exact replay is idempotent across object key order and capacity', () => {\n79:   const j = make({maxEntries: 1});\n80:   const a = entry('a', {payload: {z: [1, 2], a: {z: 2, a: 1}}});\n81:   j.append(a, 100); j.append(entry('b'), 100);\n82:   const before = j.serialize();\n83:   const reversed = Object.fromEntries(Object.entries(a).reverse());\n84:   reversed.payload = {a: {a: 1, z: 2}, z: [1, 2]};\n85:   assert.deepEqual(j.append(reversed, 100), {status: 'DUPLICATE', id: 'a'});\n86:   assert.equal(j.serialize(), before);\n87:   assert.equal(j.list(100).length, 2);\n88: });\n89: \n90: test('05 same id with changed binding, lifecycle or redacted content is CONFLICT', () => {\n91:   const j = make({redactPaths: ['payload.secret']});\n92:   const a = entry('a', {payload: {secret: 'original'}}); j.append(a, 100);\n93:   const before = j.serialize();\n94:   for (const patch of [{runId: 'other'}, {attempt: 1}, {candidateId: 'other'}, {stage: 'other'},\n95:     {receiptId: null}, {createdAt: 99}, {ttlMs: 200}, {state: 'QUEUED'},\n96:     {payload: {secret: 'changed'}}, {payload: {secret: '[REDACTED]'}}]) {\n97:     assert.deepEqual(j.append({...a, ...patch}, 100), {status: 'CONFLICT', id: 'a', reason: 'ID_CONTENT_MISMATCH'});\n98:   }\n99:   assert.equal(j.serialize(), before);\n100: });\n101: \n102: test('06 terminal replay never becomes new work; retries need new id and valid citation', () => {\n103:   const j = make(); j.append(entry('a'), 100);\n104:   assert.equal(j.append(entry('a'), 100).status, 'DUPLICATE');\n105:   assert.equal(j.append(entry('a', {state: 'QUEUED'}), 100).status, 'CONFLICT');\n106:   for (const patch of [{retryOf: 'missing', attempt: 1}, {retryOf: 'a', attempt: 0},\n107:     {retryOf: 'a', attempt: 1, runId: 'other'}, {retryOf: 'a', attempt: 1, state: 'RUNNING'}]) {\n108:     assert.deepEqual(j.append(entry('bad', patch), 100), {status: 'REFUSED', id: 'bad', reason: 'RETRY'});\n109:   }\n110:   assert.equal(j.append(entry('retry', {state: 'QUEUED', retryOf: 'a', attempt: 1, candidateId: 'candidate-b'}), 100).status, 'APPENDED');\n111:   assert.equal(row(j, 'retry').authorizing, false);\n112: });\n113: \n114: test('07 TTL boundary, irreversible payload retention and caller time validation', () => {\n115:   const j = make(); const a = entry('a', {state: 'QUEUED', ttlMs: 5}); j.append(a, 100);\n116:   assert.equal(row(j, 'a', 104).expired, false);\n117:   assert.deepEqual(j.retain(105), ['a']);\n118:   const expired = row(j, 'a', 105);\n119:   assert.equal(expired.expired, true); assert.equal(expired.liveness, 'EXPIRED');\n120:   assert.equal(expired.retained, false); assert.equal(expired.entry.payload, null);\n121:   assert.deepEqual(j.retain(105), []);\n122:   assert.equal(j.append(a, 105).status, 'DUPLICATE');\n123:   assert.equal(j.append({...a, ttlMs: 500}, 105).status, 'CONFLICT');\n124:   assert.throws(() => j.list(104), code('TIME'));\n125:   assert.throws(() => j.retain(NaN), code('TIME'));\n126:   assert.equal(j.append(entry('retry', {createdAt: 105, retryOf: 'a', attempt: 1, state: 'QUEUED'}), 105).status, 'APPENDED');\n127: });\n128: \n129: test('08 stale heartbeat is UNKNOWN and never sufficient for retry', () => {\n130:   const j = make(); j.append(entry('running', {state: 'RUNNING', heartbeatAt: 100}), 100);\n131:   assert.equal(row(j, 'running', 110).liveness, 'RUNNING');\n132:   assert.equal(row(j, 'running', 111).liveness, 'UNKNOWN');\n133:   assert.deepEqual(j.append(entry('retry', {retryOf: 'running', attempt: 1, state: 'QUEUED'}), 111),\n134:     {status: 'REFUSED', id: 'retry', reason: 'RETRY'});\n135:   assert.equal(j.append(entry('running', {state: 'QUEUED'}), 111).status, 'CONFLICT');\n136:   j.append(entry('missing-beat', {state: 'RUNNING'}), 111);\n137:   assert.equal(row(j, 'missing-beat', 111).liveness, 'UNKNOWN');\n138:   j.append(entry('terminal', {heartbeatAt: 90}), 111);\n139:   assert.equal(row(j, 'terminal', 111).liveness, 'SUCCEEDED');\n140:   assert.ok(j.list(111).every(x => x.authorizing === false));\n141: });\n142: \n143: test('09 maxEntries bounds retained payloads in insertion order but never forgets ids', () => {\n144:   const j = make({maxEntries: 1}); const a = entry('a');\n145:   j.append(a, 100); j.append(entry('b'), 100); j.append(entry('c'), 100);\n146:   assert.deepEqual(j.list(100).map(x => [x.entry.id, x.retained]), [['a', false], ['b', false], ['c', true]]);\n147:   assert.equal(j.append(a, 100).status, 'DUPLICATE');\n148:   assert.equal(j.append({...a, payload: {different: true}}, 100).status, 'CONFLICT');\n149:   const r = reopen(j.serialize());\n150:   assert.equal(r.report.status, 'COMPLETE');\n151:   assert.equal(r.journal.append(a, 100).status, 'DUPLICATE');\n152:   assert.equal(row(r.journal, 'a').historical, true);\n153:   assert.equal(row(r.journal, 'a').retained, false);\n154: });\n155: \n156: test('10 revocation cites an existing exact attempt and candidate without deleting it', () => {\n157:   const j = make(); j.append(entry('a'), 100);\n158:   for (const patch of [{revokes: 'missing'}, {revokes: 'a', runId: 'other'}, {revokes: 'a', attempt: 1},\n159:     {revokes: 'a', candidateId: 'other'}, {revokes: 'a', createdAt: 99}]) {\n160:     assert.deepEqual(j.append(entry('bad', {state: 'REVOKED', ...patch}), 100), {status: 'REFUSED', id: 'bad', reason: 'REVOCATION'});\n161:   }\n162:   assert.throws(() => j.append(entry('bad', {state: 'REVOKED'}), 100), code('ENTRY'));\n163:   assert.throws(() => j.append(entry('bad', {revokes: 'a'}), 100), code('ENTRY'));\n164:   assert.equal(j.append(entry('revoke', {state: 'REVOKED', revokes: 'a'}), 100).status, 'APPENDED');\n165:   assert.equal(row(j, 'a').entry.state, 'SUCCEEDED');\n166:   assert.equal(row(j, 'a').revoked, true); assert.equal(row(j, 'a').liveness, 'REVOKED');\n167:   assert.equal(j.list(100).length, 2);\n168: });\n169: \n170: test('11 revocation survives tombstones, expiry, revoker revocation and reopen', () => {\n171:   const j = make({maxEntries: 1}); j.append(entry('a', {state: 'RUNNING'}), 100);\n172:   j.append(entry('revoke', {state: 'REVOKED', revokes: 'a', ttlMs: 1}), 100);\n173:   j.append(entry('revoke-again', {state: 'REVOKED', revokes: 'revoke'}), 100);\n174:   j.retain(101);\n175:   const r = reopen(j.serialize());\n176:   assert.equal(r.report.status, 'COMPLETE');\n177:   assert.equal(row(r.journal, 'a', 101).revoked, true);\n178:   assert.equal(row(r.journal, 'revoke', 101).retained, false);\n179:   assert.equal(r.journal.append(entry('retry', {retryOf: 'a', attempt: 1, state: 'QUEUED', createdAt: 101}), 101).status, 'APPENDED');\n180: });\n181: \n182: test('12 declared payload paths redact nested values and arrays before exposure', () => {\n183:   const j = make({redactPaths: ['payload.secret', 'payload.nested.token', 'payload.items.0.value']});\n184:   const a = entry('a', {payload: {secret: {raw: 'HIDDEN-ONE'}, nested: {token: 'HIDDEN-TWO', safe: 7},\n185:     items: [{value: 'HIDDEN-THREE'}, {value: 'visible'}]}});\n186:   j.append(a, 100);\n187:   const stored = row(j, 'a').entry.payload;\n188:   assert.deepEqual(stored, {secret: '[REDACTED]', nested: {token: '[REDACTED]', safe: 7},\n189:     items: [{value: '[REDACTED]'}, {value: 'visible'}]});\n190:   assert.doesNotMatch(j.serialize(), /HIDDEN-/);\n191:   assert.deepEqual(a.payload.secret, {raw: 'HIDDEN-ONE'});\n192:   assert.equal(j.append(a, 100).status, 'DUPLICATE');\n193:   const r = reopen(j.serialize());\n194:   assert.equal(r.journal.append(a, 100).status, 'DUPLICATE');\n195:   assert.equal(r.journal.append({...a, payload: stored}, 100).status, 'CONFLICT');\n196:   const missing = entry('missing', {payload: {secret: 'safe'}});\n197:   assert.throws(() => j.append(missing, 100), code('REDACTION'));\n198: });\n199: \n200: test('13 complete persisted reopen is historical through replay and serialization cycles', () => {\n201:   const j = make(); const a = entry('a', {payload: {savedPlan: {issued: true}, receipt: {status: 'PASS'}}});\n202:   j.append(a, 100); const serialized = j.serialize();\n203:   const r = reopen(serialized);\n204:   assert.deepEqual(r.report, {status: 'COMPLETE', recoveredIds: ['a'], rejectedLine: null, reason: null, authorizing: false});\n205:   assert.equal(row(r.journal, 'a').historical, true);\n206:   assert.equal(row(r.journal, 'a').authorizing, false);\n207:   assert.equal(r.journal.serialize(), serialized);\n208:   assert.equal(r.journal.append(a, 100).status, 'DUPLICATE');\n209:   assert.equal(row(r.journal, 'a').historical, true);\n210:   r.journal.append(entry('fresh'), 100);\n211:   assert.equal(row(r.journal, 'fresh').historical, false);\n212:   const r2 = reopen(r.journal.serialize());\n213:   assert.ok(r2.journal.list(100).every(x => x.historical && !x.authorizing));\n214:   assert.deepEqual(Object.keys(r2.journal).sort(), ['append', 'list', 'retain', 'serialize']);\n215: });\n216: \n217: test('14 truncation recovers only committed prefix and cannot be resealed or appended', () => {\n218:   const all = lines(fixture());\n219:   const truncated = all.slice(0, 3).join('\\n') + '\\n' + all[3].slice(0, -7);\n220:   const r = reopen(truncated);\n221:   assert.deepEqual(r.report, {status: 'INCOMPLETE', recoveredIds: ['a', 'b'], rejectedLine: 4, reason: 'TRUNCATED', authorizing: false});\n222:   assert.deepEqual(r.journal.list(100).map(x => x.entry.id), ['a', 'b']);\n223:   assert.ok(r.journal.list(100).every(x => x.historical));\n224:   for (const id of ['a', 'unseen']) assert.deepEqual(r.journal.append(entry(id), 100), {status: 'REFUSED', id, reason: 'SEALED'});\n225:   assert.throws(() => r.journal.serialize(), code('SEALED'));\n226:   const missingFooter = reopen(all.slice(0, -1).join('\\n') + '\\n');\n227:   assert.deepEqual(missingFooter.report, {status: 'INCOMPLETE', recoveredIds: ['a', 'b', 'c'], rejectedLine: 5, reason: 'MISSING_FOOTER', authorizing: false});\n228:   const noDelimiter = reopen(all.slice(0, 2).join('\\n'));\n229:   assert.deepEqual(noDelimiter.report.recoveredIds, []);\n230:   assert.equal(noDelimiter.report.rejectedLine, 2);\n231: });\n232: \n233: test('15 invalid line stops recovery; deletion or reordering cannot bless later entries', () => {\n234:   const all = lines(fixture());\n235:   for (const bad of ['{broken}', all[2].replace('candidate-a', 'candidate-x')]) {\n236:     const r = reopen([all[0], all[1], bad, all[3], all[4]].join('\\n') + '\\n');\n237:     assert.deepEqual(r.report, {status: 'INVALID', recoveredIds: ['a'], rejectedLine: 3, r

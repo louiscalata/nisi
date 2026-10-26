@@ -1,0 +1,95 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://veritas.invalid/private/schemas/stage5/e16-case.v1.json",
+  "title": "Veritas Stage 5 frozen E16 case preparation",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schemaVersion",
+    "caseId",
+    "family",
+    "mutation",
+    "expectedOutcome",
+    "runStatus",
+    "evidenceClass",
+    "credits"
+  ],
+  "properties": {
+    "schemaVersion": {
+      "const": 1
+    },
+    "caseId": {
+      "type": "string",
+      "pattern": "^E16-S5-(?:AUTH|DIGEST|PROMO|ROLLBACK)-[0-9]{3}$"
+    },
+    "family": {
+      "enum": [
+        "AUTHORITY_MUTATION",
+        "DIGEST_SUBSTITUTION",
+        "PROMOTION_CRASH_OR_RACE",
+        "PRIOR_TARGET_RECOVERY"
+      ]
+    },
+    "mutation": {
+      "type": "string",
+      "minLength": 8,
+      "maxLength": 240
+    },
+    "expectedOutcome": {
+      "enum": [
+        "REFUSE_BEFORE_DECISION",
+        "REFUSE_BEFORE_PROMOTION",
+        "ROLL_BACK_TO_PRIOR_TARGET",
+        "RECALL_AFTER_ACCEPTANCE",
+        "CONVERGE_IDEMPOTENTLY",
+        "WITHHOLD_AS_UNCERTAIN"
+      ]
+    },
+    "runStatus": {
+      "const": "NOT_RUN"
+    },
+    "evidenceClass": {
+      "const": "SELF_ADMINISTERED_STRUCTURAL_PREPARATION"
+    },
+    "credits": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "protectedAuthority",
+        "nativeRuntime",
+        "t164ThroughT183",
+        "m4",
+        "e16",
+        "patent",
+        "production",
+        "release"
+      ],
+      "properties": {
+        "protectedAuthority": {
+          "const": false
+        },
+        "nativeRuntime": {
+          "const": false
+        },
+        "t164ThroughT183": {
+          "const": false
+        },
+        "m4": {
+          "const": false
+        },
+        "e16": {
+          "const": false
+        },
+        "patent": {
+          "const": false
+        },
+        "production": {
+          "const": false
+        },
+        "release": {
+          "const": false
+        }
+      }
+    }
+  }
+}

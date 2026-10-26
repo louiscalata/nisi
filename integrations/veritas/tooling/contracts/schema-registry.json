@@ -1,0 +1,99 @@
+{
+  "schemaVersion": 1,
+  "profile": "veritas-stage5-self-administered-schema-registry-v1",
+  "statusCeiling": "SELF_ADMINISTERED_STRUCTURAL_PREPARATION",
+  "schemas": [
+    {
+      "id": "https://veritas.invalid/private/schemas/stage5/assurance-dependency-closure.v1.json",
+      "path": "tooling/schemas/assurance-dependency-closure.schema.json"
+    },
+    {
+      "id": "https://veritas.invalid/private/schemas/stage5/assurance-exhaustive-replay-oracle.v1.json",
+      "path": "tooling/schemas/assurance-exhaustive-replay-oracle.schema.json"
+    },
+    {
+      "id": "https://veritas.invalid/private/schemas/stage5/assurance-genesis-event-reducer.v1.json",
+      "path": "tooling/schemas/assurance-genesis-event-reducer.schema.json"
+    },
+    {
+      "id": "https://veritas.invalid/private/schemas/stage5/assurance-no-execution-product-journey.v1.json",
+      "path": "tooling/schemas/assurance-no-execution-product-journey.schema.json"
+    },
+    {
+      "id": "https://veritas.invalid/private/schemas/stage5/assurance-recall-before-reuse.v1.json",
+      "path": "tooling/schemas/assurance-recall-before-reuse.schema.json"
+    },
+    {
+      "id": "https://veritas.invalid/private/schemas/stage5/authority-snapshot.v1.json",
+      "path": "tooling/schemas/authority-snapshot.schema.json"
+    },
+    {
+      "id": "https://veritas.invalid/private/schemas/stage5/candidate-staging.v1.json",
+      "path": "tooling/schemas/candidate-staging.schema.json"
+    },
+    {
+      "id": "https://veritas.invalid/private/schemas/stage5/e14-displacement-case.v1.json",
+      "path": "tooling/schemas/e14-displacement-case.schema.json"
+    },
+    {
+      "id": "https://veritas.invalid/private/schemas/stage5/e16-case.v1.json",
+      "path": "tooling/schemas/e16-case.schema.json"
+    },
+    {
+      "id": "https://veritas.invalid/private/schemas/stage5/e16-implementation-environment-diagnostic.v1.json",
+      "path": "tooling/schemas/e16-implementation-environment-diagnostic.schema.json"
+    },
+    {
+      "id": "https://veritas.invalid/private/schemas/stage5/e16-implementation-result.v1.json",
+      "path": "tooling/schemas/e16-implementation-result.schema.json"
+    },
+    {
+      "id": "https://veritas.invalid/private/schemas/stage5/e16-reference-scenario.v1.json",
+      "path": "tooling/schemas/e16-reference-scenario.schema.json"
+    },
+    {
+      "id": "https://veritas.invalid/private/schemas/stage5/fi0-canonical-vector-process-result.v1.json",
+      "path": "tooling/schemas/fi0-canonical-vector-process-result.schema.json"
+    },
+    {
+      "id": "https://veritas.invalid/private/schemas/stage5/fi0-event.v1.json",
+      "path": "tooling/schemas/fi0-event.schema.json"
+    },
+    {
+      "id": "https://veritas.invalid/private/schemas/stage5/fi0-evidence-manifest.v1.json",
+      "path": "tooling/schemas/fi0-evidence-manifest.schema.json"
+    },
+    {
+      "id": "https://veritas.invalid/private/schemas/stage5/fi0-evidence-ref.v1.json",
+      "path": "tooling/schemas/fi0-evidence-ref.schema.json"
+    },
+    {
+      "id": "https://veritas.invalid/private/schemas/stage5/fi0-historical-import-envelope.v1.json",
+      "path": "tooling/schemas/fi0-historical-import-envelope.schema.json"
+    },
+    {
+      "id": "https://veritas.invalid/private/schemas/stage5/fi0-incident.v1.json",
+      "path": "tooling/schemas/fi0-incident.schema.json"
+    },
+    {
+      "id": "https://veritas.invalid/private/schemas/stage5/fi0-view.v1.json",
+      "path": "tooling/schemas/fi0-view.schema.json"
+    },
+    {
+      "id": "https://veritas.invalid/private/schemas/stage5/git-base-manifest.v1.json",
+      "path": "tooling/schemas/git-base-manifest.schema.json"
+    },
+    {
+      "id": "https://veritas.invalid/private/schemas/stage5/git-tree-delta.v1.json",
+      "path": "tooling/schemas/git-tree-delta.schema.json"
+    },
+    {
+      "id": "https://veritas.invalid/private/schemas/stage5/promotion-transaction.v1.json",
+      "path": "tooling/schemas/promotion-transaction.schema.json"
+    },
+    {
+      "id": "https://veritas.invalid/private/schemas/stage5/recovery-resolution.v1.json",
+      "path": "tooling/schemas/recovery-resolution.schema.json"
+    }
+  ]
+}

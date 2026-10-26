@@ -1,0 +1,282 @@
+>> Online code mode preflight...
+
+============================================================
+  ONLINE CODE MODE V5 CORE — PREFLIGHT
+============================================================
+  Share:        MOUNTED
+    Health:     ready
+    Free:       173.1 GB
+    Rules:      yes
+    Queue:      yes
+  PC Worker:    ADVERTISED (not inference/native parity)
+    Models:     Qwen3-Coder-Next 80B-A3B Q4_K_M, gpt-oss-20b
+    Heartbeat:  28.273s ago
+  Local models: ADVERTISED (not inference health)
+    Count:      9 models
+    Models:     qwen/qwen3.8-27b, google/gemma-4-26b-a4b-qat, google/gemma-3-4b, text-embedding-nomic-embed-text-v2-moe, openai/gpt-oss-20b, gemma-4-26b-tuned...
+  Zen (Big Pickle): NOT CONFIGURED
+    Reason:     endpoint unavailable: HTTPError
+    Env var:    OPENCODE_ZEN_API_KEY
+  Model tiers:
+    [UP  ] afm    ondevice afm/apple-foundation             on-device binary present, no network
+    [UP  ] local  local  lmstudio/qwen/qwen3.8-27b        9 models, 10ms · model loaded
+    [UP  ] free   remote opencode/big-pickle              70 models, 186ms
+    [UP  ] go     remote opencode-go/kimi-k2.7-code       70 models, 249ms
+    Evidence:   inventory + credential only; not inference health
+    Usable:     afm, local, free, go   (name one with CHAMI_PACKET_TIER for packets)
+  Pinned guards: 31 pins · OK
+    [UNRELATED] TRANSPORT_SHA256 in ~/bin/codemode-batch/batch_admission.py
+    [UNRELATED] PROFILE_HELPER_SHA256 in ~/bin/chami-admission/broker.py
+============================================================
+
+>> Launching pipeline...
+
+>> PC inference: worker advertised, not inference-tested (Qwen3-Coder-Next 80B-A3B Q4_K_M, gpt-oss-20b), heartbeat 29.924s
+>> Runtime diagnostics: ~/code-runs/online-coordinator-20260914-013513-2696-881884000
+>> codemode [online/python]  draft=google/gemma-4-26b-a4b-qat  max_iters=3
+>> Context: DISABLED (0 UTF-8 bytes; tokens unknown)
+>> Acceptance tests: loaded from acceptance_tests.py (immutable)
+>> Stage: drafting (Gemma)...
+>> Verify (tests): FAIL
+>> Acceptance tests: FAIL
+>> Failure class: IMPLEMENTATION — The implementation raises a KeyError for unknown layers in methods like begin_check, instead of the required WellError.
+>> Failure class: IMPLEMENTATION (The implementation raises a KeyError for unknown layers in methods like begin_check, instead of the required WellError.)
+>> Repair 1/3 (google/gemma-4-26b-a4b-qat)...
+>> Verify (tests): FAIL
+>> Acceptance tests: PASS
+>> Model-authored harness unavailable or unexecuted; authoritative acceptance assertions passed
+>> Structural gate: PASS (0 advisory finding(s))
+>> verify (openai/gpt-oss-20b) unavailable: openai/gpt-oss-20b: output was truncated and rejected — quorum incomplete
+>> verify (qwen/qwen3.6-35b-a3b) unavailable: all inference endpoints failed: http://localhost:1234: HTTP Error 500: Internal  — quorum incomplete
+>> Model-verify: UNAVAILABLE
+>> Repair 2/3 (google/gemma-4-26b-a4b-qat)...
+>> Verify (tests): FAIL
+>> Acceptance tests: PASS
+>> Model-authored harness unavailable or unexecuted; authoritative acceptance assertions passed
+>> Structural gate: PASS (0 advisory finding(s))
+>> verify (openai/gpt-oss-20b) unavailable: all inference endpoints failed: http://localhost:1234: HTTP Error 500: Internal  — quorum incomplete
+>> verify (qwen/qwen3.6-35b-a3b) unavailable: qwen/qwen3.6-35b-a3b: output was truncated and rejected — quorum incomplete
+>> Model-verify: UNAVAILABLE
+>> Repair 3/3 (qwen/qwen3.6-35b-a3b)...
+>> Verify (tests): FAIL
+>> Acceptance tests: PASS
+>> Model-authored harness unavailable or unexecuted; authoritative acceptance assertions passed
+>> Structural gate: PASS (0 advisory finding(s))
+>> verify (openai/gpt-oss-20b) unavailable: openai/gpt-oss-20b: output was truncated and rejected — quorum incomplete
+>> verify (qwen/qwen3.6-35b-a3b) unavailable: all inference endpoints failed: http://localhost:1234: HTTP Error 400: Bad Reque — quorum incomplete
+>> Model-verify: UNAVAILABLE
+>> Run scope: mac-only  |  manifest=~/code-runs/codemode-20260914-013514-2703-036493000/run.json
+>> Reported metric tokens: 48550 | known rows=8/11; classify=4510 draft=4585 repair1=8481 repair2=7810 repair3=7193 verify=15971; not a complete all-request total
+>> Reported summed request-seconds: 302.800 | timed rows=8/11; not wall time or a complete request total
+>> UNVERIFIED after repairs; escalate to Codex for inspection and repair.
+>> Saved to ~/pending-review/codemode-20260914-013514-2703-036493000.txt
+>> Coordinator: LOCAL_FAILED (~/code-runs/online-coordinator-20260914-013513-2696-881884000/comparison.json)
+# ⚠ UNVERIFIED — model-verify failing. Review before use.
+from enum import Enum
+
+class RowState(Enum):
+    OPEN = "open"
+    FULL = "full"
+    CHECKING = "checking"
+    PASSED = "passed"
+    CLEARED = "cleared"
+    QUARANTINED = "quarantined"
+
+class WellError(Exception):
+    pass
+
+class Well:
+    def __init__(self, layers, tiles, deps=None, is_hole=None, max_reopens=2):
+        if not layers or len(layers) != len(set(layers)):
+            raise WellError()
+        if not tiles or len(tiles) != len(set(tiles)):
+            raise WellError()
+        
+        self.layers = list(layers)
+        self.tiles = list(tiles)
+        self.max_reopens = max_reopens
+        
+        self.deps_map = {}
+        if deps is None:
+            for i, layer in enumerate(self.layers):
+                if i > 0:
+                    self.deps_map[layer] = {self.layers[i-1]}
+                else:
+                    self.deps_map[layer] = set()
+        else:
+            for layer, d_set in deps.items():
+                if layer not in self.layers:
+                    raise WellError()
+                for d in d_set:
+                    if d not in self.layers or d == layer:
+                        raise WellError()
+                self.deps_map[layer] = set(d_set)
+            for layer in self.layers:
+                if layer not in self.deps_map:
+                    self.deps_map[layer] = set()
+
+        self._check_cycles()
+
+        self._rows = {}
+        for layer in self.layers:
+            self._rows[layer] = {
+                "state": RowState.OPEN,
+                "reopens": 0,
+                "cells": {tile: {"source": None, "text": None} for tile in self.tiles}
+            }
+        
+        self._is_hole_func = is_hole if is_hole else lambda x: x is None or not str(x).strip() or "TODO" in str(x)
+
+    def _check_cycles(self):
+        visited = set()
+        path = set()
+        def visit(u):
+            if u in path: raise WellError()
+            if u in visited: return
+            path.add(u)
+            for v in self.deps_map.get(u, []):
+                visit(v)
+            path.remove(u)
+            visited.add(u)
+        for layer in self.layers:
+            visit(layer)
+
+    def _get_transitive_dependents(self, layer):
+        rev = {l: set() for l in self.layers}
+        for l, d_set in self.deps_map.items():
+            for d in d_set:
+                rev[d].add(l)
+        
+        dependents = []
+        stack = list(rev[layer])
+        visited = set()
+        while stack:
+            curr = stack.pop()
+            if curr not in visited:
+                visited.add(curr)
+                dependents.append(curr)
+                stack.extend(list(rev[curr]))
+        return [l for l in self.layers if l in visited]
+
+    def state(self, layer):
+        if layer not in self._rows: raise WellError()
+        return self._rows[layer]["state"]
+
+    def deps(self, layer):
+        if layer not in self._rows: raise WellError()
+        return set(self.deps_map[layer])
+
+    def dependents(self, layer):
+        if layer not in self._rows: raise WellError()
+        return self._get_transitive_dependents(layer)
+
+    def reopens(self, layer):
+        if layer not in self._rows: raise WellError()
+        return self._rows[layer]["reopens"]
+
+    def holes(self, layer):
+        if layer not in self._rows: raise WellError()
+        row = self._rows[layer]
+        h = []
+        for t in self.tiles:
+            cell = row["cells"][t]
+            if cell["text"] is None or self._is_hole_func(cell["text"]):
+                h.append(t)
+        return h
+
+    def place(self, layer, tile, output, source):
+        if layer not in self._rows or tile not in self.tiles: raise WellError()
+        s = self._rows[layer]["state"]
+        if s not in (RowState.OPEN, RowState.FULL):
+            raise WellError()
+        
+        self._rows[layer]["cells"][tile] = {"source": source, "text": output}
+        h_list = self.holes(layer)
+        self._rows[layer]["state"] = RowState.FULL if not h_list else RowState.OPEN
+        return self._rows[layer]["state"]
+
+    def begin_check(self, layer):
+        if layer not in self._rows: raise WellError()
+        if self._rows[layer]["state"] != RowState.FULL:
+            raise WellError()
+        self._rows[layer]["state"] = RowState.CHECKING
+
+    def report_check(self, layer, validity, quality, failed_tiles=()):
+        if layer not in self._rows: raise WellError()
+        if self._rows[layer]["state"] != RowState.CHECKING:
+            raise WellError()
+        
+        if validity and quality:
+            self._rows[layer]["state"] = RowState.PASSED
+            changed = True
+            while changed:
+                changed = False
+                for l in self.layers:
+                    if self._rows[l]["state"] == RowState.PASSED:
+                        if all(self._rows[d]["state"] == RowState.CLEARED for d in self.deps_map[l]):
+                            self._rows[l]["state"] = RowState.CLEARED
+                            changed = True
+            return self._rows[layer]["state"]
+        else:
+            self._rows[layer]["state"] = RowState.OPEN
+            if not failed_tiles:
+                for t in self.tiles:
+                    self._rows[layer]["cells"][t] = {"source": None, "text": None}
+            else:
+                for t in failed_tiles:
+                    if t not in self.tiles: raise WellError()
+                    self._rows[layer]["cells"][t] = {"source": None, "text": None}
+            return self._rows[layer]["state"]
+
+    def reopen(self, layer, tiles, reason):
+        if layer not in self._rows: raise WellError()
+        s = self._rows[layer]["state"]
+        if s not in (RowState.PASSED, RowState.CLEARED):
+            raise WellError()
+        
+        self._rows[layer]["reopens"] += 1
+        if self._rows[layer]["reopens"] > self.max_reopens:
+            self._rows[layer]["state"] = RowState.QUARANTINED
+            return self._rows[layer]["state"]
+        
+        target_tiles = tiles if tiles else self.tiles
+        for t in target_tiles:
+            if t not in self.tiles: raise WellError()
+            self._rows[layer]["cells"][t] = {"source": None, "text": None}
+        
+        self._rows[layer]["state"] = RowState.OPEN
+        for dep in self._get_transitive_dependents(layer):
+            if self._rows[dep]["state"] in (RowState.CHECKING, RowState.PASSED, RowState.CLEARED):
+                self._rows[dep]["state"] = RowState.FULL
+        return self._rows[layer]["state"]
+
+    def height(self):
+        return sum(1 for l in self.layers if self._rows[l]["state"] != RowState.CLEARED)
+
+    def done(self):
+        return all(self._rows[l]["state"] == RowState.CLEARED for l in self.layers)
+
+    def stuck(self):
+        return any(self._rows[l]["state"] == RowState.QUARANTINED for l in self.layers)
+
+    def snapshot(self):
+        return {
+            "layers": self.layers,
+            "tiles": self.tiles,
+            "rows": {
+                l: {
+                    "state": self._rows[l]["state"].value,
+                    "reopens": self._rows[l]["reopens"],
+                    "cells": {
+                        t: {
+                            "source": self._rows[l]["cells"][t]["source"],
+                            "hole": self._is_hole_func(self._rows[l]["cells"][t]["text"]) if self._rows[l]["cells"][t]["text"] is not None else True
+                        } for t in self.tiles
+                    }
+                } for l in self.layers
+            }
+        }
+
+# --- last error output ---
+# high-risk model verification unavailable
+exit=1

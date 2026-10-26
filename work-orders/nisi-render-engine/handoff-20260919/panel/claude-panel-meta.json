@@ -1,0 +1,108 @@
+{
+ "panelists": [
+  {
+   "key": "artist",
+   "model": "sonnet",
+   "ideas": 7
+  },
+  {
+   "key": "pipeline-td",
+   "model": "opus",
+   "ideas": 7
+  },
+  {
+   "key": "indie",
+   "model": "haiku",
+   "ideas": 6
+  },
+  {
+   "key": "architect",
+   "model": "opus",
+   "ideas": 7
+  },
+  {
+   "key": "skeptic",
+   "model": "sonnet",
+   "ideas": 7
+  }
+ ],
+ "candidates": [
+  {
+   "title": "Pass rows as the QC gate: a shot is never delivered half-rendered",
+   "survives": false,
+   "score": 6,
+   "votes": 3,
+   "merged": false
+  },
+  {
+   "title": "The delivery is a parent tile: a movie assembled only from promoted frames",
+   "survives": false,
+   "score": 6,
+   "votes": 3,
+   "merged": false
+  },
+  {
+   "title": "Shot re-render as a cache lookup: per-frame identity and REPLAY",
+   "survives": false,
+   "score": 8,
+   "votes": 2,
+   "merged": false
+  },
+  {
+   "title": "Content-addressed frame replay: never render the same frame twice, across resubmits, artists and machines",
+   "survives": false,
+   "score": 7,
+   "votes": 2,
+   "merged": false
+  },
+  {
+   "title": "One bucket-grid Watch panel instead of tabbing between MRG, Recorder and a farm monitor",
+   "survives": false,
+   "score": 6,
+   "votes": 1,
+   "merged": false
+  },
+  {
+   "title": "Two-Machine Overnight Farm (Below the Deadline/OpenCue Floor)",
+   "survives": false,
+   "score": 6,
+   "votes": 1,
+   "merged": false
+  },
+  {
+   "title": "The Watch Panel as the Only Accept Button",
+   "survives": false,
+   "score": 5,
+   "votes": 0,
+   "merged": true
+  },
+  {
+   "title": "Shot ledger: pass cells to tracker version as one content-addressed tile tree",
+   "survives": false,
+   "score": 7,
+   "votes": 0,
+   "merged": true
+  },
+  {
+   "title": "Change-tracked multi-pass verification with instant replay",
+   "survives": false,
+   "score": 6,
+   "votes": 0,
+   "merged": true
+  },
+  {
+   "title": "Shot-as-tile release 1: pass rows under input-closure identity, assembled only from promoted rows, reported as the well",
+   "survives": false,
+   "score": 8,
+   "votes": 0,
+   "merged": true
+  },
+  {
+   "title": "The Below-the-Floor Shot Kit",
+   "survives": false,
+   "score": 6,
+   "votes": 0,
+   "merged": true
+  }
+ ]
+}

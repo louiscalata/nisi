@@ -1,0 +1,68 @@
+{
+  "schemaVersion": 1,
+  "status": "PASS_SCOPED",
+  "scope": "Reviewed fixed Node fixture through an owned async executor and the Nisi engine; not combined Swift/Node or native app acceptance",
+  "portable": {
+    "command": "npm",
+    "args": [
+      "run",
+      "check"
+    ],
+    "exitCode": 0,
+    "tests": 446,
+    "pass": 446,
+    "fail": 0,
+    "skipped": 0,
+    "cancelled": 0,
+    "durationMs": 8048,
+    "evidence": {
+      "path": "/Users/louiscalata/nisi-next-private/.build/node-behavior-PC8y5c/check-7oZTc4/portable.json",
+      "sha256": "be526ac02c4e183f0bfc4b6e288a9e56f3e3514610a515841fea4ca5a58d30f4"
+    }
+  },
+  "focused": {
+    "command": "/usr/local/bin/node",
+    "args": [
+      "--test",
+      "tests/node-suite.test.mjs",
+      "tests/node-executor.test.mjs"
+    ],
+    "exitCode": 0,
+    "tests": 47,
+    "pass": 47,
+    "fail": 0,
+    "skipped": 0,
+    "cancelled": 0,
+    "durationMs": 2615,
+    "evidence": {
+      "path": "/Users/louiscalata/nisi-next-private/.build/node-behavior-PC8y5c/check-7oZTc4/focused.json",
+      "sha256": "d4ef7cd928c9df9e4b5af84c7b7099c5f6d744514b235c056d94739b68c3038e"
+    }
+  },
+  "mutations": {
+    "detected": 23,
+    "planned": 23,
+    "exhaustive": false
+  },
+  "sourceFiles": 47,
+  "priorUnchanged": 41,
+  "freeze": {
+    "status": "PASS_SOURCE_FREEZE_ONLY",
+    "files": 225,
+    "totalBytes": 8027242,
+    "excluded": [],
+    "originRechecked": false,
+    "integrationVerified": false,
+    "legalClearance": false
+  },
+  "native": {
+    "fixedSwiftSuite": "NOT_RERUN; preceding 23/23 retained on unchanged source",
+    "application": "NOT_RUN"
+  },
+  "fullMergerComplete": false,
+  "published": false,
+  "finalReceipt": {
+    "path": "/Users/louiscalata/nisi-next-private/.build/node-behavior-PC8y5c/final-receipt.json",
+    "sha256": "7045234d82a0026d1d3785921033316bbf1afea386354a191e11480d23ee5ccf"
+  }
+}

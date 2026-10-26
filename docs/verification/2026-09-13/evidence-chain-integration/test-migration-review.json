@@ -1,0 +1,430 @@
+{
+  "tests": [
+    {
+      "kind": "test",
+      "source": "docs/verification/2026-09-13/evidence-chain-integration/preflight-tests/native-canary-summary.test.mjs",
+      "target": "tests/native-canary-summary.test.mjs",
+      "workOrderOriginal": "work-orders/native-canary-summary/tests/summary.test.mjs",
+      "preflightEditCount": 4,
+      "sourceSha256": "438d4b3240895525f0fd0bb51f0f1cbe1e86de8dfa847f358aa734025c3e8aaa",
+      "beforeSha256": null,
+      "beforeExists": false,
+      "workOrderOriginalSha256": "f962cf97846f793ab8334fcd35e3696407a4bd1e2ea46ea9e1ec517a28511825",
+      "afterSha256": "438d4b3240895525f0fd0bb51f0f1cbe1e86de8dfa847f358aa734025c3e8aaa",
+      "matchesPreflightBytes": true,
+      "pathOnlyOrDroppedPinOnly": true,
+      "pathSubstitutions": [
+        {
+          "originalLine": 4,
+          "from": "../src/native-canary-summary.mjs",
+          "to": "../hosts/macos-xpc/native-canary-summary.mjs",
+          "occurrences": 1
+        },
+        {
+          "originalLine": 6,
+          "from": "../fixtures/inherit-run-service-raw.json",
+          "to": "./fixtures/native-canary/inherit-run-service-raw.json",
+          "occurrences": 1
+        },
+        {
+          "originalLine": 7,
+          "from": "../fixtures/inherit-run-node.stdout",
+          "to": "./fixtures/native-canary/inherit-run-node.stdout",
+          "occurrences": 1
+        },
+        {
+          "originalLine": 136,
+          "from": "../src/native-canary-summary.mjs",
+          "to": "../hosts/macos-xpc/native-canary-summary.mjs",
+          "occurrences": 1
+        }
+      ],
+      "droppedFrozenCopyPins": [],
+      "verifiedEditCount": 4,
+      "diff": "docs/verification/2026-09-13/evidence-chain-integration/native-canary-summary.test.mjs.diff",
+      "diffSha256": "de16093ff196085847646a97d406577fa29cbc2e7a3c9e64c15118869a15d0c1"
+    },
+    {
+      "kind": "test",
+      "source": "docs/verification/2026-09-13/evidence-chain-integration/preflight-tests/native-canary-summary-baseline.test.mjs",
+      "target": "tests/native-canary-summary-baseline.test.mjs",
+      "workOrderOriginal": "work-orders/native-canary-summary/tests/baseline.test.mjs",
+      "preflightEditCount": 6,
+      "sourceSha256": "1cfdb066f5a451bc31bf79dadafc53fe2bbc2e44f9f8af60fa2db6e207842a23",
+      "beforeSha256": null,
+      "beforeExists": false,
+      "workOrderOriginalSha256": "0f9c6f84db51f323ebca91b839c9b545b6e6f74b8abc1177b9fae4323238f716",
+      "afterSha256": "1cfdb066f5a451bc31bf79dadafc53fe2bbc2e44f9f8af60fa2db6e207842a23",
+      "matchesPreflightBytes": true,
+      "pathOnlyOrDroppedPinOnly": true,
+      "pathSubstitutions": [
+        {
+          "originalLine": 5,
+          "from": "../src/native-canary-summary.mjs",
+          "to": "../hosts/macos-xpc/native-canary-summary.mjs",
+          "occurrences": 1
+        },
+        {
+          "originalLine": 11,
+          "from": "../fixtures/inherit-run-service-raw.json",
+          "to": "./fixtures/native-canary/inherit-run-service-raw.json",
+          "occurrences": 1
+        },
+        {
+          "originalLine": 12,
+          "from": "../fixtures/inherit-run-node.stdout",
+          "to": "./fixtures/native-canary/inherit-run-node.stdout",
+          "occurrences": 1
+        },
+        {
+          "originalLine": 16,
+          "from": "../package.json",
+          "to": "./fixtures/native-canary-summary-package.json",
+          "occurrences": 1
+        }
+      ],
+      "droppedFrozenCopyPins": [
+        {
+          "originalLine": 9,
+          "frozenPath": "../src/native-canary-adapter.mjs",
+          "frozenSha256": "ac9c9cfaacfad91a27f08d2daee461b1f0580892509dc76693ccd36bd35a5c8f"
+        },
+        {
+          "originalLine": 10,
+          "frozenPath": "../src/native-canary-adjudicator.mjs",
+          "frozenSha256": "cf875eaa7adf335ceab49ae16f9941e2d9b5b9780f5ca15c22eea4c97405de00"
+        }
+      ],
+      "verifiedEditCount": 6,
+      "diff": "docs/verification/2026-09-13/evidence-chain-integration/native-canary-summary-baseline.test.mjs.diff",
+      "diffSha256": "6c3b15df955738bd1a804f8b2e888c94583ed34883a941e4ead4bbe386e131ff"
+    },
+    {
+      "kind": "test",
+      "source": "docs/verification/2026-09-13/evidence-chain-integration/preflight-tests/fixed-run-journal-entry.test.mjs",
+      "target": "tests/fixed-run-journal-entry.test.mjs",
+      "workOrderOriginal": "work-orders/fixed-run-journal-entry/tests/entry.test.mjs",
+      "preflightEditCount": 5,
+      "sourceSha256": "2f28c6a1d5834049d33a454ef24a4d5242eda723ce106359d2dcc357568325c4",
+      "beforeSha256": null,
+      "beforeExists": false,
+      "workOrderOriginalSha256": "89a0a0e06fba80deccb074f9096b0cdc91b6256ce295b73db4803d80aaf6a320",
+      "afterSha256": "2f28c6a1d5834049d33a454ef24a4d5242eda723ce106359d2dcc357568325c4",
+      "matchesPreflightBytes": true,
+      "pathOnlyOrDroppedPinOnly": true,
+      "pathSubstitutions": [
+        {
+          "originalLine": 4,
+          "from": "../src/fixed-run-journal-entry.mjs",
+          "to": "../history/fixed-run-journal-entry.mjs",
+          "occurrences": 1
+        },
+        {
+          "originalLine": 5,
+          "from": "../src/run-journal-v1.mjs",
+          "to": "../history/run-journal-v1.mjs",
+          "occurrences": 1
+        },
+        {
+          "originalLine": 7,
+          "from": "../fixtures/${name}.json",
+          "to": "./fixtures/fixed-run/${name}.json",
+          "occurrences": 1
+        },
+        {
+          "originalLine": 295,
+          "from": "../src/fixed-run-journal-entry.mjs",
+          "to": "../history/fixed-run-journal-entry.mjs",
+          "occurrences": 1
+        },
+        {
+          "originalLine": 299,
+          "from": "../src/fixed-run-journal-entry.mjs",
+          "to": "../history/fixed-run-journal-entry.mjs",
+          "occurrences": 1
+        }
+      ],
+      "droppedFrozenCopyPins": [],
+      "verifiedEditCount": 5,
+      "diff": "docs/verification/2026-09-13/evidence-chain-integration/fixed-run-journal-entry.test.mjs.diff",
+      "diffSha256": "8465712a607c4b67a8d1fdaa371401c9fab81c8ab184d2337a768ede2e608805"
+    },
+    {
+      "kind": "test",
+      "source": "docs/verification/2026-09-13/evidence-chain-integration/preflight-tests/fixed-run-journal-entry-baseline.test.mjs",
+      "target": "tests/fixed-run-journal-entry-baseline.test.mjs",
+      "workOrderOriginal": "work-orders/fixed-run-journal-entry/tests/baseline.test.mjs",
+      "preflightEditCount": 7,
+      "sourceSha256": "00f26ae85558cfd634c7cd329cae4b3dfe2d18bd3495cb329613a0ea877d49b4",
+      "beforeSha256": null,
+      "beforeExists": false,
+      "workOrderOriginalSha256": "463ee3bf36b4584e4bc8af88b6ab37029b75bd823a95cc31847da804afdd5bfa",
+      "afterSha256": "00f26ae85558cfd634c7cd329cae4b3dfe2d18bd3495cb329613a0ea877d49b4",
+      "matchesPreflightBytes": true,
+      "pathOnlyOrDroppedPinOnly": true,
+      "pathSubstitutions": [
+        {
+          "originalLine": 5,
+          "from": "../src/fixed-run-journal-entry.mjs",
+          "to": "../history/fixed-run-journal-entry.mjs",
+          "occurrences": 1
+        },
+        {
+          "originalLine": 10,
+          "from": "../fixtures/summary-",
+          "to": "./fixtures/fixed-run/summary-",
+          "occurrences": 1
+        },
+        {
+          "originalLine": 11,
+          "from": "../fixtures/summary-",
+          "to": "./fixtures/fixed-run/summary-",
+          "occurrences": 1
+        },
+        {
+          "originalLine": 12,
+          "from": "../fixtures/summary-",
+          "to": "./fixtures/fixed-run/summary-",
+          "occurrences": 1
+        },
+        {
+          "originalLine": 13,
+          "from": "../fixtures/summary-",
+          "to": "./fixtures/fixed-run/summary-",
+          "occurrences": 1
+        },
+        {
+          "originalLine": 17,
+          "from": "../package.json",
+          "to": "./fixtures/fixed-run-journal-entry-package.json",
+          "occurrences": 1
+        }
+      ],
+      "droppedFrozenCopyPins": [
+        {
+          "originalLine": 9,
+          "frozenPath": "../src/run-journal-v1.mjs",
+          "frozenSha256": "dee9f490c091000b2560cd9464d945885e7f341091b87dde9ae4f2b7cdbd359e"
+        }
+      ],
+      "verifiedEditCount": 7,
+      "diff": "docs/verification/2026-09-13/evidence-chain-integration/fixed-run-journal-entry-baseline.test.mjs.diff",
+      "diffSha256": "8713fd79b33e8e66c3370bb87b41da40d374d56c2beb9f9c797243a518c2830e"
+    },
+    {
+      "kind": "test",
+      "source": "docs/verification/2026-09-13/evidence-chain-integration/preflight-tests/run-journal-store.test.mjs",
+      "target": "tests/run-journal-store.test.mjs",
+      "workOrderOriginal": "work-orders/run-journal-store/tests/run-journal-store.test.mjs",
+      "preflightEditCount": 1,
+      "sourceSha256": "f1caa70d02795044583ed1c872657970662f527afd1dee7eb788d31e59254360",
+      "beforeSha256": null,
+      "beforeExists": false,
+      "workOrderOriginalSha256": "304909a7275e04fd1af8d38a5ec16a21027e415c4cb6c4422d86dc8ec246969a",
+      "afterSha256": "f1caa70d02795044583ed1c872657970662f527afd1dee7eb788d31e59254360",
+      "matchesPreflightBytes": true,
+      "pathOnlyOrDroppedPinOnly": true,
+      "pathSubstitutions": [
+        {
+          "originalLine": 7,
+          "from": "../src/run-journal-store-v1.mjs",
+          "to": "../history/run-journal-store-v1.mjs",
+          "occurrences": 1
+        }
+      ],
+      "droppedFrozenCopyPins": [],
+      "verifiedEditCount": 1,
+      "diff": "docs/verification/2026-09-13/evidence-chain-integration/run-journal-store.test.mjs.diff",
+      "diffSha256": "b16be9a1a0a6a5115e3b9bb932e7962fe7a00d909480a40ccd8b170307046b63"
+    },
+    {
+      "kind": "test",
+      "source": "docs/verification/2026-09-13/evidence-chain-integration/preflight-tests/run-journal-store-baseline.test.mjs",
+      "target": "tests/run-journal-store-baseline.test.mjs",
+      "workOrderOriginal": "work-orders/run-journal-store/tests/baseline.test.mjs",
+      "preflightEditCount": 3,
+      "sourceSha256": "71e9a74adbfe349a75cf6f982aacf6ff496b1f2b4a829b25f5d71f1e09543fb5",
+      "beforeSha256": null,
+      "beforeExists": false,
+      "workOrderOriginalSha256": "f20367b8eaec8ccb58736fb36eaee393b55c8d89c21a104c6d3161f6787d8f76",
+      "afterSha256": "71e9a74adbfe349a75cf6f982aacf6ff496b1f2b4a829b25f5d71f1e09543fb5",
+      "matchesPreflightBytes": true,
+      "pathOnlyOrDroppedPinOnly": true,
+      "pathSubstitutions": [
+        {
+          "originalLine": 4,
+          "from": "../src/run-journal-store-v1.mjs",
+          "to": "../history/run-journal-store-v1.mjs",
+          "occurrences": 1
+        },
+        {
+          "originalLine": 7,
+          "from": "../package.json",
+          "to": "./fixtures/run-journal-store-package.json",
+          "occurrences": 1
+        },
+        {
+          "originalLine": 18,
+          "from": "../src/run-journal-store-v1.mjs",
+          "to": "../history/run-journal-store-v1.mjs",
+          "occurrences": 1
+        }
+      ],
+      "droppedFrozenCopyPins": [],
+      "verifiedEditCount": 3,
+      "diff": "docs/verification/2026-09-13/evidence-chain-integration/run-journal-store-baseline.test.mjs.diff",
+      "diffSha256": "3bbf86da9866658652a2e5c08ce605c7a34a732228d0b53faa8500061b18c856"
+    },
+    {
+      "kind": "test",
+      "source": "docs/verification/2026-09-13/evidence-chain-integration/preflight-tests/host-journal-bundle.test.mjs",
+      "target": "tests/host-journal-bundle.test.mjs",
+      "workOrderOriginal": "work-orders/host-journal-bundle/tests/bundle.test.mjs",
+      "preflightEditCount": 9,
+      "sourceSha256": "9973b1375f1aaa658796de6b482ff900069eccf0326bb8901213e69b116f4105",
+      "beforeSha256": null,
+      "beforeExists": false,
+      "workOrderOriginalSha256": "d830a9974edea06ffca4bba886dd89bce1bbcd0c45adccb4ec1d5e3d37f0ca48",
+      "afterSha256": "9973b1375f1aaa658796de6b482ff900069eccf0326bb8901213e69b116f4105",
+      "matchesPreflightBytes": true,
+      "pathOnlyOrDroppedPinOnly": true,
+      "pathSubstitutions": [
+        {
+          "originalLine": 4,
+          "from": "../src/host-journal-bundle.mjs",
+          "to": "../history/host-journal-bundle.mjs",
+          "occurrences": 1
+        },
+        {
+          "originalLine": 5,
+          "from": "../src/run-journal-v1.mjs",
+          "to": "../history/run-journal-v1.mjs",
+          "occurrences": 1
+        },
+        {
+          "originalLine": 6,
+          "from": "../src/run-journal-store-v1.mjs",
+          "to": "../history/run-journal-store-v1.mjs",
+          "occurrences": 1
+        },
+        {
+          "originalLine": 7,
+          "from": "../src/fixed-run-journal-entry.mjs",
+          "to": "../history/fixed-run-journal-entry.mjs",
+          "occurrences": 1
+        },
+        {
+          "originalLine": 8,
+          "from": "./memfs.mjs",
+          "to": "./helpers/memfs.mjs",
+          "occurrences": 1
+        },
+        {
+          "originalLine": 10,
+          "from": "../fixtures/summary-",
+          "to": "./fixtures/fixed-run/summary-",
+          "occurrences": 1
+        },
+        {
+          "originalLine": 11,
+          "from": "../fixtures/summary-",
+          "to": "./fixtures/fixed-run/summary-",
+          "occurrences": 1
+        },
+        {
+          "originalLine": 271,
+          "from": "../src/host-journal-bundle.mjs",
+          "to": "../history/host-journal-bundle.mjs",
+          "occurrences": 1
+        },
+        {
+          "originalLine": 277,
+          "from": "../src/host-journal-bundle.mjs",
+          "to": "../history/host-journal-bundle.mjs",
+          "occurrences": 1
+        }
+      ],
+      "droppedFrozenCopyPins": [],
+      "verifiedEditCount": 9,
+      "diff": "docs/verification/2026-09-13/evidence-chain-integration/host-journal-bundle.test.mjs.diff",
+      "diffSha256": "8eec0e6cf2928f359c73f18696a49dbe7afd48769780525150a5b3fa5d7caea4"
+    },
+    {
+      "kind": "test",
+      "source": "docs/verification/2026-09-13/evidence-chain-integration/preflight-tests/host-journal-bundle-baseline.test.mjs",
+      "target": "tests/host-journal-bundle-baseline.test.mjs",
+      "workOrderOriginal": "work-orders/host-journal-bundle/tests/baseline.test.mjs",
+      "preflightEditCount": 7,
+      "sourceSha256": "8930bb2bd82a4d8ac57ee30360a362e1a9714afbaf99f54b58a730ddab2ba962",
+      "beforeSha256": null,
+      "beforeExists": false,
+      "workOrderOriginalSha256": "35b9dcebb90370fed4bc9ef673e1feb26a5a5628ac809ba06662234ad5a45e4c",
+      "afterSha256": "8930bb2bd82a4d8ac57ee30360a362e1a9714afbaf99f54b58a730ddab2ba962",
+      "matchesPreflightBytes": true,
+      "pathOnlyOrDroppedPinOnly": true,
+      "pathSubstitutions": [
+        {
+          "originalLine": 5,
+          "from": "../src/host-journal-bundle.mjs",
+          "to": "../history/host-journal-bundle.mjs",
+          "occurrences": 1
+        },
+        {
+          "originalLine": 12,
+          "from": "../fixtures/summary-",
+          "to": "./fixtures/fixed-run/summary-",
+          "occurrences": 1
+        },
+        {
+          "originalLine": 13,
+          "from": "../fixtures/summary-",
+          "to": "./fixtures/fixed-run/summary-",
+          "occurrences": 1
+        },
+        {
+          "originalLine": 17,
+          "from": "../package.json",
+          "to": "./fixtures/host-journal-bundle-package.json",
+          "occurrences": 1
+        }
+      ],
+      "droppedFrozenCopyPins": [
+        {
+          "originalLine": 9,
+          "frozenPath": "../src/run-journal-v1.mjs",
+          "frozenSha256": "dee9f490c091000b2560cd9464d945885e7f341091b87dde9ae4f2b7cdbd359e"
+        },
+        {
+          "originalLine": 10,
+          "frozenPath": "../src/run-journal-store-v1.mjs",
+          "frozenSha256": "1356028b65f9f8b96e3b9ec8ba3bfbb4968092af53d00e8b5dfdb11b161f4792"
+        },
+        {
+          "originalLine": 11,
+          "frozenPath": "../src/fixed-run-journal-entry.mjs",
+          "frozenSha256": "ba888a4f4d5b1b78f799045e44fbdfe79b75545847ab9b3ed2673fd7b353585c"
+        }
+      ],
+      "verifiedEditCount": 7,
+      "diff": "docs/verification/2026-09-13/evidence-chain-integration/host-journal-bundle-baseline.test.mjs.diff",
+      "diffSha256": "431c42a5d2ceba1ff80ad3623c171544b4acb1d3ccaa93140a1ce54817fc4534"
+    }
+  ],
+  "helper": {
+    "kind": "helper",
+    "source": "work-orders/host-journal-bundle/tests/memfs.mjs",
+    "target": "tests/helpers/memfs.mjs",
+    "sourceSha256": "e202da18a120645ccdf6c51da48843f64ca90b6af48e87d3fdcb5cda0f9319c0",
+    "beforeSha256": null,
+    "beforeExists": false,
+    "afterSha256": "e202da18a120645ccdf6c51da48843f64ca90b6af48e87d3fdcb5cda0f9319c0",
+    "byteIdentical": true
+  },
+  "reusedStdoutFixture": {
+    "path": "tests/fixtures/native-canary/inherit-run-node.stdout",
+    "sha256": "51612e7ba818bfe7dd2a42d46e8c0cf8e84332d63f2562132842e9879bc3dddc",
+    "unchanged": true
+  },
+  "pathSubstitutionCount": 36,
+  "droppedFrozenCopyPinCount": 6
+}

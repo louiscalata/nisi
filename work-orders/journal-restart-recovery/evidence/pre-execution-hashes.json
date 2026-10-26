@@ -1,0 +1,38 @@
+[
+  {
+    "path": "package.json",
+    "sha256": "bae09eb137cb8196a85c870650b5a5dbceb5c5a0927fb0010cd6d4a5cb0d28f5"
+  },
+  {
+    "path": "roadmap.md",
+    "sha256": "1df4cdafd6a881f1d7187b5bbfc6c0d76928239d0c8d1767adfc9fb5763a1bca"
+  },
+  {
+    "path": "tests/baseline.test.mjs",
+    "sha256": "8bdac4ab81a98d74a8cd62d6579a7b07f0f384810b6f87d97fa4857511152e06"
+  },
+  {
+    "path": "tests/recovery.test.mjs",
+    "sha256": "2b0c909de25f237d59c2fae743012ee47fbe78e22bbbfc12ff6ce71f4b9e8507"
+  },
+  {
+    "path": "fixtures/worker-cli.mjs",
+    "sha256": "8cd02b64f3aed158c77b34d9a6fe8c2fa7aaf3de36a2c61dfaa0b88d990aff1d"
+  },
+  {
+    "path": "frozen/run-journal-v1.mjs",
+    "sha256": "dee9f490c091000b2560cd9464d945885e7f341091b87dde9ae4f2b7cdbd359e"
+  },
+  {
+    "path": "frozen/run-journal-store-v1.mjs",
+    "sha256": "1356028b65f9f8b96e3b9ec8ba3bfbb4968092af53d00e8b5dfdb11b161f4792"
+  },
+  {
+    "path": "src/recovery-worker.mjs",
+    "sha256": "165c5fb4c1df668155f2809509347cb9a4cc0ac89793560fb640e636a78d2ccf"
+  },
+  {
+    "path": ".packets/nisi-journal-restart-recovery.packet.md",
+    "sha256": "59017c2db68e0887f24caa28f929312af06ac154fe2675413e035fba1f31e69d"
+  }
+]

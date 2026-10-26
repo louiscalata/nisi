@@ -1,0 +1,92 @@
+{
+  "verdict": "FAIL",
+  "issues": [
+    "Scanner test never asserts the sha256 of a regular file. rows[0] (CACHEDIR.TAG, content 'wrong') only has bytes checked; sha256 is unasserted, and the final refuse() passes regardless of hash value. A collect() mutant that emits sha256:null (or hashes the wrong content/path) for files passes the oracle, so the 'sha256:file hash' contract clause is untested. Add assert.equal(rows[0].sha256, createHash('sha256').update('wrong').digest('hex')).",
+    "Accessor rejection is only exercised on the top-level object ({get hidden()}). No test defines a getter on an entry (e.g. Object.defineProperty(input.hidden[0],'bytes',{get(){reads++;return 10}})) or on the arrays, so 'reject accessors before property reads' is unverified for nested data; an implementation that reads entry fields directly would pass.",
+    "Traversal root is only implicit: the test relies on 'outside/' at importedRoot never appearing in rows, i.e. collect must scan frozenPackage only, but the contract text only says 'read-only fs traversal'. If the intended root were importedRoot the deepEqual would fail for a correct implementation; the contract should state the traversal root explicitly."
+  ],
+  "invocation_status": "succeeded",
+  "status": "FAIL",
+  "model_usage": {
+    "claude-haiku-4-5-20251001": {
+      "inputTokens": 3335,
+      "outputTokens": 15,
+      "cacheReadInputTokens": 0,
+      "cacheCreationInputTokens": 0,
+      "webSearchRequests": 0,
+      "costUSD": 0.00341,
+      "contextWindow": 200000,
+      "maxOutputTokens": 32000,
+      "thinkingTokens": 0,
+      "canonicalModel": "claude-haiku-4-5",
+      "provider": "firstParty",
+      "costBasis": "list"
+    },
+    "claude-fable-5-1": {
+      "inputTokens": 2,
+      "outputTokens": 3291,
+      "cacheReadInputTokens": 626,
+      "cacheCreationInputTokens": 4070,
+      "webSearchRequests": 0,
+      "costUSD": 0.2461265,
+      "contextWindow": 1000000,
+      "maxOutputTokens": 64000,
+      "thinkingTokens": 2792,
+      "canonicalModel": "claude-fable-5-1",
+      "provider": "firstParty",
+      "costBasis": "list"
+    }
+  },
+  "reported_models": [
+    "claude-haiku-4-5-20251001",
+    "claude-fable-5-1"
+  ],
+  "usage": {
+    "input_tokens": 2,
+    "cache_creation_input_tokens": 4070,
+    "cache_read_input_tokens": 626,
+    "output_tokens": 3291,
+    "output_tokens_details": {
+      "thinking_tokens": 2792
+    },
+    "server_tool_use": {
+      "web_search_requests": 0,
+      "web_fetch_requests": 0
+    },
+    "service_tier": "standard",
+    "cache_creation": {
+      "ephemeral_1h_input_tokens": 4070,
+      "ephemeral_5m_input_tokens": 0
+    },
+    "inference_geo": "not_available",
+    "iterations": [
+      {
+        "input_tokens": 2,
+        "output_tokens": 3291,
+        "cache_read_input_tokens": 626,
+        "cache_creation_input_tokens": 4070,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 4070
+        },
+        "type": "message",
+        "model": null
+      }
+    ],
+    "speed": "standard"
+  },
+  "total_cost_usd": 0.2495365,
+  "duration_ms": 40827,
+  "tools_enabled": false,
+  "session_persisted": false,
+  "write_owner": "codex",
+  "requested_model": "claude-fable-5-1",
+  "mode": "review",
+  "attempts": 1,
+  "wall_seconds": 41.805,
+  "created_at": "2026-09-19T00:10:58.119348+00:00",
+  "prior_attempts": [],
+  "total_wall_seconds": 41.806,
+  "prior_attempt_usage": [],
+  "total_usage_complete": true
+}

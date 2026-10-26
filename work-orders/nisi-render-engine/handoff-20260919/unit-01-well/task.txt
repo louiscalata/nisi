@@ -1,0 +1,35 @@
+Write a self-contained Python 3 module implementing a "well": the per-layer state machine of a layered render engine, in the style of Tetris rows. Standard library only (enum is fine). No I/O, no printing, no threads, no classes beyond the ones named here.
+
+Public API (names and behaviour are exercised by immutable acceptance tests):
+
+class RowState(Enum) with members OPEN="open", FULL="full", CHECKING="checking", PASSED="passed", CLEARED="cleared", QUARANTINED="quarantined".
+
+class WellError(Exception): raised for every invalid call listed below.
+
+class Well:
+  Well(layers, tiles, deps=None, is_hole=None, max_reopens=2)
+    layers: ordered bottom-up list of unique non-empty layer names. tiles: list of unique tile names (the columns). An empty list or a duplicate name -> WellError. Expose them as attributes .layers and .tiles (lists, in the given order).
+    deps: optional mapping layer -> iterable of layers it directly depends on. None means a strict bottom-up chain: layers[i] depends on layers[i-1] and layers[0] depends on nothing. When a mapping is given, layers absent from it depend on nothing. deps may form any DAG, including shared dependencies (diamonds: two layers depending on the same layer, and a layer depending on both of them); only a true cycle is rejected. Unknown names, self-dependency or any cycle -> WellError.
+    is_hole: callable(str) -> bool deciding whether a placed output counts as a hole. Default: the text is empty or whitespace-only, or contains "TODO".
+    max_reopens: a row may be re-opened this many times; the next re-open quarantines it.
+  Every row starts OPEN with every tile empty. An empty cell (never placed, or blanked by a failed check or a re-open) is ALWAYS a hole regardless of is_hole; is_hole is applied only to placed output text. Each cell records its output text and a source label.
+
+  state(layer) -> RowState.  deps(layer) -> set of direct dependencies.  dependents(layer) -> list of all transitive dependents, in layers order.  reopens(layer) -> int.  holes(layer) -> list of tiles, in tiles order, that are empty or whose output is a hole.  An unknown layer or tile in ANY method (including begin_check, report_check, reopen, reopens, deps) -> WellError, never KeyError.
+
+  place(layer, tile, output, source) -> RowState: allowed only while the row is OPEN or FULL (CHECKING, PASSED, CLEARED, QUARANTINED -> WellError). Records the cell, then the row is FULL if every tile holds a non-hole output, otherwise OPEN. Returns the row's new state.
+
+  begin_check(layer): FULL -> CHECKING; any other state -> WellError.
+
+  report_check(layer, validity, quality, failed_tiles=()) -> RowState: only from CHECKING, else WellError.
+    Pass (validity and quality both true): the row becomes PASSED, then promotion repeats until nothing changes: every PASSED row whose direct dependencies are all CLEARED becomes CLEARED (so one clear can cascade into several rows). Returns the row's resulting state.
+    Fail: the row becomes OPEN and the named failed_tiles are blanked (their output removed, so they are holes again); if failed_tiles is empty, every tile of the row is blanked.
+
+  reopen(layer, tiles, reason) -> RowState: a veto against a CLEARED or PASSED row (any other state -> WellError). Increments the row's re-open count; if the count now exceeds max_reopens the row becomes QUARANTINED (content kept, nothing else changes). Otherwise the named tiles are blanked (all tiles if none named), the row becomes OPEN, and every transitive dependent that is CHECKING, PASSED or CLEARED drops to FULL with its content intact (its verdict is invalidated, so a later report_check for it raises WellError because it is no longer CHECKING). Dependents already OPEN or FULL are untouched.
+
+  height() -> number of rows that are not CLEARED.  done() -> True when every row is CLEARED.  stuck() -> True when any row is QUARANTINED.
+
+  snapshot() -> plain dict: {"layers": [...], "tiles": [...], "rows": {layer: {"state": <the RowState value string>, "reopens": int, "cells": {tile: {"source": str or None, "hole": bool}}}}}.
+
+Tests are appended below the module in the same file, so never import the module by a name such as solution; refer to Well, RowState and WellError directly.
+
+Keep it deterministic and simple.

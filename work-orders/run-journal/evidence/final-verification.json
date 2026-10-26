@@ -1,0 +1,61 @@
+{
+  "outcome": "BLOCKED",
+  "itemStatus": "FAILED",
+  "sourceIsPlaceholder": true,
+  "sourceWritesObserved": 0,
+  "tier": "local",
+  "requestedRoute": "lmstudio/qwen/qwen3.8-27b",
+  "elapsedSecondsByAttempt": [
+    619.008,
+    666.018,
+    604.569
+  ],
+  "totalPacketElapsedSeconds": 1889.595,
+  "checks": {
+    "baseline": {
+      "exit": 0,
+      "elapsedSeconds": 0.132,
+      "tests": 2,
+      "pass": 2,
+      "fail": 0,
+      "cancelled": 0,
+      "skipped": 0
+    },
+    "journal": {
+      "exit": 1,
+      "elapsedSeconds": 0.134,
+      "tests": 18,
+      "pass": 0,
+      "fail": 18,
+      "cancelled": 0,
+      "skipped": 0
+    }
+  },
+  "protectedUnchanged": {
+    "tests/run-journal.test.mjs": true,
+    "tests/baseline.test.mjs": true,
+    "package.json": true
+  },
+  "sha256": {
+    ".packets/nisi-run-journal.packet.md": "3a97daea6e19e964ada329c3b8ef9f0ed487b3e2dcf45451f5af934ee69cd849",
+    "tests/run-journal.test.mjs": "25355f0d280a262243f1fe707fd4e0de5fc795926ce37d910c40a12721390c6d",
+    "tests/baseline.test.mjs": "adb784891764841fe628e00b0aa9d9fdf025035e659aaacdedd766cafa81b8d3",
+    "src/run-journal-v1.mjs": "c9a4cc003509d25ec798f80233c0460e89f52ec6df7e454e4133139df65d96a5",
+    "package.json": "bf9426c4d4d00fb0c449ad92855437e48217a163d313de361393b81ed7410a9a",
+    "evidence/packet-reference-candidate.txt": "dee9f490c091000b2560cd9464d945885e7f341091b87dde9ae4f2b7cdbd359e",
+    "scripts/test-history-mutants.mjs": "f318bb8ec2ff3e11a7827e548e49efbf2d582719e64ffd334d4eb375cce4bc35"
+  },
+  "referenceOnlyValidation": {
+    "contract": {
+      "pass": 18,
+      "fail": 0
+    },
+    "ownerProbes": {
+      "pass": 7,
+      "fail": 0
+    }
+  },
+  "persistedReopenActualSource": "NOT_RUN: source is placeholder",
+  "historyMutantsActualSource": "NOT_RUN: source is placeholder",
+  "claudeCodeReview": "NOT_RUN: budget cap, no usable verdict"
+}

@@ -11,14 +11,14 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import fs from 'node:fs';
-import os from 'node:os';
+import { ownedTemp } from './helpers/owned-temp.mjs';
 import path from 'node:path';
 import { createHash } from 'node:crypto';
 import { canonicalizeJSONV1 } from '../canonical/canonical-json-v1.mjs';
 import { createContentConsent, CONTENT_CONSENT_LIMITS, ALLOWED_CONTENT_KINDS } from '../gate/content-consent.mjs';
 
 const sha = b => createHash('sha256').update(b).digest('hex');
-const tempRoot = () => fs.realpathSync(fs.mkdtempSync(path.join(os.tmpdir(), 'consent-')));
+const tempRoot = t => ownedTemp(t, 'consent-');
 
 function declaration(scopeRoot, overrides = {}) {
   return {
@@ -51,8 +51,8 @@ function write(root, name, contents) {
   return file;
 }
 
-test('a grant must be presented as canonical bytes', () => {
-  const root = tempRoot();
+test('a grant must be presented as canonical bytes', t => {
+  const root = tempRoot(t);
   const value = declaration(root);
   assert.equal(createContentConsent(JSON.stringify(value), { clock: () => 0 }).code, 'CONSENT_BYTES_REFUSED');
   assert.equal(createContentConsent(Buffer.alloc(0), { clock: () => 0 }).code, 'CONSENT_BYTES_REFUSED');
@@ -65,8 +65,8 @@ test('a grant must be presented as canonical bytes', () => {
   assert.equal(createContentConsent(Buffer.from('not json', 'utf8'), { clock: () => 0 }).code, 'CONSENT_NONCANONICAL');
 });
 
-test('a grant is refused unless every declared boundary is the boundary', () => {
-  const root = tempRoot();
+test('a grant is refused unless every declared boundary is the boundary', t => {
+  const root = tempRoot(t);
   const refusals = [
     { destination: 'PRIVATE_CLOUD_COMPUTE' },
     { networkEgress: true },
@@ -98,8 +98,8 @@ test('a grant is refused unless every declared boundary is the boundary', () => 
   assert.equal(createContentConsent(bytesOf(long), { clock: () => 0 }).code, 'CONSENT_DECLARATION_REFUSED');
 });
 
-test('a valid grant admits content inside its scope and returns the file, not the caller claim', () => {
-  const root = tempRoot();
+test('a valid grant admits content inside its scope and returns the file, not the caller claim', t => {
+  const root = tempRoot(t);
   const grant = grantOf(root);
   const file = write(root, 'a.json', '{"hello":"world"}');
   const out = grant.admitContent({ filePath: file, kind: 'json' });
@@ -116,18 +116,20 @@ test('a valid grant admits content inside its scope and returns the file, not th
   assert.equal(grant.status().admittedItems, 1);
 });
 
-test('scope is a path boundary, not a string prefix', () => {
-  const root = tempRoot();
+test('scope is a path boundary, not a string prefix', t => {
+  const parent = tempRoot(t);
+  const root = path.join(parent, 'scope');
   const sibling = `${root}-evil`;
+  fs.mkdirSync(root);
   fs.mkdirSync(sibling);
   const grant = grantOf(root);
   const smuggled = write(sibling, 'a.json', '{"secret":true}');
   assert.equal(grant.admitContent({ filePath: smuggled, kind: 'json' }).code, 'CONTENT_OUT_OF_SCOPE');
 });
 
-test('a symlink cannot carry content across the boundary', () => {
-  const root = tempRoot();
-  const outside = tempRoot();
+test('a symlink cannot carry content across the boundary', t => {
+  const root = tempRoot(t);
+  const outside = tempRoot(t);
   const grant = grantOf(root);
   const target = write(outside, 'secret.json', '{"secret":true}');
   const link = path.join(root, 'innocent.json');
@@ -141,8 +143,8 @@ test('a symlink cannot carry content across the boundary', () => {
   assert.equal(grant.status().admittedItems, 0);
 });
 
-test('each item is checked on its own terms', () => {
-  const root = tempRoot();
+test('each item is checked on its own terms', t => {
+  const root = tempRoot(t);
   const grant = grantOf(root);
   const cases = [
     [{ filePath: write(root, 'a.md', '# hi'), kind: 'markdown' }, 'CONTENT_KIND_REFUSED'],
@@ -169,8 +171,8 @@ test('each item is checked on its own terms', () => {
   assert.equal(grant.status().admittedItems, 0);
 });
 
-test('a grant does not outlive its declared lifetime', () => {
-  const root = tempRoot();
+test('a grant does not outlive its declared lifetime', t => {
+  const root = tempRoot(t);
   let now = 1000;
   const grant = grantOf(root, { lifetimeMs: 500 }, () => now);
   const item = { filePath: write(root, 'a.json', '{}'), kind: 'json' };
@@ -183,8 +185,8 @@ test('a grant does not outlive its declared lifetime', () => {
   assert.equal(grant.status().refusalIfNotLive, 'CONSENT_EXPIRED');
 });
 
-test('a clock that moves backwards is refused, not trusted', () => {
-  const root = tempRoot();
+test('a clock that moves backwards is refused, not trusted', t => {
+  const root = tempRoot(t);
   let now = 5000;
   const grant = grantOf(root, {}, () => now);
   const item = { filePath: write(root, 'a.json', '{}'), kind: 'json' };
@@ -194,8 +196,8 @@ test('a clock that moves backwards is refused, not trusted', () => {
   assert.equal(grant.admitContent(item).code, 'CONSENT_CLOCK_INVALID');
 });
 
-test('revocation is immediate and terminal', () => {
-  const root = tempRoot();
+test('revocation is immediate and terminal', t => {
+  const root = tempRoot(t);
   const grant = grantOf(root);
   const item = { filePath: write(root, 'a.json', '{}'), kind: 'json' };
   assert.equal(grant.admitContent(item).ok, true);
@@ -206,8 +208,8 @@ test('revocation is immediate and terminal', () => {
   assert.equal(grant.status().live, false);
 });
 
-test('a grant reports what it is and claims nothing more', () => {
-  const root = tempRoot();
+test('a grant reports what it is and claims nothing more', t => {
+  const root = tempRoot(t);
   const made = make(root);
   const status = made.grant.status();
   assert.equal(status.consentClass, 'WRITTEN_DECLARATION');
@@ -224,11 +226,11 @@ test('a grant reports what it is and claims nothing more', () => {
   assert.notEqual(make(root, { maxContentBytes: 4095 }).consentDigest, made.consentDigest);
 });
 
-test('the declared limits are the module constants, not per-call opinions', () => {
+test('the declared limits are the module constants, not per-call opinions', t => {
   assert.deepEqual(ALLOWED_CONTENT_KINDS, ['json', 'markdown', 'text']);
   assert.equal(Object.isFrozen(ALLOWED_CONTENT_KINDS), true);
   assert.equal(Object.isFrozen(CONTENT_CONSENT_LIMITS), true);
-  const root = tempRoot();
+  const root = tempRoot(t);
   assert.equal(createContentConsent(bytesOf(declaration(root)), { clock: () => 0, extra: 1 }).code,
     'CONFIGURATION_REFUSED');
   assert.equal(createContentConsent(bytesOf(declaration(root)), { clock: 'noon' }).code, 'CONFIGURATION_REFUSED');
@@ -238,8 +240,8 @@ test('the declared limits are the module constants, not per-call opinions', () =
     'CONSENT_CLOCK_INVALID');
 });
 
-test('the consent digest is pinned to its v1 domain string', () => {
-  const root = tempRoot();
+test('the consent digest is pinned to its v1 domain string', t => {
+  const root = tempRoot(t);
   const grantBytes = bytesOf(declaration(root));
   const made = createContentConsent(grantBytes, { clock: () => 0 });
   // The digest is sha256("nisi/content-consent/v1" NUL canonical-grant-bytes).
@@ -249,8 +251,8 @@ test('the consent digest is pinned to its v1 domain string', () => {
   assert.equal(made.consentDigest, expected);
 });
 
-test('later clock failures are named refusals and status samples the clock once', () => {
-  const root = tempRoot(), filePath = write(root, 'clock.txt', 'clock');
+test('later clock failures are named refusals and status samples the clock once', t => {
+  const root = tempRoot(t), filePath = write(root, 'clock.txt', 'clock');
   for (const operation of ['admitContent', 'status']) {
     let calls = 0;
     const grant = grantOf(root, {}, () => { if (calls++ === 0) return 0; throw new Error('clock exploded'); });
@@ -270,8 +272,8 @@ test('later clock failures are named refusals and status samples the clock once'
   assert.equal(grant.status().refusalIfNotLive, 'CONSENT_EXPIRED');
 });
 
-test('a final-component replacement after validation is refused before content is returned', () => {
-  const root = tempRoot(), outside = tempRoot();
+test('a final-component replacement after validation is refused before content is returned', t => {
+  const root = tempRoot(t), outside = tempRoot(t);
   const filePath = write(root, 'safe.txt', 'PUBLIC');
   const secret = write(outside, 'secret.txt', 'SECRET');
   const grant = grantOf(root);
@@ -291,8 +293,8 @@ test('a final-component replacement after validation is refused before content i
   } finally { fs.lstatSync = original; }
 });
 
-test('file kind is a declared label; the v1 policy does not parse JSON content', () => {
-  const root = tempRoot();
+test('file kind is a declared label; the v1 policy does not parse JSON content', t => {
+  const root = tempRoot(t);
   const filePath = write(root, 'label.txt', 'plain UTF-8, not JSON');
   const result = grantOf(root).admitContent({ filePath, kind: 'json' });
   assert.equal(result.ok, true);

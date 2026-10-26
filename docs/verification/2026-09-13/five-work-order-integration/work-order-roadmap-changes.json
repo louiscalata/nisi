@@ -1,0 +1,27 @@
+[
+  {
+    "path": "work-orders/native-probe-summary/roadmap.md",
+    "beforeSha256": "0db33d2b2d59701d31e2a65848dff2af7ec5c619b7c849d81dbc515938e20ef5",
+    "afterSha256": "7aeab937ece2393738198129800a74da2fe20445a0288699875dd4a8f8ade5f3"
+  },
+  {
+    "path": "work-orders/native-canary-adjudicator/roadmap.md",
+    "beforeSha256": "afd8d2b35e92df3a73343166e093ef3d21f2b2697eac583838675620b37b33ed",
+    "afterSha256": "f9b8fe5c760c5f0b917c78e9d41b1c9fc79f34d29f89cb4c52e6180f58da625e"
+  },
+  {
+    "path": "work-orders/native-canary-adapter/roadmap.md",
+    "beforeSha256": "b5e45cdca14353b72cc659fc3cf61a090cb4775749981e612fcc350558834b81",
+    "afterSha256": "5c7753446f65ce664b098e575759813c31426c5625ba55d6f22127bb4544aeff"
+  },
+  {
+    "path": "work-orders/native-chat-types/roadmap.md",
+    "beforeSha256": "4b26a55f4f6483c8354d043596835c2a6edd19fc39eb4a762e8a002de907c2c8",
+    "afterSha256": "c843ca091e3d6f50432b166fcf1b93bbb3ce848c351bd4e1d98e588b3cef4c84"
+  },
+  {
+    "path": "work-orders/run-journal/roadmap.md",
+    "beforeSha256": "5f98a7231d2ceb738583a0477dfcd9349acaaf9151c42f9669efe0e69f3142e7",
+    "afterSha256": "e7f3b6b203e1708d0dcc0a9c1477689619493ccc6fa928daffb28c0c70537db8"
+  }
+]

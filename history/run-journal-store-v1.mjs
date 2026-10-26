@@ -1,8 +1,5 @@
-// Copyright 2026 Louis Calata
-// SPDX-License-Identifier: Apache-2.0
-import { createHash, randomUUID } from 'node:crypto';
-import { dirname, sep } from 'node:path';
-import { reopen } from './run-journal-v1.mjs';
+import { createHash } from 'node:crypto';
+import { dirname } from 'node:path';
 
 const digest = bytes => createHash('sha256').update(bytes).digest('hex');
 const hex = value => typeof value === 'string' && /^[0-9a-f]{64}$/.test(value);
@@ -16,9 +13,6 @@ const validPath = path => typeof path === 'string' && path.length > 0 && !path.i
 const hasMethods = (fs, names) => fs != null && names.every(name => typeof fs[name] === 'function');
 const initial = () => ({ durable: false, committed: false, fsync: { file: false, directory: false }, fsyncErrors: { file: null, directory: null } });
 const refusal = (state, reason) => ({ ...state, status: 'REFUSED', reason, durable: false });
-// Windows needs a write-access directory handle for its flush; POSIX directories
-// reject a read/write open. A failed sync still reports durable: false.
-const directoryFlags = sep === '\\' ? 'r+' : 'r';
 
 function validJournal(serialized) {
   try {
@@ -46,8 +40,7 @@ function validJournal(serialized) {
     }
     const footer = values.at(-1);
     return exact(footer, ['type', 'count', 'lastHash']) && footer.type === 'footer'
-      && footer.count === values.length - 2 && footer.lastHash === previousHash
-      && reopen(serialized).report.status === 'COMPLETE';
+      && footer.count === values.length - 2 && footer.lastHash === previousHash;
   } catch {
     return false;
   }
@@ -105,9 +98,7 @@ export function writeSerializedJournal(options) {
     if (expectedPreviousSha256 === undefined) return refusal(state, 'CONFLICT');
   }
 
-  // Each attempt owns a distinct temp. A process killed before cleanup may leave
-  // its temp behind; the next attempt must not be blocked by that orphan.
-  const temp = path + '.' + sha256 + '.' + randomUUID() + '.tmp';
+  const temp = path + '.' + sha256 + '.tmp';
   let fd = null;
   let ownedTemp = false;
   const cleanup = () => {
@@ -161,7 +152,7 @@ export function writeSerializedJournal(options) {
 
   let directoryFd = null;
   try {
-    directoryFd = fs.openSync(dirname(path), directoryFlags);
+    directoryFd = fs.openSync(dirname(path), 'r');
     syncFile(fs, directoryFd, state, 'directory');
   } catch (error) {
     state.fsyncErrors.directory = errorCode(error);

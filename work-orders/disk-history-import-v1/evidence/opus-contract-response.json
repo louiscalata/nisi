@@ -1,0 +1,104 @@
+{
+  "summary": "Bounded critique of the disk\u2192fixed-XPC-history import contract against the supplied facts for captureRepositoryFromDisk and the history-permit APIs. Four concrete issues: (1) step 2 requires exact path validation before any FS call, but the only pinned path grammar lives inside the async reader (and the contract cites an undocumented createRepositorySnapshot); (2) the revoke surface and the \"PERMIT_REVOKED inside pre-record clock\" guarantee are not backed by the supplied permit facts, and the \"never CANCELLED after captureAttempted\" rule is implied but not stated; (3) single-file snapshot shape, serializedRecord derivation, sourceSha256/sourceBytes encoding and the reader-code allowlist are unspecified; (4) UNCERTAIN INTERNAL_ERROR with capture:null can discard an already-obtained synchronous capture result. Small implementation outline follows. No code executed; all points need verification against the real modules.",
+  "deliverable": "# Design critique: `importFixedXpcHistoryFromDisk` (bounded, evidence-only)\n\n## Issue 1 \u2014 Step 2 \"exact path validation before any clock/FS call\" has no pinned pure validator\nEvidence: the reader `captureRepositoryFromDisk` \"validates exact descriptor data, source path grammar\" \u2014 inside an async function that then stats/reads. The contract instead references `createRepositorySnapshot` for the accepted `relativePath` grammar, which is not in the supplied facts.\nConsequences:\n- If the wrapper re-implements the grammar, it drifts from the reader (two grammars, one authority) \u2014 the contract's own \"reuse rather than weaken\" rule is violated.\n- If the wrapper defers to the reader, a bad path surfaces at step 6/7 as a REFUSED reader-code (after clock + permit creation), not as `INVALID_SOURCE_SELECTION` at step 2, and `sourceReadAttempted` becomes true for a malformed selection.\nFix: name the actual exported pure validator (if `disk-capture.mjs` exposes one) and require step 2 to call it; otherwise narrow step 2 to structural checks (string, non-empty, no NUL, no `..`/leading `/`, \u2264 length bound) and explicitly state that grammar rejection by the reader maps to `REFUSED INVALID_SOURCE_SELECTION` via the allowlist, with `sourceReadAttempted:true`. Verification: confirm which pure validator the reader actually exports.\n\n## Issue 2 \u2014 Revocation semantics are asserted beyond the supplied permit facts\nEvidence: `createFixedXpcHistoryPermit` returns \"CREATED + empty frozen permit + declarationDigest\"; \"Revoke stops future admissions, cannot undo already-admitted writes\"; `captureFixedXpcHistory` is synchronous, runs \"finalclock\" and \"consumes immediately before record call\".\nGaps:\n- The permit is empty and frozen, so revoke cannot be a method on it. The contract never names the revoke surface (separate export? handle returned alongside `permit`?). Steps 5/6/10 depend on it.\n- \"If abort occurs inside the permit's pre-record clock, its exact PERMIT_REVOKED refusal is preserved\" requires that the permit checks revocation *after* finalclock and *before* consume. The supplied facts don't state this ordering; if the check precedes finalclock, the result would be an admitted write or a different reason.\n- Because capture is synchronous, abort can only arrive \"inside the record call\" through re-entrancy (the trusted `clock` or owner callback aborting the controller). Sticky `signal.aborted` is then true on return; the contract only says \"do not override an actual admitted write\". State the rule crisply: once `captureAttempted === true`, the outer status is never `CANCELLED`; it is always derived from the capture result (or UNCERTAIN INTERNAL_ERROR).\nFix: document the revoke handle, add \"revoke is idempotent and safe after consume\" as a required property, and make the post-captureAttempted rule explicit. Verification: read the permit module's finalclock\u2192revocation-check\u2192consume order; add the \"abort from inside clock\" and \"abort from inside record\" mutants already listed under Acceptance.\n\n## Issue 3 \u2014 Snapshot shape, `serializedRecord` derivation and reader-code allowlist are unspecified\nEvidence: reader returns frozen `{snapshot, capture}` with `snapshot.files[].content` as actual text and strict UTF-8 byte roundtrip; `captureFixedXpcHistory` takes `serializedRecord` and does its own \"source hash + 1MiB limit\".\nGaps:\n- Step 8 says \"expected single-file snapshot\" but does not define the check or its failure reason. Require `files.length === 1` and that the returned file's path equals the validated `relativePath`; mismatch \u2192 `REFUSED INTERNAL_ERROR` (wrapper-side invariant, not a source problem) or a named `SOURCE_SHAPE_MISMATCH`; pick one.\n- `sourceSha256` / `sourceBytes` must be defined over the UTF-8 encoding of `content` (`Buffer.from(content,'utf8')`), not `content.length` (UTF-16 code units). The reader's byte roundtrip guarantee is what makes this equal to on-disk bytes; say so.\n- `serializedRecord` = that same `content` string (or bytes?) \u2014 the contract says \"captured content\"; specify the exact type the permit API accepts so the permit's hash matches `sourceSha256`.\n- Step 7's \"explicit allowlist of its closed codes\" is not enumerated, and the supplied reader facts don't list codes. Without the list, every reader failure degrades to `SOURCE_CAPTURE_FAILED`, and tests for links/directory/>1MiB/invalid UTF-8 cannot assert distinct reasons.\nFix: add a table `readerCode \u2192 outer reason` (e.g. symlink/hardlink/cross-device/directory/size/UTF-8/NUL/drift/handles-not-closed) and treat anything else as `SOURCE_CAPTURE_FAILED`. Verification: enumerate the reader's actual closed error codes from source.\n\n## Issue 4 \u2014 `UNCERTAIN INTERNAL_ERROR` with `capture:null` can drop a real result\nEvidence: `captureFixedXpcHistory` is synchronous and returns a frozen result. After it returns, the only possible throws are wrapper-side (evidence assembly, freezing, output validation).\nGap: the contract mandates `capture:null` for any throw after invocation. If the throw happens *after* the call returned, discarding the real result (which may say ADMITTED or UNCERTAIN with a committed diagnostic) loses the only accurate write record, and the fresh-process reopen test will show a journal entry the result didn't report.\nFix: split the rule: (a) throw *during* the call \u2192 `UNCERTAIN INTERNAL_ERROR, capture:null`; (b) throw *after* the call returned \u2192 still `UNCERTAIN INTERNAL_ERROR` but `capture` = the obtained frozen result. Implement by assigning the call result to a local first and keeping all post-call work minimal (pre-build `sourceEvidence` before the call). Verification: mutant that throws in evidence-freeze code after a successful capture; assert `capture` is non-null.\n\n## Minor notes (not counted)\n- Outer status set should be enumerated (`REFUSED | CANCELLED | UNCERTAIN` + the capture statuses passed through) so tests can be exhaustive.\n- `signal` brand check: use `Object.getOwnPropertyDescriptor(AbortSignal.prototype,'aborted').get.call(signal)` and `EventTarget.prototype.addEventListener/removeEventListener.call`; non-AbortSignal throws \u2192 `REFUSED INVALID_INPUT`. Consistent with \"trusted, not adversarial\" \u2014 this is a correctness guard, not containment.\n- Freeze the returned copy of `source` (private) and never place it on the result; digest only.\n\n## Implementation outline (`hosts/history/import-fixed-xpc-from-disk-v1.mjs`)\n1. `validateRequest(req)` \u2192 exact 5 own keys, plain/null-proto, `clock` callable, `signal` null or branded AbortSignal; else `REFUSED INVALID_INPUT` (digests null, capture null, evidence null).\n2. `copySourceSelection(src)` \u2192 exact 6 keys with fixed literals, `root` via the reader's bounded absolute-root grammar, `relativePath` structural/pure check per Issue 1; produce frozen copy; `sourceSelectionDigest = sha256('nisi-history-source-selection/v1\\n' + canonicalJson(copy))`. Failure \u2192 `REFUSED INVALID_SOURCE_SELECTION`.\n3. `if (nativeAborted(signal)) return CANCELLED ABORTED` (digest present, declarationDigest null).\n4. `try { addListener(onAbort); const p = createFixedXpcHistoryPermit({owner, declaration, clock}); if (p.status!=='CREATED') return REFUSED p.reason; declarationDigest = p.declarationDigest; onAbort = () => revoke(p) (idempotent); if aborted \u2192 revoke, CANCELLED ABORTED }` \u2014 `finally` removes listener and revokes.\n5. `sourceReadAttempted = true; let r; try { r = await captureRepositoryFromDisk({root: copy.root, paths:[copy.relativePath], profile: copy.profile}) } catch (e) { if aborted \u2192 CANCELLED ABORTED; return REFUSED allowlist(e.code) ?? SOURCE_CAPTURE_FAILED }`. One call, no retry; await to completion regardless of abort.\n6. If aborted after read \u2192 `CANCELLED ABORTED` (evidence null). Assert single-file shape (Issue 3). Build `sourceEvidence` from `r.capture.{rootFingerprint,snapshotFingerprint,fingerprint,handlesClosed}` + `sha256(utf8Bytes)` + byte length; deep-freeze; require `handlesClosed===true` else REFUSED.\n7. `captureAttempted = true; let c; try { c = captureFixedXpcHistory({permit, serializedRecord: content}) } catch { return UNCERTAIN INTERNAL_ERROR capture:null }`. Then map outer status/reason from `c` directly; never `CANCELLED` from here on (Issue 2). Any later throw \u2192 `UNCERTAIN INTERNAL_ERROR` with `capture:c` (Issue 4).\n8. `buildResult(...)` always emits exactly the 11 keys, `meaning:'HISTORY_OBSERVATIONS_ONLY'`, `authorizing:false`, recursively frozen. Unexpected throws before step 7 \u2192 `REFUSED INTERNAL_ERROR`.\n9. Tests as listed in Acceptance, plus: reader-code allowlist table coverage, post-call throw mutant, revoke-after-consume idempotency, and an explicit \"unsupported on win32\" outcome test.",
+  "risks": [
+    "The supplied permit facts do not specify a revoke API surface or whether revocation is re-checked between finalclock and consume; the contract's 'PERMIT_REVOKED inside pre-record clock' guarantee may not hold as written.",
+    "`createRepositorySnapshot` is referenced by the contract but absent from the supplied evidence; step 2 may be unimplementable without a pure validator export or a scoped-down structural check.",
+    "Reader closed error codes are not enumerated in the evidence; the step-7 allowlist cannot be finalized without reading disk-capture.mjs.",
+    "Mandated `capture:null` on any post-invocation throw can misreport an already-admitted write; recommended split rule changes the contract text.",
+    "Assumes captureFixedXpcHistory accepts the reader's UTF-8 text as `serializedRecord` and hashes the same bytes as the wrapper's sourceSha256; type mismatch (string vs bytes) would break digest agreement.",
+    "This is a design-only review; no code was run and no repository was inspected."
+  ],
+  "verification": [
+    "Open history-capture-permit-v1.mjs and confirm: revoke surface (export vs handle), idempotency after consume, and the order finalclock \u2192 revocation check \u2192 consume \u2192 record.",
+    "Open disk-capture.mjs and confirm whether a pure path/root validator is exported for step 2, and list its closed error codes to fill the step-7 allowlist.",
+    "Confirm the exact `serializedRecord` type accepted by captureFixedXpcHistory and that its hash equals sha256 of `Buffer.from(content,'utf8')`.",
+    "Run the listed mutants: abort from inside clock during permit creation, inside finalclock, inside record; assert statuses per steps 5/9 and that no result is CANCELLED once captureAttempted is true.",
+    "Add a mutant throwing after a successful synchronous capture; assert result is UNCERTAIN INTERNAL_ERROR and (under the recommended rule) carries the obtained capture object.",
+    "Fresh-process reopen test after admitted write; compare journal entry to returned capture result and to sourceEvidence.sourceSha256.",
+    "Assert every result object has exactly the 11 declared keys, is recursively frozen, and contains no root/path/content strings (grep the JSON serialization against the temp root and file text)."
+  ],
+  "invocation_status": "succeeded",
+  "status": "succeeded",
+  "model_usage": {
+    "claude-haiku-4-5-20251001": {
+      "inputTokens": 3061,
+      "outputTokens": 16,
+      "cacheReadInputTokens": 0,
+      "cacheCreationInputTokens": 0,
+      "webSearchRequests": 0,
+      "costUSD": 0.0031409999999999997,
+      "contextWindow": 200000,
+      "maxOutputTokens": 32000,
+      "thinkingTokens": 0,
+      "canonicalModel": "claude-haiku-4-5",
+      "provider": "firstParty",
+      "costBasis": "list"
+    },
+    "claude-opus-5": {
+      "inputTokens": 2,
+      "outputTokens": 7354,
+      "cacheReadInputTokens": 737,
+      "cacheCreationInputTokens": 3729,
+      "webSearchRequests": 0,
+      "costUSD": 0.2215185,
+      "contextWindow": 1000000,
+      "maxOutputTokens": 64000,
+      "thinkingTokens": 2662,
+      "canonicalModel": "claude-opus-5",
+      "provider": "firstParty",
+      "costBasis": "list"
+    }
+  },
+  "reported_models": [
+    "claude-haiku-4-5-20251001",
+    "claude-opus-5"
+  ],
+  "usage": {
+    "input_tokens": 2,
+    "cache_creation_input_tokens": 3729,
+    "cache_read_input_tokens": 737,
+    "output_tokens": 7354,
+    "output_tokens_details": {
+      "thinking_tokens": 2662
+    },
+    "server_tool_use": {
+      "web_search_requests": 0,
+      "web_fetch_requests": 0
+    },
+    "service_tier": "standard",
+    "cache_creation": {
+      "ephemeral_1h_input_tokens": 3729,
+      "ephemeral_5m_input_tokens": 0
+    },
+    "inference_geo": "not_available",
+    "iterations": [
+      {
+        "input_tokens": 2,
+        "output_tokens": 7354,
+        "cache_read_input_tokens": 737,
+        "cache_creation_input_tokens": 3729,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 3729
+        },
+        "type": "message"
+      }
+    ],
+    "speed": "standard"
+  },
+  "total_cost_usd": 0.2246595,
+  "duration_ms": 90428,
+  "tools_enabled": false,
+  "session_persisted": false,
+  "write_owner": "codex",
+  "requested_model": "opus",
+  "mode": "delegate",
+  "attempts": 1,
+  "wall_seconds": 91.606,
+  "created_at": "2026-09-14T01:39:00.448394+00:00",
+  "prior_attempts": [],
+  "total_wall_seconds": 91.606,
+  "prior_attempt_usage": [],
+  "total_usage_complete": true
+}

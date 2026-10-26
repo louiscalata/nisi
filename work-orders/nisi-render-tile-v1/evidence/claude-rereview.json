@@ -1,0 +1,163 @@
+{
+ "verdict": "REJECT",
+ "summary": "Revision 3 genuinely closes 11 of the 14 first-review findings (oracle 16/16, identity never throws codec codes, snapshot walk refuses accessors/Proxies/exotic arrays/cycles, structural evidence now carries this module's own sourceDigest), but the 'never throws' guarantee of CONTRACT.md line 26 is still broken: JSON.stringify(recipe.params) at src line 150 runs on an unbounded snapshot and throws a code-less RangeError (reproduced with a 16-level {l,r} DAG around one 10 KB string that stays inside the 200,000-node budget, and with a single 90 M NUL-character string), escaping both readRenderTileV1 and identityRenderTileV1. Two further defects of the same family survive (primitive payload shared through a DAG is re-copied per reference and reaches a fatal, uncatchable heap OOM from 8 MB of input; near-max-length strings throw at the NFC normalize on line 98 and the unknown-member path build on line 78), which is what the first review's required single-pass validate+copy+byte-count and node/byte budget were meant to prevent. The blocker means REJECT; the fix is small (a running byte budget in paramsValid and a payload budget in snapshot) and the four remaining nits are oracle/contract-precision items.",
+ "first_review_findings_status": [
+  {
+   "title": "identityRenderTileV1 throws non-contract codec codes for tiles the reader accepts (numbers, strings, keys, depth, member count)",
+   "status": "fixed",
+   "note": "params now confined to the codec grammar (safe integers not -0, well-formed strings, NFC NUL-free keys, depth 120, 4096 members); every ok() fixture is digested by the oracle."
+  },
+  {
+   "title": "readRenderTileV1 throws (contract: never throws) on deep params, throwing getters, Proxy traps, Array species, null-prototype arrays and toJSON hooks",
+   "status": "partially_fixed",
+   "note": "All listed shapes are refused as RENDER_TILE_NOT_OBJECT at $ via the descriptor-walk snapshot. But never-throws is still violated by string-length RangeErrors at src lines 150 (JSON.stringify), 98 (normalize) and 78 (path build), and by an uncatchable heap OOM from primitive payload amplification; see confirmed findings."
+  },
+  {
+   "title": "Members are validated on one read and copied on a later read, so accessors put unvalidated data in an ok:true tile and in the identity",
+   "status": "fixed",
+   "note": "Validation and output are built from the one-time snapshot; no input property is read twice."
+  },
+  {
+   "title": "Structural-check evidence in the handoff verifies canonical-json-v1.mjs, not render-tile-v1.mjs; a real run would FAIL on the export block",
+   "status": "partially_fixed",
+   "note": "evidence/structural-check.json sourceDigest aa4c65e0...cb41 equals sha256(src/render-tile-v1.mjs) and the export list sits after PURE-REGION-END (line 245/247), so the PASS is genuine. However scripts/structural-check.mjs line 89 still hardcodes the codec as subject; the PASS was produced by an out-of-tree copy and cannot be regenerated from the repository (nit for integration)."
+  },
+  {
+   "title": "Identity hashes the caller's childOutputs object rather than the validated values",
+   "status": "fixed",
+   "note": "childOutputs snapshotted and copied by index into a fresh array before hashing (src lines 229-241); oracle pins toJSON/Proxy/null-prototype childOutputs."
+  },
+  {
+   "title": "Shared (non-cyclic) sub-objects in params are refused as RENDER_TILE_PARAMS",
+   "status": "partially_fixed",
+   "note": "Path-stack cycle guard accepts DAGs (oracle line 230-231) and a tiny exponential DAG is refused without throwing. But only the node half of the requested node/byte budget was added: a shared large string or primitive array is re-copied/scanned per reference under the node budget, giving the line-150 RangeError and a fatal heap OOM (confirmed findings 1 and 2)."
+  },
+  {
+   "title": "`constructor` and `prototype` are accepted as keys of inputs and apron",
+   "status": "fixed",
+   "note": "BAD_KEYS checked on inputs names (line 134) and apron keys (line 198); oracle pins all three reserved names for inputs and constructor for apron."
+  },
+  {
+   "title": "identityRenderTileV1 throws Error objects with an empty message, unlike every other house error idiom",
+   "status": "fixed",
+   "note": "new Error(read.code) with .code set (lines 227-228); oracle asserts message === code."
+  },
+  {
+   "title": "Oracle does not pin the accepted side of the model (128) and neighbours (256) limits; both off-by-one mutants survive",
+   "status": "fixed",
+   "note": "ok(rec({ model: 'm'.repeat(128) })) and the 256-neighbour tile are pinned (tests lines 196, 219)."
+  },
+  {
+   "title": "Intra-entry check order (inputs id-vs-digest; recipe.apron size-vs-unit) is untested; swap mutants survive",
+   "status": "fixed",
+   "note": "inputs {'bad name':'zz'} -> RENDER_TILE_INPUTS and recipe.apron {size:-0, unit:'cm'} -> $.recipe.apron.size are pinned."
+  },
+  {
+   "title": "Contract prose says identity ignores `neighbours`; it does not (neighbour ids enter via apron keys)",
+   "status": "fixed",
+   "note": "CONTRACT.md lines 137-140 now say identity ignores neighbour ORDER and changes with apron keys; oracle pins rename-changes / reorder-does-not."
+  },
+  {
+   "title": "`sorted by key` is unachievable for integer-like IDs in inputs/apron",
+   "status": "fixed",
+   "note": "CONTRACT.md lines 125-128 state integer-like keys enumerate first and the codec's byte order is normative; oracle pins ['9','10','01']."
+  },
+  {
+   "title": "Own-enumerable rule not enforced: non-enumerable required members count, symbol-keyed members are ignored",
+   "status": "fixed",
+   "note": "Snapshot refuses non-enumerable own properties and symbol keys as RENDER_TILE_NOT_OBJECT at $ (contract lines 43-51); both pinned in the hostile-inputs test."
+  },
+  {
+   "title": "Contract import clause is stale after integrator repair 2",
+   "status": "fixed",
+   "note": "CONTRACT.md lines 9-10 list only canonicalizeJSONV1; src line 1 matches."
+  }
+ ],
+ "confirmed_findings": [
+  {
+   "title": "readRenderTileV1 and identityRenderTileV1 throw a code-less RangeError from JSON.stringify(recipe.params) at line 150 when the serialised params exceed V8's max string length; the paramsBytes budget is compared only after full serialisation",
+   "severity": "blocker",
+   "file": "/Users/louiscalata/nisi-next-private/work-orders/nisi-render-tile-v1/src/render-tile-v1.mjs",
+   "line": 150,
+   "claim": "paramsValid (lines 85-102) bounds depth and member count but never string length or accumulated bytes, and snapshot() counts only objects/arrays (line 50) and returns strings by reference (line 48), so a snapshot well inside the 160-depth/200,000-node budget can serialise to more than 536,870,888 chars. JSON.stringify at line 150 then throws RangeError 'Invalid string length' with no .code; nothing after the snapshot try/catch (lines 114-118) guards it, and identity (line 226) calls the reader unwrapped. Reproduced here: (a) a 16-level {l, r} DAG around one 'a'.repeat(10000) string (17 distinct objects, 131,071 node visits) -> reader threw RangeError in 260 ms, identity threw the same with code undefined; (b) params { s: NUL x 90,000,000 } with no sharing -> RangeError in 335 ms from both entry points; (c) the contract-conformance lens's { a: s, b: s } with a 268 M-char string is the same defect. Shape (a) is reachable from any in-process caller with about 10 KB of input using the shared-sub-object feature the oracle endorses (tests line 230-231). Violates CONTRACT.md line 26 ('Never throws for any input value') and lines 28-33 (identity throws only refusal-coded Errors). This is the residual of first-review blocker 2, whose required fix was 'single-pass params validate+copy+byte-count ... no JSON.stringify on raw input'; the integrator applied it to the descriptor walk but left the late stringify.",
+   "fix": "Thread a running byte budget through paramsValid: a counter object to which every leaf adds a lower bound on its serialised size (string value: v.length + 2; key: k.length + 3; number: String(v).length; null/boolean: 4-5; each member/element: +1), returning false as soon as the total exceeds RENDER_TILE_LIMITS_V1.paramsBytes. The exact line-150 check then runs only on a snapshot with at most ~6 x 65,536 output chars and can no longer hit the string limit. Oracle: the 16-level shared-10-KB-string DAG, a single 90 M-char NUL string, and { a: s, b: s } with s.length = ceil(MAX_STRING_LENGTH/2)+1 all return RENDER_TILE_PARAMS at $.recipe.params without throwing; identity on each throws e.code === 'RENDER_TILE_PARAMS'."
+  },
+  {
+   "title": "Snapshot node budget does not bound primitive payload: a primitive array or long string shared through a DAG is copied/scanned once per reference, giving a fatal uncatchable heap OOM or a multi-second/minute grind from a few MB of input",
+   "severity": "defect",
+   "file": "/Users/louiscalata/nisi-next-private/work-orders/nisi-render-tile-v1/src/render-tile-v1.mjs",
+   "line": 61,
+   "claim": "snapshot() counts a node only for objects and arrays (line 50) and copies every array element by index (line 61) without counting elements or string lengths, while shared sub-objects are deliberately re-copied (contract lines 47-49 say the node budget 'bounds that expansion'). One array of N primitives referenced through a d-level {l, r} DAG allocates N x 2^d elements before any limit is consulted. Reproduced here: depth 8 around a 100,000-int array (0.8 MB input, 767 node visits) -> RENDER_TILE_PARAMS after 2.1 s at 755 MB RSS; depth 12 around a 1,000,000-int array (8 MB input, 13 distinct objects, ~12k node visits) under --max-old-space-size=1024 -> 'FATAL ERROR: Reached heap limit Allocation failed - JavaScript heap out of memory', a process abort no try/catch can intercept. The same amplification hits paramsValid's per-reference isWellFormed() scan (line 88) for a shared long string (refuter measurement: time doubles per DAG level). A process abort is strictly worse than the throw CONTRACT.md line 26 forbids, and the contract's claim that the node budget bounds the expansion is false for primitive-heavy payloads. First-review required item 3 asked for 'a node/byte budget'; only the node half landed.",
+   "fix": "Make the snapshot budget a payload budget as well: in snapshot(), add each array's length and each string's length (keys and values) to counter and throw SnapshotRefused (-> RENDER_TILE_NOT_OBJECT at $) when it exceeds a stated ceiling (e.g. 8 M elements/chars, comfortably above the ~1 MB the schema can ever accept); state the ceiling in CONTRACT.md next to the 160/200,000 figures. Oracle: the 13-object shared 1e6-element array DAG and a shared 20 M-char string DAG both return RENDER_TILE_NOT_OBJECT at $ within a second and under a fixed RSS."
+  },
+  {
+   "title": "Near-max-length strings throw RangeError at the params-key NFC normalize (line 98) and the unknown-member path build (line 78)",
+   "severity": "defect",
+   "file": "/Users/louiscalata/nisi-next-private/work-orders/nisi-render-tile-v1/src/render-tile-v1.mjs",
+   "line": 98,
+   "claim": "Two further O(n)-allocating operations run on unbounded input strings before any length bound. Line 98 k.normalize('NFC') allocates the normalized form: a params key of 2^28 U+0344 characters (each normalizes to two code units) would normalize to 536,870,912 chars, 24 over V8's limit, and String.prototype.normalize throws RangeError out of readRenderTileV1 (reproduced: 'READER THREW RangeError Invalid string length code= undefined 1758 ms'; identity threw the same). Line 78 builds `${path}.${k}` for an unknown member: a root key of length MAX_STRING_LENGTH-1 throws the same RangeError in 0 ms from unknownOrMissing (reproduced). The 1 MiB variant returns a 1,048,578-char refusal path without throwing, so the failure is purely the near-max case. Both violate CONTRACT.md line 26; both need ~512 MB strings, so in-process-only and cheap to close.",
+   "fix": "Line 98: test k.length > RENDER_TILE_LIMITS_V1.paramsBytes before normalize (a key longer than the whole byte budget can never fit), or let the running byte budget of finding 1 refuse it first. Line 78: let the snapshot payload budget of finding 2 count keys, or cap member names during the snapshot (refuse RENDER_TILE_NOT_OBJECT at $ for any own key longer than e.g. 4096 chars, stated in the contract's snapshot clause). Oracle: a 2^28 U+0344 params key and a MAX-1-char unknown member both return a refusal object."
+  },
+  {
+   "title": "Snapshot depth (160) and node budget (200,000) boundaries are not pinned; a mutant at 150/100,000 passes 16/16",
+   "severity": "nit",
+   "file": "/Users/louiscalata/nisi-next-private/work-orders/nisi-render-tile-v1/tests/render-tile-v1.test.mjs",
+   "line": 129,
+   "claim": "CONTRACT.md lines 47-48 fix the snapshot limits at 'deeper than 160' and 'more than 200,000 nodes' and the boundary is observable (reproduced: params nest(159) -> RENDER_TILE_PARAMS $.recipe.params, nest(160) -> RENDER_TILE_NOT_OBJECT $). The oracle pins only a 20,000-deep array (line 129) and a 2^40-node DAG (lines 135-137), both far past either value, so SNAPSHOT_MAX_DEPTH=150 / SNAPSHOT_MAX_NODES=100000 survives the unmodified oracle (three independent mutant runs: pass 16 fail 0).",
+   "fix": "Pin both boundaries: rec({ params: nest(159) }) -> RENDER_TILE_PARAMS, nest(160) -> RENDER_TILE_NOT_OBJECT; params { a: Array of 199,990 empty objects } -> RENDER_TILE_PARAMS, 199,991 -> RENDER_TILE_NOT_OBJECT (the fixed tile plus params.a contributes 10 nodes)."
+  },
+  {
+   "title": "'Nested unknown/missing members are checked when that object is reached' is not pinned; a hoisting mutant passes 16/16",
+   "severity": "nit",
+   "file": "/Users/louiscalata/nisi-next-private/work-orders/nisi-render-tile-v1/tests/render-tile-v1.test.mjs",
+   "line": 140,
+   "claim": "CONTRACT.md lines 92-95 order root values before a later nested object's unknown/missing checks (HANDOFF says this wording was chosen deliberately). The module conforms (reproduced: bad tileId + recipe.extra -> RENDER_TILE_ID $.tileId; inputs {src:'zz'} + budget {wallMs:1} -> RENDER_TILE_DIGEST $.inputs.src), but every oracle case breaks exactly one thing, so a mutant hoisting the recipe/recipe.apron/budget unknownOrMissing calls to just after the root check answers RENDER_TILE_UNKNOWN_MEMBER $.recipe.extra / RENDER_TILE_MISSING_MEMBER $.budget.tokens and still passes 16/16 (three independent mutant runs).",
+   "fix": "Add refuse({ ...leaf(), tileId: '', recipe: { ...leaf().recipe, extra: 1 } }, 'RENDER_TILE_ID', '$.tileId') and refuse({ ...leaf(), inputs: { src: 'zz' }, budget: { wallMs: 1 } }, 'RENDER_TILE_DIGEST', '$.inputs.src')."
+  },
+  {
+   "title": "model 'length <= limits.modelLength' names no unit; the module counts UTF-16 code units and only ASCII cases are pinned",
+   "severity": "nit",
+   "file": "/Users/louiscalata/nisi-next-private/work-orders/nisi-render-tile-v1/CONTRACT.md",
+   "line": 70,
+   "claim": "src line 40 uses s.length (UTF-16 code units): reproduced, a 64-astral-character model (128 code units) is accepted and 65 (130 code units) refused as RENDER_TILE_RECIPE $.recipe.model, while a code-point reader would accept up to 128. Line 70 is unit-free (unlike line 78, which names 'JSON.stringify byte length'), and the oracle pins only 'm'.repeat(128/129), identical under every unit, so a [...s].length mutant passes 16/16. The ASCII byte-compatibility sentence (lines 144-145) scopes the identity formula, not this admission check.",
+   "fix": "State the unit in line 70 ('length in UTF-16 code units, as String.prototype.length') and pin ok(rec({ model: '\\u{1F600}'.repeat(64) })) and refuse(rec({ model: '\\u{1F600}'.repeat(65) }), 'RENDER_TILE_RECIPE', '$.recipe.model')."
+  },
+  {
+   "title": "In-tree scripts/structural-check.mjs still hardcodes the codec as its subject; this module's PASS evidence was produced by an out-of-tree copy and cannot be regenerated from the repository",
+   "severity": "nit",
+   "file": "/Users/louiscalata/nisi-next-private/scripts/structural-check.mjs",
+   "line": 89,
+   "claim": "First-review blocker 4 is fixed in substance (verified: evidence/structural-check.json sourceDigest aa4c65e04eaaad65804acd9e1eef68785d973da94de19136eb6d7edc5f26cb41 equals sha256 of src/render-tile-v1.mjs; export list at line 247 after PURE-REGION-END at 245), but line 89 still reads `const subject = \"canonical/canonical-json-v1.mjs\";` with no argv/env override, and HANDOFF.md lines 94-98 say the run went through a parametrised copy kept outside the tree. A reviewer running the in-tree script gets the codec's result. Outside the work order's new-files-only scope, so an integration item, not a module defect; one refuter voted to refute on scope grounds, the other two confirmed, and the substance is not disputed.",
+   "fix": "At integration, land the parametrised checker (path argument or PURE-REGION file scan) in scripts/structural-check.mjs so `node scripts/structural-check.mjs work-orders/nisi-render-tile-v1/src/render-tile-v1.mjs` regenerates evidence/structural-check.json with the same sourceDigest."
+  }
+ ],
+ "refuted_findings": [
+  {
+   "title": "Apron refusal code depends on key insertion order when the key set differs AND a value is bad; the contract is silent and the oracle does not pin either reading",
+   "why_refuted": "Behaviour reproduces (neighbours ['b','c'], apron {b:'zz', x:null} -> RENDER_TILE_DIGEST $.apron.b; {x:null, b:'zz'} -> RENDER_TILE_APRON $.apron) and a membership-first mutant passes 16/16, but CONTRACT.md permits it: the check-order clause (lines 92-97) fixes only root ordering, nested schema objects' unknown/missing-before-values, intra-entry name-before-value on inputs, and nested values in schema order; it says nothing about apron key-set-vs-value order, and lines 52-56 treat inputs/apron as maps distinct from schema objects. 'Report the first failure only' with per-key walking conforms. Same class as the first review's refuted inputs cross-entry finding; both tiles are refused, the DIGEST path always carries a validated neighbour id, and the result is deterministic per input. A contract sentence plus one pin would be an optional improvement, recorded in oracle_gaps."
+  },
+  {
+   "title": "RENDER_TILE_UNKNOWN_MEMBER paths embed an unvalidated, unbounded input key (1 MB names, raw control characters)",
+   "why_refuted": "Reproduced (1 MiB unknown root key -> refusal with a 1,048,578-char path, no throw), but CONTRACT.md mandates exactly this: line 106 says the path is 'the member' at any level, lines 53-54 say reserved names are refused 'with the path to that key', and line 97 imposes no length bound or escaping on paths. Line 14 governs error messages; identity's Error carries only the code (new Error(read.code)), which the claim concedes. The ID grammar already admits '.', so '$.inputs.a.b' is an existing contract-mandated 'unparseable' path. The only defect in this area is the near-max-length throw at line 78, which is confirmed separately; the bounded-name policy question is a contract-authoring preference for the owner, not a violation."
+  }
+ ],
+ "required_before_integration": [
+  "Close the blocker: thread a running byte budget through paramsValid (lower-bound estimate per leaf, key and member; return false once it exceeds RENDER_TILE_LIMITS_V1.paramsBytes) so the JSON.stringify at src line 150 only ever serialises a bounded snapshot and can never throw RangeError; keep the exact byte check afterwards.",
+  "Add a primitive payload budget to snapshot(): count array lengths and string lengths (keys and values) toward a stated ceiling and refuse RENDER_TILE_NOT_OBJECT at $ when exceeded; state the ceiling in CONTRACT.md's snapshot clause beside the 160/200,000 figures so the 'node budget bounds that expansion' sentence becomes true.",
+  "Guard the two remaining O(n) allocations on unbounded strings: length-check params keys against paramsBytes before k.normalize('NFC') at line 98, and bound member-name length before building `${path}.${k}` at line 78 (via the snapshot payload budget or a stated key-length cap).",
+  "Extend the protected oracle with the never-throws cases for all three: 16-level {l,r} DAG around a 10 KB string, a single 90 M NUL string, { a: s, b: s } with a ~268 M-char string, a 13-object DAG around a 1e6-element array (bounded RSS, sub-second), a 2^28 U+0344 params key, and a MAX_STRING_LENGTH-1 unknown member; each must return a refusal object and identity must throw a RENDER_TILE_* coded Error. Mark the heavy cases so they can be skipped in fast runs.",
+  "Re-run the oracle and the mutant set (evidence/mutants.json), regenerate SHA256SUMS and evidence/structural-check.json for the new sourceDigest, and record the run in HANDOFF.md as revision 4.",
+  "At integration (outside this work order's new-files-only scope): land the parametrised scripts/structural-check.mjs so the module's PASS can be regenerated from the committed tree; then the existing integration steps (directory, canonical import, package.json files/exports, private-package allowlist, copy the oracle under tests/, npm run check:private-package and npm test)."
+ ],
+ "oracle_gaps": [
+  "No case exercises a params snapshot whose serialisation exceeds V8's max string length (shared-DAG large string, single huge string, or two references to one ~268 M-char string); the largest params case is exactly at the 65,536-byte boundary.",
+  "No case bounds memory or time for a primitive array or long string shared through a DAG; the only exponential-DAG case uses a tiny {leaf:1} object and is caught by the node count alone.",
+  "No near-max-length string case for a params key (NFC expansion at line 98) or for an unknown member name (path build at line 78).",
+  "Snapshot boundaries unpinned: nest(159) -> RENDER_TILE_PARAMS vs nest(160) -> RENDER_TILE_NOT_OBJECT, and 199,990 vs 199,991 snapshot nodes; a 150/100,000 mutant passes 16/16.",
+  "Cross-level check order unpinned: bad tileId + recipe.extra -> RENDER_TILE_ID $.tileId and bad inputs digest + missing budget.tokens -> RENDER_TILE_DIGEST $.inputs.src; a hoisting mutant passes 16/16.",
+  "Model length unit unpinned: ok for 64 astral characters (128 code units) and refuse for 65; a code-point mutant passes 16/16 (after stating the unit in CONTRACT.md line 70).",
+  "Optional: if the owner adds an apron ordering sentence to the check-order clause, pin neighbours ['b','c'] with apron {b:'zz', x:null} accordingly; today neither reading is pinned."
+ ],
+ "reviewer": "claude-workflow rereview-render-readers",
+ "date": "2026-09-14"
+}

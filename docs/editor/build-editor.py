@@ -38,9 +38,24 @@ state = {
 }
 if len(sys.argv) > 2:
     supplied = json.loads(Path(sys.argv[2]).read_text())
-    assert ''.join(s['current'] for s in supplied['sections']) == markdown, 'Editor state must match Markdown exactly'
-    assert len({s['id'] for s in supplied['sections']}) == len(supplied['sections']), 'Duplicate section IDs'
-    state['sections'] = [{**s, 'baseline': s.get('baseline', s['current'])} for s in supplied['sections']]
+    if not isinstance(supplied, dict) or not isinstance(supplied.get('about'), str):
+        raise ValueError('EDITOR_STATE_INVALID: about must be text')
+    incoming = supplied.get('sections')
+    if not isinstance(incoming, list) or not 1 <= len(incoming) <= 1024:
+        raise ValueError('EDITOR_STATE_INVALID: sections required')
+    for section in incoming:
+        if (not isinstance(section, dict) or not {'id', 'current'} <= section.keys()
+                or not section.keys() <= {'id', 'current', 'baseline'}
+                or not isinstance(section['id'], str) or len(section['id']) > 128
+                or not re.fullmatch(r'section-[a-z0-9]+(?:-[a-z0-9]+)*', section['id'])
+                or not isinstance(section['current'], str)
+                or not isinstance(section.get('baseline', section['current']), str)):
+            raise ValueError('EDITOR_STATE_INVALID: section shape or ID')
+    if len({s['id'] for s in incoming}) != len(incoming):
+        raise ValueError('EDITOR_STATE_INVALID: duplicate section IDs')
+    if ''.join(s['current'] for s in incoming) != markdown:
+        raise ValueError('Editor state must match Markdown exactly')
+    state['sections'] = [{'id': s['id'], 'current': s['current'], 'baseline': s.get('baseline', s['current'])} for s in incoming]
     state['about'] = supplied['about']
 assert ''.join(s['current'] for s in sections) == markdown, 'Section split must preserve every source byte'
 css = (base / 'editor.css').read_text()
@@ -51,6 +66,7 @@ assert '</script' not in app.lower(), 'App source must not terminate its HTML sc
 data = json.dumps(state, ensure_ascii=False).replace('<', '\\u003c')
 html = '<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Nisi v0.1 on GitHub — Editable Draft</title><style id="editor-style">' + css + '</style></head><body><script id="state" type="application/json">' + data + '</script>' + chrome + '<template id="chrome">' + chrome + '</template><script id="editor-app">' + app + '</script></body></html>'
 output_name = sys.argv[1] if len(sys.argv) > 1 else 'index.html'
-assert Path(output_name).name == output_name and output_name.endswith('.html'), 'Output must be a local HTML filename'
+if Path(output_name).name != output_name or not output_name.endswith('.html'):
+    raise ValueError('Output must be a local HTML filename')
 (base / output_name).write_text(html)
 print(json.dumps({'sections': len(sections), 'html_bytes': len(html.encode()), 'draft_words': len(markdown.split())}))

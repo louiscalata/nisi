@@ -1,0 +1,6 @@
+{
+  "before_sha256": "50f6420fe17aa145b7b341467be00d4032968fcb4ac361871f9a45c34f94bd68",
+  "after_sha256": "d223d8165450c8877c208981ebe769737e2a737ec4439e213404b9b20dcb2df7",
+  "inserted_line": "**September 13 disk-store work-order checkpoint:** [run-journal-store](work-orders/run-journal-store/roadmap.md) passes 16/16 protected store tests and 2/2 baselines after local packet installation; raw-byte readback and file/directory fsync reporting verified in temporary-directory tests, with same-process product serializer/reopen compatibility; host integration, writer locking, power-loss acceptance and U02-04 closure remain open.",
+  "scope": "one inserted physical line in U02-04; removing it reproduces the immediately preceding roadmap bytes"
+}

@@ -1,0 +1,36 @@
+{
+ "model": "afm/apple-foundation",
+ "status": "success",
+ "elapsed_s": 9.5,
+ "raw": "{\n  \"lens\":\"an on-device, privacy-first user who will not send project files anywhere.\",\n  \"ideas\":[\n    {\n      \"title\":\"Automated Texture Patching & Conflict Resolution\",\n      \"who_benefits\":\"Individually-owned artists using Unreal or Unity for personal projects\",\n      \"job_to_be_done\":\"Automatically detect and repair overlapping textures across ten rendering passes without external tools\",\n      \"why_this_design\":\"Runs entirely on local GPU with digest identity preventing recomputation, ensuring privacy and speed\",\n      \"biggest_risk\":\"Latency in local digest sync if network-like dependencies emerge\",\n      \"release\":\"1\"\n    },\n    {\n      \"title\":\"Local Scene Evolution via Iterative Refinement\",\n      \"who_benefits\":\"Small indie studios optimizing assets for mobile platforms\",\n      \"job_to_be_done\":\"Iteratively refine scene layers using filler logic to remove holes and conflicts, guided by neighbour context without cloud upload\",\n      \"why_this_design\":\"Tetris-like bottom-up clearing with deterministic checks ensures stability and zero data leakage\",\n      \"biggest_risk\":\"Over-iteration if tile digest identities are misaligned\",\n      \"release\":\"2\"\n    },\n    {\n      \"title\":\"Privacy-First Asset Restoration & Recombination\",\n      \"who_benefits\":\"Archival-focused creators preserving old scenes on personal devices\",\n      \"job_to_be_done\":\"Recombine fragmented layers from memory or backup snapshots using localized rendering and conflict fixing\",\n      \"why_this_design\":\"Each tile carries neighbour context and digest ID\u2014no files ever leave the machine, preserving ownership\",\n      \"biggest_risk\":\"Incomplete rebuild if Neural Engine fails to capture full context\",\n      \"release\":\"later\"\n    }\n  ]\n}\n",
+ "stderr": "",
+ "parsed": {
+  "lens": "an on-device, privacy-first user who will not send project files anywhere.",
+  "ideas": [
+   {
+    "title": "Automated Texture Patching & Conflict Resolution",
+    "who_benefits": "Individually-owned artists using Unreal or Unity for personal projects",
+    "job_to_be_done": "Automatically detect and repair overlapping textures across ten rendering passes without external tools",
+    "why_this_design": "Runs entirely on local GPU with digest identity preventing recomputation, ensuring privacy and speed",
+    "biggest_risk": "Latency in local digest sync if network-like dependencies emerge",
+    "release": "1"
+   },
+   {
+    "title": "Local Scene Evolution via Iterative Refinement",
+    "who_benefits": "Small indie studios optimizing assets for mobile platforms",
+    "job_to_be_done": "Iteratively refine scene layers using filler logic to remove holes and conflicts, guided by neighbour context without cloud upload",
+    "why_this_design": "Tetris-like bottom-up clearing with deterministic checks ensures stability and zero data leakage",
+    "biggest_risk": "Over-iteration if tile digest identities are misaligned",
+    "release": "2"
+   },
+   {
+    "title": "Privacy-First Asset Restoration & Recombination",
+    "who_benefits": "Archival-focused creators preserving old scenes on personal devices",
+    "job_to_be_done": "Recombine fragmented layers from memory or backup snapshots using localized rendering and conflict fixing",
+    "why_this_design": "Each tile carries neighbour context and digest ID\u2014no files ever leave the machine, preserving ownership",
+    "biggest_risk": "Incomplete rebuild if Neural Engine fails to capture full context",
+    "release": "later"
+   }
+  ]
+ }
+}

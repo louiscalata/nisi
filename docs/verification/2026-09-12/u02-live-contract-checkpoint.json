@@ -1,0 +1,422 @@
+{
+  "schemaVersion": "nisi-live-contract-checkpoint-v1",
+  "observedAt": "2026-09-13T02:26:33.792Z",
+  "status": "PASS_SCOPED",
+  "scope": "PINNED_FIXTURE_AND_LIVE_LANE_RECEIPT_CLI_CONTRACTS_WITH_SEPARATE_INCOMPLETE_RUNTIME_ATTEMPT",
+  "roadmapProgress": {
+    "percent": 30,
+    "closedMajorMilestones": 3,
+    "totalMajorMilestones": 10,
+    "basis": "equal-weight NX closure, not time, accuracy or release readiness"
+  },
+  "sourceManifest": {
+    "adapters/local-chat.mjs": "7fd5cad4024f8c135c4d1e8559aac7bbb7d71068ff52c028f591b90294da540f",
+    "evaluation/fixtures/paired-example-v1.mjs": "2b3fd175c2408737ac8d646a19f576de7ec81a52e5fff61ab80b3fc530d58249",
+    "evaluation/intake-v1.mjs": "7c338bf7419c236bc8a8c912266f470e68ff3711848f777c56e68f0ef7c7912a",
+    "evaluation/metrics-v1.mjs": "a11f1247df37b89c661fe3033e8d88a0c347038114bd9192ac48620d52ba0e91",
+    "evaluation/paired-trial-v1.mjs": "cb75c8ac76deb31280fc356064e448b508e4fb8cc48cddaef03f461a70df943c",
+    "examples/repository-live-model.mjs": "0fef3ca739f968bc8ea1425020a1b69b89ecd6da57934bcbcbf5d41d7e607c92",
+    "examples/repository-task/fixtures/baseline/README.md": "b6ce54912db6b4605d19e4e0fdce5cc1e680de4a57bb1af82ca7b737ff578011",
+    "examples/repository-task/fixtures/baseline/config.json": "fc2001f12401983fa2632ee17e9879b6a1595f0de616e6e1484083c0c3324f04",
+    "examples/repository-task/fixtures/baseline/retry-settings.mjs": "c4932fa2ce0c73c52d385d25aeab64bed602179abced3b38fd525a31fe47bb10",
+    "examples/repository-task/fixtures/harness/check-retry-settings.mjs": "e07a9bd6a63a52ac6977734c61ea0a210c71ec2c331951f4d94b44159c8245c5",
+    "examples/repository-task/fixtures/live-baseline/retry-settings.mjs": "65525edd21e81c5de1791c6f47fa404ffea10f7ea332545a8e295afdd6270254",
+    "examples/repository-task/fixtures/live-repair/retry-settings.mjs": "73369f8d0cc0cefbb082c65388c3652c7602254ab5b6fbab138e08078b568112",
+    "examples/repository-task/fixtures/repair/retry-settings.mjs": "7de9f6b2cd29489563930f9131a0e0b077070bb50b52df8b5bd27aaf24b55ffd",
+    "examples/repository-task/reviewed-live-fixture-v1.mjs": "292bd67a2e4132c9c5122f5d716e7eeb3cdd3a6ebf5362470d046b6d025add36",
+    "hosts/repository/disk-capture.mjs": "972c8cd690a3f34253c9f4722c336b6e847dffe1b0c924aa8492384c800ae547",
+    "hosts/repository/node-adapter-v1.mjs": "6de05634f7cccd774c8072a000b556f49f111ccedfe1e37d19be37dbd036fa5d",
+    "hosts/repository/node-executor-v1.mjs": "cd999c0efe061c0706842cc06867f62dc59927553615db9e2f2af24523872258",
+    "hosts/repository/node-suite-v1.mjs": "5ed5cd9ca407b281379d6b67d93df60ab3b3a45676b6a4e82c7bfc474d29e2c2",
+    "hosts/repository/proposed-changes-v1.mjs": "045fe0d77b3b6d4d95c406964b603b09b2aeabe131cde267b41806114379f55d",
+    "hosts/repository/reviewed-live-model-v1.mjs": "60c2c91556028518a6735be96e1b80b59e26beb5421378342935b72664a12084",
+    "hosts/repository/reviewed-workflow-v1.mjs": "6ecc49425ae28ec1923445c8fbe79df4478b6361a5e2799b82ded24acf74dc33",
+    "hosts/repository/snapshot-contract.mjs": "2b52c23bac3a817769b7892eed71baba79cb81954b6a63724d107a9c258ba13f",
+    "hosts/repository/task-workspace-v1.mjs": "08fdb59d15d21e94914d00390e8f73ee6245b0eabec64e7c052585f23638f963",
+    "hosts/swift-verifier/adapter.mjs": "c92c21fcbf7fe91d949f60bc51a96d4cb5f185be9172d0a214c4e87d2b649388",
+    "hosts/swift-verifier/build.mjs": "ae063b627e853fc0b651e3db103dd1af01c6815374d36781e79270b7d48934fb",
+    "hosts/swift-verifier/check-plan-v1.mjs": "a30ff5596e2bebc376cfa0da84be1c00eca8443cc2b37f5b1b7da42ef44b658a",
+    "hosts/swift-verifier/executor.mjs": "3b233203d7e9d2c2e1f5aa3c458685e86f15d40fc07b2542e7b6bb48a2555db4",
+    "hosts/swift-verifier/group-adapter-v1.mjs": "471ae91cfc78a82abcb425ed75cd16aec2a76d8123cdc9b3e4063c536382e774",
+    "hosts/swift-verifier/group-contract-utils.mjs": "8fc51ac107abd68adb1c72683ccfa2af9c74ac077c5506bf89525f972b14ac82",
+    "hosts/swift-verifier/main.swift": "0d4e15b22b3231d990cfd5e7de1c52f4fdfebf4f4ab6da15b0ae22c74cea910c",
+    "hosts/swift-verifier/owned-child.mjs": "ff9bbef97b3401afd394a98c8bff4fe273a4b6af3a1f852bdf5bf872fd4474df",
+    "hosts/swift-verifier/protocol.mjs": "7557d81836f263c13e06ac7613ebfa61ce7fbeeb7b0f7db98889473806f322cc",
+    "hosts/swift-verifier/reservation.mjs": "6d7573d23a3d2b0ecdb4b396cb58f4f9ae8e5997190616c08c1b93bd0ab376fd",
+    "integrations/veritas/native/macos/CodenameVeritasFramework/Sources/VeritasCore/ArtifactSnapshot.swift": "013e796d11a844dda345f223894a8d76713b19b0f46f6a7f84019aa5b7bc0f22",
+    "integrations/veritas/native/macos/CodenameVeritasFramework/Sources/VeritasCore/DeterministicChecks.swift": "4d234fd389895cf0a55bf7daf0f5d082077ab3677880165f7d0e1236a88be474",
+    "integrations/veritas/native/macos/CodenameVeritasFramework/Sources/VeritasCore/StrictJSONDocumentValidator.swift": "bd6173e012890f2fde2e26be94c5e577cd9e098841bdad98a377b1c88dff1b2c",
+    "integrity/record-utils.mjs": "e46eb1a01170231bd6873771cd256740fd3dde6bcb01d418f6f7d7a75e6139ff",
+    "package-lock.json": "396284ceeb20491293a83094a9558cb32368bb9ccc71b75e0d10da52e86b0912",
+    "package.json": "6b5c0271f5ad95d62af409c9782a2abb0b18a9844356c01a2fcf469063f7897f",
+    "receipts/host-run-bundle-v2.mjs": "406936e6523f58323634fab1c9f560d671d58e1c343d2082f081f8a7810061fe",
+    "receipts/live-usage-v1.mjs": "f015e2973567e21329d4e79de8abc6e1f664370eff3f2338aad31490fb4791a5",
+    "receipts/repository-execution-v1.mjs": "7317e06c094bdf33e51645ce39348fc9e2d5a11ad0921af87434e34c45828cc2",
+    "receipts/repository-live-model-run-v1.mjs": "ba8a89f5dfc720e345b8afcc5673250e9e9473e99f17c2e0914174712c14e462",
+    "receipts/repository-run-v1.mjs": "50c1e86cec48fc666aae64b3285f9acda8e20968d5f10f0d9313e0e22051d697",
+    "receipts/swift-static-group-v1.mjs": "e07e9a361ef808f8d652f1542fec54085d4f341fd093a582f2e86baf77e4cdbb",
+    "receipts/swift-static-run-v1.mjs": "454e8657a2a2aaf6a016de5d09c5d65512d53ffb9db2a6843e05471450f8c8ef",
+    "tests/helpers/live-cli-side-effect-guard.mjs": "f1ed9b8f69c41c6027b9b8d7ed0149c1fee970d00109eaac0e7bb0714d08c00e",
+    "tests/helpers/node-repository-fixture.mjs": "db034a91d1ad0bfcb2b22df9b598d3e276d260c493002319e9d191e10ce2cd85",
+    "tests/helpers/repository-live-run-fixture.mjs": "7d60a9a773bff178a4abc111e7cf679e71619d34b9b45417917f8be5a5dc657a",
+    "tests/helpers/repository-run-fixture.mjs": "2877df81895185e35c5e5dd419dbb161bde5f23529f6459ed5e0128b2780b121",
+    "tests/helpers/reviewed-live-model-fixture.mjs": "0a5bf10a5a7c4e1f1cbfaba6d9848e68003554e92093b18303d9f6a3f33c1cc2",
+    "tests/helpers/swift-group-fixture.mjs": "2f8e5b98fbf2fb1757fe25bc2d78b427e30cccbdaccb64d618922f925e077d60",
+    "tests/host-run-bundle-v2.test.mjs": "ba3f06af454abd31b2b7426aedc7b04b63e7efea19696df7c24a6ff187d112cb",
+    "tests/live-usage.test.mjs": "3be9d19ee463641ea521179ff31874127c5e5654f48f0ab14ced6e1dcdf82ffd",
+    "tests/native/repository-host.test.mjs": "3e449395b033bf5bfd51c4ce1f2ca847eb27c03b85467a2e24eb40b5ff3f8594",
+    "tests/native/swift-executor.test.mjs": "97f93d9bb32ebcc262c5d2f915eb549f3cc187feec9b2636b7ac617047176cc1",
+    "tests/native/swift-group.test.mjs": "980ad1fbb2dae8eb5394b300a547f41ed34d4ab6b20db4f4335c467f5ac6a5d9",
+    "tests/native/swift-kernel.test.mjs": "e6726c94a1b7359c2e3042a0e8ddb71973255088da82373f7988cd3bb6873699",
+    "tests/node-executor.test.mjs": "87bd39e1b48872de468477c8c8f6fa8f96884c632df58973b0ac1b89bb195e6d",
+    "tests/node-suite.test.mjs": "ca26dc4558ef17d2a9df982dfe1634053451580fcbf0228d06369121ff53143e",
+    "tests/paired-trial.test.mjs": "979dd5e1dfb7dcdc55f874fdf1e1232a8eea356d0fd856817583921d3d10441b",
+    "tests/proposed-changes.test.mjs": "d938037e6f67749f5ef473eaf65a3c5fc054865fed504151c01b0fdfcd33bd39",
+    "tests/repository-execution-receipt.test.mjs": "1075990a6f96276df2057f525df9914bb56a5c1da43d7d544956c86567ad983d",
+    "tests/repository-fixture.test.mjs": "4febfb12c46f3bbcd5f26612475aef6103c6cba876b82ab26cdcb7b9ffe39b20",
+    "tests/repository-live-cli.test.mjs": "c15fcdaf6ea18fd477c1b32526d1416c56ad91005b23231b6c4406e1e2c5632d",
+    "tests/repository-live-model-run.test.mjs": "d0014f841de603e625b665f9526c0d75b324fa4bb28ee0c6672becdc171858ae",
+    "tests/repository-run.test.mjs": "e1c1f1a9407cfecce5b61359a1822fd542c72626d5969da8e679477c60cf176e",
+    "tests/repository-workflow.test.mjs": "ca455e66b4e97fc8530ef0b2a12d35cd1986d80ab409ef9449a977f047015359",
+    "tests/reviewed-live-fixture.test.mjs": "fcc1bd1d97383979ceca8437091624f4117aec5d0c5fba188c896c8998825b80",
+    "tests/reviewed-live-model.test.mjs": "9a6d5da731b16ba2602594561e54b2cde76a54d39a98b719b239874aa49b0e51",
+    "tests/swift-group-owner.test.mjs": "8c7c83e52873c0d6b9a76cda4746dd1ded3c09583ac1d5c34d681023e2a159d3",
+    "tests/swift-static-group.test.mjs": "9bf196d7f2ddad0d4968515e5413cfeb01f334f6d9ad90ec007234539b24015d",
+    "tests/swift-static-run.test.mjs": "d9f747a328e44966c5e88128c3b9edf2d07a1c6dc4e818a91d44164aac78a791",
+    "tests/task-workspace.test.mjs": "d9df1ee4dc36b5a239a5a70847c6d4c53abe2164cf484712666635f1be9a2ef1",
+    "tests/trial-intake.test.mjs": "42a93005ab3fc6b0f573cf413bbb03d5ba2a59d40d3280363b741ded813a6c92",
+    "workflow/contracts.mjs": "c28a3ee3db6e9a936cd58fca8b8ee3f2744ca25c259e2ea278b3b09cdbb73d82",
+    "workflow/engine.mjs": "c67c63baeadc725a8487af7108b01d3a38dd50e64ff35f1be66471c81e5f979b"
+  },
+  "sourceFileCount": 77,
+  "prior61Unchanged": true,
+  "verification": {
+    "path": "/Users/louiscalata/nisi-next-private/.build/live-repository-Gvvfft/checks-6z2sK9/summary.json",
+    "sha256": "5b6d05170d79d4c8b1d9ea165f2259cbd633958057561868b8842eb9a0bf372d",
+    "results": [
+      {
+        "label": "focused",
+        "exitCode": 0,
+        "counts": {
+          "tests": 97,
+          "pass": 97,
+          "fail": 0,
+          "skipped": 0,
+          "cancelled": 0,
+          "todo": 0
+        },
+        "path": "/Users/louiscalata/nisi-next-private/.build/live-repository-Gvvfft/checks-6z2sK9/focused.json",
+        "sha256": "d0cc3005b4bfec1cf3fb7cf05ee036047bc89d1a383d40f24f169324c05d02cf"
+      },
+      {
+        "label": "portable",
+        "exitCode": 0,
+        "counts": {
+          "tests": 603,
+          "pass": 603,
+          "fail": 0,
+          "skipped": 0,
+          "cancelled": 0,
+          "todo": 0
+        },
+        "path": "/Users/louiscalata/nisi-next-private/.build/live-repository-Gvvfft/checks-6z2sK9/portable.json",
+        "sha256": "d968874906743458afca25fd245a8b2359f682b87c12042fb81e71b79d64b104"
+      },
+      {
+        "label": "freeze",
+        "exitCode": 0,
+        "counts": null,
+        "path": "/Users/louiscalata/nisi-next-private/.build/live-repository-Gvvfft/checks-6z2sK9/freeze.json",
+        "sha256": "6364def0b2bed7995490bf0e8a1a7f05a6143586948c1ecb2530e14cae1c1352"
+      },
+      {
+        "label": "native-host",
+        "exitCode": 0,
+        "counts": {
+          "tests": 2,
+          "pass": 2,
+          "fail": 0,
+          "skipped": 0,
+          "cancelled": 0,
+          "todo": 0
+        },
+        "path": "/Users/louiscalata/nisi-next-private/.build/live-repository-Gvvfft/checks-6z2sK9/native-host.json",
+        "sha256": "e6457b12d599a6f677bb3a4a2be0a332f2d3b1cd03e21db4c56759d6d0c15101"
+      }
+    ]
+  },
+  "importedFreeze": {
+    "files": 225,
+    "originRechecked": false,
+    "evidence": {
+      "path": "/Users/louiscalata/nisi-next-private/.build/live-repository-Gvvfft/checks-6z2sK9/freeze.json",
+      "sha256": "6364def0b2bed7995490bf0e8a1a7f05a6143586948c1ecb2530e14cae1c1352"
+    }
+  },
+  "regressions": {
+    "concurrentLane": {
+      "before": {
+        "path": "/Users/louiscalata/nisi-next-private/.build/live-repository-Gvvfft/lane-tests-X7XaEe/concurrency-before.tap",
+        "sha256": "5a3f29a1cfd51056c95662ed07513a5e519806ab93dc7047d8856dad0c03d275"
+      },
+      "after": {
+        "path": "/Users/louiscalata/nisi-next-private/.build/live-repository-Gvvfft/lane-tests-X7XaEe/lane-usage-after.tap",
+        "sha256": "3d64caafcbf3bcb865128b90efe76b8ab6ce278fb3557033021d1013839a3ad4"
+      }
+    },
+    "receipt": {
+      "before": {
+        "path": "/Users/louiscalata/nisi-next-private/.build/live-repository-Gvvfft/receipt-tests-mW5kCx/receipt-before-compatible.tap",
+        "sha256": "ef1edb871c5cb00e5280654d766144e9f3590920a500408c3ec87d4853ca60a2"
+      },
+      "after": {
+        "path": "/Users/louiscalata/nisi-next-private/.build/live-repository-Gvvfft/receipt-tests-mW5kCx/receipt-after.tap",
+        "sha256": "4ad40cb5fe73e7a11c9a15d8294d2f1a7f5d865a7880db030695b6898b1137f4"
+      },
+      "beforePassed": 39,
+      "beforeFailed": 12,
+      "afterPassed": 51,
+      "negativeLeafCases": 9,
+      "parentTableFailures": 3
+    },
+    "mutationCoverage": {
+      "first": {
+        "path": "/Users/louiscalata/nisi-next-private/.build/live-repository-Gvvfft/mutants-V5yIp4/summary.json",
+        "sha256": "b8d4966d5718678bb41b0abded2a6482217217046c5aafac474c44c29fec0d83"
+      },
+      "firstDetected": 11,
+      "final": {
+        "path": "/Users/louiscalata/nisi-next-private/.build/live-repository-Gvvfft/mutants-ac3c35/summary.json",
+        "sha256": "09d78a609587b561edd578a5052ee4b10c8a2a04d4ff9e58c3447d44e7d81bb1"
+      },
+      "finalDetected": 12,
+      "total": 12,
+      "exhaustive": false,
+      "harness": {
+        "path": "/Users/louiscalata/nisi-next-private/.build/live-repository-Gvvfft/verified-mutation-harness.mjs",
+        "sha256": "06859fe0aab9664670b5392944828ef59bcd4872dccb2a247e6c39a38d0294da"
+      },
+      "reasonForTestChange": "Assert expired repair never reaches fresh checks, rather than only later reviewer refusal"
+    }
+  },
+  "liveAttempt": {
+    "status": "INCOMPLETE",
+    "observedCliExitCode": 1,
+    "runId": "4061a9a8-9656-470c-ac85-defad52e7aee",
+    "directory": "/Users/louiscalata/nisi-next-private/.build/repository-live-demo-pxIdpE",
+    "summary": {
+      "path": "/Users/louiscalata/nisi-next-private/.build/repository-live-demo-pxIdpE/summary.json",
+      "sha256": "2dea42ee3f31c66dbf9436bb92cbdf913362bd5eccdcaecefb8c930a91f07456"
+    },
+    "receipt": {
+      "path": "/Users/louiscalata/nisi-next-private/.build/repository-live-demo-pxIdpE/live-run-receipt.json",
+      "sha256": "d5954e5bffd059e0a569eb247fa1968366f6c392dd870fbac0b8071a232805dc"
+    },
+    "receiptFingerprint": "5d81ac334408e4b5000b3153bc1a2ce30a4727e15c1d1fd77cd62c91cf435e25",
+    "workflowOutcome": "BLOCKED",
+    "authorRequested": "qwen/qwen3.8-27b",
+    "reviewerSelectedButNotCalled": "openai/gpt-oss-20b",
+    "authorCalls": 1,
+    "reviewerCalls": 0,
+    "failureCode": "LOCAL_CHAT_EMPTY_RESPONSE",
+    "usage": {
+      "calls": 1,
+      "knownCalls": 0,
+      "unknownCalls": 1,
+      "totals": null,
+      "knownSubtotal": {
+        "promptTokens": 0,
+        "completionTokens": 0,
+        "totalTokens": 0
+      },
+      "complete": false
+    },
+    "setupDurationMs": 2540,
+    "workflowDurationMs": 10002,
+    "authorAdapterDurationMs": 9616,
+    "hostState": "SETTLED",
+    "ownerStates": {
+      "staticChecks": "IDLE",
+      "tests": "IDLE"
+    },
+    "realStaticChecks": 4,
+    "baselineAssertions": {
+      "passed": 8,
+      "executed": 10,
+      "expectedFailure": true
+    },
+    "proposal": null,
+    "applied": false,
+    "supplementalRuntimeLog": {
+      "path": "/Users/louiscalata/nisi-next-private/.build/live-repository-Gvvfft/runtime-response-metadata.json",
+      "sha256": "a0d6f99ff1fb916549f274e0553c11ae89633633b99ca1552c4eb11410f59ff4"
+    },
+    "supplementExactlyRequestHashMatched": false,
+    "unknownUsageNotReplaced": true,
+    "reasoningNotPromotedToAnswer": true,
+    "archivedChecksumRechecked": true,
+    "issuedContextRecreated": false
+  },
+  "protocolDiagnostic": {
+    "summary": {
+      "path": "/Users/louiscalata/nisi-next-private/.build/live-repository-Gvvfft/channel-probe-RLe5A5/summary.json",
+      "sha256": "4a6fb3d07494477b1cd0393daab19709fa187ea0a7dafbc822730049ed8d04f3"
+    },
+    "model": "qwen/qwen3.8-27b",
+    "calls": 2,
+    "strictSchemaFinalContentEmpty": true,
+    "plainInstructionReturnedRequestedJSON": true,
+    "repositoryRepairDemonstrated": false,
+    "runtimeSettingsChanged": false,
+    "note": "Bounded tiny task; explicit output-mode integration and a new repository attempt are still pending."
+  },
+  "collaboration": {
+    "claude": [
+      {
+        "path": "/Users/louiscalata/nisi-next-private/.build/live-repository-Gvvfft/fable-usage.json",
+        "sha256": "a02ba46cfcfff53c57bcd4733c4cd21b284b1514751f7f9ed418981f2be4f748",
+        "requestedModel": "fable",
+        "reportedModels": [
+          "claude-haiku-4-5-20251001",
+          "claude-fable-5-1"
+        ],
+        "status": "succeeded",
+        "reportedCostUSD": 0.22189025,
+        "wallSeconds": 43.526,
+        "toolsEnabled": false,
+        "sessionPersisted": false
+      },
+      {
+        "path": "/Users/louiscalata/nisi-next-private/.build/live-repository-Gvvfft/fable-live-review.json",
+        "sha256": "d87a214e8a2df3bfb1a0bbb3977a93a51cd918a46d7f6995d6457f647b1abd29",
+        "requestedModel": "fable",
+        "reportedModels": [],
+        "status": "NOT_RUN",
+        "reportedCostUSD": null,
+        "wallSeconds": null,
+        "toolsEnabled": false,
+        "sessionPersisted": false
+      },
+      {
+        "path": "/Users/louiscalata/nisi-next-private/.build/live-repository-Gvvfft/sonnet-cli-review.json",
+        "sha256": "b5ffde3d435db3d95c2ea1a1375b6a097b9a982ae0a575bdb8a2e9e45c6560d4",
+        "requestedModel": "sonnet",
+        "reportedModels": [
+          "claude-haiku-4-5-20251001",
+          "claude-sonnet-5"
+        ],
+        "status": "FAIL",
+        "reportedCostUSD": 0.07758,
+        "wallSeconds": 40.439,
+        "toolsEnabled": false,
+        "sessionPersisted": false
+      },
+      {
+        "path": "/Users/louiscalata/nisi-next-private/.build/live-repository-Gvvfft/sonnet-cli-resolution.json",
+        "sha256": "4b93c33893d8863fdc92df731be89fc1c459f30e558f4b2a4a721536db3a0ba8",
+        "requestedModel": "sonnet",
+        "reportedModels": [
+          "claude-haiku-4-5-20251001",
+          "claude-sonnet-5"
+        ],
+        "status": "PASS",
+        "reportedCostUSD": 0.014248,
+        "wallSeconds": 4.298,
+        "toolsEnabled": false,
+        "sessionPersisted": false
+      }
+    ],
+    "knownSuccessfulClaudeCostSubtotalUSD": 0.31371825,
+    "allProviderUsageKnown": false,
+    "sharedChami": {
+      "path": "/Users/louiscalata/nisi-next-private/.build/live-repository-Gvvfft/worker-review.json",
+      "sha256": "986be3e46c14eba53574b5c64bc401ca1052d9e0baf343538ab18177ecfe0ce8",
+      "jobId": "mac-20260912-184642-fb06c0d36942971899ff4a80ba6b1bd4",
+      "reportedModel": "Qwen3-Coder-Next 80B-A3B Q4_K_M",
+      "reportedSeconds": 54.1,
+      "taskOnlyServer": "louisaurorar12",
+      "persistentSettingsChanged": false,
+      "acceptedRecommendation": false,
+      "reason": "Would remove post-response consent guards and discard refused data",
+      "nativeWindowsAcceptance": false,
+      "tokens": null,
+      "costUSD": null
+    },
+    "opencode": {
+      "path": "/Users/louiscalata/nisi-next-private/.build/private-consumer-proposal-9gT8nc/.packets/typed-private-consumer.result.md",
+      "sha256": "5ac35d6e897cdfaebbb517b4d1e9b3c23451e950ecfc65fee67f7b57a1d3c234",
+      "requestedRoute": "free/opencode/big-pickle",
+      "status": "BLOCKED",
+      "taskStatus": "P1 FAILED",
+      "editTimeoutSeconds": 240,
+      "requestedFileCreated": false,
+      "servedModel": null,
+      "tokens": null,
+      "costUSD": null
+    },
+    "independentReviews": [
+      "fixture/lane/receipt/CLI test drafting",
+      "Luna receipt audit",
+      "isolated package/type proposal and audit"
+    ],
+    "excludedMutationAttempt": {
+      "harness": {
+        "path": "/Volumes/SharedChami/Veritas Local Repository/.build/live-repository-Gvvfft/live-mutation-harness.mjs",
+        "sha256": "3ad3407738e8eb7b19f780830438bbe4f5319d020f856c9af7a802a0497812e3"
+      },
+      "accepted": false,
+      "reasons": [
+        "Executed before requested parent inspection",
+        "Wrong scratch-root lookup skipped receipt tests",
+        "No passing control or retained result file"
+      ]
+    }
+  },
+  "privatePackaging": {
+    "status": "ISOLATED_PROPOSAL_NOT_INTEGRATED",
+    "priorRehearsal": {
+      "path": "/Users/louiscalata/nisi-next-private/.build/private-consumer-proposal-9gT8nc/rehearsal-result.json",
+      "sha256": "f7edc589a291ae40076069c39cbf3777732537b151a9f452b27955456ca594ce"
+    },
+    "priorArchive": {
+      "path": "/Users/louiscalata/nisi-next-private/.build/private-consumer-proposal-9gT8nc/archive-hvlRIP/nisi-0.2.0-private.0.tgz",
+      "sha256": "5b05735f2b253144c605d2d0ac35c05cc037066b21e1caca71afa8bc8dac878c"
+    },
+    "correctedRehearsal": {
+      "path": "/Users/louiscalata/nisi-next-private/.build/private-consumer-proposal-9gT8nc/declaration-fixes-vxxpC4/rehearsal-result.json",
+      "sha256": "9dcc7e464695b1c596f1b97eed8652cb904937cbd4fbb42760f86f5f7e7e3398"
+    },
+    "correctedArchive": {
+      "path": "/Users/louiscalata/nisi-next-private/.build/private-consumer-proposal-9gT8nc/declaration-fixes-vxxpC4/archive/nisi-0.2.0-private.0.tgz",
+      "sha256": "c997f8b017cf08593802770ad66fd165fcf692add9b2cdd568d10dc5271cb582"
+    },
+    "correctedCompileConsumers": 4,
+    "correctedNegativeDiagnostics": 26,
+    "correctedRuntimeTests": 7,
+    "note": "Three proposal declaration issues corrected in isolation. Node24 and existing type dependencies only. No canonical type or package edit accepted here."
+  },
+  "documentation": {
+    "roadmap": {
+      "path": "/Users/louiscalata/nisi-next-private/roadmap.md",
+      "sha256": "144d1488c85022146e3830a4fd9744944ab4a2122e5553671535aa715566b768"
+    },
+    "equation": {
+      "path": "/Volumes/SharedChami/Veritas Local Repository/SYSTEM-EQUATION.md",
+      "sha256": "4e7463f89e2ac503d48c5cc8baf0c12fab9ff70550f335246cff86a2955448d4"
+    },
+    "retainedEquationTailSha256": "703bfbd10ad108ac8b18f16e4f6864c69d29f4558794616b81dac7ab9522c4f3"
+  },
+  "warnings": [
+    "Live final-output compatibility unresolved; reviewer and fresh repaired-candidate checks did not run.",
+    "Full main-command interruption and summary-persistence fault injection remain NOT_RUN.",
+    "General generated-code isolation, native application, durable history, prevention and release gates remain open.",
+    "Hashes and original-object consistency are not cryptographic execution or model attestation.",
+    "No matched savings, accuracy uplift or completed live repository repair demonstrated."
+  ],
+  "benchmarkRun": false,
+  "accuracyImprovementMeasured": false,
+  "fullMergerAccepted": false,
+  "legalClearance": false,
+  "publicationAuthorized": false,
+  "commitsOrPushes": false
+}

@@ -1,0 +1,183 @@
+{
+  "schemaVersion": 1,
+  "profile": "veritas-stage5-private-architecture-decisions-v1",
+  "statusCeiling": "SELF_ADMINISTERED_STRUCTURAL_PREPARATION",
+  "decisions": [
+    {
+      "id": "ADR-S5-001",
+      "title": "Isolate development tooling from the root runtime package",
+      "status": "ACCEPTED_PRIVATE_FIXTURE",
+      "decision": "Pin compiler, linter, schema validator, and their lockfile under tooling without changing the byte-pinned zero-runtime-dependency root package.",
+      "rejectedShortcut": "Floating npx, globally installed tools, or root dev dependencies presented as unchanged T75 evidence.",
+      "evidenceBoundary": "Tooling code executes during verification but cannot issue protected authority or runtime evidence."
+    },
+    {
+      "id": "ADR-S5-002",
+      "title": "Use strict TypeScript checking with no emit",
+      "status": "ACCEPTED_PRIVATE_FIXTURE",
+      "decision": "Type-check the complete veritas.ts source under the pinned Node 24 type surface with TypeScript strict mode, no emit, unknown catch variables, implicit-return checks, and switch fallthrough checks. The stronger noUncheckedIndexedAccess and exactOptionalPropertyTypes options remain explicitly disabled until a separately reviewed hardening stage.",
+      "rejectedShortcut": "Transpile-only success, skipLibCheck, broad source exclusion, or unbounded suppression.",
+      "evidenceBoundary": "A type pass is static consistency evidence, not runtime or semantic correctness."
+    },
+    {
+      "id": "ADR-S5-003",
+      "title": "Run lint without mutation and with zero warnings",
+      "status": "ACCEPTED_PRIVATE_FIXTURE",
+      "decision": "Lint exactly veritas.ts through the pinned ESLint and TypeScript parser without auto-fix.",
+      "rejectedShortcut": "Ignored files, report-only warnings, or formatting churn used as security evidence.",
+      "evidenceBoundary": "Lint rules are bounded defect detectors and are not transitive capability proof."
+    },
+    {
+      "id": "ADR-S5-004",
+      "title": "Falsify structural rules with seeded negative cases",
+      "status": "ACCEPTED_PRIVATE_FIXTURE",
+      "decision": "Parse the E1 marker region with the pinned TypeScript AST and prove each forbidden-effect rule catches a named mutation while allowed validation calls remain accepted.",
+      "rejectedShortcut": "A denylist pass without negative fixtures or exact source inclusion.",
+      "evidenceBoundary": "The rule set covers the declared marker region only and does not prove whole-program side-effect absence."
+    },
+    {
+      "id": "ADR-S5-005",
+      "title": "Validate schemas without coercion or defaults",
+      "status": "ACCEPTED_PRIVATE_FIXTURE",
+      "decision": "Compile strict draft-2020-12 schemas with additionalProperties false, enable registered format validation, require canonical UTC instants whose pinned Node Date roundtrip is byte-exact, and reject every seeded invalid record without mutation.",
+      "rejectedShortcut": "Coercion, default insertion, unknown-field removal, or permissive format handling.",
+      "evidenceBoundary": "The private schemas are self-administered preparation and not independently protected policy."
+    },
+    {
+      "id": "ADR-S5-006",
+      "title": "Freeze E16 cases as NOT_RUN preparation",
+      "status": "ACCEPTED_PRIVATE_FIXTURE",
+      "decision": "Assign unique IDs and exact family denominators to authority, digest, promotion, and rollback cases while every case remains NOT_RUN.",
+      "rejectedShortcut": "Treating schema validity, prior tests, or a planned oracle as E16 execution credit.",
+      "evidenceBoundary": "Protected authority, native power loss, distinct principals, and complete E16 acceptance remain absent."
+    },
+    {
+      "id": "ADR-S5-007",
+      "title": "Keep public release and patent decisions outside engineering status",
+      "status": "ACCEPTED_PRIVATE_FIXTURE",
+      "decision": "Stage 5 may improve enablement and traceability but cannot set patentability, freedom-to-operate, signing, production, or release status.",
+      "rejectedShortcut": "Inferring legal or public-release authority from passing private structural checks.",
+      "evidenceBoundary": "Counsel and named release-owner gates remain external and incomplete."
+    },
+    {
+      "id": "ADR-S5-008",
+      "title": "Use a non-self-referential digest root",
+      "status": "ACCEPTED_PRIVATE_FIXTURE",
+      "decision": "A private-Git-bound stage5-root.json pins the SHA-256 digests of both the Stage 5 manifest and its separate digest map. The manifest also pins the digest map, while the map hashes every declared contract and source file except the three non-cyclic root files. The private Git commit freezes the external root with the objects it names.",
+      "rejectedShortcut": "An unhashed manifest, an unhashed digest map, a self-referential hash claim, or a mutable file set presented as independently authenticated evidence.",
+      "evidenceBoundary": "The digest graph proves private-checkpoint consistency only; authenticity and custody remain bounded by the private Git commit and do not constitute protected or independent attestation."
+    },
+    {
+      "id": "ADR-S5-009",
+      "title": "Model E16 semantics without converting preparation into execution credit",
+      "status": "ACCEPTED_PRIVATE_FIXTURE",
+      "decision": "Run all 24 frozen E16 planning cases through a digest-bound pure reference model twice, require mutation-specific delta validation, clean-path twins, outcome invariants, operation-ID-bound replay, trace-derived counts, and five vacuity controls, while preserving every official case as NOT_RUN.",
+      "rejectedShortcut": "Mapping case IDs directly to expected outcomes, relabeling symbolic transitions as coordinator execution, or treating model consistency as protected authority, native crash, power-loss, concurrency, E16, patent, production, or release evidence.",
+      "evidenceBoundary": "PASS_STAGE5_E16_REFERENCE_MODEL_SUBSET_ONLY proves deterministic self-administered model consistency only; implementationExecutedCases and e16ExecutedCases remain zero."
+    },
+    {
+      "id": "ADR-S5-010",
+      "title": "Separate bounded process-crash fixtures from official E16 credit",
+      "status": "ACCEPTED_PRIVATE_FIXTURE",
+      "decision": "Prepare a static contract for four frozen E16 case shapes without reporting them as executed in the Stage 5 structural gate. A separate opt-in dynamic runner may execute the exact-source Darwin local-APFS process fixture twice, independently validate three kernel SIGKILL boundaries and one digest-substitution rollback, and emit its own bounded PASS result without mutating the official NOT_RUN manifest.",
+      "rejectedShortcut": "Relabeling process-loss fixtures as power-loss durability, generated native-runtime execution, protected authority, multiwriter conformance, complete E16 execution, or product and legal readiness.",
+      "evidenceBoundary": "The static contract status is PREPARED_E16_IMPLEMENTATION_LOCAL_APFS_PROCESS_SUBSET and Stage 5 reports zero implementation cases executed. Only the separate dynamic runner may emit PASS_E16_IMPLEMENTATION_VERIFIED_SUBSET_ONLY for a self-administered implementation fixture; official E16 credit remains zero."
+    },
+    {
+      "id": "ADR-S5-011",
+      "title": "Select one inert hold-resolution without reopening trust",
+      "status": "ACCEPTED_PRIVATE_FIXTURE",
+      "decision": "After an exact terminal persistent-witness withdrawal, the coordinator may construct only the canonical HOLD_RECOVERY_REQUIRED resolution. Its full bytes are selected once in a witness-owned monotonic sidecar, then bound into an immutable local closure and reconstructible reference without advancing coordinator HEAD, clearing the recovery barrier, restoring accepted state, or changing the trust lifecycle.",
+      "rejectedShortcut": "Caller-supplied arbitrary digests, hash-only witness storage, unwitnessed or random barriers, general RECOVERY_REQUIRED transitions, local closure before witness readback, or treating retry ambiguity as not applied.",
+      "evidenceBoundary": "The registered Stage 5 schema covers only the coordinator resolution payload. Witness selection, local closure, and reference records have exact runtime validators but remain outside complete lifecycle-schema credit. PASS_M36_COORDINATOR_RECOVERY_RESOLUTION_FIXTURE_ONLY is same-user local-APFS process and SQLite evidence; it proves no protected principal, power-loss durability, multi-writer conformance, production authority, patent status, or release readiness."
+    },
+    {
+      "id": "ADR-S5-012",
+      "title": "Stage declared candidate bytes without creating promotion authority",
+      "status": "ACCEPTED_PRIVATE_FIXTURE",
+      "decision": "The M3.7 preparation slice accepts only a sorted bounded declared full-tree byte set bound to the exact active coordinator base. It writes same-user immutable fence, intent, inert tree, and result records, revalidates exact bytes before and after result publication, and moves detected poison into identity-checked same-device quarantine before allowing retry.",
+      "rejectedShortcut": "Live-directory import, unbounded decoding, caller-claimed tree digests, result publication without final readback, deletion of untrusted substituted paths, Git or patch claims without adapters, promotion side effects, execution, or calling the path outside the bounded test lane.",
+      "evidenceBoundary": "PASS_M37_INERT_DECLARED_FULL_TREE_STAGING_FIXTURE_ONLY is a deterministic same-user local fixture. It has no live Git repository adapter, patch adapter, protected fence, distinct daemon principal, descriptor-relative ancestor proof, power-loss durability proof, native multi-writer conformance, decision authority, promotion authority, execution authority, M3.7 roadmap credit, patent status, or release readiness."
+    },
+    {
+      "id": "ADR-S5-013",
+      "title": "Verify a declared Git object bundle without admitting repository authority",
+      "status": "ACCEPTED_PRIVATE_FIXTURE",
+      "decision": "The M3.7 Git-base fixture admits only one unsigned root commit, recomputes exact SHA-1 commit, tree, and blob identities from declared framed bytes, independently binds every selected-snapshot object with SHA-256, closes the sorted snapshot inventory, flattens the admitted tree, and requires its Veritas digest to equal the active accepted artifact while observing one monotonic in-memory ref token before and after validation. The exact ordered M37-G1 through M37-G9 denominator, two repetitions, and five denominator-negative controls are frozen independently in source and the Stage 5 acceptance manifest. The registered JSON schema is structural only; a freshly generated result receives a separate summary-consistency check for request/base/ref bindings, sorted metadata, counts, and recomputed summary/result digests. That helper does not replace replay over raw objects, tree edges, blob content, and the ref observation.",
+      "rejectedShortcut": "Calling a Git subprocess, reading a live repository, admitting a parented commit while claiming history closure, trusting SHA-1 as the Veritas security identity, accepting extra or missing snapshot objects, treating an unprotected ref token as custody, treating structural schema validity as semantic verification, or allowing the result to stage, decide, promote, or execute.",
+      "evidenceBoundary": "PASS_M37_GIT_BASE_MANIFEST_FIXTURE_ONLY covers one declared in-memory root-commit snapshot closure under independent SHA-256 binding and runtime semantic cross-binding. It proves no parent or history admission, packfile, alternates, live ref, protected custody, signed commit, checkout, patch, repository-concurrency, promotion, execution, patent, production, or release property."
+    },
+    {
+      "id": "ADR-S5-014",
+      "title": "Derive a structured tree delta without admitting patch or staging authority",
+      "status": "ACCEPTED_PRIVATE_FIXTURE",
+      "decision": "The M3.7 structured tree-delta fixture freshly verifies the exact raw Git base, rereads each selected blob, validates one canonically sorted operation per portable path against that same immutable base, derives ADD, REPLACE, DELETE, and CHMOD effects simultaneously in memory, validates the complete final byte-and-mode tree against an independently requested candidate digest, and repeats raw base, ref-token, object-closure, accepted-base, and result-identity verification before returning a zero-authority summary. The positive all-operations vector binds a literal final-tree digest calculated by a separate reference procedure instead of asking the implementation under test to invent its own expected value. REPLACE requires changed content and may also change mode; CHMOD is the exclusive mode-only operation. Empty operations and empty final trees are deliberately outside this V1 fixture.",
+      "rejectedShortcut": "Sequential same-path mutation, trusting a standalone Git-base or delta summary, parsing textual patches, applying filesystem or Git changes, treating SHA-1 as a security digest, accepting a changed ref token or object closure, returning an intermediate tree, or allowing any staging, decision, certification, promotion, installation, or execution effect.",
+      "evidenceBoundary": "PASS_M37_STRUCTURED_GIT_TREE_DELTA_FIXTURE_ONLY is a deterministic self-administered in-memory derivation fixture with 59 ordered atomic checks, two repetitions, and five denominator controls. It is not a live Git adapter, repository mutation mechanism, patch parser, protected ref, concurrency or durability proof, containment claim, M3/M4 credit, patentability evidence, production or signing readiness, or release authority."
+    },
+    {
+      "id": "ADR-S5-015",
+      "title": "Separate declared assurance-graph closure from runtime dependency completeness and recall",
+      "status": "ACCEPTED_PRIVATE_FIXTURE",
+      "decision": "The M4.6 preparation slice validates one bounded, typed, content-addressed dependency DAG for an exact accepted-artifact subject. Exact external subject and graph digests constrain the fixture; exact-key nodes, requirements, and edges use separate digest domains, canonical ordering, unique logical identities, exact declared-set equality, acyclicity, and root reachability. The minimum vector declares one verifier, policy, adapter, runtime, evidence, and destination dependency. Thirty-seven ordered atomic checks repeat twice with five denominator controls and terminal whole-store zero-effect evidence.",
+      "rejectedShortcut": "Treating caller-selected requirements as protected completeness, accepting coherent redigests without an external expected graph digest, trusting caller order or topology, permitting missing, duplicate, ambiguous, cyclic, dangling, unreachable, or undeclared graph elements, reusing C5 runtime-closure claims, binding an active receipt, advancing recall, replaying evidence, or creating any staging, decision, promotion, installation, or execution effect.",
+      "evidenceBoundary": "PASS_M46_INERT_DECLARED_DEPENDENCY_CLOSURE_GRAPH_FIXTURE_ONLY proves only deterministic declared-set graph structure and the tested refusals. It proves no discovery of all real runtime dependencies, semantic truth, signatures, protected authority, currentness, destination readback, active-receipt binding, recall-before-reuse, replay sufficiency, durability, concurrency, M4 or M4.6 completion, E15, patentability, production, signing, or release authority."
+    },
+    {
+      "id": "ADR-S5-016",
+      "title": "Derive scoped recall barriers without creating runtime recall authority",
+      "status": "ACCEPTED_PRIVATE_FIXTURE",
+      "decision": "The M4.6 scoped recall preparation slice operates only inside a bounded private test lane over the frozen synthetic dependency graph. Source-external receipt-set, prior-state, event, barrier-state, after-state, and transition-result digests constrain a pure derivation. One affecting content-change event advances only intersecting scope barriers exactly once, evaluates every admission against the after-state, withholds affected receipts, preserves unrelated barriers, and returns zero-authority dispositions. Thirty-six ordered checks repeat twice with five denominator controls and terminal whole-store zero-effect evidence.",
+      "rejectedShortcut": "Calling the existing coordinator recall path, accepting caller-declared affected receipts, evaluating reuse against the prior state, treating unknown scope as unrelated, upgrading receipt barriers by coherent redigestion, changing unrelated barriers, issuing replacement receipts, replaying evidence, consuming receipts, performing filesystem or network effects, or claiming runtime closure, protected currentness, durability, concurrency, authority, M4, E15, patent, production, signing, or release credit.",
+      "evidenceBoundary": "PASS_M46_INERT_SYNTHETIC_RECALL_BEFORE_REUSE_FIXTURE_ONLY proves only the deterministic synthetic scope-barrier transition and exact refusals exercised by this fixture. It proves no complete runtime dependency discovery, authenticated real event observation, durable or rollback-resistant monotonic state, crash or power-loss safety, hostile-writer or real concurrency behavior, product receipt consumption, replay sufficiency, fresh replacement authority, M4 or M4.6 completion, E15, patentability, production, signing, or release authority."
+    },
+    {
+      "id": "ADR-S5-017",
+      "title": "Prepare a source-bound inert Failure Intelligence incident spine without creating authority",
+      "status": "ACCEPTED_PRIVATE_FIXTURE",
+      "decision": "The FI-0 preparation slice validates bounded canonical incident, evidence, adjudication-event, provenance-envelope, and derived-view records only inside the private test lane. Purpose-separated digests bind subject identity and content, an exact source-frozen self-administered evidence manifest, deterministic observation identity, one self-administered frozen genesis, three contiguous one-child event links, an inert historical provenance envelope, and a byte-identical pre-FI baseline bundle across seven injected in-memory shadow-adapter scenarios. Identical observations classify idempotently without raising occurrence count; divergent bytes under one observation key fail. A self-administered actor may produce only CANDIDATE or INCONCLUSIVE fixture state. Derived authority/effect fields are declared false and one temporary sentinel-store fingerprint is observed unchanged; temporary setup and cleanup remain harness filesystem effects.",
+      "rejectedShortcut": "Caller-shaped authority digests, declared-only evidence completeness without an external manifest, duplicate event acceptance, forked or gapped histories, self-administered confirmed-defect state, raw prompts or paths, unbounded incident content, historical-import claims, occurrence inflation, view-derived authority, baseline mutation, or treating structural schemas and in-memory fixtures as persistence, protected adjudication, product integration, outage resilience, M4/M5/E15/E16, patent, production, signing, or release credit.",
+      "evidenceBoundary": "PASS_FI0_INERT_INCIDENT_CONTRACT_FIXTURE_ONLY proves only the deterministic in-memory contract and exact refusals exercised by 36 ordered checks repeated twice with five denominator controls. The source-frozen expectations are self-administered constants, not authenticated external authority. The frozen fixture rejects declared raw locator and credential-like fields, but pseudonymous digests are not proved anonymous or personal-data-free. No capture, durable append, restart recovery, real SharedChami import, protected role separation, real product outage, global effect instrumentation, retrieval, prevention, certification influence, public release, or patentability conclusion is established."
+    },
+    {
+      "id": "ADR-S5-018",
+      "title": "Require separate-process readback before FI0 canonical-vector credit",
+      "status": "ACCEPTED_PRIVATE_FIXTURE",
+      "decision": "Run frozen FI0 vector 009 twice through a separately spawned, self-contained Node canonicalizer and digest verifier. Require exact canonical-envelope bytes, byte-identical successful results, the source-frozen vector digest, and ordered value-substitution, coherent-mutation, profile-version, key-order, whitespace, duplicate-key, CRLF, and invalid-UTF8 refusals. The native self-test separately runs the FI0 record contract through a bounded capability-gated same-UID child matrix for coherent substitution, stale digest mutation, and seven noncanonical record encodings.",
+      "rejectedShortcut": "Same-process rehashing, importing the shared Stage 5 canonicalizer into the worker, declared digest agreement, normalizing negative inputs before transport, accepting a coherently mutated and redigested vector, accepting a crash or generic error as an expected refusal, or describing same-UID Node process separation as independent authority or independent-toolchain agreement.",
+      "evidenceBoundary": "PASS_PRIVATE_CROSS_PROCESS_CANONICAL_VECTOR_FIXTURE_ONLY and PASS_PRIVATE_SAME_UID_CROSS_PROCESS_FIXTURE_ONLY prove only bounded same-host, same-owner, same-Node-version process separation over synthetic fixture bytes and exact refusals. Temporary harness files and subprocesses are observed test effects. No independent language or toolchain agreement, protected or distinct-principal authority, persistence, durability, product integration, FI0.4, FI0.8, M5.3, roadmap, patentability, production, signing, or release credit is established."
+    },
+    {
+      "id": "ADR-S5-019",
+      "title": "Freeze E14 displacement scenarios without converting design validation into comparison evidence",
+      "status": "ACCEPTED_PRIVATE_FIXTURE",
+      "decision": "Freeze an exact ordered 42-case E14 scenario partition across twelve failure families, two planned fresh-store repetitions, 84 paired structural case slots, 168 future lane-result slots, six representative comparison classes, five denominator controls, one separate payload-binding probe, named barrier templates, nonempty metric denominators, and pre-committed falsification decisions. Structural validation performs two sequential same-process manifest rereads and structural validations, validates every case under an unknown-field-refusing schema, and binds case content to a canonical digest while every case remains NOT_RUN.",
+      "rejectedShortcut": "Calling structural slots executed or passed cases, treating a frozen scenario as a competitive result, allowing an empty rate denominator, comparing against deliberately weak components, using sleeps instead of named barriers, reusing stores across atomic cases, counting the payload-binding probe as a sixth denominator control, accepting a changed case payload under unchanged identities, or assigning M4, uniqueness, patent, production, signing, release, technical E14, adoption E14, or comparison credit.",
+      "evidenceBoundary": "PASS_M07_E14_SCENARIO_FREEZE_ONLY proves only exact private scenario preparation and deterministic structural refusal behavior. It observes zero fresh-store runs, zero E14 case executions, zero comparison runs, no fairness assessment, no user-adoption evidence, and no competitive advantage. Future M0.8 result envelopes must bind this frozen scenario, exact builds, configurations, permissions, stores, and named barriers without rewriting the manifest."
+    },
+    {
+      "id": "ADR-S5-020",
+      "title": "Compare a separately pre-frozen finite registered-set oracle with a derived inert plan without admitting replay authority",
+      "status": "ACCEPTED_PRIVATE_FIXTURE",
+      "decision": "The M4.7 Phase-A fixture binds a separately pre-frozen 12-record synthetic oracle universe, separately encoded registered check records, one pre-planner freeze record, and the frozen M4.6 graph digest, then derives a pure FROZEN_SET_FALLBACK plan for one known-change vector and one unresolved-dependency vector. Every registered check appears exactly once in canonical order with one reason path of at most eight nodes; excludedCheckReasons is always empty; missedCheckIds and extraCheckIds are computed only by the comparison step and never accepted as inputs. Unknown or ambiguous dependencies expand to the full frozen set or refuse with an exact code and can never shrink the plan. Bounded ceilings of 32 checks, 16 dependency references per check, 8 reason-path nodes, 8 unresolved dependencies, 128 check-ID bytes, and 16,384 canonical plan bytes reject before nested processing or hashing. Twenty-four ordered atomic checks repeat twice with five denominator controls that fail with exact M47_DENOMINATOR codes, and Stage 5 enforces from source bytes that the planner region never references the frozen oracle-ID constant.",
+      "rejectedShortcut": "Letting the planner import, copy, or call the frozen oracle ID array; accepting missedCheckIds or extraCheckIds as success assumptions; treating an unknown or ambiguous dependency as excludable; asserting that some exception occurred instead of the exact refusal code; hashing or nesting before ceilings are enforced; emitting PASS_E15, REPLAYED, CURRENT, ACTIVE, CERTIFIED, or any receipt-issuing disposition; or assigning M4, M4.7, E15, official E16, patent, production, signing, or release credit.",
+      "evidenceBoundary": "PASS_M47_INERT_FROZEN_SET_PLAN_ORACLE_AGREEMENT_FIXTURE_ONLY proves only agreement between one bounded synthetic oracle and one derived inert plan over the declared 12-record set. It does not prove that any check ran, that runtime dependencies were complete, that an event was authentic or durably ordered, that state was rebuilt from genesis, or that any receipt can be replaced. Phase B and a separately pre-frozen outcome oracle remain unimplemented; the status token DERIVED_M47_INERT_FROZEN_SET_PLAN_ONLY is the only permitted result status."
+    },
+    {
+      "id": "ADR-S5-021",
+      "title": "Reduce a bounded genesis-rooted event chain to an inert terminal state with structural caller-hint isolation",
+      "status": "ACCEPTED_PRIVATE_FIXTURE",
+      "decision": "The M4.7 Phase-B fixture derives one frozen subject node's terminal state from a bounded three-to-sixteen-event ordinal-contiguous chain rooted at one source-external exact genesis digest, folding each event's predecessor state digest and state-transition digest into the next state under its own digest domain, then binds one receipt to the derived terminal barrier revision and evaluates its disposition -- MEASURED_CURRENT_NONAUTHORIZING when the receipt is bound to the exact current state digest and revision, REFUSED_RECALL_REQUIRED otherwise -- without granting recall, replay, execution, promotion, or installation authority. A caller-supplied terminal-state hint is recorded only as supplied-or-not and evaluated post hoc, after the terminal state is independently derived from the event chain alone; Stage 5 enforces from source bytes that the isolated pure-reducer region references neither the exact hint parameter name nor the word hint under any spelling. Twenty-seven ordered atomic checks repeat twice with five denominator controls that fail with exact M47B_REDUCER codes, covering minimum-chain reduction, deterministic re-derivation, exact-key rejection for every fixture shape, external substitution of the genesis digest, terminal state, and receipt, head/middle/tail truncation, reordering, duplication, unrelated-scope events, ordinal gaps, predecessor-continuity defects, divergent event-ID reuse, next-state digest mismatches, terminal-barrier lowering, stale-receipt nonauthorization, status-and-trace binding, idempotent duplicate replay, and terminal zero-effects with lane refusal.",
+      "rejectedShortcut": "Letting the pure-reducer region read the caller-supplied terminal-state hint under its exact name or any renamed parameter; treating a lower caller-claimed barrier revision as acceptable; deriving the terminal state from anything but the validated event chain; accepting a non-null checkpoint as anything but a protected-authority violation; skipping the ordinal-contiguity or predecessor-continuity checks; asserting that some exception occurred instead of the exact refusal code; hashing or nesting before the three-to-sixteen event-count bound is enforced; emitting PASS_E15, REPLAYED, CURRENT, ACTIVE, CERTIFIED, or any receipt-issuing or consumption disposition; or assigning M4, M4.7, E15, official E16, patent, production, signing, or release credit.",
+      "evidenceBoundary": "PASS_M47B_INERT_GENESIS_EVENT_REDUCER_FIXTURE_ONLY proves only that one bounded synthetic genesis-rooted event chain reduces deterministically to one inert terminal state and receipt disposition under structural caller-hint isolation. It does not prove that any event was observed or authenticated externally, that terminal state is durable or protected against rollback, that any receipt was actively consumed, that recall or replay executed, or that state was rebuilt across crash, power loss, or multiple writers. M4.7 Phase A's frozen-set oracle and Phase B's genesis-event reducer remain separate, unlinked fixtures; a pre-frozen outcome oracle binding both phases remains unimplemented, and the status token DERIVED_M47B_INERT_GENESIS_EVENT_REDUCER_ONLY is the only permitted result status."
+    },
+    {
+      "id": "ADR-S5-022",
+      "title": "Compose all seven product-journey stages as one inert fixture whose joints, not merely whose stages, are load-bearing",
+      "status": "ACCEPTED_PRIVATE_FIXTURE",
+      "decision": "The M4J fixture derives one fully inert composed product journey -- stage, check, explain, promote with destination readback, dependency event, recall, and replay -- simulating all seven stages without calling any real production mechanism. M4.6's frozen minimum subject digest and frozen dependency-closure graph digest are bound as external inputs, never restated: Stage 5 enforces from source bytes that M4J_EXPECTED_SUBJECT_DIGEST and M4J_EXPECTED_GRAPH_DIGEST are declared as assignments from the M4.6 constants. Each of the seven records is digested under its own domain and the result binds all seven record digests plus the two external inputs under a ninth result domain; the eight frozen expectation digests must be present as an exact key set before any value is examined, so a partial or absent expectation set cannot let downstream frozen-digest comparisons skip vacuously. Fifty-four ordered atomic checks repeat twice with five denominator controls that fail with exact codes, and six seeded joint substitutions -- stage-to-check, check-to-explain, explain-to-promote, promote-to-dependency-event, dependency-event-to-recall, and recall-to-replay, plus an adjacent explain-to-promote variant and a coherent whole-result substitution -- prove the composition itself is load-bearing rather than each stage in isolation. Structural isolation is enforced from source bytes rather than claimed: the marker-isolated replay region nests inside the outer journey region, may name none of the five upstream journey record types nor any upstream, replay, or whole-journey frozen expected digest, is closed to fixpoint against alias laundering through top-level constants, may read no module-level mutable binding, and exposes exactly one entry point taking exactly the validated recall record, so replay derives from validated recall alone. Each forbidden name is additionally required to exist outside the replay region so the absence scan cannot pass vacuously.",
+      "rejectedShortcut": "Letting the replay region read an upstream journey record type, an upstream frozen digest, its own or the whole-journey expected digest, a top-level constant whose initializer reaches any of them, or a module-level mutable carrier; adding a second parameter or a second entry point to the replay region; restating the M4.6 subject or graph digests instead of binding them; accepting a partial or absent journey expectation set; substituting a coherent whole result for the composed derivation; presenting any single stage's pass as journey evidence without the seeded joint substitutions; treating simulated stage, check, explain, promote, recall, or replay outcomes as real staging, checking, explaining, promotion, recall, or replay; hashing or nesting before the declared-file, subcheck, evidence, reason-path, stage-ID, and canonical-byte bounds are enforced; asserting that some exception occurred instead of the exact refusal code; emitting PASS_E15, REPLAYED, CURRENT, ACTIVE, CERTIFIED, or any receipt-issuing disposition; or assigning M3, M4, E15, official E16, patent, security, production, signing, or release credit.",
+      "evidenceBoundary": "PASS_M4J_INERT_NO_EXECUTION_PRODUCT_JOURNEY_FIXTURE_ONLY proves only that one bounded synthetic seven-stage journey over one frozen subject and one frozen graph composes deterministically into one inert result under structural replay isolation. It does not prove that anything was staged, checked, explained, promoted, recalled, or replayed, that any generated artifact, verifier, model, or plugin executed, that any external event was observed or authenticated, that state is durable, protected, or rollback-resistant, that any product receipt was active or actually consumed, or that the fixture survives crash, power loss, multiple writers, or cross-process atomicity. It composes sibling fixture shapes and not sibling fixture logic, is noncallable outside the bounded test lane, covers a single frozen subject and graph rather than general journeys, and the status token DERIVED_M4J_INERT_NO_EXECUTION_JOURNEY_ONLY is the only permitted result status."
+    }
+  ]
+}

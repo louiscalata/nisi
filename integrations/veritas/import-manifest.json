@@ -1,0 +1,1147 @@
+{
+  "schemaVersion": 1,
+  "purpose": "PRIVATE_VERITAS_SOURCE_FREEZE",
+  "frozenAt": "2026-09-12T16:54:37.800Z",
+  "source": {
+    "root": "/Volumes/SharedChami/Veritas Local Repository",
+    "head": "87b89102a4e231cea47b66f7a33da5a84f17d049",
+    "treeState": "DIRTY_INCLUDING_UNTRACKED_SOURCE",
+    "comparison": "EACH_INCLUDED_FILE_BYTE_MATCHED_AT_FREEZE"
+  },
+  "roots": [
+    ".npmrc",
+    "native/macos",
+    "package-lock.json",
+    "package.json",
+    "tooling",
+    "veritas.ts"
+  ],
+  "exclusionPolicy": "explicit-root-files; subtree-exclusions:hidden-entries,node_modules,DerivedData,*.xcresult",
+  "files": [
+    {
+      "path": ".npmrc",
+      "bytes": 64,
+      "sha256": "d3ef0b258cd8f979a27800ff7d6ad574349d3cf04cfe1b06c6c44a4d8b3f0630"
+    },
+    {
+      "path": "native/macos/CodenameVeritasFramework/Package.swift",
+      "bytes": 2862,
+      "sha256": "1f299c44be8a34be2ad707883e2dc2494707a911e4131ae44c39c47bfe3e91b6"
+    },
+    {
+      "path": "native/macos/CodenameVeritasFramework/Scripts/checkpoint-control-log.zsh",
+      "bytes": 72031,
+      "sha256": "31150e620a34d7ecd2d6a195a8cb7abd2dbf21b8169bddddc2a27e515b20c1a9"
+    },
+    {
+      "path": "native/macos/CodenameVeritasFramework/Scripts/compare-platform-contract-lanes.zsh",
+      "bytes": 73321,
+      "sha256": "78aa2e0b59d986c593b6ffae6ef4c7b1a2c97e7f2d4710eb0e007f40a32add88"
+    },
+    {
+      "path": "native/macos/CodenameVeritasFramework/Scripts/initialize-platform-contract-batch.zsh",
+      "bytes": 2108,
+      "sha256": "7b84709dcd15493a3ce72b13bacacc148daa6045ba8978f5710a47df2709d417"
+    },
+    {
+      "path": "native/macos/CodenameVeritasFramework/Scripts/machine-evidence-process-probe.swift",
+      "bytes": 1162,
+      "sha256": "a7a66e160ccb1f1d5c0744bbf6e5962aeb41a9d776546633743444c04881eb25"
+    },
+    {
+      "path": "native/macos/CodenameVeritasFramework/Scripts/source-manifest.zsh",
+      "bytes": 8392,
+      "sha256": "6ff25d2eb37acc3b90564c44ff07677166579e82f7d99f307089435069ee869b"
+    },
+    {
+      "path": "native/macos/CodenameVeritasFramework/Scripts/test-cr09-parser-negatives.zsh",
+      "bytes": 19625,
+      "sha256": "034e88636f68f9a55a7286c97f4a5298c532bc99328fe804c7bbadf6051c0696"
+    },
+    {
+      "path": "native/macos/CodenameVeritasFramework/Scripts/test-private-parallel.zsh",
+      "bytes": 24830,
+      "sha256": "d14ec8f6fee19ee97d73b133dcb12bff8aaa2bd172dad93be0bebea37bd71d6d"
+    },
+    {
+      "path": "native/macos/CodenameVeritasFramework/Scripts/test-transport-record.zsh",
+      "bytes": 4991,
+      "sha256": "c1a607c801a4af1e8082af7753ae4ef29c8d5c03842725a6716ff6fb82fb00ea"
+    },
+    {
+      "path": "native/macos/CodenameVeritasFramework/Scripts/verify-afm-orchestration.zsh",
+      "bytes": 15640,
+      "sha256": "f3377d607948d94470961cf05469a71c828cf4c7e8478b9ff2fca0768d4d48f5"
+    },
+    {
+      "path": "native/macos/CodenameVeritasFramework/Scripts/verify-platform-contract.zsh",
+      "bytes": 63509,
+      "sha256": "d4a2174af2ab2a4d1fd85fa960a757acee583bc60586cc92925315f97405c0d3"
+    },
+    {
+      "path": "native/macos/CodenameVeritasFramework/Sources/CodenameVeritasApp/AppModel.swift",
+      "bytes": 71840,
+      "sha256": "9c69e50c50329b47fc3b9f8d9c0c6adf80d3e7a526a5791c00b577671d39033d"
+    },
+    {
+      "path": "native/macos/CodenameVeritasFramework/Sources/CodenameVeritasApp/CodenameVeritasApp.swift",
+      "bytes": 2320,
+      "sha256": "cedbd7b7e01ce566ecea200004df1d6cf256c761974bfdc5a32cbb3be23dab19"
+    },
+    {
+      "path": "native/macos/CodenameVeritasFramework/Sources/CodenameVeritasApp/IncidentHistoryCoordinator.swift",
+      "bytes": 45571,
+      "sha256": "5a79575152f228d43ed470abd24b4283c11b9325b92977763eef30586bd7f73f"
+    },
+    {
+      "path": "native/macos/CodenameVeritasFramework/Sources/CodenameVeritasApp/MenuBarView.swift",
+      "bytes": 21754,
+      "sha256": "4859f7ed28edbde5ba17ee399de3dc8bb0a44e969a6eac3eeb39ee16dda34701"
+    },
+    {
+      "path": "native/macos/CodenameVeritasFramework/Sources/CodenameVeritasApp/PrivateVerifiedFileWriter.swift",
+      "bytes": 13241,
+      "sha256": "6a675744643548f2fcd5e1c37122d6a071e0492b7d145417a8e88ac450ccd7d5"
+    },
+    {
+      "path": "native/macos/CodenameVeritasFramework/Sources/CodenameVeritasApp/ShellTruthV1.swift",
+      "bytes": 40699,
+      "sha256": "ec4e0e6c20c0120be4129274e7cea2f4a05fdc5f7a70b50b6a152921e95ab1e3"
+    },
+    {
+      "path": "native/macos/CodenameVeritasFramework/Sources/VeritasAFMFunctionalProbe/main.swift",
+      "bytes": 5630,
+      "sha256": "3177be26384e2407be4279bbdec425991c4b704f1e6d74c698d4b3756fb5b1b2"
+    },
+    {
+      "path": "native/macos/CodenameVeritasFramework/Sources/VeritasAppleFoundation/AppleFoundationOrchestrator.swift",
+      "bytes": 26855,
+      "sha256": "b6baef31e2241904f794f4539fa7f0dc38f14badd9a0ab73f031fb4100b352e9"
+    },
+    {
+      "path": "native/macos/CodenameVeritasFramework/Sources/VeritasAppleFoundation/ApplePreventionTrial.swift",
+      "bytes": 11102,
+      "sha256": "3aa408c48fc1624368bbcce670f692f6846d83e210befe288df47380e8d85914"
+    },
+    {
+      "path": "native/macos/CodenameVeritasFramework/Sources/VeritasCore/AdvisoryOrchestration.swift",
+      "bytes": 12976,
+      "sha256": "218b80819dd30d2967c1376078cf4927e87e9a9fbb5d031cd8129b7b60ed936d"
+    },
+    {
+      "path": "native/macos/CodenameVeritasFramework/Sources/VeritasCore/ArtifactSnapshot.swift",
+      "bytes": 9517,
+      "sha256": "013e796d11a844dda345f223894a8d76713b19b0f46f6a7f84019aa5b7bc0f22"
+    },
+    {
+      "path": "native/macos/CodenameVeritasFramework/Sources/VeritasCore/DeterministicChecks.swift",
+      "bytes": 11021,
+      "sha256": "4d234fd389895cf0a55bf7daf0f5d082077ab3677880165f7d0e1236a88be474"
+    },
+    {
+      "path": "native/macos/CodenameVeritasFramework/Sources/VeritasCore/DigestFramingV1.swift",
+      "bytes": 4731,
+      "sha256": "a03a795aa5351153ff2de993d48e47e044fbd75bdda0a80a217ef2ed16d6bc3b"
+    },
+    {
+      "path": "native/macos/CodenameVeritasFramework/Sources/VeritasCore/FailureFamilyAdjudication.swift",
+      "bytes": 14871,
+      "sha256": "21970e066ac7d7a9515cc194f5856bebb9d1a33418d546384246d53b38792df4"
+    },
+    {
+      "path": "native/macos/CodenameVeritasFramework/Sources/VeritasCore/HistoricalGateImport.swift",
+      "bytes": 16577,
+      "sha256": "38c3b18bee7e4d0aee6e5c450effc03f1a44de3895d6ba2e4d098976cf0a06be"
+    },
+    {
+      "path": "native/macos/CodenameVeritasFramework/Sources/VeritasCore/IncidentExplanation.swift",
+      "bytes": 7596,
+      "sha256": "ca4cb2243f267b26b5f5261fbf32255c6f28f42dc96ea5260cea2f9af2a5c544"
+    },
+    {
+      "path": "native/macos/CodenameVeritasFramework/Sources/VeritasCore/IncidentNamespaceObserver.swift",
+      "bytes": 6714,
+      "sha256": "c903b234b61e3dd5e227bf3298796942e3dc1c1184924766a989842cfc813f0f"
+    },
+    {
+      "path": "native/macos/CodenameVeritasFramework/Sources/VeritasCore/LocalIncidentLedger.swift",
+      "bytes": 206940,
+      "sha256": "46bdb2fd10f3e89c4f6d4486457c75112234aa5415e39ec38d0266187212797a"
+    },
+    {
+      "path": "native/macos/CodenameVeritasFramework/Sources/VeritasCore/MAC1JSONV1.swift",
+      "bytes": 10631,
+      "sha256": "6df2ae999b1d0257e73692f81a22e4e5236c30b747ce7e581ee74284d4c72b3a"
+    },
+    {
+      "path": "native/macos/CodenameVeritasFramework/Sources/VeritasCore/NativeBuildAdmission.swift",
+      "bytes": 12352,
+      "sha256": "36469a78151f8d3e428ad0ad4f795e6a882410fdc4e7357eb89c90c25f30ea40"
+    },
+    {
+      "path": "native/macos/CodenameVeritasFramework/Sources/VeritasCore/PairedPreventionTrial.swift",
+      "bytes": 16675,
+      "sha256": "3e90f00f2d693e6b9460c140e21187019751c356429baaf26a3fcd8e4c18f015"
+    },
+    {
+      "path": "native/macos/CodenameVeritasFramework/Sources/VeritasCore/PipelineIncidentAdapter.swift",
+      "bytes": 27250,
+      "sha256": "c3763c84983ef847cbe168a3cb509ef6af997a28edb0bd6032442f3be19b5d08"
+    },
+    {
+      "path": "native/macos/CodenameVeritasFramework/Sources/VeritasCore/PipelineIncidentCaptureEnvelope.swift",
+      "bytes": 18733,
+      "sha256": "bc5cfdc8e2e029febf740ddc386dff9d90cac8a7e2073d24597e0e2f753ad7a2"
+    },
+    {
+      "path": "native/macos/CodenameVeritasFramework/Sources/VeritasCore/PlatformRequirements.swift",
+      "bytes": 5276,
+      "sha256": "5b28525cb0159efe075029c1bb47002ad1eb2e994195b5e42e77b4d0d09517e8"
+    },
+    {
+      "path": "native/macos/CodenameVeritasFramework/Sources/VeritasCore/PreparedReferenceMLPEvaluation.swift",
+      "bytes": 7332,
+      "sha256": "ea1b13b423f007adaca3d94740279460623d4c7ee7da64a3cd3d6525dfbf58e0"
+    },
+    {
+      "path": "native/macos/CodenameVeritasFramework/Sources/VeritasCore/PreventionPolicyEvaluation.swift",
+      "bytes": 12112,
+      "sha256": "219c5ba3e94d71cf4b1300c9afdc1fe8ff9921a2375a213322b4aa23762a464d"
+    },
+    {
+      "path": "native/macos/CodenameVeritasFramework/Sources/VeritasCore/ProtectedAuthorityCaptureEnvelope.swift",
+      "bytes": 28575,
+      "sha256": "f4c93cba07072e602c963d5bf95da7543eb99e1783a20d9a683d9f3b4c9829c9"
+    },
+    {
+      "path": "native/macos/CodenameVeritasFramework/Sources/VeritasCore/ReferenceArtifactFeatureCapture.swift",
+      "bytes": 4716,
+      "sha256": "8ec753ac52744226bd77f3add5589fb5df564af75784a239a635259da2f5a770"
+    },
+    {
+      "path": "native/macos/CodenameVeritasFramework/Sources/VeritasCore/ReferenceArtifactPlugin.swift",
+      "bytes": 5570,
+      "sha256": "e2403792e67db9d5d801b87ad84305a30bcae336205dac42a0d8e1d0fa9897db"
+    },
+    {
+      "path": "native/macos/CodenameVeritasFramework/Sources/VeritasCore/ReferenceArtifactShadowPreparation.swift",
+      "bytes": 7228,
+      "sha256": "a4d373c52d58278d0b305902b1c37abba312b8a8c46e0faf929f3fbd6b4a7402"
+    },
+    {
+      "path": "native/macos/CodenameVeritasFramework/Sources/VeritasCore/ReferenceArtifactShadowRunOwner.swift",
+      "bytes": 27197,
+      "sha256": "606f062ecaa5045efaba2780ea3d683d1dbe0b125c961178a3c520b1e3c66421"
+    },
+    {
+      "path": "native/macos/CodenameVeritasFramework/Sources/VeritasCore/ReferenceMLP.swift",
+      "bytes": 7581,
+      "sha256": "6682d0a1b56d2d8e8e1bca1965a7cab2ca43ff3580553f32f48bd78a297f0cc2"
+    },
+    {
+      "path": "native/macos/CodenameVeritasFramework/Sources/VeritasCore/ReferenceMLPShadowOwner.swift",
+      "bytes": 8657,
+      "sha256": "49d48906f834ff8f3f5faa71cc23c0fc54fee8019de3e42d54e3fcc664cd995c"
+    },
+    {
+      "path": "native/macos/CodenameVeritasFramework/Sources/VeritasCore/StrictJSONDocumentValidator.swift",
+      "bytes": 11424,
+      "sha256": "bd6173e012890f2fde2e26be94c5e577cd9e098841bdad98a377b1c88dff1b2c"
+    },
+    {
+      "path": "native/macos/CodenameVeritasFramework/Sources/VeritasCore/VeritasPipeline.swift",
+      "bytes": 35597,
+      "sha256": "c59a068eec57cb006a578d789a494717866213ba5b3e1d962c4257fc377e4a1a"
+    },
+    {
+      "path": "native/macos/CodenameVeritasFramework/Sources/VeritasLedgerCrashProbe/VeritasLedgerCrashProbe.swift",
+      "bytes": 85503,
+      "sha256": "78f46a5ac5cd952c7e9c36565a9ae13d68e21e92b8c037eadd81d8d6d78ab18a"
+    },
+    {
+      "path": "native/macos/CodenameVeritasFramework/Sources/VeritasNativeBuildProbe/main.swift",
+      "bytes": 5454,
+      "sha256": "77f8c86e78ddb959c1b120a81b2e2a92dd4bb45a3d3de0b4aa211d056c3baae6"
+    },
+    {
+      "path": "native/macos/CodenameVeritasFramework/Sources/VeritasSQLiteSupport/VeritasSQLiteSupport.c",
+      "bytes": 256,
+      "sha256": "e207d5bfc6a67b4e08740b9849b46b451c76f5c29008f79b5af2e44d5d2e935d"
+    },
+    {
+      "path": "native/macos/CodenameVeritasFramework/Sources/VeritasSQLiteSupport/include/VeritasSQLiteSupport.h",
+      "bytes": 191,
+      "sha256": "5ba0ed9f1608eb2d5ced1e4b209a8029a93f90aa8493a83921c144166a2154bf"
+    },
+    {
+      "path": "native/macos/CodenameVeritasFramework/Sources/VeritasScheduledReferenceProbe/main.swift",
+      "bytes": 8180,
+      "sha256": "060d096c49b36c12a5a54089730caa7c5767cfbd54b8ba01f134a2264a4f23f5"
+    },
+    {
+      "path": "native/macos/CodenameVeritasFramework/Tests/CodenameVeritasAppTests/AppKitIntegrationTests.swift",
+      "bytes": 5086,
+      "sha256": "5ea5cd49914ffa4a8634b7a15eb58aee8489c56a2e38c9ba892663caf3cb7b01"
+    },
+    {
+      "path": "native/macos/CodenameVeritasFramework/Tests/CodenameVeritasAppTests/AppModelTests.swift",
+      "bytes": 162630,
+      "sha256": "29297d15007a41202be49a404a206ca1142759171f552299e73b570f45a8a9c9"
+    },
+    {
+      "path": "native/macos/CodenameVeritasFramework/Tests/CodenameVeritasAppTests/PrivateVerifiedFileWriterTests.swift",
+      "bytes": 6677,
+      "sha256": "abb196dde80eadde70b249a464cef3fa462a67222d0cef2eb0377dc5cfc96092"
+    },
+    {
+      "path": "native/macos/CodenameVeritasFramework/Tests/CodenameVeritasAppTests/ShellTruthV1Tests.swift",
+      "bytes": 36198,
+      "sha256": "9eb3836421a6f7fb593a38c0fb4f9bbf1ff96c3b6845278fa660fe9c18629417"
+    },
+    {
+      "path": "native/macos/CodenameVeritasFramework/Tests/VeritasAppleFoundationTests/AppleFoundationBoundaryTests.swift",
+      "bytes": 19377,
+      "sha256": "bc5ae0534d0384f30651b1feba01c4d28529a7ddf35a1a3eabb3a63737a7a56a"
+    },
+    {
+      "path": "native/macos/CodenameVeritasFramework/Tests/VeritasAppleFoundationTests/ApplePreventionTrialTests.swift",
+      "bytes": 9754,
+      "sha256": "6d7aebe60599a022155154ad9dd188ed82c7bc82e52e156725b49d481b184813"
+    },
+    {
+      "path": "native/macos/CodenameVeritasFramework/Tests/VeritasCoreTests/ArtifactSnapshotterTests.swift",
+      "bytes": 15636,
+      "sha256": "2ef62e9fb0ba306a2baf73f442ca00901ae46334dfedf937a09feee5e784a537"
+    },
+    {
+      "path": "native/macos/CodenameVeritasFramework/Tests/VeritasCoreTests/AsyncTestCleanup.swift",
+      "bytes": 577,
+      "sha256": "b9ea41a674c903fc202bf565b1692afc8de731cd07f6da154bc03085381c88be"
+    },
+    {
+      "path": "native/macos/CodenameVeritasFramework/Tests/VeritasCoreTests/AsyncTestCleanupTests.swift",
+      "bytes": 5713,
+      "sha256": "78e6bc3d4a7c7741c9f0631b3f0adc8983f413840d3afc41470d8b302f9d6404"
+    },
+    {
+      "path": "native/macos/CodenameVeritasFramework/Tests/VeritasCoreTests/DigestFramingV1Tests.swift",
+      "bytes": 2809,
+      "sha256": "3e032a32aa58e955cb627e388ceb8e0def3668c76baa946244327837d52a6c83"
+    },
+    {
+      "path": "native/macos/CodenameVeritasFramework/Tests/VeritasCoreTests/EngineEvidenceParityTests.swift",
+      "bytes": 6682,
+      "sha256": "188c63264572d10e650de4782598313f47644fe9ef15bf96bda77956095a312a"
+    },
+    {
+      "path": "native/macos/CodenameVeritasFramework/Tests/VeritasCoreTests/FI04RaceCaseTests.swift",
+      "bytes": 19746,
+      "sha256": "6beef3e915acd3428659f81a7ca978c22b4300189cd30ae0695b98a8de06eacf"
+    },
+    {
+      "path": "native/macos/CodenameVeritasFramework/Tests/VeritasCoreTests/FI05FailureFamilyTests.swift",
+      "bytes": 19887,
+      "sha256": "062c0efb83f978eba8a2377ae6506d77701b659de3fd69d13d73fdeda5d8d84c"
+    },
+    {
+      "path": "native/macos/CodenameVeritasFramework/Tests/VeritasCoreTests/FI06PreventionPolicyTests.swift",
+      "bytes": 13140,
+      "sha256": "5a0ca27a8e3df47fe24ac5090493327b98ce693d0cd8d2181ca0c6a29fa25e4a"
+    },
+    {
+      "path": "native/macos/CodenameVeritasFramework/Tests/VeritasCoreTests/FI08ProtectedAuthorityTests.swift",
+      "bytes": 20178,
+      "sha256": "3d30b713711486d342938de8f5b449bf632db01a332b21a3e2f35c2020bd978e"
+    },
+    {
+      "path": "native/macos/CodenameVeritasFramework/Tests/VeritasCoreTests/Fixtures/engine-evidence-v1.json",
+      "bytes": 38648,
+      "sha256": "1a47b395f54c533cf78ad52f6e1024ea4ba5a41153ce95de12ba99bb316e560b"
+    },
+    {
+      "path": "native/macos/CodenameVeritasFramework/Tests/VeritasCoreTests/Fixtures/gate-events-mac-20260908.jsonl",
+      "bytes": 29445,
+      "sha256": "0ddf797a0089caa34d6faa01207112cfed631c2507aa1c300875f5c5ff2c97c9"
+    },
+    {
+      "path": "native/macos/CodenameVeritasFramework/Tests/VeritasCoreTests/Fixtures/mac1-json-v1-corpus.json",
+      "bytes": 1586036,
+      "sha256": "27ad7b927e8315eea0f63eca6bf4a590314628e9b15240a348657a3c35e7ae3e"
+    },
+    {
+      "path": "native/macos/CodenameVeritasFramework/Tests/VeritasCoreTests/Fixtures/prepared-mlp-v1.json",
+      "bytes": 742,
+      "sha256": "da4784cd6e96e1871088d91a57214765e512453141e58eaa3f169520077532c4"
+    },
+    {
+      "path": "native/macos/CodenameVeritasFramework/Tests/VeritasCoreTests/Fixtures/reference-artifact-package-v1.json",
+      "bytes": 4703,
+      "sha256": "9d755c7d4cfb9d3df7c111fa3a7220131f8402d9b9a0e90c5dc7c4952d22ec68"
+    },
+    {
+      "path": "native/macos/CodenameVeritasFramework/Tests/VeritasCoreTests/Fixtures/reference-mlp-v1.json",
+      "bytes": 1940,
+      "sha256": "5e6cec5bf961d0442ac90ade16fccfeb08b0d45858bea307f216334c7ba0dda0"
+    },
+    {
+      "path": "native/macos/CodenameVeritasFramework/Tests/VeritasCoreTests/HistoricalGateImportTests.swift",
+      "bytes": 15245,
+      "sha256": "f311d5d57cbb82555bd1365d47487ca843a5042229af337f5740391c5ade90a9"
+    },
+    {
+      "path": "native/macos/CodenameVeritasFramework/Tests/VeritasCoreTests/IncidentNamespaceObserverTests.swift",
+      "bytes": 32265,
+      "sha256": "511779046af4e38d6834c6087d82ea9d9e5ab91c0177e92ca0468a888542e102"
+    },
+    {
+      "path": "native/macos/CodenameVeritasFramework/Tests/VeritasCoreTests/LocalIncidentLedgerCoherentReplacementB2Tests.swift",
+      "bytes": 269613,
+      "sha256": "6bbd61037736119338ac8c5dc7d3cc40a72852102a56c193c706f9ace6b48fd7"
+    },
+    {
+      "path": "native/macos/CodenameVeritasFramework/Tests/VeritasCoreTests/LocalIncidentLedgerCoherentReplacementBaselineTests.swift",
+      "bytes": 61602,
+      "sha256": "d877e8485b69b9edc781c8b83d855731a3818d6fb48e0572dbd4f24283f0f1f1"
+    },
+    {
+      "path": "native/macos/CodenameVeritasFramework/Tests/VeritasCoreTests/LocalIncidentLedgerTests.swift",
+      "bytes": 149889,
+      "sha256": "73b33b0f2a996933b70275a957d8738be27855ff83f38ae23ed48bf3693a41a0"
+    },
+    {
+      "path": "native/macos/CodenameVeritasFramework/Tests/VeritasCoreTests/MAC1JSONV1Tests.swift",
+      "bytes": 7487,
+      "sha256": "17e0b848c81ed0883f08cd5ba056c80e1b4c09a6fa624508672e4e5b5a377882"
+    },
+    {
+      "path": "native/macos/CodenameVeritasFramework/Tests/VeritasCoreTests/MAC1toMAC9Tests.swift",
+      "bytes": 7811,
+      "sha256": "602d9999dab2d99b5f15b02cb42ef5c770fbcad15ab6e10e994c69ca63ae91d5"
+    },
+    {
+      "path": "native/macos/CodenameVeritasFramework/Tests/VeritasCoreTests/MachineEvidenceTransportTests.swift",
+      "bytes": 13609,
+      "sha256": "84536aff21fbab75c90095c9f842c08ab296ef510a52d1d85947af0867f20c81"
+    },
+    {
+      "path": "native/macos/CodenameVeritasFramework/Tests/VeritasCoreTests/NativeBuildAdmissionTests.swift",
+      "bytes": 6778,
+      "sha256": "9df440f74888f3b625b4dd0e63dee38fb89181883f1e15fe3f73536b86a16f7a"
+    },
+    {
+      "path": "native/macos/CodenameVeritasFramework/Tests/VeritasCoreTests/PairedPreventionTrialTests.swift",
+      "bytes": 18813,
+      "sha256": "aa39e51c93eb2b6765d53dacb0160f08f5d1afede2294446686b38b6fef53dce"
+    },
+    {
+      "path": "native/macos/CodenameVeritasFramework/Tests/VeritasCoreTests/PipelineIncidentAdapterTests.swift",
+      "bytes": 61880,
+      "sha256": "71d7a53cc330053c404d217c795d23deccc9c11ba3a4a0288c1c2429dd3bf049"
+    },
+    {
+      "path": "native/macos/CodenameVeritasFramework/Tests/VeritasCoreTests/PlatformRequirementsTests.swift",
+      "bytes": 3233,
+      "sha256": "8abd7c792709f4ab49b719c679f030bdf86a9ba29f847005feee581c7e70ff9c"
+    },
+    {
+      "path": "native/macos/CodenameVeritasFramework/Tests/VeritasCoreTests/PreparedReferenceMLPEvaluationTests.swift",
+      "bytes": 17348,
+      "sha256": "b4c4f80a20f13fab8d01e336e67321cd1c172ded54d3d835fa8802d6f21b0c74"
+    },
+    {
+      "path": "native/macos/CodenameVeritasFramework/Tests/VeritasCoreTests/ReferenceArtifactPluginTests.swift",
+      "bytes": 20017,
+      "sha256": "41d43a34fa6b8a0d6a36a4d8c3b1f3cfb9fa25a4c33f54bd15566ae9a97bedb7"
+    },
+    {
+      "path": "native/macos/CodenameVeritasFramework/Tests/VeritasCoreTests/ReferenceArtifactShadowPreparationTests.swift",
+      "bytes": 17795,
+      "sha256": "b9c96b0b4b96b4109e1e5fc972964c663c7d3f7fd3059c4e1a1909b9da0e4a48"
+    },
+    {
+      "path": "native/macos/CodenameVeritasFramework/Tests/VeritasCoreTests/ReferenceArtifactShadowRunOwnerTests.swift",
+      "bytes": 38143,
+      "sha256": "e8aef7c9be01c890a133ee9490e09f92300f91c0eaac986a30b1e6261b3075cf"
+    },
+    {
+      "path": "native/macos/CodenameVeritasFramework/Tests/VeritasCoreTests/ReferenceMLPShadowOwnerTests.swift",
+      "bytes": 22650,
+      "sha256": "b2cf7ff21aaaf9bd4d999ddcf57167898bfb00a2474ec6486db3b8f9f290bf53"
+    },
+    {
+      "path": "native/macos/CodenameVeritasFramework/Tests/VeritasCoreTests/ReferenceMLPTests.swift",
+      "bytes": 12274,
+      "sha256": "efa43f2d035923ea57e42868846aefe4aff16499c55f91731d28eab15fefbca8"
+    },
+    {
+      "path": "native/macos/CodenameVeritasFramework/Tests/VeritasCoreTests/VeritasPipelineTests.swift",
+      "bytes": 38330,
+      "sha256": "d7c77cb99a2b5413387b28b7dd9eb2593fb929b5557ad1f68b15646b53268f64"
+    },
+    {
+      "path": "native/macos/CodenameVeritasFramework/Tests/VeritasTestEvidenceSupport/MachineEvidence.swift",
+      "bytes": 7625,
+      "sha256": "39f5f3940c20b498c1330dc3b6dac5c3d962fd19274d797182d04710e89f0043"
+    },
+    {
+      "path": "native/macos/CodenameVeritasFramework/Tests/VeritasTestEvidenceSupport/MachineEvidenceRecorder.swift",
+      "bytes": 492,
+      "sha256": "471fe32a422938cc69b614e32a91bc84147c75505f6e4bf81f7c911c266bc008"
+    },
+    {
+      "path": "native/macos/contracts/engine-evidence-v1.ts",
+      "bytes": 9975,
+      "sha256": "e952899f8ff6198b7e3c7038d5ca064acef4249e70c30ac29508abb4b7ae5e55"
+    },
+    {
+      "path": "native/macos/contracts/native-contract.test.mjs",
+      "bytes": 17591,
+      "sha256": "e94ef084173c5f3a62c8e96bc0908a4ccd39f179aedf91d01612847eed3c5a7b"
+    },
+    {
+      "path": "native/macos/contracts/native-required-paths-v1.json",
+      "bytes": 5303,
+      "sha256": "7e616206a69aa7a4b00c2e719aa6b8ce2b044538a3327a275049b23b864eba39"
+    },
+    {
+      "path": "native/macos/contracts/scheduled-reference-probe.integration.mjs",
+      "bytes": 8473,
+      "sha256": "08ec15f3f76451f6fa9ca17b90610ab1ef69c19d5af284a0658c5b6bb5c9b9fb"
+    },
+    {
+      "path": "package-lock.json",
+      "bytes": 322,
+      "sha256": "7c157ae3d574d1e645263818ee5d937071ca65e5f7dede86109b918f70daff1b"
+    },
+    {
+      "path": "package.json",
+      "bytes": 388,
+      "sha256": "9960bc49ee9dc46bafb9fb723fc4ab718a3d36245bfced2a30525f2ac9dee09b"
+    },
+    {
+      "path": "tooling/canonical/mac1-json-v1.mjs",
+      "bytes": 7617,
+      "sha256": "a64a70173337f354bf08d0113804885ced79eccc7f20a3e1d116960e7375f81d"
+    },
+    {
+      "path": "tooling/contracts/architecture-decisions.json",
+      "bytes": 33867,
+      "sha256": "ace65d74393c856abc1b825901d064d96832c204c6a746bdcd9c85672fb3bfc9"
+    },
+    {
+      "path": "tooling/contracts/canonical-vectors.json",
+      "bytes": 38832,
+      "sha256": "bb127393cd7553770ad12f8faa907d0e4f68e79973cb29329ce5b0d27c302784"
+    },
+    {
+      "path": "tooling/contracts/digests.json",
+      "bytes": 6351,
+      "sha256": "e0096408ce0fcece404ac22289a604a4123aed68bb99740dbfaf3844f5b2ab53"
+    },
+    {
+      "path": "tooling/contracts/e14-displacement-manifest.json",
+      "bytes": 40819,
+      "sha256": "f9a60fb3ed7c5776645eee108ee5196c2d611129d800e195dd80a28f22960b59"
+    },
+    {
+      "path": "tooling/contracts/e16-implementation-subset.json",
+      "bytes": 2622,
+      "sha256": "7b3405986ee90cacd189c2d440f27a49a7d69a899417672dfaf0836293edfa6f"
+    },
+    {
+      "path": "tooling/contracts/e16-manifest.json",
+      "bytes": 13311,
+      "sha256": "87dbc726667cd55a45152dc0f009e6b087b3dc9bb3511549bb7c88cf69c6cfe4"
+    },
+    {
+      "path": "tooling/contracts/e16-reference-scenarios.json",
+      "bytes": 8330,
+      "sha256": "d43475c70a987250a4479a0ed56546cf93f66952e9afc02988d5f7fefc031fd7"
+    },
+    {
+      "path": "tooling/contracts/mac1-json-v1-profile.md",
+      "bytes": 4397,
+      "sha256": "e3aa01489729ac4a74cbc81508c4ba16d2fb2ce42e64c3fe848b15e036d88beb"
+    },
+    {
+      "path": "tooling/contracts/schema-corpus.json",
+      "bytes": 219447,
+      "sha256": "4049db6177ea1e959ad06cb44f208fb9daa1197088f4fe95a1e5cbc58aa0359f"
+    },
+    {
+      "path": "tooling/contracts/schema-registry.json",
+      "bytes": 4170,
+      "sha256": "57c9e3dc83e15b2f246a832382724d6cda87fa1f41458d76c423e8857053e978"
+    },
+    {
+      "path": "tooling/contracts/stage5-manifest.json",
+      "bytes": 37075,
+      "sha256": "f1d169711211c9c09fcfed7a7d7ec06db58003865117e778759fbc711b0b1b9e"
+    },
+    {
+      "path": "tooling/contracts/stage5-root.json",
+      "bytes": 264,
+      "sha256": "a9e33542ff2a99ddda2201a70301faae3e337de31cb390f65dea16ea684d1ba1"
+    },
+    {
+      "path": "tooling/contracts/structural-fixtures.json",
+      "bytes": 1385,
+      "sha256": "2742aec7a9973ddab53825ef0bdedfb2d27f2c83013263cf5a7922e2bb3424c0"
+    },
+    {
+      "path": "tooling/eslint.config.mjs",
+      "bytes": 1199,
+      "sha256": "a822ddfb3b2adf80550b9fb9f7360853c316629cefb3de30d793ed377337e2ac"
+    },
+    {
+      "path": "tooling/harness/chain-harness.mjs",
+      "bytes": 13501,
+      "sha256": "e49156412d52e4100b4e701b843e08a149505828266886e5912e0da4b8e91101"
+    },
+    {
+      "path": "tooling/learning/activation-improvement.ts",
+      "bytes": 7866,
+      "sha256": "dd00fd294d41ef2cec176ad2deea28a4226e9717f20b07287bdae5a2946e8cdd"
+    },
+    {
+      "path": "tooling/learning/activation-journal.ts",
+      "bytes": 30841,
+      "sha256": "1d53e98e74847295fd4b637878698df39a377b76fcb1bbdfb10b899b95dc0d62"
+    },
+    {
+      "path": "tooling/learning/activation-owner-worker.mjs",
+      "bytes": 1307,
+      "sha256": "ade693d95dd0d40ea0d60fa982845ed11f538ccc43a5f6fa3abe78a7fd72653e"
+    },
+    {
+      "path": "tooling/learning/activation-owner.ts",
+      "bytes": 23048,
+      "sha256": "64b953bfe216d2caf73a88f8a6461bcdc24d14e7520b2393909abd6d86b7d873"
+    },
+    {
+      "path": "tooling/learning/activation-receipt-store.ts",
+      "bytes": 15709,
+      "sha256": "1037de105eff358ac5f7e25b38d36e253b3e8fa2a867c0287e9f7846b4d62e96"
+    },
+    {
+      "path": "tooling/learning/journaled-activation-owner.ts",
+      "bytes": 19200,
+      "sha256": "df441c003b59f2c82604a7b27e6d816bcb9f78d28cdad54070739324f9cf1be3"
+    },
+    {
+      "path": "tooling/native-probes/afm-content-probe.swift",
+      "bytes": 7211,
+      "sha256": "b14f8c3e96af53eb471b82ea26da890c9c4146a1888155153e2c6602450b4cf5"
+    },
+    {
+      "path": "tooling/neural/admitted-run-owner.mjs",
+      "bytes": 12994,
+      "sha256": "996e1026caffe99c091c5836b56a6bc74b115121dd61e5acd4f05ea50523007b"
+    },
+    {
+      "path": "tooling/neural/afm-content-executor.mjs",
+      "bytes": 11839,
+      "sha256": "5cdb86c016a6db1153950da0b55e2c5c33712b692278f3fc14be31efd09adf38"
+    },
+    {
+      "path": "tooling/neural/afm-dispatcher.mjs",
+      "bytes": 11167,
+      "sha256": "a78a2217ea3d3da8f1603f4c64d0aca2f18c43589b590a4d9adae6ae9e0dd32f"
+    },
+    {
+      "path": "tooling/neural/afm-executor.mjs",
+      "bytes": 7539,
+      "sha256": "4d2481873a56c3b2fe6e99e81356b5425053386475dbd4c3af5009e16b3b9efe"
+    },
+    {
+      "path": "tooling/neural/bn01-fixture.mjs",
+      "bytes": 4387,
+      "sha256": "8dc76c11b7ca768bc78adde26e4a90b904384b774bb7f23da50d95fa6682ac8e"
+    },
+    {
+      "path": "tooling/neural/bn01.mjs",
+      "bytes": 9800,
+      "sha256": "3c7b355e67a39c0f0f33a61329208fbfb4627bc1fef0c973d52a7e654957ee19"
+    },
+    {
+      "path": "tooling/neural/bn01.schema.json",
+      "bytes": 9527,
+      "sha256": "cd2ad04cabaca2845bd8f5d8fd1baefe2a888ac76a4f7c86f2d8cd0dda52279e"
+    },
+    {
+      "path": "tooling/neural/content-consent.mjs",
+      "bytes": 9382,
+      "sha256": "90d61392191babd24b60cae014e2d1f0adb7d40e7f45a01c298cabe687a7420f"
+    },
+    {
+      "path": "tooling/neural/contribution-admission.mjs",
+      "bytes": 10705,
+      "sha256": "2a500d3b38a184ec6af49cdce147fcb8cacaa7acda3405f91733b1617f1ef667"
+    },
+    {
+      "path": "tooling/neural/courier-queue.mjs",
+      "bytes": 11990,
+      "sha256": "19a8adef08d71e0be7d3a61e99eb424f32b57beb5b3e3538fd8cd3b9d001e7e1"
+    },
+    {
+      "path": "tooling/neural/default-contribution-round.mjs",
+      "bytes": 9493,
+      "sha256": "3fc26af9a3f5b83f341fb2d33f43e9cf7c9ddd83c06b7217377fc1c1d2cbd716"
+    },
+    {
+      "path": "tooling/neural/default-contribution-rounds.mjs",
+      "bytes": 8281,
+      "sha256": "2f9f519d0acc788577b7990131a6f1bdeb75182ff769859566fe7c8400d4f537"
+    },
+    {
+      "path": "tooling/neural/dual-face-fixture.mjs",
+      "bytes": 2569,
+      "sha256": "239f53e346a131b408cd495d658fc5864327950038bf6f586585e03b482ae29f"
+    },
+    {
+      "path": "tooling/neural/dual-face.mjs",
+      "bytes": 9263,
+      "sha256": "41e7363478ff1c8e5108c29967f7b638393b03418364f026c6a396ff3c197fba"
+    },
+    {
+      "path": "tooling/neural/scheduled-afm-probe.mjs",
+      "bytes": 14580,
+      "sha256": "a9636a3817cfa3fa0acb98f76e136410ea084c9747ffa9590ae25637d362c34b"
+    },
+    {
+      "path": "tooling/neural/scheduled-reference-probe.mjs",
+      "bytes": 12782,
+      "sha256": "27ff4126441e43a07ebdc95c721085d574d117acf2ed1f430fcfd591e1edeeff"
+    },
+    {
+      "path": "tooling/neural/scheduled-run-owner.mjs",
+      "bytes": 12628,
+      "sha256": "44a474d6246c7c26a30dcfc1501fa6ad2334825b3e64f23fa93d388e42fd1318"
+    },
+    {
+      "path": "tooling/neural/scheduler-queue-responses.mjs",
+      "bytes": 6877,
+      "sha256": "0b22e19f04d7160fc465be34c9aa263f09c89d9c66ce9fd7a67ac1923ac5a04e"
+    },
+    {
+      "path": "tooling/neural/shared-work-slot-scheduler.mjs",
+      "bytes": 11687,
+      "sha256": "a5ddd7a69952efa2c0000e15ce1239d2d6a1197da52f98357923e2553ff5ee3f"
+    },
+    {
+      "path": "tooling/neural/task-response-combiner.mjs",
+      "bytes": 14773,
+      "sha256": "fa50b8de0f77df7efd275957d2038cda5d9e0bfa5d14ed37dbd941fd1629d861"
+    },
+    {
+      "path": "tooling/neural/typed-contribution-combiner.mjs",
+      "bytes": 21140,
+      "sha256": "16d7fc151d31cc23b37eafa0626d4c6fc1dd5ded276cce8ae2def2f946253946"
+    },
+    {
+      "path": "tooling/package-lock.json",
+      "bytes": 46891,
+      "sha256": "235a20a0f6a8b7f816688165801dc493b86aee0accaeca82bd4e284aad80d76a"
+    },
+    {
+      "path": "tooling/package.json",
+      "bytes": 2971,
+      "sha256": "d514263ce92147c0ee9528d2631f9e2fb0fa29cd2fc41af4972e8fb410331f3b"
+    },
+    {
+      "path": "tooling/policy/required-inventory-contract.ts",
+      "bytes": 11946,
+      "sha256": "64a9ea39d8eed0d07569b22bce6ce5f87c43d5f0a83154177a90ed3c19784afc"
+    },
+    {
+      "path": "tooling/schemas/assurance-dependency-closure.schema.json",
+      "bytes": 4980,
+      "sha256": "7dd64eedae5f1cb857cc1c2aecf24bcf790056a0fe9336efdc3f3a4f60d0a99a"
+    },
+    {
+      "path": "tooling/schemas/assurance-exhaustive-replay-oracle.schema.json",
+      "bytes": 6595,
+      "sha256": "9cbdb2f2506128b9df0acd7db2579272e2e6e344f6e09862f0a23211418e0f1e"
+    },
+    {
+      "path": "tooling/schemas/assurance-genesis-event-reducer.schema.json",
+      "bytes": 3924,
+      "sha256": "18772da9867a6d4987fec2a00f0b1fe8e813cd5b3beb52142424d22348868209"
+    },
+    {
+      "path": "tooling/schemas/assurance-no-execution-product-journey.schema.json",
+      "bytes": 4398,
+      "sha256": "e5cb42a3c78da5f5ad0f8cd4bb8245ba94dd97ba2ccd46147ec2e2bff48b6f91"
+    },
+    {
+      "path": "tooling/schemas/assurance-recall-before-reuse.schema.json",
+      "bytes": 4185,
+      "sha256": "c93306500cf22d2b0be59dc7bbb80e562b630597c358a90490e2101bee8e48ad"
+    },
+    {
+      "path": "tooling/schemas/authority-snapshot.schema.json",
+      "bytes": 1565,
+      "sha256": "ed051cbbefe75711d7d44d1a8d949003138afa63aef0d585d3f45cca4c4aafc2"
+    },
+    {
+      "path": "tooling/schemas/candidate-staging.schema.json",
+      "bytes": 12178,
+      "sha256": "e9f4acac2ade8037e85d2916a60554f32d3b133c3625549daf6b0036d6dd9d91"
+    },
+    {
+      "path": "tooling/schemas/e14-displacement-case.schema.json",
+      "bytes": 2504,
+      "sha256": "ea505604eba8e4389166cc851fa7029795c8170c6598d2c8d513ad96e27365c6"
+    },
+    {
+      "path": "tooling/schemas/e16-case.schema.json",
+      "bytes": 2052,
+      "sha256": "760172e5162c311ccb95db262d545cc79cbf727b722ba100cb9b4462773813c9"
+    },
+    {
+      "path": "tooling/schemas/e16-implementation-environment-diagnostic.schema.json",
+      "bytes": 5695,
+      "sha256": "2f351f38e0e4dd2784e813df65efaf56937436df807571090324d66a6c950e6e"
+    },
+    {
+      "path": "tooling/schemas/e16-implementation-result.schema.json",
+      "bytes": 8024,
+      "sha256": "89bc6894fcaf6d6cba528108da5a4cc440b94f105d3e14c7b615cbcbda627c44"
+    },
+    {
+      "path": "tooling/schemas/e16-reference-scenario.schema.json",
+      "bytes": 2278,
+      "sha256": "4de392f14e8a20a4f3727ba3730e6205d60b3e29174fd3a67d675d93920b4576"
+    },
+    {
+      "path": "tooling/schemas/fi0-canonical-vector-process-result.schema.json",
+      "bytes": 2132,
+      "sha256": "c806cc58c7cb32b91a778523a6dec0bb868e7c8cd6c6f327c9a0f4a09ba039ad"
+    },
+    {
+      "path": "tooling/schemas/fi0-event.schema.json",
+      "bytes": 2629,
+      "sha256": "d0b7b00d1b783d6d29a2ef75dca2157edf50c4f1dcb5b98f71eee74869d070a8"
+    },
+    {
+      "path": "tooling/schemas/fi0-evidence-manifest.schema.json",
+      "bytes": 2131,
+      "sha256": "07b89c042e762cfa2d3eb846ecee138546c4ae7df42a833481fe498eecbaacd4"
+    },
+    {
+      "path": "tooling/schemas/fi0-evidence-ref.schema.json",
+      "bytes": 1954,
+      "sha256": "724bd9b371bee9fa291860d6a96e87cc87986789f9b5678fb9aee56d283ae3a3"
+    },
+    {
+      "path": "tooling/schemas/fi0-historical-import-envelope.schema.json",
+      "bytes": 2387,
+      "sha256": "613291bd07287bef0e8c9c6d128e663d1274c884cc9366d3c6ffa6d054b85285"
+    },
+    {
+      "path": "tooling/schemas/fi0-incident.schema.json",
+      "bytes": 3443,
+      "sha256": "d0946852e32b3f21b7483508c77beac32fb0ce847935aa53fb844a09c6983d3a"
+    },
+    {
+      "path": "tooling/schemas/fi0-view.schema.json",
+      "bytes": 3734,
+      "sha256": "d9fe7fcb95c0df352d146c868689b997d186095cba855d0a9895e560278bb5ec"
+    },
+    {
+      "path": "tooling/schemas/git-base-manifest.schema.json",
+      "bytes": 6623,
+      "sha256": "9bbe22a8084526b6755ee9dcec08909b25d346b36de38e14314bcc613c20e430"
+    },
+    {
+      "path": "tooling/schemas/git-tree-delta.schema.json",
+      "bytes": 9651,
+      "sha256": "15315d8e6f2c61150b2d4d0fb412d1cc5f516b5e9a42ed8bfbf7c46dcc0b8b5d"
+    },
+    {
+      "path": "tooling/schemas/promotion-transaction.schema.json",
+      "bytes": 1870,
+      "sha256": "78285f4ad4a10162ecda6d52d20a2566234c1a7e8a7ac778245d0514225deb38"
+    },
+    {
+      "path": "tooling/schemas/recovery-resolution.schema.json",
+      "bytes": 3562,
+      "sha256": "b57b8df677be64a6c9a299de6fbc63fc7a48ff680e3e3b434dacee00c6d8f829"
+    },
+    {
+      "path": "tooling/scripts/common.mjs",
+      "bytes": 2233,
+      "sha256": "86c3d5f1278bbeba7aa1fc09eb5ecb4396cc8683459908c1c31051e3d5912b8d"
+    },
+    {
+      "path": "tooling/scripts/e14-freeze-verifier.mjs",
+      "bytes": 17828,
+      "sha256": "5a5ae45dd63a8e0ca4fb89cf2d0c7c4de86dcd3ab6fee81da5b1859bd142eb24"
+    },
+    {
+      "path": "tooling/scripts/e16-implementation-runner.mjs",
+      "bytes": 20061,
+      "sha256": "47b5d38e856df1f91c1aa82ddf161a3ef525f6c658a2972d1cee5bc6aab50c5a"
+    },
+    {
+      "path": "tooling/scripts/e16-reference-oracle.mjs",
+      "bytes": 47417,
+      "sha256": "d28d0ffe2fa074e953b1bdb3b4b628e8efc9a21edf5e62a0ff43046e0f00ff9f"
+    },
+    {
+      "path": "tooling/scripts/fi0-canonical-vector-worker.mjs",
+      "bytes": 4965,
+      "sha256": "956d5adeb01de069e87024ee2da28d8c2af706ceba9cff1c2c4237cbb6fab14c"
+    },
+    {
+      "path": "tooling/scripts/lint.mjs",
+      "bytes": 1432,
+      "sha256": "d5859d2f455f96a115b5bd90317623be87a543511adc4304e7842a6b7c742e21"
+    },
+    {
+      "path": "tooling/scripts/run-stage5.mjs",
+      "bytes": 52968,
+      "sha256": "2468495f88ac3e31857781af189719ac49b33cedca99c26a0be98e19c4eea7f6"
+    },
+    {
+      "path": "tooling/scripts/schema-corpus-closure.mjs",
+      "bytes": 4515,
+      "sha256": "2b89ebeeb5bdc4eaee4e7dd48634b723e8f1c63dc79afb00c94e2551f7b52807"
+    },
+    {
+      "path": "tooling/scripts/structural-check.mjs",
+      "bytes": 4946,
+      "sha256": "cd9c9c3810f69caefcbe942d7c2cfb6204e7ac854f71c6112421f436da298333"
+    },
+    {
+      "path": "tooling/scripts/verify-contracts.mjs",
+      "bytes": 88763,
+      "sha256": "f15f7aca4f8b03128aa7120508fb7582e6b21efa9114af136191969862d643f2"
+    },
+    {
+      "path": "tooling/scripts/verify-installation.mjs",
+      "bytes": 4355,
+      "sha256": "e19a652f7e407f510e9118b5b6442aeadd6948cc1e27d710c3dade2e0dc78141"
+    },
+    {
+      "path": "tooling/tests/activation-diagnostics.test.mjs",
+      "bytes": 21017,
+      "sha256": "7412697024d0b3fb25d4be3e2988c576481818172cb32233f12783c8e50c8e89"
+    },
+    {
+      "path": "tooling/tests/activation-improvement.test.mjs",
+      "bytes": 8679,
+      "sha256": "0a75b166099a67b6408012e214273af84e0e56cfbdf0d9ef475bec54356bfef1"
+    },
+    {
+      "path": "tooling/tests/activation-journal.test.mjs",
+      "bytes": 22264,
+      "sha256": "5cdb853380d2363b1089fc5613adbf2e3f4ef667906ab664e6ca375dba2effdc"
+    },
+    {
+      "path": "tooling/tests/activation-owner.test.mjs",
+      "bytes": 20312,
+      "sha256": "c31b84b981702b1ddea15cf2e482048dfaa140413855d89057473007c9fcb2b5"
+    },
+    {
+      "path": "tooling/tests/activation-receipt-store.test.mjs",
+      "bytes": 22144,
+      "sha256": "d562ff0d5ab43d479df65087545f408b642c0ae9d8aaa89ba2eb9561e417f817"
+    },
+    {
+      "path": "tooling/tests/admitted-run-owner.test.mjs",
+      "bytes": 10329,
+      "sha256": "9b52d140950a9e876075b46d9effdd71b72dde6bf2bf0809efb4116394909079"
+    },
+    {
+      "path": "tooling/tests/afm-content-executor.test.mjs",
+      "bytes": 16415,
+      "sha256": "cc731a059861e6430fa7f93f08527f986c680e8ebbde65d2df9b25f494889299"
+    },
+    {
+      "path": "tooling/tests/afm-dispatcher.test.mjs",
+      "bytes": 8761,
+      "sha256": "a090413b4c4738b85135be96a7f58797c5f05760ce6eb4fafdf64000e7df4297"
+    },
+    {
+      "path": "tooling/tests/afm-executor.test.mjs",
+      "bytes": 5126,
+      "sha256": "3f1ba4bb65061dc20e7b2a0bbfe5d4bfce8530e38fc6d31fc7f226aedb981cc7"
+    },
+    {
+      "path": "tooling/tests/chain-harness.test.mjs",
+      "bytes": 14587,
+      "sha256": "c2d234582f90ebbebcd803db218d751b71c0917862ce6884a9c3b217e379ee10"
+    },
+    {
+      "path": "tooling/tests/content-consent.test.mjs",
+      "bytes": 11262,
+      "sha256": "5ab629b99a92583e0345fdab9d154c4991314964f9701030b250ea3b055dad2e"
+    },
+    {
+      "path": "tooling/tests/contribution-admission.test.mjs",
+      "bytes": 9247,
+      "sha256": "00b1f011cbd696e662f0e2ee8e9aad3142f4bb4978d579fa0ed60bce6da86909"
+    },
+    {
+      "path": "tooling/tests/contribution-flow.test.mjs",
+      "bytes": 13250,
+      "sha256": "e61319bc81415a86df156a36b2f3be45d355fc555c70bd88259acdb643121244"
+    },
+    {
+      "path": "tooling/tests/courier-queue-boundary.test.mjs",
+      "bytes": 8451,
+      "sha256": "1e00cab0cd4f8bfd9198d8d989889f0d0dda362b03b30dd19802a7e2fe7e5f15"
+    },
+    {
+      "path": "tooling/tests/courier-queue.test.mjs",
+      "bytes": 16454,
+      "sha256": "62092df7b545f9744ee9d04e57f852d2f29747abd58585b0f7b19fc2d092d331"
+    },
+    {
+      "path": "tooling/tests/default-contribution-round.test.mjs",
+      "bytes": 11302,
+      "sha256": "5d51d9e181b586030793ce7170cbf8d9328d85cce105a130007817a2229c820c"
+    },
+    {
+      "path": "tooling/tests/default-contribution-rounds.test.mjs",
+      "bytes": 9149,
+      "sha256": "350821cdd37f6b952070e59fdd713e6e289196a34b7cbbe8932f2711ca9cadeb"
+    },
+    {
+      "path": "tooling/tests/dual-face-contracts.test.mjs",
+      "bytes": 15890,
+      "sha256": "0c15040cb11d7abefc8a3b969ab671cb35fe110f97cdc8a4c6cd2245d230b651"
+    },
+    {
+      "path": "tooling/tests/fixtures/activation-diagnostic-writer.mjs",
+      "bytes": 461,
+      "sha256": "1b6f309841f20006d8f9ca311925211c6ea008c2d5fb08340fea4524fc2b55eb"
+    },
+    {
+      "path": "tooling/tests/fixtures/activation-journal-worker.mjs",
+      "bytes": 4537,
+      "sha256": "be9cc3b3c61122207a52b3b23eccc6465032a2e42888ddff8300a48017917925"
+    },
+    {
+      "path": "tooling/tests/fixtures/activation-receipt-worker.mjs",
+      "bytes": 2654,
+      "sha256": "ac24b8d2cfae5dd099a5a5ddc0ed5b5bc2b9d4bf27a7cd205806e4aff9679f79"
+    },
+    {
+      "path": "tooling/tests/fixtures/afm-probe-process.c",
+      "bytes": 1234,
+      "sha256": "3003090fc71d1c2bfd44f86f9c598a69dd2adc84f2fc4f8672ecb435f16e39dd"
+    },
+    {
+      "path": "tooling/tests/fixtures/scheduler-quota-oracle.mjs",
+      "bytes": 2204,
+      "sha256": "b1de4771875cee2384155954cbf53e67ca6c35bb21bb1a91733a5ebdda8d6cd6"
+    },
+    {
+      "path": "tooling/tests/fixtures/synthetic-afm-evidence.mjs",
+      "bytes": 2419,
+      "sha256": "ddfeac358d7912bf35f672683e579998c9d5cad373b66900cf162f25f38bc5e5"
+    },
+    {
+      "path": "tooling/tests/fixtures/typed-context.mjs",
+      "bytes": 597,
+      "sha256": "0a0f6e3fbf2f0d9881aed5e2d6e343d49806c7a5f8244baf0307e5decd40c08c"
+    },
+    {
+      "path": "tooling/tests/input-bound-ordering.test.mjs",
+      "bytes": 6587,
+      "sha256": "46aef6a64a975e6b676ec431759bb65e445f8cf5101d86b71a29ccab6971d37c"
+    },
+    {
+      "path": "tooling/tests/journaled-activation-owner.test.mjs",
+      "bytes": 26511,
+      "sha256": "691ba52f452b546427cbfdf094b40138db340022891f2a6f8e5b1b613863b33f"
+    },
+    {
+      "path": "tooling/tests/mac1-json-v1.test.mjs",
+      "bytes": 10802,
+      "sha256": "d97ba5ea6ab905f7067949234ac379e2da28f63310f1033f4a08bec281c9a9d4"
+    },
+    {
+      "path": "tooling/tests/neural-contracts.test.mjs",
+      "bytes": 15132,
+      "sha256": "356f0912023a932255f6ff94a47c7d945f77db36472b869fcb742621dc8a2666"
+    },
+    {
+      "path": "tooling/tests/neural-output-budget.test.mjs",
+      "bytes": 6832,
+      "sha256": "7870a60bbb06ca3c01a5cd0c641e2648afbc0218e1da25c94bf737ced02ae142"
+    },
+    {
+      "path": "tooling/tests/node-enhancements.test.mjs",
+      "bytes": 12072,
+      "sha256": "3aad35ad90612fed1c0bccf825be9d46a8a118d0f26fef498c64dbad3e057900"
+    },
+    {
+      "path": "tooling/tests/owner-lifecycle.test.mjs",
+      "bytes": 9715,
+      "sha256": "e088e24f163fae10b093f0519dbbc05c431255dbce60b0b80d23d0317b14d05f"
+    },
+    {
+      "path": "tooling/tests/required-inventory-contract.test.mjs",
+      "bytes": 13912,
+      "sha256": "7cd0fb0911078c0cf5201e61e8ef422847c840866ef083ffba2b033e9e3258a4"
+    },
+    {
+      "path": "tooling/tests/scheduled-afm-probe.test.mjs",
+      "bytes": 11074,
+      "sha256": "9b69749c9b9934b65173951c8da72acf3772ecd220facee58fe4ce42c3f1a8a5"
+    },
+    {
+      "path": "tooling/tests/scheduled-run-owner.test.mjs",
+      "bytes": 16468,
+      "sha256": "c4a21b3ebcc95b3ba937f31337dc386e12ab83d922b26bd9ad3fb7e03e1d3d0f"
+    },
+    {
+      "path": "tooling/tests/scheduler-quota.test.mjs",
+      "bytes": 2067,
+      "sha256": "fa97657ec6b4873c20190d382dd4d8908f12008674b622d039f47a0968ebe5b9"
+    },
+    {
+      "path": "tooling/tests/scheduler-response-boundary.test.mjs",
+      "bytes": 5076,
+      "sha256": "854efb9f4e827ee5473de41ad788209c3bfcaf210d276674cbf784c2c1832d3a"
+    },
+    {
+      "path": "tooling/tests/schema-registry-completeness.test.mjs",
+      "bytes": 8812,
+      "sha256": "7408c40130eb733ce97192ff64da02fcdb02e8c957900572c98cf7dbef80e09c"
+    },
+    {
+      "path": "tooling/tests/shared-work-slot-scheduler.test.mjs",
+      "bytes": 19560,
+      "sha256": "f06dc7a4a54332c5003a198307316e5bec6eee29670aec782473944cfe3467ec"
+    },
+    {
+      "path": "tooling/tests/task-response-combiner.test.mjs",
+      "bytes": 9675,
+      "sha256": "43c33cb82ad374f88e0d92ef412c282474a6cd50f79ca061b9fa5515bd6a4356"
+    },
+    {
+      "path": "tooling/tests/typed-contribution-combiner.test.mjs",
+      "bytes": 17676,
+      "sha256": "9b06d9adf9d8229519d712593fa915cb0a991f9066a3e1880ec27eff82d0257a"
+    },
+    {
+      "path": "tooling/tests/typed-lifecycle.test.mjs",
+      "bytes": 14622,
+      "sha256": "55638377492ad7dc0d366cc0127e4cfe52b5b5689fa85d701adeb087b259ce27"
+    },
+    {
+      "path": "tooling/tsconfig.json",
+      "bytes": 694,
+      "sha256": "8c372d41de1e7c9c05371eca0f9836e66c7c982dcf1a080f7974913f8008587c"
+    },
+    {
+      "path": "veritas.ts",
+      "bytes": 2354118,
+      "sha256": "529139adcb44d2957581eb0c9ed17e9e85a90cbc418d03fa4c0fab67920b7d3a"
+    }
+  ]
+}

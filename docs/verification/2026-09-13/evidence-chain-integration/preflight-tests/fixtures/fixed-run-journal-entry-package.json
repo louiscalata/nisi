@@ -1,0 +1,11 @@
+{
+  "name": "nisi-fixed-run-journal-entry",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "license": "UNLICENSED",
+  "scripts": {
+    "test": "node --test tests/baseline.test.mjs",
+    "test:entry": "node --test tests/entry.test.mjs"
+  }
+}

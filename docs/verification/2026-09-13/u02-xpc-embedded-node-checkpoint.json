@@ -1,0 +1,1558 @@
+{
+  "schemaVersion": "nisi-fixed-xpc-embedded-node-checkpoint-v1",
+  "createdAt": "2026-09-13T17:16:50.258668+00:00",
+  "status": "FIXED_EMBEDDED_NODE_START_FAILED",
+  "statusProvenance": "OWNER_RAW_WAIT_STATUS_ADJUDICATION; protected checker remains INCOMPLETE, no acceptance result",
+  "decisionProvenance": {
+    "owner": "Louis",
+    "date": "2026-09-13",
+    "approximateTime": "10:00 PDT",
+    "session": "Claude",
+    "quote": "Approve the fixed-script prerequisite, have Astra run it",
+    "approvedBriefSha256": "cb8615b905c1e7153ef22a09f537078524517d453f6a5d86a5a2554a9543f609",
+    "scope": "Bounded experiment proposed if Louis approves, steps 1-5, with user bindings"
+  },
+  "nativeContext": {
+    "platform": "darwin",
+    "machine": "arm64",
+    "kernelRelease": "27.0.0",
+    "harnessPid": 8972,
+    "parentPid": 6148,
+    "nativeExecution": true,
+    "claudeShellSandbox": false,
+    "nestedSandboxConfoundingExcluded": true,
+    "basis": "User provided native permission_profile disabled; direct local exec_command, no sandbox-exec or Claude shell wrapper",
+    "scopeInterpretation": "Explicitly requested unique macOS-managed containers, script copy, inventory are experiment effects outside tree. No unrelated outside writes. Canary read-only.",
+    "generatedCodeExecuted": false,
+    "completeIsolation": false,
+    "authorizing": false
+  },
+  "attempts": {
+    "nativeFixtureLaunches": 1,
+    "embeddedNodeSpawnAttempts": 1,
+    "retries": 0,
+    "entitlementChangesAfterFailure": 0,
+    "runtimeWorkStoppedAfterFailure": true
+  },
+  "node": {
+    "source": {
+      "path": "/usr/local/bin/node",
+      "size": 244304112,
+      "sha256": "bf0cea6ab3631b6b53a9709ed54d62608dd0725187426d34d4d6af6644c5197f",
+      "version": "v24.18.0",
+      "versionSource": "user-provided, source binary not run by this harness"
+    },
+    "embeddedUnsigned": {
+      "path": "/Users/louiscalata/nisi-next-private/.build/xpc-embedded-node-69qhvao1/ProbeHost.app/Contents/XPCServices/ProbeService.xpc/Contents/MacOS/node",
+      "size": 120965360,
+      "sha256": "ae73c07d5041900b8e28428da1fc3b538a0d1c9b6c8dd321f4926d326586e9b2"
+    },
+    "embeddedSigned": {
+      "path": "/Users/louiscalata/nisi-next-private/.build/xpc-embedded-node-69qhvao1/ProbeHost.app/Contents/XPCServices/ProbeService.xpc/Contents/MacOS/node",
+      "size": 120243280,
+      "sha256": "d261195b75f7e02239c46b89032249e25641c9d6ad99a77032a50544aca7015e"
+    },
+    "generatedCodeExecuted": false,
+    "completeIsolation": false,
+    "authorizing": false
+  },
+  "entitlements": {
+    "host": {
+      "target": "/Users/louiscalata/nisi-next-private/.build/xpc-embedded-node-69qhvao1/ProbeHost.app",
+      "argv": [
+        "/usr/bin/codesign",
+        "-d",
+        "--entitlements",
+        ":-",
+        "/Users/louiscalata/nisi-next-private/.build/xpc-embedded-node-69qhvao1/ProbeHost.app"
+      ],
+      "stdout": "<?xml version=\"1.0\" encoding=\"UTF-8\"?><!DOCTYPE plist PUBLIC \"-//Apple//DTD PLIST 1.0//EN\" \"https://www.apple.com/DTDs/PropertyList-1.0.dtd\"><plist version=\"1.0\"><dict><key>com.apple.security.app-sandbox</key><true/></dict></plist>\n",
+      "stderr": "Executable=/Users/louiscalata/nisi-next-private/.build/xpc-embedded-node-69qhvao1/ProbeHost.app/Contents/MacOS/ProbeHost\nwarning: Specifying ':' in the path is deprecated and will not work in a future release\n",
+      "applied": {
+        "com.apple.security.app-sandbox": true
+      },
+      "adHoc": true,
+      "strictSignatureVerification": "SUCCEEDED"
+    },
+    "service": {
+      "target": "/Users/louiscalata/nisi-next-private/.build/xpc-embedded-node-69qhvao1/ProbeHost.app/Contents/XPCServices/ProbeService.xpc",
+      "argv": [
+        "/usr/bin/codesign",
+        "-d",
+        "--entitlements",
+        ":-",
+        "/Users/louiscalata/nisi-next-private/.build/xpc-embedded-node-69qhvao1/ProbeHost.app/Contents/XPCServices/ProbeService.xpc"
+      ],
+      "stdout": "<?xml version=\"1.0\" encoding=\"UTF-8\"?><!DOCTYPE plist PUBLIC \"-//Apple//DTD PLIST 1.0//EN\" \"https://www.apple.com/DTDs/PropertyList-1.0.dtd\"><plist version=\"1.0\"><dict><key>com.apple.security.app-sandbox</key><true/></dict></plist>\n",
+      "stderr": "Executable=/Users/louiscalata/nisi-next-private/.build/xpc-embedded-node-69qhvao1/ProbeHost.app/Contents/XPCServices/ProbeService.xpc/Contents/MacOS/ProbeService\nwarning: Specifying ':' in the path is deprecated and will not work in a future release\n",
+      "applied": {
+        "com.apple.security.app-sandbox": true
+      },
+      "adHoc": true,
+      "strictSignatureVerification": "SUCCEEDED"
+    },
+    "node": {
+      "target": "/Users/louiscalata/nisi-next-private/.build/xpc-embedded-node-69qhvao1/ProbeHost.app/Contents/XPCServices/ProbeService.xpc/Contents/MacOS/node",
+      "argv": [
+        "/usr/bin/codesign",
+        "-d",
+        "--entitlements",
+        ":-",
+        "/Users/louiscalata/nisi-next-private/.build/xpc-embedded-node-69qhvao1/ProbeHost.app/Contents/XPCServices/ProbeService.xpc/Contents/MacOS/node"
+      ],
+      "stdout": "<?xml version=\"1.0\" encoding=\"UTF-8\"?><!DOCTYPE plist PUBLIC \"-//Apple//DTD PLIST 1.0//EN\" \"https://www.apple.com/DTDs/PropertyList-1.0.dtd\"><plist version=\"1.0\"><dict><key>com.apple.security.app-sandbox</key><true/></dict></plist>\n",
+      "stderr": "Executable=/Users/louiscalata/nisi-next-private/.build/xpc-embedded-node-69qhvao1/ProbeHost.app/Contents/XPCServices/ProbeService.xpc/Contents/MacOS/node\nwarning: Specifying ':' in the path is deprecated and will not work in a future release\n",
+      "applied": {
+        "com.apple.security.app-sandbox": true
+      },
+      "adHoc": true,
+      "strictSignatureVerification": "SUCCEEDED"
+    }
+  },
+  "hashes": {
+    "approvedBriefBefore": "cb8615b905c1e7153ef22a09f537078524517d453f6a5d86a5a2554a9543f609",
+    "frozenManifest": "3349dc526ec3a3bb383398e80f5f80885a50cc30d781e8351bb1a59076cb4134",
+    "frozenInputs": [
+      {
+        "path": "/Users/louiscalata/nisi-next-private/.build/xpc-embedded-node-69qhvao1/ProbeHost.app/Contents/Info.plist",
+        "size": 462,
+        "sha256": "e68a3f50df77291000880e5274b408e432c90c1bf5d8aab8ebccf0c86308e775",
+        "mode": "0o444",
+        "flags": 2
+      },
+      {
+        "path": "/Users/louiscalata/nisi-next-private/.build/xpc-embedded-node-69qhvao1/ProbeHost.app/Contents/MacOS/ProbeHost",
+        "size": 56512,
+        "sha256": "dfc42ac08027f2599b9430731c621d96399a79cdaefe64bcfe578de189e66c67",
+        "mode": "0o555",
+        "flags": 2
+      },
+      {
+        "path": "/Users/louiscalata/nisi-next-private/.build/xpc-embedded-node-69qhvao1/ProbeHost.app/Contents/XPCServices/ProbeService.xpc/Contents/Info.plist",
+        "size": 564,
+        "sha256": "85b4eba60d02c2c42fb7f3890e1c82affe95e7cc20396920655fa3f4280a3e03",
+        "mode": "0o444",
+        "flags": 2
+      },
+      {
+        "path": "/Users/louiscalata/nisi-next-private/.build/xpc-embedded-node-69qhvao1/ProbeHost.app/Contents/XPCServices/ProbeService.xpc/Contents/MacOS/ProbeService",
+        "size": 75808,
+        "sha256": "bf7558715a0281d012e5644de4843a46fd4703118236cbb8ca58604bb6ef3771",
+        "mode": "0o555",
+        "flags": 2
+      },
+      {
+        "path": "/Users/louiscalata/nisi-next-private/.build/xpc-embedded-node-69qhvao1/ProbeHost.app/Contents/XPCServices/ProbeService.xpc/Contents/MacOS/node",
+        "size": 120243280,
+        "sha256": "d261195b75f7e02239c46b89032249e25641c9d6ad99a77032a50544aca7015e",
+        "mode": "0o555",
+        "flags": 2
+      },
+      {
+        "path": "/Users/louiscalata/nisi-next-private/.build/xpc-embedded-node-69qhvao1/ProbeHost.app/Contents/XPCServices/ProbeService.xpc/Contents/Resources/fixed-canary.cjs",
+        "size": 1707,
+        "sha256": "de392d7a6d488331ec7b39e10da48f2e68cb000c3083191f59b2d57012a13c40",
+        "mode": "0o444",
+        "flags": 2
+      },
+      {
+        "path": "/Users/louiscalata/nisi-next-private/.build/xpc-embedded-node-69qhvao1/ProbeHost.app/Contents/XPCServices/ProbeService.xpc/Contents/_CodeSignature/CodeResources",
+        "size": 2668,
+        "sha256": "9776d2fd838165ffe29a2c4cd5553e6d11b4a0100422ff3b23189c92771fc4e7",
+        "mode": "0o444",
+        "flags": 2
+      },
+      {
+        "path": "/Users/louiscalata/nisi-next-private/.build/xpc-embedded-node-69qhvao1/ProbeHost.app/Contents/_CodeSignature/CodeResources",
+        "size": 2440,
+        "sha256": "50ffb017c8deddc1176f206b2aafc9c47237174d8418a33daea6bc7791713d55",
+        "mode": "0o444",
+        "flags": 2
+      },
+      {
+        "path": "/Users/louiscalata/nisi-next-private/.build/xpc-embedded-node-69qhvao1/experiment.py",
+        "size": 12627,
+        "sha256": "3f10afe28ef5a314e265687adac4eac54731dc519e1c9ebded63bd0f1dae00d5",
+        "mode": "0o444",
+        "flags": 2
+      },
+      {
+        "path": "/Users/louiscalata/nisi-next-private/.build/xpc-embedded-node-69qhvao1/inputs/checker.py",
+        "size": 6921,
+        "sha256": "f467a5f2a48ce1a051ba335edce135f523c1185c4515471e5d1469d8ae34689e",
+        "mode": "0o444",
+        "flags": 2
+      },
+      {
+        "path": "/Users/louiscalata/nisi-next-private/.build/xpc-embedded-node-69qhvao1/inputs/entitlements.plist",
+        "size": 112,
+        "sha256": "1e5bb1deff393cc3cb2e5df6453d6b0d3ced694cbf075a73075dc504a03ef3c7",
+        "mode": "0o444",
+        "flags": 2
+      },
+      {
+        "path": "/Users/louiscalata/nisi-next-private/.build/xpc-embedded-node-69qhvao1/inputs/fixed-canary.cjs",
+        "size": 1707,
+        "sha256": "de392d7a6d488331ec7b39e10da48f2e68cb000c3083191f59b2d57012a13c40",
+        "mode": "0o444",
+        "flags": 2
+      },
+      {
+        "path": "/Users/louiscalata/nisi-next-private/.build/xpc-embedded-node-69qhvao1/inputs/probe-client.m",
+        "size": 4134,
+        "sha256": "5c4e716ad883f1edf3e351049162db8e1b447c6bbbd724e32b5aada7c91f227e",
+        "mode": "0o444",
+        "flags": 2
+      },
+      {
+        "path": "/Users/louiscalata/nisi-next-private/.build/xpc-embedded-node-69qhvao1/inputs/probe-config.h",
+        "size": 1061,
+        "sha256": "3e4ec462e677c5c8941c9e1eb88e6f5fee2d10781e180ca932bc36b272324f02",
+        "mode": "0o444",
+        "flags": 2
+      },
+      {
+        "path": "/Users/louiscalata/nisi-next-private/.build/xpc-embedded-node-69qhvao1/inputs/probe-service.m",
+        "size": 12217,
+        "sha256": "905539a782ddc7a149895fdab6efed1f3c2c337d3930ad82825d5c7f7e2bc9b0",
+        "mode": "0o444",
+        "flags": 2
+      },
+      {
+        "path": "/Users/louiscalata/nisi-next-private/.build/xpc-embedded-node-69qhvao1/inputs/probe-wire.h",
+        "size": 1673,
+        "sha256": "bb5cd4e712263855dc0ad46c9610591df4128556b80785d5cf31fdd6d0669971",
+        "mode": "0o444",
+        "flags": 2
+      },
+      {
+        "path": "/Users/louiscalata/nisi-next-private/.build/xpc-embedded-node-69qhvao1/preparation.json",
+        "size": 2220,
+        "sha256": "09b61617446e7bd40cb3fef76e9075aea389e81fb9c0e4e2de5822b4c9ee839c",
+        "mode": "0o444",
+        "flags": 2
+      },
+      {
+        "path": "/Users/louiscalata/nisi-next-private/.build/xpc-embedded-node-69qhvao1/prepare-inputs.py",
+        "size": 3889,
+        "sha256": "57098a5772954b7c3cdecf988e3b6a0b03451d7bd74be951e3a3a12e036ff877",
+        "mode": "0o444",
+        "flags": 2
+      }
+    ],
+    "canonicalHostSourcesUnchanged": {
+      "probe-wire.h": true,
+      "probe-client.m": true,
+      "probe-service.m": true,
+      "protocol.mjs": true,
+      "fixed-xpc-runner.mjs": true
+    }
+  },
+  "fixedScript": {
+    "sourcePath": "/Users/louiscalata/nisi-next-private/.build/xpc-embedded-node-69qhvao1/inputs/fixed-canary.cjs",
+    "containerPath": "/Users/louiscalata/Library/Containers/local.nisi.embeddednode.service.r12cc2e70e1a9b8b795274505747a8990/Data/nisi-fixed-canary.cjs",
+    "sha256": "de392d7a6d488331ec7b39e10da48f2e68cb000c3083191f59b2d57012a13c40",
+    "bytes": 1707,
+    "mode": "0400 in service container",
+    "acceptsArgv": false,
+    "acceptsEnvironment": false,
+    "repositoryPathsReadByScript": false,
+    "modelOutputReferenced": false,
+    "scriptEntryObserved": false
+  },
+  "spawn": {
+    "attempted": true,
+    "return": 0,
+    "errnoSnapshot": 0,
+    "failureErrno": null,
+    "childPidServiceObserved": 9917,
+    "servicePidSelfReported": 9916,
+    "childPgidObserved": 9917,
+    "launchContract": {
+      "argv": [
+        "/Users/louiscalata/nisi-next-private/.build/xpc-embedded-node-69qhvao1/ProbeHost.app/Contents/XPCServices/ProbeService.xpc/Contents/MacOS/node",
+        "/Users/louiscalata/Library/Containers/local.nisi.embeddednode.service.r12cc2e70e1a9b8b795274505747a8990/Data/nisi-fixed-canary.cjs"
+      ],
+      "cwd": "/Users/louiscalata/Library/Containers/local.nisi.embeddednode.service.r12cc2e70e1a9b8b795274505747a8990/Data",
+      "environment": [
+        "PATH=/usr/bin:/bin",
+        "LANG=C",
+        "LC_ALL=C",
+        "HOME=/Users/louiscalata/Library/Containers/local.nisi.embeddednode.service.r12cc2e70e1a9b8b795274505747a8990/Data",
+        "TMPDIR=/Users/louiscalata/Library/Containers/local.nisi.embeddednode.service.r12cc2e70e1a9b8b795274505747a8990/Data"
+      ],
+      "inheritedEnvironment": false,
+      "NODE_OPTIONS": "stripped by fixed env; reject if present",
+      "NODE_PATH": "stripped by fixed env; reject if present",
+      "nodePath": "/Users/louiscalata/nisi-next-private/.build/xpc-embedded-node-69qhvao1/ProbeHost.app/Contents/XPCServices/ProbeService.xpc/Contents/MacOS/node"
+    },
+    "durationMs": 1.8876666654250585
+  },
+  "exec": {
+    "outcome": "SPAWN_SUCCEEDED_SCRIPT_ENTRY_UNOBSERVED_EXEC_COMPLETION_UNKNOWN",
+    "nodeStartupCompleted": null,
+    "scriptEntryObserved": false,
+    "exactCause": "UNKNOWN; child received SIGTRAP, no diagnostic message captured",
+    "nodeStartupCompletionObserved": false
+  },
+  "exit": {
+    "waitObservedByService": true,
+    "basis": "Raw waitObservedPid matches childPid, waitErrno 0, raw status 5; frozen checker type defect separately retained",
+    "rawWaitStatus": 5,
+    "exitCode": null,
+    "signal": 5,
+    "signalName": "SIGTRAP",
+    "coreDumped": false,
+    "observedAfterSpawnMs": 24.0820833350881
+  },
+  "drain": {
+    "stdoutEOF": true,
+    "stderrEOF": true,
+    "stdoutBytes": 0,
+    "stderrBytes": 0,
+    "stdoutReadErrno": 0,
+    "stderrReadErrno": 0,
+    "rawEOFObserved": true,
+    "outputCapBytes": 65536,
+    "outputCapExceeded": false
+  },
+  "bounds": {
+    "deadlineSeconds": 20,
+    "timeout": false,
+    "cancellationRequested": false,
+    "cancellationPathExercised": false,
+    "settlementDeadlineExpired": false
+  },
+  "timings": {
+    "hostStartedAt": "2026-09-13T17:12:26.326502+00:00",
+    "hostEndedAt": "2026-09-13T17:12:27.316580+00:00",
+    "hostDurationMs": 990.094,
+    "serviceDurationMs": 24.364416662137955,
+    "nodeSpawnDurationMs": 1.8876666654250585,
+    "nodeExitObservedAfterSpawnMs": 24.0820833350881
+  },
+  "host": {
+    "startedAt": "2026-09-13T17:12:26.326502+00:00",
+    "pid": 9910,
+    "argv": [
+      "/Users/louiscalata/nisi-next-private/.build/xpc-embedded-node-69qhvao1/ProbeHost.app/Contents/MacOS/ProbeHost"
+    ],
+    "timeout": false,
+    "outputCapExceeded": false,
+    "stdoutEOF": true,
+    "stderrEOF": true,
+    "cancellationRequested": false,
+    "endedAt": "2026-09-13T17:12:27.316580+00:00",
+    "durationMs": 990.094,
+    "returnCode": 0,
+    "bytesObserved": 4005,
+    "generatedCodeExecuted": false,
+    "completeIsolation": false,
+    "authorizing": false
+  },
+  "canaryOutcomes": [
+    {
+      "operation": "self_report",
+      "expected": "identity match",
+      "observed": "NOT_OBSERVED",
+      "errno": null
+    },
+    {
+      "operation": "own_container_write",
+      "expected": "allowed",
+      "observed": "NOT_OBSERVED",
+      "errno": null
+    },
+    {
+      "operation": "own_container_read",
+      "expected": "allowed",
+      "observed": "NOT_OBSERVED",
+      "errno": null
+    },
+    {
+      "operation": "outside_read",
+      "expected": "denied EPERM errno 1",
+      "observed": "NOT_OBSERVED",
+      "errno": null
+    },
+    {
+      "operation": "ipv4_loopback_bind",
+      "expected": "denied EPERM errno 1",
+      "observed": "NOT_OBSERVED",
+      "errno": null
+    }
+  ],
+  "outsideCanary": {
+    "before": {
+      "path": "/Users/louiscalata/.zshrc",
+      "existedBefore": true,
+      "sha256Before": "7ea70a5af13474396a2d0e409f7ee6a2132adfe0bc9cbe5e6ad50551bee4f937",
+      "sizeBefore": 324
+    },
+    "after": {
+      "path": "/Users/louiscalata/.zshrc",
+      "exists": true,
+      "sha256": "7ea70a5af13474396a2d0e409f7ee6a2132adfe0bc9cbe5e6ad50551bee4f937",
+      "unchanged": true,
+      "created": false,
+      "written": false,
+      "generatedCodeExecuted": false,
+      "completeIsolation": false,
+      "authorizing": false
+    }
+  },
+  "protectedChecker": {
+    "path": "/Users/louiscalata/nisi-next-private/.build/xpc-embedded-node-69qhvao1/inputs/checker.py",
+    "sha256": "f467a5f2a48ce1a051ba335edce135f523c1185c4515471e5d1469d8ae34689e",
+    "resultPath": "/Users/louiscalata/nisi-next-private/.build/xpc-embedded-node-69qhvao1/checker-result.json",
+    "status": "INCOMPLETE",
+    "preRunHashRetained": true,
+    "unmodifiedAfterFreeze": true,
+    "mode": "0444",
+    "immutableFlag": true,
+    "childWritable": false,
+    "protectionBasis": "Outside child container and bundle, mode0444 + UF_IMMUTABLE; fixed script has no repo paths",
+    "failureMode": {
+      "waitObservedRaw": 1,
+      "drainObservedRaw": 1,
+      "cause": "Objective-C boxing of C comparison expressions emits JSON integer 1; Python checker uses identity comparison `is True`. The checker therefore reports exitKnown:false and drainObserved:false despite raw wait status and independent EOF evidence. No frozen checker was patched or rerun with normalized evidence."
+    },
+    "falsePass": false
+  },
+  "descendants": {
+    "childPid": 9917,
+    "pgrepDirect": {
+      "returnCode": 1,
+      "stdout": "",
+      "stderr": "",
+      "meaning": "No current direct children matched"
+    },
+    "pgrepGroup": {
+      "returnCode": 1,
+      "stdout": "",
+      "stderr": ""
+    },
+    "internalGroupAfterCleanup": {
+      "errno": 3,
+      "return": -1,
+      "signal": 0
+    },
+    "externalGroup": {
+      "return": -1,
+      "errno": 3,
+      "observed": "ABSENT_AT_CHECK"
+    },
+    "escapedOrReparentedDescendants": "NOT_PROVEN_ABSENT",
+    "servicePidAbsentAtPostRunPs": true,
+    "serviceTerminationProven": false,
+    "rawHarnessQualification": "descendants.json and cleanup.json contain terminationProven:true derived only from ps return1. Owner interpretation here is PID absent at one snapshot, not independent service wait/lifecycle settlement."
+  },
+  "cleanup": {
+    "hostExited": true,
+    "nodeReapedByService": true,
+    "signalsSentByService": [],
+    "groupAbsentAtChecks": true,
+    "serviceIndependentWaitObserved": false,
+    "containersRemoved": false,
+    "containersRetained": true,
+    "containerDisposition": "Preserved for review; no recursive removal outside tree",
+    "uncertainty": [
+      "Escaped or reparented descendants not proven absent by finite checks",
+      "Service PID absent in one ps snapshot; independent service lifecycle not proven"
+    ],
+    "evidenceRetained": true
+  },
+  "containerInventories": {
+    "before": {
+      "observedAt": "2026-09-13T17:08:56.772139+00:00",
+      "containers": [
+        {
+          "path": "/Users/louiscalata/Library/Containers/local.nisi.embeddednode.host.r12cc2e70e1a9b8b795274505747a8990",
+          "exists": false,
+          "entries": [],
+          "errors": [],
+          "symlinksFollowed": false,
+          "removed": false
+        },
+        {
+          "path": "/Users/louiscalata/Library/Containers/local.nisi.embeddednode.service.r12cc2e70e1a9b8b795274505747a8990",
+          "exists": false,
+          "entries": [],
+          "errors": [],
+          "symlinksFollowed": false,
+          "removed": false
+        }
+      ],
+      "generatedCodeExecuted": false,
+      "completeIsolation": false,
+      "authorizing": false
+    },
+    "after": {
+      "observedAt": "2026-09-13T17:12:28.080867+00:00",
+      "containers": [
+        {
+          "path": "/Users/louiscalata/Library/Containers/local.nisi.embeddednode.host.r12cc2e70e1a9b8b795274505747a8990",
+          "exists": true,
+          "entries": [
+            {
+              "path": ".",
+              "mode": "0o700",
+              "type": "directory",
+              "size": 128,
+              "mtimeNs": 1789319547213282441
+            },
+            {
+              "path": ".com.apple.containermanagerd.metadata.plist",
+              "mode": "0o600",
+              "type": "file",
+              "size": 30593,
+              "mtimeNs": 1789319547213200983,
+              "sha256": "0da84328c36c324ce8e25f0ae2d1b6bfaf82a8f495c12ecb627ebd9ce8d59b8c"
+            },
+            {
+              "path": "Data",
+              "mode": "0o700",
+              "type": "directory",
+              "size": 384,
+              "mtimeNs": 1789319547123492313
+            },
+            {
+              "path": "Data/.CFUserTextEncoding",
+              "mode": "0o700",
+              "type": "symlink",
+              "size": 31,
+              "mtimeNs": 1789319547120707732,
+              "target": "../../../../.CFUserTextEncoding"
+            },
+            {
+              "path": "Data/Desktop",
+              "mode": "0o700",
+              "type": "symlink",
+              "size": 19,
+              "mtimeNs": 1789319547122180481,
+              "target": "../../../../Desktop"
+            },
+            {
+              "path": "Data/Documents",
+              "mode": "0o700",
+              "type": "directory",
+              "size": 64,
+              "mtimeNs": 1789319547120790024
+            },
+            {
+              "path": "Data/Downloads",
+              "mode": "0o700",
+              "type": "symlink",
+              "size": 21,
+              "mtimeNs": 1789319547121565732,
+              "target": "../../../../Downloads"
+            },
+            {
+              "path": "Data/Library",
+              "mode": "0o700",
+              "type": "directory",
+              "size": 960,
+              "mtimeNs": 1789319547123273188
+            },
+            {
+              "path": "Data/Library/Application Scripts",
+              "mode": "0o700",
+              "type": "directory",
+              "size": 96,
+              "mtimeNs": 1789319547122456231
+            },
+            {
+              "path": "Data/Library/Application Scripts/local.nisi.embeddednode.host.r12cc2e70e1a9b8b795274505747a8990",
+              "mode": "0o700",
+              "type": "symlink",
+              "size": 97,
+              "mtimeNs": 1789319547122444939,
+              "target": "../../../../../Application Scripts/local.nisi.embeddednode.host.r12cc2e70e1a9b8b795274505747a8990"
+            },
+            {
+              "path": "Data/Library/Application Support",
+              "mode": "0o700",
+              "type": "directory",
+              "size": 160,
+              "mtimeNs": 1789319547122535814
+            },
+            {
+              "path": "Data/Library/Application Support/AddressBook",
+              "mode": "0o700",
+              "type": "symlink",
+              "size": 46,
+              "mtimeNs": 1789319547120186608,
+              "target": "../../../../../Application Support/AddressBook"
+            },
+            {
+              "path": "Data/Library/Application Support/SyncServices",
+              "mode": "0o700",
+              "type": "symlink",
+              "size": 47,
+              "mtimeNs": 1789319547122533814,
+              "target": "../../../../../Application Support/SyncServices"
+            },
+            {
+              "path": "Data/Library/Application Support/iCloud",
+              "mode": "0o700",
+              "type": "symlink",
+              "size": 41,
+              "mtimeNs": 1789319547122354606,
+              "target": "../../../../../Application Support/iCloud"
+            },
+            {
+              "path": "Data/Library/Audio",
+              "mode": "0o700",
+              "type": "symlink",
+              "size": 17,
+              "mtimeNs": 1789319547120872066,
+              "target": "../../../../Audio"
+            },
+            {
+              "path": "Data/Library/Caches",
+              "mode": "0o700",
+              "type": "directory",
+              "size": 64,
+              "mtimeNs": 1789319547120923357
+            },
+            {
+              "path": "Data/Library/Calendars",
+              "mode": "0o700",
+              "type": "symlink",
+              "size": 21,
+              "mtimeNs": 1789319547120229066,
+              "target": "../../../../Calendars"
+            },
+            {
+              "path": "Data/Library/ColorPickers",
+              "mode": "0o700",
+              "type": "symlink",
+              "size": 24,
+              "mtimeNs": 1789319547120974774,
+              "target": "../../../../ColorPickers"
+            },
+            {
+              "path": "Data/Library/ColorSync",
+              "mode": "0o700",
+              "type": "symlink",
+              "size": 21,
+              "mtimeNs": 1789319547122097856,
+              "target": "../../../../ColorSync"
+            },
+            {
+              "path": "Data/Library/Colors",
+              "mode": "0o700",
+              "type": "symlink",
+              "size": 18,
+              "mtimeNs": 1789319547120268066,
+              "target": "../../../../Colors"
+            },
+            {
+              "path": "Data/Library/Components",
+              "mode": "0o700",
+              "type": "symlink",
+              "size": 22,
+              "mtimeNs": 1789319547121493690,
+              "target": "../../../../Components"
+            },
+            {
+              "path": "Data/Library/Compositions",
+              "mode": "0o700",
+              "type": "symlink",
+              "size": 24,
+              "mtimeNs": 1789319547121024190,
+              "target": "../../../../Compositions"
+            },
+            {
+              "path": "Data/Library/Dictionaries",
+              "mode": "0o700",
+              "type": "symlink",
+              "size": 24,
+              "mtimeNs": 1789319547122733106,
+              "target": "../../../../Dictionaries"
+            },
+            {
+              "path": "Data/Library/Favorites",
+              "mode": "0o700",
+              "type": "symlink",
+              "size": 21,
+              "mtimeNs": 1789319547121071440,
+              "target": "../../../../Favorites"
+            },
+            {
+              "path": "Data/Library/Filters",
+              "mode": "0o700",
+              "type": "symlink",
+              "size": 19,
+              "mtimeNs": 1789319547123222730,
+              "target": "../../../../Filters"
+            },
+            {
+              "path": "Data/Library/FontCollections",
+              "mode": "0o700",
+              "type": "symlink",
+              "size": 27,
+              "mtimeNs": 1789319547120335274,
+              "target": "../../../../FontCollections"
+            },
+            {
+              "path": "Data/Library/Fonts",
+              "mode": "0o700",
+              "type": "symlink",
+              "size": 17,
+              "mtimeNs": 1789319547120408108,
+              "target": "../../../../Fonts"
+            },
+            {
+              "path": "Data/Library/Images",
+              "mode": "0o700",
+              "type": "directory",
+              "size": 96,
+              "mtimeNs": 1789319547122636522
+            },
+            {
+              "path": "Data/Library/Images/People",
+              "mode": "0o700",
+              "type": "symlink",
+              "size": 28,
+              "mtimeNs": 1789319547122633147,
+              "target": "../../../../../Images/People"
+            },
+            {
+              "path": "Data/Library/Input Methods",
+              "mode": "0o700",
+              "type": "symlink",
+              "size": 25,
+              "mtimeNs": 1789319547121419898,
+              "target": "../../../../Input Methods"
+            },
+            {
+              "path": "Data/Library/KeyBindings",
+              "mode": "0o700",
+              "type": "symlink",
+              "size": 23,
+              "mtimeNs": 1789319547120480399,
+              "target": "../../../../KeyBindings"
+            },
+            {
+              "path": "Data/Library/Keyboard Layouts",
+              "mode": "0o700",
+              "type": "symlink",
+              "size": 28,
+              "mtimeNs": 1789319547120559566,
+              "target": "../../../../Keyboard Layouts"
+            },
+            {
+              "path": "Data/Library/Keychains",
+              "mode": "0o700",
+              "type": "symlink",
+              "size": 21,
+              "mtimeNs": 1789319547120633774,
+              "target": "../../../../Keychains"
+            },
+            {
+              "path": "Data/Library/Logs",
+              "mode": "0o700",
+              "type": "directory",
+              "size": 64,
+              "mtimeNs": 1789319547121121274
+            },
+            {
+              "path": "Data/Library/Mail",
+              "mode": "0o700",
+              "type": "symlink",
+              "size": 16,
+              "mtimeNs": 1789319547122250064,
+              "target": "../../../../Mail"
+            },
+            {
+              "path": "Data/Library/PDF Services",
+              "mode": "0o700",
+              "type": "symlink",
+              "size": 24,
+              "mtimeNs": 1789319547123268105,
+              "target": "../../../../PDF Services"
+            },
+            {
+              "path": "Data/Library/Preferences",
+              "mode": "0o700",
+              "type": "directory",
+              "size": 128,
+              "mtimeNs": 1789319547121728898
+            },
+            {
+              "path": "Data/Library/Preferences/com.apple.security.plist",
+              "mode": "0o700",
+              "type": "symlink",
+              "size": 51,
+              "mtimeNs": 1789319547121647648,
+              "target": "../../../../../Preferences/com.apple.security.plist"
+            },
+            {
+              "path": "Data/Library/Preferences/com.apple.security_common.plist",
+              "mode": "0o700",
+              "type": "symlink",
+              "size": 58,
+              "mtimeNs": 1789319547121720690,
+              "target": "../../../../../Preferences/com.apple.security_common.plist"
+            },
+            {
+              "path": "Data/Library/QuickLook",
+              "mode": "0o700",
+              "type": "symlink",
+              "size": 21,
+              "mtimeNs": 1789319547122019231,
+              "target": "../../../../QuickLook"
+            },
+            {
+              "path": "Data/Library/Saved Application State",
+              "mode": "0o700",
+              "type": "directory",
+              "size": 64,
+              "mtimeNs": 1789319547120096025
+            },
+            {
+              "path": "Data/Library/Sounds",
+              "mode": "0o700",
+              "type": "symlink",
+              "size": 18,
+              "mtimeNs": 1789319547121177107,
+              "target": "../../../../Sounds"
+            },
+            {
+              "path": "Data/Library/Spelling",
+              "mode": "0o700",
+              "type": "symlink",
+              "size": 20,
+              "mtimeNs": 1789319547121226857,
+              "target": "../../../../Spelling"
+            },
+            {
+              "path": "Data/Movies",
+              "mode": "0o700",
+              "type": "symlink",
+              "size": 18,
+              "mtimeNs": 1789319547121274565,
+              "target": "../../../../Movies"
+            },
+            {
+              "path": "Data/Music",
+              "mode": "0o700",
+              "type": "symlink",
+              "size": 17,
+              "mtimeNs": 1789319547121321024,
+              "target": "../../../../Music"
+            },
+            {
+              "path": "Data/Pictures",
+              "mode": "0o700",
+              "type": "symlink",
+              "size": 20,
+              "mtimeNs": 1789319547121368149,
+              "target": "../../../../Pictures"
+            },
+            {
+              "path": "Data/SystemData",
+              "mode": "0o700",
+              "type": "directory",
+              "size": 64,
+              "mtimeNs": 1789319547123488022
+            },
+            {
+              "path": "Data/tmp",
+              "mode": "0o700",
+              "type": "directory",
+              "size": 64,
+              "mtimeNs": 1789319547123434063
+            }
+          ],
+          "errors": [],
+          "symlinksFollowed": false,
+          "removed": false
+        },
+        {
+          "path": "/Users/louiscalata/Library/Containers/local.nisi.embeddednode.service.r12cc2e70e1a9b8b795274505747a8990",
+          "exists": true,
+          "entries": [
+            {
+              "path": ".",
+              "mode": "0o700",
+              "type": "directory",
+              "size": 128,
+              "mtimeNs": 1789319547285510794
+            },
+            {
+              "path": ".com.apple.containermanagerd.metadata.plist",
+              "mode": "0o600",
+              "type": "file",
+              "size": 31048,
+              "mtimeNs": 1789319547285436044,
+              "sha256": "8e8836840f1c6bcdfc3677ffee85243f1cf31a90ae8f0b3ab54a90d41b95d243"
+            },
+            {
+              "path": "Data",
+              "mode": "0o700",
+              "type": "directory",
+              "size": 416,
+              "mtimeNs": 1789319547289120041
+            },
+            {
+              "path": "Data/.CFUserTextEncoding",
+              "mode": "0o700",
+              "type": "symlink",
+              "size": 31,
+              "mtimeNs": 1789319547226010680,
+              "target": "../../../../.CFUserTextEncoding"
+            },
+            {
+              "path": "Data/Desktop",
+              "mode": "0o700",
+              "type": "symlink",
+              "size": 19,
+              "mtimeNs": 1789319547226807013,
+              "target": "../../../../Desktop"
+            },
+            {
+              "path": "Data/Documents",
+              "mode": "0o700",
+              "type": "directory",
+              "size": 64,
+              "mtimeNs": 1789319547226045513
+            },
+            {
+              "path": "Data/Downloads",
+              "mode": "0o700",
+              "type": "symlink",
+              "size": 21,
+              "mtimeNs": 1789319547226531471,
+              "target": "../../../../Downloads"
+            },
+            {
+              "path": "Data/Library",
+              "mode": "0o700",
+              "type": "directory",
+              "size": 960,
+              "mtimeNs": 1789319547227223804
+            },
+            {
+              "path": "Data/Library/Application Scripts",
+              "mode": "0o700",
+              "type": "directory",
+              "size": 96,
+              "mtimeNs": 1789319547226942471
+            },
+            {
+              "path": "Data/Library/Application Scripts/local.nisi.embeddednode.service.r12cc2e70e1a9b8b795274505747a8990",
+              "mode": "0o700",
+              "type": "symlink",
+              "size": 100,
+              "mtimeNs": 1789319547226939263,
+              "target": "../../../../../Application Scripts/local.nisi.embeddednode.service.r12cc2e70e1a9b8b795274505747a8990"
+            },
+            {
+              "path": "Data/Library/Application Support",
+              "mode": "0o700",
+              "type": "directory",
+              "size": 160,
+              "mtimeNs": 1789319547226980554
+            },
+            {
+              "path": "Data/Library/Application Support/AddressBook",
+              "mode": "0o700",
+              "type": "symlink",
+              "size": 46,
+              "mtimeNs": 1789319547225730722,
+              "target": "../../../../../Application Support/AddressBook"
+            },
+            {
+              "path": "Data/Library/Application Support/SyncServices",
+              "mode": "0o700",
+              "type": "symlink",
+              "size": 47,
+              "mtimeNs": 1789319547226979554,
+              "target": "../../../../../Application Support/SyncServices"
+            },
+            {
+              "path": "Data/Library/Application Support/iCloud",
+              "mode": "0o700",
+              "type": "symlink",
+              "size": 41,
+              "mtimeNs": 1789319547226897096,
+              "target": "../../../../../Application Support/iCloud"
+            },
+            {
+              "path": "Data/Library/Audio",
+              "mode": "0o700",
+              "type": "symlink",
+              "size": 17,
+              "mtimeNs": 1789319547226079972,
+              "target": "../../../../Audio"
+            },
+            {
+              "path": "Data/Library/Caches",
+              "mode": "0o700",
+              "type": "directory",
+              "size": 64,
+              "mtimeNs": 1789319547226115055
+            },
+            {
+              "path": "Data/Library/Calendars",
+              "mode": "0o700",
+              "type": "symlink",
+              "size": 21,
+              "mtimeNs": 1789319547225766847,
+              "target": "../../../../Calendars"
+            },
+            {
+              "path": "Data/Library/ColorPickers",
+              "mode": "0o700",
+              "type": "symlink",
+              "size": 24,
+              "mtimeNs": 1789319547226150347,
+              "target": "../../../../ColorPickers"
+            },
+            {
+              "path": "Data/Library/ColorSync",
+              "mode": "0o700",
+              "type": "symlink",
+              "size": 21,
+              "mtimeNs": 1789319547226774638,
+              "target": "../../../../ColorSync"
+            },
+            {
+              "path": "Data/Library/Colors",
+              "mode": "0o700",
+              "type": "symlink",
+              "size": 18,
+              "mtimeNs": 1789319547225802180,
+              "target": "../../../../Colors"
+            },
+            {
+              "path": "Data/Library/Components",
+              "mode": "0o700",
+              "type": "symlink",
+              "size": 22,
+              "mtimeNs": 1789319547226498346,
+              "target": "../../../../Components"
+            },
+            {
+              "path": "Data/Library/Compositions",
+              "mode": "0o700",
+              "type": "symlink",
+              "size": 24,
+              "mtimeNs": 1789319547226189430,
+              "target": "../../../../Compositions"
+            },
+            {
+              "path": "Data/Library/Dictionaries",
+              "mode": "0o700",
+              "type": "symlink",
+              "size": 24,
+              "mtimeNs": 1789319547227070054,
+              "target": "../../../../Dictionaries"
+            },
+            {
+              "path": "Data/Library/Favorites",
+              "mode": "0o700",
+              "type": "symlink",
+              "size": 21,
+              "mtimeNs": 1789319547226225055,
+              "target": "../../../../Favorites"
+            },
+            {
+              "path": "Data/Library/Filters",
+              "mode": "0o700",
+              "type": "symlink",
+              "size": 19,
+              "mtimeNs": 1789319547227185971,
+              "target": "../../../../Filters"
+            },
+            {
+              "path": "Data/Library/FontCollections",
+              "mode": "0o700",
+              "type": "symlink",
+              "size": 27,
+              "mtimeNs": 1789319547225837097,
+              "target": "../../../../FontCollections"
+            },
+            {
+              "path": "Data/Library/Fonts",
+              "mode": "0o700",
+              "type": "symlink",
+              "size": 17,
+              "mtimeNs": 1789319547225875847,
+              "target": "../../../../Fonts"
+            },
+            {
+              "path": "Data/Library/Images",
+              "mode": "0o700",
+              "type": "directory",
+              "size": 96,
+              "mtimeNs": 1789319547227026888
+            },
+            {
+              "path": "Data/Library/Images/People",
+              "mode": "0o700",
+              "type": "symlink",
+              "size": 28,
+              "mtimeNs": 1789319547227024429,
+              "target": "../../../../../Images/People"
+            },
+            {
+              "path": "Data/Library/Input Methods",
+              "mode": "0o700",
+              "type": "symlink",
+              "size": 25,
+              "mtimeNs": 1789319547226464680,
+              "target": "../../../../Input Methods"
+            },
+            {
+              "path": "Data/Library/KeyBindings",
+              "mode": "0o700",
+              "type": "symlink",
+              "size": 23,
+              "mtimeNs": 1789319547225912889,
+              "target": "../../../../KeyBindings"
+            },
+            {
+              "path": "Data/Library/Keyboard Layouts",
+              "mode": "0o700",
+              "type": "symlink",
+              "size": 28,
+              "mtimeNs": 1789319547225947513,
+              "target": "../../../../Keyboard Layouts"
+            },
+            {
+              "path": "Data/Library/Keychains",
+              "mode": "0o700",
+              "type": "symlink",
+              "size": 21,
+              "mtimeNs": 1789319547225979305,
+              "target": "../../../../Keychains"
+            },
+            {
+              "path": "Data/Library/Logs",
+              "mode": "0o700",
+              "type": "directory",
+              "size": 64,
+              "mtimeNs": 1789319547226263597
+            },
+            {
+              "path": "Data/Library/Mail",
+              "mode": "0o700",
+              "type": "symlink",
+              "size": 16,
+              "mtimeNs": 1789319547226845471,
+              "target": "../../../../Mail"
+            },
+            {
+              "path": "Data/Library/PDF Services",
+              "mode": "0o700",
+              "type": "symlink",
+              "size": 24,
+              "mtimeNs": 1789319547227220304,
+              "target": "../../../../PDF Services"
+            },
+            {
+              "path": "Data/Library/Preferences",
+              "mode": "0o700",
+              "type": "directory",
+              "size": 128,
+              "mtimeNs": 1789319547226612263
+            },
+            {
+              "path": "Data/Library/Preferences/com.apple.security.plist",
+              "mode": "0o700",
+              "type": "symlink",
+              "size": 51,
+              "mtimeNs": 1789319547226572805,
+              "target": "../../../../../Preferences/com.apple.security.plist"
+            },
+            {
+              "path": "Data/Library/Preferences/com.apple.security_common.plist",
+              "mode": "0o700",
+              "type": "symlink",
+              "size": 58,
+              "mtimeNs": 1789319547226611388,
+              "target": "../../../../../Preferences/com.apple.security_common.plist"
+            },
+            {
+              "path": "Data/Library/QuickLook",
+              "mode": "0o700",
+              "type": "symlink",
+              "size": 21,
+              "mtimeNs": 1789319547226740971,
+              "target": "../../../../QuickLook"
+            },
+            {
+              "path": "Data/Library/Saved Application State",
+              "mode": "0o700",
+              "type": "directory",
+              "size": 64,
+              "mtimeNs": 1789319547225649097
+            },
+            {
+              "path": "Data/Library/Sounds",
+              "mode": "0o700",
+              "type": "symlink",
+              "size": 18,
+              "mtimeNs": 1789319547226298013,
+              "target": "../../../../Sounds"
+            },
+            {
+              "path": "Data/Library/Spelling",
+              "mode": "0o700",
+              "type": "symlink",
+              "size": 20,
+              "mtimeNs": 1789319547226333388,
+              "target": "../../../../Spelling"
+            },
+            {
+              "path": "Data/Movies",
+              "mode": "0o700",
+              "type": "symlink",
+              "size": 18,
+              "mtimeNs": 1789319547226367972,
+              "target": "../../../../Movies"
+            },
+            {
+              "path": "Data/Music",
+              "mode": "0o700",
+              "type": "symlink",
+              "size": 17,
+              "mtimeNs": 1789319547226398263,
+              "target": "../../../../Music"
+            },
+            {
+              "path": "Data/Pictures",
+              "mode": "0o700",
+              "type": "symlink",
+              "size": 20,
+              "mtimeNs": 1789319547226430638,
+              "target": "../../../../Pictures"
+            },
+            {
+              "path": "Data/SystemData",
+              "mode": "0o700",
+              "type": "directory",
+              "size": 64,
+              "mtimeNs": 1789319547227407220
+            },
+            {
+              "path": "Data/nisi-fixed-canary.cjs",
+              "mode": "0o400",
+              "type": "file",
+              "size": 1707,
+              "mtimeNs": 1789319547289170915,
+              "sha256": "de392d7a6d488331ec7b39e10da48f2e68cb000c3083191f59b2d57012a13c40"
+            },
+            {
+              "path": "Data/tmp",
+              "mode": "0o700",
+              "type": "directory",
+              "size": 64,
+              "mtimeNs": 1789319547227366887
+            }
+          ],
+          "errors": [],
+          "symlinksFollowed": false,
+          "removed": false
+        }
+      ],
+      "generatedCodeExecuted": false,
+      "completeIsolation": false,
+      "authorizing": false
+    }
+  },
+  "diagnosticLogs": {
+    "stdoutPath": "/Users/louiscalata/nisi-next-private/.build/xpc-embedded-node-69qhvao1/logs/node.stdout",
+    "stderrPath": "/Users/louiscalata/nisi-next-private/.build/xpc-embedded-node-69qhvao1/logs/node.stderr",
+    "unifiedImmediatePath": "/Users/louiscalata/nisi-next-private/.build/xpc-embedded-node-69qhvao1/logs/native-unified-log.stdout",
+    "unifiedDelayedPath": "/Users/louiscalata/nisi-next-private/.build/xpc-embedded-node-69qhvao1/logs/native-unified-log-delayed.stdout",
+    "unifiedRawOutput": "[]",
+    "logExcerptAvailable": false,
+    "reason": "Both successful targeted unified-log queries returned an empty JSON array; no crash-report file outside approved paths was read"
+  },
+  "evidencePaths": {
+    "root": "/Users/louiscalata/nisi-next-private/.build/xpc-embedded-node-69qhvao1",
+    "manifest": "/Users/louiscalata/nisi-next-private/.build/xpc-embedded-node-69qhvao1/frozen-inputs.json",
+    "launchAnchor": "/Users/louiscalata/nisi-next-private/.build/xpc-embedded-node-69qhvao1/launch-started.json",
+    "nativeRun": "/Users/louiscalata/nisi-next-private/.build/xpc-embedded-node-69qhvao1/native-run.json",
+    "rawService": "/Users/louiscalata/nisi-next-private/.build/xpc-embedded-node-69qhvao1/service-raw.json",
+    "ownerAdjudication": "/Users/louiscalata/nisi-next-private/.build/xpc-embedded-node-69qhvao1/owner-adjudication.json",
+    "protectedChecker": "/Users/louiscalata/nisi-next-private/.build/xpc-embedded-node-69qhvao1/checker-result.json",
+    "descendants": "/Users/louiscalata/nisi-next-private/.build/xpc-embedded-node-69qhvao1/descendants.json",
+    "cleanup": "/Users/louiscalata/nisi-next-private/.build/xpc-embedded-node-69qhvao1/cleanup.json",
+    "filesChanged": "/Users/louiscalata/nisi-next-private/.build/xpc-embedded-node-69qhvao1/files-changed.json",
+    "evidenceHashes": "/Users/louiscalata/nisi-next-private/.build/xpc-embedded-node-69qhvao1/evidence-hashes.json"
+  },
+  "review": {
+    "Luna": "Read-only prototype inspection and independent raw failure receipt audit completed",
+    "DaybreakBlue": "Pre-run source/checker/harness review completed; findings fixed before freeze",
+    "ClaudeFable5_1": "Independent verification afterwards requested by user; not performed or claimed in this turn",
+    "Spark": "Not used; no callable Spark model in this session"
+  },
+  "notClaimed": [
+    "Generated-candidate execution",
+    "Complete isolation or isolation acceptance",
+    "Entitlement widening",
+    "Specific cause of SIGTRAP",
+    "Protected checker acceptance",
+    "Service lifecycle settlement",
+    "v0.2 milestone completion",
+    "Git commit or push",
+    "Bionic inference, model loading, or Windows dispatch"
+  ],
+  "generatedCodeExecuted": false,
+  "completeIsolation": false,
+  "authorizing": false,
+  "supersededBy": {
+    "/diagnosticLogs": "#/corrections/D1/diagnosticLogs",
+    "/exec/exactCause": "#/corrections/D2/exec/exactCause",
+    "/notClaimed": "#/corrections/D2/notClaimed",
+    "/protectedChecker/failureMode": "#/corrections/D3",
+    "/nativeContext/nestedSandboxConfoundingExcluded": "#/corrections/D7",
+    "/nativeContext/basis": "#/corrections/D7",
+    "/review": "#/corrections/review"
+  },
+  "corrections": {
+    "schemaVersion": "nisi-retention-corrections-v1",
+    "recordedAt": "2026-09-13T18:13:19Z",
+    "authority": {
+      "status": "ACCEPTED_AS_MEASURED_2026-09-13",
+      "owner": "Louis",
+      "date": "2026-09-13",
+      "approximateTime": "11:10 PDT",
+      "session": "Claude",
+      "quote": "Approve both, have Astra run the retention pass",
+      "provenance": "Verbatim decision supplied by Louis in the current Astra retention instruction; both refers to items 1 and 2 of Claude Fable's verification record.",
+      "acceptedMeasurement": "FIXED_EMBEDDED_NODE_OBSERVED",
+      "nodeEntitlements": {
+        "com.apple.security.app-sandbox": true,
+        "com.apple.security.inherit": true
+      },
+      "hostEntitlements": {
+        "com.apple.security.app-sandbox": true
+      },
+      "serviceEntitlements": {
+        "com.apple.security.app-sandbox": true
+      },
+      "acceptedScope": "September 13 fixed embedded-Node prerequisite as measured; no-launch evidence retention and documentation correction pass approved.",
+      "generatedCodeExecuted": false,
+      "completeIsolation": false,
+      "authorizing": false,
+      "isolationAcceptance": "OPEN_SEPARATE_DECISION",
+      "milestoneClosure": false,
+      "laterIsolationReviewItem": {
+        "time": "2026-09-13 10:41:58.473 PDT",
+        "pid": 20280,
+        "observation": "mach-lookup / XPC mach connection activation named com.apple.SystemConfiguration.DNSConfiguration; loopback listen itself was EPERM.",
+        "source": ".build/xpc-embedded-node-9u2lavy_/logs/inherit-run-unified-log-20280.txt"
+      },
+      "forbidden": [
+        "Third fixture launch",
+        "Build",
+        "Signing",
+        "Entitlement change",
+        "Generated-code execution",
+        "Isolation acceptance",
+        "Git commit",
+        "Git push",
+        "Deletion",
+        "Edits to work-orders/native-canary-adjudicator",
+        "Edits to work-orders/run-journal"
+      ]
+    },
+    "precedence": "Original checkpoint statements remain unchanged. Root supersededBy maps historical JSON pointers to authoritative corrections below; corrected notClaimed arrays apply only as additive effective replacements.",
+    "retentionStatus": "DOCUMENTATION_AND_COPIES_COMPLETE_FRESH_FIRST_ATTEMPT_LOG_CAPTURE_BLOCKED",
+    "D1": {
+      "issue": "Harness log-window bug, not evidence that the attempt had no diagnostic events.",
+      "evidence": ".build/xpc-embedded-node-69qhvao1/experiment.py:146",
+      "diagnosticLogs": {
+        "stdoutPath": "/Users/louiscalata/nisi-next-private/.build/xpc-embedded-node-69qhvao1/logs/node.stdout",
+        "stderrPath": "/Users/louiscalata/nisi-next-private/.build/xpc-embedded-node-69qhvao1/logs/node.stderr",
+        "unifiedImmediatePath": "/Users/louiscalata/nisi-next-private/.build/xpc-embedded-node-69qhvao1/logs/native-unified-log.stdout",
+        "unifiedDelayedPath": "/Users/louiscalata/nisi-next-private/.build/xpc-embedded-node-69qhvao1/logs/native-unified-log-delayed.stdout",
+        "unifiedRawOutput": "[]",
+        "logExcerptAvailable": false,
+        "reason": "The original queries returned [] because experiment.py:146 converted a UTC-labelled start into a timezone-less --start that log show parsed as local time, selecting a window seven hours in the future. Claude Fable's verification reports that the corrected local window contains the secinitd failure. Astra's authorized fresh local-window command failed with exit 64, 'log: Cannot run while sandboxed'; its empty stdout is not event-absence evidence. The causal OS crash report is now retained.",
+        "causalOSReportAvailable": true,
+        "retentionCapture": ".build/xpc-embedded-node-69qhvao1/logs/retention-unified-log-local-window.capture.json"
+      },
+      "originalQueriesPreserved": true,
+      "harnessChanged": false,
+      "freshCaptureStatus": "BLOCKED_SANDBOX",
+      "priorLogFindingSource": "work-orders/decisions/2026-09-13-xpc-embedded-node.fable-verification.md"
+    },
+    "D2": {
+      "exec": {
+        "exactCause": "Unable to get bundle identifier for container id node-55554944aee6b0f8c39f3f8cbec396e3a1e42bb4: Unable to get bundle identifier because Info.plist from code signature information has no value for kCFBundleIdentifierKey. secinitd reported \"registration request failed: (0x10, 0x0)\" (Claude Fable verification record; fresh unified-log capture blocked). Crash report: EXC_BREAKPOINT/SIGTRAP, '(Breakpoint) brk 1', at _libsecinit_appsandbox.cold.6 + 60 -> _libsecinit_appsandbox + 1968 -> _os_activity_initiate_impl + 64 -> _libsecinit_initializer + 196 -> libSystem_initializer + 280 -> dyld initializer traversal through start; failure during libSystem/App Sandbox initialization before main.",
+        "nodeStartupCompletionObserved": false,
+        "scriptEntryObserved": false
+      },
+      "directEvidence": {
+        "path": ".build/xpc-embedded-node-69qhvao1/logs/node-2026-09-13-101227.ips",
+        "sha256": "c0516e6c752d39a7c0cdb5956afef7b18e7e36c8d900911ebedc59a8416305bb",
+        "pid": 9917,
+        "parentPid": 9916,
+        "asiSignatures": [
+          "Unable to get bundle identifier for container id node-55554944aee6b0f8c39f3f8cbec396e3a1e42bb4: Unable to get bundle identifier because Info.plist from code signature information has no value for kCFBundleIdentifierKey."
+        ],
+        "exception": {
+          "codes": "0x0000000000000001, 0x00000001a8a4b160",
+          "rawCodes": [
+            1,
+            7124332896
+          ],
+          "type": "EXC_BREAKPOINT",
+          "signal": "SIGTRAP"
+        },
+        "breakpoint": "(Breakpoint) brk 1",
+        "frameChainCrashOrder": [
+          {
+            "symbol": "_libsecinit_appsandbox.cold.6",
+            "symbolLocation": 60
+          },
+          {
+            "symbol": "_libsecinit_appsandbox",
+            "symbolLocation": 1968
+          },
+          {
+            "symbol": "_os_activity_initiate_impl",
+            "symbolLocation": 64
+          },
+          {
+            "symbol": "_libsecinit_initializer",
+            "symbolLocation": 196
+          },
+          {
+            "symbol": "libSystem_initializer",
+            "symbolLocation": 280
+          },
+          {
+            "symbol": "invocation function for block in dyld4::Loader::findAndRunAllInitializers(dyld4::RuntimeState&) const::$_0::operator()() const",
+            "symbolLocation": 360
+          },
+          {
+            "symbol": "invocation function for block in mach_o::Image::forEachInitializer(void (unsigned int) block_pointer) const",
+            "symbolLocation": 84
+          },
+          {
+            "symbol": "mach_o::Header::SegmentInfo mach_o::Header::parse_segment_command<true>(mach_o::Header::LoadCommandInfo const&, unsigned short, void (mach_o::Header::SegmentInfo const&, mach_o::Header::SectionInfo const&) block_pointer, mach_o::Error*) const",
+            "symbolLocation": 580
+          },
+          {
+            "symbol": "invocation function for block in mach_o::Header::forEachSection(void (mach_o::Header::SectionInfo const&, bool&) block_pointer) const",
+            "symbolLocation": 156
+          },
+          {
+            "symbol": "mach_o::Header::forEachLoadCommand(void (mach_o::Header::LoadCommandInfo const&, bool&) block_pointer, mach_o::Error*) const",
+            "symbolLocation": 228
+          },
+          {
+            "symbol": "mach_o::Header::forEachSection(void (mach_o::Header::SectionInfo const&, bool&) block_pointer) const",
+            "symbolLocation": 128
+          },
+          {
+            "symbol": "mach_o::Image::forEachInitializer(void (unsigned int) block_pointer) const",
+            "symbolLocation": 244
+          },
+          {
+            "symbol": "dyld4::Loader::findAndRunAllInitializers(dyld4::RuntimeState&) const",
+            "symbolLocation": 680
+          },
+          {
+            "symbol": "dyld4::PrebuiltLoader::runInitializers(dyld4::RuntimeState&) const",
+            "symbolLocation": 44
+          },
+          {
+            "symbol": "dyld4::APIs::runAllInitializersForMain()",
+            "symbolLocation": 100
+          },
+          {
+            "symbol": "dyld4::prepare(dyld4::APIs&, mach_o::UnsafeHeader const*)",
+            "symbolLocation": 4724
+          },
+          {
+            "symbol": "dyld4::start(dyld4::KernelArgs*, void*, void*, unsigned long long)::$_1::operator()() const",
+            "symbolLocation": 320
+          },
+          {
+            "symbol": "start",
+            "symbolLocation": 6596
+          }
+        ]
+      },
+      "secinitd": {
+        "text": "registration request failed: (0x10, 0x0)",
+        "provenance": "work-orders/decisions/2026-09-13-xpc-embedded-node.fable-verification.md",
+        "verifiedHere": "Quoted from Claude Fable's verification; fresh local-window capture blocked with exit 64. Not represented as newly captured raw log evidence."
+      },
+      "notClaimed": [
+        "Generated-candidate execution",
+        "Complete isolation or isolation acceptance",
+        "Entitlement widening",
+        "Protected checker acceptance",
+        "Service lifecycle settlement",
+        "v0.2 milestone completion",
+        "Git commit or push",
+        "Bionic inference, model loading, or Windows dispatch"
+      ],
+      "limitation": "Fresh first-attempt unified-log excerpt remains unretained because this session's sandbox prevents log show; retained crash report directly supports the initializer failure."
+    },
+    "D3": {
+      "fields": [
+        "waitObserved",
+        "drainObserved",
+        "cleanupUncertain",
+        "coreDumped"
+      ],
+      "firstAttemptRawValues": {
+        "waitObserved": 1,
+        "drainObserved": 1,
+        "cleanupUncertain": 0,
+        "coreDumped": 0
+      },
+      "cause": "All four derived C/Objective-C boxed-int fields belong in the checker-defect enumeration. Numeric wait/drain 1 failed Python identity comparison with True; cleanupUncertain and coreDumped were numeric 0. The rerun's existing harness-correction.diff already normalizes all four non-null values using NSNumber numberWithBool; normal-exit coreDumped null remains null.",
+      "existingFix": ".build/xpc-embedded-node-9u2lavy_/harness-correction.diff",
+      "sourceChangedInRetention": false,
+      "firstFrozenCheckerPatched": false,
+      "firstFrozenCheckerRerun": false
+    },
+    "D4": {
+      "status": "KNOWN_LIMITATION",
+      "issue": "The pre-freeze build retry overwrote container-before.json and native-context.json because save(name, data) writes R/name without an attempt suffix.",
+      "source": ".build/xpc-embedded-node-69qhvao1/experiment.py:10-11",
+      "overwrittenPaths": [
+        ".build/xpc-embedded-node-69qhvao1/container-before.json",
+        ".build/xpc-embedded-node-69qhvao1/native-context.json"
+      ],
+      "retainedBuildReceipts": [
+        ".build/xpc-embedded-node-69qhvao1/logs/compile-service.json",
+        ".build/xpc-embedded-node-69qhvao1/logs/compile-service-attempt2.json"
+      ],
+      "failedCompileAt": "2026-09-13T17:08:11.223890+00:00",
+      "successfulCompileRetryAt": "2026-09-13T17:08:56.962230+00:00",
+      "interpretation": "This is a pre-freeze snapshot provenance gap. Command logs retain the failed compile and successful build retry. Original overwritten snapshot contents are not reconstructed. It is not another fixture launch or a retention-time build; frozen files remain unchanged."
+    },
+    "D7": {
+      "replacesBareAssertion": "nativeContext.nestedSandboxConfoundingExcluded and nativeContext.basis",
+      "measuredBasis": {
+        "firstAttemptHostPid": 9910,
+        "firstAttemptServicePid": 9916,
+        "hostAndService": "Each received its own App Sandbox per secinitd lines observed in Claude Fable's verification.",
+        "secinitdSource": "work-orders/decisions/2026-09-13-xpc-embedded-node.fable-verification.md",
+        "secinitdEvidenceLimit": "The first-attempt raw excerpt could not be freshly retained in this sandbox; the secinitd basis here is attributed to Claude's prior verification.",
+        "harnessPid": 8972,
+        "codexParentPid": 6148,
+        "ancestryPath": ".build/xpc-embedded-node-69qhvao1/logs/ancestry-attempt2.stdout",
+        "parentExecutable": "/Applications/ChatGPT.app/Contents/Resources/codex"
+      },
+      "interpretation": "The no-nested-Claude-seatbelt finding is supported by independent host/service App Sandbox initialization plus the measured Codex ancestry. It is not complete-isolation or general sandbox-composition acceptance."
+    },
+    "review": {
+      "claudeFable51": "RECEIPTS_ACCEPT_WITH_DEFECTS",
+      "source": "work-orders/decisions/2026-09-13-xpc-embedded-node.fable-verification.md"
+    }
+  }
+}

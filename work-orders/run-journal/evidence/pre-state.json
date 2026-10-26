@@ -1,0 +1,27 @@
+{
+  "baseline": {
+    "argv": [
+      "npm",
+      "test"
+    ],
+    "exit": 0,
+    "elapsedSeconds": 0.245,
+    "output": "\n> nisi-private-run-journal-work-order@0.0.0-private test\n> node --test --test-timeout=5000 tests/baseline.test.mjs\n\n\u2714 private dependency-free ESM package and declared exports (4.170542ms)\n\u2714 source uses no ambient effects and at most the declared deterministic hash import (0.939375ms)\n\u2139 tests 2\n\u2139 suites 0\n\u2139 pass 2\n\u2139 fail 0\n\u2139 cancelled 0\n\u2139 skipped 0\n\u2139 todo 0\n\u2139 duration_ms 53.551667\n"
+  },
+  "journal": {
+    "argv": [
+      "npm",
+      "run",
+      "test:journal"
+    ],
+    "exit": 1,
+    "elapsedSeconds": 0.212,
+    "output": "orders/run-journal/tests/run-journal.test.mjs:275:35)\n      at Test.runInAsyncScope (node:async_hooks:227:14)\n      at Test.run (node:internal/test_runner/test:1325:25)\n      at Test.processPendingSubtests (node:internal/test_runner/test:911:18)\n      at Test.postRun (node:internal/test_runner/test:1465:19)\n      at Test.run (node:internal/test_runner/test:1390:12)\n      at async Test.processPendingSubtests (node:internal/test_runner/test:911:7)\n"
+  },
+  "sha256": {
+    "package.json": "bf9426c4d4d00fb0c449ad92855437e48217a163d313de361393b81ed7410a9a",
+    "src/run-journal-v1.mjs": "c9a4cc003509d25ec798f80233c0460e89f52ec6df7e454e4133139df65d96a5",
+    "tests/baseline.test.mjs": "adb784891764841fe628e00b0aa9d9fdf025035e659aaacdedd766cafa81b8d3",
+    "tests/run-journal.test.mjs": "25355f0d280a262243f1fe707fd4e0de5fc795926ce37d910c40a12721390c6d"
+  }
+}

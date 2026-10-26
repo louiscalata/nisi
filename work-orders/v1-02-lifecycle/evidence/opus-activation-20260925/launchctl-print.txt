@@ -1,0 +1,59 @@
+gui/501/com.louiscalata.nisi.login-activation = {
+	active count = 0
+	path = ~/Library/LaunchAgents/com.louiscalata.nisi.login-activation.plist
+	type = LaunchAgent
+	state = not running
+
+	program = /usr/bin/python3
+	arguments = {
+		/usr/bin/python3
+		~/Library/Application Support/Nisi/bin/nisi-login-activate.py
+	}
+
+	inherited environment = {
+		SSH_AUTH_SOCK => /var/run/com.apple.launchd.QI5q94zZwW/Listeners
+	}
+
+	default environment = {
+		PATH => /usr/bin:/bin:/usr/sbin:/sbin
+	}
+
+	environment = {
+		OSLogRateLimit => 64
+		XPC_SERVICE_NAME => com.louiscalata.nisi.login-activation
+	}
+
+	domain = gui/501 [100020]
+	asid = 100020
+	minimum runtime = 10
+	exit timeout = 5
+	runs = 1
+	last exit code = 0
+
+	resource coalition = {
+		ID = 1757
+		type = resource
+		state = active
+		active count = 1
+		name = com.louiscalata.nisi.login-activation
+	}
+
+	jetsam coalition = {
+		ID = 1758
+		type = jetsam
+		state = active
+		active count = 1
+		name = com.louiscalata.nisi.login-activation
+	}
+
+	spawn type = interactive (4)
+	jetsam priority = 40
+	jetsam memory limit (active) = (unlimited)
+	jetsam memory limit (inactive) = (unlimited)
+	jetsamproperties category = daemon
+	jetsam thread limit = 32
+	cpumon = default
+	sanitizer flags = 0x0
+
+	properties = runatload | inferred program
+}

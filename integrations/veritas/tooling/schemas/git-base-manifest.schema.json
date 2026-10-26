@@ -1,0 +1,277 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://veritas.invalid/private/schemas/stage5/git-base-manifest.v1.json",
+  "title": "Veritas inert exact Git-base manifest verification fixture result",
+  "description": "Structural result shape only. Full verification requires replay against the original request, raw object and tree topology, blob content, accepted base, and ref observation. A separate runtime helper checks only summary-level consistency on freshly generated output and is not an independent ingest verifier.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schemaVersion",
+    "recordType",
+    "status",
+    "profile",
+    "requestDigest",
+    "baseBindingDigest",
+    "refName",
+    "objectFormat",
+    "commitObjectId",
+    "commitRawSha256",
+    "rootTreeObjectId",
+    "rootTreeRawSha256",
+    "refRevisionToken",
+    "acceptedTreeDigest",
+    "snapshotObjectClosureDigest",
+    "objects",
+    "files",
+    "snapshotObjectCount",
+    "fileCount",
+    "totalFileBytes",
+    "gitSnapshotClosureValidated",
+    "acceptedTreeMatched",
+    "protectedRef",
+    "authorizing",
+    "mayCreateDecision",
+    "mayStage",
+    "mayPromote",
+    "mayExecute",
+    "limitations",
+    "resultDigest"
+  ],
+  "properties": {
+    "schemaVersion": {
+      "const": 1
+    },
+    "recordType": {
+      "const": "GIT_BASE_MANIFEST_VERIFICATION"
+    },
+    "status": {
+      "const": "VERIFIED_INERT"
+    },
+    "profile": {
+      "const": "veritas-git-base-manifest-v1:exact-sha1-commit+tree+accepted-bytes+inert"
+    },
+    "requestDigest": {
+      "$ref": "#/$defs/sha256"
+    },
+    "baseBindingDigest": {
+      "$ref": "#/$defs/sha256"
+    },
+    "refName": {
+      "type": "string",
+      "minLength": 12,
+      "maxLength": 256,
+      "pattern": "^refs/heads/(?!.*(?:\\.\\.|//|/\\.|\\./|\\.lock(?:/|$)))[A-Za-z0-9][A-Za-z0-9._/-]*[A-Za-z0-9]$"
+    },
+    "objectFormat": {
+      "const": "sha1"
+    },
+    "commitObjectId": {
+      "$ref": "#/$defs/sha1"
+    },
+    "commitRawSha256": {
+      "$ref": "#/$defs/sha256"
+    },
+    "rootTreeObjectId": {
+      "$ref": "#/$defs/sha1"
+    },
+    "rootTreeRawSha256": {
+      "$ref": "#/$defs/sha256"
+    },
+    "refRevisionToken": {
+      "$ref": "#/$defs/sha256"
+    },
+    "acceptedTreeDigest": {
+      "$ref": "#/$defs/sha256"
+    },
+    "snapshotObjectClosureDigest": {
+      "$ref": "#/$defs/sha256"
+    },
+    "objects": {
+      "type": "array",
+      "minItems": 1,
+      "maxItems": 4096,
+      "uniqueItems": true,
+      "items": {
+        "$ref": "#/$defs/object"
+      }
+    },
+    "files": {
+      "type": "array",
+      "minItems": 1,
+      "maxItems": 1024,
+      "uniqueItems": true,
+      "items": {
+        "$ref": "#/$defs/file"
+      }
+    },
+    "snapshotObjectCount": {
+      "type": "integer",
+      "minimum": 1,
+      "maximum": 4096
+    },
+    "fileCount": {
+      "type": "integer",
+      "minimum": 1,
+      "maximum": 1024
+    },
+    "totalFileBytes": {
+      "type": "integer",
+      "minimum": 0,
+      "maximum": 67108864
+    },
+    "gitSnapshotClosureValidated": {
+      "const": true
+    },
+    "acceptedTreeMatched": {
+      "const": true
+    },
+    "protectedRef": {
+      "const": false
+    },
+    "authorizing": {
+      "const": false
+    },
+    "mayCreateDecision": {
+      "const": false
+    },
+    "mayStage": {
+      "const": false
+    },
+    "mayPromote": {
+      "const": false
+    },
+    "mayExecute": {
+      "const": false
+    },
+    "limitations": {
+      "type": "array",
+      "minItems": 13,
+      "maxItems": 13,
+      "prefixItems": [
+        {
+          "const": "SELF_ADMINISTERED_IN_MEMORY_OBJECT_PORT_FIXTURE_ONLY"
+        },
+        {
+          "const": "SHA1_GIT_OBJECT_ID_COMPATIBILITY_NOT_SECURITY_ATTESTATION"
+        },
+        {
+          "const": "RAW_OBJECT_BYTES_ABSTRACTION_NO_PACKFILE_ALTERNATES_OR_FILESYSTEM_ADAPTER"
+        },
+        {
+          "const": "NO_GIT_SUBPROCESS_OR_WORKTREE_IMPORT"
+        },
+        {
+          "const": "MONOTONIC_REF_OBSERVATION_TOKEN_FIXTURE_NOT_PROTECTED_REF_STORAGE"
+        },
+        {
+          "const": "NO_REF_STORAGE_CUSTODY_OR_CONCURRENT_REPOSITORY_RACE_PROOF"
+        },
+        {
+          "const": "ROOT_UNSIGNED_COMMIT_GRAMMAR_ONLY"
+        },
+        {
+          "const": "NO_PARENT_OR_HISTORY_ADMISSION"
+        },
+        {
+          "const": "UTF8_NFC_EN_US_LOWER_WINDOWS_ALIAS_PORTABLE_PATH_PROFILE_ONLY"
+        },
+        {
+          "const": "SYMLINK_SUBMODULE_AND_NONREGULAR_MODES_REFUSED"
+        },
+        {
+          "const": "NO_SIGNED_COMMIT_OR_SIGNATURE_VERIFICATION"
+        },
+        {
+          "const": "NO_PATCH_OR_TREE_DELTA_APPLICATION"
+        },
+        {
+          "const": "NO_DECISION_PROMOTION_OR_EXECUTION_SIDE_EFFECT"
+        }
+      ],
+      "items": false
+    },
+    "resultDigest": {
+      "$ref": "#/$defs/sha256"
+    }
+  },
+  "$defs": {
+    "sha1": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{40}$"
+    },
+    "sha256": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{64}$"
+    },
+    "object": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "objectId",
+        "objectType",
+        "rawSha256",
+        "contentByteLength"
+      ],
+      "properties": {
+        "objectId": {
+          "$ref": "#/$defs/sha1"
+        },
+        "objectType": {
+          "enum": [
+            "blob",
+            "tree",
+            "commit"
+          ]
+        },
+        "rawSha256": {
+          "$ref": "#/$defs/sha256"
+        },
+        "contentByteLength": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 16777216
+        }
+      }
+    },
+    "file": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "relativePath",
+        "mode",
+        "blobObjectId",
+        "blobRawSha256",
+        "byteLength",
+        "contentSha256"
+      ],
+      "properties": {
+        "relativePath": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 1024,
+          "pattern": "^(?!/)(?!.*(?:^|/)\\.\\.?/)(?!.*//)(?!\\.(?:git|veritas)(?:/|$))[^\\u0000\\\\]+$"
+        },
+        "mode": {
+          "enum": [
+            "100644",
+            "100755"
+          ]
+        },
+        "blobObjectId": {
+          "$ref": "#/$defs/sha1"
+        },
+        "blobRawSha256": {
+          "$ref": "#/$defs/sha256"
+        },
+        "byteLength": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 16777216
+        },
+        "contentSha256": {
+          "$ref": "#/$defs/sha256"
+        }
+      }
+    }
+  }
+}

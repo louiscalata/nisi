@@ -1,0 +1,102 @@
+{
+  "summary": "Design review (Opus fallback, no tools/source access) of importFixedXpcObservation v1. Verdict: keep inspect-first only as a non-authoritative handle/phase pre-check (or drop it if inspectJournalOwner isn't a confirmed API); keep the five statuses but add an explicit attempted/uncertain signal so a post-rename COMMIT_UNCERTAIN is never reported as a plain REFUSED. Five contract requirements and a fs-injected test plan follow. Nothing here was executed.",
+  "deliverable": "## 1. Inspect-first: keep, but demote\n\nReasons it is fine:\n- Rejects a bogus/foreign opaque handle before any projection work, giving a clean INVALID_INPUT that is distinguishable from a projector refusal.\n- Gives deterministic ordering: envelope \u2192 owner phase \u2192 projection \u2192 record.\n\nReasons to be careful:\n- Not atomic with record. Owner phase can change between inspect and record (e.g. OWNER_BUSY, or another consumer sealing it). The consumer must map record's own REFUSED reasons identically; inspect's result must never be cached or trusted over record's.\n- `inspectJournalOwner` is not one of the three source-bound APIs in the brief. If it does not exist on owner v2, do not add one for this consumer \u2014 fall through to record's INVALID_INPUT/OWNER_SEALED/COMMIT_UNCERTAIN instead. Projection has no IO and is cheap, so skipping it on a sealed owner buys little.\n- Do not pre-reject on OWNER_BUSY from inspect; let record decide (it may be transient and record already refuses without retry).\n\n## 2. Return shape / statuses\n\nKeep: IMPORTED (only RECORDED), DUPLICATE, REFUSED, CONFLICT, STORE_FAILED, plus `projection`, `journal`, `authorizing:false`, `meaning`.\n\nOne real gap: record can return `COMMIT_UNCERTAIN` in two different situations \u2014 (a) owner was already sealed before this call (nothing attempted), (b) this call's rename succeeded/failed ambiguously and sealed the owner (something may be on disk). Both currently land in `status:'REFUSED'`, which reads as \"nothing happened\". Fix with the smallest change: add `attempted: boolean` (true only if `recordJournalObservation` was actually invoked) and, for case (b), use `status:'UNCERTAIN'` (or at minimum `status:'REFUSED', reason:'COMMIT_UNCERTAIN', attempted:true`). Callers must be told a fresh explicit open is the only reconciliation.\n\nMinor: CONFLICT merges entry CONFLICT and STORE_CONFLICT \u2014 acceptable only because `journal` is preserved verbatim; keep `reason` as the original journal reason so the two remain distinguishable.\n\n## 3. Contract requirements (max five)\n\nR1. Input envelope: exact own-enumerable data keys {owner, serializedRecord, projectId, candidateId, receiptId, createdAt, ttlMs, now}; plain or null prototype; no accessors; no defaults. `now` and `createdAt` are host-supplied \u2014 the consumer never reads a clock, never calls `openJournalOwner`, never touches fs. Violation \u2192 REFUSED INVALID_INPUT, `attempted:false`, `projection:null`, `journal:null`.\n\nR2. Projection is pass-through: the projector's ENTRY is handed to record unchanged (no re-keying, no mutation of state/payload flags; `sourceManifestVerified`, `authorizing`, `generatedCodeExecuted`, `nativeProductAccepted` stay false; an INCONCLUSIVE runner record stays entry state FAILED and is still importable). Projector REFUSED \u2192 consumer REFUSED with projector reason, `attempted:false`. Old five-canary format must be rejected by the projector, not tolerated here.\n\nR3. Exactly one `recordJournalObservation` call per invocation, no retry on any outcome (including OWNER_BUSY and prior-digest CONFLICT). Status mapping is total and fixed: RECORDED\u2192IMPORTED; DUPLICATE\u2192DUPLICATE; CONFLICT|STORE_CONFLICT\u2192CONFLICT; STORE_FAILED\u2192STORE_FAILED; every simple REFUSED reason\u2192REFUSED; post-attempt COMMIT_UNCERTAIN\u2192UNCERTAIN (or REFUSED with attempted:true). Unknown journal status \u2192 throw/REFUSED INTERNAL, never IMPORTED.\n\nR4. Never report persistence beyond the journal: `journal` is the original record result (append/store/snapshot) untouched; IMPORTED carries `store.durable` as-is (durable:false is still IMPORTED but the consumer adds no crash guarantee); DUPLICATE and every non-RECORDED status must not be described as a new write. `meaning:'HISTORY_OBSERVATIONS_ONLY'` and `authorizing:false` are constants, not inputs.\n\nR5. Output hygiene: result deep-frozen; `projection` is the projector's redacted entry only; `serializedRecord`, raw fs content and stack traces never appear in `reason`, `projection` or `journal`. Projected entry id remains `runId + ':0:fixed-xpc'`, stage fixed-xpc, attempt 0, receiptId from host \u2014 the consumer must not override receiptId.\n\n## 4. Test plan (synchronous, injected fs via openJournalOwner; no native runner)\n\nFixtures: valid current-format record; old five-canary record; structurally valid INCONCLUSIVE runner record; in-memory fs with hooks to fail fsync, fail rename, and to seed a damaged matching prefix.\n\n1. Envelope: extra key / missing `now` / getter property / Object-prototype-with-inherited key / Proxy owner \u2192 REFUSED INVALID_INPUT, attempted:false, fs call log empty.\n2. Invalid owner handle (plain object mimic) \u2192 REFUSED INVALID_INPUT before projection (projection:null).\n3. Damaged-prefix path opened \u2192 SEALED owner \u2192 REFUSED OWNER_SEALED, attempted:false, projection:null (if inspect kept) or projection present + attempted:true (if dropped) \u2014 pin whichever ordering you choose.\n4. Old five-canary record on healthy owner \u2192 REFUSED INVALID_RECORD, attempted:false, fs unchanged (byte-compare).\n5. Fresh ENOENT path + valid record \u2192 IMPORTED, journal.status RECORDED, entry id `${runId}:0:fixed-xpc`, all four payload flags false, authorizing:false, result frozen (Object.isFrozen deep).\n6. Same record twice, same owner \u2192 second call DUPLICATE, attempted:true, fs unchanged after second call.\n7. INCONCLUSIVE record \u2192 IMPORTED with entry.state FAILED (not SUCCEEDED, not REFUSED).\n8. fs with fsync disabled \u2192 IMPORTED with journal.store.durable:false, committed:true; assert consumer adds no durable/verified fields of its own.\n9. fs rename failure after write \u2192 status UNCERTAIN (or REFUSED/COMMIT_UNCERTAIN with attempted:true); snapshot cleared; a second call on the same owner \u2192 REFUSED COMMIT_UNCERTAIN attempted:false; a new explicit open of the same path reflects actual disk.\n10. Prior-digest conflict (seed journal with a different entry at the same id) \u2192 CONFLICT, reason preserved from journal, record invoked exactly once (spy count).\n11. Store failure (fs write throws) \u2192 STORE_FAILED, journal preserved.\n12. Redaction: serializedRecord containing a sentinel string \u2192 sentinel absent from JSON.stringify(result).\n13. Non-retry/no-open: spy that openJournalOwner is never called by the consumer and record is called \u22641 time across all cases above.",
+  "risks": [
+    "inspectJournalOwner is not among the three source-bound APIs supplied; if it does not exist on owner v2, the inspect-first step must be dropped rather than invented.",
+    "Inspect\u2192record is not atomic; treating inspect's phase as authoritative can misreport a refusal that record would classify differently (e.g. OWNER_BUSY, freshly sealed).",
+    "Ambiguity in the brief: whether record's simple REFUSED COMMIT_UNCERTAIN can be returned after an attempted write in the same call. If so, mapping it to plain REFUSED hides a possible on-disk write.",
+    "Merging CONFLICT and STORE_CONFLICT is safe only while the original journal result is preserved verbatim; any future trimming of `journal` would lose the distinction.",
+    "Tests 9\u201311 depend on the injected fs supporting fault injection at fsync/rename/write granularity; if it doesn't, those cases cannot be exercised without a test seam.",
+    "The private example's raw-file read (cap, strict UTF-8) sits outside this consumer; its size cap and error mapping are not covered by this review."
+  ],
+  "verification": [
+    "Confirm whether inspectJournalOwner exists on the reviewed owner v2 and what phases it reports; otherwise remove the step.",
+    "Check recordJournalObservation's source to see if COMMIT_UNCERTAIN can be returned after a partial write in the same call, and adjust the UNCERTAIN/attempted mapping accordingly.",
+    "Run the 13 listed cases against the real openJournalOwner with an in-memory fs; byte-compare fs state in every non-IMPORTED case.",
+    "Grep the consumer for Date.now, fs imports, openJournalOwner and any retry loop; all must be absent.",
+    "Verify the result object and nested projection/journal are deep-frozen and contain no sentinel from the raw serialized record."
+  ],
+  "invocation_status": "succeeded",
+  "status": "succeeded",
+  "model_usage": {
+    "claude-haiku-4-5-20251001": {
+      "inputTokens": 1859,
+      "outputTokens": 13,
+      "cacheReadInputTokens": 0,
+      "cacheCreationInputTokens": 0,
+      "webSearchRequests": 0,
+      "costUSD": 0.001924,
+      "contextWindow": 200000,
+      "maxOutputTokens": 32000,
+      "thinkingTokens": 0,
+      "canonicalModel": "claude-haiku-4-5",
+      "provider": "firstParty",
+      "costBasis": "list"
+    },
+    "claude-opus-5": {
+      "inputTokens": 2,
+      "outputTokens": 5517,
+      "cacheReadInputTokens": 737,
+      "cacheCreationInputTokens": 1966,
+      "webSearchRequests": 0,
+      "costUSD": 0.15796349999999998,
+      "contextWindow": 1000000,
+      "maxOutputTokens": 64000,
+      "thinkingTokens": 1874,
+      "canonicalModel": "claude-opus-5",
+      "provider": "firstParty",
+      "costBasis": "list"
+    }
+  },
+  "reported_models": [
+    "claude-haiku-4-5-20251001",
+    "claude-opus-5"
+  ],
+  "usage": {
+    "input_tokens": 2,
+    "cache_creation_input_tokens": 1966,
+    "cache_read_input_tokens": 737,
+    "output_tokens": 5517,
+    "output_tokens_details": {
+      "thinking_tokens": 1874
+    },
+    "server_tool_use": {
+      "web_search_requests": 0,
+      "web_fetch_requests": 0
+    },
+    "service_tier": "standard",
+    "cache_creation": {
+      "ephemeral_1h_input_tokens": 1966,
+      "ephemeral_5m_input_tokens": 0
+    },
+    "inference_geo": "not_available",
+    "iterations": [
+      {
+        "input_tokens": 2,
+        "output_tokens": 5517,
+        "cache_read_input_tokens": 737,
+        "cache_creation_input_tokens": 1966,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 1966
+        },
+        "type": "message"
+      }
+    ],
+    "speed": "standard"
+  },
+  "total_cost_usd": 0.1598875,
+  "duration_ms": 73486,
+  "tools_enabled": false,
+  "session_persisted": false,
+  "write_owner": "codex",
+  "requested_model": "opus",
+  "mode": "delegate",
+  "attempts": 1,
+  "wall_seconds": 74.222,
+  "created_at": "2026-09-14T00:49:16.713471+00:00",
+  "prior_attempts": [],
+  "total_wall_seconds": 74.222,
+  "prior_attempt_usage": [],
+  "total_usage_complete": true
+}

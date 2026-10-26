@@ -1,0 +1,23 @@
+
+> nisi-future-comparison-table@0.0.0-private test:acceptance
+> node --test --test-timeout=10000 tests/acceptance.test.mjs
+
+✔ empty comparison has exact neutral shape (0.602417ms)
+✔ known comparison computes signed change without a savings claim (0.087667ms)
+✔ unknown values stay unknown and known zero is preserved (0.085875ms)
+✔ millisecond fractions retain unrounded change and units are not aggregated (0.070125ms)
+✔ unsafe, nonfinite, negative and noninteger counts refuse (0.099708ms)
+✔ overflowing relative percentage is unknown not infinity (0.044958ms)
+✔ closed shapes and unique bounded ids are required (0.076792ms)
+✔ rows preserve order and literal labels (0.051542ms)
+✔ input and output are independent copies (0.0905ms)
+✔ deterministic repeated requests (0.080167ms)
+ℹ tests 10
+ℹ suites 0
+ℹ pass 10
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 35.220167
+EXIT=0

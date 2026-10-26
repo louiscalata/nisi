@@ -1,0 +1,8 @@
+--- work-orders/run-journal-store/roadmap.md (pre-state)
++++ work-orders/run-journal-store/roadmap.md
+@@ -51,3 +51,5 @@
+ acceptance is implied. Louis must decide the product/host integration slice and
+ its writer-ownership and native crash/durability acceptance protocol.
+ 2026-09-13 post-review fix (Astra): directory close failure no longer overwrites the earlier directory fsync error; both codes recorded in order. Source fa1817d924471cbf6307f9583c5f513f6e6aa97eee61ce8445f9addc13c1163a → 1356028b65f9f8b96e3b9ec8ba3bfbb4968092af53d00e8b5dfdb11b161f4792; protected tests 7190d7d212f8c2012b8978057e6a5e2314ff2bbeee29e69a377ff9bdc36e4834 → 304909a7275e04fd1af8d38a5ec16a21027e415c4cb6c4422d86dc8ec246969a (16 → 17 tests; 17/17 and baseline 2/2 rerun by Astra and independently by Claude).
++
++2026-09-13 — integrated (Astra; Louis “Autointegrate”, 2026-09-13 Claude session): `history/run-journal-store-v1.mjs` copied byte-for-byte, SHA256 `1356028b65f9f8b96e3b9ec8ba3bfbb4968092af53d00e8b5dfdb11b161f4792`; 19/19 migrated tests (17 functional + 2 baseline), product check 1230/1230 with zero failed/skipped/cancelled/todo, TypeScript PASS and PRIVATE_PACKAGE_FILES 27. Not closed: host wiring of the bundle to the XPC runner, real-filesystem durability, cross-process locking, crash qualification, or incident admission. Progress stays 30% — 3 of 10; no milestone closure. Receipt: `../../docs/verification/2026-09-13/evidence-chain-integration/receipt.json`.

@@ -1,0 +1,89 @@
+{
+  "verdict": "FAIL",
+  "issues": [
+    "terminal-history-prompt-v1.mjs: `paused=input.isPaused()` is false for a fresh TTY stdin (readableFlowing null), so finish() never pauses after the adapter's own `input.resume()`. stdin stays flowing with a ref'd handle after listeners are removed; in repository-live-model.mjs the main path only sets process.exitCode, so a --review-history run can print the summary and then hang until Ctrl-D/Ctrl-C (and the SIGINT listener is already removed, giving a signal exit instead of the intended exitCode). Pause on finish whenever the adapter started flowing."
+  ],
+  "invocation_status": "succeeded",
+  "status": "FAIL",
+  "model_usage": {
+    "claude-haiku-4-5-20251001": {
+      "inputTokens": 10093,
+      "outputTokens": 14,
+      "cacheReadInputTokens": 0,
+      "cacheCreationInputTokens": 0,
+      "webSearchRequests": 0,
+      "costUSD": 0.010163,
+      "contextWindow": 200000,
+      "maxOutputTokens": 32000,
+      "thinkingTokens": 0,
+      "canonicalModel": "claude-haiku-4-5",
+      "provider": "firstParty",
+      "costBasis": "list"
+    },
+    "claude-opus-5": {
+      "inputTokens": 2,
+      "outputTokens": 3003,
+      "cacheReadInputTokens": 626,
+      "cacheCreationInputTokens": 13469,
+      "webSearchRequests": 0,
+      "costUSD": 0.210088,
+      "contextWindow": 1000000,
+      "maxOutputTokens": 64000,
+      "thinkingTokens": 1972,
+      "canonicalModel": "claude-opus-5",
+      "provider": "firstParty",
+      "costBasis": "list"
+    }
+  },
+  "reported_models": [
+    "claude-haiku-4-5-20251001",
+    "claude-opus-5"
+  ],
+  "usage": {
+    "input_tokens": 2,
+    "cache_creation_input_tokens": 13469,
+    "cache_read_input_tokens": 626,
+    "output_tokens": 3003,
+    "output_tokens_details": {
+      "thinking_tokens": 1972
+    },
+    "server_tool_use": {
+      "web_search_requests": 0,
+      "web_fetch_requests": 0
+    },
+    "service_tier": "standard",
+    "cache_creation": {
+      "ephemeral_1h_input_tokens": 13469,
+      "ephemeral_5m_input_tokens": 0
+    },
+    "inference_geo": "not_available",
+    "iterations": [
+      {
+        "input_tokens": 2,
+        "output_tokens": 3003,
+        "cache_read_input_tokens": 626,
+        "cache_creation_input_tokens": 13469,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 13469
+        },
+        "type": "message"
+      }
+    ],
+    "speed": "standard"
+  },
+  "total_cost_usd": 0.220251,
+  "duration_ms": 42011,
+  "tools_enabled": false,
+  "session_persisted": false,
+  "write_owner": "codex",
+  "requested_model": "opus",
+  "mode": "review",
+  "attempts": 1,
+  "wall_seconds": 42.934,
+  "created_at": "2026-09-14T03:09:40.719876+00:00",
+  "prior_attempts": [],
+  "total_wall_seconds": 42.936,
+  "prior_attempt_usage": [],
+  "total_usage_complete": true
+}

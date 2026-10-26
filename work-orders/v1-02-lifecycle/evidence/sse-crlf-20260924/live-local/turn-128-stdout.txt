@@ -1,0 +1,8 @@
+CONVERSATION B20C4517-A49E-423B-9995-F680EE8499D0
+RESTORED_MESSAGES 0
+REQUEST_SHA256 6ce5224830cc899b0df6348c720ef1a6b211b040a9ac9cfbea1d065e4d8de18e
+REPLY_START
+
+REPLY_END
+NOT_PERSISTED status=EMPTY_REPLY
+{"acceptanceAuthorityGranted":false,"backend":"lmstudio-loopback","budgetExhausted":false,"chunks":0,"contentPersisted":false,"continuationHeuristic":"none","continuationLegs":0,"externalToolsEnabled":false,"modelAvailability":"loopback-responded","nativeSession":false,"networkEgress":false,"reasoningLevel":"none","replyChars":0,"replySha256":"e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855","requestChars":103,"status":"EMPTY_REPLY","streamedChars":0,"transcriptDropped":0,"transport":"loopback-http","turnMode":"fast"}

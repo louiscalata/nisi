@@ -1,0 +1,8 @@
+{
+  "tests/run-journal-baseline.test.mjs": "17a8de142999f7ebdbe164336d81ce5c0a7ef27b00e105ff7bf7a1113ea37e7f",
+  "tests/native-probe-summary-baseline.test.mjs": "28756bd6d730045e0bb12c9d5de04ed79523ba33b319ef3dfe593a56856e71ed",
+  "work-orders/run-journal/tests/baseline.test.mjs": "adb784891764841fe628e00b0aa9d9fdf025035e659aaacdedd766cafa81b8d3",
+  "work-orders/native-probe-summary/tests/baseline.test.mjs": "32664b54c73170511d89911bc7d4e030bb8c7ac3082d3572bce70b5fe215a6b1",
+  "history/run-journal-v1.mjs": "dee9f490c091000b2560cd9464d945885e7f341091b87dde9ae4f2b7cdbd359e",
+  "hosts/macos-xpc/native-probe-summary.mjs": "c048df362405ffbd3053de93aedd05a0b51ec5c64417d19c9ee5ea22a6d90056"
+}

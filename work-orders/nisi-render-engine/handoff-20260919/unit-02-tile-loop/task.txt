@@ -1,0 +1,40 @@
+Write a self-contained Python 3 module implementing the "tile loop" of a layered render engine: nested tiles that each go through render -> verify -> promote, with digest identity, apron staleness detection, upward re-open cascade and journal replay. Standard library only (enum, json, hashlib). No I/O, no printing, no threads, no classes beyond the ones named here. Tests are appended below the module in the same file, so never import the module by a name such as solution; refer to Loop, TileState and TileError directly.
+
+Definitions used below:
+- canonical(x) = json.dumps(x, sort_keys=True, separators=(",", ":")) with default ensure_ascii.
+- digest(s) = hashlib.sha256(s.encode("utf-8")).hexdigest() for a str s.
+
+class TileState(Enum) with members OPEN="open", RENDERED="rendered", PROMOTED="promoted", QUARANTINED="quarantined".
+
+class TileError(Exception): raised for every invalid call listed below.
+
+class Loop:
+  Loop(max_attempts=3, max_reopens=2)
+
+  add(tile_id, inputs, recipe, neighbours=(), children=()): registers a tile. inputs is a dict name -> digest string; recipe is any JSON-serialisable dict; neighbours and children are ids of tiles already added. A tile with children is a parent, otherwise a leaf. TileError for: a duplicate id, an unknown neighbour or child id, a tile naming itself as neighbour or child, or a child that already has a parent (one parent per tile). Every tile starts OPEN with attempt 0, reopens 0, no output and last_code None.
+
+  state(tile_id) -> TileState. attempt(tile_id) -> int. reopens(tile_id) -> int. output(tile_id) -> the output digest string once PROMOTED; a tile quarantined by reopen keeps and still reports its last promoted output; otherwise None. last_code(tile_id) -> None or one of "PASS", "VALIDITY_FAIL", "QUALITY_FAIL", "APRON_STALE", "REPLAY". An unknown tile id in ANY method -> TileError, never KeyError.
+
+  apron(tile_id) -> dict {neighbour id: output(neighbour)} computed from the CURRENT state, with an explicit None value for every neighbour that is not PROMOTED (never omit a neighbour); {} only when there are no neighbours.
+
+  identity(tile_id) -> digest(canonical({"apron": apron(tile_id), "attempt": attempt, "children": [output(child) if the child is PROMOTED else None, for each child in the order given to add], "inputs": inputs, "recipe": recipe})), computed from the current state.
+
+  render(tile_id, output=None, source=None) -> TileState: only from OPEN, else TileError.
+    Leaf: output must be a str and source a non-empty str, else TileError. The candidate digest is digest(output). The apron is snapshotted now (stored with the tile) and the tile records source.
+    Parent: TileError unless every child is PROMOTED. output and source are ignored; the candidate digest is digest(canonical([output(child) for each child in order])) and the recorded source is "assemble". The apron is snapshotted the same way.
+    Replay: if identity(tile_id) (computed now, before any state change) is present in the journal, the tile becomes PROMOTED immediately with the journal's output digest, last_code "REPLAY", and the recorded source "journal"; return PROMOTED. Otherwise the tile becomes RENDERED and returns RENDERED.
+
+  verify(tile_id, validity, quality, reviewer) -> TileState: only from RENDERED, else TileError. reviewer must be a non-empty str and must differ from the tile's recorded source, else TileError (the author never reviews its own work) with no state change.
+    First recompute the apron; if it differs from the snapshot taken at render, the verdict is "APRON_STALE": the candidate is discarded, the tile becomes OPEN, attempt is NOT incremented. Return OPEN.
+    Otherwise if validity and quality are both true: last_code "PASS", the tile becomes PROMOTED with the candidate digest as its output, and the journal records identity -> output digest. Return PROMOTED.
+    Otherwise the verdict is "VALIDITY_FAIL" if validity is false, else "QUALITY_FAIL": the candidate is discarded and attempt is incremented; if attempt is now greater than max_attempts the tile becomes QUARANTINED, otherwise OPEN. Return the new state.
+
+  reopen(tile_id, reason) -> TileState: only from PROMOTED, else TileError. reopens is incremented; if reopens is now greater than max_reopens the tile becomes QUARANTINED (output kept) and nothing else changes. Otherwise the tile's output is cleared, attempt is incremented, the tile becomes OPEN, and every ancestor (parent, grandparent, ...) that is RENDERED or PROMOTED becomes OPEN with its output cleared and its attempt unchanged. Siblings, children and unrelated tiles are untouched. Return the tile's new state.
+
+  QUARANTINED tiles are frozen: render, verify and reopen on them -> TileError.
+
+  height() -> number of tiles that are not PROMOTED. done() -> every tile PROMOTED. stuck() -> any tile QUARANTINED.
+
+  snapshot() -> plain dict {"tiles": {tile_id: {"state": <TileState value string>, "attempt": int, "reopens": int, "children": [ids], "neighbours": [ids], "output": digest or None, "last_code": code or None}}}.
+
+Keep it deterministic and simple.

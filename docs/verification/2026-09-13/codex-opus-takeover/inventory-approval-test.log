@@ -1,0 +1,14 @@
+Exit code: 0
+✔ private checkout declares exact typed aliases and portable file inventory (1.331084ms)
+✔ every declared private payload source exists as a regular non-symlink file (0.687459ms)
+✔ staged private metadata strips scripts and development dependencies (0.186333ms)
+✔ unreviewed payload exports or dependencies and public flags refuse staging (1.007208ms)
+✔ engine compatibility cannot silently widen or disappear in staged metadata (0.227917ms)
+ℹ tests 5
+ℹ suites 0
+ℹ pass 5
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 41.974709

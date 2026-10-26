@@ -1,0 +1,11 @@
+{
+  "name": "nisi-private-run-journal-work-order",
+  "version": "0.0.0-private",
+  "private": true,
+  "type": "module",
+  "license": "UNLICENSED",
+  "scripts": {
+    "test": "node --test --test-timeout=5000 tests/baseline.test.mjs",
+    "test:journal": "node --test --test-timeout=5000 tests/run-journal.test.mjs"
+  }
+}

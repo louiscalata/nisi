@@ -1,0 +1,20 @@
+{
+  "afm" : "available",
+  "local" : {
+    "generationObserved" : false,
+    "inferenceVerified" : false,
+    "loaded" : [
+      "google\/gemma-4-26b-a4b-qat"
+    ],
+    "loadedEvidence" : "provider-reported",
+    "state" : "running",
+    "stateScope" : "inventory-server"
+  },
+  "store" : {
+    "conversationId" : "EAFA1198-4F91-4961-8BCA-1338D6D7B84D",
+    "messages" : 16,
+    "state" : "healthy (16 msgs)",
+    "utf16" : 2484
+  },
+  "window" : null
+}

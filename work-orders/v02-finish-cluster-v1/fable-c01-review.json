@@ -1,0 +1,91 @@
+{
+  "verdict": "FAIL",
+  "issues": [
+    "Scope gap vs contract: the oracle has no assertion that empty-directory observation is wired in the build proof and no check that the hidden walk reports actual directory/symlink/other kinds. A fault control that keeps labelling unknown leaves as 'file' or drops empty subdirectories passes every test here; the only kind coverage is synthetic refusal of 'symlink'/'directory' on the historical file tuple, which never exercises the walk.",
+    "Build-proof source assertions pin exact whitespace-free text (e.g. /JSON\\.stringify\\(record\\.hiddenAfter\\)!==JSON\\.stringify\\(record\\.hiddenBefore\\)/) and an exact relative import path. The contract requires retaining the existing equality checks, not reformatting them; if the current build-nisi-macos.mjs uses spaces around !== or a different import spelling, the test fails for formatting rather than semantics and cannot be corrected by the executor. Loosen with \\s* or confirm the literal text matches."
+  ],
+  "invocation_status": "succeeded",
+  "status": "FAIL",
+  "model_usage": {
+    "claude-haiku-4-5-20251001": {
+      "inputTokens": 2719,
+      "outputTokens": 13,
+      "cacheReadInputTokens": 0,
+      "cacheCreationInputTokens": 0,
+      "webSearchRequests": 0,
+      "costUSD": 0.002784,
+      "contextWindow": 200000,
+      "maxOutputTokens": 32000,
+      "thinkingTokens": 0,
+      "canonicalModel": "claude-haiku-4-5",
+      "provider": "firstParty",
+      "costBasis": "list"
+    },
+    "claude-fable-5-1": {
+      "inputTokens": 2,
+      "outputTokens": 2046,
+      "cacheReadInputTokens": 626,
+      "cacheCreationInputTokens": 3167,
+      "webSearchRequests": 0,
+      "costUSD": 0.16581650000000003,
+      "contextWindow": 1000000,
+      "maxOutputTokens": 64000,
+      "thinkingTokens": 1628,
+      "canonicalModel": "claude-fable-5-1",
+      "provider": "firstParty",
+      "costBasis": "list"
+    }
+  },
+  "reported_models": [
+    "claude-haiku-4-5-20251001",
+    "claude-fable-5-1"
+  ],
+  "usage": {
+    "input_tokens": 2,
+    "cache_creation_input_tokens": 3167,
+    "cache_read_input_tokens": 626,
+    "output_tokens": 2046,
+    "output_tokens_details": {
+      "thinking_tokens": 1628
+    },
+    "server_tool_use": {
+      "web_search_requests": 0,
+      "web_fetch_requests": 0
+    },
+    "service_tier": "standard",
+    "cache_creation": {
+      "ephemeral_1h_input_tokens": 3167,
+      "ephemeral_5m_input_tokens": 0
+    },
+    "inference_geo": "not_available",
+    "iterations": [
+      {
+        "input_tokens": 2,
+        "output_tokens": 2046,
+        "cache_read_input_tokens": 626,
+        "cache_creation_input_tokens": 3167,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 3167
+        },
+        "type": "message",
+        "model": null
+      }
+    ],
+    "speed": "standard"
+  },
+  "total_cost_usd": 0.16860050000000004,
+  "duration_ms": 26433,
+  "tools_enabled": false,
+  "session_persisted": false,
+  "write_owner": "codex",
+  "requested_model": "claude-fable-5-1",
+  "mode": "review",
+  "attempts": 1,
+  "wall_seconds": 27.299,
+  "created_at": "2026-09-19T00:08:37.657842+00:00",
+  "prior_attempts": [],
+  "total_wall_seconds": 27.3,
+  "prior_attempt_usage": [],
+  "total_usage_complete": true
+}

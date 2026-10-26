@@ -1,0 +1,5 @@
+
+> nisi@0.2.0-private.0 check:private-package
+> node scripts/check-private-package.mjs
+
+{"status":"PASS_SCOPED","evidence":"/Users/louiscalata/nisi-next-private/.build/private-package-6XXmhf","archive":{"path":"/Users/louiscalata/nisi-next-private/.build/private-package-6XXmhf/nisi-0.2.0-private.0.tgz","sha256":"d368985e340002993046fdcba14501ba804993fcdc32154d1f88480339e2cbd3"},"negativeControls":{"expected":39,"observed":39,"allExpectedLocationsDetected":true},"failure":null}

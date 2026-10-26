@@ -1,0 +1,1507 @@
+{
+  "schema": "nisi-evidence-chain-integration-v1",
+  "status": "STOPPED_FINAL_SCOPE_AUDIT",
+  "integrationChecksStatus": "PASS_SCOPED",
+  "date": "2026-09-13",
+  "recordedAt": "2026-09-13T23:04:31.065162+00:00",
+  "root": "/Users/louiscalata/nisi-next-private",
+  "writer": "Astra (Codex)",
+  "authorization": {
+    "quote": "Autointegrate",
+    "by": "Louis",
+    "date": "2026-09-13",
+    "session": "Claude session",
+    "basis": "Explicitly carried forward in the user instruction; no new approval requested."
+  },
+  "failure": {
+    "stage": "final scope audit after step e",
+    "reason": "A pre-existing file outside the authorized integration paths changed since the pre-state snapshot. The first scope-audit assertion stopped completion.",
+    "firstObservedUnexpectedPath": "work-orders/windows-future-20260913/packs/usage-table/tests/acceptance.test.mjs",
+    "beforeSha256": "0d594a693f25421fd87b371eaaf91a67985d12bd24a9c664ad01b8546cdf39bc",
+    "reportingSnapshotSha256": "2c66e069ed0d59f2a1cf3c31b738ddf2500ddfdc846a25830c0684f7abe418dc",
+    "integrationWroteThisPath": false,
+    "externalWriterIdentity": "unknown; not attributed",
+    "action": "Stopped further integration actions. Did not modify or revert this path. Only failure-reporting evidence written after the audit failure."
+  },
+  "steps": {
+    "a": "PASS: pre-state 1170/1170 and target hashes recorded",
+    "b": "PASS: modules and fixtures copied byte-identically with cp",
+    "c": "PASS: exact preflight tests and memfs copied; all eight permitted diffs retained",
+    "d": "PASS: check 1230/1230; types exit 0; private package 27 files, exit 0",
+    "e": "DONE: four product checkpoints and four work-order integrated lines, append-only, progress unchanged",
+    "finalScopeAudit": "FAIL: unexpected unrelated pre-existing file drift; stopped",
+    "f": "Failure-reporting receipt and README written with all observed results"
+  },
+  "claudePreflight": {
+    "providedBeforeThisRun": true,
+    "migrationLog": "docs/verification/2026-09-13/evidence-chain-integration/preflight-migration-log.json",
+    "migrationLogSha256": "1d1008b9d25dc946daefc3e43f4adee5f6d9e4829e787f552d8963e41f0e0112",
+    "targetDirectory": "docs/verification/2026-09-13/evidence-chain-integration/preflight-tests/",
+    "newClaudeInvocation": false
+  },
+  "preState": {
+    "gitHead": "02a0b39146596da6abaf279316ff7086cd70ec52",
+    "manifest": "docs/verification/2026-09-13/evidence-chain-integration/before-manifest.json",
+    "manifestSha256": "2b000958a12a8930a95eb047059b89b7a5f20c7dfad27797807c959d8104145e",
+    "moduleTargetsAbsent": true,
+    "all22PlacementTargetsAbsent": true,
+    "otherTargets": {
+      "roadmap.md": {
+        "exists": true,
+        "sha256": "e9aa7539faa41a15d4a7c35bbef057d20d4cc127f3bd78e6ffdaa3b265dead29"
+      },
+      "work-orders/native-canary-summary/roadmap.md": {
+        "exists": true,
+        "sha256": "532994e96ffc4b538c35a975925f448c86dd4a0152ee91a369b0bb0a2c0439d7"
+      },
+      "work-orders/fixed-run-journal-entry/roadmap.md": {
+        "exists": true,
+        "sha256": "471b6cfbe3ab77ff8e42a606fc60546c6fcad3427a18ff14bc4692435ce04a8b"
+      },
+      "work-orders/run-journal-store/roadmap.md": {
+        "exists": true,
+        "sha256": "6f227ea1dc7089f734681cf447d8b414e7ccf40dce9f6b7fd7d2b7d891dc0a32"
+      },
+      "work-orders/host-journal-bundle/roadmap.md": {
+        "exists": true,
+        "sha256": "1bb57934242a3e3ca0aaa12604fadf5411a2e953a797433955023be4f3197c79"
+      },
+      "docs/verification/2026-09-13/evidence-chain-integration/receipt.json": {
+        "exists": false,
+        "sha256": null
+      },
+      "docs/verification/2026-09-13/evidence-chain-integration/README.md": {
+        "exists": false,
+        "sha256": null
+      }
+    }
+  },
+  "placements": [
+    {
+      "kind": "module",
+      "source": "work-orders/native-canary-summary/src/native-canary-summary.mjs",
+      "target": "hosts/macos-xpc/native-canary-summary.mjs",
+      "expectedSha256": "92590f11d91071fb7d5c1a0208958ef7c094d06a723fd38c5827fc63e6fb9c41",
+      "sourceSha256": "92590f11d91071fb7d5c1a0208958ef7c094d06a723fd38c5827fc63e6fb9c41",
+      "beforeSha256": null,
+      "beforeExists": false,
+      "afterSha256": "92590f11d91071fb7d5c1a0208958ef7c094d06a723fd38c5827fc63e6fb9c41",
+      "byteIdentical": true
+    },
+    {
+      "kind": "module",
+      "source": "work-orders/fixed-run-journal-entry/src/fixed-run-journal-entry.mjs",
+      "target": "history/fixed-run-journal-entry.mjs",
+      "expectedSha256": "ba888a4f4d5b1b78f799045e44fbdfe79b75545847ab9b3ed2673fd7b353585c",
+      "sourceSha256": "ba888a4f4d5b1b78f799045e44fbdfe79b75545847ab9b3ed2673fd7b353585c",
+      "beforeSha256": null,
+      "beforeExists": false,
+      "afterSha256": "ba888a4f4d5b1b78f799045e44fbdfe79b75545847ab9b3ed2673fd7b353585c",
+      "byteIdentical": true
+    },
+    {
+      "kind": "module",
+      "source": "work-orders/run-journal-store/src/run-journal-store-v1.mjs",
+      "target": "history/run-journal-store-v1.mjs",
+      "expectedSha256": "1356028b65f9f8b96e3b9ec8ba3bfbb4968092af53d00e8b5dfdb11b161f4792",
+      "sourceSha256": "1356028b65f9f8b96e3b9ec8ba3bfbb4968092af53d00e8b5dfdb11b161f4792",
+      "beforeSha256": null,
+      "beforeExists": false,
+      "afterSha256": "1356028b65f9f8b96e3b9ec8ba3bfbb4968092af53d00e8b5dfdb11b161f4792",
+      "byteIdentical": true
+    },
+    {
+      "kind": "module",
+      "source": "work-orders/host-journal-bundle/src/host-journal-bundle.mjs",
+      "target": "history/host-journal-bundle.mjs",
+      "expectedSha256": "97b2554b7fe50812fcb0065197964967d2beefc0c8cb322a38154ec16ebb9894",
+      "sourceSha256": "97b2554b7fe50812fcb0065197964967d2beefc0c8cb322a38154ec16ebb9894",
+      "beforeSha256": null,
+      "beforeExists": false,
+      "afterSha256": "97b2554b7fe50812fcb0065197964967d2beefc0c8cb322a38154ec16ebb9894",
+      "byteIdentical": true
+    },
+    {
+      "kind": "fixture",
+      "source": "work-orders/native-canary-summary/fixtures/inherit-run-service-raw.json",
+      "target": "tests/fixtures/native-canary/inherit-run-service-raw.json",
+      "sourceSha256": "00f76c88284738036b884c8242dbfa59c52f207bb2398a71d12798e591387d64",
+      "beforeSha256": null,
+      "beforeExists": false,
+      "afterSha256": "00f76c88284738036b884c8242dbfa59c52f207bb2398a71d12798e591387d64",
+      "byteIdentical": true
+    },
+    {
+      "kind": "fixture",
+      "source": "work-orders/fixed-run-journal-entry/fixtures/summary-canaries-not-matched.json",
+      "target": "tests/fixtures/fixed-run/summary-canaries-not-matched.json",
+      "sourceSha256": "855b60f16c134943e9b04bbdc6c5385f686991728161d1ae58052b5e894f9ddf",
+      "beforeSha256": null,
+      "beforeExists": false,
+      "afterSha256": "855b60f16c134943e9b04bbdc6c5385f686991728161d1ae58052b5e894f9ddf",
+      "byteIdentical": true
+    },
+    {
+      "kind": "fixture",
+      "source": "work-orders/fixed-run-journal-entry/fixtures/summary-identity-unavailable.json",
+      "target": "tests/fixtures/fixed-run/summary-identity-unavailable.json",
+      "sourceSha256": "2468510c52d2ff361a68fc9c636361d73995d5453a9db3bf4b804ced9ae9bbf2",
+      "beforeSha256": null,
+      "beforeExists": false,
+      "afterSha256": "2468510c52d2ff361a68fc9c636361d73995d5453a9db3bf4b804ced9ae9bbf2",
+      "byteIdentical": true
+    },
+    {
+      "kind": "fixture",
+      "source": "work-orders/fixed-run-journal-entry/fixtures/summary-observed.json",
+      "target": "tests/fixtures/fixed-run/summary-observed.json",
+      "sourceSha256": "a00dce2160b6f271080f1297b6f426c958205dc20a1369a2671c2c657bb4e8ad",
+      "beforeSha256": null,
+      "beforeExists": false,
+      "afterSha256": "a00dce2160b6f271080f1297b6f426c958205dc20a1369a2671c2c657bb4e8ad",
+      "byteIdentical": true
+    },
+    {
+      "kind": "fixture",
+      "source": "work-orders/fixed-run-journal-entry/fixtures/summary-timeout.json",
+      "target": "tests/fixtures/fixed-run/summary-timeout.json",
+      "sourceSha256": "2d9180eb8a0d5fb6083489b1298fd23c26281df7c92ed85d74895d63e5bbd407",
+      "beforeSha256": null,
+      "beforeExists": false,
+      "afterSha256": "2d9180eb8a0d5fb6083489b1298fd23c26281df7c92ed85d74895d63e5bbd407",
+      "byteIdentical": true
+    },
+    {
+      "kind": "package_fixture",
+      "source": "work-orders/native-canary-summary/package.json",
+      "target": "tests/fixtures/native-canary-summary-package.json",
+      "sourceSha256": "048871064d5309de15f799a75945aade84d6f9bf6e44f05e22836f0767d580ea",
+      "beforeSha256": null,
+      "beforeExists": false,
+      "afterSha256": "048871064d5309de15f799a75945aade84d6f9bf6e44f05e22836f0767d580ea",
+      "byteIdentical": true
+    },
+    {
+      "kind": "package_fixture",
+      "source": "work-orders/fixed-run-journal-entry/package.json",
+      "target": "tests/fixtures/fixed-run-journal-entry-package.json",
+      "sourceSha256": "d165304f582275ed7132a577eab58c305b5d0cff88a6e5dcbf24230b87aa6747",
+      "beforeSha256": null,
+      "beforeExists": false,
+      "afterSha256": "d165304f582275ed7132a577eab58c305b5d0cff88a6e5dcbf24230b87aa6747",
+      "byteIdentical": true
+    },
+    {
+      "kind": "package_fixture",
+      "source": "work-orders/run-journal-store/package.json",
+      "target": "tests/fixtures/run-journal-store-package.json",
+      "sourceSha256": "42bed7239d3e46cf5f4952e03bd2295d63d3af1368c34f8b285ae77937c42e94",
+      "beforeSha256": null,
+      "beforeExists": false,
+      "afterSha256": "42bed7239d3e46cf5f4952e03bd2295d63d3af1368c34f8b285ae77937c42e94",
+      "byteIdentical": true
+    },
+    {
+      "kind": "package_fixture",
+      "source": "work-orders/host-journal-bundle/package.json",
+      "target": "tests/fixtures/host-journal-bundle-package.json",
+      "sourceSha256": "1e3e8fa0baa6c87457c7eb55b4ddf117f9e256328f35288f3bde7915be6d4d87",
+      "beforeSha256": null,
+      "beforeExists": false,
+      "afterSha256": "1e3e8fa0baa6c87457c7eb55b4ddf117f9e256328f35288f3bde7915be6d4d87",
+      "byteIdentical": true
+    },
+    {
+      "kind": "test",
+      "source": "docs/verification/2026-09-13/evidence-chain-integration/preflight-tests/native-canary-summary.test.mjs",
+      "target": "tests/native-canary-summary.test.mjs",
+      "workOrderOriginal": "work-orders/native-canary-summary/tests/summary.test.mjs",
+      "preflightEditCount": 4,
+      "sourceSha256": "438d4b3240895525f0fd0bb51f0f1cbe1e86de8dfa847f358aa734025c3e8aaa",
+      "beforeSha256": null,
+      "beforeExists": false,
+      "workOrderOriginalSha256": "f962cf97846f793ab8334fcd35e3696407a4bd1e2ea46ea9e1ec517a28511825",
+      "afterSha256": "438d4b3240895525f0fd0bb51f0f1cbe1e86de8dfa847f358aa734025c3e8aaa",
+      "matchesPreflightBytes": true,
+      "pathOnlyOrDroppedPinOnly": true,
+      "pathSubstitutions": [
+        {
+          "originalLine": 4,
+          "from": "../src/native-canary-summary.mjs",
+          "to": "../hosts/macos-xpc/native-canary-summary.mjs",
+          "occurrences": 1
+        },
+        {
+          "originalLine": 6,
+          "from": "../fixtures/inherit-run-service-raw.json",
+          "to": "./fixtures/native-canary/inherit-run-service-raw.json",
+          "occurrences": 1
+        },
+        {
+          "originalLine": 7,
+          "from": "../fixtures/inherit-run-node.stdout",
+          "to": "./fixtures/native-canary/inherit-run-node.stdout",
+          "occurrences": 1
+        },
+        {
+          "originalLine": 136,
+          "from": "../src/native-canary-summary.mjs",
+          "to": "../hosts/macos-xpc/native-canary-summary.mjs",
+          "occurrences": 1
+        }
+      ],
+      "droppedFrozenCopyPins": [],
+      "verifiedEditCount": 4,
+      "diff": "docs/verification/2026-09-13/evidence-chain-integration/native-canary-summary.test.mjs.diff",
+      "diffSha256": "de16093ff196085847646a97d406577fa29cbc2e7a3c9e64c15118869a15d0c1"
+    },
+    {
+      "kind": "test",
+      "source": "docs/verification/2026-09-13/evidence-chain-integration/preflight-tests/native-canary-summary-baseline.test.mjs",
+      "target": "tests/native-canary-summary-baseline.test.mjs",
+      "workOrderOriginal": "work-orders/native-canary-summary/tests/baseline.test.mjs",
+      "preflightEditCount": 6,
+      "sourceSha256": "1cfdb066f5a451bc31bf79dadafc53fe2bbc2e44f9f8af60fa2db6e207842a23",
+      "beforeSha256": null,
+      "beforeExists": false,
+      "workOrderOriginalSha256": "0f9c6f84db51f323ebca91b839c9b545b6e6f74b8abc1177b9fae4323238f716",
+      "afterSha256": "1cfdb066f5a451bc31bf79dadafc53fe2bbc2e44f9f8af60fa2db6e207842a23",
+      "matchesPreflightBytes": true,
+      "pathOnlyOrDroppedPinOnly": true,
+      "pathSubstitutions": [
+        {
+          "originalLine": 5,
+          "from": "../src/native-canary-summary.mjs",
+          "to": "../hosts/macos-xpc/native-canary-summary.mjs",
+          "occurrences": 1
+        },
+        {
+          "originalLine": 11,
+          "from": "../fixtures/inherit-run-service-raw.json",
+          "to": "./fixtures/native-canary/inherit-run-service-raw.json",
+          "occurrences": 1
+        },
+        {
+          "originalLine": 12,
+          "from": "../fixtures/inherit-run-node.stdout",
+          "to": "./fixtures/native-canary/inherit-run-node.stdout",
+          "occurrences": 1
+        },
+        {
+          "originalLine": 16,
+          "from": "../package.json",
+          "to": "./fixtures/native-canary-summary-package.json",
+          "occurrences": 1
+        }
+      ],
+      "droppedFrozenCopyPins": [
+        {
+          "originalLine": 9,
+          "frozenPath": "../src/native-canary-adapter.mjs",
+          "frozenSha256": "ac9c9cfaacfad91a27f08d2daee461b1f0580892509dc76693ccd36bd35a5c8f"
+        },
+        {
+          "originalLine": 10,
+          "frozenPath": "../src/native-canary-adjudicator.mjs",
+          "frozenSha256": "cf875eaa7adf335ceab49ae16f9941e2d9b5b9780f5ca15c22eea4c97405de00"
+        }
+      ],
+      "verifiedEditCount": 6,
+      "diff": "docs/verification/2026-09-13/evidence-chain-integration/native-canary-summary-baseline.test.mjs.diff",
+      "diffSha256": "6c3b15df955738bd1a804f8b2e888c94583ed34883a941e4ead4bbe386e131ff"
+    },
+    {
+      "kind": "test",
+      "source": "docs/verification/2026-09-13/evidence-chain-integration/preflight-tests/fixed-run-journal-entry.test.mjs",
+      "target": "tests/fixed-run-journal-entry.test.mjs",
+      "workOrderOriginal": "work-orders/fixed-run-journal-entry/tests/entry.test.mjs",
+      "preflightEditCount": 5,
+      "sourceSha256": "2f28c6a1d5834049d33a454ef24a4d5242eda723ce106359d2dcc357568325c4",
+      "beforeSha256": null,
+      "beforeExists": false,
+      "workOrderOriginalSha256": "89a0a0e06fba80deccb074f9096b0cdc91b6256ce295b73db4803d80aaf6a320",
+      "afterSha256": "2f28c6a1d5834049d33a454ef24a4d5242eda723ce106359d2dcc357568325c4",
+      "matchesPreflightBytes": true,
+      "pathOnlyOrDroppedPinOnly": true,
+      "pathSubstitutions": [
+        {
+          "originalLine": 4,
+          "from": "../src/fixed-run-journal-entry.mjs",
+          "to": "../history/fixed-run-journal-entry.mjs",
+          "occurrences": 1
+        },
+        {
+          "originalLine": 5,
+          "from": "../src/run-journal-v1.mjs",
+          "to": "../history/run-journal-v1.mjs",
+          "occurrences": 1
+        },
+        {
+          "originalLine": 7,
+          "from": "../fixtures/${name}.json",
+          "to": "./fixtures/fixed-run/${name}.json",
+          "occurrences": 1
+        },
+        {
+          "originalLine": 295,
+          "from": "../src/fixed-run-journal-entry.mjs",
+          "to": "../history/fixed-run-journal-entry.mjs",
+          "occurrences": 1
+        },
+        {
+          "originalLine": 299,
+          "from": "../src/fixed-run-journal-entry.mjs",
+          "to": "../history/fixed-run-journal-entry.mjs",
+          "occurrences": 1
+        }
+      ],
+      "droppedFrozenCopyPins": [],
+      "verifiedEditCount": 5,
+      "diff": "docs/verification/2026-09-13/evidence-chain-integration/fixed-run-journal-entry.test.mjs.diff",
+      "diffSha256": "8465712a607c4b67a8d1fdaa371401c9fab81c8ab184d2337a768ede2e608805"
+    },
+    {
+      "kind": "test",
+      "source": "docs/verification/2026-09-13/evidence-chain-integration/preflight-tests/fixed-run-journal-entry-baseline.test.mjs",
+      "target": "tests/fixed-run-journal-entry-baseline.test.mjs",
+      "workOrderOriginal": "work-orders/fixed-run-journal-entry/tests/baseline.test.mjs",
+      "preflightEditCount": 7,
+      "sourceSha256": "00f26ae85558cfd634c7cd329cae4b3dfe2d18bd3495cb329613a0ea877d49b4",
+      "beforeSha256": null,
+      "beforeExists": false,
+      "workOrderOriginalSha256": "463ee3bf36b4584e4bc8af88b6ab37029b75bd823a95cc31847da804afdd5bfa",
+      "afterSha256": "00f26ae85558cfd634c7cd329cae4b3dfe2d18bd3495cb329613a0ea877d49b4",
+      "matchesPreflightBytes": true,
+      "pathOnlyOrDroppedPinOnly": true,
+      "pathSubstitutions": [
+        {
+          "originalLine": 5,
+          "from": "../src/fixed-run-journal-entry.mjs",
+          "to": "../history/fixed-run-journal-entry.mjs",
+          "occurrences": 1
+        },
+        {
+          "originalLine": 10,
+          "from": "../fixtures/summary-",
+          "to": "./fixtures/fixed-run/summary-",
+          "occurrences": 1
+        },
+        {
+          "originalLine": 11,
+          "from": "../fixtures/summary-",
+          "to": "./fixtures/fixed-run/summary-",
+          "occurrences": 1
+        },
+        {
+          "originalLine": 12,
+          "from": "../fixtures/summary-",
+          "to": "./fixtures/fixed-run/summary-",
+          "occurrences": 1
+        },
+        {
+          "originalLine": 13,
+          "from": "../fixtures/summary-",
+          "to": "./fixtures/fixed-run/summary-",
+          "occurrences": 1
+        },
+        {
+          "originalLine": 17,
+          "from": "../package.json",
+          "to": "./fixtures/fixed-run-journal-entry-package.json",
+          "occurrences": 1
+        }
+      ],
+      "droppedFrozenCopyPins": [
+        {
+          "originalLine": 9,
+          "frozenPath": "../src/run-journal-v1.mjs",
+          "frozenSha256": "dee9f490c091000b2560cd9464d945885e7f341091b87dde9ae4f2b7cdbd359e"
+        }
+      ],
+      "verifiedEditCount": 7,
+      "diff": "docs/verification/2026-09-13/evidence-chain-integration/fixed-run-journal-entry-baseline.test.mjs.diff",
+      "diffSha256": "8713fd79b33e8e66c3370bb87b41da40d374d56c2beb9f9c797243a518c2830e"
+    },
+    {
+      "kind": "test",
+      "source": "docs/verification/2026-09-13/evidence-chain-integration/preflight-tests/run-journal-store.test.mjs",
+      "target": "tests/run-journal-store.test.mjs",
+      "workOrderOriginal": "work-orders/run-journal-store/tests/run-journal-store.test.mjs",
+      "preflightEditCount": 1,
+      "sourceSha256": "f1caa70d02795044583ed1c872657970662f527afd1dee7eb788d31e59254360",
+      "beforeSha256": null,
+      "beforeExists": false,
+      "workOrderOriginalSha256": "304909a7275e04fd1af8d38a5ec16a21027e415c4cb6c4422d86dc8ec246969a",
+      "afterSha256": "f1caa70d02795044583ed1c872657970662f527afd1dee7eb788d31e59254360",
+      "matchesPreflightBytes": true,
+      "pathOnlyOrDroppedPinOnly": true,
+      "pathSubstitutions": [
+        {
+          "originalLine": 7,
+          "from": "../src/run-journal-store-v1.mjs",
+          "to": "../history/run-journal-store-v1.mjs",
+          "occurrences": 1
+        }
+      ],
+      "droppedFrozenCopyPins": [],
+      "verifiedEditCount": 1,
+      "diff": "docs/verification/2026-09-13/evidence-chain-integration/run-journal-store.test.mjs.diff",
+      "diffSha256": "b16be9a1a0a6a5115e3b9bb932e7962fe7a00d909480a40ccd8b170307046b63"
+    },
+    {
+      "kind": "test",
+      "source": "docs/verification/2026-09-13/evidence-chain-integration/preflight-tests/run-journal-store-baseline.test.mjs",
+      "target": "tests/run-journal-store-baseline.test.mjs",
+      "workOrderOriginal": "work-orders/run-journal-store/tests/baseline.test.mjs",
+      "preflightEditCount": 3,
+      "sourceSha256": "71e9a74adbfe349a75cf6f982aacf6ff496b1f2b4a829b25f5d71f1e09543fb5",
+      "beforeSha256": null,
+      "beforeExists": false,
+      "workOrderOriginalSha256": "f20367b8eaec8ccb58736fb36eaee393b55c8d89c21a104c6d3161f6787d8f76",
+      "afterSha256": "71e9a74adbfe349a75cf6f982aacf6ff496b1f2b4a829b25f5d71f1e09543fb5",
+      "matchesPreflightBytes": true,
+      "pathOnlyOrDroppedPinOnly": true,
+      "pathSubstitutions": [
+        {
+          "originalLine": 4,
+          "from": "../src/run-journal-store-v1.mjs",
+          "to": "../history/run-journal-store-v1.mjs",
+          "occurrences": 1
+        },
+        {
+          "originalLine": 7,
+          "from": "../package.json",
+          "to": "./fixtures/run-journal-store-package.json",
+          "occurrences": 1
+        },
+        {
+          "originalLine": 18,
+          "from": "../src/run-journal-store-v1.mjs",
+          "to": "../history/run-journal-store-v1.mjs",
+          "occurrences": 1
+        }
+      ],
+      "droppedFrozenCopyPins": [],
+      "verifiedEditCount": 3,
+      "diff": "docs/verification/2026-09-13/evidence-chain-integration/run-journal-store-baseline.test.mjs.diff",
+      "diffSha256": "3bbf86da9866658652a2e5c08ce605c7a34a732228d0b53faa8500061b18c856"
+    },
+    {
+      "kind": "test",
+      "source": "docs/verification/2026-09-13/evidence-chain-integration/preflight-tests/host-journal-bundle.test.mjs",
+      "target": "tests/host-journal-bundle.test.mjs",
+      "workOrderOriginal": "work-orders/host-journal-bundle/tests/bundle.test.mjs",
+      "preflightEditCount": 9,
+      "sourceSha256": "9973b1375f1aaa658796de6b482ff900069eccf0326bb8901213e69b116f4105",
+      "beforeSha256": null,
+      "beforeExists": false,
+      "workOrderOriginalSha256": "d830a9974edea06ffca4bba886dd89bce1bbcd0c45adccb4ec1d5e3d37f0ca48",
+      "afterSha256": "9973b1375f1aaa658796de6b482ff900069eccf0326bb8901213e69b116f4105",
+      "matchesPreflightBytes": true,
+      "pathOnlyOrDroppedPinOnly": true,
+      "pathSubstitutions": [
+        {
+          "originalLine": 4,
+          "from": "../src/host-journal-bundle.mjs",
+          "to": "../history/host-journal-bundle.mjs",
+          "occurrences": 1
+        },
+        {
+          "originalLine": 5,
+          "from": "../src/run-journal-v1.mjs",
+          "to": "../history/run-journal-v1.mjs",
+          "occurrences": 1
+        },
+        {
+          "originalLine": 6,
+          "from": "../src/run-journal-store-v1.mjs",
+          "to": "../history/run-journal-store-v1.mjs",
+          "occurrences": 1
+        },
+        {
+          "originalLine": 7,
+          "from": "../src/fixed-run-journal-entry.mjs",
+          "to": "../history/fixed-run-journal-entry.mjs",
+          "occurrences": 1
+        },
+        {
+          "originalLine": 8,
+          "from": "./memfs.mjs",
+          "to": "./helpers/memfs.mjs",
+          "occurrences": 1
+        },
+        {
+          "originalLine": 10,
+          "from": "../fixtures/summary-",
+          "to": "./fixtures/fixed-run/summary-",
+          "occurrences": 1
+        },
+        {
+          "originalLine": 11,
+          "from": "../fixtures/summary-",
+          "to": "./fixtures/fixed-run/summary-",
+          "occurrences": 1
+        },
+        {
+          "originalLine": 271,
+          "from": "../src/host-journal-bundle.mjs",
+          "to": "../history/host-journal-bundle.mjs",
+          "occurrences": 1
+        },
+        {
+          "originalLine": 277,
+          "from": "../src/host-journal-bundle.mjs",
+          "to": "../history/host-journal-bundle.mjs",
+          "occurrences": 1
+        }
+      ],
+      "droppedFrozenCopyPins": [],
+      "verifiedEditCount": 9,
+      "diff": "docs/verification/2026-09-13/evidence-chain-integration/host-journal-bundle.test.mjs.diff",
+      "diffSha256": "8eec0e6cf2928f359c73f18696a49dbe7afd48769780525150a5b3fa5d7caea4"
+    },
+    {
+      "kind": "test",
+      "source": "docs/verification/2026-09-13/evidence-chain-integration/preflight-tests/host-journal-bundle-baseline.test.mjs",
+      "target": "tests/host-journal-bundle-baseline.test.mjs",
+      "workOrderOriginal": "work-orders/host-journal-bundle/tests/baseline.test.mjs",
+      "preflightEditCount": 7,
+      "sourceSha256": "8930bb2bd82a4d8ac57ee30360a362e1a9714afbaf99f54b58a730ddab2ba962",
+      "beforeSha256": null,
+      "beforeExists": false,
+      "workOrderOriginalSha256": "35b9dcebb90370fed4bc9ef673e1feb26a5a5628ac809ba06662234ad5a45e4c",
+      "afterSha256": "8930bb2bd82a4d8ac57ee30360a362e1a9714afbaf99f54b58a730ddab2ba962",
+      "matchesPreflightBytes": true,
+      "pathOnlyOrDroppedPinOnly": true,
+      "pathSubstitutions": [
+        {
+          "originalLine": 5,
+          "from": "../src/host-journal-bundle.mjs",
+          "to": "../history/host-journal-bundle.mjs",
+          "occurrences": 1
+        },
+        {
+          "originalLine": 12,
+          "from": "../fixtures/summary-",
+          "to": "./fixtures/fixed-run/summary-",
+          "occurrences": 1
+        },
+        {
+          "originalLine": 13,
+          "from": "../fixtures/summary-",
+          "to": "./fixtures/fixed-run/summary-",
+          "occurrences": 1
+        },
+        {
+          "originalLine": 17,
+          "from": "../package.json",
+          "to": "./fixtures/host-journal-bundle-package.json",
+          "occurrences": 1
+        }
+      ],
+      "droppedFrozenCopyPins": [
+        {
+          "originalLine": 9,
+          "frozenPath": "../src/run-journal-v1.mjs",
+          "frozenSha256": "dee9f490c091000b2560cd9464d945885e7f341091b87dde9ae4f2b7cdbd359e"
+        },
+        {
+          "originalLine": 10,
+          "frozenPath": "../src/run-journal-store-v1.mjs",
+          "frozenSha256": "1356028b65f9f8b96e3b9ec8ba3bfbb4968092af53d00e8b5dfdb11b161f4792"
+        },
+        {
+          "originalLine": 11,
+          "frozenPath": "../src/fixed-run-journal-entry.mjs",
+          "frozenSha256": "ba888a4f4d5b1b78f799045e44fbdfe79b75545847ab9b3ed2673fd7b353585c"
+        }
+      ],
+      "verifiedEditCount": 7,
+      "diff": "docs/verification/2026-09-13/evidence-chain-integration/host-journal-bundle-baseline.test.mjs.diff",
+      "diffSha256": "431c42a5d2ceba1ff80ad3623c171544b4acb1d3ccaa93140a1ce54817fc4534"
+    },
+    {
+      "kind": "helper",
+      "source": "work-orders/host-journal-bundle/tests/memfs.mjs",
+      "target": "tests/helpers/memfs.mjs",
+      "sourceSha256": "e202da18a120645ccdf6c51da48843f64ca90b6af48e87d3fdcb5cda0f9319c0",
+      "beforeSha256": null,
+      "beforeExists": false,
+      "afterSha256": "e202da18a120645ccdf6c51da48843f64ca90b6af48e87d3fdcb5cda0f9319c0",
+      "byteIdentical": true
+    }
+  ],
+  "perTestDiffSummaries": [
+    {
+      "kind": "test",
+      "source": "docs/verification/2026-09-13/evidence-chain-integration/preflight-tests/native-canary-summary.test.mjs",
+      "target": "tests/native-canary-summary.test.mjs",
+      "workOrderOriginal": "work-orders/native-canary-summary/tests/summary.test.mjs",
+      "preflightEditCount": 4,
+      "sourceSha256": "438d4b3240895525f0fd0bb51f0f1cbe1e86de8dfa847f358aa734025c3e8aaa",
+      "beforeSha256": null,
+      "beforeExists": false,
+      "workOrderOriginalSha256": "f962cf97846f793ab8334fcd35e3696407a4bd1e2ea46ea9e1ec517a28511825",
+      "afterSha256": "438d4b3240895525f0fd0bb51f0f1cbe1e86de8dfa847f358aa734025c3e8aaa",
+      "matchesPreflightBytes": true,
+      "pathOnlyOrDroppedPinOnly": true,
+      "pathSubstitutions": [
+        {
+          "originalLine": 4,
+          "from": "../src/native-canary-summary.mjs",
+          "to": "../hosts/macos-xpc/native-canary-summary.mjs",
+          "occurrences": 1
+        },
+        {
+          "originalLine": 6,
+          "from": "../fixtures/inherit-run-service-raw.json",
+          "to": "./fixtures/native-canary/inherit-run-service-raw.json",
+          "occurrences": 1
+        },
+        {
+          "originalLine": 7,
+          "from": "../fixtures/inherit-run-node.stdout",
+          "to": "./fixtures/native-canary/inherit-run-node.stdout",
+          "occurrences": 1
+        },
+        {
+          "originalLine": 136,
+          "from": "../src/native-canary-summary.mjs",
+          "to": "../hosts/macos-xpc/native-canary-summary.mjs",
+          "occurrences": 1
+        }
+      ],
+      "droppedFrozenCopyPins": [],
+      "verifiedEditCount": 4,
+      "diff": "docs/verification/2026-09-13/evidence-chain-integration/native-canary-summary.test.mjs.diff",
+      "diffSha256": "de16093ff196085847646a97d406577fa29cbc2e7a3c9e64c15118869a15d0c1"
+    },
+    {
+      "kind": "test",
+      "source": "docs/verification/2026-09-13/evidence-chain-integration/preflight-tests/native-canary-summary-baseline.test.mjs",
+      "target": "tests/native-canary-summary-baseline.test.mjs",
+      "workOrderOriginal": "work-orders/native-canary-summary/tests/baseline.test.mjs",
+      "preflightEditCount": 6,
+      "sourceSha256": "1cfdb066f5a451bc31bf79dadafc53fe2bbc2e44f9f8af60fa2db6e207842a23",
+      "beforeSha256": null,
+      "beforeExists": false,
+      "workOrderOriginalSha256": "0f9c6f84db51f323ebca91b839c9b545b6e6f74b8abc1177b9fae4323238f716",
+      "afterSha256": "1cfdb066f5a451bc31bf79dadafc53fe2bbc2e44f9f8af60fa2db6e207842a23",
+      "matchesPreflightBytes": true,
+      "pathOnlyOrDroppedPinOnly": true,
+      "pathSubstitutions": [
+        {
+          "originalLine": 5,
+          "from": "../src/native-canary-summary.mjs",
+          "to": "../hosts/macos-xpc/native-canary-summary.mjs",
+          "occurrences": 1
+        },
+        {
+          "originalLine": 11,
+          "from": "../fixtures/inherit-run-service-raw.json",
+          "to": "./fixtures/native-canary/inherit-run-service-raw.json",
+          "occurrences": 1
+        },
+        {
+          "originalLine": 12,
+          "from": "../fixtures/inherit-run-node.stdout",
+          "to": "./fixtures/native-canary/inherit-run-node.stdout",
+          "occurrences": 1
+        },
+        {
+          "originalLine": 16,
+          "from": "../package.json",
+          "to": "./fixtures/native-canary-summary-package.json",
+          "occurrences": 1
+        }
+      ],
+      "droppedFrozenCopyPins": [
+        {
+          "originalLine": 9,
+          "frozenPath": "../src/native-canary-adapter.mjs",
+          "frozenSha256": "ac9c9cfaacfad91a27f08d2daee461b1f0580892509dc76693ccd36bd35a5c8f"
+        },
+        {
+          "originalLine": 10,
+          "frozenPath": "../src/native-canary-adjudicator.mjs",
+          "frozenSha256": "cf875eaa7adf335ceab49ae16f9941e2d9b5b9780f5ca15c22eea4c97405de00"
+        }
+      ],
+      "verifiedEditCount": 6,
+      "diff": "docs/verification/2026-09-13/evidence-chain-integration/native-canary-summary-baseline.test.mjs.diff",
+      "diffSha256": "6c3b15df955738bd1a804f8b2e888c94583ed34883a941e4ead4bbe386e131ff"
+    },
+    {
+      "kind": "test",
+      "source": "docs/verification/2026-09-13/evidence-chain-integration/preflight-tests/fixed-run-journal-entry.test.mjs",
+      "target": "tests/fixed-run-journal-entry.test.mjs",
+      "workOrderOriginal": "work-orders/fixed-run-journal-entry/tests/entry.test.mjs",
+      "preflightEditCount": 5,
+      "sourceSha256": "2f28c6a1d5834049d33a454ef24a4d5242eda723ce106359d2dcc357568325c4",
+      "beforeSha256": null,
+      "beforeExists": false,
+      "workOrderOriginalSha256": "89a0a0e06fba80deccb074f9096b0cdc91b6256ce295b73db4803d80aaf6a320",
+      "afterSha256": "2f28c6a1d5834049d33a454ef24a4d5242eda723ce106359d2dcc357568325c4",
+      "matchesPreflightBytes": true,
+      "pathOnlyOrDroppedPinOnly": true,
+      "pathSubstitutions": [
+        {
+          "originalLine": 4,
+          "from": "../src/fixed-run-journal-entry.mjs",
+          "to": "../history/fixed-run-journal-entry.mjs",
+          "occurrences": 1
+        },
+        {
+          "originalLine": 5,
+          "from": "../src/run-journal-v1.mjs",
+          "to": "../history/run-journal-v1.mjs",
+          "occurrences": 1
+        },
+        {
+          "originalLine": 7,
+          "from": "../fixtures/${name}.json",
+          "to": "./fixtures/fixed-run/${name}.json",
+          "occurrences": 1
+        },
+        {
+          "originalLine": 295,
+          "from": "../src/fixed-run-journal-entry.mjs",
+          "to": "../history/fixed-run-journal-entry.mjs",
+          "occurrences": 1
+        },
+        {
+          "originalLine": 299,
+          "from": "../src/fixed-run-journal-entry.mjs",
+          "to": "../history/fixed-run-journal-entry.mjs",
+          "occurrences": 1
+        }
+      ],
+      "droppedFrozenCopyPins": [],
+      "verifiedEditCount": 5,
+      "diff": "docs/verification/2026-09-13/evidence-chain-integration/fixed-run-journal-entry.test.mjs.diff",
+      "diffSha256": "8465712a607c4b67a8d1fdaa371401c9fab81c8ab184d2337a768ede2e608805"
+    },
+    {
+      "kind": "test",
+      "source": "docs/verification/2026-09-13/evidence-chain-integration/preflight-tests/fixed-run-journal-entry-baseline.test.mjs",
+      "target": "tests/fixed-run-journal-entry-baseline.test.mjs",
+      "workOrderOriginal": "work-orders/fixed-run-journal-entry/tests/baseline.test.mjs",
+      "preflightEditCount": 7,
+      "sourceSha256": "00f26ae85558cfd634c7cd329cae4b3dfe2d18bd3495cb329613a0ea877d49b4",
+      "beforeSha256": null,
+      "beforeExists": false,
+      "workOrderOriginalSha256": "463ee3bf36b4584e4bc8af88b6ab37029b75bd823a95cc31847da804afdd5bfa",
+      "afterSha256": "00f26ae85558cfd634c7cd329cae4b3dfe2d18bd3495cb329613a0ea877d49b4",
+      "matchesPreflightBytes": true,
+      "pathOnlyOrDroppedPinOnly": true,
+      "pathSubstitutions": [
+        {
+          "originalLine": 5,
+          "from": "../src/fixed-run-journal-entry.mjs",
+          "to": "../history/fixed-run-journal-entry.mjs",
+          "occurrences": 1
+        },
+        {
+          "originalLine": 10,
+          "from": "../fixtures/summary-",
+          "to": "./fixtures/fixed-run/summary-",
+          "occurrences": 1
+        },
+        {
+          "originalLine": 11,
+          "from": "../fixtures/summary-",
+          "to": "./fixtures/fixed-run/summary-",
+          "occurrences": 1
+        },
+        {
+          "originalLine": 12,
+          "from": "../fixtures/summary-",
+          "to": "./fixtures/fixed-run/summary-",
+          "occurrences": 1
+        },
+        {
+          "originalLine": 13,
+          "from": "../fixtures/summary-",
+          "to": "./fixtures/fixed-run/summary-",
+          "occurrences": 1
+        },
+        {
+          "originalLine": 17,
+          "from": "../package.json",
+          "to": "./fixtures/fixed-run-journal-entry-package.json",
+          "occurrences": 1
+        }
+      ],
+      "droppedFrozenCopyPins": [
+        {
+          "originalLine": 9,
+          "frozenPath": "../src/run-journal-v1.mjs",
+          "frozenSha256": "dee9f490c091000b2560cd9464d945885e7f341091b87dde9ae4f2b7cdbd359e"
+        }
+      ],
+      "verifiedEditCount": 7,
+      "diff": "docs/verification/2026-09-13/evidence-chain-integration/fixed-run-journal-entry-baseline.test.mjs.diff",
+      "diffSha256": "8713fd79b33e8e66c3370bb87b41da40d374d56c2beb9f9c797243a518c2830e"
+    },
+    {
+      "kind": "test",
+      "source": "docs/verification/2026-09-13/evidence-chain-integration/preflight-tests/run-journal-store.test.mjs",
+      "target": "tests/run-journal-store.test.mjs",
+      "workOrderOriginal": "work-orders/run-journal-store/tests/run-journal-store.test.mjs",
+      "preflightEditCount": 1,
+      "sourceSha256": "f1caa70d02795044583ed1c872657970662f527afd1dee7eb788d31e59254360",
+      "beforeSha256": null,
+      "beforeExists": false,
+      "workOrderOriginalSha256": "304909a7275e04fd1af8d38a5ec16a21027e415c4cb6c4422d86dc8ec246969a",
+      "afterSha256": "f1caa70d02795044583ed1c872657970662f527afd1dee7eb788d31e59254360",
+      "matchesPreflightBytes": true,
+      "pathOnlyOrDroppedPinOnly": true,
+      "pathSubstitutions": [
+        {
+          "originalLine": 7,
+          "from": "../src/run-journal-store-v1.mjs",
+          "to": "../history/run-journal-store-v1.mjs",
+          "occurrences": 1
+        }
+      ],
+      "droppedFrozenCopyPins": [],
+      "verifiedEditCount": 1,
+      "diff": "docs/verification/2026-09-13/evidence-chain-integration/run-journal-store.test.mjs.diff",
+      "diffSha256": "b16be9a1a0a6a5115e3b9bb932e7962fe7a00d909480a40ccd8b170307046b63"
+    },
+    {
+      "kind": "test",
+      "source": "docs/verification/2026-09-13/evidence-chain-integration/preflight-tests/run-journal-store-baseline.test.mjs",
+      "target": "tests/run-journal-store-baseline.test.mjs",
+      "workOrderOriginal": "work-orders/run-journal-store/tests/baseline.test.mjs",
+      "preflightEditCount": 3,
+      "sourceSha256": "71e9a74adbfe349a75cf6f982aacf6ff496b1f2b4a829b25f5d71f1e09543fb5",
+      "beforeSha256": null,
+      "beforeExists": false,
+      "workOrderOriginalSha256": "f20367b8eaec8ccb58736fb36eaee393b55c8d89c21a104c6d3161f6787d8f76",
+      "afterSha256": "71e9a74adbfe349a75cf6f982aacf6ff496b1f2b4a829b25f5d71f1e09543fb5",
+      "matchesPreflightBytes": true,
+      "pathOnlyOrDroppedPinOnly": true,
+      "pathSubstitutions": [
+        {
+          "originalLine": 4,
+          "from": "../src/run-journal-store-v1.mjs",
+          "to": "../history/run-journal-store-v1.mjs",
+          "occurrences": 1
+        },
+        {
+          "originalLine": 7,
+          "from": "../package.json",
+          "to": "./fixtures/run-journal-store-package.json",
+          "occurrences": 1
+        },
+        {
+          "originalLine": 18,
+          "from": "../src/run-journal-store-v1.mjs",
+          "to": "../history/run-journal-store-v1.mjs",
+          "occurrences": 1
+        }
+      ],
+      "droppedFrozenCopyPins": [],
+      "verifiedEditCount": 3,
+      "diff": "docs/verification/2026-09-13/evidence-chain-integration/run-journal-store-baseline.test.mjs.diff",
+      "diffSha256": "3bbf86da9866658652a2e5c08ce605c7a34a732228d0b53faa8500061b18c856"
+    },
+    {
+      "kind": "test",
+      "source": "docs/verification/2026-09-13/evidence-chain-integration/preflight-tests/host-journal-bundle.test.mjs",
+      "target": "tests/host-journal-bundle.test.mjs",
+      "workOrderOriginal": "work-orders/host-journal-bundle/tests/bundle.test.mjs",
+      "preflightEditCount": 9,
+      "sourceSha256": "9973b1375f1aaa658796de6b482ff900069eccf0326bb8901213e69b116f4105",
+      "beforeSha256": null,
+      "beforeExists": false,
+      "workOrderOriginalSha256": "d830a9974edea06ffca4bba886dd89bce1bbcd0c45adccb4ec1d5e3d37f0ca48",
+      "afterSha256": "9973b1375f1aaa658796de6b482ff900069eccf0326bb8901213e69b116f4105",
+      "matchesPreflightBytes": true,
+      "pathOnlyOrDroppedPinOnly": true,
+      "pathSubstitutions": [
+        {
+          "originalLine": 4,
+          "from": "../src/host-journal-bundle.mjs",
+          "to": "../history/host-journal-bundle.mjs",
+          "occurrences": 1
+        },
+        {
+          "originalLine": 5,
+          "from": "../src/run-journal-v1.mjs",
+          "to": "../history/run-journal-v1.mjs",
+          "occurrences": 1
+        },
+        {
+          "originalLine": 6,
+          "from": "../src/run-journal-store-v1.mjs",
+          "to": "../history/run-journal-store-v1.mjs",
+          "occurrences": 1
+        },
+        {
+          "originalLine": 7,
+          "from": "../src/fixed-run-journal-entry.mjs",
+          "to": "../history/fixed-run-journal-entry.mjs",
+          "occurrences": 1
+        },
+        {
+          "originalLine": 8,
+          "from": "./memfs.mjs",
+          "to": "./helpers/memfs.mjs",
+          "occurrences": 1
+        },
+        {
+          "originalLine": 10,
+          "from": "../fixtures/summary-",
+          "to": "./fixtures/fixed-run/summary-",
+          "occurrences": 1
+        },
+        {
+          "originalLine": 11,
+          "from": "../fixtures/summary-",
+          "to": "./fixtures/fixed-run/summary-",
+          "occurrences": 1
+        },
+        {
+          "originalLine": 271,
+          "from": "../src/host-journal-bundle.mjs",
+          "to": "../history/host-journal-bundle.mjs",
+          "occurrences": 1
+        },
+        {
+          "originalLine": 277,
+          "from": "../src/host-journal-bundle.mjs",
+          "to": "../history/host-journal-bundle.mjs",
+          "occurrences": 1
+        }
+      ],
+      "droppedFrozenCopyPins": [],
+      "verifiedEditCount": 9,
+      "diff": "docs/verification/2026-09-13/evidence-chain-integration/host-journal-bundle.test.mjs.diff",
+      "diffSha256": "8eec0e6cf2928f359c73f18696a49dbe7afd48769780525150a5b3fa5d7caea4"
+    },
+    {
+      "kind": "test",
+      "source": "docs/verification/2026-09-13/evidence-chain-integration/preflight-tests/host-journal-bundle-baseline.test.mjs",
+      "target": "tests/host-journal-bundle-baseline.test.mjs",
+      "workOrderOriginal": "work-orders/host-journal-bundle/tests/baseline.test.mjs",
+      "preflightEditCount": 7,
+      "sourceSha256": "8930bb2bd82a4d8ac57ee30360a362e1a9714afbaf99f54b58a730ddab2ba962",
+      "beforeSha256": null,
+      "beforeExists": false,
+      "workOrderOriginalSha256": "35b9dcebb90370fed4bc9ef673e1feb26a5a5628ac809ba06662234ad5a45e4c",
+      "afterSha256": "8930bb2bd82a4d8ac57ee30360a362e1a9714afbaf99f54b58a730ddab2ba962",
+      "matchesPreflightBytes": true,
+      "pathOnlyOrDroppedPinOnly": true,
+      "pathSubstitutions": [
+        {
+          "originalLine": 5,
+          "from": "../src/host-journal-bundle.mjs",
+          "to": "../history/host-journal-bundle.mjs",
+          "occurrences": 1
+        },
+        {
+          "originalLine": 12,
+          "from": "../fixtures/summary-",
+          "to": "./fixtures/fixed-run/summary-",
+          "occurrences": 1
+        },
+        {
+          "originalLine": 13,
+          "from": "../fixtures/summary-",
+          "to": "./fixtures/fixed-run/summary-",
+          "occurrences": 1
+        },
+        {
+          "originalLine": 17,
+          "from": "../package.json",
+          "to": "./fixtures/host-journal-bundle-package.json",
+          "occurrences": 1
+        }
+      ],
+      "droppedFrozenCopyPins": [
+        {
+          "originalLine": 9,
+          "frozenPath": "../src/run-journal-v1.mjs",
+          "frozenSha256": "dee9f490c091000b2560cd9464d945885e7f341091b87dde9ae4f2b7cdbd359e"
+        },
+        {
+          "originalLine": 10,
+          "frozenPath": "../src/run-journal-store-v1.mjs",
+          "frozenSha256": "1356028b65f9f8b96e3b9ec8ba3bfbb4968092af53d00e8b5dfdb11b161f4792"
+        },
+        {
+          "originalLine": 11,
+          "frozenPath": "../src/fixed-run-journal-entry.mjs",
+          "frozenSha256": "ba888a4f4d5b1b78f799045e44fbdfe79b75545847ab9b3ed2673fd7b353585c"
+        }
+      ],
+      "verifiedEditCount": 7,
+      "diff": "docs/verification/2026-09-13/evidence-chain-integration/host-journal-bundle-baseline.test.mjs.diff",
+      "diffSha256": "431c42a5d2ceba1ff80ad3623c171544b4acb1d3ccaa93140a1ce54817fc4534"
+    }
+  ],
+  "migrationTotals": {
+    "moduleCopies": 4,
+    "dataFixtureCopies": 5,
+    "packageFixtureCopies": 4,
+    "testCopies": 8,
+    "helperCopies": 1,
+    "allPlacements": 22,
+    "pathSubstitutions": 36,
+    "droppedFrozenModulePins": 6,
+    "totalEdits": 42,
+    "addedTests": 60,
+    "functionalTests": 49,
+    "baselineTests": 11,
+    "expectedSuiteIncrease": 60,
+    "observedSuiteIncrease": 60
+  },
+  "reusedUnchangedFixture": {
+    "path": "tests/fixtures/native-canary/inherit-run-node.stdout",
+    "sha256": "51612e7ba818bfe7dd2a42d46e8c0cf8e84332d63f2562132842e9879bc3dddc",
+    "unchanged": true
+  },
+  "checks": {
+    "baseline": {
+      "command": "npm run check",
+      "startedAt": "2026-09-13T22:56:17.323372+00:00",
+      "exitCode": 0,
+      "elapsedSeconds": 8.137,
+      "counts": {
+        "tests": 1170,
+        "suites": 0,
+        "pass": 1170,
+        "fail": 0,
+        "cancelled": 0,
+        "skipped": 0,
+        "todo": 0
+      },
+      "structuralPass": true,
+      "accepted": true
+    },
+    "integrated": {
+      "command": "npm run check",
+      "startedAt": "2026-09-13T22:57:53.190771+00:00",
+      "exitCode": 0,
+      "elapsedSeconds": 7.873,
+      "counts": {
+        "tests": 1230,
+        "suites": 0,
+        "pass": 1230,
+        "fail": 0,
+        "cancelled": 0,
+        "skipped": 0,
+        "todo": 0
+      },
+      "structuralPass": true,
+      "accepted": true
+    },
+    "types": {
+      "command": "npm run test:types",
+      "exitCode": 0,
+      "elapsedSeconds": 0.742,
+      "accepted": true,
+      "consumerFiles": 6
+    },
+    "privatePackage": {
+      "command": "npm run check:private-package",
+      "exitCode": 0,
+      "elapsedSeconds": 2.049,
+      "summary": {
+        "status": "PASS_SCOPED",
+        "evidence": "/Users/louiscalata/nisi-next-private/.build/private-package-6XXmhf",
+        "archive": {
+          "path": "/Users/louiscalata/nisi-next-private/.build/private-package-6XXmhf/nisi-0.2.0-private.0.tgz",
+          "sha256": "d368985e340002993046fdcba14501ba804993fcdc32154d1f88480339e2cbd3"
+        },
+        "negativeControls": {
+          "expected": 39,
+          "observed": 39,
+          "allExpectedLocationsDetected": true
+        },
+        "failure": null
+      },
+      "accepted": true,
+      "privatePackageFiles": 27,
+      "archiveFiles": [
+        "adapters/apple-foundation-models.mjs",
+        "adapters/local-chat.mjs",
+        "adapters/native-chat-protocol-v1.mjs",
+        "adapters/native-chat-v1.mjs",
+        "canonical/canonical-json-v1.mjs",
+        "gate/afm-content-executor.mjs",
+        "gate/content-consent.mjs",
+        "hosts/repository/snapshot-contract.mjs",
+        "hosts/swift-verifier/owned-child.mjs",
+        "hosts/swift-verifier/protocol.mjs",
+        "index.mjs",
+        "package.json",
+        "policy/file-access.mjs",
+        "serialization/canonical-json-v1.mjs",
+        "types/afm-content-executor.d.ts",
+        "types/apple-foundation-models.d.ts",
+        "types/canonical.d.ts",
+        "types/content-consent.d.ts",
+        "types/contracts.d.ts",
+        "types/index.d.ts",
+        "types/local-chat.d.ts",
+        "types/native-chat.d.ts",
+        "types/policy.d.ts",
+        "types/serialization.d.ts",
+        "types/workflow.d.ts",
+        "workflow/contracts.mjs",
+        "workflow/engine.mjs"
+      ],
+      "excludesMacosXpcAndHistory": true,
+      "negativeControls": {
+        "expected": 39,
+        "observed": 39,
+        "allExpectedLocationsDetected": true
+      },
+      "runtimeCounts": {
+        "tests": 8,
+        "pass": 8,
+        "fail": 0,
+        "cancelled": 0,
+        "skipped": 0,
+        "todo": 0
+      },
+      "typeConsumerFiles": 6
+    }
+  },
+  "structuralChecks": {
+    "baseline": {
+      "status": "PASS",
+      "sourceFindings": 0,
+      "mutations": 8,
+      "caught": 8,
+      "allowed": 8,
+      "allowedWithZeroFindings": 8,
+      "subject": "canonical/canonical-json-v1.mjs",
+      "scope": "Existing structural contract only; not a structural scan of new modules."
+    },
+    "integrated": {
+      "status": "PASS",
+      "sourceFindings": 0,
+      "mutations": 8,
+      "caught": 8,
+      "allowed": 8,
+      "allowedWithZeroFindings": 8,
+      "subject": "canonical/canonical-json-v1.mjs",
+      "scope": "Existing structural contract only; not a structural scan of new modules."
+    }
+  },
+  "perTestCounts": [
+    {
+      "path": "tests/native-canary-summary.test.mjs",
+      "tests": 10,
+      "pass": 10,
+      "fail": 0,
+      "cancelled": 0,
+      "skipped": 0,
+      "todo": 0,
+      "evidence": "integrated-check.log",
+      "countBasis": "Top-level declarations and passing names in the full 1230/1230 npm run check log."
+    },
+    {
+      "path": "tests/native-canary-summary-baseline.test.mjs",
+      "tests": 3,
+      "pass": 3,
+      "fail": 0,
+      "cancelled": 0,
+      "skipped": 0,
+      "todo": 0,
+      "evidence": "integrated-check.log",
+      "countBasis": "Top-level declarations and passing names in the full 1230/1230 npm run check log."
+    },
+    {
+      "path": "tests/fixed-run-journal-entry.test.mjs",
+      "tests": 8,
+      "pass": 8,
+      "fail": 0,
+      "cancelled": 0,
+      "skipped": 0,
+      "todo": 0,
+      "evidence": "integrated-check.log",
+      "countBasis": "Top-level declarations and passing names in the full 1230/1230 npm run check log."
+    },
+    {
+      "path": "tests/fixed-run-journal-entry-baseline.test.mjs",
+      "tests": 3,
+      "pass": 3,
+      "fail": 0,
+      "cancelled": 0,
+      "skipped": 0,
+      "todo": 0,
+      "evidence": "integrated-check.log",
+      "countBasis": "Top-level declarations and passing names in the full 1230/1230 npm run check log."
+    },
+    {
+      "path": "tests/run-journal-store.test.mjs",
+      "tests": 17,
+      "pass": 17,
+      "fail": 0,
+      "cancelled": 0,
+      "skipped": 0,
+      "todo": 0,
+      "evidence": "integrated-check.log",
+      "countBasis": "Top-level declarations and passing names in the full 1230/1230 npm run check log."
+    },
+    {
+      "path": "tests/run-journal-store-baseline.test.mjs",
+      "tests": 2,
+      "pass": 2,
+      "fail": 0,
+      "cancelled": 0,
+      "skipped": 0,
+      "todo": 0,
+      "evidence": "integrated-check.log",
+      "countBasis": "Top-level declarations and passing names in the full 1230/1230 npm run check log."
+    },
+    {
+      "path": "tests/host-journal-bundle.test.mjs",
+      "tests": 14,
+      "pass": 14,
+      "fail": 0,
+      "cancelled": 0,
+      "skipped": 0,
+      "todo": 0,
+      "evidence": "integrated-check.log",
+      "countBasis": "Top-level declarations and passing names in the full 1230/1230 npm run check log."
+    },
+    {
+      "path": "tests/host-journal-bundle-baseline.test.mjs",
+      "tests": 3,
+      "pass": 3,
+      "fail": 0,
+      "cancelled": 0,
+      "skipped": 0,
+      "todo": 0,
+      "evidence": "integrated-check.log",
+      "countBasis": "Top-level declarations and passing names in the full 1230/1230 npm run check log."
+    }
+  ],
+  "migratedPassingNamesMatched": true,
+  "roadmapChanges": [
+    {
+      "path": "roadmap.md",
+      "beforeSha256": "e9aa7539faa41a15d4a7c35bbef057d20d4cc127f3bd78e6ffdaa3b265dead29",
+      "afterSha256": "74fc1c1590c8af3eda1e779fdcb09a95b7c170c02a6b3a0ab2e6b20ee8e0edba",
+      "appendOnly": true,
+      "addedLines": 8,
+      "diff": "docs/verification/2026-09-13/evidence-chain-integration/roadmap.md.diff"
+    },
+    {
+      "path": "work-orders/native-canary-summary/roadmap.md",
+      "beforeSha256": "532994e96ffc4b538c35a975925f448c86dd4a0152ee91a369b0bb0a2c0439d7",
+      "afterSha256": "aa4daee191bdec8581b9ba7f4001ab7d62fffffa4a2c669c82c0ad7e230075c6",
+      "appendOnly": true,
+      "addedLines": 2,
+      "diff": "docs/verification/2026-09-13/evidence-chain-integration/work-orders__native-canary-summary__roadmap.md.diff"
+    },
+    {
+      "path": "work-orders/fixed-run-journal-entry/roadmap.md",
+      "beforeSha256": "471b6cfbe3ab77ff8e42a606fc60546c6fcad3427a18ff14bc4692435ce04a8b",
+      "afterSha256": "1aa2f53189ef4dc8ff8d927d1fbfde1047fa4a22d98bbda33902d641986105b3",
+      "appendOnly": true,
+      "addedLines": 2,
+      "diff": "docs/verification/2026-09-13/evidence-chain-integration/work-orders__fixed-run-journal-entry__roadmap.md.diff"
+    },
+    {
+      "path": "work-orders/run-journal-store/roadmap.md",
+      "beforeSha256": "6f227ea1dc7089f734681cf447d8b414e7ccf40dce9f6b7fd7d2b7d891dc0a32",
+      "afterSha256": "ccd10b5b66d80792cfdcee1581c0788f6cc858a402d7cd0d5a6090b53288e216",
+      "appendOnly": true,
+      "addedLines": 2,
+      "diff": "docs/verification/2026-09-13/evidence-chain-integration/work-orders__run-journal-store__roadmap.md.diff"
+    },
+    {
+      "path": "work-orders/host-journal-bundle/roadmap.md",
+      "beforeSha256": "1bb57934242a3e3ca0aaa12604fadf5411a2e953a797433955023be4f3197c79",
+      "afterSha256": "20ba30358414d43cb3455ad03ea6ec74445ffce000cd7dc896ef0dcd8d98ec1e",
+      "appendOnly": true,
+      "addedLines": 2,
+      "diff": "docs/verification/2026-09-13/evidence-chain-integration/work-orders__host-journal-bundle__roadmap.md.diff"
+    }
+  ],
+  "progress": {
+    "display": "30% \u2014 3 of 10",
+    "percent": 30,
+    "closed": 3,
+    "total": 10,
+    "changed": false
+  },
+  "scopeAudit": {
+    "status": "FAIL_UNEXPECTED_PREEXISTING_FILE_DRIFT",
+    "failure": {
+      "stage": "final scope audit after step e",
+      "reason": "A pre-existing file outside the authorized integration paths changed since the pre-state snapshot. The first scope-audit assertion stopped completion.",
+      "firstObservedUnexpectedPath": "work-orders/windows-future-20260913/packs/usage-table/tests/acceptance.test.mjs",
+      "beforeSha256": "0d594a693f25421fd87b371eaaf91a67985d12bd24a9c664ad01b8546cdf39bc",
+      "reportingSnapshotSha256": "2c66e069ed0d59f2a1cf3c31b738ddf2500ddfdc846a25830c0684f7abe418dc",
+      "integrationWroteThisPath": false,
+      "externalWriterIdentity": "unknown; not attributed",
+      "action": "Stopped further integration actions. Did not modify or revert this path. Only failure-reporting evidence written after the audit failure."
+    },
+    "basis": "SHA256 comparison of tracked and non-ignored untracked files against live pre-state; normal ignored .build/OS temporary check outputs are outside this audit.",
+    "initialFileCount": 940,
+    "preExistingFilesChanged": [
+      {
+        "path": "roadmap.md",
+        "beforeSha256": "e9aa7539faa41a15d4a7c35bbef057d20d4cc127f3bd78e6ffdaa3b265dead29",
+        "afterSha256": "eb7afa5608aba3fb44c03558c581d7c5b70e5df679100e93646a510d9c37176d",
+        "authorizedRoadmapEdit": true
+      },
+      {
+        "path": "work-orders/fixed-run-journal-entry/roadmap.md",
+        "beforeSha256": "471b6cfbe3ab77ff8e42a606fc60546c6fcad3427a18ff14bc4692435ce04a8b",
+        "afterSha256": "1aa2f53189ef4dc8ff8d927d1fbfde1047fa4a22d98bbda33902d641986105b3",
+        "authorizedRoadmapEdit": true
+      },
+      {
+        "path": "work-orders/host-journal-bundle/roadmap.md",
+        "beforeSha256": "1bb57934242a3e3ca0aaa12604fadf5411a2e953a797433955023be4f3197c79",
+        "afterSha256": "20ba30358414d43cb3455ad03ea6ec74445ffce000cd7dc896ef0dcd8d98ec1e",
+        "authorizedRoadmapEdit": true
+      },
+      {
+        "path": "work-orders/journal-restart-recovery/roadmap.md",
+        "beforeSha256": "1df4cdafd6a881f1d7187b5bbfc6c0d76928239d0c8d1767adfc9fb5763a1bca",
+        "afterSha256": "94aab5f5f7428cc129d71cedd2e3aeb560ef1ed2012ebaec535a87220eb502c0",
+        "authorizedRoadmapEdit": false
+      },
+      {
+        "path": "work-orders/native-canary-summary/roadmap.md",
+        "beforeSha256": "532994e96ffc4b538c35a975925f448c86dd4a0152ee91a369b0bb0a2c0439d7",
+        "afterSha256": "aa4daee191bdec8581b9ba7f4001ab7d62fffffa4a2c669c82c0ad7e230075c6",
+        "authorizedRoadmapEdit": true
+      },
+      {
+        "path": "work-orders/run-journal-store/roadmap.md",
+        "beforeSha256": "6f227ea1dc7089f734681cf447d8b414e7ccf40dce9f6b7fd7d2b7d891dc0a32",
+        "afterSha256": "ccd10b5b66d80792cfdcee1581c0788f6cc858a402d7cd0d5a6090b53288e216",
+        "authorizedRoadmapEdit": true
+      },
+      {
+        "path": "work-orders/windows-future-20260913/packs/usage-table/src/index.mjs",
+        "beforeSha256": "b0feb39698ad4042c4c672026ddffbe1b32bf146f10aa697450bae206fb31612",
+        "afterSha256": "caf7a70b5ecfec0ac9f928bf90615312968ad2470d1eed7210cf74a05a661c3a",
+        "authorizedRoadmapEdit": false
+      },
+      {
+        "path": "work-orders/windows-future-20260913/packs/usage-table/tests/acceptance.test.mjs",
+        "beforeSha256": "0d594a693f25421fd87b371eaaf91a67985d12bd24a9c664ad01b8546cdf39bc",
+        "afterSha256": "2c66e069ed0d59f2a1cf3c31b738ddf2500ddfdc846a25830c0684f7abe418dc",
+        "authorizedRoadmapEdit": false
+      }
+    ],
+    "preExistingFilesUnchanged": 932,
+    "unexpectedChangedPaths": [
+      "work-orders/journal-restart-recovery/roadmap.md",
+      "work-orders/windows-future-20260913/packs/usage-table/src/index.mjs",
+      "work-orders/windows-future-20260913/packs/usage-table/tests/acceptance.test.mjs"
+    ],
+    "unexpectedNewPaths": [
+      "work-orders/journal-restart-recovery/evidence/owner-acceptance.json",
+      "work-orders/windows-future-20260913/packs/comparison-table/tests/acceptance.test.mjs",
+      "work-orders/windows-future-20260913/packs/markdown-status-card/tests/acceptance.test.mjs",
+      "work-orders/windows-future-20260913/packs/usage-table/evidence/draft-1.json",
+      "work-orders/windows-future-20260913/packs/usage-table/worker-revision-1.md",
+      "work-orders/windows-future-20260913/preflight.json",
+      "work-orders/windows-future-20260913/queue.json",
+      "work-orders/windows-future-20260913/roadmap.md"
+    ],
+    "newProductPlacementCount": 22,
+    "all22PlacementsStillMatchSources": true,
+    "protectedFilesInTheseFourWorkOrders": 44,
+    "protectedFilesInTheseFourWorkOrdersUnchanged": true,
+    "allWorkOrderProtectedFilesInspected": 102,
+    "allWorkOrderProtectedFilesUnchanged": false,
+    "productScriptFilesChecked": 16,
+    "productScriptsUnchanged": true,
+    "retainedPreflightFilesChecked": 20,
+    "retainedPreflightUnchanged": true,
+    "packageJsonUnchanged": true,
+    "packageLockUnchanged": true,
+    "allRoadmapEditsAppendOnly": true,
+    "roadmapFinalHashesMatch": false,
+    "gitHeadUnchanged": true,
+    "requestedPrivatePackageGeneratedOutput": ".build/private-package-6XXmhf",
+    "reportingNotes": [
+      "Additional concurrent drift appeared while writing the stop report: three pre-existing non-target paths changed and eight non-target paths appeared at the reporting snapshot. These files were not written by this integration.",
+      "The canonical roadmap also changed after the integration append. Its recorded roadmapChanges afterSha256 denotes bytes immediately after our append; scopeAudit and postStopReportingObservation record the later shared-tree hash. No external writer is attributed."
+    ]
+  },
+  "independentReview": {
+    "reviewer": "gpt-5.6-luna",
+    "role": "read-only migration reviewer; Astra sole writer",
+    "status": "ACCEPT_SCOPED",
+    "pathSubstitutions": 36,
+    "droppedFrozenModulePins": 6,
+    "preflightEditCountsMatched": true,
+    "impermissibleDeltas": [],
+    "notes": [
+      "All behavioral assertions and fixture hash literals unchanged.",
+      "Inherited baseline test titles still mention frozen modules; kept unchanged to preserve preflight bytes. Migrated baselines retain only fixture pins.",
+      "Structural checker targets existing canonical JSON pure region only."
+    ],
+    "localModelLoads": 0,
+    "packetRuns": 0,
+    "writes": 0
+  },
+  "actionsByThisIntegration": {
+    "commits": 0,
+    "pushes": 0,
+    "modelLoadCommands": 0,
+    "packetRuns": 0,
+    "canvasEdits": 0,
+    "workOrderSourceTestFixturePacketEdits": 0,
+    "productScriptEdits": 0,
+    "productCopies": 22,
+    "roadmapsAppended": 5
+  },
+  "whatIsNotClaimed": [
+    "A clean final whole-tree scope audit is not claimed: an unrelated pre-existing work-order test changed during the task; its writer is unknown.",
+    "Host wiring of the bundle to the XPC runner is not closed.",
+    "Real-filesystem durability acceptance is not closed. Store tests include bounded temporary-filesystem checks; bundle tests use injected memfs. No broad filesystem or power-loss guarantee is established.",
+    "Cross-process locking, hostile-writer isolation and multi-process compare-and-swap are not established.",
+    "Crash qualification, fresh-process/native recovery acceptance and power-loss qualification are not established.",
+    "Incident admission and failure-history acceptance are not closed.",
+    "U02-02, U02-04, NX milestone closure, release acceptance and public distribution are not claimed.",
+    "No new native XPC canary execution, generated-code isolation acceptance or authorizing evidence is claimed. Retained fixed-run data supplies the test input.",
+    "No live model or packet participation is established by the passing product tests."
+  ],
+  "archiveEvidence": {
+    "retainedReceipt": "docs/verification/2026-09-13/evidence-chain-integration/integrated-archive-receipt.json",
+    "sha256": "8d54b07cb3d5787fc948ec1595bbcc13405659620d6f2a91845cba70634bb760",
+    "fileCount": 27,
+    "archiveSha256": "d368985e340002993046fdcba14501ba804993fcdc32154d1f88480339e2cbd3",
+    "runtimeCountsFromRetainedTAP": {
+      "tests": 8,
+      "pass": 8,
+      "fail": 0,
+      "cancelled": 0,
+      "skipped": 0,
+      "todo": 0
+    }
+  },
+  "documentation": {
+    "readme": "docs/verification/2026-09-13/evidence-chain-integration/README.md",
+    "beforeSha256": null,
+    "afterSha256": "df1517ae2b03db37388e9878ea6339f412bee7746a2a71596054473d1b2a06f6",
+    "receiptSelfHash": "Excluded to avoid circular hashing; retained in SHA256SUMS."
+  },
+  "postStopReportingObservation": {
+    "observedAt": "2026-09-13T23:05:16.601684+00:00",
+    "canonicalRoadmapSha256AfterIntegrationAppend": "74fc1c1590c8af3eda1e779fdcb09a95b7c170c02a6b3a0ab2e6b20ee8e0edba",
+    "canonicalRoadmapSha256AtReportingRead": "eb7afa5608aba3fb44c03558c581d7c5b70e5df679100e93646a510d9c37176d",
+    "canonicalRoadmapChangedAgain": true,
+    "allFourIntegrationCheckpointLinesStillPresent": true,
+    "progressHeaderAtReportingRead": "**Overall roadmap progress: 30% \u2014 3 of 10 major NX milestones closed.**",
+    "unexpectedChangedPathCountAtScopeSnapshot": 3,
+    "unexpectedNewPathCountAtScopeSnapshot": 8,
+    "action": "Reporting only; no further product or work-order edits, tests, reverts or integration attempts."
+  }
+}

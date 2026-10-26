@@ -1,0 +1,10 @@
+{
+  "name": "nisi-track3-prevention-experiment-plan",
+  "private": true,
+  "type": "module",
+  "license": "UNLICENSED",
+  "scripts": {
+    "test": "node --test tests/plan-containment.test.mjs",
+    "test:author": "node --test tests/author.test.mjs"
+  }
+}

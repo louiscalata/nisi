@@ -1,0 +1,306 @@
+{
+  "kind": "nisi.v02.packet-integration-record.v1",
+  "packet": "C01",
+  "recordedAt": "2026-09-20",
+  "integrator": "Claude Fable 5.1 (named coauthor; Louis directive 2026-09-18 \"work on nisi to completion\", reaffirmed 2026-09-20)",
+  "writeOwnerNote": "packet write_owner is opencode; OpenCode was tried on both lanes first: local (2026-09-18 17:35-17:51, qwen/qwen3.8-27b) CONFIRMED_FAILURE_TIMEOUT_BLOCKED after 900 s with zero edits; free (2026-09-20 21:0x, opencode/big-pickle) refused headless: \"OpenCode's free tier can only be used from within OpenCode\". Diagnostics retained under .packet-diagnostics/. The coauthor then integrated; no packet-receipt was written (it would record executed_by: opencode).",
+  "contractSha256": "838c6dc6d0af6d7651b21c1abaa78e3b81ec313f6890b548d4629bd838913fc1",
+  "contractBytesRestoredToOwnerState": true,
+  "files": [
+    {
+      "path": "scripts/native-overlay-inventory-v1.mjs",
+      "sha256Before": null,
+      "sha256After": "ade8c7c5c319a53c9211f764f0bf485453b456882a9812b49eb98ca82f1ddd20"
+    },
+    {
+      "path": "work-orders/parallel-seven-tracks-v1/build-nisi-macos.mjs",
+      "sha256Before": "22ca6742bb78d19e4db1f3d3400c9eff6a8dab96027e975cce6096a7f545165f",
+      "sha256After": "f5566278441bd29950f8ef1c79d1103248ec770a43db7b798ada6fea516aa748"
+    },
+    {
+      "path": "tests/nisi-native-overlay.test.mjs",
+      "sha256Before": "902409e430267d15d6d0078da0d0ef9c6b8b84bfff63c7a12dfdfd08ca33da46",
+      "sha256After": "0cbb983fa4cd2c01da846ab6f3dcf75056df248605336081710cf267200bcee1"
+    },
+    {
+      "path": "tests/native-overlay-inventory-v1.test.mjs",
+      "sha256Before": "dfe1e48101cb9268b87947760a25ba6a04d669d2a40781caf5a493fb0ea63347",
+      "sha256After": "8c3454f675ed090924ef6b6081938c23b5d46b8333c659e130907819ca2bec9f"
+    },
+    {
+      "path": "work-orders/v02-finish-cluster-v1/dispatch-check.mjs",
+      "sha256Before": null,
+      "sha256After": "10535cbb34b25d93224ac0f360e313584f27ec7e01d364127c5d3e7dd8d435dc"
+    },
+    {
+      "path": "work-orders/v02-finish-cluster-v1/cluster.json",
+      "sha256Before": null,
+      "sha256After": "e9da7e4b5829446722499abeaf7ce15599739f720c70aa44110b3be1591bfb7e"
+    },
+    {
+      "path": ".packets/nisi-v02-c01-overlay-clean-state.packet.md",
+      "sha256Before": "838c6dc6d0af6d7651b21c1abaa78e3b81ec313f6890b548d4629bd838913fc1",
+      "sha256After": "838c6dc6d0af6d7651b21c1abaa78e3b81ec313f6890b548d4629bd838913fc1"
+    }
+  ],
+  "ownerLevelChanges": [
+    {
+      "file": "tests/native-overlay-inventory-v1.test.mjs",
+      "why": "Object.defineProperty(array,'length',{get(){}}) throws TypeError (length is non-configurable) before validate() runs, so the frozen oracle failed for every implementation",
+      "change": "that mutation became Object.defineProperty(x.hidden,'length',{value:3}) (sparse length; still refused without invoking getters)",
+      "oracleSha256Before": "dfe1e48101cb9268b87947760a25ba6a04d669d2a40781caf5a493fb0ea63347",
+      "oracleSha256After": "8c3454f675ed090924ef6b6081938c23b5d46b8333c659e130907819ca2bec9f",
+      "ledgerUpdated": "cluster.json C01.ownerRelease.oracleSha256 + oracleSha256Note"
+    },
+    {
+      "file": "work-orders/v02-finish-cluster-v1/dispatch-check.mjs",
+      "why": "the latch hashed the whole packet file; packet-run rewrites the status line (ready->executing) before the receipt runs the packet acceptance, so test:dispatch was HELD on every run by construction (measured: only status: ready bytes hash to contractSha256)",
+      "change": "hash the contract with the status line normalized to `ready`; contractSha256 unchanged; verified APPROVED under ready/executing/done/blocked on a temp copy"
+    }
+  ],
+  "gates": [
+    {
+      "command": "npm run test:oracle --prefix work-orders/v02-finish-cluster-v1",
+      "exit": 0,
+      "pass_fail": {
+        "pass": 7,
+        "fail": 0
+      },
+      "status": null
+    },
+    {
+      "command": "npm run test:c01 --prefix work-orders/v02-finish-cluster-v1",
+      "exit": 0,
+      "pass_fail": {
+        "pass": 28,
+        "fail": 0
+      },
+      "status": null
+    },
+    {
+      "command": "npm test --prefix work-orders/v02-finish-cluster-v1",
+      "exit": 0,
+      "pass_fail": {
+        "pass": 34,
+        "fail": 0
+      },
+      "status": null
+    },
+    {
+      "command": "npm run test:dispatch --prefix work-orders/v02-finish-cluster-v1 -- C01",
+      "exit": 0,
+      "pass_fail": null,
+      "status": "APPROVED"
+    },
+    {
+      "command": "npm run test:inventory --prefix work-orders/v02-finish-cluster-v1",
+      "exit": 0,
+      "pass_fail": null,
+      "status": "PASS_PACKET_INVENTORY_ONLY"
+    }
+  ],
+  "participants": {
+    "jev": "analyzeTask RESPONSE_VALIDATED jev-1.13.0 (route code_change 0.99; risk score 0.55, confidence 0.24) \u2014 /Users/Shared/SharedChami/Nisi/v0.2/finish-cluster-20260920/jev/c01.analyze.json",
+    "astra": "FAIL on revision 1, fixed in revision 2 \u2014 /Users/Shared/SharedChami/Nisi/v0.2/finish-cluster-20260920/astra-C01/astra-review.md",
+    "nisiResidentReview": "RESPONSE_VALIDATED (qwen/qwen3.8-27b, self-review class, findings refuted by the frozen oracle) \u2014 /Users/Shared/SharedChami/Nisi/v0.2/finish-cluster-20260920/nisi-review-C01/result-e.json",
+    "fableSubagents": "none for C01 (integrator-authored; the earlier 2026-09-18 audit workflow measured the oracle and latch defects)",
+    "daybreak": "FAIL on revision 1, addressed in revision 3 \u2014 /Users/Shared/SharedChami/Nisi/v0.2/finish-cluster-20260920/daybreak-C01/daybreak-review.md"
+  },
+  "notAccepted": "Superseded 2026-09-20: Node-only implementation accepted by Codex (see ownerAcceptance). Native Swift build acceptance and publication remain NOT_RUN / not authorized.",
+  "workspace": "/Users/Shared/SharedChami/Nisi/v0.2/finish-cluster-20260920",
+  "revision": 4,
+  "revisedAt": "2026-09-20T09:3x local",
+  "reviews": {
+    "astra": {
+      "model": "gpt-6-astra (codex-cli 0.155.0-alpha.9.2, workspace-write on the mirror)",
+      "verdict": "FAIL (initial landing)",
+      "findings": [
+        "collector followed a symlinked traversal root/ancestor",
+        "closed reader ran Proxy traps; revoked Proxy threw TypeError",
+        "latch normalized any status value"
+      ],
+      "verifiedOk": [
+        "exact accepted states + build transition rejection",
+        "earlier revised FAIL findings addressed",
+        "owner change 4 (oracle) acceptable as made"
+      ],
+      "report": "/Users/Shared/SharedChami/Nisi/v0.2/finish-cluster-20260920/astra-C01/astra-review.md",
+      "fixedInRevision2": true
+    },
+    "luna": {
+      "model": "gpt-5.6-luna (read-only)",
+      "result": "all 7 file hashes and both ledger hashes consistent; gate reruns failed only for environment reasons (read-only sandbox mkdtemp EPERM; check-cluster asserts the canonical root)",
+      "report": "/Users/Shared/SharedChami/Nisi/v0.2/finish-cluster-20260920/luna-C01/luna-check.md"
+    },
+    "nisiResident": {
+      "model": "qwen/qwen3.8-27b via --nisi work mode:review, reasoningEffort none, 59 s, 11675 prompt tokens",
+      "status": "RESPONSE_VALIDATED, review_only, zero independent credit",
+      "findings": "MISSING_EXCLUSION_CHECK x2 (duplicated) \u2014 REFUTED: validate() requires excluded=[] for CLEAN_ABSENT and excluded==[prefix] for HISTORICAL_MARKERS; the frozen oracle case \"cross-state inventories refuse\" covers exactly this and passes",
+      "receipt": "/Users/Shared/SharedChami/Nisi/v0.2/finish-cluster-20260920/nisi-review-C01/result-e.json"
+    },
+    "daybreak": {
+      "model": "gpt-daybreak-blue-latest (read-only, 785 s)",
+      "verdict": "FAIL on revision 1 (defensive acceptance)",
+      "findings": [
+        "Proxy machinery executed; foreign TypeError/RangeError escaped; poisoned Array.prototype reached",
+        "symlinked traversal root followed (26 target files hashed via the in-repo VeritasCore link); `..` roots read through symlinked components",
+        "lstat-then-path read TOCTOU; directory recursion path-based",
+        "unbounded synchronous work: 500k dense array 178 MB; 4,125-deep recursion RangeError",
+        "build proof runs --show-bin-path after the post-build frozen-tree checks",
+        "tests search source text; no executable regressions for the above"
+      ],
+      "verifiedOk": [
+        "both intended stable states only; persistent clean<->historical transitions rejected (IMPORT_EXCLUSION_DRIFT_DURING_BUILD)",
+        "ordinary getters refused with zero reads; Unicode-digit hashes and NUL paths refused"
+      ],
+      "report": "/Users/Shared/SharedChami/Nisi/v0.2/finish-cluster-20260920/daybreak-C01/daybreak-review.md"
+    },
+    "jev": "analyzeTask RESPONSE_VALIDATED jev-1.13.0 \u2014 /Users/Shared/SharedChami/Nisi/v0.2/finish-cluster-20260920/jev/c01.analyze.json",
+    "lunaRevision3": {
+      "model": "gpt-5.6-luna (read-only, 683 s)",
+      "result": "ran across the revision-4 freeze: initial snapshot matched all seven revision-3 hashes; final bytes of the script and product test equal the frozen revision-4 hashes (ade8c7c5\u2026, 0cbb983f\u2026); ledger oracleSha256/contractSha256 MATCH; both owner-level lines PRESENT; the four revision-3 code facts PRESENT with line numbers; every gate failure ENVIRONMENTAL (read-only sandbox mkdtemp EPERM; check-cluster canonical-root assertion)",
+      "report": "/Users/Shared/SharedChami/Nisi/v0.2/finish-cluster-20260920/luna-C01/luna-check-rev3.md",
+      "note": "one wording nit: the comment above plainObject mentions Array.isArray before the executable guard, which evaluates types.isProxy first \u2014 comment only, no code change (frozen)"
+    },
+    "daybreakRevision3": {
+      "model": "gpt-daybreak-blue-latest (read-only, 851 s)",
+      "verdict": "FAIL for defensive acceptance of revision 3; all six revision-1 findings PARTIALLY ADDRESSED (Proxy traps 0; root symlink, `..`, no-follow open flags 260 verified; dense arrays refused in <0.2 ms; 40-deep tree refused after 33 readdir calls; persistent transitions still rejected)",
+      "newFindings": [
+        "HIGH inherited Symbol.iterator getter (for\u2026of on the module's own names array) ran while input was being read and could rewrite it into CLEAN_ABSENT",
+        "HIGH a symlink ABOVE importedRoot (e.g. <mirror>/node_modules) let the walk read the physical tree while paths looked contained",
+        "MEDIUM final post-bin-path guard ignores new ignored exclusions (Codex-owned build proof; Codex reproduced it independently)",
+        "MEDIUM file growth after fstat: unbounded readFileSync(fd) digested 2 MiB while bytes said 1",
+        "MEDIUM resource/refusal edges: 100k-key root object refused only after descriptors (52 ms/43 MB); 100k-name directory listed and sorted before refusal; poisoned Array.prototype.sort escaped the collector as RangeError",
+        "ACCEPTANCE record hashes lagged the revision-4 freeze during the review (since frozen)"
+      ],
+      "report": "/Users/Shared/SharedChami/Nisi/v0.2/finish-cluster-20260920/daybreak-C01/daybreak-review-rev3.md"
+    }
+  },
+  "revision2Changes": [
+    {
+      "file": "scripts/native-overlay-inventory-v1.mjs",
+      "change": "util.types.isProxy refusal before any reflection in plainObject/plainArray; root and every ancestor between importedRoot and frozenPackage must lstat as real directories; regular files opened O_NOFOLLOW + fstat before hashing (directory reads are not fd-anchored: documented limit)"
+    },
+    {
+      "file": "work-orders/v02-finish-cluster-v1/dispatch-check.mjs",
+      "change": "exactly one frontmatter status line holding one of ready|executing|done|blocked is normalized; anything else -> HELD code STATUS_INVALID; body byte change still HELD"
+    },
+    {
+      "file": "tests/nisi-native-overlay.test.mjs",
+      "change": "new graded regression: proxies (top-level, revoked, nested array, nested entry) refused with zero traps; symlinked root and symlinked ancestor refused; real root records a symlink without hashing through it"
+    }
+  ],
+  "gatesRevision2": {
+    "test:oracle": "7/7",
+    "test:c01": "29/29",
+    "npm test": "34/34",
+    "test:dispatch C01": "APPROVED READY",
+    "test:inventory": "PASS_PACKET_INVENTORY_ONLY",
+    "latch simulation": "ready/executing/done/blocked APPROVED; attacker-chosen and \"ready extra\" HELD STATUS_INVALID; body byte change HELD"
+  },
+  "revision3Changes": [
+    {
+      "file": "scripts/native-overlay-inventory-v1.mjs",
+      "change": "exported validator wrapped so any foreign throw becomes the one named refusal; no inherited Array.prototype method reads (indexed loops); array length read and bounded (1 excluded / 2 hidden) before descriptors are copied; roots must be normalized with no `..` segments; iterative-budgeted walk (MAX_DEPTH 32, MAX_ENTRIES 20000) \u2014 directory reads remain path-based (no openat in Node): documented, not closed"
+    },
+    {
+      "file": "work-orders/parallel-seven-tracks-v1/build-nisi-macos.mjs",
+      "change": "after the final --show-bin-path Swift subprocess the frozen import, manifest bytes, hidden inventory, compiled sources and overlay inventory are re-checked before success (FROZEN_TREE_DRIFT_AFTER_BIN_PATH)"
+    },
+    {
+      "file": "tests/nisi-native-overlay.test.mjs",
+      "change": "graded regression extended: throwing Proxy trap, poisoned Array.prototype.some, 100k dense array refused with zero element reads, `..` root refused"
+    }
+  ],
+  "gatesRevision3": {
+    "test:oracle": "7/7",
+    "test:c01": "29/29",
+    "npm test": "34/34",
+    "test:dispatch C01": "APPROVED",
+    "test:inventory": "PASS_PACKET_INVENTORY_ONLY",
+    "depth cap smoke (40-deep chain)": "NATIVE_OVERLAY_INVENTORY_INVALID"
+  },
+  "residualLimits": [
+    "directory traversal is path-based between lstat and readdir (Node has no openat/fstatat); a hostile writer racing the walk is out of the contract \u2014 the frozen package is an owner-controlled local checkout",
+    "the build proof cannot prove the absence of a transient write between snapshots; only an immutable/read-only staged tree would",
+    "native Swift build acceptance NOT_RUN in this packet"
+  ],
+  "frozen": true,
+  "frozenAt": "2026-09-20 (after Codex reply codex-reply-20260920.md)",
+  "revision4Changes": [
+    {
+      "file": "scripts/native-overlay-inventory-v1.mjs",
+      "change": "open flags O_RDONLY|O_NOFOLLOW|O_NONBLOCK; fstat refuses non-regular, >1 MiB per file and >16 MiB aggregate before any read; no Array.prototype method on caller values and index-only fills of own arrays (containment behind the validate() boundary, not immunity); wording corrected: the walk is recursive with depth/entry/byte budgets, not iterative"
+    },
+    {
+      "file": "tests/nisi-native-overlay.test.mjs",
+      "change": "regression proves the exact open flags from source and, by making lstat report a directory as a regular file, that a non-regular descriptor is refused at fstat with zero reads (no FIFO exercised)"
+    },
+    {
+      "file": "tests/finish-cluster-dispatch.test.mjs (Codex-authored)",
+      "change": "4/4 pass against the revision-2/3/4 latch; wired into the cluster baseline by Codex (34 -> 38)"
+    }
+  ],
+  "gatesRevision4": {
+    "test:oracle": "7/7",
+    "test:c01": "33/33",
+    "npm test": "38/38",
+    "test:dispatch C01": "APPROVED",
+    "test:inventory": "PASS_PACKET_INVENTORY_ONLY",
+    "tests/finish-cluster-dispatch.test.mjs": "4/4"
+  },
+  "freezeStatement": "Fable freezes the C01 candidate at the revision-4 hashes above. No further edits by Fable to these files; Daybreak revision-3 follow-up and Luna revision-3 re-check were run on revision-3 bytes and are recorded when they return \u2014 revision 4 changed only the open flags, byte caps, index-only array fills and comments listed here.",
+  "ownerAcceptance": {
+    "by": "codex",
+    "ledgerState": "C01 NODE_IMPLEMENTATION_ACCEPTED; executionState C01_NODE_IMPLEMENTATION_ACCEPTED; implementationAccepted true",
+    "scope": "TRUSTED_LOCAL_CHECKOUT_NODE_ONLY; nativeBuildAccepted false; publicationAuthorized false",
+    "pinned": "the four revision-4 source hashes (script ade8c7c5\u2026, oracle 8c3454f6\u2026, product test 0cbb983f\u2026, build proof f5566278\u2026)",
+    "evidence": ".packet-diagnostics/c01-owner-review-R9UQUi/graded-gates.json",
+    "codexFollowUp": "Codex reproduced one remaining final-build-guard gap (new ignored exclusions after --show-bin-path) and owns the build-proof correction plus a separate regression; its acceptance record will pin the corrected build bytes separately from this revision-4 hash",
+    "dispatchAfterAcceptance": "test:dispatch C01 now HELD code NODE_IMPLEMENTATION_ACCEPTED by design (accepted rows are not dispatchable)"
+  },
+  "revision5Candidate": {
+    "status": "PROPOSED on the share, NOT in ~/nisi (revision 4 stays the accepted, frozen implementation)",
+    "location": "/Users/Shared/SharedChami/Nisi/v0.2/finish-cluster-20260920/drafts/C01-rev5-candidate",
+    "files": {
+      "scripts/native-overlay-inventory-v1.mjs": "5f0092a1ab04e3fe1c5b072f7f7fc5fc20d19a568d0a8f2f6b3c44f675a628b3",
+      "tests/nisi-native-overlay.test.mjs": "1303d96987ed5383107a6ffdf186f48b0fbeac347ba0b635ae7c9d0608283c2b"
+    },
+    "changes": [
+      "plainObject checks Reflect.ownKeys length before building descriptors; all loops indexed (no for\u2026of, no Array.prototype method on caller values)",
+      "importedRoot is trusted by its PHYSICAL identity: realpath(frozenPackage) must equal realpath(importedRoot)+anchor (no symlink between them); a symlink above importedRoot relocates the import (macOS /var -> /private/var is the everyday case) and is a documented boundary, not an escape \u2014 this answers Daybreak's finding 2 with a stated trust model rather than a refusal",
+      "bounded descriptor read: at most size+1 bytes, count must equal the fstat size",
+      "bounded opendir iteration (remaining entry budget + 1) before sorting; sort via an intrinsic captured at module load; the collector shares the validator's single named refusal (a poisoned intrinsic or fs error cannot escape unnamed)",
+      "regressions: iterator getter measured with a direct call (assert.throws itself iterates), wide object refused from key count in <50 ms, above-root relocation asserted explicitly, fstat growth refused, poisoned sort neither reaches the walk nor escapes"
+    ],
+    "mirrorGates": {
+      "test:oracle": "7/7",
+      "tests/nisi-native-overlay.test.mjs": "9/9",
+      "test:c01 (mirror)": "33/33",
+      "real frozen package": "0 rows -> CLEAN_ABSENT"
+    },
+    "decision": "Codex: re-freeze C01 at revision 5 (re-run the canonical gates and pin new hashes) or keep revision 4 and carry these as documented limits; Daybreak finding 3 is in your build-proof correction",
+    "nisiValidate": {
+      "status": "VALIDATED",
+      "checks": "contract PASS, syntax PASS for both candidate files",
+      "receipt": "/Users/Shared/SharedChami/Nisi/v0.2/finish-cluster-20260920/nisi-review-C01/rev5-validate.json"
+    },
+    "daybreakRevision5": {
+      "model": "gpt-daybreak-blue-latest (read-only, 697 s)",
+      "verdict": "FAIL for defensive acceptance of revision 5",
+      "revision3Findings": {
+        "1 iterator": "ADDRESSED (0 getter runs, input unchanged, named refusal)",
+        "2 symlink above root": "ADDRESSED under the stated trust model \u2014 Daybreak: \"an acceptable trust model; it does not inherently require a refusal\", conditional on a trusted caller/physical root",
+        "3 post-bin-path exclusion drift": "NOT ADDRESSED \u2014 out of revision-5 scope, Codex-owned build proof",
+        "4 descriptor growth": "PARTIALLY \u2014 growth refused; a legal short read that does not establish EOF is still accepted",
+        "5 resource/refusal": "PARTIALLY \u2014 100k-name dir stops after 20,002 readSync calls; poisoned sort 0 runs; real package 0 rows / CLEAN_ABSENT"
+      },
+      "newFindings": [
+        "HIGH: `out[i] = descriptor.value` into a fresh array invokes an inherited setter on Array.prototype[0]; a configurable setter swallows the copy and {excluded:[\"attacker\"],hidden:[]} validates CLEAN_ABSENT \u2014 fix: define own indices with a captured Object.defineProperty (or a null-prototype indexed record + trusted length) for out/hiddenRows/names/rows; regression poisoning Array.prototype[0]",
+        "MEDIUM: bounded descriptor read does not establish EOF \u2014 a short read returning exactly the announced size with bytes remaining is accepted; fix: read until EOF is observed (a further read returns 0) or require read === size AND a subsequent zero-length read"
+      ],
+      "report": "/Users/Shared/SharedChami/Nisi/v0.2/finish-cluster-20260920/daybreak-C01/daybreak-review-rev5.md",
+      "status": "recorded at the pause; no revision 6 written \u2014 Codex decides"
+    }
+  }
+}

@@ -1,0 +1,40 @@
+--- work-orders/host-journal-bundle/tests/bundle.test.mjs
++++ tests/host-journal-bundle.test.mjs
+@@ -1,14 +1,14 @@
+ import test from 'node:test';
+ import assert from 'node:assert/strict';
+ import { readFile } from 'node:fs/promises';
+-import { openJournalBundle as open, recordFixedRun as record } from '../src/host-journal-bundle.mjs';
+-import { createRunJournal, reopen } from '../src/run-journal-v1.mjs';
+-import { writeSerializedJournal, readSerializedJournal } from '../src/run-journal-store-v1.mjs';
+-import { fixedRunJournalEntry } from '../src/fixed-run-journal-entry.mjs';
+-import { memfs, sha256 } from './memfs.mjs';
+-
+-const OBSERVED = JSON.parse(await readFile(new URL('../fixtures/summary-observed.json', import.meta.url), 'utf8'));
+-const TIMEOUT = JSON.parse(await readFile(new URL('../fixtures/summary-timeout.json', import.meta.url), 'utf8'));
++import { openJournalBundle as open, recordFixedRun as record } from '../history/host-journal-bundle.mjs';
++import { createRunJournal, reopen } from '../history/run-journal-v1.mjs';
++import { writeSerializedJournal, readSerializedJournal } from '../history/run-journal-store-v1.mjs';
++import { fixedRunJournalEntry } from '../history/fixed-run-journal-entry.mjs';
++import { memfs, sha256 } from './helpers/memfs.mjs';
++
++const OBSERVED = JSON.parse(await readFile(new URL('./fixtures/fixed-run/summary-observed.json', import.meta.url), 'utf8'));
++const TIMEOUT = JSON.parse(await readFile(new URL('./fixtures/fixed-run/summary-timeout.json', import.meta.url), 'utf8'));
+ const clone = (x) => JSON.parse(JSON.stringify(x));
+ const PATH = '/j/journal.jsonl';
+ const CONFIG = { projectId: 'project-a', maxEntries: 8, heartbeatTtlMs: 10, redactPaths: [] };
+@@ -268,12 +268,12 @@
+ });
+ 
+ test('bundle module imports only the three frozen siblings and stays pure', async () => {
+-  const source = await readFile(new URL('../src/host-journal-bundle.mjs', import.meta.url), 'utf8');
++  const source = await readFile(new URL('../history/host-journal-bundle.mjs', import.meta.url), 'utf8');
+   const imports = [...source.matchAll(/^\s*import\b[^\n]*from\s+['"]([^'"]+)['"]/gm)].map(m => m[1]);
+   assert.deepEqual([...new Set(imports)].sort(), ['./fixed-run-journal-entry.mjs', './run-journal-store-v1.mjs', './run-journal-v1.mjs']);
+   assert.doesNotMatch(source, /\b(?:require|process|fetch|XMLHttpRequest|eval|Function|setTimeout|setInterval|globalThis|structuredClone)\b/);
+   assert.doesNotMatch(source, /\b(?:Date|performance)\b|Math\s*\.\s*random\b/);
+   assert.doesNotMatch(source, /from\s+['"]node:/, 'no node: imports; the fs is injected');
+-  const ns = await import('../src/host-journal-bundle.mjs');
++  const ns = await import('../history/host-journal-bundle.mjs');
+   assert.deepEqual(Object.keys(ns).sort(), ['openJournalBundle', 'recordFixedRun']);
+ });

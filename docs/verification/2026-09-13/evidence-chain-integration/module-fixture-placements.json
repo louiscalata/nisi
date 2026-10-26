@@ -1,0 +1,136 @@
+[
+  {
+    "kind": "module",
+    "source": "work-orders/native-canary-summary/src/native-canary-summary.mjs",
+    "target": "hosts/macos-xpc/native-canary-summary.mjs",
+    "expectedSha256": "92590f11d91071fb7d5c1a0208958ef7c094d06a723fd38c5827fc63e6fb9c41",
+    "sourceSha256": "92590f11d91071fb7d5c1a0208958ef7c094d06a723fd38c5827fc63e6fb9c41",
+    "beforeSha256": null,
+    "beforeExists": false,
+    "afterSha256": "92590f11d91071fb7d5c1a0208958ef7c094d06a723fd38c5827fc63e6fb9c41",
+    "byteIdentical": true
+  },
+  {
+    "kind": "module",
+    "source": "work-orders/fixed-run-journal-entry/src/fixed-run-journal-entry.mjs",
+    "target": "history/fixed-run-journal-entry.mjs",
+    "expectedSha256": "ba888a4f4d5b1b78f799045e44fbdfe79b75545847ab9b3ed2673fd7b353585c",
+    "sourceSha256": "ba888a4f4d5b1b78f799045e44fbdfe79b75545847ab9b3ed2673fd7b353585c",
+    "beforeSha256": null,
+    "beforeExists": false,
+    "afterSha256": "ba888a4f4d5b1b78f799045e44fbdfe79b75545847ab9b3ed2673fd7b353585c",
+    "byteIdentical": true
+  },
+  {
+    "kind": "module",
+    "source": "work-orders/run-journal-store/src/run-journal-store-v1.mjs",
+    "target": "history/run-journal-store-v1.mjs",
+    "expectedSha256": "1356028b65f9f8b96e3b9ec8ba3bfbb4968092af53d00e8b5dfdb11b161f4792",
+    "sourceSha256": "1356028b65f9f8b96e3b9ec8ba3bfbb4968092af53d00e8b5dfdb11b161f4792",
+    "beforeSha256": null,
+    "beforeExists": false,
+    "afterSha256": "1356028b65f9f8b96e3b9ec8ba3bfbb4968092af53d00e8b5dfdb11b161f4792",
+    "byteIdentical": true
+  },
+  {
+    "kind": "module",
+    "source": "work-orders/host-journal-bundle/src/host-journal-bundle.mjs",
+    "target": "history/host-journal-bundle.mjs",
+    "expectedSha256": "97b2554b7fe50812fcb0065197964967d2beefc0c8cb322a38154ec16ebb9894",
+    "sourceSha256": "97b2554b7fe50812fcb0065197964967d2beefc0c8cb322a38154ec16ebb9894",
+    "beforeSha256": null,
+    "beforeExists": false,
+    "afterSha256": "97b2554b7fe50812fcb0065197964967d2beefc0c8cb322a38154ec16ebb9894",
+    "byteIdentical": true
+  },
+  {
+    "kind": "fixture",
+    "source": "work-orders/native-canary-summary/fixtures/inherit-run-service-raw.json",
+    "target": "tests/fixtures/native-canary/inherit-run-service-raw.json",
+    "sourceSha256": "00f76c88284738036b884c8242dbfa59c52f207bb2398a71d12798e591387d64",
+    "beforeSha256": null,
+    "beforeExists": false,
+    "afterSha256": "00f76c88284738036b884c8242dbfa59c52f207bb2398a71d12798e591387d64",
+    "byteIdentical": true
+  },
+  {
+    "kind": "fixture",
+    "source": "work-orders/fixed-run-journal-entry/fixtures/summary-canaries-not-matched.json",
+    "target": "tests/fixtures/fixed-run/summary-canaries-not-matched.json",
+    "sourceSha256": "855b60f16c134943e9b04bbdc6c5385f686991728161d1ae58052b5e894f9ddf",
+    "beforeSha256": null,
+    "beforeExists": false,
+    "afterSha256": "855b60f16c134943e9b04bbdc6c5385f686991728161d1ae58052b5e894f9ddf",
+    "byteIdentical": true
+  },
+  {
+    "kind": "fixture",
+    "source": "work-orders/fixed-run-journal-entry/fixtures/summary-identity-unavailable.json",
+    "target": "tests/fixtures/fixed-run/summary-identity-unavailable.json",
+    "sourceSha256": "2468510c52d2ff361a68fc9c636361d73995d5453a9db3bf4b804ced9ae9bbf2",
+    "beforeSha256": null,
+    "beforeExists": false,
+    "afterSha256": "2468510c52d2ff361a68fc9c636361d73995d5453a9db3bf4b804ced9ae9bbf2",
+    "byteIdentical": true
+  },
+  {
+    "kind": "fixture",
+    "source": "work-orders/fixed-run-journal-entry/fixtures/summary-observed.json",
+    "target": "tests/fixtures/fixed-run/summary-observed.json",
+    "sourceSha256": "a00dce2160b6f271080f1297b6f426c958205dc20a1369a2671c2c657bb4e8ad",
+    "beforeSha256": null,
+    "beforeExists": false,
+    "afterSha256": "a00dce2160b6f271080f1297b6f426c958205dc20a1369a2671c2c657bb4e8ad",
+    "byteIdentical": true
+  },
+  {
+    "kind": "fixture",
+    "source": "work-orders/fixed-run-journal-entry/fixtures/summary-timeout.json",
+    "target": "tests/fixtures/fixed-run/summary-timeout.json",
+    "sourceSha256": "2d9180eb8a0d5fb6083489b1298fd23c26281df7c92ed85d74895d63e5bbd407",
+    "beforeSha256": null,
+    "beforeExists": false,
+    "afterSha256": "2d9180eb8a0d5fb6083489b1298fd23c26281df7c92ed85d74895d63e5bbd407",
+    "byteIdentical": true
+  },
+  {
+    "kind": "package_fixture",
+    "source": "work-orders/native-canary-summary/package.json",
+    "target": "tests/fixtures/native-canary-summary-package.json",
+    "sourceSha256": "048871064d5309de15f799a75945aade84d6f9bf6e44f05e22836f0767d580ea",
+    "beforeSha256": null,
+    "beforeExists": false,
+    "afterSha256": "048871064d5309de15f799a75945aade84d6f9bf6e44f05e22836f0767d580ea",
+    "byteIdentical": true
+  },
+  {
+    "kind": "package_fixture",
+    "source": "work-orders/fixed-run-journal-entry/package.json",
+    "target": "tests/fixtures/fixed-run-journal-entry-package.json",
+    "sourceSha256": "d165304f582275ed7132a577eab58c305b5d0cff88a6e5dcbf24230b87aa6747",
+    "beforeSha256": null,
+    "beforeExists": false,
+    "afterSha256": "d165304f582275ed7132a577eab58c305b5d0cff88a6e5dcbf24230b87aa6747",
+    "byteIdentical": true
+  },
+  {
+    "kind": "package_fixture",
+    "source": "work-orders/run-journal-store/package.json",
+    "target": "tests/fixtures/run-journal-store-package.json",
+    "sourceSha256": "42bed7239d3e46cf5f4952e03bd2295d63d3af1368c34f8b285ae77937c42e94",
+    "beforeSha256": null,
+    "beforeExists": false,
+    "afterSha256": "42bed7239d3e46cf5f4952e03bd2295d63d3af1368c34f8b285ae77937c42e94",
+    "byteIdentical": true
+  },
+  {
+    "kind": "package_fixture",
+    "source": "work-orders/host-journal-bundle/package.json",
+    "target": "tests/fixtures/host-journal-bundle-package.json",
+    "sourceSha256": "1e3e8fa0baa6c87457c7eb55b4ddf117f9e256328f35288f3bde7915be6d4d87",
+    "beforeSha256": null,
+    "beforeExists": false,
+    "afterSha256": "1e3e8fa0baa6c87457c7eb55b4ddf117f9e256328f35288f3bde7915be6d4d87",
+    "byteIdentical": true
+  }
+]

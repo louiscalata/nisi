@@ -1,0 +1,15 @@
+{
+  "answerContentChars": 0,
+  "answerContentChunks": 0,
+  "crlfLineEndings": 0,
+  "doneMarkerObserved": true,
+  "finishReasons": [
+    "length"
+  ],
+  "jsonEvents": 126,
+  "lfLineEndings": 254,
+  "liveWireExercisedCrlf": false,
+  "modelReasoningTextRetained": false,
+  "reasoningContentChars": 501,
+  "reasoningContentChunks": 125
+}

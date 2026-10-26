@@ -1,0 +1,13 @@
+{
+  "schemaVersion": "nisi-product-readiness-input/v1",
+  "receipts": [{"id": "portable", "path": "evidence/portable.json", "sha256": "REPLACE_WITH_SHA256"}],
+  "sourcePins": [{"path": "package.json", "sha256": "REPLACE_WITH_SHA256"}],
+  "featureInventory": {"required": ["workflow", "history", "incident"], "observed": ["workflow"]},
+  "gates": [
+    {"id": "portable-tests", "lane": "portable", "receiptId": "portable"},
+    {"id": "native-tests", "lane": "native", "receiptId": "native"},
+    {"id": "windows-tests", "lane": "windows", "receiptId": "windows"},
+    {"id": "private-install", "lane": "install", "receiptId": "install"},
+    {"id": "matched-evaluation", "lane": "evaluation", "receiptId": "evaluation"}
+  ]
+}

@@ -1,0 +1,19 @@
+# Mutant run after folding the review's oracle additions (T5+, T11+/T14+, T14+, T15+, T18+, T19+) into
+# tests/interrupted-run-decision.test.mjs (24 tests). Patches are the reviewer's exact string patches
+# (scratchpad/ircrev/final-1789383655/harness.mjs); each applied alone to a copy of the product module.
+R03b_queued_unknown_sibling_settles  killed (fail 1)
+m7_revoked_sibling_settles           killed
+P03_claim_other_runId_ok             killed
+P04_claim_other_attempt_ok           killed
+M6_unclaimed_candidate_only          killed
+P01_restart_reuse_same_attempt       killed
+M24_restart_reuse_ignores_settled    killed
+P17_drop_profile_id                  killed
+P02_drop_attempt_le_cited            killed
+R15a_attempt_lt                      SURVIVES — equivalent mutant: at attempt equality the cited row itself
+                                     satisfies the "row with that runId and attempt" disjunct, so <= and <
+                                     never differ. README §Mutants item 15 replaced accordingly.
+M8_revoked_flag_one_sided            killed
+M3_expired_one_sided                 killed
+M1_rethrow                           killed
+M13_14_row_cap_65537                 killed

@@ -1,6 +1,7 @@
 (() => {
   'use strict';
   const state = JSON.parse(document.getElementById('state').textContent);
+  if (!validState(state)) throw new Error('EDITOR_STATE_INVALID');
   const storageKey = `nisi-editor:${state.id}:${state.baseRevision}`;
   const $ = selector => document.querySelector(selector);
   let artifact = null;
@@ -22,12 +23,21 @@
   let localSavedSnapshot = snapshot();
   let artifactSavedSnapshot = snapshot();
   function message(text) { $('#message').textContent = text; }
-  function validSaved(value) {
-    return value && value.id === state.id && value.baseRevision === state.baseRevision && value.schemaVersion === 1 &&
-      typeof value.about === 'string' && Number.isFinite(value.savedAt) &&
-      Array.isArray(value.sections) && value.sections.length > 0 &&
-      value.sections.every(s => s && typeof s.id === 'string' && /^[a-z0-9-]+$/.test(s.id) && typeof s.current === 'string' && typeof s.baseline === 'string') &&
+  function validState(value) {
+    return value !== null && typeof value === 'object' && !Array.isArray(value) && value.schemaVersion === 1 &&
+      typeof value.id === 'string' && /^[a-z0-9-]{1,128}$/.test(value.id) &&
+      typeof value.baseRevision === 'string' && /^[0-9a-f]{64}$/.test(value.baseRevision) &&
+      typeof value.editorBuild === 'string' && /^[0-9a-f]{64}$/.test(value.editorBuild) &&
+      typeof value.about === 'string' && Number.isSafeInteger(value.savedAt) && value.savedAt >= 0 &&
+      Array.isArray(value.sections) && value.sections.length > 0 && value.sections.length <= 1024 &&
+      value.sections.every(s => s && typeof s === 'object' && !Array.isArray(s) &&
+        Object.keys(s).sort().join('|') === 'baseline|current|id' &&
+        typeof s.id === 'string' && s.id.length <= 128 && /^section-[a-z0-9]+(?:-[a-z0-9]+)*$/.test(s.id) &&
+        typeof s.current === 'string' && typeof s.baseline === 'string') &&
       new Set(value.sections.map(s => s.id)).size === value.sections.length;
+  }
+  function validSaved(value) {
+    return validState(value) && value.id === state.id && value.baseRevision === state.baseRevision;
   }
   try {
     const restored = JSON.parse(localStorage.getItem(storageKey) || 'null');
@@ -158,8 +168,10 @@
     const host = $('#sections'); host.replaceChildren();
     state.sections.forEach((section, index) => {
       const element = document.createElement('section'); element.id = section.id; element.className = 'editor-section';
-      element.innerHTML = `<header class="section-bar"><span class="number">${String(index + 1).padStart(2, '0')}</span><span class="section-title"></span><span class="edited" hidden>Edited</span></header><div class="columns"><div class="writing"><label for="edit-${section.id}">Your text · Markdown</label><textarea id="edit-${section.id}" spellcheck="true"></textarea><details><summary>Read the starting draft</summary><pre class="baseline"></pre></details></div><div class="reading"><div class="preview-label">Safe preview · Markdown subset</div><div class="rendered"></div></div></div>`;
+      element.innerHTML = `<header class="section-bar"><span class="number">${String(index + 1).padStart(2, '0')}</span><span class="section-title"></span><span class="edited" hidden>Edited</span></header><div class="columns"><div class="writing"><label>Your text · Markdown</label><textarea spellcheck="true"></textarea><details><summary>Read the starting draft</summary><pre class="baseline"></pre></details></div><div class="reading"><div class="preview-label">Safe preview · Markdown subset</div><div class="rendered"></div></div></div>`;
       const textarea = element.querySelector('textarea'), preview = element.querySelector('.rendered');
+      textarea.id = `edit-${section.id}`;
+      element.querySelector('label').htmlFor = textarea.id;
       const title = element.querySelector('.section-title');
       textarea.value = section.current;
       textarea.setAttribute('aria-label', `Edit ${titleOf(section)}`);
@@ -211,6 +223,7 @@
   $('#download').addEventListener('click', () => { download('Nisi-README-draft.md', allMarkdown(), 'text/markdown;charset=utf-8'); message('Markdown download requested.'); });
   $('#download-html').addEventListener('click', () => { download('Nisi-Brigade-editor.html', buildDocument(), 'text/html;charset=utf-8'); message('Editable HTML download requested.'); });
   $('#add').addEventListener('click', () => {
+    if (state.sections.length >= 1024) { message('Section limit reached. Edit an existing section.'); return; }
     const section = { id: `section-${Date.now()}-${state.sections.length}`, current: '\n\n## New section\n\nWrite your section here.\n', baseline: '' };
     state.sections.push(section); buildSections(); onEdit();
     document.getElementById(`edit-${section.id}`).focus();

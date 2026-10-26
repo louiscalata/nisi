@@ -1,0 +1,8 @@
+You are Astra (Codex) acting as a parallel AUTHOR (not reviewer) for one isolated work-order module, in a scratch copy at this directory (the -C root). The real work order lives elsewhere and is being drafted by the local OpenCode lane at the same time; you must not touch it. Everything you need is here.
+
+Read, in this order: .packets/nisi-host-journal-bundle.packet.md (the complete contract, Context + Constraints + Items), tests/bundle.test.mjs (the acceptance oracle, 14 tests), tests/memfs.mjs (the fs double the tests inject), and the three frozen siblings in src/ (run-journal-v1.mjs, run-journal-store-v1.mjs, fixed-run-journal-entry.mjs) — read their exported functions and result shapes exactly; do not edit them.
+
+Write ONLY src/host-journal-bundle.mjs implementing the contract. Then run `npm test` (baseline, expect 3/3) and `npm run test:bundle` (expect 14/14) here in the scratch copy and iterate until both are green, or until you hit a contradiction between the contract and a test — in which case stop and report the exact contradiction with file:line; do not "fix" the test. Rules: no other file edits, no node: imports in the module (the fs is injected), no commit/push, no model loads, no packet runs, nothing outside this directory. Final message: sha256 of your src/host-journal-bundle.mjs, the two test counts, and any contract/test contradiction you found (or "none").
+
+
+UPDATE: the contradiction you found is fixed in tests/bundle.test.mjs (createdAt > now now expects ENTRY; a clock earlier than the watermark expects TIME). The packet carries an oracle-correction note. Proceed to author the module now.

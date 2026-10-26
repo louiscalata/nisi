@@ -1,0 +1,65 @@
+{
+  "schemaVersion": "nisi-scoped-user-approval/v1",
+  "recordedAt": "2026-09-13T21:05:20.003Z",
+  "status": "APPROVED_CURRENT_EXACT_ARTIFACT",
+  "source": {
+    "type": "direct_user_reply_in_current_codex_task",
+    "assistantQuestion": "Do you approve the earlier change of only the two package-inventory assertions from 24 files to 27 files in tests/private-package-contract.test.mjs?",
+    "userReply": "approved"
+  },
+  "scope": {
+    "path": "tests/private-package-contract.test.mjs",
+    "line": 9,
+    "allowedChange": "Only PRIVATE_PACKAGE_FILES.length and new Set(PRIVATE_PACKAGE_FILES).size assertion literals: 24 to 27",
+    "literalCount": 2,
+    "recordedAt": "2026-09-13T21:05:20.003Z",
+    "beforePath": "docs/verification/2026-09-13/five-work-order-integration/before/tests/private-package-contract.test.mjs",
+    "currentPath": "tests/private-package-contract.test.mjs",
+    "beforeSha256": "177193ffcf7ad6111a047c4beba718888c607b1710625655fc275606d558451f",
+    "currentSha256": "2fc26ef962f778502688294fc7b0939734a8a262a1bd2e5e003acacfd9363784",
+    "exactOnlyApprovedChange": true,
+    "inventoryCount": 27,
+    "uniqueInventoryCount": 27
+  },
+  "history": {
+    "changeWasAlreadyPresent": true,
+    "sourceOrTestChangedThisTurn": false,
+    "approvalEffectiveFromThisReply": true,
+    "doesNotEstablishEarlierApproval": true,
+    "preservePreviousReceipts": true
+  },
+  "verification": {
+    "command": "node --test tests/private-package-contract.test.mjs",
+    "exitCode": 0,
+    "tests": 5,
+    "pass": 5,
+    "fail": 0,
+    "cancelled": 0,
+    "skipped": 0,
+    "todo": 0,
+    "log": "inventory-approval-test.log"
+  },
+  "supersedesCurrentApprovalStatusIn": [
+    "REPORT.md protected-test approval warning",
+    "../../../../.build/codex-opus-takeover-ScjWha/verification.json authorization.protectedInventoryException (historical capture preserved)",
+    "../../../../.build/orchestration-study-Y4xvJ1/HANDOFF.md historical approval status"
+  ],
+  "notAuthorized": [
+    "publication",
+    "checkpoint guard bypass",
+    "other test changes",
+    "claiming full product acceptance"
+  ],
+  "unchanged": {
+    "overallProgressPercent": 30,
+    "closedNXMilestones": 3,
+    "totalNXMilestones": 10,
+    "formatterCanonicalIntegration": "PENDING_OWNER_TRANSFER",
+    "checkpoint": "UNRESOLVED_NOT_RETRIED"
+  },
+  "ownership": {
+    "otherAstraProcessStillObserved": 84927,
+    "settlementReportNotObserved": true,
+    "canonicalReceiptAndRoadmapEditsDeferred": true
+  }
+}

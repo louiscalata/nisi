@@ -1,0 +1,23 @@
+
+> nisi-future-history-timeline@0.0.0-private test:acceptance
+> node --test --test-timeout=10000 tests/acceptance.test.mjs
+
+✔ empty input returns the exact ready shape (0.59125ms)
+✔ events sort by attempt then createdAt, with input order as the tie-breaker (0.392458ms)
+✔ all terminal and nonterminal statuses remain distinct (0.106333ms)
+✔ duplicate stage observations with different IDs are retained (0.079292ms)
+✔ attempt groups retain sorted event IDs and count unknown durations (0.077709ms)
+✔ input is exact and invalid ordinary values are refused (0.141333ms)
+✔ attempt and createdAt require safe nonnegative integers excluding negative zero (0.119709ms)
+✔ stage, status, receiptId and duration validation is bounded and exact (0.129833ms)
+✔ output is cloned and does not mutate or alias the input (0.156917ms)
+✔ unknown duration is represented only in the attempt count; no outcome is inferred (0.098083ms)
+✔ identical input is deterministic (0.064ms)
+ℹ tests 11
+ℹ suites 0
+ℹ pass 11
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 36.4315

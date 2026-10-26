@@ -1,0 +1,1127 @@
+{
+  "schemaVersion": "nisi-fixed-private-xpc-prototype-checkpoint-v1",
+  "createdAt": "2026-09-13T06:49:33.056Z",
+  "status": "FIXED_PRIVATE_XPC_PROTOTYPE_OBSERVED",
+  "overallMilestones": {
+    "completed": 3,
+    "total": 10,
+    "percentage": 30,
+    "definition": "Equal-weight accepted NX milestones, not effort or release readiness"
+  },
+  "previousCheckpoint": {
+    "path": "/Users/louiscalata/nisi-next-private/docs/verification/2026-09-12/u02-repeatable-app-sandbox-checkpoint.json",
+    "byteLength": 43136,
+    "sha256": "dba210b6a8ccc82da646ca5d53d3bb65760c47bc17caabe33b84c46f35d1afe4"
+  },
+  "sourceManifest": {
+    "adapters/apple-foundation-models.mjs": "311f4898c31b4e0693093361fc19c344086c1f24946909fe134c14d37e25d080",
+    "adapters/local-chat.mjs": "ca26b49502b27f494487f5da32edfc13a9d8b85cb02da43b58c4417babb3e842",
+    "adapters/native-chat-protocol-v1.mjs": "44468cb8b6ebc97e1821405a5add4916a97bf82b0ffeaa2076f85e79e12255f3",
+    "adapters/native-chat-v1.mjs": "45f8149f2f526cab75ba5758aed8b05aeea136fa4cb107a8a45196045ce205bd",
+    "canonical/canonical-json-v1.mjs": "d1049a26d2bea0d14e959c0af22af15b975345091c5fa5360e8bd685637f8e59",
+    "evaluation/fixtures/paired-example-v1.mjs": "2b3fd175c2408737ac8d646a19f576de7ec81a52e5fff61ab80b3fc530d58249",
+    "evaluation/intake-v1.mjs": "7c338bf7419c236bc8a8c912266f470e68ff3711848f777c56e68f0ef7c7912a",
+    "evaluation/metrics-v1.mjs": "a11f1247df37b89c661fe3033e8d88a0c347038114bd9192ac48620d52ba0e91",
+    "evaluation/paired-trial-v1.mjs": "cb75c8ac76deb31280fc356064e448b508e4fb8cc48cddaef03f461a70df943c",
+    "examples/repository-live-model.mjs": "dddb7d9d1235308ecf8a5f154cad3c02e5d5546f9bfa92822cab684321617f39",
+    "examples/repository-task/fixtures/baseline/README.md": "b6ce54912db6b4605d19e4e0fdce5cc1e680de4a57bb1af82ca7b737ff578011",
+    "examples/repository-task/fixtures/baseline/config.json": "fc2001f12401983fa2632ee17e9879b6a1595f0de616e6e1484083c0c3324f04",
+    "examples/repository-task/fixtures/baseline/retry-settings.mjs": "c4932fa2ce0c73c52d385d25aeab64bed602179abced3b38fd525a31fe47bb10",
+    "examples/repository-task/fixtures/harness/check-retry-settings.mjs": "e07a9bd6a63a52ac6977734c61ea0a210c71ec2c331951f4d94b44159c8245c5",
+    "examples/repository-task/fixtures/live-baseline/retry-settings.mjs": "65525edd21e81c5de1791c6f47fa404ffea10f7ea332545a8e295afdd6270254",
+    "examples/repository-task/fixtures/live-repair/retry-settings.mjs": "73369f8d0cc0cefbb082c65388c3652c7602254ab5b6fbab138e08078b568112",
+    "examples/repository-task/fixtures/repair/retry-settings.mjs": "7de9f6b2cd29489563930f9131a0e0b077070bb50b52df8b5bd27aaf24b55ffd",
+    "examples/repository-task/reviewed-live-fixture-v1.mjs": "292bd67a2e4132c9c5122f5d716e7eeb3cdd3a6ebf5362470d046b6d025add36",
+    "gate/afm-content-executor.mjs": "29955d7e80d7b7fdc0bdb88fbd24e782a317b4bdc78548b56f3b48598d21e74d",
+    "gate/content-consent.mjs": "a735eb35cb1373b3f3744dc7b3caa8b24ebbf394babba53d4f722136c72a0820",
+    "hosts/macos-sandbox/fixed-probe-parser.mjs": "9301d23fc4feac1a3b3df8eaa9275f3afa614bc246a15a0159b9f9bd82289d9a",
+    "hosts/macos-sandbox/fixed-probe-runner.mjs": "bf68eaded5421af9f18804714030352968d934e90163e7406a8c3d55e27b7c73",
+    "hosts/macos-sandbox/fixed-probe.m": "dd93459c4a66693e6f5a0e0294c93fe3ddc3bc5458c73fcc6e412b408e74bb29",
+    "hosts/repository/candidate-review-v1.mjs": "e8fc04224ec9bd9f9c455222557ad79d29df95c62722c08377899a969f7555de",
+    "hosts/repository/disk-capture.mjs": "972c8cd690a3f34253c9f4722c336b6e847dffe1b0c924aa8492384c800ae547",
+    "hosts/repository/generated-execution-approval-v1.mjs": "3b5a20f1a74eb126a2aca826286aa096fc2c1ed6fbb73f6805067e93d3bff161",
+    "hosts/repository/live-model-selection-v3.mjs": "22a242290248180f158974d7a733a368a82669c270b0171eae747ac18c638520",
+    "hosts/repository/node-adapter-v1.mjs": "6de05634f7cccd774c8072a000b556f49f111ccedfe1e37d19be37dbd036fa5d",
+    "hosts/repository/node-executor-v1.mjs": "cd999c0efe061c0706842cc06867f62dc59927553615db9e2f2af24523872258",
+    "hosts/repository/node-suite-v1.mjs": "5ed5cd9ca407b281379d6b67d93df60ab3b3a45676b6a4e82c7bfc474d29e2c2",
+    "hosts/repository/proposed-changes-v1.mjs": "045fe0d77b3b6d4d95c406964b603b09b2aeabe131cde267b41806114379f55d",
+    "hosts/repository/reviewed-live-model-v1.mjs": "741d7df962dccbba993481497779afd2bbd4253487532c5dd5bd51522be9247e",
+    "hosts/repository/reviewed-live-model-v3.mjs": "e9f7f810f2fab36a34b1486034128752ce0b4df5989998300e2f239829ff307e",
+    "hosts/repository/reviewed-workflow-v1.mjs": "6ecc49425ae28ec1923445c8fbe79df4478b6361a5e2799b82ded24acf74dc33",
+    "hosts/repository/snapshot-contract.mjs": "2b52c23bac3a817769b7892eed71baba79cb81954b6a63724d107a9c258ba13f",
+    "hosts/repository/task-workspace-v1.mjs": "08fdb59d15d21e94914d00390e8f73ee6245b0eabec64e7c052585f23638f963",
+    "hosts/swift-verifier/adapter.mjs": "c92c21fcbf7fe91d949f60bc51a96d4cb5f185be9172d0a214c4e87d2b649388",
+    "hosts/swift-verifier/build.mjs": "ae063b627e853fc0b651e3db103dd1af01c6815374d36781e79270b7d48934fb",
+    "hosts/swift-verifier/check-plan-v1.mjs": "a30ff5596e2bebc376cfa0da84be1c00eca8443cc2b37f5b1b7da42ef44b658a",
+    "hosts/swift-verifier/executor.mjs": "3b233203d7e9d2c2e1f5aa3c458685e86f15d40fc07b2542e7b6bb48a2555db4",
+    "hosts/swift-verifier/group-adapter-v1.mjs": "471ae91cfc78a82abcb425ed75cd16aec2a76d8123cdc9b3e4063c536382e774",
+    "hosts/swift-verifier/group-contract-utils.mjs": "8fc51ac107abd68adb1c72683ccfa2af9c74ac077c5506bf89525f972b14ac82",
+    "hosts/swift-verifier/main.swift": "0d4e15b22b3231d990cfd5e7de1c52f4fdfebf4f4ab6da15b0ae22c74cea910c",
+    "hosts/swift-verifier/owned-child.mjs": "ff9bbef97b3401afd394a98c8bff4fe273a4b6af3a1f852bdf5bf872fd4474df",
+    "hosts/swift-verifier/protocol.mjs": "7557d81836f263c13e06ac7613ebfa61ce7fbeeb7b0f7db98889473806f322cc",
+    "hosts/swift-verifier/reservation.mjs": "6d7573d23a3d2b0ecdb4b396cb58f4f9ae8e5997190616c08c1b93bd0ab376fd",
+    "index.mjs": "066c90d65209854cd6aeb838924ce28dca90d7dc75d0cd533d17fbba8e1c3db7",
+    "integrations/veritas/native/macos/CodenameVeritasFramework/Sources/VeritasCore/ArtifactSnapshot.swift": "013e796d11a844dda345f223894a8d76713b19b0f46f6a7f84019aa5b7bc0f22",
+    "integrations/veritas/native/macos/CodenameVeritasFramework/Sources/VeritasCore/DeterministicChecks.swift": "4d234fd389895cf0a55bf7daf0f5d082077ab3677880165f7d0e1236a88be474",
+    "integrations/veritas/native/macos/CodenameVeritasFramework/Sources/VeritasCore/StrictJSONDocumentValidator.swift": "bd6173e012890f2fde2e26be94c5e577cd9e098841bdad98a377b1c88dff1b2c",
+    "integrity/record-utils.mjs": "e46eb1a01170231bd6873771cd256740fd3dde6bcb01d418f6f7d7a75e6139ff",
+    "package-lock.json": "bb677e234c47798b323e8a9a4643ef64bc174729c950094b43d3b00c0dfc0233",
+    "package.json": "307e73e19199186cb33a346da92941d2feed4d64b43ebc86c678207c6a79e45c",
+    "policy/file-access.mjs": "92f9f60220e1869ad0d6571ae2b5a8ddc9259b2463c4cf617d4cecee6eacc1d3",
+    "receipts/host-run-bundle-v2.mjs": "406936e6523f58323634fab1c9f560d671d58e1c343d2082f081f8a7810061fe",
+    "receipts/live-usage-v1.mjs": "f015e2973567e21329d4e79de8abc6e1f664370eff3f2338aad31490fb4791a5",
+    "receipts/repository-execution-v1.mjs": "7317e06c094bdf33e51645ce39348fc9e2d5a11ad0921af87434e34c45828cc2",
+    "receipts/repository-live-model-run-v1.mjs": "7a17b15f5d649c9255da8b09c531f5192b7d6e14ba5db928c878e1ccd13dc293",
+    "receipts/repository-live-model-run-v3.mjs": "66f7598c6b3be393c65dbd92e1a3c58c52b7ca66c4e73f57a46c8556739614a4",
+    "receipts/repository-run-v1.mjs": "50c1e86cec48fc666aae64b3285f9acda8e20968d5f10f0d9313e0e22051d697",
+    "receipts/swift-static-group-v1.mjs": "e07e9a361ef808f8d652f1542fec54085d4f341fd093a582f2e86baf77e4cdbb",
+    "receipts/swift-static-run-v1.mjs": "454e8657a2a2aaf6a016de5d09c5d65512d53ffb9db2a6843e05471450f8c8ef",
+    "scripts/check-private-package.mjs": "80b384b406dbde63a65408c16cdb5634596c15bfcc19b60971b50b8e0580b841",
+    "scripts/private-package-contract.mjs": "52b73fad04e639475895261d5b982b1442ee5545a02ffaeaa9726e58bbd58288",
+    "serialization/canonical-json-v1.mjs": "1e5eb6222da2c7baae3cd45a5077ccc1e8ae25b5bc184646d9e55170dec53625",
+    "tests/candidate-review.test.mjs": "1c46af99fda3919dbb858de49f393cbff019b3e717b8e64961c65651301a6e4a",
+    "tests/fixed-app-sandbox.test.mjs": "e85dfc0e52ff67b1aebf0bef9fc4521b5e56f00d40c799b165526f59966d6b99",
+    "tests/fixtures/local-chat-response-cases.json": "c05bb7e645152cc485600085eb97c95225dcc4ad39fb571c15ff9d40bd983e1e",
+    "tests/fixtures/native-response-cases.json": "64b8cc5a2050d541d917b4b459392114debe1d374579bfe7a76c5ff0ce7a0efb",
+    "tests/fixtures/v3-cli-cases.json": "eb344b3ad7b1c63e55e9da944a11c569a517803b36ce4dd298989d7a0bc41c4a",
+    "tests/generated-execution-approval.test.mjs": "76b7ec9f47ed96ac72284eab120fef168ab101a06f5cb5c61b87eb493a07e442",
+    "tests/helpers/live-cli-side-effect-guard.mjs": "f1ed9b8f69c41c6027b9b8d7ed0149c1fee970d00109eaac0e7bb0714d08c00e",
+    "tests/helpers/live-model-v3-fixture.mjs": "29da9ad187efe09ee0a24e0e27b14737e9872de7035d4c96dac13da1930febd7",
+    "tests/helpers/local-chat-expected-cases.mjs": "1e1f3af35720944e447d60600487a7a9111da6911f82322c70a7750fa5a5e537",
+    "tests/helpers/native-chat-fixture.mjs": "3d5029a0d73880a055d8823d9ca629c40d40e55795d2abe1192345a8ecbb0b52",
+    "tests/helpers/native-response-expected.mjs": "76724d266bcbd2576079df1517ee8be7cd7b3e8ed17894a197e20b75660ed4af",
+    "tests/helpers/node-repository-fixture.mjs": "db034a91d1ad0bfcb2b22df9b598d3e276d260c493002319e9d191e10ce2cd85",
+    "tests/helpers/repository-live-run-fixture.mjs": "17e24de717f46a1b3844cf37c05cf1baf23f69d71f6f3f02f53f2c881d0f08ea",
+    "tests/helpers/repository-run-fixture.mjs": "2877df81895185e35c5e5dd419dbb161bde5f23529f6459ed5e0128b2780b121",
+    "tests/helpers/reviewed-live-model-fixture.mjs": "539eb8530170b9f85705cd20af45b9be01463343f7ddb1691860f2628d9b5cbb",
+    "tests/helpers/swift-group-fixture.mjs": "2f8e5b98fbf2fb1757fe25bc2d78b427e30cccbdaccb64d618922f925e077d60",
+    "tests/helpers/v3-cli-expected.mjs": "93c9606c00ecdfc1449336f9e53a75e4da76c2b985146d401c54457c8f71e6d9",
+    "tests/host-run-bundle-v2.test.mjs": "ba3f06af454abd31b2b7426aedc7b04b63e7efea19696df7c24a6ff187d112cb",
+    "tests/live-model-v3-cli.test.mjs": "54207c8bd4f081411f997b10fa9df749d8e6d26fa1b78ab7302f1de5b6e0ea80",
+    "tests/live-model-v3-receipt.test.mjs": "38ef7f69f1444952de9dcef39ace75487cd0ba38ab359097b7994d9a233264b8",
+    "tests/live-model-v3.test.mjs": "d4a5cf960819e0fdf8630a21e1743b13171aeb285ac780f1904135b758fef13d",
+    "tests/live-output-mode.test.mjs": "a573d477e7463f8f323079bc1ba72e1d775b2116da2ebaf6f159e097258d62b7",
+    "tests/live-usage.test.mjs": "3be9d19ee463641ea521179ff31874127c5e5654f48f0ab14ced6e1dcdf82ffd",
+    "tests/local-chat-output-mode.test.mjs": "21a36fc3c14dad1f080fc16293f20443b7f90f30ddb6c12941e46abdd15b1d2c",
+    "tests/local-chat-response-matrix.test.mjs": "c4d14ba74952876b2d07061ed60ca5948ac4d26ee2e0f908d228b406fdeafe4c",
+    "tests/native-chat.test.mjs": "0257a2622b19939de5da09b557167e7c49a425f41d109e42b91fd0f820712c37",
+    "tests/native-response-matrix.test.mjs": "c5563856227f4b2d387681b8a1943834ca514706d77ffd057b76c6ab0d8bef16",
+    "tests/native/repository-host.test.mjs": "3e449395b033bf5bfd51c4ce1f2ca847eb27c03b85467a2e24eb40b5ff3f8594",
+    "tests/native/swift-executor.test.mjs": "97f93d9bb32ebcc262c5d2f915eb549f3cc187feec9b2636b7ac617047176cc1",
+    "tests/native/swift-group.test.mjs": "980ad1fbb2dae8eb5394b300a547f41ed34d4ab6b20db4f4335c467f5ac6a5d9",
+    "tests/native/swift-kernel.test.mjs": "e6726c94a1b7359c2e3042a0e8ddb71973255088da82373f7988cd3bb6873699",
+    "tests/node-executor.test.mjs": "87bd39e1b48872de468477c8c8f6fa8f96884c632df58973b0ac1b89bb195e6d",
+    "tests/node-suite.test.mjs": "ca26dc4558ef17d2a9df982dfe1634053451580fcbf0228d06369121ff53143e",
+    "tests/paired-trial.test.mjs": "979dd5e1dfb7dcdc55f874fdf1e1232a8eea356d0fd856817583921d3d10441b",
+    "tests/private-consumer.test.mjs": "0a29cb423a2b11163864a5a6b63471e93ab042897cda601ecec40a9c34b2ec07",
+    "tests/private-consumer/adoption-reviewed.mts": "865dc54412789663a28a105970f390d7452a041272870edd7156fd09f24124aa",
+    "tests/private-consumer/baseline.mts": "6c99646cb0c846ee09cd70fd0c1d38ffa11514c2ba913aa690002da2d0090990",
+    "tests/private-consumer/declaration-regressions.mts": "6176b259f151c0dce32f17da6787a6fcfc6edaea40b86d5fdf60ba78ced4fcaf",
+    "tests/private-consumer/declaration-regressions.test.mjs": "8eb8c04e7b265021ec9dd3aa580da7088fb41c8c4da9f18bbcb5433e84eeefd2",
+    "tests/private-consumer/edge-cases.mts": "457ee56a0127e81703fb72eb2c943e6341dd1316d7fc1fadf3fe64ef5ef54af7",
+    "tests/private-consumer/output-mode-types.mts": "0eedf2ea1f7e4c30a71765129ef1ffcf4f2d9e69fdbbf02dc8685b8fcffea1ba",
+    "tests/private-consumer/runtime.test.mjs": "10a7eb74391501c754ad919d29af6a47c4823a3bb6cefe8a0462a9e7c82bc23c",
+    "tests/private-package-contract.test.mjs": "177193ffcf7ad6111a047c4beba718888c607b1710625655fc275606d558451f",
+    "tests/proposed-changes.test.mjs": "d938037e6f67749f5ef473eaf65a3c5fc054865fed504151c01b0fdfcd33bd39",
+    "tests/repository-execution-receipt.test.mjs": "1075990a6f96276df2057f525df9914bb56a5c1da43d7d544956c86567ad983d",
+    "tests/repository-fixture.test.mjs": "4febfb12c46f3bbcd5f26612475aef6103c6cba876b82ab26cdcb7b9ffe39b20",
+    "tests/repository-live-cli.test.mjs": "c15fcdaf6ea18fd477c1b32526d1416c56ad91005b23231b6c4406e1e2c5632d",
+    "tests/repository-live-model-run.test.mjs": "d0014f841de603e625b665f9526c0d75b324fa4bb28ee0c6672becdc171858ae",
+    "tests/repository-run.test.mjs": "e1c1f1a9407cfecce5b61359a1822fd542c72626d5969da8e679477c60cf176e",
+    "tests/repository-workflow.test.mjs": "ca455e66b4e97fc8530ef0b2a12d35cd1986d80ab409ef9449a977f047015359",
+    "tests/reviewed-live-fixture.test.mjs": "fcc1bd1d97383979ceca8437091624f4117aec5d0c5fba188c896c8998825b80",
+    "tests/reviewed-live-model.test.mjs": "9a6d5da731b16ba2602594561e54b2cde76a54d39a98b719b239874aa49b0e51",
+    "tests/swift-group-owner.test.mjs": "8c7c83e52873c0d6b9a76cda4746dd1ded3c09583ac1d5c34d681023e2a159d3",
+    "tests/swift-static-group.test.mjs": "9bf196d7f2ddad0d4968515e5413cfeb01f334f6d9ad90ec007234539b24015d",
+    "tests/swift-static-run.test.mjs": "d9f747a328e44966c5e88128c3b9edf2d07a1c6dc4e818a91d44164aac78a791",
+    "tests/task-workspace.test.mjs": "d9df1ee4dc36b5a239a5a70847c6d4c53abe2164cf484712666635f1be9a2ef1",
+    "tests/trial-intake.test.mjs": "42a93005ab3fc6b0f573cf413bbb03d5ba2a59d40d3280363b741ded813a6c92",
+    "types/afm-content-executor.d.ts": "05d4dc617ba58abc67f2469d912a0cc0a025a06bae784be263ea67b286504b94",
+    "types/apple-foundation-models.d.ts": "09086a14ea7e0441df3cbe4e414f00e6aa6d3d8e8a53dfb812d5c13d1d97a90d",
+    "types/canonical.d.ts": "8fb8a3a402d2f4e9a24ad945705d407ddde9f1a5555c23ae53db7075e0f101f4",
+    "types/content-consent.d.ts": "94b27ebef08df7e85a22ca8b1bf7d84d88fcc79e5145981e827bdc9aeb78f7c9",
+    "types/contracts.d.ts": "6ad05a1db5d18de910a22cc696257fb0b2d2b7a8cfe875090f0c3b6b70658c15",
+    "types/index.d.ts": "b12ba5fb5f8d15efd89ee8ca263d0ca8c97e228059ab98ee78a42446b101fab6",
+    "types/local-chat.d.ts": "8faccd51bef36c9a5380c5b4568f01d7c9afc20311d65e60dde2d87501c920ae",
+    "types/policy.d.ts": "843edb85c40728778e1a76763dd90b8b560e89cdd716d7ff8a5f8c19dc460f80",
+    "types/serialization.d.ts": "c699b39740237933ded4b7afea48fe20d9c0eb2f8bbcecdad472f9f0bca05084",
+    "types/workflow.d.ts": "92d155a41afa9734bdf333419fb8d1bc5c129d4d5724979c8f3dd82a09e7dd18",
+    "workflow/contracts.mjs": "c28a3ee3db6e9a936cd58fca8b8ee3f2744ca25c259e2ea278b3b09cdbb73d82",
+    "workflow/engine.mjs": "c67c63baeadc725a8487af7108b01d3a38dd50e64ff35f1be66471c81e5f979b"
+  },
+  "canonicalProductionSourcesChanged": [],
+  "prototypeIntegrated": false,
+  "portable": {
+    "tests": 972,
+    "passed": 972,
+    "failed": 0,
+    "receipt": {
+      "path": "/Users/louiscalata/nisi-next-private/.build/private-xpc-owner-6Ao5Gh/portable.json",
+      "byteLength": 222379,
+      "sha256": "90bf504eace231d04de2d7e7d521ae60a9cd14ae3a1d9b84ace6ad2344b179e0"
+    }
+  },
+  "importedVeritas": {
+    "status": "PASS_SOURCE_FREEZE_ONLY",
+    "files": 225,
+    "totalBytes": 8027242,
+    "excluded": [],
+    "originRechecked": false,
+    "integrationVerified": false,
+    "legalClearance": false
+  },
+  "native": [
+    {
+      "root": "/Users/louiscalata/nisi-next-private/.build/private-xpc-native-guyf6f",
+      "terminalSha256": "db8f22cf0fcf50b2aae940fb13fca75d949054e3c5ff7d9cc7db88f97f0d726e",
+      "pid": 30941,
+      "servicePidSelfReported": 30943,
+      "durationMs": 309,
+      "wireBytes": 225,
+      "status": "RECHECKED",
+      "serviceTerminationProven": false,
+      "terminal": {
+        "path": "/Users/louiscalata/nisi-next-private/.build/private-xpc-native-guyf6f/terminal.json",
+        "byteLength": 17182,
+        "sha256": "db8f22cf0fcf50b2aae940fb13fca75d949054e3c5ff7d9cc7db88f97f0d726e"
+      },
+      "runId": "5f1bd0f791cce1e0c31072fb80e81fdd",
+      "containers": [
+        {
+          "path": "/Users/louiscalata/Library/Containers/local.nisi.xpcprobe.host.r5f1bd0f791cce1e0c31072fb80e81fdd",
+          "existedBefore": false,
+          "existsAfter": true,
+          "removed": false
+        },
+        {
+          "path": "/Users/louiscalata/Library/Containers/local.nisi.xpcprobe.service.r5f1bd0f791cce1e0c31072fb80e81fdd",
+          "existedBefore": false,
+          "existsAfter": true,
+          "removed": false
+        }
+      ],
+      "entitlements": {
+        "service": {
+          "com.apple.security.app-sandbox": true
+        },
+        "host": {
+          "com.apple.security.app-sandbox": true
+        }
+      },
+      "rows": [
+        {
+          "operation": "own-open-write",
+          "outcome": "ALLOWED",
+          "errno": 0
+        },
+        {
+          "operation": "own-write",
+          "outcome": "ALLOWED",
+          "errno": 0
+        },
+        {
+          "operation": "own-close-write",
+          "outcome": "ALLOWED",
+          "errno": 0
+        },
+        {
+          "operation": "own-open-read",
+          "outcome": "ALLOWED",
+          "errno": 0
+        },
+        {
+          "operation": "own-read",
+          "outcome": "ALLOWED",
+          "errno": 0
+        },
+        {
+          "operation": "own-close-read",
+          "outcome": "ALLOWED",
+          "errno": 0
+        },
+        {
+          "operation": "outside-open-read",
+          "outcome": "DENIED",
+          "errno": 1
+        },
+        {
+          "operation": "outside-read",
+          "outcome": "NOT_RUN",
+          "errno": 0
+        },
+        {
+          "operation": "outside-close-read",
+          "outcome": "NOT_RUN",
+          "errno": 0
+        },
+        {
+          "operation": "outside-open-write",
+          "outcome": "DENIED",
+          "errno": 1
+        },
+        {
+          "operation": "outside-write",
+          "outcome": "NOT_RUN",
+          "errno": 0
+        },
+        {
+          "operation": "outside-close-write",
+          "outcome": "NOT_RUN",
+          "errno": 0
+        },
+        {
+          "operation": "socket-create",
+          "outcome": "ALLOWED",
+          "errno": 0
+        },
+        {
+          "operation": "socket-bind",
+          "outcome": "DENIED",
+          "errno": 1
+        },
+        {
+          "operation": "socket-close",
+          "outcome": "ALLOWED",
+          "errno": 0
+        }
+      ],
+      "clientLifecycle": {
+        "operation": 1,
+        "launchCalled": true,
+        "closeObserved": true,
+        "exited": true,
+        "killRequested": false,
+        "killReturned": null,
+        "killAtMs": null,
+        "ownerState": "IDLE",
+        "directChildOnly": true
+      }
+    },
+    {
+      "root": "/Users/louiscalata/nisi-next-private/.build/private-xpc-native-oGIVMQ",
+      "terminalSha256": "6e0e6cb0239cf076271cc8b0bc26ad1ec5139d7f4237279c37d386f9c11d4f47",
+      "pid": 31222,
+      "servicePidSelfReported": 31223,
+      "durationMs": 355,
+      "wireBytes": 225,
+      "status": "RECHECKED",
+      "serviceTerminationProven": false,
+      "terminal": {
+        "path": "/Users/louiscalata/nisi-next-private/.build/private-xpc-native-oGIVMQ/terminal.json",
+        "byteLength": 17182,
+        "sha256": "6e0e6cb0239cf076271cc8b0bc26ad1ec5139d7f4237279c37d386f9c11d4f47"
+      },
+      "runId": "08f40a53b204cec2bc68eca9324a030b",
+      "containers": [
+        {
+          "path": "/Users/louiscalata/Library/Containers/local.nisi.xpcprobe.host.r08f40a53b204cec2bc68eca9324a030b",
+          "existedBefore": false,
+          "existsAfter": true,
+          "removed": false
+        },
+        {
+          "path": "/Users/louiscalata/Library/Containers/local.nisi.xpcprobe.service.r08f40a53b204cec2bc68eca9324a030b",
+          "existedBefore": false,
+          "existsAfter": true,
+          "removed": false
+        }
+      ],
+      "entitlements": {
+        "service": {
+          "com.apple.security.app-sandbox": true
+        },
+        "host": {
+          "com.apple.security.app-sandbox": true
+        }
+      },
+      "rows": [
+        {
+          "operation": "own-open-write",
+          "outcome": "ALLOWED",
+          "errno": 0
+        },
+        {
+          "operation": "own-write",
+          "outcome": "ALLOWED",
+          "errno": 0
+        },
+        {
+          "operation": "own-close-write",
+          "outcome": "ALLOWED",
+          "errno": 0
+        },
+        {
+          "operation": "own-open-read",
+          "outcome": "ALLOWED",
+          "errno": 0
+        },
+        {
+          "operation": "own-read",
+          "outcome": "ALLOWED",
+          "errno": 0
+        },
+        {
+          "operation": "own-close-read",
+          "outcome": "ALLOWED",
+          "errno": 0
+        },
+        {
+          "operation": "outside-open-read",
+          "outcome": "DENIED",
+          "errno": 1
+        },
+        {
+          "operation": "outside-read",
+          "outcome": "NOT_RUN",
+          "errno": 0
+        },
+        {
+          "operation": "outside-close-read",
+          "outcome": "NOT_RUN",
+          "errno": 0
+        },
+        {
+          "operation": "outside-open-write",
+          "outcome": "DENIED",
+          "errno": 1
+        },
+        {
+          "operation": "outside-write",
+          "outcome": "NOT_RUN",
+          "errno": 0
+        },
+        {
+          "operation": "outside-close-write",
+          "outcome": "NOT_RUN",
+          "errno": 0
+        },
+        {
+          "operation": "socket-create",
+          "outcome": "ALLOWED",
+          "errno": 0
+        },
+        {
+          "operation": "socket-bind",
+          "outcome": "DENIED",
+          "errno": 1
+        },
+        {
+          "operation": "socket-close",
+          "outcome": "ALLOWED",
+          "errno": 0
+        }
+      ],
+      "clientLifecycle": {
+        "operation": 1,
+        "launchCalled": true,
+        "closeObserved": true,
+        "exited": true,
+        "killRequested": false,
+        "killReturned": null,
+        "killAtMs": null,
+        "ownerState": "IDLE",
+        "directChildOnly": true
+      }
+    }
+  ],
+  "isolatedParser": {
+    "tests": 9,
+    "passed": 9,
+    "selectedMutants": 3,
+    "detected": 3,
+    "failedTestsPerMutant": [
+      1,
+      1,
+      1
+    ],
+    "integrated": false,
+    "receipt": {
+      "path": "/Users/louiscalata/nisi-next-private/.build/private-xpc-owner-6Ao5Gh/recheck.json",
+      "byteLength": 2567,
+      "sha256": "faeb518a25d267e80fadc23019ac983cb80c423ab6c9e82e8cc7610660fd324f"
+    }
+  },
+  "collaborators": {
+    "claude": {
+      "requested": [
+        "fable",
+        "sonnet",
+        "opus"
+      ],
+      "status": "NOT_RUN",
+      "cause": "Each bounded attempt timed out",
+      "reportedModels": [],
+      "tokens": null,
+      "cost": null
+    },
+    "sharedChami": {
+      "jobId": "mac-20260912-233639-8059c59deb02a7e61d88cc54f6d73dba",
+      "requestedModel": "qwen3-coder-next",
+      "reportedModel": "Qwen3-Coder-Next 80B-A3B Q4_K_M",
+      "workerSeconds": 77.3,
+      "status": "RETURNED_REJECTED",
+      "cause": "Malformed closed JSON, incorrect proposed frame offsets and validation gaps",
+      "returnedTextExecuted": false,
+      "tokens": null,
+      "cost": null,
+      "taskOnlyHostname": "louisaurorar12"
+    },
+    "daybreak": "Read-only platform, source and first native receipt review; concrete findings corrected before launch",
+    "luna": "Isolated draft tests/parser and selected mutant fixtures; owner inspected and reran final parser checks",
+    "codex": "Sole native prototype writer, source collection, local build/ad-hoc signing/native launch, artifact recheck, final acceptance and documentation",
+    "newOpenCodePacket": false
+  },
+  "warnings": [
+    "Native source/runner are still private .build prototype artifacts; canonical integration is pending.",
+    "Client exit and XPC invalidation are not independent proof of service termination or cleanup.",
+    "Service PID is self-reported, not runtime code identity or kill authority.",
+    "Process-local one-use flags do not persist across launchd restart or new clients.",
+    "Fixed file and IPv4 bind observations do not establish complete isolation, resource containment or generated execution.",
+    "Four new App Sandbox containers remain; none removed.",
+    "The first owner parser recheck used Node human-readable output and refused unparseable counts; explicit TAP then passed, original record retained.",
+    "Selected pure parser mutants do not cover every guard or native behavior.",
+    "Evidence is local mutable storage, not independently signed or timestamped.",
+    "No new unsandboxed XPC control or paired product benchmark was performed."
+  ],
+  "notRun": [
+    "native malformed/duplicate/crash/timeout/invalidation acceptance",
+    "canonical XPC integration",
+    "protected checker + isolated Node runtime",
+    "service settlement",
+    "generated candidate execution",
+    "full live repository workflow",
+    "native product acceptance",
+    "new package acceptance",
+    "legal/publication clearance"
+  ],
+  "generatedCodeExecuted": false,
+  "developerIdUsed": false,
+  "publication": false,
+  "savedTrustSettingsChanged": false,
+  "authorizing": false,
+  "documents": [
+    {
+      "path": "/Users/louiscalata/nisi-next-private/roadmap.md",
+      "byteLength": 313762,
+      "sha256": "1136972b06837f51d595334b40549545f73f54206ca2f835008db6897032e440"
+    },
+    {
+      "path": "/Volumes/SharedChami/Veritas Local Repository/SYSTEM-EQUATION.md",
+      "byteLength": 286270,
+      "sha256": "a3f1213170d2ecec43145be6ede69f3a488a129011ed70760f75d26d6e8a0bcd"
+    }
+  ],
+  "retainedEquationTailSha256": "703bfbd10ad108ac8b18f16e4f6864c69d29f4558794616b81dac7ab9522c4f3",
+  "evidence": [
+    {
+      "path": "/Users/louiscalata/nisi-next-private/.build/private-xpc-owner-6Ao5Gh/checkpoint.mjs",
+      "byteLength": 6673,
+      "sha256": "d365d3bedd07c6592d315d140bf8498f9767e0c02c73bf3b840ee3c09cd9219b"
+    },
+    {
+      "path": "/Users/louiscalata/nisi-next-private/.build/private-xpc-owner-6Ao5Gh/freeze.json",
+      "byteLength": 15595,
+      "sha256": "d75b2349a8d556fd083bda33dcb2d9af5c17c3d77c08e35e4d02a21dc877977f"
+    },
+    {
+      "path": "/Users/louiscalata/nisi-next-private/.build/private-xpc-owner-6Ao5Gh/parser-recheck-0.json",
+      "byteLength": 1210,
+      "sha256": "7cc1824bb13552ce9a26fa24bb657dc1c0359371baedef3f5d771132cd391f1c"
+    },
+    {
+      "path": "/Users/louiscalata/nisi-next-private/.build/private-xpc-owner-6Ao5Gh/parser-tap-recheck-0.json",
+      "byteLength": 2246,
+      "sha256": "135bca5c63e5ed0622e4c69c72f9d1f3d2c3758846aacafe678b39aa3f49ddba"
+    },
+    {
+      "path": "/Users/louiscalata/nisi-next-private/.build/private-xpc-owner-6Ao5Gh/parser-tap-recheck-1.json",
+      "byteLength": 3045,
+      "sha256": "681e372fdc7b745758315eee7fc0abc39862592d1d37848f4baf7a598b0db2e1"
+    },
+    {
+      "path": "/Users/louiscalata/nisi-next-private/.build/private-xpc-owner-6Ao5Gh/parser-tap-recheck-2.json",
+      "byteLength": 3055,
+      "sha256": "5b5a6cf7b0bf84cc87cf382964b5c464558b0a519f393823a7147bca5f76309b"
+    },
+    {
+      "path": "/Users/louiscalata/nisi-next-private/.build/private-xpc-owner-6Ao5Gh/parser-tap-recheck-3.json",
+      "byteLength": 3070,
+      "sha256": "92ada837cde5dd2054ff95b9c5234ea2fbd99ca74e00edeb1575b30c8e1db083"
+    },
+    {
+      "path": "/Users/louiscalata/nisi-next-private/.build/private-xpc-owner-6Ao5Gh/portable.json",
+      "byteLength": 222379,
+      "sha256": "90bf504eace231d04de2d7e7d521ae60a9cd14ae3a1d9b84ace6ad2344b179e0"
+    },
+    {
+      "path": "/Users/louiscalata/nisi-next-private/.build/private-xpc-owner-6Ao5Gh/probe-client.m",
+      "byteLength": 3783,
+      "sha256": "e384948d18c2dc08a5495087aa78c87a367994aa4f42a42dae6a5d1565ca9c44"
+    },
+    {
+      "path": "/Users/louiscalata/nisi-next-private/.build/private-xpc-owner-6Ao5Gh/probe-service.m",
+      "byteLength": 4733,
+      "sha256": "ea2eb920dee034624c528e73e09deb89be40931d3d2f4b46c27e30f10b9df14a"
+    },
+    {
+      "path": "/Users/louiscalata/nisi-next-private/.build/private-xpc-owner-6Ao5Gh/probe-wire.h",
+      "byteLength": 2255,
+      "sha256": "9501102e7cd17bb2b6a1fd752b554dcec86b0a8c3683f5f7cb0af282b3701f64"
+    },
+    {
+      "path": "/Users/louiscalata/nisi-next-private/.build/private-xpc-owner-6Ao5Gh/recheck.json",
+      "byteLength": 2567,
+      "sha256": "faeb518a25d267e80fadc23019ac983cb80c423ab6c9e82e8cc7610660fd324f"
+    },
+    {
+      "path": "/Users/louiscalata/nisi-next-private/.build/private-xpc-owner-6Ao5Gh/recheck.mjs",
+      "byteLength": 5095,
+      "sha256": "adbd17b8235605ce233bbaff22febcbd808adcc04ea2688d204d4ee5a86e9df7"
+    },
+    {
+      "path": "/Users/louiscalata/nisi-next-private/.build/private-xpc-owner-6Ao5Gh/run.mjs",
+      "byteLength": 12705,
+      "sha256": "2092c010e3aeac6aab2fed93ea1e5b46249dbb969a43df1d717b3b6655c0300d"
+    },
+    {
+      "path": "/Users/louiscalata/nisi-next-private/.build/private-xpc-owner-6Ao5Gh/verify.mjs",
+      "byteLength": 1680,
+      "sha256": "8c1d1da04454df879d994ff405569d51f327431b69b22318614df7a9912d1108"
+    },
+    {
+      "path": "/Users/louiscalata/nisi-next-private/.build/private-xpc-native-guyf6f/client-run.json",
+      "byteLength": 5162,
+      "sha256": "15b50ecbcff5d0d9da99ef8cfcfaa59ec052f0ba897d50f4035feddebb18942a"
+    },
+    {
+      "path": "/Users/louiscalata/nisi-next-private/.build/private-xpc-native-guyf6f/command-1.json",
+      "byteLength": 221,
+      "sha256": "3f988933fa92ed3d8e42262b7db4cec2a91b45a710cf247c2266628ede4a2083"
+    },
+    {
+      "path": "/Users/louiscalata/nisi-next-private/.build/private-xpc-native-guyf6f/command-10.json",
+      "byteLength": 798,
+      "sha256": "6a214853eacd4e0e5b3bf4f731e0c3cc220ba935674d5041257f774805bc3aa5"
+    },
+    {
+      "path": "/Users/louiscalata/nisi-next-private/.build/private-xpc-native-guyf6f/command-11.json",
+      "byteLength": 677,
+      "sha256": "02ba88223daaab4a1e07bf364bb028134507322cecab625c377f7a8bc8df15e1"
+    },
+    {
+      "path": "/Users/louiscalata/nisi-next-private/.build/private-xpc-native-guyf6f/command-12.json",
+      "byteLength": 275,
+      "sha256": "a907d23157b81f222a0182e4e6dc883fc0443acc5eed6c7c9f97c838247f140e"
+    },
+    {
+      "path": "/Users/louiscalata/nisi-next-private/.build/private-xpc-native-guyf6f/command-13.json",
+      "byteLength": 820,
+      "sha256": "06e0c466184440c5e8c4b0b39e6ca798aca6b917b6eaa0c306b67e4b5d6cd4e9"
+    },
+    {
+      "path": "/Users/louiscalata/nisi-next-private/.build/private-xpc-native-guyf6f/command-2.json",
+      "byteLength": 228,
+      "sha256": "9eaa93e99fc162bf99a2835611f0ccae7a6a3ea0bb2d8a3e1cfc2e3c2b93f380"
+    },
+    {
+      "path": "/Users/louiscalata/nisi-next-private/.build/private-xpc-native-guyf6f/command-3.json",
+      "byteLength": 500,
+      "sha256": "81552bf2f143ac43fd716d7068d6e12e0583e0595a364501315b26e3e0bf21b0"
+    },
+    {
+      "path": "/Users/louiscalata/nisi-next-private/.build/private-xpc-native-guyf6f/command-4.json",
+      "byteLength": 457,
+      "sha256": "249ac0ea9b28c0f44af19e0f0dd2c74e0305294252209f0b8e580714346848dc"
+    },
+    {
+      "path": "/Users/louiscalata/nisi-next-private/.build/private-xpc-native-guyf6f/command-5.json",
+      "byteLength": 627,
+      "sha256": "0f2e40cad6ab621dccbf1294029e3b539c9d22835d09bed3d42c2146fb634aed"
+    },
+    {
+      "path": "/Users/louiscalata/nisi-next-private/.build/private-xpc-native-guyf6f/command-6.json",
+      "byteLength": 646,
+      "sha256": "9a92ea555f618bdc5e20cf7ad8c75161bbbdfd7a5e04edffb92c6e4db7204b7c"
+    },
+    {
+      "path": "/Users/louiscalata/nisi-next-private/.build/private-xpc-native-guyf6f/command-7.json",
+      "byteLength": 759,
+      "sha256": "00727b6172fba9658ec6856c9e04ba3ce98a67586ef1900d44d369af6297f63a"
+    },
+    {
+      "path": "/Users/louiscalata/nisi-next-private/.build/private-xpc-native-guyf6f/command-8.json",
+      "byteLength": 278,
+      "sha256": "22d4ebef5ed2761e50295e0308a65e90b7190870ce01a1077f3b362e3cb902df"
+    },
+    {
+      "path": "/Users/louiscalata/nisi-next-private/.build/private-xpc-native-guyf6f/command-9.json",
+      "byteLength": 548,
+      "sha256": "368d36e2763ddf43aa8c4b6fa6541507e411667bdff59cf46622660cd20c5a6c"
+    },
+    {
+      "path": "/Users/louiscalata/nisi-next-private/.build/private-xpc-native-guyf6f/entitlements.plist",
+      "byteLength": 112,
+      "sha256": "1e5bb1deff393cc3cb2e5df6453d6b0d3ced694cbf075a73075dc504a03ef3c7"
+    },
+    {
+      "path": "/Users/louiscalata/nisi-next-private/.build/private-xpc-native-guyf6f/outside-canary.txt",
+      "byteLength": 17,
+      "sha256": "747966aeb8561fb5cee0765def4b539302b368883ac878e4ac2a78958aeed92e"
+    },
+    {
+      "path": "/Users/louiscalata/nisi-next-private/.build/private-xpc-native-guyf6f/probe-client.m",
+      "byteLength": 3783,
+      "sha256": "e384948d18c2dc08a5495087aa78c87a367994aa4f42a42dae6a5d1565ca9c44"
+    },
+    {
+      "path": "/Users/louiscalata/nisi-next-private/.build/private-xpc-native-guyf6f/probe-config.h",
+      "byteLength": 500,
+      "sha256": "e0bd09fcd1ce998b1630efaa098aedf2382832620239f196eb73492287464ba1"
+    },
+    {
+      "path": "/Users/louiscalata/nisi-next-private/.build/private-xpc-native-guyf6f/probe-service.m",
+      "byteLength": 4733,
+      "sha256": "ea2eb920dee034624c528e73e09deb89be40931d3d2f4b46c27e30f10b9df14a"
+    },
+    {
+      "path": "/Users/louiscalata/nisi-next-private/.build/private-xpc-native-guyf6f/probe-wire.h",
+      "byteLength": 2255,
+      "sha256": "9501102e7cd17bb2b6a1fd752b554dcec86b0a8c3683f5f7cb0af282b3701f64"
+    },
+    {
+      "path": "/Users/louiscalata/nisi-next-private/.build/private-xpc-native-guyf6f/ProbeHost.app/Contents/_CodeSignature/CodeResources",
+      "byteLength": 2440,
+      "sha256": "3003b63e5d6348a1c1c46412796158643e98bd459d0458f2a2c27485bbb41dd7"
+    },
+    {
+      "path": "/Users/louiscalata/nisi-next-private/.build/private-xpc-native-guyf6f/ProbeHost.app/Contents/Info.plist",
+      "byteLength": 318,
+      "sha256": "78f1bf81db14b1c340488ab73dd5060bc999723161c3e8538173667ce1c25894"
+    },
+    {
+      "path": "/Users/louiscalata/nisi-next-private/.build/private-xpc-native-guyf6f/ProbeHost.app/Contents/MacOS/ProbeHost",
+      "byteLength": 56624,
+      "sha256": "01091010a12ce2adcce540a9f4d58ed7329d66236dbba6be69cfd321e50e9033"
+    },
+    {
+      "path": "/Users/louiscalata/nisi-next-private/.build/private-xpc-native-guyf6f/ProbeHost.app/Contents/XPCServices/ProbeService.xpc/Contents/_CodeSignature/CodeResources",
+      "byteLength": 2200,
+      "sha256": "6686de10a28a2fe11b36cbb86dcbacc827cfc4ea116b4dabf1845e5aee629e9b"
+    },
+    {
+      "path": "/Users/louiscalata/nisi-next-private/.build/private-xpc-native-guyf6f/ProbeHost.app/Contents/XPCServices/ProbeService.xpc/Contents/Info.plist",
+      "byteLength": 408,
+      "sha256": "dee848c1b84628c32f424a00685cba8cc9f8089f8bf32e7998ef58f516f7c57f"
+    },
+    {
+      "path": "/Users/louiscalata/nisi-next-private/.build/private-xpc-native-guyf6f/ProbeHost.app/Contents/XPCServices/ProbeService.xpc/Contents/MacOS/ProbeService",
+      "byteLength": 55984,
+      "sha256": "10f2cba1fe27c3c5824aa4e75d9e5d0ccda90384b666df8717628c8373b5c40e"
+    },
+    {
+      "path": "/Users/louiscalata/nisi-next-private/.build/private-xpc-native-guyf6f/run.mjs",
+      "byteLength": 12705,
+      "sha256": "2092c010e3aeac6aab2fed93ea1e5b46249dbb969a43df1d717b3b6655c0300d"
+    },
+    {
+      "path": "/Users/louiscalata/nisi-next-private/.build/private-xpc-native-guyf6f/terminal.json",
+      "byteLength": 17182,
+      "sha256": "db8f22cf0fcf50b2aae940fb13fca75d949054e3c5ff7d9cc7db88f97f0d726e"
+    },
+    {
+      "path": "/Users/louiscalata/nisi-next-private/.build/private-xpc-native-oGIVMQ/client-run.json",
+      "byteLength": 5162,
+      "sha256": "b86f575c2729608383048957f1d03a9386091a63486bf2bc655675336efd6a2c"
+    },
+    {
+      "path": "/Users/louiscalata/nisi-next-private/.build/private-xpc-native-oGIVMQ/command-1.json",
+      "byteLength": 221,
+      "sha256": "3f988933fa92ed3d8e42262b7db4cec2a91b45a710cf247c2266628ede4a2083"
+    },
+    {
+      "path": "/Users/louiscalata/nisi-next-private/.build/private-xpc-native-oGIVMQ/command-10.json",
+      "byteLength": 798,
+      "sha256": "8d1ad762f48fa5a560aff4bbac1f4a1528ef5cdbf7962b6614829804b73a2231"
+    },
+    {
+      "path": "/Users/louiscalata/nisi-next-private/.build/private-xpc-native-oGIVMQ/command-11.json",
+      "byteLength": 677,
+      "sha256": "1d2ba349ecdcd2c8b7072abeb4bf4343aabba231fa5026e3d49751c397f7d3d4"
+    },
+    {
+      "path": "/Users/louiscalata/nisi-next-private/.build/private-xpc-native-oGIVMQ/command-12.json",
+      "byteLength": 275,
+      "sha256": "a907d23157b81f222a0182e4e6dc883fc0443acc5eed6c7c9f97c838247f140e"
+    },
+    {
+      "path": "/Users/louiscalata/nisi-next-private/.build/private-xpc-native-oGIVMQ/command-13.json",
+      "byteLength": 820,
+      "sha256": "1c5f7dbf660205ef492e332d715438c7e8b23e019026a67d4a05d6878b28af7e"
+    },
+    {
+      "path": "/Users/louiscalata/nisi-next-private/.build/private-xpc-native-oGIVMQ/command-2.json",
+      "byteLength": 228,
+      "sha256": "9eaa93e99fc162bf99a2835611f0ccae7a6a3ea0bb2d8a3e1cfc2e3c2b93f380"
+    },
+    {
+      "path": "/Users/louiscalata/nisi-next-private/.build/private-xpc-native-oGIVMQ/command-3.json",
+      "byteLength": 500,
+      "sha256": "71585fcc0d8fe13d42ea874918157785201629edd29fc64e32c7d6bb685917bc"
+    },
+    {
+      "path": "/Users/louiscalata/nisi-next-private/.build/private-xpc-native-oGIVMQ/command-4.json",
+      "byteLength": 457,
+      "sha256": "7e0b2b36a17fcaffa50bbe84794a76defab72b5cd2d5a46f766fccccda6a81f5"
+    },
+    {
+      "path": "/Users/louiscalata/nisi-next-private/.build/private-xpc-native-oGIVMQ/command-5.json",
+      "byteLength": 627,
+      "sha256": "26bad249dec8cb40c4d19ae2e0910746dd2e4fe783c1fa15567a3161b8b6d256"
+    },
+    {
+      "path": "/Users/louiscalata/nisi-next-private/.build/private-xpc-native-oGIVMQ/command-6.json",
+      "byteLength": 646,
+      "sha256": "f061f9690584297b242b918dde1e45a6431618bdc485cebd72e7aa05ad2924a6"
+    },
+    {
+      "path": "/Users/louiscalata/nisi-next-private/.build/private-xpc-native-oGIVMQ/command-7.json",
+      "byteLength": 759,
+      "sha256": "50fc1faa5c345cf0af54c2c1363ccd29e0d6c3cd19a98e756135af43d1114945"
+    },
+    {
+      "path": "/Users/louiscalata/nisi-next-private/.build/private-xpc-native-oGIVMQ/command-8.json",
+      "byteLength": 278,
+      "sha256": "22d4ebef5ed2761e50295e0308a65e90b7190870ce01a1077f3b362e3cb902df"
+    },
+    {
+      "path": "/Users/louiscalata/nisi-next-private/.build/private-xpc-native-oGIVMQ/command-9.json",
+      "byteLength": 548,
+      "sha256": "e9a6464aee8f871e409cdf827c706d01630fb31b239ab44f225851561dd542ea"
+    },
+    {
+      "path": "/Users/louiscalata/nisi-next-private/.build/private-xpc-native-oGIVMQ/entitlements.plist",
+      "byteLength": 112,
+      "sha256": "1e5bb1deff393cc3cb2e5df6453d6b0d3ced694cbf075a73075dc504a03ef3c7"
+    },
+    {
+      "path": "/Users/louiscalata/nisi-next-private/.build/private-xpc-native-oGIVMQ/outside-canary.txt",
+      "byteLength": 17,
+      "sha256": "747966aeb8561fb5cee0765def4b539302b368883ac878e4ac2a78958aeed92e"
+    },
+    {
+      "path": "/Users/louiscalata/nisi-next-private/.build/private-xpc-native-oGIVMQ/probe-client.m",
+      "byteLength": 3783,
+      "sha256": "e384948d18c2dc08a5495087aa78c87a367994aa4f42a42dae6a5d1565ca9c44"
+    },
+    {
+      "path": "/Users/louiscalata/nisi-next-private/.build/private-xpc-native-oGIVMQ/probe-config.h",
+      "byteLength": 500,
+      "sha256": "e352b44672f187a159f3d88a27d98777c00572121a30973873454ede8f548be7"
+    },
+    {
+      "path": "/Users/louiscalata/nisi-next-private/.build/private-xpc-native-oGIVMQ/probe-service.m",
+      "byteLength": 4733,
+      "sha256": "ea2eb920dee034624c528e73e09deb89be40931d3d2f4b46c27e30f10b9df14a"
+    },
+    {
+      "path": "/Users/louiscalata/nisi-next-private/.build/private-xpc-native-oGIVMQ/probe-wire.h",
+      "byteLength": 2255,
+      "sha256": "9501102e7cd17bb2b6a1fd752b554dcec86b0a8c3683f5f7cb0af282b3701f64"
+    },
+    {
+      "path": "/Users/louiscalata/nisi-next-private/.build/private-xpc-native-oGIVMQ/ProbeHost.app/Contents/_CodeSignature/CodeResources",
+      "byteLength": 2440,
+      "sha256": "af7ad7f2631de898265c2718c21837209676791c806231df15a7aaa3969da992"
+    },
+    {
+      "path": "/Users/louiscalata/nisi-next-private/.build/private-xpc-native-oGIVMQ/ProbeHost.app/Contents/Info.plist",
+      "byteLength": 318,
+      "sha256": "49d54a6197fcab2e23b7931a4f3a61c52fafbb20777a73b8235ae855f5d2a6db"
+    },
+    {
+      "path": "/Users/louiscalata/nisi-next-private/.build/private-xpc-native-oGIVMQ/ProbeHost.app/Contents/MacOS/ProbeHost",
+      "byteLength": 56624,
+      "sha256": "a399b5f2d5073bbe673e80064d070e1482ccfc033b8d1c76c63cbb85d57505cd"
+    },
+    {
+      "path": "/Users/louiscalata/nisi-next-private/.build/private-xpc-native-oGIVMQ/ProbeHost.app/Contents/XPCServices/ProbeService.xpc/Contents/_CodeSignature/CodeResources",
+      "byteLength": 2200,
+      "sha256": "6686de10a28a2fe11b36cbb86dcbacc827cfc4ea116b4dabf1845e5aee629e9b"
+    },
+    {
+      "path": "/Users/louiscalata/nisi-next-private/.build/private-xpc-native-oGIVMQ/ProbeHost.app/Contents/XPCServices/ProbeService.xpc/Contents/Info.plist",
+      "byteLength": 408,
+      "sha256": "bfe8a2345ad611c8f7f70ed7a0a52c1ae33b58d741f8c8cc4f882ce97237d32e"
+    },
+    {
+      "path": "/Users/louiscalata/nisi-next-private/.build/private-xpc-native-oGIVMQ/ProbeHost.app/Contents/XPCServices/ProbeService.xpc/Contents/MacOS/ProbeService",
+      "byteLength": 55984,
+      "sha256": "dc09dfcde59f069b0950d69f1335326bde2086dd8f06eda75f86ff13bf603e0b"
+    },
+    {
+      "path": "/Users/louiscalata/nisi-next-private/.build/private-xpc-native-oGIVMQ/run.mjs",
+      "byteLength": 12705,
+      "sha256": "2092c010e3aeac6aab2fed93ea1e5b46249dbb969a43df1d717b3b6655c0300d"
+    },
+    {
+      "path": "/Users/louiscalata/nisi-next-private/.build/private-xpc-native-oGIVMQ/terminal.json",
+      "byteLength": 17182,
+      "sha256": "6e0e6cb0239cf076271cc8b0bc26ad1ec5139d7f4237279c37d386f9c11d4f47"
+    },
+    {
+      "path": "/Users/louiscalata/nisi-next-private/.build/xpc-scaffold-claude-rbr5Ze/claude-xpc-prompt.md",
+      "byteLength": 5325,
+      "sha256": "e325b23c6ccb5e7174ce8940bac1d2bd970b4412cf4dda61fae31379b64f1e54"
+    },
+    {
+      "path": "/Users/louiscalata/nisi-next-private/.build/xpc-scaffold-claude-rbr5Ze/claude-xpc-result.json",
+      "byteLength": 640,
+      "sha256": "872f8c57f69429720e7ec2b8734e2f10f608f39602dd5ae083ab1156e2f0b054"
+    },
+    {
+      "path": "/Users/louiscalata/nisi-next-private/.build/xpc-scaffold-claude-rbr5Ze/claude-xpc-status.md",
+      "byteLength": 2225,
+      "sha256": "27a48794c85d21f2279c1dedff845cd051e20ab09c2c178a999ee234a6e16855"
+    },
+    {
+      "path": "/Users/louiscalata/nisi-next-private/.build/xpc-frame-worker-4R5pvr/worker-frame-e17542ad-43c4-4606-92e4-9b201806fe12-adjudication.md",
+      "byteLength": 9000,
+      "sha256": "1e0747b686f590cc4a57f23eee4720b7e8ce76bd9a6ab845447f3bb7b3155338"
+    },
+    {
+      "path": "/Users/louiscalata/nisi-next-private/.build/xpc-frame-worker-4R5pvr/worker-frame-e17542ad-43c4-4606-92e4-9b201806fe12-deliverable.raw.md",
+      "byteLength": 4922,
+      "sha256": "5df7072b54252b573048613f4912ab701925f52fd36cd147a60328264a2bb3d6"
+    },
+    {
+      "path": "/Users/louiscalata/nisi-next-private/.build/xpc-frame-worker-4R5pvr/worker-frame-e17542ad-43c4-4606-92e4-9b201806fe12-enqueue-process.json",
+      "byteLength": 107,
+      "sha256": "b068eb7bff6556a2343ca7f8d492ffa63f9511ab4ee0e6beba2620e27b445d45"
+    },
+    {
+      "path": "/Users/louiscalata/nisi-next-private/.build/xpc-frame-worker-4R5pvr/worker-frame-e17542ad-43c4-4606-92e4-9b201806fe12-enqueue.stderr.txt",
+      "byteLength": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "/Users/louiscalata/nisi-next-private/.build/xpc-frame-worker-4R5pvr/worker-frame-e17542ad-43c4-4606-92e4-9b201806fe12-enqueue.stdout.txt",
+      "byteLength": 85,
+      "sha256": "44e06d45a6b5a6ddf086f9c1a1b6165f5ff8fc4ea38aeb9b83466198c8fefafc"
+    },
+    {
+      "path": "/Users/louiscalata/nisi-next-private/.build/xpc-frame-worker-4R5pvr/worker-frame-e17542ad-43c4-4606-92e4-9b201806fe12-job-handle.json",
+      "byteLength": 220,
+      "sha256": "ca82c9540b40264419be56a9ad2aa213d395995bb7f65712e24710e8faae3271"
+    },
+    {
+      "path": "/Users/louiscalata/nisi-next-private/.build/xpc-frame-worker-4R5pvr/worker-frame-e17542ad-43c4-4606-92e4-9b201806fe12-json-diagnostic.json",
+      "byteLength": 162,
+      "sha256": "841451ee4babc0ea695994043e4027095ed5c2ae2833281f9ec647d27787364e"
+    },
+    {
+      "path": "/Users/louiscalata/nisi-next-private/.build/xpc-frame-worker-4R5pvr/worker-frame-e17542ad-43c4-4606-92e4-9b201806fe12-prepared.json",
+      "byteLength": 1914,
+      "sha256": "b705fb9c90b17de8ff39d344243e01777de430f2f9812946642abe62355a59de"
+    },
+    {
+      "path": "/Users/louiscalata/nisi-next-private/.build/xpc-frame-worker-4R5pvr/worker-frame-e17542ad-43c4-4606-92e4-9b201806fe12-raw-result-process.json",
+      "byteLength": 106,
+      "sha256": "fab8e0ba9c0cbfec73a7ef393255bfdb3c5018cd26e9605d7ecc95031bc968cf"
+    },
+    {
+      "path": "/Users/louiscalata/nisi-next-private/.build/xpc-frame-worker-4R5pvr/worker-frame-e17542ad-43c4-4606-92e4-9b201806fe12-raw-result.stderr.txt",
+      "byteLength": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "/Users/louiscalata/nisi-next-private/.build/xpc-frame-worker-4R5pvr/worker-frame-e17542ad-43c4-4606-92e4-9b201806fe12-raw-result.stdout.txt",
+      "byteLength": 5556,
+      "sha256": "d6c42594ff8beb9a4eb8e5257cfb6637b5269d161c70dcb94543d6e5fe76c9b5"
+    },
+    {
+      "path": "/Users/louiscalata/nisi-next-private/.build/xpc-frame-worker-4R5pvr/worker-frame-e17542ad-43c4-4606-92e4-9b201806fe12-receipt.raw.json",
+      "byteLength": 5556,
+      "sha256": "d6c42594ff8beb9a4eb8e5257cfb6637b5269d161c70dcb94543d6e5fe76c9b5"
+    },
+    {
+      "path": "/Users/louiscalata/nisi-next-private/.build/xpc-frame-worker-4R5pvr/worker-frame-e17542ad-43c4-4606-92e4-9b201806fe12-request.json",
+      "byteLength": 6311,
+      "sha256": "0a952d023ca5f193c0d4a1cf9a54e37fb667ec748698a49c9afe2a2affd0778c"
+    },
+    {
+      "path": "/Users/louiscalata/nisi-next-private/.build/xpc-frame-worker-4R5pvr/worker-frame-e17542ad-43c4-4606-92e4-9b201806fe12-result-process.json",
+      "byteLength": 109,
+      "sha256": "f36855d7103a7076dd96e2c1a11a91897e1be0bc898842ecb87477378b94df74"
+    },
+    {
+      "path": "/Users/louiscalata/nisi-next-private/.build/xpc-frame-worker-4R5pvr/worker-frame-e17542ad-43c4-4606-92e4-9b201806fe12-result.stderr.txt",
+      "byteLength": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "/Users/louiscalata/nisi-next-private/.build/xpc-frame-worker-4R5pvr/worker-frame-e17542ad-43c4-4606-92e4-9b201806fe12-result.stdout.txt",
+      "byteLength": 5545,
+      "sha256": "d5dbfe0c8f3da708f5d9d408961d2fffe6f9bd1a65d4267e40f4b26ecd4da63f"
+    },
+    {
+      "path": "/Users/louiscalata/nisi-next-private/.build/xpc-frame-worker-4R5pvr/worker-frame-e17542ad-43c4-4606-92e4-9b201806fe12-status-process.json",
+      "byteLength": 106,
+      "sha256": "655ebfb3ead00badd491ae9b772807f4b924e955c22a9db1822cb7244c093ddf"
+    },
+    {
+      "path": "/Users/louiscalata/nisi-next-private/.build/xpc-frame-worker-4R5pvr/worker-frame-e17542ad-43c4-4606-92e4-9b201806fe12-status.stderr.txt",
+      "byteLength": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "/Users/louiscalata/nisi-next-private/.build/xpc-frame-worker-4R5pvr/worker-frame-e17542ad-43c4-4606-92e4-9b201806fe12-status.stdout.txt",
+      "byteLength": 265,
+      "sha256": "223dfb8be9ea19c44a72e057a2e2930e522234e8e65c21299242bb02c7c7cea9"
+    },
+    {
+      "path": "/Users/louiscalata/nisi-next-private/.build/xpc-frame-worker-4R5pvr/worker-frame-e17542ad-43c4-4606-92e4-9b201806fe12-submission-started.json",
+      "byteLength": 113,
+      "sha256": "19d2b116d4f40b1ced04fb73aed75bdeb710233364faba0438993b9eb9425793"
+    },
+    {
+      "path": "/Users/louiscalata/nisi-next-private/.build/xpc-frame-worker-4R5pvr/worker-frame-e17542ad-43c4-4606-92e4-9b201806fe12-summary.json",
+      "byteLength": 10090,
+      "sha256": "f50b6f7aa995b879fea4d64294797970a7533fcd19ebc19bdee9c5f3529aa438"
+    },
+    {
+      "path": "/Users/louiscalata/nisi-next-private/.build/xpc-frame-worker-4R5pvr/worker-xpc-frame-prompt.md",
+      "byteLength": 6220,
+      "sha256": "2068f17b6753ee41de7583877b0b50606ee189b43a252cee322623319a403ee6"
+    },
+    {
+      "path": "/Users/louiscalata/nisi-next-private/.build/xpc-frame-worker-4R5pvr/worker-xpc-frame.mjs",
+      "byteLength": 8456,
+      "sha256": "786c1d88c56cd9fb0007da0588b1873d7314d91dede677a249da51187abc5a1a"
+    },
+    {
+      "path": "/Users/louiscalata/nisi-next-private/.build/xpc-platform-design-SMo5v6/NOTES.md",
+      "byteLength": 21389,
+      "sha256": "46447b2d43c45d73af48bf1f31e362ae1010a427ad277cba65b61aec04fb0546"
+    },
+    {
+      "path": "/Users/louiscalata/nisi-next-private/.build/private-xpc-source-review-RMGZ2P/REVIEW.md",
+      "byteLength": 6392,
+      "sha256": "22b8a4e5ed7339272c8d75b15886af46a4cf0bff808f56e688ceca453d38b8e3"
+    },
+    {
+      "path": "/Users/louiscalata/nisi-next-private/.build/private-xpc-final-gate-BeH5FJ/REVIEW.md",
+      "byteLength": 3182,
+      "sha256": "0301ed73736b4669ab5b2bd0e0666161499215b4d7a73a427b56a6604635016b"
+    },
+    {
+      "path": "/Users/louiscalata/nisi-next-private/.build/private-xpc-native-review-wjclVw/REVIEW.md",
+      "byteLength": 5407,
+      "sha256": "734463d2aa5f9d4a93e9f7847c0e9135d8a84cf7921abd3caa848cb1ff6fb198"
+    },
+    {
+      "path": "/Users/louiscalata/nisi-next-private/.build/private-xpc-parser-mutants-NoA2OY/control.tap",
+      "byteLength": 793,
+      "sha256": "e690277083b9a6601d2ecf2bd78da9c5282d837965118bf66cd7833477c22cf5"
+    },
+    {
+      "path": "/Users/louiscalata/nisi-next-private/.build/private-xpc-parser-mutants-NoA2OY/src/probe-wire-parser.mjs",
+      "byteLength": 3581,
+      "sha256": "379753c8c037066ba914a8732461e80e0e8a3f3b8162e6606af93394601c93d2"
+    },
+    {
+      "path": "/Users/louiscalata/nisi-next-private/.build/private-xpc-parser-mutants-NoA2OY/tests/parser.test.mjs",
+      "byteLength": 5125,
+      "sha256": "f6c9fbc4d5e5277e363603225253f175312262838278e70c179d1a770bb27596"
+    },
+    {
+      "path": "/Users/louiscalata/nisi-next-private/.build/private-xpc-parser-mutants-m01-pid/control.tap",
+      "byteLength": 793,
+      "sha256": "e690277083b9a6601d2ecf2bd78da9c5282d837965118bf66cd7833477c22cf5"
+    },
+    {
+      "path": "/Users/louiscalata/nisi-next-private/.build/private-xpc-parser-mutants-m01-pid/evidence-hashes.txt",
+      "byteLength": 376,
+      "sha256": "c6f36e66fc396f8f20c72a4e6eafa430a275ff81b8c58699f87a5943b235362c"
+    },
+    {
+      "path": "/Users/louiscalata/nisi-next-private/.build/private-xpc-parser-mutants-m01-pid/mutant.tap",
+      "byteLength": 1678,
+      "sha256": "b2ced8641795d197d3702c991f4abfb3796d11f67fe80e5b86bd488507f0980b"
+    },
+    {
+      "path": "/Users/louiscalata/nisi-next-private/.build/private-xpc-parser-mutants-m01-pid/mutation.patch",
+      "byteLength": 1050,
+      "sha256": "7e93f93db7d20f32f4c0b220d832871ed8f55e992cda704f14f9434228bc0c25"
+    },
+    {
+      "path": "/Users/louiscalata/nisi-next-private/.build/private-xpc-parser-mutants-m01-pid/src/probe-wire-parser.mjs",
+      "byteLength": 3590,
+      "sha256": "94f35b25963166253f50e52bdbe14f0fd969d336af6f29f5d9b8e4dba0c2d322"
+    },
+    {
+      "path": "/Users/louiscalata/nisi-next-private/.build/private-xpc-parser-mutants-m01-pid/tests/parser.test.mjs",
+      "byteLength": 5125,
+      "sha256": "f6c9fbc4d5e5277e363603225253f175312262838278e70c179d1a770bb27596"
+    },
+    {
+      "path": "/Users/louiscalata/nisi-next-private/.build/private-xpc-parser-mutants-m02-errno/control.tap",
+      "byteLength": 793,
+      "sha256": "e690277083b9a6601d2ecf2bd78da9c5282d837965118bf66cd7833477c22cf5"
+    },
+    {
+      "path": "/Users/louiscalata/nisi-next-private/.build/private-xpc-parser-mutants-m02-errno/evidence-hashes.txt",
+      "byteLength": 382,
+      "sha256": "7098624c0f97713f89201247bef4b189c6ac36e70a89ef6be17f26f01c7459da"
+    },
+    {
+      "path": "/Users/louiscalata/nisi-next-private/.build/private-xpc-parser-mutants-m02-errno/mutant.tap",
+      "byteLength": 1682,
+      "sha256": "20a3367b03b346dc81dea35904ca0caaa4498091d7e9e955cee7dcaf2076dab3"
+    },
+    {
+      "path": "/Users/louiscalata/nisi-next-private/.build/private-xpc-parser-mutants-m02-errno/mutation.patch",
+      "byteLength": 713,
+      "sha256": "18fc98abac37c85788815ba2f4b3727ff7bfe8df65d5b0c2df300a43f8b93b59"
+    },
+    {
+      "path": "/Users/louiscalata/nisi-next-private/.build/private-xpc-parser-mutants-m02-errno/src/probe-wire-parser.mjs",
+      "byteLength": 3559,
+      "sha256": "4a6f27c472e5f520a6cd2c1f2b4e8792b6a13f38a3a17f275de6e6e327e0fbea"
+    },
+    {
+      "path": "/Users/louiscalata/nisi-next-private/.build/private-xpc-parser-mutants-m02-errno/tests/parser.test.mjs",
+      "byteLength": 5125,
+      "sha256": "f6c9fbc4d5e5277e363603225253f175312262838278e70c179d1a770bb27596"
+    },
+    {
+      "path": "/Users/louiscalata/nisi-next-private/.build/private-xpc-parser-mutants-m03-dependency/control.tap",
+      "byteLength": 793,
+      "sha256": "e690277083b9a6601d2ecf2bd78da9c5282d837965118bf66cd7833477c22cf5"
+    },
+    {
+      "path": "/Users/louiscalata/nisi-next-private/.build/private-xpc-parser-mutants-m03-dependency/evidence-hashes.txt",
+      "byteLength": 397,
+      "sha256": "b258f1b359812651707d1ac30ca05259b9ac58756ba21790775b4d5f646484a3"
+    },
+    {
+      "path": "/Users/louiscalata/nisi-next-private/.build/private-xpc-parser-mutants-m03-dependency/mutant.tap",
+      "byteLength": 1684,
+      "sha256": "6d04b5bb77f4f4b8a85ae6725fff0e53aec85599bc46abe68d4ce2798bebc223"
+    },
+    {
+      "path": "/Users/louiscalata/nisi-next-private/.build/private-xpc-parser-mutants-m03-dependency/mutation.patch",
+      "byteLength": 867,
+      "sha256": "9f95617fab83e5b7222613e9522a4d9e971ec18cd4e0a87ecbeeabab1ab18a19"
+    },
+    {
+      "path": "/Users/louiscalata/nisi-next-private/.build/private-xpc-parser-mutants-m03-dependency/src/probe-wire-parser.mjs",
+      "byteLength": 3321,
+      "sha256": "9e95bbb63e614047bfb0548781e0322b96bdcae5528725225a989fdcf90fa197"
+    },
+    {
+      "path": "/Users/louiscalata/nisi-next-private/.build/private-xpc-parser-mutants-m03-dependency/tests/parser.test.mjs",
+      "byteLength": 5125,
+      "sha256": "f6c9fbc4d5e5277e363603225253f175312262838278e70c179d1a770bb27596"
+    }
+  ]
+}

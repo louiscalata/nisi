@@ -1,0 +1,109 @@
+{
+  "summary": "Draft of src/index.mjs open/inspect half plus shared helpers for the journal owner v2 contract. Includes private WeakMap owner registry, getter-free envelope validation, safe time check, strict plain-data copy + deep freeze, snapshot/recovery/interrupted builders, sha256 digest, canonical config comparison from the fresh journal's serialized header, full open precedence (read, size, UTF-8, invalid journal, project, config, clock) with project/config rejection before any list/publication, single list(now) per open, and a prebuilt COMMIT_UNCERTAIN fallback snapshot for Codex's write path. recordJournalObservation is left as refusal('UNIMPLEMENTED'). Opus fallback draft; no Fable participation; nothing executed or tested.",
+  "deliverable": "import {createHash} from 'node:crypto';\nimport {createRunJournal, reopen} from './run-journal-v1.mjs';\nimport {writeSerializedJournal} from './run-journal-store-v1.mjs';\n\n// Journal owner v2 \u2014 open/inspect half and shared helpers.\n// recordJournalObservation (the write half) is intentionally unimplemented here.\n// writeSerializedJournal is imported for the write half; it is not called in this file.\n\nconst SCHEMA = 'nisi-journal-owner/v2';\nconst MEANING = 'HISTORY_OBSERVATIONS_ONLY';\nconst MAX_BYTES = 16 * 1024 * 1024;\nconst FS_METHODS = ['readFileSync', 'openSync', 'writeSync', 'closeSync', 'renameSync', 'unlinkSync'];\nconst CONFIG_KEYS = ['projectId', 'maxEntries', 'heartbeatTtlMs', 'redactPaths'];\nconst HEADER_KEYS = ['type', 'schema', 'config', 'now'];\n\n// Private registry: opaque frozen handle -> mutable private state.\n// State fields: path, fs, config, phase, busy, serialized, sha256, snapshot.\nconst OWNERS = new WeakMap();\n\nconst own = (o, k) => Object.prototype.hasOwnProperty.call(o, k);\n\nfunction fail(code) {\n  const e = new Error(code);\n  e.code = code;\n  return e;\n}\n\nfunction refusal(reason) {\n  return Object.freeze({schemaVersion: SCHEMA, status: 'REFUSED', reason, authorizing: false});\n}\n\nfunction safeTime(n) {\n  return typeof n === 'number' && Number.isSafeInteger(n) && n >= 0 && !Object.is(n, -0);\n}\n\n// Exact request envelope reader. Never invokes getters: values are taken from\n// own data descriptors only. Returns a plain object of values or null.\nfunction envelope(input, keys) {\n  if (input === null || typeof input !== 'object' || Array.isArray(input)) return null;\n  const proto = Object.getPrototypeOf(input);\n  if (proto !== Object.prototype && proto !== null) return null;\n  if (Reflect.ownKeys(input).length !== keys.length) return null;\n  const out = {};\n  for (const key of keys) {\n    const d = Object.getOwnPropertyDescriptor(input, key);\n    if (!d || !d.enumerable || !('value' in d)) return null;\n    out[key] = d.value;\n  }\n  return out;\n}\n\n// Strict plain-data deep copy: null, boolean, string, finite non-negative-zero\n// numbers, plain objects and dense arrays only. Accessors, symbol keys, functions,\n// undefined, Buffers, class instances and cycles throw PLAIN_DATA. Nothing is\n// silently dropped or converted.\nfunction plainCopy(value, stack = new Set()) {\n  if (value === null || typeof value === 'string' || typeof value === 'boolean') return value;\n  if (typeof value === 'number') {\n    if (!Number.isFinite(value) || Object.is(value, -0)) throw fail('PLAIN_DATA');\n    return value;\n  }\n  if (typeof value !== 'object' || stack.has(value)) throw fail('PLAIN_DATA');\n  const proto = Object.getPrototypeOf(value);\n  const isArray = Array.isArray(value);\n  if (isArray ? proto !== Array.prototype : proto !== Object.prototype && proto !== null) throw fail('PLAIN_DATA');\n  stack.add(value);\n  const names = Reflect.ownKeys(value);\n  let out;\n  if (isArray) {\n    if (names.length !== value.length + 1) throw fail('PLAIN_DATA');\n    out = [];\n    for (let i = 0; i < value.length; i++) {\n      const d = Object.getOwnPropertyDescriptor(value, String(i));\n      if (!d || !d.enumerable || !('value' in d)) throw fail('PLAIN_DATA');\n      out.push(plainCopy(d.value, stack));\n    }\n  } else {\n    out = {};\n    for (const key of names) {\n      if (typeof key !== 'string') throw fail('PLAIN_DATA');\n      const d = Object.getOwnPropertyDescriptor(value, key);\n      if (!d || !d.enumerable || !('value' in d)) throw fail('PLAIN_DATA');\n      Object.defineProperty(out, key, {value: plainCopy(d.value, stack), enumerable: true, writable: true, configurable: true});\n    }\n  }\n  stack.delete(value);\n  return out;\n}\n\n// Only ever applied to plainCopy output (no getters, no symbols).\nfunction deepFreeze(value, seen = new Set()) {\n  if (value !== null && typeof value === 'object' && !seen.has(value)) {\n    seen.add(value);\n    for (const key of Object.keys(value)) deepFreeze(value[key], seen);\n    Object.freeze(value);\n  }\n  return value;\n}\n\nconst frozenPlain = value => deepFreeze(plainCopy(value));\n\n// Canonical JSON with sorted object keys; array order preserved.\nfunction canonical(value) {\n  if (Array.isArray(value)) return '[' + value.map(canonical).join(',') + ']';\n  if (value !== null && typeof value === 'object') {\n    return '{' + Object.keys(value).sort().map(k => JSON.stringify(k) + ':' + canonical(value[k])).join(',') + '}';\n  }\n  return JSON.stringify(value);\n}\n\nfunction digest(buffer) {\n  return createHash('sha256').update(buffer).digest('hex');\n}\n\n// Parses the already-validated first line of a serialized journal into a plain\n// {config, now}. Throws on anything not shaped like the frozen journal header.\nfunction headerOf(serialized) {\n  const end = serialized.indexOf('\\n');\n  if (end < 0) throw fail('HEADER');\n  const header = plainCopy(JSON.parse(serialized.slice(0, end)));\n  if (Array.isArray(header) || header === null || typeof header !== 'object') throw fail('HEADER');\n  if (Object.keys(header).length !== HEADER_KEYS.length || HEADER_KEYS.some(k => !own(header, k))) throw fail('HEADER');\n  if (header.type !== 'header' || header.schema !== 'nisi-run-journal-v1' || !safeTime(header.now)) throw fail('HEADER');\n  const config = header.config;\n  if (config === null || typeof config !== 'object' || Array.isArray(config)) throw fail('HEADER');\n  if (Object.keys(config).length !== CONFIG_KEYS.length || CONFIG_KEYS.some(k => !own(config, k))) throw fail('HEADER');\n  return {config, now: header.now};\n}\n\nfunction recoveryOf(status, recoveredIds, rejectedLine, reason) {\n  return frozenPlain({status, recoveredIds, rejectedLine, reason, authorizing: false});\n}\n\nfunction interruptedOf(entries) {\n  const out = [];\n  for (const row of entries) {\n    const e = row.entry;\n    if (e.state === 'RUNNING' && row.liveness === 'UNKNOWN' && !row.revoked && !row.expired) {\n      out.push({id: e.id, runId: e.runId, attempt: e.attempt, stage: e.stage, liveness: row.liveness, heartbeatAt: e.heartbeatAt, createdAt: e.createdAt});\n    }\n  }\n  return out;\n}\n\n// entries must already be a plain copy of the journal's list(now) result.\nfunction snapshotOf(state, recovery, sha256, bytes, entries) {\n  return deepFreeze({\n    schemaVersion: SCHEMA,\n    state,\n    recovery,\n    sha256,\n    bytes,\n    entries,\n    interrupted: interruptedOf(entries),\n    meaning: MEANING,\n    authorizing: false,\n  });\n}\n\nconst NEW_RECOVERY = recoveryOf('NEW', [], null, null);\n\n// Prebuilt cleared uncertainty publication. The write half uses this as the\n// fallback when building the real COMMIT_UNCERTAIN diagnostic itself fails.\nconst UNCERTAIN_SNAPSHOT = snapshotOf('COMMIT_UNCERTAIN', recoveryOf('COMMIT_UNCERTAIN', [], null, 'COMMIT_UNCERTAIN'), null, null, []);\n\nfunction createState(fields) {\n  return {\n    path: fields.path,\n    fs: fields.fs,\n    config: fields.config,\n    phase: fields.phase,\n    busy: false,\n    serialized: fields.serialized,\n    sha256: fields.sha256,\n    snapshot: fields.snapshot,\n  };\n}\n\nfunction publishOwner(state) {\n  const owner = Object.freeze({});\n  OWNERS.set(owner, state);\n  return Object.freeze({schemaVersion: SCHEMA, status: 'OPENED', owner, snapshot: state.snapshot, authorizing: false});\n}\n\nexport function openJournalOwner(request) {\n  const req = envelope(request, ['path', 'fs', 'config', 'now']);\n  if (!req) return refusal('INVALID_INPUT');\n  const {path, fs, config, now} = req;\n  if (typeof path !== 'string' || path.length === 0 || path.includes('\u0000') || !path.isWellFormed()) return refusal('INVALID_INPUT');\n  if (fs === null || (typeof fs !== 'object' && typeof fs !== 'function')) return refusal('INVALID_INPUT');\n  for (const name of FS_METHODS) if (typeof fs[name] !== 'function') return refusal('INVALID_INPUT');\n  if (!safeTime(now)) return refusal('INVALID_INPUT');\n\n  // Config is validated by the frozen journal; the canonical private copy comes\n  // from the fresh journal's own serialized header, never from caller objects.\n  let fresh;\n  let canonicalConfig;\n  try {\n    fresh = createRunJournal(config);\n    canonicalConfig = deepFreeze(headerOf(fresh.serialize()).config);\n  } catch (_) {\n    return refusal('INVALID_INPUT');\n  }\n  const configJson = canonical(canonicalConfig);\n\n  // Single read. ENOENT means NEW; any other failure or non-Buffer is READ_FAILED.\n  let raw;\n  let missing = false;\n  try {\n    raw = fs.readFileSync(path);\n  } catch (error) {\n    if (error !== null && typeof error === 'object' && error.code === 'ENOENT') missing = true;\n    else return refusal('READ_FAILED');\n  }\n\n  if (missing) {\n    let entries;\n    let serialized;\n    try {\n      entries = frozenPlain(fresh.list(now));\n      serialized = fresh.serialize();\n    } catch (_) {\n      return refusal('INVALID_INPUT');\n    }\n    const snapshot = snapshotOf('OPEN', NEW_RECOVERY, null, 0, entries);\n    return publishOwner(createState({path, fs, config: canonicalConfig, phase: 'OPEN', serialized, sha256: null, snapshot}));\n  }\n\n  if (!Buffer.isBuffer(raw)) return refusal('READ_FAILED');\n  const bytes = Buffer.from(raw);\n  if (bytes.length > MAX_BYTES) return refusal('SIZE_LIMIT');\n  const text = bytes.toString('utf8');\n  if (!Buffer.from(text, 'utf8').equals(bytes)) return refusal('INVALID_UTF8');\n\n  const reopened = reopen(text);\n  if (!reopened || !reopened.journal || !reopened.report) return refusal('INVALID_JOURNAL');\n\n  // Project/config/clock binding happens before any list() or row exposure,\n  // for COMPLETE, INCOMPLETE and INVALID prefixes alike.\n  let persisted;\n  try {\n    persisted = headerOf(text);\n  } catch (_) {\n    return refusal('INVALID_JOURNAL');\n  }\n  if (persisted.config.projectId !== canonicalConfig.projectId) return refusal('PROJECT_MISMATCH');\n  if (canonical(persisted.config) !== configJson) return refusal('CONFIG_MISMATCH');\n  if (now < persisted.now) return refusal('CLOCK_BEHIND_JOURNAL');\n\n  const report = reopened.report;\n  const journal = reopened.journal;\n  let entries;\n  let recovery;\n  try {\n    entries = frozenPlain(journal.list(now));\n    recovery = recoveryOf(report.status, report.recoveredIds, report.rejectedLine, report.reason);\n  } catch (_) {\n    return refusal('INVALID_JOURNAL');\n  }\n\n  if (report.status === 'COMPLETE') {\n    let serialized;\n    try {\n      serialized = journal.serialize();\n    } catch (_) {\n      return refusal('INVALID_JOURNAL');\n    }\n    const sha256 = digest(bytes);\n    const snapshot = snapshotOf('OPEN', recovery, sha256, bytes.length, entries);\n    return publishOwner(createState({path, fs, config: canonicalConfig, phase: 'OPEN', serialized, sha256, snapshot}));\n  }\n\n  if (report.status === 'INCOMPLETE' || report.status === 'INVALID') {\n    // Sealed prefix: display only. Never serialize a sealed journal.\n    const snapshot = snapshotOf('SEALED', recovery, null, null, entries);\n    return publishOwner(createState({path, fs, config: canonicalConfig, phase: 'SEALED', serialized: null, sha256: null, snapshot}));\n  }\n\n  return refusal('INVALID_JOURNAL');\n}\n\nexport function inspectJournalOwner(request) {\n  const req = envelope(request, ['owner']);\n  if (!req) return refusal('INVALID_INPUT');\n  const state = req.owner !== null && typeof req.owner === 'object' ? OWNERS.get(req.owner) : undefined;\n  if (!state) return refusal('INVALID_INPUT');\n  return Object.freeze({schemaVersion: SCHEMA, status: 'SNAPSHOT', snapshot: state.snapshot, authorizing: false});\n}\n\nexport function recordJournalObservation(request) {\n  return refusal('UNIMPLEMENTED');\n}\n",
+  "risks": [
+    "Unverified draft: no execution, syntax check or tests were run. Opus fallback; no Fable participation.",
+    "Config refusal reason: an invalid config (createRunJournal throws CONFIG) is mapped to INVALID_INPUT; the contract does not name a distinct code. Owner should confirm.",
+    "fs method presence is checked via typeof fs[name], which can invoke getters on the injected fs object. Contract places injected fs outside the guarantee, but the envelope itself is read getter-free.",
+    "String.prototype.isWellFormed requires Node 20+; if an older runtime is targeted, replace with a manual surrogate scan.",
+    "plainCopy accepts finite non-integer numbers (JSON-compatible) while the frozen journal only emits safe integers; Codex may want to tighten this to safe integers for store responses.",
+    "UNCERTAIN_SNAPSHOT uses recovery.reason 'COMMIT_UNCERTAIN' as a placeholder; the real uncertainty snapshot must carry store.reason per contract. Codex must import/refer to UNCERTAIN_SNAPSHOT, `frozenPlain`, `snapshotOf`, `recoveryOf`, `digest`, `MAX_BYTES`, `OWNERS`, `writeSerializedJournal` for the write half.",
+    "Unused-import lint may flag writeSerializedJournal and the unused `request` parameter until Codex's half lands.",
+    "Sealed-prefix list(now) relies on the frozen journal's sealed build allowing list/time; if list throws TIME or otherwise, open returns INVALID_JOURNAL rather than a sealed owner \u2014 verify against test expectations.",
+    "Duplicate ENOENT detection assumes the trusted fs sets error.code; a fs throwing non-object errors is treated as READ_FAILED.",
+    "Error-code checks via error.code and report fields access properties on trusted dependency outputs only, consistent with the pinned dependencies assumption."
+  ],
+  "verification": [
+    "Confirm exactly three exports and that the module parses (node --check src/index.mjs) once written to disk.",
+    "Test open precedence: read failure, >16 MiB, invalid UTF-8 suffix after a valid prefix, non-journal text, wrong-project COMPLETE/INCOMPLETE/INVALID, config drift (including redactPaths order), now < header now \u2014 each refused with the contract code and no owner created.",
+    "Verify NEW open returns sha256:null, bytes:0, recovery NEW, and that state.serialized header `now` equals the open time (list(now) before serialize).",
+    "Verify COMPLETE open snapshot.sha256 equals sha256 of the raw file bytes and bytes equals raw length, while state.serialized reflects post-list(now) serialization.",
+    "Verify SEALED (INCOMPLETE/INVALID) owners expose the verified prefix rows and original diagnostic, with sha256 and bytes both null and no serialize call.",
+    "Getter-trap tests: request objects with accessor properties, symbol keys, arrays, or class prototypes must be refused without the getter running.",
+    "Handle tests: JSON-roundtripped or structurally identical `{}` handles must be refused by inspectJournalOwner; the returned snapshot must be deeply frozen and contain no fs/path/config/journal references.",
+    "Interrupted derivation: RUNNING entries with liveness UNKNOWN, not revoked/expired, appear with exactly the seven listed keys."
+  ],
+  "invocation_status": "succeeded",
+  "status": "succeeded",
+  "model_usage": {
+    "claude-haiku-4-5-20251001": {
+      "inputTokens": 9299,
+      "outputTokens": 13,
+      "cacheReadInputTokens": 0,
+      "cacheCreationInputTokens": 0,
+      "webSearchRequests": 0,
+      "costUSD": 0.009364,
+      "contextWindow": 200000,
+      "maxOutputTokens": 32000,
+      "thinkingTokens": 0,
+      "canonicalModel": "claude-haiku-4-5",
+      "provider": "firstParty",
+      "costBasis": "list"
+    },
+    "claude-opus-5": {
+      "inputTokens": 2,
+      "outputTokens": 12697,
+      "cacheReadInputTokens": 737,
+      "cacheCreationInputTokens": 12072,
+      "webSearchRequests": 0,
+      "costUSD": 0.4385235,
+      "contextWindow": 1000000,
+      "maxOutputTokens": 64000,
+      "thinkingTokens": 6170,
+      "canonicalModel": "claude-opus-5",
+      "provider": "firstParty",
+      "costBasis": "list"
+    }
+  },
+  "reported_models": [
+    "claude-haiku-4-5-20251001",
+    "claude-opus-5"
+  ],
+  "usage": {
+    "input_tokens": 2,
+    "cache_creation_input_tokens": 12072,
+    "cache_read_input_tokens": 737,
+    "output_tokens": 12697,
+    "output_tokens_details": {
+      "thinking_tokens": 6170
+    },
+    "server_tool_use": {
+      "web_search_requests": 0,
+      "web_fetch_requests": 0
+    },
+    "service_tier": "standard",
+    "cache_creation": {
+      "ephemeral_1h_input_tokens": 12072,
+      "ephemeral_5m_input_tokens": 0
+    },
+    "inference_geo": "not_available",
+    "iterations": [
+      {
+        "input_tokens": 2,
+        "output_tokens": 12697,
+        "cache_read_input_tokens": 737,
+        "cache_creation_input_tokens": 12072,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 12072
+        },
+        "type": "message"
+      }
+    ],
+    "speed": "standard"
+  },
+  "total_cost_usd": 0.4478875,
+  "duration_ms": 128284,
+  "tools_enabled": false,
+  "session_persisted": false,
+  "write_owner": "codex",
+  "requested_model": "opus",
+  "mode": "delegate",
+  "attempts": 1,
+  "wall_seconds": 129.28,
+  "created_at": "2026-09-14T00:25:35.785067+00:00",
+  "prior_attempts": [],
+  "total_wall_seconds": 129.281,
+  "prior_attempt_usage": [],
+  "total_usage_complete": true
+}

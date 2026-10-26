@@ -1,0 +1,15 @@
+Rung-4 grounded demo chain (real v1 -> v2 -> v3 -> v4 modules)
+
+planHash:            53ab2955e3585adffdea2fc7d9b2cc0b92020987f39a2496fbfa53491c7f5b29
+stagingHash:         6b29dbc9b7718615b045e5e8e5316f2c4e205bb5acf191afb4b485120b53db9b
+compilePlanHash:     63cd24c257d6b2dfb8c1ad9607b7eca7da2d57b0fdb3a61ac7d5601c990828ac
+manifest pin:        fffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff0
+packHash:            78253fd56a83fb1ea4f23f75defa66e1cd45e16bdd67aecfb9e4c720df107111
+lane:                work-orders/afm-internal-builder-v4/evidence/staging/
+invoke:              swiftc -c a.swift b.swift -o staged.o
+noNetwork:           true
+sources:             a.swift (11111111…) | b.swift (22222222…)
+output:              staged.o @ work-orders/afm-internal-builder-v4/evidence/staging/staged.o
+budget:              {"timeoutSeconds":120,"outputBytes":262144}
+
+Generated module:    evidence/compile-plan-demo.mjs (node --check PASS expected)

@@ -1,0 +1,89 @@
+{
+  "verdict": "FAIL",
+  "issues": [
+    "capture() (repository-host-history-v1.mjs): after admission (consumed=true, recordJournalObservation called) the switch `default:` and outer `catch` return output('REFUSED','INTERNAL_ERROR'). A throw from the record call, a STORE_FAILED result without `snapshot` (journal.snapshot.state throws), or an unknown status thus reports REFUSED, implying no write/rollback, which the contract forbids. Repair: set admitted=true before the record call; default -> output('UNCERTAIN','INTERNAL_ERROR',journal); catch -> output(admitted?'UNCERTAIN':'REFUSED','INTERNAL_ERROR'); use journal.snapshot?.state."
+  ],
+  "invocation_status": "succeeded",
+  "status": "FAIL",
+  "model_usage": {
+    "claude-haiku-4-5-20251001": {
+      "inputTokens": 8286,
+      "outputTokens": 12,
+      "cacheReadInputTokens": 0,
+      "cacheCreationInputTokens": 0,
+      "webSearchRequests": 0,
+      "costUSD": 0.008346,
+      "contextWindow": 200000,
+      "maxOutputTokens": 32000,
+      "thinkingTokens": 0,
+      "canonicalModel": "claude-haiku-4-5",
+      "provider": "firstParty",
+      "costBasis": "list"
+    },
+    "claude-opus-5": {
+      "inputTokens": 6,
+      "outputTokens": 4338,
+      "cacheReadInputTokens": 27291,
+      "cacheCreationInputTokens": 15027,
+      "webSearchRequests": 0,
+      "costUSD": 0.27239549999999996,
+      "contextWindow": 1000000,
+      "maxOutputTokens": 64000,
+      "thinkingTokens": 2359,
+      "canonicalModel": "claude-opus-5",
+      "provider": "firstParty",
+      "costBasis": "list"
+    }
+  },
+  "reported_models": [
+    "claude-haiku-4-5-20251001",
+    "claude-opus-5"
+  ],
+  "usage": {
+    "input_tokens": 6,
+    "cache_creation_input_tokens": 15027,
+    "cache_read_input_tokens": 27291,
+    "output_tokens": 4338,
+    "output_tokens_details": {
+      "thinking_tokens": 2359
+    },
+    "server_tool_use": {
+      "web_search_requests": 0,
+      "web_fetch_requests": 0
+    },
+    "service_tier": "standard",
+    "cache_creation": {
+      "ephemeral_1h_input_tokens": 15027,
+      "ephemeral_5m_input_tokens": 0
+    },
+    "inference_geo": "not_available",
+    "iterations": [
+      {
+        "input_tokens": 2,
+        "output_tokens": 320,
+        "cache_read_input_tokens": 15234,
+        "cache_creation_input_tokens": 419,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 419
+        },
+        "type": "message"
+      }
+    ],
+    "speed": "standard"
+  },
+  "total_cost_usd": 0.2807415,
+  "duration_ms": 59681,
+  "tools_enabled": false,
+  "session_persisted": false,
+  "write_owner": "codex",
+  "requested_model": "opus",
+  "mode": "review",
+  "attempts": 1,
+  "wall_seconds": 60.9,
+  "created_at": "2026-09-14T02:40:05.701561+00:00",
+  "prior_attempts": [],
+  "total_wall_seconds": 60.901,
+  "prior_attempt_usage": [],
+  "total_usage_complete": true
+}

@@ -1,0 +1,26 @@
+{
+ "M1-flags-shifted-out": {
+  "caught": true
+ },
+ "M2-no-predictor": {
+  "caught": true
+ },
+ "M3-no-uninterleave": {
+  "caught": true
+ },
+ "M4-luma-weights-swapped": {
+  "caught": true
+ },
+ "M5-nan-threshold-off-by-one": {
+  "caught": true
+ },
+ "M6-black-strict": {
+  "caught": true
+ },
+ "M7-unsorted-channels-accepted": {
+  "caught": true
+ },
+ "M8-chunk-y-unchecked": {
+  "caught": true
+ }
+}

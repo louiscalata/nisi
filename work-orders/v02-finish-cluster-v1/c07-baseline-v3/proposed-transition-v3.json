@@ -1,0 +1,165 @@
+{
+  "schema": "nisi.c07.baseline-transition.v3",
+  "status": "IMMUTABLE_PROPOSED_SOURCE_TRANSITION_NOT_ACCEPTANCE",
+  "scope": "C07_BASELINE_ORACLE_V3_NODE_ONLY",
+  "ownerAcceptance": "SEPARATE_EXTERNAL_ACTUAL_RECEIPT_REQUIRED",
+  "predecessor": {
+    "version": 1,
+    "dependencyMapSha256": "d368f5e3935324445f544b4eab081f66763b8149a9c8438a0bb94a2effc23461",
+    "baselineTestSha256": "17a8de142999f7ebdbe164336d81ce5c0a7ef27b00e105ff7bf7a1113ea37e7f",
+    "references": [
+      [
+        ".packet-diagnostics/c07-owner-draft-20260920/final-evidence.json",
+        "7909ceae8efe9290c63163834f31485894458fef3faa79506db3c5ede592ea10"
+      ],
+      [
+        ".packet-diagnostics/c07-owner-draft-20260920/canonical-MybG74/checks.json",
+        "adf573d2aaf0740d8f6eff26091100186ef4c875d47f1c3167f6bcf69f908093"
+      ],
+      [
+        "work-orders/run-journal-store/evidence/task1-initial-hashes.json",
+        "48fb527f84180df69341224e1502e9fbceb158691ac78f3b3a00937a2d95db40"
+      ],
+      [
+        "work-orders/run-journal-store/evidence/verification.json",
+        "9a97934ca8a0534216061632876d6cc063de1b1534b52f033e83b2b3c9f93f16"
+      ]
+    ],
+    "originalPacketPath": "work-orders/v02-finish-cluster-v1/c07-baseline-v3/history/c07-packet-v1.packet.md",
+    "originalPacketRawSha256": "872ce897b91cb3b0e93338e80060a7cb7787c97e1e15e27babf043a9c73e9af4",
+    "originalPacketNormalizedSha256": "c01e53f7925a83c0d7d1b620bd8ef3f8c27054241b6a326b71e38436c4757930",
+    "originalPackagePath": "work-orders/v02-finish-cluster-v1/c07-baseline-v3/history/finish-package-v1.json",
+    "originalPackageSha256": "5a648d3057b70061e6947c895981df7ce9308b4a01c578e4e3abd31aff85f935",
+    "originalControls": {
+      "work-orders/v02-finish-cluster-v1/c07-baseline-v3/history/check-c06.mjs": "19c6dfa1ab67f7b764a9a60e36edd18dc92545ed059e9c96c569e382a89dad4a",
+      "work-orders/v02-finish-cluster-v1/c07-baseline-v3/history/check-c07.mjs": "3ad5fc05d81a81ac4039c27dfc58c412271b3ea96f6712614871659f8ff75f97",
+      "work-orders/v02-finish-cluster-v1/c07-baseline-v3/history/check-cluster.mjs": "4a13a3d36170419baec4b9251ecd80d9f8542e023de746c3d3689233dbb42347"
+    },
+    "originalBaselinePath": "work-orders/v02-finish-cluster-v1/c07-baseline-v3/history/run-journal-baseline-v1.test.mjs"
+  },
+  "successor": {
+    "version": 3,
+    "baselineTestPath": "tests/run-journal-baseline.test.mjs",
+    "baselineTestSha256": "e5003eb51c32eaa988b6aa9313b9863bc60579b3f7d5739c56d4b9aa95bb5f86",
+    "parserPath": "tests/parse-static-imports-child.mjs",
+    "parserSha256": "0405808adc77b2f4e2b166bbab96213b881d9d3090711e3bc39dc8bebdbc1aa5",
+    "journalPath": "history/run-journal-v1.mjs",
+    "journalSha256": "0164f10da27f6d12cfd1f3d443bd8e0f7c237b46363353570ae4a759a97f749b",
+    "dependencyMapPath": "work-orders/v02-finish-cluster-v1/c07-baseline-v3/dependency-map-v3.json",
+    "dependencyMapSha256": "a9d3e998a73d57573f83d101fc2204ab5a30b3e36b5a9c7a3ebdef4d5cc79178",
+    "dependencyCount": 129,
+    "nodeEngine": ">=22",
+    "packetBinding": {
+      "path": ".packets/nisi-v02-c07-native-incident-oracle.packet.md",
+      "normalization": "PROJECT_ROOT_PLACEHOLDER_V1",
+      "canonicalRoot": "/Users/louiscalata/nisi",
+      "canonicalRawSha256": "43c24dee53f6906799f256c913e6497e0fa3ac8cdf8f770e80316d5015e06a6c",
+      "normalizedSha256": "0b1803926209cc9be49a588bea18ccd682eee9c59729928039b78d9aca735e13",
+      "rootRewriteOnly": true
+    },
+    "packagePath": "work-orders/v02-finish-cluster-v1/package.json",
+    "packageSha256": "ca463f3c1e23901fd687b98c43b0cd5198470a9ee6cfe09a443f5049a544dfea",
+    "packageCommand": "node --test ../../tests/finish-cluster-c07-baseline-v3.test.mjs ../../tests/run-journal-baseline.test.mjs ../../work-orders/v02-finish-cluster-v1/native-incident/admission-integration.test.mjs ../../tests/native-incident-source.test.mjs ../../tests/native-incident-source-host.test.mjs ../../tests/native-incident-source-boundaries.test.mjs"
+  },
+  "selection": {
+    "version": 3,
+    "currentTest": "tests/run-journal-baseline.test.mjs",
+    "historicalV1Test": "work-orders/v02-finish-cluster-v1/c07-baseline-v3/history/run-journal-baseline-v1.test.mjs",
+    "proposalRecord": "work-orders/v02-finish-cluster-v1/c07-baseline-v3/proposed-transition-v3.json",
+    "currentCommand": "npm run test:c07:v3 --prefix work-orders/v02-finish-cluster-v1",
+    "fullSuiteCommand": "npm test",
+    "selectionPolicy": "V1_PRESERVED_HISTORICAL_V3_SOURCE_SELECTION",
+    "ownerAcceptance": "SEPARATE_EXTERNAL_RECEIPT_REQUIRED"
+  },
+  "transitions": [
+    {
+      "by": "C07_BASELINE_ORACLE_V3",
+      "path": "tests/run-journal-baseline.test.mjs",
+      "oldSha256": "17a8de142999f7ebdbe164336d81ce5c0a7ef27b00e105ff7bf7a1113ea37e7f",
+      "newSha256": "e5003eb51c32eaa988b6aa9313b9863bc60579b3f7d5739c56d4b9aa95bb5f86",
+      "record": "work-orders/v02-finish-cluster-v1/c07-baseline-v3/proposed-transition-v3.json"
+    },
+    {
+      "by": "C07_BASELINE_ORACLE_V3",
+      "path": "work-orders/v02-finish-cluster-v1/package.json",
+      "oldSha256": "5a648d3057b70061e6947c895981df7ce9308b4a01c578e4e3abd31aff85f935",
+      "newSha256": "ca463f3c1e23901fd687b98c43b0cd5198470a9ee6cfe09a443f5049a544dfea",
+      "record": "work-orders/v02-finish-cluster-v1/c07-baseline-v3/proposed-transition-v3.json"
+    },
+    {
+      "by": "C07_BASELINE_ORACLE_V3",
+      "path": ".packets/nisi-v02-c07-native-incident-oracle.packet.md",
+      "oldSha256": "872ce897b91cb3b0e93338e80060a7cb7787c97e1e15e27babf043a9c73e9af4",
+      "newSha256": "43c24dee53f6906799f256c913e6497e0fa3ac8cdf8f770e80316d5015e06a6c",
+      "record": "work-orders/v02-finish-cluster-v1/c07-baseline-v3/proposed-transition-v3.json"
+    }
+  ],
+  "packetAmendment": {
+    "insertBefore": "## Packet acceptance\n",
+    "text": "### P3 \u2014 Owner-managed baseline oracle v3 source transition\n- **files**: .packets/nisi-v02-c07-native-incident-oracle.packet.md, tests/finish-cluster-c06.test.mjs, tests/finish-cluster-c07-baseline-v3.test.mjs, tests/finish-cluster-c07.test.mjs, tests/finish-cluster-history.test.mjs, tests/finish-cluster-inventory.test.mjs, tests/parse-static-imports-child.mjs, tests/run-journal-baseline.test.mjs, work-orders/v02-finish-cluster-v1/c07-baseline-v3/dependency-map-v3.json, work-orders/v02-finish-cluster-v1/c07-baseline-v3/history/c07-packet-v1.packet.md, work-orders/v02-finish-cluster-v1/c07-baseline-v3/history/check-c06.mjs, work-orders/v02-finish-cluster-v1/c07-baseline-v3/history/check-c07.mjs, work-orders/v02-finish-cluster-v1/c07-baseline-v3/history/check-cluster.mjs, work-orders/v02-finish-cluster-v1/c07-baseline-v3/history/finish-package-v1.json, work-orders/v02-finish-cluster-v1/c07-baseline-v3/history/run-journal-baseline-v1.test.mjs, work-orders/v02-finish-cluster-v1/c07-baseline-v3/proposed-transition-v3.json, work-orders/v02-finish-cluster-v1/check-c06.mjs, work-orders/v02-finish-cluster-v1/check-c07-baseline-v3.mjs, work-orders/v02-finish-cluster-v1/check-c07.mjs, work-orders/v02-finish-cluster-v1/check-cluster.mjs, work-orders/v02-finish-cluster-v1/cluster.json, work-orders/v02-finish-cluster-v1/package.json\n- **protected**: history/run-journal-v1.mjs, history/journal-owner-v2.mjs, tests/journal-proxy-boundaries.test.mjs, package.json, package-lock.json, roadmap.md, work-orders/v02-finish-cluster-v1/c06-c07-owner-decisions-20260920.md, .packet-diagnostics/, integrations/veritas/\n- **do**: Root alone may integrate the separately reviewed C07_BASELINE_ORACLE_V3_NODE_ONLY transition. Preserve the original packet/test/checker/package in the named history paths; keep all v1 evidence, five-file accepted C07 source scope, production Proxy rejection and existing dirty roadmap work unchanged. Validate exact baseline/package/packet old-to-new transitions and full current selection. The immutable proposal never self-accepts; actual test/review/owner acceptance belongs in a separate externally pinned receipt. No executor dispatch, native operation, cloud/model call, installation or publication.\n- **accept**: npm run test:c07:v3 --prefix work-orders/v02-finish-cluster-v1\n- **needs**: P2 and exact independent/root source review plus bounded isolated checks before canonical integration\n\n",
+    "textSha256": "c961ca74d8bc3563c05985872861023c69f60edfc0c7291e36f4f55e92f0cc6a",
+    "allowedPaths": [
+      ".packets/nisi-v02-c07-native-incident-oracle.packet.md",
+      "tests/finish-cluster-c06.test.mjs",
+      "tests/finish-cluster-c07-baseline-v3.test.mjs",
+      "tests/finish-cluster-c07.test.mjs",
+      "tests/finish-cluster-history.test.mjs",
+      "tests/finish-cluster-inventory.test.mjs",
+      "tests/parse-static-imports-child.mjs",
+      "tests/run-journal-baseline.test.mjs",
+      "work-orders/v02-finish-cluster-v1/c07-baseline-v3/dependency-map-v3.json",
+      "work-orders/v02-finish-cluster-v1/c07-baseline-v3/history/c07-packet-v1.packet.md",
+      "work-orders/v02-finish-cluster-v1/c07-baseline-v3/history/check-c06.mjs",
+      "work-orders/v02-finish-cluster-v1/c07-baseline-v3/history/check-c07.mjs",
+      "work-orders/v02-finish-cluster-v1/c07-baseline-v3/history/check-cluster.mjs",
+      "work-orders/v02-finish-cluster-v1/c07-baseline-v3/history/finish-package-v1.json",
+      "work-orders/v02-finish-cluster-v1/c07-baseline-v3/history/run-journal-baseline-v1.test.mjs",
+      "work-orders/v02-finish-cluster-v1/c07-baseline-v3/proposed-transition-v3.json",
+      "work-orders/v02-finish-cluster-v1/check-c06.mjs",
+      "work-orders/v02-finish-cluster-v1/check-c07-baseline-v3.mjs",
+      "work-orders/v02-finish-cluster-v1/check-c07.mjs",
+      "work-orders/v02-finish-cluster-v1/check-cluster.mjs",
+      "work-orders/v02-finish-cluster-v1/cluster.json",
+      "work-orders/v02-finish-cluster-v1/package.json"
+    ],
+    "protectedPaths": [
+      "history/run-journal-v1.mjs",
+      "history/journal-owner-v2.mjs",
+      "tests/journal-proxy-boundaries.test.mjs",
+      "package.json",
+      "package-lock.json",
+      "roadmap.md",
+      "work-orders/v02-finish-cluster-v1/c06-c07-owner-decisions-20260920.md",
+      ".packet-diagnostics/",
+      "integrations/veritas/"
+    ],
+    "acceptCommand": "npm run test:c07:v3 --prefix work-orders/v02-finish-cluster-v1"
+  },
+  "protectedProductionAndHistory": "Original source/Proxy rejection and all accepted historical evidence remain unchanged; no implicit current/historical fallback",
+  "historicalFixtures": {
+    "selection": "Explicit original controls and original pinned baseline/package/packet; original assertions retained",
+    "paths": [
+      "tests/finish-cluster-c06.test.mjs",
+      "tests/finish-cluster-c07.test.mjs",
+      "tests/finish-cluster-history.test.mjs",
+      "tests/finish-cluster-inventory.test.mjs"
+    ]
+  },
+  "currentControlTest": "tests/finish-cluster-c07-baseline-v3.test.mjs",
+  "acceptanceBoundary": {
+    "immutableRecordNeverUpdated": true,
+    "actualReceiptLocation": "External root-owned dated acceptance/integration receipt; absent at preparation",
+    "receiptMustBind": [
+      "raw source/control/packet/package/proposal/map hashes",
+      "independent exact-source review",
+      "actual parser/Node22/focused/history/Proxy/current-control receipts",
+      "actual versioned selection and full-suite raw counts",
+      "preserved original evidence identities",
+      "root owner acceptance and canonical integration readback"
+    ],
+    "receiptOutsideSourceDigestGraph": true,
+    "nativeOrDispatchAcceptance": false
+  },
+  "parserScope": "Static requested imports for the exact pinned source; not a general JavaScript effect analyzer",
+  "historicalSuiteCounts": "Not reconciled from raw receipts in this preparation; no fresh suite result claimed"
+}

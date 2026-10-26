@@ -1,0 +1,11 @@
+{
+  "name": "nisi-private-journal-restart-recovery",
+  "version": "0.0.0-private",
+  "private": true,
+  "type": "module",
+  "license": "UNLICENSED",
+  "scripts": {
+    "test": "node --test --test-timeout=10000 tests/baseline.test.mjs",
+    "test:recovery": "node --test --test-timeout=10000 tests/recovery.test.mjs"
+  }
+}

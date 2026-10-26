@@ -1,0 +1,36 @@
+diff --git a/hosts/macos-xpc/native-canary-adjudicator.mjs b/hosts/macos-xpc/native-canary-adjudicator.mjs
+index b01386c..cf8c807 100644
+--- a/hosts/macos-xpc/native-canary-adjudicator.mjs
++++ b/hosts/macos-xpc/native-canary-adjudicator.mjs
+@@ -221,6 +221,13 @@ export function adjudicateFixedCanaries(rawOutput, expected) {
+   };
+ }
+ 
++// Escape single-line plain-text fields only; structured evidence stays unchanged.
++// Escape backslashes too, so literal escape text cannot mimic an encoded control.
++function displayField(value) {
++  return value.replace(/[\\\u0000-\u001f\u007f-\u009f\u061c\u200e\u200f\u2028-\u202e\u2066-\u2069]/gu,
++    character => '\\u' + character.charCodeAt(0).toString(16).padStart(4, '0'));
++}
++
+ export function formatCanaryTable(result) {
+   if (typeof result !== 'object' || result === null || !Array.isArray(result.rows) ||
+       typeof result.counts !== 'object' || result.counts === null ||
+@@ -256,14 +263,14 @@ export function formatCanaryTable(result) {
+     } else if (observedOutcome === null) {
+       observedPart = 'Unknown';
+     } else {
+-      observedPart = observedOutcome + ' (errno ' + (observedErrno ?? 'Unknown') + ')';
++      observedPart = displayField(observedOutcome) + ' (errno ' + (observedErrno ?? 'Unknown') + ')';
+     }
+ 
+-    lines.push('- ' + row.operation + ': expected ' + expectedPart + ', observed ' + observedPart + ' -> ' + verdict);
++    lines.push('- ' + displayField(row.operation) + ': expected ' + expectedPart + ', observed ' + observedPart + ' -> ' + verdict);
+   }
+ 
+   lines.push('Malformed lines: ' + result.malformedLines.length);
+-  const unexpectedOps = result.unexpectedOperations.length === 0 ? 'none' : result.unexpectedOperations.join(', ');
++  const unexpectedOps = result.unexpectedOperations.length === 0 ? 'none' : result.unexpectedOperations.map(displayField).join(', ');
+   lines.push('Unexpected operations: ' + unexpectedOps);
+   lines.push('');
+   lines.push('Isolation acceptance is not established by this table.');

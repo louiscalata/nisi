@@ -1,0 +1,8 @@
+CONVERSATION E88DD56B-EE92-411B-ACD1-15C0E32CF170
+RESTORED_MESSAGES 0
+REQUEST_SHA256 636129fb55ede97c38255ece38c561560cd33720c7c57bd47ef023d10ab1b018
+REPLY_START
+I received your message.
+REPLY_END
+SAVED_SHA256 5950bff073fd0989335efb6fb47fcdefc9971f72117678b03d1cf9bd1619ed30
+{"acceptanceAuthorityGranted":false,"backend":"lmstudio-loopback","budgetExhausted":false,"chunks":5,"contentPersisted":true,"continuationHeuristic":"none","continuationLegs":0,"externalToolsEnabled":false,"modelAvailability":"loopback-responded","nativeSession":false,"networkEgress":false,"reasoningLevel":"none","replyChars":24,"replySha256":"274d7ad1f3b0b7fb633098a1e10cfe82fbf3e78d85feb4c6749864cb3bb38a64","requestChars":103,"status":"PASS","streamedChars":24,"transcriptDropped":0,"transport":"loopback-http","turnMode":"fast"}

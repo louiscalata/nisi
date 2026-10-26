@@ -1,0 +1,586 @@
+{
+  "schemaVersion": 1,
+  "contract": "veritas-mac1-engine-evidence-v1",
+  "scope": "ACTUAL_SWIFT_PIPELINE_DETERMINISTIC_ONLY_EVIDENCE_ENVELOPE",
+  "fullEngineParity": false,
+  "modelExecuted": false,
+  "externalAuthority": false,
+  "vectors": [
+    {
+      "id": "MAC1-EV-001",
+      "label": "valid JSON object",
+      "request": {
+        "kind": "json",
+        "utf8": "{\"name\":\"veritas\"}",
+        "repeat": 1,
+        "mode": "ASSIST",
+        "profile": {
+          "id": "veritas-macos-one-file-v1",
+          "requiredSections": [],
+          "allowedAdvisoryDimensions": [
+            "completeness",
+            "factual_support",
+            "risk",
+            "style"
+          ],
+          "modelParticipationRequired": false,
+          "maximumAdvisoryDimensions": 3
+        }
+      },
+      "expectedCanonical": "{\"advisoryCoverage\":null,\"advisoryPlan\":[],\"advisoryReceipt\":null,\"analyzerProbe\":{\"adapterContractVersion\":\"deterministic-only-v1\",\"contextSize\":null,\"modelIdentityStatus\":\"NO_MODEL\",\"provider\":\"none\",\"reasonCode\":\"MAC1_MODEL_UNAVAILABLE\",\"requestTokenCount\":null,\"route\":\"deterministic-only\",\"runtimeFingerprint\":\"da62f83807e1c6de029dccd0662b4d1ec39a6146535654b904682420c735fd72\",\"state\":\"DEGRADED\"},\"artifactKind\":\"json\",\"canAcceptInsideVeritas\":true,\"deterministicChecks\":[{\"explanation\":\"The artifact contains bytes.\",\"id\":\"DET-001-NONEMPTY\",\"status\":\"PASS\"},{\"explanation\":\"The complete snapshot decodes as UTF-8.\",\"id\":\"DET-002-UTF8\",\"status\":\"PASS\"},{\"explanation\":\"The snapshot is a JSON object or array.\",\"id\":\"DET-003-JSON-STRUCTURE\",\"status\":\"PASS\"}],\"deterministicPassed\":true,\"disposition\":\"DEGRADED\",\"findings\":[],\"limitationCodes\":[\"MAC1_MODEL_UNAVAILABLE\",\"OPTIONAL_MODEL_EVIDENCE_MISSING\",\"DETERMINISTIC_RESULT_PRESERVED\"],\"mode\":\"ASSIST\",\"modelParticipation\":\"UNAVAILABLE\",\"profileFingerprint\":\"7c197fb8f7100681bbc2fa7fcb4974bd1e46278143d6025eb7ae7bb0a85d8962\",\"profileID\":\"veritas-macos-one-file-v1\",\"subjectDigest\":\"3402af48eb7489fab81156b862c938133d58a710a919659f93393f3b194bf491\"}",
+      "expectedDigest": "cbd3738928b7682fcd47a28f80127b8725a7c1b29025ce8f739d0609dd2450ca",
+      "expectedProfileFingerprint": "7c197fb8f7100681bbc2fa7fcb4974bd1e46278143d6025eb7ae7bb0a85d8962"
+    },
+    {
+      "id": "MAC1-EV-002",
+      "label": "valid JSON array",
+      "request": {
+        "kind": "json",
+        "utf8": "[1,true,null]",
+        "repeat": 1,
+        "mode": "ASSIST",
+        "profile": {
+          "id": "veritas-macos-one-file-v1",
+          "requiredSections": [],
+          "allowedAdvisoryDimensions": [
+            "completeness",
+            "factual_support",
+            "risk",
+            "style"
+          ],
+          "modelParticipationRequired": false,
+          "maximumAdvisoryDimensions": 3
+        }
+      },
+      "expectedCanonical": "{\"advisoryCoverage\":null,\"advisoryPlan\":[],\"advisoryReceipt\":null,\"analyzerProbe\":{\"adapterContractVersion\":\"deterministic-only-v1\",\"contextSize\":null,\"modelIdentityStatus\":\"NO_MODEL\",\"provider\":\"none\",\"reasonCode\":\"MAC1_MODEL_UNAVAILABLE\",\"requestTokenCount\":null,\"route\":\"deterministic-only\",\"runtimeFingerprint\":\"da62f83807e1c6de029dccd0662b4d1ec39a6146535654b904682420c735fd72\",\"state\":\"DEGRADED\"},\"artifactKind\":\"json\",\"canAcceptInsideVeritas\":true,\"deterministicChecks\":[{\"explanation\":\"The artifact contains bytes.\",\"id\":\"DET-001-NONEMPTY\",\"status\":\"PASS\"},{\"explanation\":\"The complete snapshot decodes as UTF-8.\",\"id\":\"DET-002-UTF8\",\"status\":\"PASS\"},{\"explanation\":\"The snapshot is a JSON object or array.\",\"id\":\"DET-003-JSON-STRUCTURE\",\"status\":\"PASS\"}],\"deterministicPassed\":true,\"disposition\":\"DEGRADED\",\"findings\":[],\"limitationCodes\":[\"MAC1_MODEL_UNAVAILABLE\",\"OPTIONAL_MODEL_EVIDENCE_MISSING\",\"DETERMINISTIC_RESULT_PRESERVED\"],\"mode\":\"ASSIST\",\"modelParticipation\":\"UNAVAILABLE\",\"profileFingerprint\":\"7c197fb8f7100681bbc2fa7fcb4974bd1e46278143d6025eb7ae7bb0a85d8962\",\"profileID\":\"veritas-macos-one-file-v1\",\"subjectDigest\":\"6cd0536974ff4080ac0b296e30328660e9f0630e8027af4a4ac61fa7765bae63\"}",
+      "expectedDigest": "2683b3acde9ddb0d654d4d7c788feb8726730d225cae120f65d03f7668fba147",
+      "expectedProfileFingerprint": "7c197fb8f7100681bbc2fa7fcb4974bd1e46278143d6025eb7ae7bb0a85d8962"
+    },
+    {
+      "id": "MAC1-EV-003",
+      "label": "duplicate JSON key",
+      "request": {
+        "kind": "json",
+        "utf8": "{\"a\":1,\"a\":2}",
+        "repeat": 1,
+        "mode": "ASSIST",
+        "profile": {
+          "id": "veritas-macos-one-file-v1",
+          "requiredSections": [],
+          "allowedAdvisoryDimensions": [
+            "completeness",
+            "factual_support",
+            "risk",
+            "style"
+          ],
+          "modelParticipationRequired": false,
+          "maximumAdvisoryDimensions": 3
+        }
+      },
+      "expectedCanonical": "{\"advisoryCoverage\":null,\"advisoryPlan\":[],\"advisoryReceipt\":null,\"analyzerProbe\":null,\"artifactKind\":\"json\",\"canAcceptInsideVeritas\":false,\"deterministicChecks\":[{\"explanation\":\"The artifact contains bytes.\",\"id\":\"DET-001-NONEMPTY\",\"status\":\"PASS\"},{\"explanation\":\"The complete snapshot decodes as UTF-8.\",\"id\":\"DET-002-UTF8\",\"status\":\"PASS\"},{\"explanation\":\"The JSON snapshot contains a duplicate object key.\",\"id\":\"DET-003-JSON-STRUCTURE\",\"status\":\"FAIL\"}],\"deterministicPassed\":false,\"disposition\":\"NEEDS_ATTENTION\",\"findings\":[],\"limitationCodes\":[\"DETERMINISTIC_GATE_FAILED_MODEL_SKIPPED\"],\"mode\":\"ASSIST\",\"modelParticipation\":\"NOT_RUN\",\"profileFingerprint\":\"7c197fb8f7100681bbc2fa7fcb4974bd1e46278143d6025eb7ae7bb0a85d8962\",\"profileID\":\"veritas-macos-one-file-v1\",\"subjectDigest\":\"1c53ee0df7b12fd4d65b976120c7fa6b847dc41dffd7f0331c3237a1ceab1756\"}",
+      "expectedDigest": "39387282ab7dd91bef169df6c571d0a9f466162bf65a14b485ab03b109af5b5d",
+      "expectedProfileFingerprint": "7c197fb8f7100681bbc2fa7fcb4974bd1e46278143d6025eb7ae7bb0a85d8962"
+    },
+    {
+      "id": "MAC1-EV-004",
+      "label": "Unicode-equivalent JSON keys",
+      "request": {
+        "kind": "json",
+        "utf8": "{\"caf\\u00e9\":1,\"cafe\\u0301\":2}",
+        "repeat": 1,
+        "mode": "ASSIST",
+        "profile": {
+          "id": "veritas-macos-one-file-v1",
+          "requiredSections": [],
+          "allowedAdvisoryDimensions": [
+            "completeness",
+            "factual_support",
+            "risk",
+            "style"
+          ],
+          "modelParticipationRequired": false,
+          "maximumAdvisoryDimensions": 3
+        }
+      },
+      "expectedCanonical": "{\"advisoryCoverage\":null,\"advisoryPlan\":[],\"advisoryReceipt\":null,\"analyzerProbe\":null,\"artifactKind\":\"json\",\"canAcceptInsideVeritas\":false,\"deterministicChecks\":[{\"explanation\":\"The artifact contains bytes.\",\"id\":\"DET-001-NONEMPTY\",\"status\":\"PASS\"},{\"explanation\":\"The complete snapshot decodes as UTF-8.\",\"id\":\"DET-002-UTF8\",\"status\":\"PASS\"},{\"explanation\":\"The JSON snapshot contains Unicode-equivalent object keys.\",\"id\":\"DET-003-JSON-STRUCTURE\",\"status\":\"FAIL\"}],\"deterministicPassed\":false,\"disposition\":\"NEEDS_ATTENTION\",\"findings\":[],\"limitationCodes\":[\"DETERMINISTIC_GATE_FAILED_MODEL_SKIPPED\"],\"mode\":\"ASSIST\",\"modelParticipation\":\"NOT_RUN\",\"profileFingerprint\":\"7c197fb8f7100681bbc2fa7fcb4974bd1e46278143d6025eb7ae7bb0a85d8962\",\"profileID\":\"veritas-macos-one-file-v1\",\"subjectDigest\":\"c4720aabbb71c88d411b621d1daf5c516262952cfcb28b12006a88cfc438d61d\"}",
+      "expectedDigest": "a98cde6e118a557f66b686c39d2b1358a8b5f6a83670bbbf9f73913615d28c86",
+      "expectedProfileFingerprint": "7c197fb8f7100681bbc2fa7fcb4974bd1e46278143d6025eb7ae7bb0a85d8962"
+    },
+    {
+      "id": "MAC1-EV-005",
+      "label": "NUL JSON key",
+      "request": {
+        "kind": "json",
+        "utf8": "{\"\\u0000\":1}",
+        "repeat": 1,
+        "mode": "ASSIST",
+        "profile": {
+          "id": "veritas-macos-one-file-v1",
+          "requiredSections": [],
+          "allowedAdvisoryDimensions": [
+            "completeness",
+            "factual_support",
+            "risk",
+            "style"
+          ],
+          "modelParticipationRequired": false,
+          "maximumAdvisoryDimensions": 3
+        }
+      },
+      "expectedCanonical": "{\"advisoryCoverage\":null,\"advisoryPlan\":[],\"advisoryReceipt\":null,\"analyzerProbe\":null,\"artifactKind\":\"json\",\"canAcceptInsideVeritas\":false,\"deterministicChecks\":[{\"explanation\":\"The artifact contains bytes.\",\"id\":\"DET-001-NONEMPTY\",\"status\":\"PASS\"},{\"explanation\":\"The complete snapshot decodes as UTF-8.\",\"id\":\"DET-002-UTF8\",\"status\":\"PASS\"},{\"explanation\":\"The JSON snapshot contains a NUL object key.\",\"id\":\"DET-003-JSON-STRUCTURE\",\"status\":\"FAIL\"}],\"deterministicPassed\":false,\"disposition\":\"NEEDS_ATTENTION\",\"findings\":[],\"limitationCodes\":[\"DETERMINISTIC_GATE_FAILED_MODEL_SKIPPED\"],\"mode\":\"ASSIST\",\"modelParticipation\":\"NOT_RUN\",\"profileFingerprint\":\"7c197fb8f7100681bbc2fa7fcb4974bd1e46278143d6025eb7ae7bb0a85d8962\",\"profileID\":\"veritas-macos-one-file-v1\",\"subjectDigest\":\"d3ddd6e6adad292e4ae7970d59263e1187efc81ea972408769fb3adf5f13c207\"}",
+      "expectedDigest": "82c9835047ef733f145d4b19b590d61d89c506d41ddfa7a630630de9d06fe108",
+      "expectedProfileFingerprint": "7c197fb8f7100681bbc2fa7fcb4974bd1e46278143d6025eb7ae7bb0a85d8962"
+    },
+    {
+      "id": "MAC1-EV-006",
+      "label": "invalid UTF-8",
+      "request": {
+        "kind": "text",
+        "hex": "ff",
+        "repeat": 1,
+        "mode": "ASSIST",
+        "profile": {
+          "id": "veritas-macos-one-file-v1",
+          "requiredSections": [],
+          "allowedAdvisoryDimensions": [
+            "completeness",
+            "factual_support",
+            "risk",
+            "style"
+          ],
+          "modelParticipationRequired": false,
+          "maximumAdvisoryDimensions": 3
+        }
+      },
+      "expectedCanonical": "{\"advisoryCoverage\":null,\"advisoryPlan\":[],\"advisoryReceipt\":null,\"analyzerProbe\":null,\"artifactKind\":\"text\",\"canAcceptInsideVeritas\":false,\"deterministicChecks\":[{\"explanation\":\"The artifact contains bytes.\",\"id\":\"DET-001-NONEMPTY\",\"status\":\"PASS\"},{\"explanation\":\"The prototype accepts UTF-8 input only.\",\"id\":\"DET-002-UTF8\",\"status\":\"FAIL\"},{\"explanation\":\"Structure checks require valid UTF-8 text.\",\"id\":\"DET-003-STRUCTURE\",\"status\":\"NOT_RUN\"}],\"deterministicPassed\":false,\"disposition\":\"NEEDS_ATTENTION\",\"findings\":[],\"limitationCodes\":[\"DETERMINISTIC_GATE_FAILED_MODEL_SKIPPED\"],\"mode\":\"ASSIST\",\"modelParticipation\":\"NOT_RUN\",\"profileFingerprint\":\"7c197fb8f7100681bbc2fa7fcb4974bd1e46278143d6025eb7ae7bb0a85d8962\",\"profileID\":\"veritas-macos-one-file-v1\",\"subjectDigest\":\"a8100ae6aa1940d0b663bb31cd466142ebbdbd5187131b92d93818987832eb89\"}",
+      "expectedDigest": "6302f2284d42e387bff42aea13073f72edb072b9d7a04bb266d45a14a08565fd",
+      "expectedProfileFingerprint": "7c197fb8f7100681bbc2fa7fcb4974bd1e46278143d6025eb7ae7bb0a85d8962"
+    },
+    {
+      "id": "MAC1-EV-007",
+      "label": "empty direct snapshot",
+      "request": {
+        "kind": "text",
+        "utf8": "",
+        "repeat": 1,
+        "mode": "ASSIST",
+        "profile": {
+          "id": "veritas-macos-one-file-v1",
+          "requiredSections": [],
+          "allowedAdvisoryDimensions": [
+            "completeness",
+            "factual_support",
+            "risk",
+            "style"
+          ],
+          "modelParticipationRequired": false,
+          "maximumAdvisoryDimensions": 3
+        }
+      },
+      "expectedCanonical": "{\"advisoryCoverage\":null,\"advisoryPlan\":[],\"advisoryReceipt\":null,\"analyzerProbe\":null,\"artifactKind\":\"text\",\"canAcceptInsideVeritas\":false,\"deterministicChecks\":[{\"explanation\":\"The artifact is empty.\",\"id\":\"DET-001-NONEMPTY\",\"status\":\"FAIL\"},{\"explanation\":\"The complete snapshot decodes as UTF-8.\",\"id\":\"DET-002-UTF8\",\"status\":\"PASS\"},{\"explanation\":\"This profile declares no mandatory sections.\",\"id\":\"DET-003-REQUIRED-SECTIONS\",\"status\":\"PASS\"}],\"deterministicPassed\":false,\"disposition\":\"NEEDS_ATTENTION\",\"findings\":[],\"limitationCodes\":[\"DETERMINISTIC_GATE_FAILED_MODEL_SKIPPED\"],\"mode\":\"ASSIST\",\"modelParticipation\":\"NOT_RUN\",\"profileFingerprint\":\"7c197fb8f7100681bbc2fa7fcb4974bd1e46278143d6025eb7ae7bb0a85d8962\",\"profileID\":\"veritas-macos-one-file-v1\",\"subjectDigest\":\"e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855\"}",
+      "expectedDigest": "712d2fb7a71f154654b8a52995b0d7dfb109477d0d797de961078a9336b0eeb6",
+      "expectedProfileFingerprint": "7c197fb8f7100681bbc2fa7fcb4974bd1e46278143d6025eb7ae7bb0a85d8962"
+    },
+    {
+      "id": "MAC1-EV-008",
+      "label": "missing Markdown heading",
+      "request": {
+        "kind": "markdown",
+        "utf8": "# Summary",
+        "repeat": 1,
+        "mode": "ASSIST",
+        "profile": {
+          "id": "veritas-macos-one-file-v1",
+          "requiredSections": [
+            "Testing"
+          ],
+          "allowedAdvisoryDimensions": [
+            "completeness",
+            "factual_support",
+            "risk",
+            "style"
+          ],
+          "modelParticipationRequired": false,
+          "maximumAdvisoryDimensions": 3
+        }
+      },
+      "expectedCanonical": "{\"advisoryCoverage\":null,\"advisoryPlan\":[],\"advisoryReceipt\":null,\"analyzerProbe\":null,\"artifactKind\":\"markdown\",\"canAcceptInsideVeritas\":false,\"deterministicChecks\":[{\"explanation\":\"The artifact contains bytes.\",\"id\":\"DET-001-NONEMPTY\",\"status\":\"PASS\"},{\"explanation\":\"The complete snapshot decodes as UTF-8.\",\"id\":\"DET-002-UTF8\",\"status\":\"PASS\"},{\"explanation\":\"Missing required section markers: Testing.\",\"id\":\"DET-003-REQUIRED-SECTIONS\",\"status\":\"FAIL\"}],\"deterministicPassed\":false,\"disposition\":\"NEEDS_ATTENTION\",\"findings\":[],\"limitationCodes\":[\"DETERMINISTIC_GATE_FAILED_MODEL_SKIPPED\"],\"mode\":\"ASSIST\",\"modelParticipation\":\"NOT_RUN\",\"profileFingerprint\":\"4db2e64c0ace7bb003f0bd11756ad267d6933ffa95dd0cdef948831038c5e966\",\"profileID\":\"veritas-macos-one-file-v1\",\"subjectDigest\":\"d472979042ac41639fc5e45fc55464aaeefa9ec20e264099ebb7ebed728e9487\"}",
+      "expectedDigest": "4f282dc3360dce43018d2164899a926d7e1e84491183f75f78a81735471ce91d",
+      "expectedProfileFingerprint": "4db2e64c0ace7bb003f0bd11756ad267d6933ffa95dd0cdef948831038c5e966"
+    },
+    {
+      "id": "MAC1-EV-009",
+      "label": "present Markdown heading",
+      "request": {
+        "kind": "markdown",
+        "utf8": "## testing\n\nCovered.",
+        "repeat": 1,
+        "mode": "ASSIST",
+        "profile": {
+          "id": "veritas-macos-one-file-v1",
+          "requiredSections": [
+            "Testing"
+          ],
+          "allowedAdvisoryDimensions": [
+            "completeness",
+            "factual_support",
+            "risk",
+            "style"
+          ],
+          "modelParticipationRequired": false,
+          "maximumAdvisoryDimensions": 3
+        }
+      },
+      "expectedCanonical": "{\"advisoryCoverage\":null,\"advisoryPlan\":[],\"advisoryReceipt\":null,\"analyzerProbe\":{\"adapterContractVersion\":\"deterministic-only-v1\",\"contextSize\":null,\"modelIdentityStatus\":\"NO_MODEL\",\"provider\":\"none\",\"reasonCode\":\"MAC1_MODEL_UNAVAILABLE\",\"requestTokenCount\":null,\"route\":\"deterministic-only\",\"runtimeFingerprint\":\"da62f83807e1c6de029dccd0662b4d1ec39a6146535654b904682420c735fd72\",\"state\":\"DEGRADED\"},\"artifactKind\":\"markdown\",\"canAcceptInsideVeritas\":true,\"deterministicChecks\":[{\"explanation\":\"The artifact contains bytes.\",\"id\":\"DET-001-NONEMPTY\",\"status\":\"PASS\"},{\"explanation\":\"The complete snapshot decodes as UTF-8.\",\"id\":\"DET-002-UTF8\",\"status\":\"PASS\"},{\"explanation\":\"Every required section marker is present.\",\"id\":\"DET-003-REQUIRED-SECTIONS\",\"status\":\"PASS\"}],\"deterministicPassed\":true,\"disposition\":\"DEGRADED\",\"findings\":[],\"limitationCodes\":[\"MAC1_MODEL_UNAVAILABLE\",\"OPTIONAL_MODEL_EVIDENCE_MISSING\",\"DETERMINISTIC_RESULT_PRESERVED\"],\"mode\":\"ASSIST\",\"modelParticipation\":\"UNAVAILABLE\",\"profileFingerprint\":\"4db2e64c0ace7bb003f0bd11756ad267d6933ffa95dd0cdef948831038c5e966\",\"profileID\":\"veritas-macos-one-file-v1\",\"subjectDigest\":\"7e0f3891e4052909c27cf6b53bf73a91f51c3970c5a80e93ff8e368bdefa4187\"}",
+      "expectedDigest": "e96101a5ce19c46190fd5b62d474265237ab185f16af496de4442c5a9ab639d9",
+      "expectedProfileFingerprint": "4db2e64c0ace7bb003f0bd11756ad267d6933ffa95dd0cdef948831038c5e966"
+    },
+    {
+      "id": "MAC1-EV-010",
+      "label": "missing text marker",
+      "request": {
+        "kind": "text",
+        "utf8": "Rollback is discussed inline.",
+        "repeat": 1,
+        "mode": "ASSIST",
+        "profile": {
+          "id": "veritas-macos-one-file-v1",
+          "requiredSections": [
+            "Rollback"
+          ],
+          "allowedAdvisoryDimensions": [
+            "completeness",
+            "factual_support",
+            "risk",
+            "style"
+          ],
+          "modelParticipationRequired": false,
+          "maximumAdvisoryDimensions": 3
+        }
+      },
+      "expectedCanonical": "{\"advisoryCoverage\":null,\"advisoryPlan\":[],\"advisoryReceipt\":null,\"analyzerProbe\":null,\"artifactKind\":\"text\",\"canAcceptInsideVeritas\":false,\"deterministicChecks\":[{\"explanation\":\"The artifact contains bytes.\",\"id\":\"DET-001-NONEMPTY\",\"status\":\"PASS\"},{\"explanation\":\"The complete snapshot decodes as UTF-8.\",\"id\":\"DET-002-UTF8\",\"status\":\"PASS\"},{\"explanation\":\"Missing required standalone section markers: Rollback.\",\"id\":\"DET-003-REQUIRED-SECTIONS\",\"status\":\"FAIL\"}],\"deterministicPassed\":false,\"disposition\":\"NEEDS_ATTENTION\",\"findings\":[],\"limitationCodes\":[\"DETERMINISTIC_GATE_FAILED_MODEL_SKIPPED\"],\"mode\":\"ASSIST\",\"modelParticipation\":\"NOT_RUN\",\"profileFingerprint\":\"d4b7e92af4a0182924ad8680b7c9da90f55d9741261ba4acf0d53fad27abc0b2\",\"profileID\":\"veritas-macos-one-file-v1\",\"subjectDigest\":\"1f421017babb2cf2e1a692968aa6714667db2c24fe25ce90edba173259283de5\"}",
+      "expectedDigest": "c0ad0e30f4bde629f1c15201253b22903fc6534a4d108e24aee80a70a48becc0",
+      "expectedProfileFingerprint": "d4b7e92af4a0182924ad8680b7c9da90f55d9741261ba4acf0d53fad27abc0b2"
+    },
+    {
+      "id": "MAC1-EV-011",
+      "label": "present text marker",
+      "request": {
+        "kind": "text",
+        "utf8": " rollback \nSteps follow.",
+        "repeat": 1,
+        "mode": "ASSIST",
+        "profile": {
+          "id": "veritas-macos-one-file-v1",
+          "requiredSections": [
+            "Rollback"
+          ],
+          "allowedAdvisoryDimensions": [
+            "completeness",
+            "factual_support",
+            "risk",
+            "style"
+          ],
+          "modelParticipationRequired": false,
+          "maximumAdvisoryDimensions": 3
+        }
+      },
+      "expectedCanonical": "{\"advisoryCoverage\":null,\"advisoryPlan\":[],\"advisoryReceipt\":null,\"analyzerProbe\":{\"adapterContractVersion\":\"deterministic-only-v1\",\"contextSize\":null,\"modelIdentityStatus\":\"NO_MODEL\",\"provider\":\"none\",\"reasonCode\":\"MAC1_MODEL_UNAVAILABLE\",\"requestTokenCount\":null,\"route\":\"deterministic-only\",\"runtimeFingerprint\":\"da62f83807e1c6de029dccd0662b4d1ec39a6146535654b904682420c735fd72\",\"state\":\"DEGRADED\"},\"artifactKind\":\"text\",\"canAcceptInsideVeritas\":true,\"deterministicChecks\":[{\"explanation\":\"The artifact contains bytes.\",\"id\":\"DET-001-NONEMPTY\",\"status\":\"PASS\"},{\"explanation\":\"The complete snapshot decodes as UTF-8.\",\"id\":\"DET-002-UTF8\",\"status\":\"PASS\"},{\"explanation\":\"Every required section marker is present as a standalone line.\",\"id\":\"DET-003-REQUIRED-SECTIONS\",\"status\":\"PASS\"}],\"deterministicPassed\":true,\"disposition\":\"DEGRADED\",\"findings\":[],\"limitationCodes\":[\"MAC1_MODEL_UNAVAILABLE\",\"OPTIONAL_MODEL_EVIDENCE_MISSING\",\"DETERMINISTIC_RESULT_PRESERVED\"],\"mode\":\"ASSIST\",\"modelParticipation\":\"UNAVAILABLE\",\"profileFingerprint\":\"d4b7e92af4a0182924ad8680b7c9da90f55d9741261ba4acf0d53fad27abc0b2\",\"profileID\":\"veritas-macos-one-file-v1\",\"subjectDigest\":\"52f727f194cb2dd35376468547eea1a0ff947a7b9e7faccfed4c0ff78fec08b7\"}",
+      "expectedDigest": "06426dccb4887bd18071d8d0a531c71dfe7a0effbe758a24edd4f0157070ae31",
+      "expectedProfileFingerprint": "d4b7e92af4a0182924ad8680b7c9da90f55d9741261ba4acf0d53fad27abc0b2"
+    },
+    {
+      "id": "MAC1-EV-012",
+      "label": "off short-circuits even invalid input",
+      "request": {
+        "kind": "json",
+        "utf8": "bad",
+        "repeat": 1,
+        "mode": "OFF",
+        "profile": {
+          "id": "veritas-macos-one-file-v1",
+          "requiredSections": [],
+          "allowedAdvisoryDimensions": [
+            "completeness",
+            "factual_support",
+            "risk",
+            "style"
+          ],
+          "modelParticipationRequired": false,
+          "maximumAdvisoryDimensions": 3
+        }
+      },
+      "expectedCanonical": "{\"advisoryCoverage\":null,\"advisoryPlan\":[],\"advisoryReceipt\":null,\"analyzerProbe\":null,\"artifactKind\":\"json\",\"canAcceptInsideVeritas\":false,\"deterministicChecks\":[],\"deterministicPassed\":false,\"disposition\":\"OFF\",\"findings\":[],\"limitationCodes\":[\"MODE_OFF_NO_ANALYSIS\"],\"mode\":\"OFF\",\"modelParticipation\":\"NOT_RUN\",\"profileFingerprint\":\"7c197fb8f7100681bbc2fa7fcb4974bd1e46278143d6025eb7ae7bb0a85d8962\",\"profileID\":\"veritas-macos-one-file-v1\",\"subjectDigest\":\"2f05d4b689d270cafb02285f35f44866f7dc8a2d368a3f9d1124373eeab31fb1\"}",
+      "expectedDigest": "5d8c8e1e19dc190efe08792703761d0cd0de3b9527c4bd63ccbfc3ade8924cdc",
+      "expectedProfileFingerprint": "7c197fb8f7100681bbc2fa7fcb4974bd1e46278143d6025eb7ae7bb0a85d8962"
+    },
+    {
+      "id": "MAC1-EV-013",
+      "label": "enforce refuses even valid input",
+      "request": {
+        "kind": "json",
+        "utf8": "{}",
+        "repeat": 1,
+        "mode": "ENFORCE",
+        "profile": {
+          "id": "veritas-macos-one-file-v1",
+          "requiredSections": [],
+          "allowedAdvisoryDimensions": [
+            "completeness",
+            "factual_support",
+            "risk",
+            "style"
+          ],
+          "modelParticipationRequired": false,
+          "maximumAdvisoryDimensions": 3
+        }
+      },
+      "expectedCanonical": "{\"advisoryCoverage\":null,\"advisoryPlan\":[],\"advisoryReceipt\":null,\"analyzerProbe\":null,\"artifactKind\":\"json\",\"canAcceptInsideVeritas\":false,\"deterministicChecks\":[],\"deterministicPassed\":false,\"disposition\":\"BLOCKED\",\"findings\":[],\"limitationCodes\":[\"ENFORCE_ROUTE_NOT_IMPLEMENTED\",\"NO_EXTERNAL_ACTION_WITHHELD\"],\"mode\":\"ENFORCE\",\"modelParticipation\":\"NOT_RUN\",\"profileFingerprint\":\"7c197fb8f7100681bbc2fa7fcb4974bd1e46278143d6025eb7ae7bb0a85d8962\",\"profileID\":\"veritas-macos-one-file-v1\",\"subjectDigest\":\"44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a\"}",
+      "expectedDigest": "be03e12d252337510735a09ea8071fa107c0830bf50498a981776f3a534a9dad",
+      "expectedProfileFingerprint": "7c197fb8f7100681bbc2fa7fcb4974bd1e46278143d6025eb7ae7bb0a85d8962"
+    },
+    {
+      "id": "MAC1-EV-014",
+      "label": "required model unavailable",
+      "request": {
+        "kind": "json",
+        "utf8": "{}",
+        "repeat": 1,
+        "mode": "ASSIST",
+        "profile": {
+          "id": "veritas-macos-one-file-v1",
+          "requiredSections": [],
+          "allowedAdvisoryDimensions": [
+            "completeness",
+            "factual_support",
+            "risk",
+            "style"
+          ],
+          "modelParticipationRequired": true,
+          "maximumAdvisoryDimensions": 3
+        }
+      },
+      "expectedCanonical": "{\"advisoryCoverage\":null,\"advisoryPlan\":[],\"advisoryReceipt\":null,\"analyzerProbe\":{\"adapterContractVersion\":\"deterministic-only-v1\",\"contextSize\":null,\"modelIdentityStatus\":\"NO_MODEL\",\"provider\":\"none\",\"reasonCode\":\"MAC1_MODEL_UNAVAILABLE\",\"requestTokenCount\":null,\"route\":\"deterministic-only\",\"runtimeFingerprint\":\"da62f83807e1c6de029dccd0662b4d1ec39a6146535654b904682420c735fd72\",\"state\":\"DEGRADED\"},\"artifactKind\":\"json\",\"canAcceptInsideVeritas\":false,\"deterministicChecks\":[{\"explanation\":\"The artifact contains bytes.\",\"id\":\"DET-001-NONEMPTY\",\"status\":\"PASS\"},{\"explanation\":\"The complete snapshot decodes as UTF-8.\",\"id\":\"DET-002-UTF8\",\"status\":\"PASS\"},{\"explanation\":\"The snapshot is a JSON object or array.\",\"id\":\"DET-003-JSON-STRUCTURE\",\"status\":\"PASS\"}],\"deterministicPassed\":true,\"disposition\":\"BLOCKED\",\"findings\":[],\"limitationCodes\":[\"MAC1_MODEL_UNAVAILABLE\",\"REQUIRED_MODEL_EVIDENCE_MISSING\",\"DETERMINISTIC_RESULT_PRESERVED\"],\"mode\":\"ASSIST\",\"modelParticipation\":\"UNAVAILABLE\",\"profileFingerprint\":\"915bab0174ee333757cbe3e60e1f071eb31d8511de3effe6a199ca67d6c51026\",\"profileID\":\"veritas-macos-one-file-v1\",\"subjectDigest\":\"44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a\"}",
+      "expectedDigest": "38902b26fccf13321e6604d72378bfb7a2f3de69fd3a48a84fcf91cba73d755e",
+      "expectedProfileFingerprint": "915bab0174ee333757cbe3e60e1f071eb31d8511de3effe6a199ca67d6c51026"
+    },
+    {
+      "id": "MAC1-EV-015",
+      "label": "oversized profile ID",
+      "request": {
+        "kind": "text",
+        "utf8": "ok",
+        "repeat": 1,
+        "mode": "ASSIST",
+        "profile": {
+          "id": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "requiredSections": [],
+          "allowedAdvisoryDimensions": [
+            "completeness",
+            "factual_support",
+            "risk",
+            "style"
+          ],
+          "modelParticipationRequired": false,
+          "maximumAdvisoryDimensions": 3
+        }
+      },
+      "expectedCanonical": "{\"advisoryCoverage\":null,\"advisoryPlan\":[],\"advisoryReceipt\":null,\"analyzerProbe\":null,\"artifactKind\":\"text\",\"canAcceptInsideVeritas\":false,\"deterministicChecks\":[{\"explanation\":\"The check profile exceeds the deterministic resource limits.\",\"id\":\"DET-000-PROFILE-RESOURCE-LIMIT\",\"status\":\"FAIL\"}],\"deterministicPassed\":false,\"disposition\":\"NEEDS_ATTENTION\",\"findings\":[],\"limitationCodes\":[\"DETERMINISTIC_GATE_FAILED_MODEL_SKIPPED\"],\"mode\":\"ASSIST\",\"modelParticipation\":\"NOT_RUN\",\"profileFingerprint\":\"21691330777d35641b5b25679f501ae2ab535611e92a727b4aa7a4525089b543\",\"profileID\":\"veritas-unadmitted-profile\",\"subjectDigest\":\"2689367b205c16ce32ed4200942b8b8b1e262dfc70d9bc9fbc77c49699a4f1df\"}",
+      "expectedDigest": "094dcf5ac553e39b5c81300be749b88cb211fd7bbc438fa9a83a7d5758b74aeb",
+      "expectedProfileFingerprint": "21691330777d35641b5b25679f501ae2ab535611e92a727b4aa7a4525089b543"
+    },
+    {
+      "id": "MAC1-EV-016",
+      "label": "too many required sections",
+      "request": {
+        "kind": "text",
+        "utf8": "ok",
+        "repeat": 1,
+        "mode": "ASSIST",
+        "profile": {
+          "id": "veritas-macos-one-file-v1",
+          "requiredSections": [
+            "section-0",
+            "section-1",
+            "section-2",
+            "section-3",
+            "section-4",
+            "section-5",
+            "section-6",
+            "section-7",
+            "section-8",
+            "section-9",
+            "section-10",
+            "section-11",
+            "section-12",
+            "section-13",
+            "section-14",
+            "section-15",
+            "section-16",
+            "section-17",
+            "section-18",
+            "section-19",
+            "section-20",
+            "section-21",
+            "section-22",
+            "section-23",
+            "section-24",
+            "section-25",
+            "section-26",
+            "section-27",
+            "section-28",
+            "section-29",
+            "section-30",
+            "section-31",
+            "section-32",
+            "section-33",
+            "section-34",
+            "section-35",
+            "section-36",
+            "section-37",
+            "section-38",
+            "section-39",
+            "section-40",
+            "section-41",
+            "section-42",
+            "section-43",
+            "section-44",
+            "section-45",
+            "section-46",
+            "section-47",
+            "section-48",
+            "section-49",
+            "section-50",
+            "section-51",
+            "section-52",
+            "section-53",
+            "section-54",
+            "section-55",
+            "section-56",
+            "section-57",
+            "section-58",
+            "section-59",
+            "section-60",
+            "section-61",
+            "section-62",
+            "section-63",
+            "section-64"
+          ],
+          "allowedAdvisoryDimensions": [
+            "completeness",
+            "factual_support",
+            "risk",
+            "style"
+          ],
+          "modelParticipationRequired": false,
+          "maximumAdvisoryDimensions": 3
+        }
+      },
+      "expectedCanonical": "{\"advisoryCoverage\":null,\"advisoryPlan\":[],\"advisoryReceipt\":null,\"analyzerProbe\":null,\"artifactKind\":\"text\",\"canAcceptInsideVeritas\":false,\"deterministicChecks\":[{\"explanation\":\"The check profile exceeds the deterministic resource limits.\",\"id\":\"DET-000-PROFILE-RESOURCE-LIMIT\",\"status\":\"FAIL\"}],\"deterministicPassed\":false,\"disposition\":\"NEEDS_ATTENTION\",\"findings\":[],\"limitationCodes\":[\"DETERMINISTIC_GATE_FAILED_MODEL_SKIPPED\"],\"mode\":\"ASSIST\",\"modelParticipation\":\"NOT_RUN\",\"profileFingerprint\":\"98f9a63f9d2bb5c7021591315f4311080c6deabd80e65bf00d7e4dd4940ef6af\",\"profileID\":\"veritas-macos-one-file-v1\",\"subjectDigest\":\"2689367b205c16ce32ed4200942b8b8b1e262dfc70d9bc9fbc77c49699a4f1df\"}",
+      "expectedDigest": "1ed904033b0a4c787e07ba40e388f1be82807d554ebbd78afb515d0c3040e490",
+      "expectedProfileFingerprint": "98f9a63f9d2bb5c7021591315f4311080c6deabd80e65bf00d7e4dd4940ef6af"
+    },
+    {
+      "id": "MAC1-EV-017",
+      "label": "oversized direct snapshot",
+      "request": {
+        "kind": "text",
+        "utf8": "a",
+        "repeat": 1048577,
+        "mode": "ASSIST",
+        "profile": {
+          "id": "veritas-macos-one-file-v1",
+          "requiredSections": [],
+          "allowedAdvisoryDimensions": [
+            "completeness",
+            "factual_support",
+            "risk",
+            "style"
+          ],
+          "modelParticipationRequired": false,
+          "maximumAdvisoryDimensions": 3
+        }
+      },
+      "expectedCanonical": "{\"advisoryCoverage\":null,\"advisoryPlan\":[],\"advisoryReceipt\":null,\"analyzerProbe\":null,\"artifactKind\":\"text\",\"canAcceptInsideVeritas\":false,\"deterministicChecks\":[{\"explanation\":\"The artifact exceeds the deterministic snapshot byte limit.\",\"id\":\"DET-000-SNAPSHOT-BYTE-LIMIT\",\"status\":\"FAIL\"}],\"deterministicPassed\":false,\"disposition\":\"NEEDS_ATTENTION\",\"findings\":[],\"limitationCodes\":[\"DETERMINISTIC_GATE_FAILED_MODEL_SKIPPED\"],\"mode\":\"ASSIST\",\"modelParticipation\":\"NOT_RUN\",\"profileFingerprint\":\"7c197fb8f7100681bbc2fa7fcb4974bd1e46278143d6025eb7ae7bb0a85d8962\",\"profileID\":\"veritas-macos-one-file-v1\",\"subjectDigest\":\"4a3f0c0c213adea174f9a3d4c13177315b588bdb2e9c1012d3d0bf0453ca0f6a\"}",
+      "expectedDigest": "5b72e3c4f47a09eda6ddeeffd543d3d5865f5cdbb86ee4e4383a21e96da1ff51",
+      "expectedProfileFingerprint": "7c197fb8f7100681bbc2fa7fcb4974bd1e46278143d6025eb7ae7bb0a85d8962"
+    },
+    {
+      "id": "MAC1-EV-018",
+      "label": "raw Unicode profile framing",
+      "request": {
+        "kind": "text",
+        "utf8": "café / 🧪\n",
+        "repeat": 1,
+        "mode": "ASSIST",
+        "profile": {
+          "id": "café/🧪",
+          "requiredSections": [],
+          "allowedAdvisoryDimensions": [
+            "completeness",
+            "factual_support",
+            "risk",
+            "style"
+          ],
+          "modelParticipationRequired": false,
+          "maximumAdvisoryDimensions": 3
+        }
+      },
+      "expectedCanonical": "{\"advisoryCoverage\":null,\"advisoryPlan\":[],\"advisoryReceipt\":null,\"analyzerProbe\":{\"adapterContractVersion\":\"deterministic-only-v1\",\"contextSize\":null,\"modelIdentityStatus\":\"NO_MODEL\",\"provider\":\"none\",\"reasonCode\":\"MAC1_MODEL_UNAVAILABLE\",\"requestTokenCount\":null,\"route\":\"deterministic-only\",\"runtimeFingerprint\":\"da62f83807e1c6de029dccd0662b4d1ec39a6146535654b904682420c735fd72\",\"state\":\"DEGRADED\"},\"artifactKind\":\"text\",\"canAcceptInsideVeritas\":true,\"deterministicChecks\":[{\"explanation\":\"The artifact contains bytes.\",\"id\":\"DET-001-NONEMPTY\",\"status\":\"PASS\"},{\"explanation\":\"The complete snapshot decodes as UTF-8.\",\"id\":\"DET-002-UTF8\",\"status\":\"PASS\"},{\"explanation\":\"This profile declares no mandatory sections.\",\"id\":\"DET-003-REQUIRED-SECTIONS\",\"status\":\"PASS\"}],\"deterministicPassed\":true,\"disposition\":\"DEGRADED\",\"findings\":[],\"limitationCodes\":[\"MAC1_MODEL_UNAVAILABLE\",\"OPTIONAL_MODEL_EVIDENCE_MISSING\",\"DETERMINISTIC_RESULT_PRESERVED\"],\"mode\":\"ASSIST\",\"modelParticipation\":\"UNAVAILABLE\",\"profileFingerprint\":\"8dde473d8d5b32ecdcdf5b2aeeab4e135a0face7588c3f9107704b90764cbc40\",\"profileID\":\"café/🧪\",\"subjectDigest\":\"79c8195ea5b78c53299d9271e98fbd743b15b57f356d986fc26b530d0a13473c\"}",
+      "expectedDigest": "66b8ffb9617f4800573b3f3a350ef2e919e76d3a586fe9286e86d16da7d27f2d",
+      "expectedProfileFingerprint": "8dde473d8d5b32ecdcdf5b2aeeab4e135a0face7588c3f9107704b90764cbc40"
+    },
+    {
+      "id": "MAC1-EV-019",
+      "label": "profile trim deduplicate and order",
+      "request": {
+        "kind": "markdown",
+        "utf8": "# Testing\n# Rollback",
+        "repeat": 1,
+        "mode": "ASSIST",
+        "profile": {
+          "id": "veritas-macos-one-file-v1",
+          "requiredSections": [
+            "Testing",
+            " Testing ",
+            "Rollback"
+          ],
+          "allowedAdvisoryDimensions": [
+            "completeness",
+            "factual_support",
+            "risk",
+            "style"
+          ],
+          "modelParticipationRequired": false,
+          "maximumAdvisoryDimensions": 3
+        }
+      },
+      "expectedCanonical": "{\"advisoryCoverage\":null,\"advisoryPlan\":[],\"advisoryReceipt\":null,\"analyzerProbe\":{\"adapterContractVersion\":\"deterministic-only-v1\",\"contextSize\":null,\"modelIdentityStatus\":\"NO_MODEL\",\"provider\":\"none\",\"reasonCode\":\"MAC1_MODEL_UNAVAILABLE\",\"requestTokenCount\":null,\"route\":\"deterministic-only\",\"runtimeFingerprint\":\"da62f83807e1c6de029dccd0662b4d1ec39a6146535654b904682420c735fd72\",\"state\":\"DEGRADED\"},\"artifactKind\":\"markdown\",\"canAcceptInsideVeritas\":true,\"deterministicChecks\":[{\"explanation\":\"The artifact contains bytes.\",\"id\":\"DET-001-NONEMPTY\",\"status\":\"PASS\"},{\"explanation\":\"The complete snapshot decodes as UTF-8.\",\"id\":\"DET-002-UTF8\",\"status\":\"PASS\"},{\"explanation\":\"Every required section marker is present.\",\"id\":\"DET-003-REQUIRED-SECTIONS\",\"status\":\"PASS\"}],\"deterministicPassed\":true,\"disposition\":\"DEGRADED\",\"findings\":[],\"limitationCodes\":[\"MAC1_MODEL_UNAVAILABLE\",\"OPTIONAL_MODEL_EVIDENCE_MISSING\",\"DETERMINISTIC_RESULT_PRESERVED\"],\"mode\":\"ASSIST\",\"modelParticipation\":\"UNAVAILABLE\",\"profileFingerprint\":\"3856ff064b0388db8a073aa4ea190cf2e7ab2bec5f456b996c765bfed94e6971\",\"profileID\":\"veritas-macos-one-file-v1\",\"subjectDigest\":\"d80271f1062edafcbc83ae0ca63650361dae4baa028b5fce9a552cb1908204fd\"}",
+      "expectedDigest": "8b28adf0daa348a533255715a3319f0df9068ffedc4ef580c4068e794173012d",
+      "expectedProfileFingerprint": "3856ff064b0388db8a073aa4ea190cf2e7ab2bec5f456b996c765bfed94e6971"
+    },
+    {
+      "id": "MAC1-EV-020",
+      "label": "dimension set ordering and lower clamp",
+      "request": {
+        "kind": "text",
+        "utf8": "ok",
+        "repeat": 1,
+        "mode": "ASSIST",
+        "profile": {
+          "id": "veritas-macos-one-file-v1",
+          "requiredSections": [],
+          "allowedAdvisoryDimensions": [
+            "style",
+            "risk"
+          ],
+          "modelParticipationRequired": false,
+          "maximumAdvisoryDimensions": -8
+        }
+      },
+      "expectedCanonical": "{\"advisoryCoverage\":null,\"advisoryPlan\":[],\"advisoryReceipt\":null,\"analyzerProbe\":{\"adapterContractVersion\":\"deterministic-only-v1\",\"contextSize\":null,\"modelIdentityStatus\":\"NO_MODEL\",\"provider\":\"none\",\"reasonCode\":\"MAC1_MODEL_UNAVAILABLE\",\"requestTokenCount\":null,\"route\":\"deterministic-only\",\"runtimeFingerprint\":\"da62f83807e1c6de029dccd0662b4d1ec39a6146535654b904682420c735fd72\",\"state\":\"DEGRADED\"},\"artifactKind\":\"text\",\"canAcceptInsideVeritas\":true,\"deterministicChecks\":[{\"explanation\":\"The artifact contains bytes.\",\"id\":\"DET-001-NONEMPTY\",\"status\":\"PASS\"},{\"explanation\":\"The complete snapshot decodes as UTF-8.\",\"id\":\"DET-002-UTF8\",\"status\":\"PASS\"},{\"explanation\":\"This profile declares no mandatory sections.\",\"id\":\"DET-003-REQUIRED-SECTIONS\",\"status\":\"PASS\"}],\"deterministicPassed\":true,\"disposition\":\"DEGRADED\",\"findings\":[],\"limitationCodes\":[\"MAC1_MODEL_UNAVAILABLE\",\"OPTIONAL_MODEL_EVIDENCE_MISSING\",\"DETERMINISTIC_RESULT_PRESERVED\"],\"mode\":\"ASSIST\",\"modelParticipation\":\"UNAVAILABLE\",\"profileFingerprint\":\"7767bfb4a5f27b636d4694834468255ca0984a97cb14e718f76b743d452c65e1\",\"profileID\":\"veritas-macos-one-file-v1\",\"subjectDigest\":\"2689367b205c16ce32ed4200942b8b8b1e262dfc70d9bc9fbc77c49699a4f1df\"}",
+      "expectedDigest": "560efc559c03483db88a95db3b5d88030faffac337ebee5628ade59aa28b17ad",
+      "expectedProfileFingerprint": "7767bfb4a5f27b636d4694834468255ca0984a97cb14e718f76b743d452c65e1"
+    }
+  ]
+}

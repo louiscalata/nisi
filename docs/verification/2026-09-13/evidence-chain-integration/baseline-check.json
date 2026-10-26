@@ -1,0 +1,17 @@
+{
+  "command": "npm run check",
+  "startedAt": "2026-09-13T22:56:17.323372+00:00",
+  "exitCode": 0,
+  "elapsedSeconds": 8.137,
+  "counts": {
+    "tests": 1170,
+    "suites": 0,
+    "pass": 1170,
+    "fail": 0,
+    "cancelled": 0,
+    "skipped": 0,
+    "todo": 0
+  },
+  "structuralPass": true,
+  "accepted": true
+}

@@ -1,0 +1,101 @@
+{
+  "summary": "Contract recommendation for two additive methods (historyPreview, captureHistory) on the real reviewed repository host, binding the settled result to journal owner v2 with a single consumed write, explicit candidate-absence representation, hashed unknown diagnostic codes, one-shot post-settlement semantics (no revoke API), and a state mapping that separates engine outcome, host settlement and store outcome. Design only; nothing was inspected or executed.",
+  "deliverable": "## Contract recommendation (design only, no code)\n\n### A. Host changes (additive)\nAPI becomes {run, settled, status, invocations, lateObservations, historyPreview, captureHistory}. Existing members unchanged. Privately retain `collected` = the exact frozen settlement result (or a sentinel `SETTLEMENT_REJECTED` if collect threw \u2014 keep only that code, never the error). Both new methods:\n- refuse `NO_SETTLED_RESULT` while collected is undefined (including after run() returned the report but drains are pending);\n- refuse `SETTLEMENT_REJECTED` if collect rejected. No preview from partial data.\n\n### B. historyPreview() \u2192 frozen {status:'PREVIEW'|'REFUSED', reason, preview, sha256, authorizing:false}\nPure, deterministic, cached after first success (no repeated failure occurrences; a refusal is also cached since inputs cannot change). Validate the report through the existing readFinalEngineReportV2; any validation failure \u2192 `REFUSED:INVALID_REPORT` (never coerce). Also refuse `TASK_IDENTITY_MISMATCH` if report.taskFingerprint \u2260 host preparation taskFingerprint.\n\nPreview fields (fixed shape, all scalars bounded):\n- schema:'repo-history-preview-v1', taskFingerprint, baselineFingerprint, runId, attempt (=repairAttempts), candidateFingerprint (nullable), candidatePresent:boolean\n- outcome, workflowOutcome (enum literals only; non-enum \u2192 REFUSED:MALFORMED)\n- outcomeCode / workflowCode: {kind:'LISTED', code} when the string is in the engine's known allowlist; {kind:'UNLISTED', sha256, length} otherwise (domain-separated hash of the raw text); {kind:'NONE'} when null. Non-string \u2192 REFUSED:MALFORMED. Rationale: unknown adapter text may embed paths/messages, so it is hashed, but the observation is not discarded \u2014 an unknown code is still a real run.\n- settlementState (SETTLED|QUARANTINED), ownerStates {staticChecks, tests} (enum, else UNKNOWN\u2192REFUSED:MALFORMED)\n- stageCounts: fixed keys per stage status enum, each a count clamped to \u22641000; stageTotal\n- bundleFingerprint / bundleReportSha256 (nullable, from bundleSummary only)\n- candidateVerdict: PASS (workflowOutcome success \u2227 SETTLED \u2227 both owners not QUARANTINED/UNKNOWN), FAIL (engine reports candidate failure \u2227 SETTLED), NOT_EVALUATED (any owner quarantined/unknown, settlement QUARANTINED, or outcome not candidate-attributable)\n- failureAttribution: ENGINE_OUTCOME | HOST_SETTLEMENT | OWNER_QUARANTINE | NONE \u2014 derived solely from structured fields, never from messages\n- flags: sourceAuthenticityAttested:false, executionAttested:false, learningEligible:false, authorizing:false\nExcluded by construction: candidate source/evidence, invocations, histories, paths, output, messages, timings, prompts.\nsha256 = SHA-256 over `repo-history-preview-v1\\n` + canonical JSON (sorted keys, no undefined).\n\n### C. Candidate-null resolution\nRefuse only when runId is null (preflight-invalid; readFinalEngineReportV2 already refuses). When runId is a UUID and candidateFingerprint is null, use reserved journal candidateId `none:<runId>` \u2014 a namespaced absence marker, not a fabricated candidate. Real candidates use `cand:<64hex>`. Preview carries candidateFingerprint:null and candidatePresent:false, so consumers cannot mistake the marker for an evaluation. Correction to proposal: this is the \"truthful nullable-ID mapping\"; do not refuse valid QUARANTINED or candidate-less runs \u2014 they remain operational observations.\n\n### D. captureHistory({owner, declaration, clock}) \u2014 one-shot, no grant\nOrder (synchronous up to the single journal call):\n1. Exact own-enumerable key check; shallow-copy declaration before invoking clock.\n2. collected checks (A). Then busy \u2192 REFUSED:BUSY; consumed \u2192 REFUSED:ALREADY_CAPTURED (both non-consuming, but reentrancy always refuses).\n3. Declaration schema 'repo-history-declaration-v1': id/projectId (journal ID grammar), sourceDigest === preview sha256 (else REFUSED:DIGEST_MISMATCH), issuedAt\u2264now<expiresAt, expiresAt\u2212issuedAt\u22643_600_000, retentionMs 1..7_776_000_000, createdAt safe, destination/consentClass exact literals, the three false flags exact. Any failure \u2192 REFUSED, non-consuming.\n4. Recheck `clock.now()` immediately before the write; window violation \u2192 REFUSED:EXPIRED, non-consuming.\n5. Set busy; build entry; call recordJournalObservation once. No inspectJournalOwner call (would be a second journal call; owner shape is checked structurally only).\n6. Consumption rule: journal `REFUSED` (validation/project mismatch, nothing written per owner contract) does not consume; every other status \u2014 RECORDED, DUPLICATE, CONFLICT, STORE_CONFLICT, STORE_FAILED (precommit or COMMIT_UNCERTAIN) \u2014 consumes. Clear busy.\n\nEntry: id = `rv1.` + sha256(`repo-history-id-v1\\n` + taskFingerprint|runId|candidateId|previewSha256); projectId from declaration; runId; attempt; candidateId (C); stage 'REPOSITORY_SETTLEMENT'; receiptId null (none exists; the fixed-XPC permit is not reusable); createdAt = declaration.createdAt (must be \u2264 now); ttlMs = retentionMs; state mapping: SUCCEEDED iff candidateVerdict PASS; CANCELLED iff engine outcome is a cancellation enum; else FAILED \u2014 with the preview's candidateVerdict/failureAttribution carrying the honest nuance (a QUARANTINED host or store error is FAILED at the run level but NOT_EVALUATED/HOST_SETTLEMENT at candidate level). heartbeatAt = createdAt; retryOf/revokes null; payload = {preview, declarationSha256} only.\n\nResult (frozen): {status:'ADMITTED'|'REFUSED', reason, consumed:boolean, entryId|null, sourceDigest, journal: null | {status, reason, store, snapshot (journal-redacted, as returned)}, durable:boolean (true only when journal.status RECORDED \u2227 snapshot.state \u2260 COMMIT_UNCERTAIN \u2227 store reports durable), authorizing:false}. Never echo the attempted entry on refusal. report.reportStored untouched.\n\n### E. Revocation\nDo not add revokeHistory(). Reasoning: no grant exists to revoke \u2014 the declaration is consumed at admission and its lifetime \u22641h bounds any pre-admission window. State explicitly: no cancel after synchronous admission; if a caller later needs retraction, that is a separate journal entry with `revokes` written by the caller, not a host responsibility. This avoids implying a protected UI or authenticated permission.\n\n### F. Corrections to the proposal\n- \"Owner refusal does not consume\" is only sound if journal REFUSED guarantees no bytes written \u2014 treat as an owner-contract assumption to verify.\n- Preview must be computed and cached once; captureHistory compares against the cached digest, never recomputes from mutable inputs.\n- Diagnostic codes: hash-or-allowlist rather than refuse; refuse only on wrong type.\n- Stage counts must be bounded and keyed by enum, not by free-text stage names.",
+  "risks": [
+    "Journal `REFUSED` may not guarantee zero bytes written; if it can occur post-write, the non-consuming rule would permit a second real journal call. Needs owner-contract confirmation.",
+    "The `none:<runId>` candidateId marker could be read by downstream consumers as a real candidate if they ignore candidatePresent:false; namespace enforcement must be documented in the entry schema.",
+    "Mapping QUARANTINED/host errors to journal state FAILED remains lossy at the entry-state level; only the payload preview carries attribution, so consumers reading state alone may over-attribute failure to the candidate.",
+    "Allowlist for LISTED codes must be sourced from the engine enum, not the host; drift between engine and host allowlists silently turns real codes into hashed UNLISTED entries.",
+    "Caching a preview REFUSED result assumes the collected result is immutable; if settlement can be re-derived or lateObservations mutate it, the cache would be stale."
+  ],
+  "verification": [
+    "Confirm with the journal owner v2 source that status REFUSED is only emitted before any store write (precommit), otherwise make all post-admission statuses consuming.",
+    "Confirm readFinalEngineReportV2 rejects null runId and non-enum outcome/workflowOutcome so the host does not need duplicate validation.",
+    "Enumerate the engine's known outcome/workflow code allowlist and stage status enum; verify the fixed stageCounts keys cover all values.",
+    "Test matrix: capture before settled, after report-but-pending drain, after collect rejection, digest mismatch, expired declaration, reentrant call during busy, duplicate on second host instance with same result (expect journal DUPLICATE, consumed).",
+    "Verify the canonical encoding yields identical sha256 across runs for identical settlement results and differs on any single field change, including candidatePresent."
+  ],
+  "invocation_status": "succeeded",
+  "status": "succeeded",
+  "model_usage": {
+    "claude-haiku-4-5-20251001": {
+      "inputTokens": 2527,
+      "outputTokens": 13,
+      "cacheReadInputTokens": 0,
+      "cacheCreationInputTokens": 0,
+      "webSearchRequests": 0,
+      "costUSD": 0.002592,
+      "contextWindow": 200000,
+      "maxOutputTokens": 32000,
+      "thinkingTokens": 0,
+      "canonicalModel": "claude-haiku-4-5",
+      "provider": "firstParty",
+      "costBasis": "list"
+    },
+    "claude-opus-5": {
+      "inputTokens": 2,
+      "outputTokens": 6702,
+      "cacheReadInputTokens": 737,
+      "cacheCreationInputTokens": 2990,
+      "webSearchRequests": 0,
+      "costUSD": 0.1978285,
+      "contextWindow": 1000000,
+      "maxOutputTokens": 64000,
+      "thinkingTokens": 3107,
+      "canonicalModel": "claude-opus-5",
+      "provider": "firstParty",
+      "costBasis": "list"
+    }
+  },
+  "reported_models": [
+    "claude-haiku-4-5-20251001",
+    "claude-opus-5"
+  ],
+  "usage": {
+    "input_tokens": 2,
+    "cache_creation_input_tokens": 2990,
+    "cache_read_input_tokens": 737,
+    "output_tokens": 6702,
+    "output_tokens_details": {
+      "thinking_tokens": 3107
+    },
+    "server_tool_use": {
+      "web_search_requests": 0,
+      "web_fetch_requests": 0
+    },
+    "service_tier": "standard",
+    "cache_creation": {
+      "ephemeral_1h_input_tokens": 2990,
+      "ephemeral_5m_input_tokens": 0
+    },
+    "inference_geo": "not_available",
+    "iterations": [
+      {
+        "input_tokens": 2,
+        "output_tokens": 6702,
+        "cache_read_input_tokens": 737,
+        "cache_creation_input_tokens": 2990,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 2990
+        },
+        "type": "message"
+      }
+    ],
+    "speed": "standard"
+  },
+  "total_cost_usd": 0.2004205,
+  "duration_ms": 86976,
+  "tools_enabled": false,
+  "session_persisted": false,
+  "write_owner": "codex",
+  "requested_model": "opus",
+  "mode": "delegate",
+  "attempts": 1,
+  "wall_seconds": 87.842,
+  "created_at": "2026-09-14T02:27:50.051926+00:00",
+  "prior_attempts": [],
+  "total_wall_seconds": 87.843,
+  "prior_attempt_usage": [],
+  "total_usage_complete": true
+}

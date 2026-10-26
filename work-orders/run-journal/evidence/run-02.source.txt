@@ -1,0 +1,3 @@
+// Placeholder. OpenCode is the sole implementation writer for this work order.
+export function createRunJournal() { throw new Error('NOT_IMPLEMENTED'); }
+export function reopen() { throw new Error('NOT_IMPLEMENTED'); }

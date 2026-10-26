@@ -1,0 +1,337 @@
+{
+  "checkedAt": "2026-09-13T23:54:40.425Z",
+  "pins": [
+    {
+      "path": "comparison-table/package.json",
+      "expected": "57bfbe9a74c982187799bac0a86763d52d6b5bd5a8f9cd80f1e7f1c5551d96c6",
+      "actual": "57bfbe9a74c982187799bac0a86763d52d6b5bd5a8f9cd80f1e7f1c5551d96c6"
+    },
+    {
+      "path": "comparison-table/tests/baseline.test.mjs",
+      "expected": "cf1fc4e12360366110423ab3bdc5852e3630e1637cb56ebadd2fc1cc24ae4fca",
+      "actual": "cf1fc4e12360366110423ab3bdc5852e3630e1637cb56ebadd2fc1cc24ae4fca"
+    },
+    {
+      "path": "comparison-table/tests/acceptance.test.mjs",
+      "expected": "7a4c02c4c17be813147175a9fda3e43c56ba3af1f3e99fdf0238cb75455e5077",
+      "actual": "7a4c02c4c17be813147175a9fda3e43c56ba3af1f3e99fdf0238cb75455e5077"
+    },
+    {
+      "path": "comparison-table/worker-packet.md",
+      "expected": "a63cc3e38744f67a20269109200de84e0b08b87e5b66d4f49fb385acce314b37",
+      "actual": "a63cc3e38744f67a20269109200de84e0b08b87e5b66d4f49fb385acce314b37"
+    },
+    {
+      "path": "comparison-table/worker-request.md",
+      "expected": "b8cdbce2a6066b4d8b85f684d1431bc01f0313956919df5ab32afede32003ed2",
+      "actual": "b8cdbce2a6066b4d8b85f684d1431bc01f0313956919df5ab32afede32003ed2"
+    },
+    {
+      "path": "history-timeline/package.json",
+      "expected": "f4502e3198e93540f3b55d7cc21fc9d3883e6068e74ca9311024b4c5cd5ada48",
+      "actual": "f4502e3198e93540f3b55d7cc21fc9d3883e6068e74ca9311024b4c5cd5ada48"
+    },
+    {
+      "path": "history-timeline/tests/baseline.test.mjs",
+      "expected": "15ab9087fe868d8f674fd537de83aedee31dd6c175484c23f21786260505c209",
+      "actual": "15ab9087fe868d8f674fd537de83aedee31dd6c175484c23f21786260505c209"
+    },
+    {
+      "path": "history-timeline/tests/acceptance.test.mjs",
+      "expected": "fd4b944e8d85e4c54bddf36c68723b3bcedb3c4d25a455cee8809199ed0f08bb",
+      "actual": "fd4b944e8d85e4c54bddf36c68723b3bcedb3c4d25a455cee8809199ed0f08bb"
+    },
+    {
+      "path": "history-timeline/worker-packet.md",
+      "expected": "4d7528433baf81dbd7a92003a010e564fa5a0330c8d3cf075ad268edfda38450",
+      "actual": "4d7528433baf81dbd7a92003a010e564fa5a0330c8d3cf075ad268edfda38450"
+    },
+    {
+      "path": "history-timeline/worker-request.md",
+      "expected": "ba6bfee15dd7b1feed5f7f008f4aafc43383de95eae175cf7c21f5111a93fa28",
+      "actual": "ba6bfee15dd7b1feed5f7f008f4aafc43383de95eae175cf7c21f5111a93fa28"
+    },
+    {
+      "path": "markdown-status-card/package.json",
+      "expected": "77645d97af0db4fd2efa2bc708e47b5fd82b1c24e4c23bb809ff30e9e6008ff5",
+      "actual": "77645d97af0db4fd2efa2bc708e47b5fd82b1c24e4c23bb809ff30e9e6008ff5"
+    },
+    {
+      "path": "markdown-status-card/tests/baseline.test.mjs",
+      "expected": "fbea4f0d7a3b28bf1f037192edc12fd806343046cb8db68d5f607455fe09d46e",
+      "actual": "fbea4f0d7a3b28bf1f037192edc12fd806343046cb8db68d5f607455fe09d46e"
+    },
+    {
+      "path": "markdown-status-card/tests/acceptance.test.mjs",
+      "expected": "318d58130350f0367b77d3ec282c3b3e2533cb745e6106b27c3ce059254c1a62",
+      "actual": "318d58130350f0367b77d3ec282c3b3e2533cb745e6106b27c3ce059254c1a62"
+    },
+    {
+      "path": "markdown-status-card/worker-packet.md",
+      "expected": "0496bfadfb39e762940bf1aba8b2a8b5b266b8249df261d53351494bb9b4ccb4",
+      "actual": "0496bfadfb39e762940bf1aba8b2a8b5b266b8249df261d53351494bb9b4ccb4"
+    },
+    {
+      "path": "markdown-status-card/worker-request.md",
+      "expected": "b6abc3fad8d0bdacaef54e15609dff8d96d06c62edf8e30ec1e8c7877f541cfd",
+      "actual": "b6abc3fad8d0bdacaef54e15609dff8d96d06c62edf8e30ec1e8c7877f541cfd"
+    },
+    {
+      "path": "model-catalog/package.json",
+      "expected": "5ff6f1fdbcb6d77072fff7628b3d3df23e0fb5ed655564eec3fdca4b33ce8b29",
+      "actual": "5ff6f1fdbcb6d77072fff7628b3d3df23e0fb5ed655564eec3fdca4b33ce8b29"
+    },
+    {
+      "path": "model-catalog/tests/baseline.test.mjs",
+      "expected": "2cba3cd0fccb697d96c7160bc929d4c1f7aa189e9c0004c4ba8f4a5357e451c2",
+      "actual": "2cba3cd0fccb697d96c7160bc929d4c1f7aa189e9c0004c4ba8f4a5357e451c2"
+    },
+    {
+      "path": "model-catalog/tests/acceptance.test.mjs",
+      "expected": "a59ee6cd8de2c55753fd8bb7e836d0fc05e1083a9278e68111818e04c9e8d475",
+      "actual": "a59ee6cd8de2c55753fd8bb7e836d0fc05e1083a9278e68111818e04c9e8d475"
+    },
+    {
+      "path": "model-catalog/worker-packet.md",
+      "expected": "6f6f7c19cb2d054ca193fa8f608b6f4e9cd11fdb97884df0060912073bbefab9",
+      "actual": "6f6f7c19cb2d054ca193fa8f608b6f4e9cd11fdb97884df0060912073bbefab9"
+    },
+    {
+      "path": "model-catalog/worker-request.md",
+      "expected": "cba6e7c25b60145c4af2e7094dee7436dea9a9171b90788be9af68ffaa41925a",
+      "actual": "cba6e7c25b60145c4af2e7094dee7436dea9a9171b90788be9af68ffaa41925a"
+    },
+    {
+      "path": "progress-checklist/package.json",
+      "expected": "55f78e3cbe0042ad4d2e75fea2b13c2abe66dc87a2f406f64a0970ba67d84b01",
+      "actual": "55f78e3cbe0042ad4d2e75fea2b13c2abe66dc87a2f406f64a0970ba67d84b01"
+    },
+    {
+      "path": "progress-checklist/tests/baseline.test.mjs",
+      "expected": "743b93738afa1b32f12695d16d79325a03a37a4af0381faf2b1fa31bd13967d3",
+      "actual": "743b93738afa1b32f12695d16d79325a03a37a4af0381faf2b1fa31bd13967d3"
+    },
+    {
+      "path": "progress-checklist/tests/acceptance.test.mjs",
+      "expected": "24baaa1e8c5af703c845a0e7c7011eb44cfe344eb60da73ec618f17c89aed314",
+      "actual": "24baaa1e8c5af703c845a0e7c7011eb44cfe344eb60da73ec618f17c89aed314"
+    },
+    {
+      "path": "progress-checklist/worker-packet.md",
+      "expected": "16eaa8a8d0e93e7f2d72916814b397beb68f5e2ac1fb753c480055744e12ae12",
+      "actual": "16eaa8a8d0e93e7f2d72916814b397beb68f5e2ac1fb753c480055744e12ae12"
+    },
+    {
+      "path": "progress-checklist/worker-request.md",
+      "expected": "ee89cf1bf6a60075f7bee7d55ac0deb844710cc60d9c7edef1e0740fb4866806",
+      "actual": "ee89cf1bf6a60075f7bee7d55ac0deb844710cc60d9c7edef1e0740fb4866806"
+    },
+    {
+      "path": "usage-table/package.json",
+      "expected": "eeb66c38dc4177abe79e0572e6aabf0c620917ae84ef566339cb81937c0fdc16",
+      "actual": "eeb66c38dc4177abe79e0572e6aabf0c620917ae84ef566339cb81937c0fdc16"
+    },
+    {
+      "path": "usage-table/tests/baseline.test.mjs",
+      "expected": "eaa35b860f3d614a81ed5c5f44fee64ec8e3c4dd153b196b1175090f1d90d862",
+      "actual": "eaa35b860f3d614a81ed5c5f44fee64ec8e3c4dd153b196b1175090f1d90d862"
+    },
+    {
+      "path": "usage-table/tests/acceptance.test.mjs",
+      "expected": "2c66e069ed0d59f2a1cf3c31b738ddf2500ddfdc846a25830c0684f7abe418dc",
+      "actual": "2c66e069ed0d59f2a1cf3c31b738ddf2500ddfdc846a25830c0684f7abe418dc"
+    },
+    {
+      "path": "usage-table/worker-packet.md",
+      "expected": "0d969c917084d53594dda29ed95703c5416f1b84ede7997dcf585011414baeb4",
+      "actual": "0d969c917084d53594dda29ed95703c5416f1b84ede7997dcf585011414baeb4"
+    },
+    {
+      "path": "usage-table/worker-request.md",
+      "expected": "545531536bcb877617c51b30b7ca2fe7cda7d3c203c788744d7dc7931960ff49",
+      "actual": "545531536bcb877617c51b30b7ca2fe7cda7d3c203c788744d7dc7931960ff49"
+    }
+  ],
+  "reports": [
+    {
+      "id": "usage-table",
+      "sourceSha256": "ecbd6327faa00afce3750ff69df87fcf3e342e47a341107548e9bb7226b86206",
+      "unchanged": true,
+      "checks": [
+        {
+          "cmd": "npm",
+          "args": [
+            "test"
+          ],
+          "exitCode": 0,
+          "signal": null,
+          "stdout": "\n> nisi-future-usage-table@0.0.0-private test\n> node --test --test-timeout=10000 tests/baseline.test.mjs\n\n✔ private dependency-free ESM package (0.4605ms)\n✔ named synchronous API placeholder exists (0.052292ms)\nℹ tests 2\nℹ suites 0\nℹ pass 2\nℹ fail 0\nℹ cancelled 0\nℹ skipped 0\nℹ todo 0\nℹ duration_ms 36.257458\n",
+          "stderr": ""
+        },
+        {
+          "cmd": "npm",
+          "args": [
+            "run",
+            "test:acceptance"
+          ],
+          "exitCode": 0,
+          "signal": null,
+          "stdout": "\n> nisi-future-usage-table@0.0.0-private test:acceptance\n> node --test --test-timeout=10000 tests/acceptance.test.mjs\n\n✔ empty input returns the exact ready shape with zero totals (0.609375ms)\n✔ known zero counters and duration remain numeric zero (0.494875ms)\n✔ nullable metrics produce row and column unknowns without inventing zeros (0.076625ms)\n✔ reasoning tokens are reported as a subset and are not double-counted in totalTokens (0.058375ms)\n✔ multiple rows sum each known column and count unknown rows (0.079208ms)\n✔ input is exact and invalid ordinary values are refused (0.101708ms)\n✔ provider and model may be null but non-null labels must be bounded nonempty strings (0.07425ms)\n✔ negative, unsafe, negative-zero and invalid duration metrics are refused (0.085ms)\n✔ known reasoning count with unknown output does not invent a contradiction (0.061291ms)\n✔ numeric overflow makes the affected totals null (0.090458ms)\n✔ output is cloned and does not mutate or alias the input (0.105209ms)\n✔ identical input is deterministic (0.060125ms)\nℹ tests 12\nℹ suites 0\nℹ pass 12\nℹ fail 0\nℹ cancelled 0\nℹ skipped 0\nℹ todo 0\nℹ duration_ms 35.667833\n",
+          "stderr": ""
+        },
+        {
+          "cmd": "node",
+          "args": [
+            "--test",
+            "--test-timeout=10000",
+            "tests/owner-regressions.test.mjs"
+          ],
+          "exitCode": 0,
+          "signal": null,
+          "stdout": "✔ unknown input on an earlier row cannot skip independent later columns (0.653333ms)\n✔ known reasoning/output contradiction is refused even when input tokens unknown (0.062791ms)\n✔ combined input and output overflow stays null although column sums individually fit (0.061667ms)\n✔ unknown reasoning on one row does not skip later duration sums (0.063125ms)\nℹ tests 4\nℹ suites 0\nℹ pass 4\nℹ fail 0\nℹ cancelled 0\nℹ skipped 0\nℹ todo 0\nℹ duration_ms 34.352542\n",
+          "stderr": ""
+        }
+      ]
+    },
+    {
+      "id": "history-timeline",
+      "sourceSha256": "a3c770f6534c7b2243bca1288fd642627294bf54203f432df702a07173960f79",
+      "unchanged": true,
+      "checks": [
+        {
+          "cmd": "npm",
+          "args": [
+            "test"
+          ],
+          "exitCode": 0,
+          "signal": null,
+          "stdout": "\n> nisi-future-history-timeline@0.0.0-private test\n> node --test --test-timeout=10000 tests/baseline.test.mjs\n\n✔ private dependency-free ESM package (0.347ms)\n✔ named synchronous API placeholder exists (0.046375ms)\nℹ tests 2\nℹ suites 0\nℹ pass 2\nℹ fail 0\nℹ cancelled 0\nℹ skipped 0\nℹ todo 0\nℹ duration_ms 32.03275\n",
+          "stderr": ""
+        },
+        {
+          "cmd": "npm",
+          "args": [
+            "run",
+            "test:acceptance"
+          ],
+          "exitCode": 0,
+          "signal": null,
+          "stdout": "\n> nisi-future-history-timeline@0.0.0-private test:acceptance\n> node --test --test-timeout=10000 tests/acceptance.test.mjs\n\n✔ empty input returns the exact ready shape (0.6705ms)\n✔ events sort by attempt then createdAt, with input order as the tie-breaker (0.445375ms)\n✔ all terminal and nonterminal statuses remain distinct (0.139208ms)\n✔ duplicate stage observations with different IDs are retained (0.084292ms)\n✔ attempt groups retain sorted event IDs and count unknown durations (0.06025ms)\n✔ input is exact and invalid ordinary values are refused (0.082792ms)\n✔ attempt and createdAt require safe nonnegative integers excluding negative zero (0.063708ms)\n✔ stage, status, receiptId and duration validation is bounded and exact (0.102584ms)\n✔ output is cloned and does not mutate or alias the input (0.115917ms)\n✔ unknown duration is represented only in the attempt count; no outcome is inferred (0.090917ms)\n✔ identical input is deterministic (0.063666ms)\nℹ tests 11\nℹ suites 0\nℹ pass 11\nℹ fail 0\nℹ cancelled 0\nℹ skipped 0\nℹ todo 0\nℹ duration_ms 36.519458\n",
+          "stderr": ""
+        }
+      ]
+    },
+    {
+      "id": "model-catalog",
+      "sourceSha256": "383fea468bb42469e7abb6aaec7ef5a479bc995b3fb96237e32591985d608a65",
+      "unchanged": true,
+      "checks": [
+        {
+          "cmd": "npm",
+          "args": [
+            "test"
+          ],
+          "exitCode": 0,
+          "signal": null,
+          "stdout": "\n> nisi-future-model-catalog@0.0.0-private test\n> node --test --test-timeout=10000 tests/baseline.test.mjs\n\n✔ private dependency-free ESM package (0.431208ms)\n✔ named synchronous API placeholder exists (0.0965ms)\nℹ tests 2\nℹ suites 0\nℹ pass 2\nℹ fail 0\nℹ cancelled 0\nℹ skipped 0\nℹ todo 0\nℹ duration_ms 33.49525\n",
+          "stderr": ""
+        },
+        {
+          "cmd": "npm",
+          "args": [
+            "run",
+            "test:acceptance"
+          ],
+          "exitCode": 0,
+          "signal": null,
+          "stdout": "\n> nisi-future-model-catalog@0.0.0-private test:acceptance\n> node --test --test-timeout=10000 tests/acceptance.test.mjs\n\n✔ empty catalog is READY with exact keys and zero counts (0.598625ms)\n✔ preserves row order and counts every availability and location enum (0.388083ms)\n✔ accepts non-ASCII names as inert catalog data (0.081375ms)\n✔ output is a copy and later input mutation cannot change it (0.075666ms)\n✔ equivalent ordinary JSON input is deterministic (0.103542ms)\n✔ refuses missing, extra, and wrong top-level keys with the exact refusal (0.055833ms)\n✔ refuses malformed row shapes, missing fields, and extra fields (0.052709ms)\n✔ refuses empty, non-string, and overlong identity text (0.079875ms)\n✔ refuses unknown or incorrectly cased availability and location enums (0.064084ms)\n✔ refuses duplicate ids and more than 200 rows (0.105625ms)\n✔ dangerous ordinary-JSON keys are data-shape violations and never alter prototypes (0.052292ms)\nℹ tests 11\nℹ suites 0\nℹ pass 11\nℹ fail 0\nℹ cancelled 0\nℹ skipped 0\nℹ todo 0\nℹ duration_ms 36.226458\n",
+          "stderr": ""
+        }
+      ]
+    },
+    {
+      "id": "progress-checklist",
+      "sourceSha256": "36b1439f433d5c7a2f8663e8aef412c3be9f6404e7c6578f8f2213d7d1d01984",
+      "unchanged": true,
+      "checks": [
+        {
+          "cmd": "npm",
+          "args": [
+            "test"
+          ],
+          "exitCode": 0,
+          "signal": null,
+          "stdout": "\n> nisi-future-progress-checklist@0.0.0-private test\n> node --test --test-timeout=10000 tests/baseline.test.mjs\n\n✔ private dependency-free ESM package (0.357ms)\n✔ named synchronous API placeholder exists (0.047375ms)\nℹ tests 2\nℹ suites 0\nℹ pass 2\nℹ fail 0\nℹ cancelled 0\nℹ skipped 0\nℹ todo 0\nℹ duration_ms 34.713792\n",
+          "stderr": ""
+        },
+        {
+          "cmd": "npm",
+          "args": [
+            "run",
+            "test:acceptance"
+          ],
+          "exitCode": 0,
+          "signal": null,
+          "stdout": "\n> nisi-future-progress-checklist@0.0.0-private test:acceptance\n> node --test --test-timeout=10000 tests/acceptance.test.mjs\n\n✔ empty checklist has exact shape, zero counts, and null percent (0.717208ms)\n✔ three closed of ten is exactly 30 percent and preserves order (0.454917ms)\n✔ one closed of three floors to 33 rather than rounding up (0.083791ms)\n✔ all closed is 100 and all open is 0 (0.060167ms)\n✔ in-progress and blocked milestones are counted but never complete (0.053542ms)\n✔ output copies title and rows and is isolated from later input mutation (0.061292ms)\n✔ equivalent ordinary JSON input is deterministic and supports non-ASCII labels (0.074458ms)\n✔ refuses missing, extra, and wrongly typed top-level fields exactly (0.072458ms)\n✔ refuses malformed milestone shapes and unknown states (0.081542ms)\n✔ refuses invalid milestone text, duplicate ids, and more than 200 rows (0.127125ms)\n✔ dangerous ordinary-JSON keys are refused without prototype effects (0.054791ms)\nℹ tests 11\nℹ suites 0\nℹ pass 11\nℹ fail 0\nℹ cancelled 0\nℹ skipped 0\nℹ todo 0\nℹ duration_ms 36.694042\n",
+          "stderr": ""
+        }
+      ]
+    },
+    {
+      "id": "comparison-table",
+      "sourceSha256": "93de56c99a7b686695f57975c5777f7f8dbf80cb84a0c4a40e206af6befde1e4",
+      "unchanged": true,
+      "checks": [
+        {
+          "cmd": "npm",
+          "args": [
+            "test"
+          ],
+          "exitCode": 0,
+          "signal": null,
+          "stdout": "\n> nisi-future-comparison-table@0.0.0-private test\n> node --test --test-timeout=10000 tests/baseline.test.mjs\n\n✔ private dependency-free ESM package (0.359208ms)\n✔ named synchronous API placeholder exists (0.084208ms)\nℹ tests 2\nℹ suites 0\nℹ pass 2\nℹ fail 0\nℹ cancelled 0\nℹ skipped 0\nℹ todo 0\nℹ duration_ms 34.724167\n",
+          "stderr": ""
+        },
+        {
+          "cmd": "npm",
+          "args": [
+            "run",
+            "test:acceptance"
+          ],
+          "exitCode": 0,
+          "signal": null,
+          "stdout": "\n> nisi-future-comparison-table@0.0.0-private test:acceptance\n> node --test --test-timeout=10000 tests/acceptance.test.mjs\n\n✔ empty comparison has exact neutral shape (0.603083ms)\n✔ known comparison computes signed change without a savings claim (0.087375ms)\n✔ unknown values stay unknown and known zero is preserved (0.088ms)\n✔ millisecond fractions retain unrounded change and units are not aggregated (0.072125ms)\n✔ unsafe, nonfinite, negative and noninteger counts refuse (0.101ms)\n✔ overflowing relative percentage is unknown not infinity (0.045417ms)\n✔ closed shapes and unique bounded ids are required (0.076166ms)\n✔ rows preserve order and literal labels (0.049625ms)\n✔ input and output are independent copies (0.087084ms)\n✔ deterministic repeated requests (0.083625ms)\nℹ tests 10\nℹ suites 0\nℹ pass 10\nℹ fail 0\nℹ cancelled 0\nℹ skipped 0\nℹ todo 0\nℹ duration_ms 35.239\n",
+          "stderr": ""
+        }
+      ]
+    },
+    {
+      "id": "markdown-status-card",
+      "sourceSha256": "9ea91d273de854cead45fe91c7a5a4580b02419b14398ce3ff3e392943fef4ae",
+      "unchanged": true,
+      "checks": [
+        {
+          "cmd": "npm",
+          "args": [
+            "test"
+          ],
+          "exitCode": 0,
+          "signal": null,
+          "stdout": "\n> nisi-future-markdown-status-card@0.0.0-private test\n> node --test --test-timeout=10000 tests/baseline.test.mjs\n\n✔ private dependency-free ESM package (0.569042ms)\n✔ named synchronous API placeholder exists (0.0685ms)\nℹ tests 2\nℹ suites 0\nℹ pass 2\nℹ fail 0\nℹ cancelled 0\nℹ skipped 0\nℹ todo 0\nℹ duration_ms 32.488542\n",
+          "stderr": ""
+        },
+        {
+          "cmd": "npm",
+          "args": [
+            "run",
+            "test:acceptance"
+          ],
+          "exitCode": 0,
+          "signal": null,
+          "stdout": "\n> nisi-future-markdown-status-card@0.0.0-private test:acceptance\n> node --test --test-timeout=10000 tests/acceptance.test.mjs\n\n✔ empty card has exact explicit empty row (0.579375ms)\n✔ known zero, empty text and unknown remain distinct (0.0735ms)\n✔ title and values cannot add headings or table columns (0.303083ms)\n✔ all specified ASCII metacharacters are escaped once (0.069ms)\n✔ control, separator and bidi characters are visible entities (0.206375ms)\n✔ ordinary Unicode and spaces are not normalized away (0.041583ms)\n✔ closed shapes, bounds and invalid numeric values refuse (0.116542ms)\n✔ duplicate labels remain separate supplied rows (0.046583ms)\n✔ negative and fractional numeric fields render literally (0.054875ms)\n✔ render is deterministic and does not mutate inputs (0.103583ms)\nℹ tests 10\nℹ suites 0\nℹ pass 10\nℹ fail 0\nℹ cancelled 0\nℹ skipped 0\nℹ todo 0\nℹ duration_ms 35.189333\n",
+          "stderr": ""
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,8 @@
+--- work-orders/native-canary-summary/roadmap.md (pre-state)
++++ work-orders/native-canary-summary/roadmap.md
+@@ -34,3 +34,5 @@
+   Note (Claude, 15:35 PDT): this work order's frozen copy `src/native-canary-adjudicator.mjs` stays at the
+   accepted `cf875eaa…` bytes it was reviewed against; the baseline pin was briefly re-pinned to the product hash
+   during integration and reverted (baseline 3/3, summary 10/10 after revert). The product module carries the fix.
++
++2026-09-13 — integrated (Astra; Louis “Autointegrate”, 2026-09-13 Claude session): `hosts/macos-xpc/native-canary-summary.mjs` copied byte-for-byte, SHA256 `92590f11d91071fb7d5c1a0208958ef7c094d06a723fd38c5827fc63e6fb9c41`; 13/13 migrated tests (10 functional + 3 baseline), product check 1230/1230 with zero failed/skipped/cancelled/todo, TypeScript PASS and PRIVATE_PACKAGE_FILES 27. Not closed: host wiring of the bundle to the XPC runner, real-filesystem durability, cross-process locking, crash qualification, or incident admission. Progress stays 30% — 3 of 10; no milestone closure. Receipt: `../../docs/verification/2026-09-13/evidence-chain-integration/receipt.json`.

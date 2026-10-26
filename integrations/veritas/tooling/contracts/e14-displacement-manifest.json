@@ -1,0 +1,760 @@
+{
+  "schemaVersion": 1,
+  "experimentId": "E14",
+  "profile": "veritas-e14-assurance-continuity-displacement-v1",
+  "statusCeiling": "FROZEN_E14_SCENARIO_ONLY",
+  "runStatus": "NOT_RUN",
+  "evidenceClass": "SELF_ADMINISTERED_SCENARIO_FREEZE",
+  "caseSlotsPerFreshStoreRepetition": 42,
+  "repetitionsPerComparisonPair": 2,
+  "pairedCaseSlotsPerComparisonPair": 84,
+  "laneResultSlotsPerComparisonPair": 168,
+  "e14ExecutedCases": 0,
+  "comparisonRuns": 0,
+  "orderedStepIds": [
+    "S01",
+    "S02",
+    "S03",
+    "S04",
+    "S05",
+    "S06",
+    "S07",
+    "S08",
+    "S09",
+    "S10",
+    "S11",
+    "S12"
+  ],
+  "stepDenominators": {
+    "S01": 2,
+    "S02": 5,
+    "S03": 6,
+    "S04": 5,
+    "S05": 3,
+    "S06": 2,
+    "S07": 1,
+    "S08": 2,
+    "S09": 2,
+    "S10": 6,
+    "S11": 6,
+    "S12": 2
+  },
+  "comparisonClasses": [
+    "local-code-change-gate",
+    "supply-chain-attestation",
+    "agent-action-policy",
+    "failure-to-policy",
+    "policy-replay",
+    "reviewed-strong-composite"
+  ],
+  "fairnessStatus": "NOT_ASSESSED",
+  "freshStorePolicy": {
+    "eachCaseEachLane": true,
+    "eachRepetition": true,
+    "immutableStartingCheckpoint": "CHECKPOINT/CLEAN-BASELINE-V1",
+    "namedBarriersRequired": true,
+    "sleepSynchronizationAllowed": false,
+    "crossCaseStateReuseAllowed": false
+  },
+  "barrierProtocol": {
+    "startBarrierTemplate": "BARRIER/{caseId}/START",
+    "mutationBarrierTemplate": "BARRIER/{caseId}/MUTATION",
+    "decisionBarrierTemplate": "BARRIER/{caseId}/DECISION",
+    "sleepSynchronizationAllowed": false
+  },
+  "steps": [
+    {
+      "stepId": "S01",
+      "family": "CLEAN",
+      "caseCount": 2,
+      "cases": [
+        {
+          "schemaVersion": 1,
+          "caseId": "E14-S01-C01-CLEAN-ACCEPT-READBACK",
+          "stepId": "S01",
+          "family": "CLEAN",
+          "condition": "Submit the clean current candidate through controlled acceptance and destination readback.",
+          "expectedBehavior": "Accept exactly once, bind the destination to the accepted subject, and read back identical bytes.",
+          "startingCheckpoint": "CHECKPOINT/CLEAN-BASELINE-V1",
+          "freshStoreRequired": true,
+          "runStatus": "NOT_RUN",
+          "evidenceClass": "SELF_ADMINISTERED_SCENARIO_FREEZE",
+          "credits": { "technicalE14": false, "adoptionE14": false, "comparison": false, "m4": false, "uniqueness": false, "patent": false, "production": false, "signing": false, "release": false }
+        },
+        {
+          "schemaVersion": 1,
+          "caseId": "E14-S01-C02-CLEAN-CURRENT-REUSE",
+          "stepId": "S01",
+          "family": "CLEAN",
+          "condition": "Reuse the clean receipt while its subject, authority, dependencies, and destination remain current.",
+          "expectedBehavior": "Permit one exact-subject reuse without issuing a duplicate acceptance effect or receipt.",
+          "startingCheckpoint": "CHECKPOINT/CLEAN-BASELINE-V1",
+          "freshStoreRequired": true,
+          "runStatus": "NOT_RUN",
+          "evidenceClass": "SELF_ADMINISTERED_SCENARIO_FREEZE",
+          "credits": { "technicalE14": false, "adoptionE14": false, "comparison": false, "m4": false, "uniqueness": false, "patent": false, "production": false, "signing": false, "release": false }
+        }
+      ]
+    },
+    {
+      "stepId": "S02",
+      "family": "SUBJECT_NONINHERITANCE",
+      "caseCount": 5,
+      "cases": [
+        {
+          "schemaVersion": 1,
+          "caseId": "E14-S02-C01-RESPONSE-SUBSTITUTION",
+          "stepId": "S02",
+          "family": "SUBJECT_NONINHERITANCE",
+          "condition": "Substitute model-response bytes before a declared output is derived while retaining earlier evidence.",
+          "expectedBehavior": "Refuse downstream acceptance until evidence is regenerated for the exact substituted response subject.",
+          "startingCheckpoint": "CHECKPOINT/CLEAN-BASELINE-V1",
+          "freshStoreRequired": true,
+          "runStatus": "NOT_RUN",
+          "evidenceClass": "SELF_ADMINISTERED_SCENARIO_FREEZE",
+          "credits": { "technicalE14": false, "adoptionE14": false, "comparison": false, "m4": false, "uniqueness": false, "patent": false, "production": false, "signing": false, "release": false }
+        },
+        {
+          "schemaVersion": 1,
+          "caseId": "E14-S02-C02-DECLARED-OUTPUT-SUBSTITUTION",
+          "stepId": "S02",
+          "family": "SUBJECT_NONINHERITANCE",
+          "condition": "Substitute the declared-output bytes while reusing evidence bound to the original response lineage.",
+          "expectedBehavior": "Refuse inheritance across the response-to-declared-output boundary and require a new exact binding.",
+          "startingCheckpoint": "CHECKPOINT/CLEAN-BASELINE-V1",
+          "freshStoreRequired": true,
+          "runStatus": "NOT_RUN",
+          "evidenceClass": "SELF_ADMINISTERED_SCENARIO_FREEZE",
+          "credits": { "technicalE14": false, "adoptionE14": false, "comparison": false, "m4": false, "uniqueness": false, "patent": false, "production": false, "signing": false, "release": false }
+        },
+        {
+          "schemaVersion": 1,
+          "caseId": "E14-S02-C03-CANDIDATE-SUBSTITUTION",
+          "stepId": "S02",
+          "family": "SUBJECT_NONINHERITANCE",
+          "condition": "Replace the staged candidate after declared-output checks while retaining the earlier decision inputs.",
+          "expectedBehavior": "Refuse promotion because the checked subject and the candidate subject are not identical.",
+          "startingCheckpoint": "CHECKPOINT/CLEAN-BASELINE-V1",
+          "freshStoreRequired": true,
+          "runStatus": "NOT_RUN",
+          "evidenceClass": "SELF_ADMINISTERED_SCENARIO_FREEZE",
+          "credits": { "technicalE14": false, "adoptionE14": false, "comparison": false, "m4": false, "uniqueness": false, "patent": false, "production": false, "signing": false, "release": false }
+        },
+        {
+          "schemaVersion": 1,
+          "caseId": "E14-S02-C04-ACCEPTED-ARTIFACT-SUBSTITUTION",
+          "stepId": "S02",
+          "family": "SUBJECT_NONINHERITANCE",
+          "condition": "Replace the accepted-artifact reference with another artifact after a valid decision is recorded.",
+          "expectedBehavior": "Refuse promotion because the accepted artifact no longer names the exact decided candidate.",
+          "startingCheckpoint": "CHECKPOINT/CLEAN-BASELINE-V1",
+          "freshStoreRequired": true,
+          "runStatus": "NOT_RUN",
+          "evidenceClass": "SELF_ADMINISTERED_SCENARIO_FREEZE",
+          "credits": { "technicalE14": false, "adoptionE14": false, "comparison": false, "m4": false, "uniqueness": false, "patent": false, "production": false, "signing": false, "release": false }
+        },
+        {
+          "schemaVersion": 1,
+          "caseId": "E14-S02-C05-DESTINATION-RESULT-SUBSTITUTION",
+          "stepId": "S02",
+          "family": "SUBJECT_NONINHERITANCE",
+          "condition": "Reuse an acceptance receipt for a different destination-result digest.",
+          "expectedBehavior": "Refuse reuse because destination result, accepted artifact, and receipt subject do not form one exact chain.",
+          "startingCheckpoint": "CHECKPOINT/CLEAN-BASELINE-V1",
+          "freshStoreRequired": true,
+          "runStatus": "NOT_RUN",
+          "evidenceClass": "SELF_ADMINISTERED_SCENARIO_FREEZE",
+          "credits": { "technicalE14": false, "adoptionE14": false, "comparison": false, "m4": false, "uniqueness": false, "patent": false, "production": false, "signing": false, "release": false }
+        }
+      ]
+    },
+    {
+      "stepId": "S03",
+      "family": "AUTHORITY_MUTATION",
+      "caseCount": 6,
+      "cases": [
+        {
+          "schemaVersion": 1,
+          "caseId": "E14-S03-C01-POLICY-DIGEST-MUTATION",
+          "stepId": "S03",
+          "family": "AUTHORITY_MUTATION",
+          "condition": "Mutate the policy digest after authority freeze and before judgment.",
+          "expectedBehavior": "Refuse the decision; candidate-controlled policy must never govern the candidate's own acceptance.",
+          "startingCheckpoint": "CHECKPOINT/CLEAN-BASELINE-V1",
+          "freshStoreRequired": true,
+          "runStatus": "NOT_RUN",
+          "evidenceClass": "SELF_ADMINISTERED_SCENARIO_FREEZE",
+          "credits": { "technicalE14": false, "adoptionE14": false, "comparison": false, "m4": false, "uniqueness": false, "patent": false, "production": false, "signing": false, "release": false }
+        },
+        {
+          "schemaVersion": 1,
+          "caseId": "E14-S03-C02-VERIFIER-SET-DIGEST-MUTATION",
+          "stepId": "S03",
+          "family": "AUTHORITY_MUTATION",
+          "condition": "Mutate the verifier-set digest after authority freeze.",
+          "expectedBehavior": "Refuse judgment under the altered verifier set and retain the frozen authority identity.",
+          "startingCheckpoint": "CHECKPOINT/CLEAN-BASELINE-V1",
+          "freshStoreRequired": true,
+          "runStatus": "NOT_RUN",
+          "evidenceClass": "SELF_ADMINISTERED_SCENARIO_FREEZE",
+          "credits": { "technicalE14": false, "adoptionE14": false, "comparison": false, "m4": false, "uniqueness": false, "patent": false, "production": false, "signing": false, "release": false }
+        },
+        {
+          "schemaVersion": 1,
+          "caseId": "E14-S03-C03-HOOK-SET-DIGEST-MUTATION",
+          "stepId": "S03",
+          "family": "AUTHORITY_MUTATION",
+          "condition": "Mutate the protected hook-set digest before or during judgment.",
+          "expectedBehavior": "Refuse judgment and prevent the candidate from changing the hooks that govern its decision.",
+          "startingCheckpoint": "CHECKPOINT/CLEAN-BASELINE-V1",
+          "freshStoreRequired": true,
+          "runStatus": "NOT_RUN",
+          "evidenceClass": "SELF_ADMINISTERED_SCENARIO_FREEZE",
+          "credits": { "technicalE14": false, "adoptionE14": false, "comparison": false, "m4": false, "uniqueness": false, "patent": false, "production": false, "signing": false, "release": false }
+        },
+        {
+          "schemaVersion": 1,
+          "caseId": "E14-S03-C04-APPROVAL-BINDING-MUTATION",
+          "stepId": "S03",
+          "family": "AUTHORITY_MUTATION",
+          "condition": "Replace the approval binding or attempt writer self-approval after the authority snapshot is frozen.",
+          "expectedBehavior": "Refuse the decision because approval identity and role separation no longer match frozen authority.",
+          "startingCheckpoint": "CHECKPOINT/CLEAN-BASELINE-V1",
+          "freshStoreRequired": true,
+          "runStatus": "NOT_RUN",
+          "evidenceClass": "SELF_ADMINISTERED_SCENARIO_FREEZE",
+          "credits": { "technicalE14": false, "adoptionE14": false, "comparison": false, "m4": false, "uniqueness": false, "patent": false, "production": false, "signing": false, "release": false }
+        },
+        {
+          "schemaVersion": 1,
+          "caseId": "E14-S03-C05-ADAPTER-SET-DIGEST-MUTATION",
+          "stepId": "S03",
+          "family": "AUTHORITY_MUTATION",
+          "condition": "Mutate the evidence-adapter-set digest before or during judgment.",
+          "expectedBehavior": "Refuse judgment under the changed adapter set and retain the original frozen authority.",
+          "startingCheckpoint": "CHECKPOINT/CLEAN-BASELINE-V1",
+          "freshStoreRequired": true,
+          "runStatus": "NOT_RUN",
+          "evidenceClass": "SELF_ADMINISTERED_SCENARIO_FREEZE",
+          "credits": { "technicalE14": false, "adoptionE14": false, "comparison": false, "m4": false, "uniqueness": false, "patent": false, "production": false, "signing": false, "release": false }
+        },
+        {
+          "schemaVersion": 1,
+          "caseId": "E14-S03-C06-AUTHORITY-REFERENCE-MUTATION",
+          "stepId": "S03",
+          "family": "AUTHORITY_MUTATION",
+          "condition": "Redirect the authority reference to a different authority snapshot during judgment.",
+          "expectedBehavior": "Refuse the decision because the authority reference is not the immutable snapshot bound at start.",
+          "startingCheckpoint": "CHECKPOINT/CLEAN-BASELINE-V1",
+          "freshStoreRequired": true,
+          "runStatus": "NOT_RUN",
+          "evidenceClass": "SELF_ADMINISTERED_SCENARIO_FREEZE",
+          "credits": { "technicalE14": false, "adoptionE14": false, "comparison": false, "m4": false, "uniqueness": false, "patent": false, "production": false, "signing": false, "release": false }
+        }
+      ]
+    },
+    {
+      "stepId": "S04",
+      "family": "DESTINATION_SUBSTITUTION",
+      "caseCount": 5,
+      "cases": [
+        {
+          "schemaVersion": 1,
+          "caseId": "E14-S04-C01-PREPARED-OBJECT-BYTES-SUBSTITUTION",
+          "stepId": "S04",
+          "family": "DESTINATION_SUBSTITUTION",
+          "condition": "Substitute prepared immutable-object bytes before the destination reference is changed.",
+          "expectedBehavior": "Refuse promotion or converge to the prior exact target; substituted bytes must never become accepted.",
+          "startingCheckpoint": "CHECKPOINT/CLEAN-BASELINE-V1",
+          "freshStoreRequired": true,
+          "runStatus": "NOT_RUN",
+          "evidenceClass": "SELF_ADMINISTERED_SCENARIO_FREEZE",
+          "credits": { "technicalE14": false, "adoptionE14": false, "comparison": false, "m4": false, "uniqueness": false, "patent": false, "production": false, "signing": false, "release": false }
+        },
+        {
+          "schemaVersion": 1,
+          "caseId": "E14-S04-C02-ACCEPTED-REFERENCE-SUBSTITUTION",
+          "stepId": "S04",
+          "family": "DESTINATION_SUBSTITUTION",
+          "condition": "Substitute the accepted reference after judgment but before destination promotion.",
+          "expectedBehavior": "Refuse promotion or preserve the prior target; the substituted reference must not be accepted.",
+          "startingCheckpoint": "CHECKPOINT/CLEAN-BASELINE-V1",
+          "freshStoreRequired": true,
+          "runStatus": "NOT_RUN",
+          "evidenceClass": "SELF_ADMINISTERED_SCENARIO_FREEZE",
+          "credits": { "technicalE14": false, "adoptionE14": false, "comparison": false, "m4": false, "uniqueness": false, "patent": false, "production": false, "signing": false, "release": false }
+        },
+        {
+          "schemaVersion": 1,
+          "caseId": "E14-S04-C03-DESTINATION-BEFORE-READBACK-SUBSTITUTION",
+          "stepId": "S04",
+          "family": "DESTINATION_SUBSTITUTION",
+          "condition": "Replace the destination target after reference swap and before mandatory readback.",
+          "expectedBehavior": "Withhold acceptance or roll back to the prior target when destination readback differs from the accepted subject.",
+          "startingCheckpoint": "CHECKPOINT/CLEAN-BASELINE-V1",
+          "freshStoreRequired": true,
+          "runStatus": "NOT_RUN",
+          "evidenceClass": "SELF_ADMINISTERED_SCENARIO_FREEZE",
+          "credits": { "technicalE14": false, "adoptionE14": false, "comparison": false, "m4": false, "uniqueness": false, "patent": false, "production": false, "signing": false, "release": false }
+        },
+        {
+          "schemaVersion": 1,
+          "caseId": "E14-S04-C04-DESTINATION-AFTER-READBACK-SUBSTITUTION",
+          "stepId": "S04",
+          "family": "DESTINATION_SUBSTITUTION",
+          "condition": "Replace the destination after successful readback but before receipt issuance or reuse.",
+          "expectedBehavior": "Withhold or recall the receipt unless a current readback still binds the exact accepted subject.",
+          "startingCheckpoint": "CHECKPOINT/CLEAN-BASELINE-V1",
+          "freshStoreRequired": true,
+          "runStatus": "NOT_RUN",
+          "evidenceClass": "SELF_ADMINISTERED_SCENARIO_FREEZE",
+          "credits": { "technicalE14": false, "adoptionE14": false, "comparison": false, "m4": false, "uniqueness": false, "patent": false, "production": false, "signing": false, "release": false }
+        },
+        {
+          "schemaVersion": 1,
+          "caseId": "E14-S04-C05-SAME-PATH-EXECUTABLE-SUBSTITUTION",
+          "stepId": "S04",
+          "family": "DESTINATION_SUBSTITUTION",
+          "condition": "Replace a checked executable at the same path with a different signed executable before benign use.",
+          "expectedBehavior": "Refuse use because path and signing state cannot substitute for exact accepted executable bytes.",
+          "startingCheckpoint": "CHECKPOINT/CLEAN-BASELINE-V1",
+          "freshStoreRequired": true,
+          "runStatus": "NOT_RUN",
+          "evidenceClass": "SELF_ADMINISTERED_SCENARIO_FREEZE",
+          "credits": { "technicalE14": false, "adoptionE14": false, "comparison": false, "m4": false, "uniqueness": false, "patent": false, "production": false, "signing": false, "release": false }
+        }
+      ]
+    },
+    {
+      "stepId": "S05",
+      "family": "CRASH_CONVERGENCE",
+      "caseCount": 3,
+      "cases": [
+        {
+          "schemaVersion": 1,
+          "caseId": "E14-S05-C01-CRASH-AFTER-OBJECT-WRITE",
+          "stepId": "S05",
+          "family": "CRASH_CONVERGENCE",
+          "condition": "Crash immediately after immutable-object write and before reference swap.",
+          "expectedBehavior": "Recover idempotently to the prior target or the exact accepted candidate with no ambiguous acceptance.",
+          "startingCheckpoint": "CHECKPOINT/CLEAN-BASELINE-V1",
+          "freshStoreRequired": true,
+          "runStatus": "NOT_RUN",
+          "evidenceClass": "SELF_ADMINISTERED_SCENARIO_FREEZE",
+          "credits": { "technicalE14": false, "adoptionE14": false, "comparison": false, "m4": false, "uniqueness": false, "patent": false, "production": false, "signing": false, "release": false }
+        },
+        {
+          "schemaVersion": 1,
+          "caseId": "E14-S05-C02-CRASH-AFTER-REFERENCE-SWAP",
+          "stepId": "S05",
+          "family": "CRASH_CONVERGENCE",
+          "condition": "Crash immediately after destination reference swap and before verified readback.",
+          "expectedBehavior": "Recover by verified readback and converge without declaring ambiguous state accepted.",
+          "startingCheckpoint": "CHECKPOINT/CLEAN-BASELINE-V1",
+          "freshStoreRequired": true,
+          "runStatus": "NOT_RUN",
+          "evidenceClass": "SELF_ADMINISTERED_SCENARIO_FREEZE",
+          "credits": { "technicalE14": false, "adoptionE14": false, "comparison": false, "m4": false, "uniqueness": false, "patent": false, "production": false, "signing": false, "release": false }
+        },
+        {
+          "schemaVersion": 1,
+          "caseId": "E14-S05-C03-CRASH-AFTER-READBACK-BEFORE-RECEIPT",
+          "stepId": "S05",
+          "family": "CRASH_CONVERGENCE",
+          "condition": "Crash after exact destination readback and before durable receipt issuance.",
+          "expectedBehavior": "Recover idempotently with at most one bound receipt and no duplicate accepted effect.",
+          "startingCheckpoint": "CHECKPOINT/CLEAN-BASELINE-V1",
+          "freshStoreRequired": true,
+          "runStatus": "NOT_RUN",
+          "evidenceClass": "SELF_ADMINISTERED_SCENARIO_FREEZE",
+          "credits": { "technicalE14": false, "adoptionE14": false, "comparison": false, "m4": false, "uniqueness": false, "patent": false, "production": false, "signing": false, "release": false }
+        }
+      ]
+    },
+    {
+      "stepId": "S06",
+      "family": "AFFECTING_RECALL",
+      "caseCount": 2,
+      "cases": [
+        {
+          "schemaVersion": 1,
+          "caseId": "E14-S06-C01-DEPENDENCY-CORRECTION-CONCURRENT-REUSE",
+          "stepId": "S06",
+          "family": "AFFECTING_RECALL",
+          "condition": "Correct an affecting dependency while an old receipt is concurrently offered for reuse.",
+          "expectedBehavior": "Publish the recall barrier before reuse, reject the old receipt, and require current replay before supersession.",
+          "startingCheckpoint": "CHECKPOINT/CLEAN-BASELINE-V1",
+          "freshStoreRequired": true,
+          "runStatus": "NOT_RUN",
+          "evidenceClass": "SELF_ADMINISTERED_SCENARIO_FREEZE",
+          "credits": { "technicalE14": false, "adoptionE14": false, "comparison": false, "m4": false, "uniqueness": false, "patent": false, "production": false, "signing": false, "release": false }
+        },
+        {
+          "schemaVersion": 1,
+          "caseId": "E14-S06-C02-DEPENDENCY-REVOCATION-CONCURRENT-REUSE",
+          "stepId": "S06",
+          "family": "AFFECTING_RECALL",
+          "condition": "Revoke an affecting dependency while an old receipt is concurrently offered for reuse.",
+          "expectedBehavior": "Publish the revocation barrier before reuse, reject the receipt, and withhold acceptance until valid replay.",
+          "startingCheckpoint": "CHECKPOINT/CLEAN-BASELINE-V1",
+          "freshStoreRequired": true,
+          "runStatus": "NOT_RUN",
+          "evidenceClass": "SELF_ADMINISTERED_SCENARIO_FREEZE",
+          "credits": { "technicalE14": false, "adoptionE14": false, "comparison": false, "m4": false, "uniqueness": false, "patent": false, "production": false, "signing": false, "release": false }
+        }
+      ]
+    },
+    {
+      "stepId": "S07",
+      "family": "KNOWN_REPLAY",
+      "caseCount": 1,
+      "cases": [
+        {
+          "schemaVersion": 1,
+          "caseId": "E14-S07-C01-KNOWN-GRAPH-MINIMUM-REPLAY-ORACLE",
+          "stepId": "S07",
+          "family": "KNOWN_REPLAY",
+          "condition": "Compute a shadow minimum replay set for a frozen graph whose mandatory replay oracle is known.",
+          "expectedBehavior": "Match the frozen oracle exactly while exhaustive replay remains the only execution-authorizing path.",
+          "startingCheckpoint": "CHECKPOINT/CLEAN-BASELINE-V1",
+          "freshStoreRequired": true,
+          "runStatus": "NOT_RUN",
+          "evidenceClass": "SELF_ADMINISTERED_SCENARIO_FREEZE",
+          "credits": { "technicalE14": false, "adoptionE14": false, "comparison": false, "m4": false, "uniqueness": false, "patent": false, "production": false, "signing": false, "release": false }
+        }
+      ]
+    },
+    {
+      "stepId": "S08",
+      "family": "UNRESOLVED_REPLAY",
+      "caseCount": 2,
+      "cases": [
+        {
+          "schemaVersion": 1,
+          "caseId": "E14-S08-C01-AMBIGUOUS-GRAPH-EXHAUSTIVE-FALLBACK",
+          "stepId": "S08",
+          "family": "UNRESOLVED_REPLAY",
+          "condition": "Request replay for a graph whose dependency sufficiency is intentionally ambiguous.",
+          "expectedBehavior": "Select exhaustive replay and prevent a minimum-replay proposal from governing execution.",
+          "startingCheckpoint": "CHECKPOINT/CLEAN-BASELINE-V1",
+          "freshStoreRequired": true,
+          "runStatus": "NOT_RUN",
+          "evidenceClass": "SELF_ADMINISTERED_SCENARIO_FREEZE",
+          "credits": { "technicalE14": false, "adoptionE14": false, "comparison": false, "m4": false, "uniqueness": false, "patent": false, "production": false, "signing": false, "release": false }
+        },
+        {
+          "schemaVersion": 1,
+          "caseId": "E14-S08-C02-MISSING-ORACLE-EXHAUSTIVE-FALLBACK",
+          "stepId": "S08",
+          "family": "UNRESOLVED_REPLAY",
+          "condition": "Request replay when no independently frozen minimum mandatory-set oracle exists.",
+          "expectedBehavior": "Select exhaustive replay and record the missing oracle without granting selective-replay authority.",
+          "startingCheckpoint": "CHECKPOINT/CLEAN-BASELINE-V1",
+          "freshStoreRequired": true,
+          "runStatus": "NOT_RUN",
+          "evidenceClass": "SELF_ADMINISTERED_SCENARIO_FREEZE",
+          "credits": { "technicalE14": false, "adoptionE14": false, "comparison": false, "m4": false, "uniqueness": false, "patent": false, "production": false, "signing": false, "release": false }
+        }
+      ]
+    },
+    {
+      "stepId": "S09",
+      "family": "UNRELATED_CHANGE",
+      "caseCount": 2,
+      "cases": [
+        {
+          "schemaVersion": 1,
+          "caseId": "E14-S09-C01-UNRELATED-DEPENDENCY-CONTENT-CHANGE",
+          "stepId": "S09",
+          "family": "UNRELATED_CHANGE",
+          "condition": "Change the content of a dependency outside the accepted receipt's frozen transitive closure.",
+          "expectedBehavior": "Keep the unrelated receipt current; conservative global recall is measured as an efficiency failure.",
+          "startingCheckpoint": "CHECKPOINT/CLEAN-BASELINE-V1",
+          "freshStoreRequired": true,
+          "runStatus": "NOT_RUN",
+          "evidenceClass": "SELF_ADMINISTERED_SCENARIO_FREEZE",
+          "credits": { "technicalE14": false, "adoptionE14": false, "comparison": false, "m4": false, "uniqueness": false, "patent": false, "production": false, "signing": false, "release": false }
+        },
+        {
+          "schemaVersion": 1,
+          "caseId": "E14-S09-C02-UNRELATED-DEPENDENCY-REVOCATION",
+          "stepId": "S09",
+          "family": "UNRELATED_CHANGE",
+          "condition": "Revoke a dependency outside the accepted receipt's frozen transitive closure.",
+          "expectedBehavior": "Do not recall the unrelated receipt and preserve a measurable zero unrelated-recall outcome.",
+          "startingCheckpoint": "CHECKPOINT/CLEAN-BASELINE-V1",
+          "freshStoreRequired": true,
+          "runStatus": "NOT_RUN",
+          "evidenceClass": "SELF_ADMINISTERED_SCENARIO_FREEZE",
+          "credits": { "technicalE14": false, "adoptionE14": false, "comparison": false, "m4": false, "uniqueness": false, "patent": false, "production": false, "signing": false, "release": false }
+        }
+      ]
+    },
+    {
+      "stepId": "S10",
+      "family": "ONE_USE_AND_CUSTODY",
+      "caseCount": 6,
+      "cases": [
+        {
+          "schemaVersion": 1,
+          "caseId": "E14-S10-C01-DUPLICATE-PROMOTION-RETRY",
+          "stepId": "S10",
+          "family": "ONE_USE_AND_CUSTODY",
+          "condition": "Retry an already completed promotion operation using the identical operation identity.",
+          "expectedBehavior": "Return the one prior bound outcome without a second promotion effect or receipt.",
+          "startingCheckpoint": "CHECKPOINT/CLEAN-BASELINE-V1",
+          "freshStoreRequired": true,
+          "runStatus": "NOT_RUN",
+          "evidenceClass": "SELF_ADMINISTERED_SCENARIO_FREEZE",
+          "credits": { "technicalE14": false, "adoptionE14": false, "comparison": false, "m4": false, "uniqueness": false, "patent": false, "production": false, "signing": false, "release": false }
+        },
+        {
+          "schemaVersion": 1,
+          "caseId": "E14-S10-C02-LOST-SUCCESS-RETRY",
+          "stepId": "S10",
+          "family": "ONE_USE_AND_CUSTODY",
+          "condition": "Lose the success response after promotion and retry the same operation identity.",
+          "expectedBehavior": "Recover the original success idempotently without duplicating promotion, billing, or protected effects.",
+          "startingCheckpoint": "CHECKPOINT/CLEAN-BASELINE-V1",
+          "freshStoreRequired": true,
+          "runStatus": "NOT_RUN",
+          "evidenceClass": "SELF_ADMINISTERED_SCENARIO_FREEZE",
+          "credits": { "technicalE14": false, "adoptionE14": false, "comparison": false, "m4": false, "uniqueness": false, "patent": false, "production": false, "signing": false, "release": false }
+        },
+        {
+          "schemaVersion": 1,
+          "caseId": "E14-S10-C03-CONCURRENT-RECEIPT-REUSE",
+          "stepId": "S10",
+          "family": "ONE_USE_AND_CUSTODY",
+          "condition": "Offer the same one-use receipt concurrently to two protected consumers.",
+          "expectedBehavior": "Allow at most one successful consume transition and reject every later or concurrent duplicate use.",
+          "startingCheckpoint": "CHECKPOINT/CLEAN-BASELINE-V1",
+          "freshStoreRequired": true,
+          "runStatus": "NOT_RUN",
+          "evidenceClass": "SELF_ADMINISTERED_SCENARIO_FREEZE",
+          "credits": { "technicalE14": false, "adoptionE14": false, "comparison": false, "m4": false, "uniqueness": false, "patent": false, "production": false, "signing": false, "release": false }
+        },
+        {
+          "schemaVersion": 1,
+          "caseId": "E14-S10-C04-WRONG-SUBJECT-CAPABILITY",
+          "stepId": "S10",
+          "family": "ONE_USE_AND_CUSTODY",
+          "condition": "Present a valid one-use capability for a different accepted subject.",
+          "expectedBehavior": "Reject before any protected effect because the capability subject binding differs.",
+          "startingCheckpoint": "CHECKPOINT/CLEAN-BASELINE-V1",
+          "freshStoreRequired": true,
+          "runStatus": "NOT_RUN",
+          "evidenceClass": "SELF_ADMINISTERED_SCENARIO_FREEZE",
+          "credits": { "technicalE14": false, "adoptionE14": false, "comparison": false, "m4": false, "uniqueness": false, "patent": false, "production": false, "signing": false, "release": false }
+        },
+        {
+          "schemaVersion": 1,
+          "caseId": "E14-S10-C05-WRONG-DESTINATION-CAPABILITY",
+          "stepId": "S10",
+          "family": "ONE_USE_AND_CUSTODY",
+          "condition": "Present a valid one-use capability to a destination other than the bound destination.",
+          "expectedBehavior": "Reject before any protected effect because the destination binding differs.",
+          "startingCheckpoint": "CHECKPOINT/CLEAN-BASELINE-V1",
+          "freshStoreRequired": true,
+          "runStatus": "NOT_RUN",
+          "evidenceClass": "SELF_ADMINISTERED_SCENARIO_FREEZE",
+          "credits": { "technicalE14": false, "adoptionE14": false, "comparison": false, "m4": false, "uniqueness": false, "patent": false, "production": false, "signing": false, "release": false }
+        },
+        {
+          "schemaVersion": 1,
+          "caseId": "E14-S10-C06-REVOKED-OR-EXPIRED-CAPABILITY",
+          "stepId": "S10",
+          "family": "ONE_USE_AND_CUSTODY",
+          "condition": "Present a capability after revocation or after its frozen expiry boundary.",
+          "expectedBehavior": "Reject before any provider, destination, or protected side effect is attempted.",
+          "startingCheckpoint": "CHECKPOINT/CLEAN-BASELINE-V1",
+          "freshStoreRequired": true,
+          "runStatus": "NOT_RUN",
+          "evidenceClass": "SELF_ADMINISTERED_SCENARIO_FREEZE",
+          "credits": { "technicalE14": false, "adoptionE14": false, "comparison": false, "m4": false, "uniqueness": false, "patent": false, "production": false, "signing": false, "release": false }
+        }
+      ]
+    },
+    {
+      "stepId": "S11",
+      "family": "EVIDENCE_AND_REPLAY",
+      "caseCount": 6,
+      "cases": [
+        {
+          "schemaVersion": 1,
+          "caseId": "E14-S11-C01-MISSING-REQUIRED-EVIDENCE",
+          "stepId": "S11",
+          "family": "EVIDENCE_AND_REPLAY",
+          "condition": "Omit one evidence item required by the frozen acceptance profile.",
+          "expectedBehavior": "Refuse acceptance and select the frozen replay or remediation path for missing evidence.",
+          "startingCheckpoint": "CHECKPOINT/CLEAN-BASELINE-V1",
+          "freshStoreRequired": true,
+          "runStatus": "NOT_RUN",
+          "evidenceClass": "SELF_ADMINISTERED_SCENARIO_FREEZE",
+          "credits": { "technicalE14": false, "adoptionE14": false, "comparison": false, "m4": false, "uniqueness": false, "patent": false, "production": false, "signing": false, "release": false }
+        },
+        {
+          "schemaVersion": 1,
+          "caseId": "E14-S11-C02-NOT-RUN-REQUIRED-EVIDENCE",
+          "stepId": "S11",
+          "family": "EVIDENCE_AND_REPLAY",
+          "condition": "Supply a required evidence record whose authoritative run status is NOT_RUN.",
+          "expectedBehavior": "Refuse acceptance; NOT_RUN must never be normalized or credited as PASS.",
+          "startingCheckpoint": "CHECKPOINT/CLEAN-BASELINE-V1",
+          "freshStoreRequired": true,
+          "runStatus": "NOT_RUN",
+          "evidenceClass": "SELF_ADMINISTERED_SCENARIO_FREEZE",
+          "credits": { "technicalE14": false, "adoptionE14": false, "comparison": false, "m4": false, "uniqueness": false, "patent": false, "production": false, "signing": false, "release": false }
+        },
+        {
+          "schemaVersion": 1,
+          "caseId": "E14-S11-C03-MALFORMED-REQUIRED-EVIDENCE",
+          "stepId": "S11",
+          "family": "EVIDENCE_AND_REPLAY",
+          "condition": "Supply malformed bytes where a required evidence record is expected.",
+          "expectedBehavior": "Refuse acceptance with a typed malformed-evidence result and no protected side effect.",
+          "startingCheckpoint": "CHECKPOINT/CLEAN-BASELINE-V1",
+          "freshStoreRequired": true,
+          "runStatus": "NOT_RUN",
+          "evidenceClass": "SELF_ADMINISTERED_SCENARIO_FREEZE",
+          "credits": { "technicalE14": false, "adoptionE14": false, "comparison": false, "m4": false, "uniqueness": false, "patent": false, "production": false, "signing": false, "release": false }
+        },
+        {
+          "schemaVersion": 1,
+          "caseId": "E14-S11-C04-STALE-OR-EXPIRED-EVIDENCE",
+          "stepId": "S11",
+          "family": "EVIDENCE_AND_REPLAY",
+          "condition": "Supply required evidence that is stale or expired under the frozen policy epoch.",
+          "expectedBehavior": "Refuse acceptance and require current evidence before any new receipt is issued.",
+          "startingCheckpoint": "CHECKPOINT/CLEAN-BASELINE-V1",
+          "freshStoreRequired": true,
+          "runStatus": "NOT_RUN",
+          "evidenceClass": "SELF_ADMINISTERED_SCENARIO_FREEZE",
+          "credits": { "technicalE14": false, "adoptionE14": false, "comparison": false, "m4": false, "uniqueness": false, "patent": false, "production": false, "signing": false, "release": false }
+        },
+        {
+          "schemaVersion": 1,
+          "caseId": "E14-S11-C05-WRONG-SUBJECT-EVIDENCE",
+          "stepId": "S11",
+          "family": "EVIDENCE_AND_REPLAY",
+          "condition": "Supply valid evidence bound to a different subject while all other fields appear current.",
+          "expectedBehavior": "Refuse acceptance because evidence cannot transfer across subjects.",
+          "startingCheckpoint": "CHECKPOINT/CLEAN-BASELINE-V1",
+          "freshStoreRequired": true,
+          "runStatus": "NOT_RUN",
+          "evidenceClass": "SELF_ADMINISTERED_SCENARIO_FREEZE",
+          "credits": { "technicalE14": false, "adoptionE14": false, "comparison": false, "m4": false, "uniqueness": false, "patent": false, "production": false, "signing": false, "release": false }
+        },
+        {
+          "schemaVersion": 1,
+          "caseId": "E14-S11-C06-CORRECTED-EVIDENCE-EXHAUSTIVE-REPLAY",
+          "stepId": "S11",
+          "family": "EVIDENCE_AND_REPLAY",
+          "condition": "Correct invalid evidence and execute the frozen exhaustive replay path.",
+          "expectedBehavior": "Issue a superseding receipt only after every mandatory check passes for the current dependency closure.",
+          "startingCheckpoint": "CHECKPOINT/CLEAN-BASELINE-V1",
+          "freshStoreRequired": true,
+          "runStatus": "NOT_RUN",
+          "evidenceClass": "SELF_ADMINISTERED_SCENARIO_FREEZE",
+          "credits": { "technicalE14": false, "adoptionE14": false, "comparison": false, "m4": false, "uniqueness": false, "patent": false, "production": false, "signing": false, "release": false }
+        }
+      ]
+    },
+    {
+      "stepId": "S12",
+      "family": "CLEAN_UNAFFECTED",
+      "caseCount": 2,
+      "cases": [
+        {
+          "schemaVersion": 1,
+          "caseId": "E14-S12-C01-CLEAN-TWIN-AFTER-ADVERSARIAL-CASE",
+          "stepId": "S12",
+          "family": "CLEAN_UNAFFECTED",
+          "condition": "Run a clean twin from the immutable checkpoint after an adversarial case completes in an isolated store.",
+          "expectedBehavior": "Accept the clean twin exactly once, proving the adversarial case did not contaminate later case state.",
+          "startingCheckpoint": "CHECKPOINT/CLEAN-BASELINE-V1",
+          "freshStoreRequired": true,
+          "runStatus": "NOT_RUN",
+          "evidenceClass": "SELF_ADMINISTERED_SCENARIO_FREEZE",
+          "credits": { "technicalE14": false, "adoptionE14": false, "comparison": false, "m4": false, "uniqueness": false, "patent": false, "production": false, "signing": false, "release": false }
+        },
+        {
+          "schemaVersion": 1,
+          "caseId": "E14-S12-C02-UNAFFECTED-RECEIPT-CURRENT-AFTER-CHANGE",
+          "stepId": "S12",
+          "family": "CLEAN_UNAFFECTED",
+          "condition": "Reuse a receipt whose closure is unaffected after another isolated dependency change.",
+          "expectedBehavior": "Keep the receipt current and avoid both false rejection and cross-case contamination.",
+          "startingCheckpoint": "CHECKPOINT/CLEAN-BASELINE-V1",
+          "freshStoreRequired": true,
+          "runStatus": "NOT_RUN",
+          "evidenceClass": "SELF_ADMINISTERED_SCENARIO_FREEZE",
+          "credits": { "technicalE14": false, "adoptionE14": false, "comparison": false, "m4": false, "uniqueness": false, "patent": false, "production": false, "signing": false, "release": false }
+        }
+      ]
+    }
+  ],
+  "denominatorControls": [
+    { "id": "EMPTY", "expectedRefusal": "REFUSE_EMPTY_CASE_SET" },
+    { "id": "MISSING", "expectedRefusal": "REFUSE_MISSING_CASE" },
+    { "id": "DUPLICATE", "expectedRefusal": "REFUSE_DUPLICATE_CASE_ID" },
+    { "id": "EXTRA", "expectedRefusal": "REFUSE_EXTRA_CASE" },
+    { "id": "REORDERED", "expectedRefusal": "REFUSE_REORDERED_CASE_SET" }
+  ],
+  "payloadBindingProbe": {
+    "probeId": "E14-PAYLOAD-BINDING-01",
+    "method": "MUTATE_CASE_CONTENT_WITH_IDS_UNCHANGED",
+    "requiredObservation": "CASE_SET_DIGEST_CHANGES",
+    "evidenceClass": "SELF_ADMINISTERED_STRUCTURAL_PROBE"
+  },
+  "primaryMetrics": {
+    "criticalFalseAccepts": { "target": 0, "denominator": "FROZEN_CRITICAL_CASES_NONEMPTY" },
+    "cleanFalseRejects": { "target": 0, "denominator": "FROZEN_CLEAN_CASES_NONEMPTY" },
+    "crossSubjectInheritanceAccepts": { "target": 0, "denominator": "FROZEN_SUBJECT_SUBSTITUTIONS_NONEMPTY" },
+    "authorityMutationAccepts": { "target": 0, "denominator": "FROZEN_AUTHORITY_MUTATIONS_NONEMPTY" },
+    "verifiedPromotedReadbackMismatches": { "target": 0, "denominator": "FROZEN_PROMOTIONS_NONEMPTY" },
+    "staleReceiptReuseAccepts": { "target": 0, "denominator": "FROZEN_STALE_REUSE_ATTEMPTS_NONEMPTY" },
+    "affectedRecallRate": { "targetPercent": 100, "denominator": "FROZEN_AFFECTED_RECEIPTS_NONEMPTY" },
+    "unrelatedRecallRate": { "targetPercent": 0, "denominator": "FROZEN_UNAFFECTED_RECEIPTS_NONEMPTY" },
+    "exhaustiveOracleReplayMisses": { "target": 0, "denominator": "FROZEN_ORACLE_REQUIREMENTS_NONEMPTY" },
+    "crashNonconvergence": { "target": 0, "denominator": "FROZEN_CRASH_POINTS_NONEMPTY" },
+    "manualSafetyInterventions": { "target": 0, "denominator": "FROZEN_CASE_SET_NONEMPTY" }
+  },
+  "secondaryMeasurements": [
+    "custom_transition_code",
+    "privileged_hooks",
+    "trust_roots",
+    "durable_stores",
+    "configuration_artifacts",
+    "integration_hours",
+    "gate_latency",
+    "correction_to_block_latency",
+    "replay_work"
+  ],
+  "decisionRules": [
+    { "decision": "KILL_IMPLEMENTATION", "condition": "Veritas produces any critical false acceptance or exhaustive-oracle replay miss." },
+    { "decision": "KILL_E14_DIFFERENTIATION_HYPOTHESIS", "condition": "The reviewed composite baseline achieves every primary outcome without custom mechanisms equivalent to the continuity spine." },
+    { "decision": "PRODUCTIZATION_ONLY", "condition": "Both lanes satisfy every primary outcome and Veritas only reduces glue, configuration, operating burden, or latency." },
+    { "decision": "CONTINUE_NARROW", "condition": "Veritas satisfies every primary outcome and the reviewed baseline fails a critical case unless it adds an equivalent continuity mechanism." },
+    { "decision": "INCONCLUSIVE", "condition": "Either lane is incomplete, inaccessible, non-executing, differently permissioned, or the baseline reconstruction remains disputed." }
+  ],
+  "limitations": [
+    "NO_E14_CASE_EXECUTION",
+    "NO_COMPARISON_RUN",
+    "NO_FAIRNESS_ASSESSMENT",
+    "NO_OBSERVED_COMPETITIVE_ADVANTAGE",
+    "NO_USER_ADOPTION_EVIDENCE",
+    "NO_M4_UNIQUENESS_PATENT_PRODUCTION_SIGNING_OR_RELEASE_CREDIT"
+  ],
+  "credits": {
+    "technicalE14": false,
+    "adoptionE14": false,
+    "comparison": false,
+    "m4": false,
+    "uniqueness": false,
+    "patent": false,
+    "production": false,
+    "signing": false,
+    "release": false
+  }
+}

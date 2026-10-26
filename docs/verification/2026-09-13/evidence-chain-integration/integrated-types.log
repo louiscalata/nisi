@@ -1,0 +1,4 @@
+
+> nisi@0.2.0-private.0 test:types
+> tsc --noEmit --ignoreConfig --strict --exactOptionalPropertyTypes --noUncheckedIndexedAccess --module NodeNext --target ES2022 --types node tests/private-consumer/*.mts
+

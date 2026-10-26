@@ -1,0 +1,98 @@
+{
+ "M1-children-sorted": {
+  "caught": true,
+  "fail_line": "\u2139 fail 1"
+ },
+ "M2-params-float-allowed": {
+  "caught": true,
+  "fail_line": "\u2139 fail 1"
+ },
+ "M3-params-surrogate-allowed": {
+  "caught": true,
+  "fail_line": "\u2139 fail 1"
+ },
+ "M4-identity-drops-apron": {
+  "caught": true,
+  "fail_line": "\u2139 fail 1"
+ },
+ "M5-self-neighbour-allowed": {
+  "caught": true,
+  "fail_line": "\u2139 fail 1"
+ },
+ "M6-assemble-on-leaf-allowed": {
+  "caught": true,
+  "fail_line": "\u2139 fail 1"
+ },
+ "M7-identity-includes-attempt": {
+  "caught": true,
+  "fail_line": "\u2139 fail 1"
+ },
+ "M8-model-limit-off-by-one": {
+  "caught": true,
+  "fail_line": "\u2139 fail 1"
+ },
+ "M9-neighbour-limit-off-by-one": {
+  "caught": true,
+  "fail_line": "\u2139 fail 1"
+ },
+ "M10-constructor-input-key-allowed": {
+  "caught": true,
+  "fail_line": "\u2139 fail 1"
+ },
+ "M11-accessor-accepted": {
+  "caught": true,
+  "fail_line": "\u2139 fail 1"
+ },
+ "M12-cycle-guard-removed": {
+  "caught": true,
+  "fail_line": "\u2139 fail 1"
+ },
+ "M13-depth-limit-off": {
+  "caught": true,
+  "fail_line": "\u2139 fail 1"
+ },
+ "M14-error-message-empty": {
+  "caught": true,
+  "fail_line": "\u2139 fail 1"
+ },
+ "M15-nfc-key-allowed": {
+  "caught": true,
+  "fail_line": "\u2139 fail 1"
+ },
+ "M16-inputs-value-before-name": {
+  "caught": true,
+  "fail_line": "\u2139 fail 1"
+ },
+ "M17-snapshot-depth-150": {
+  "caught": true,
+  "fail_line": "\u2139 fail 1"
+ },
+ "M18-snapshot-nodes-100k": {
+  "caught": true,
+  "fail_line": "\u2139 fail 1"
+ },
+ "M19-no-payload-budget-strings": {
+  "caught": true,
+  "fail_line": "\u2139 fail 1"
+ },
+ "M20-no-payload-budget-arrays": {
+  "caught": true,
+  "fail_line": "\u2139 fail 1"
+ },
+ "M21-no-key-cap": {
+  "caught": true,
+  "fail_line": "\u2139 fail 1"
+ },
+ "M22-no-running-byte-budget": {
+  "caught": true,
+  "fail_line": "\u2139 fail 1"
+ },
+ "M23-nested-unknown-hoisted": {
+  "caught": true,
+  "fail_line": "\u2139 fail 1"
+ },
+ "M24-model-code-points": {
+  "caught": true,
+  "fail_line": "\u2139 fail 1"
+ }
+}

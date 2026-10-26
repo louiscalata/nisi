@@ -1,0 +1,11 @@
+test_empty_inventory_loads_exact_model_then_verifies (test_login_activate.StartupTests) ... ok
+test_exact_model_and_other_resident_inventory (test_login_activate.StartupTests) ... ok
+test_existing_gemma_is_idempotent (test_login_activate.StartupTests) ... ok
+test_inventory_refuses_redirect_invalid_and_oversize (test_login_activate.StartupTests) ... ok
+test_other_resident_defers_without_loading (test_login_activate.StartupTests) ... ok
+test_unreachable_server_has_bounded_start (test_login_activate.StartupTests) ... ok
+
+----------------------------------------------------------------------
+Ran 6 tests in 0.001s
+
+OK

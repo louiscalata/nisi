@@ -1,5 +1,31 @@
 # Verification record
 
+## September 17: declared type prerequisite enforced, and the measured red baseline
+
+`npm install` was authorized and run (`--no-audit --no-fund --ignore-scripts`;
+2 packages served from the local cache; `package-lock.json` itself unchanged,
+so no dependency decision was made). The eight
+`error TS2688: Cannot find type definition file for 'node'` failures cleared.
+
+A new regression, `tests/type-prerequisite.test.mjs`, makes the declared
+`devDependencies["@types/node"] = "24.13.3"` pin explicit and fail closed:
+`npm run preflight` now reports `MISSING_TYPES_NODE @types/node@24.13.3 is not
+installed; run: npm install` when the pin is absent, and
+`PRESENT @types/node@24.13.3` when it is present. The check failed before the
+install and passes after it, and `test:types` is byte-identical to its
+pre-change value, so no red suite was edited into passing.
+
+Measured at the end of the day on Node 24.18.0, macOS arm64: `npm test` → 1782
+total, 1780 pass, 2 fail; `npm run test:types` → exit 0. Arithmetic reconciles
+with the pre-remediation baseline: 1768 pass + 8 cleared + 4 new regression
+tests = 1780; 10 failures − 8 cleared = 2. The two remaining failures are
+pre-existing frozen-import overlay manifest drift confined to
+`tests/nisi-native-overlay.test.mjs` (`:122`, `:130`, `:138`, `:156`), still
+undiagnosed; `tests/veritas-import.test.mjs` is green (13/13). Both the
+pre-remediation and post-remediation counts are recorded in
+`verification/known-red-baseline-2026-09-17.md`, and the session handoff is in
+`verification/opencode-online-session-20260917.md`.
+
 ## September 12: Nisi v0.1 deadline correction
 
 The follow-up to commit `02a0b39` labels the README and editable artifact

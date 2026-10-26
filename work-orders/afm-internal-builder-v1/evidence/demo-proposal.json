@@ -1,0 +1,13 @@
+{
+  "ok": true,
+  "profile": "nisi-afm-internal-builder-v1",
+  "proposal": {
+    "proposedStep": "implement",
+    "testsToRun": [
+      "swift-build",
+      "unit-01"
+    ],
+    "explanation": "Demo-backed smoke of the first increment.",
+    "packHash": "63aecabb6341fc2b47161bc8c614483b1560aeaaaeb8ca68451d608d4c138c0b"
+  }
+}

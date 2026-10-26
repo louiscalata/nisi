@@ -1,0 +1,21 @@
+{
+  "demo" : "manual tool-calling loop",
+  "model" : "SystemLanguageModel.default",
+  "toolCall.decode" : {
+    "format" : "time",
+    "timezone" : "UTC"
+  },
+  "toolCall.id" : "0C477B8F-0F97-4664-A250-4850AA1E5AB2",
+  "toolCall.name" : "get_time",
+  "toolResult" : "2026-09-15 06:13:00 GMT",
+  "turn1.response" : "The current time in UTC is 06:12:59.",
+  "turn1.usage" : {
+    "input" : 208,
+    "output" : 23
+  },
+  "turn2.response" : "The current time in UTC is 06:12:59.",
+  "turn2.usage" : {
+    "input" : 279,
+    "output" : 23
+  }
+}

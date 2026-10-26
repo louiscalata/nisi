@@ -1,0 +1,12 @@
+✔ windows-xpc-integration: valid synthetic fixed-case observation (6.799333ms)
+✔ windows-xpc-integration: malformed-request synthetic fixed-case observation (1.251583ms)
+✔ windows-xpc-integration: no-reply synthetic fixed-case observation (0.916916ms)
+✔ windows-xpc-integration: adverse INCONCLUSIVE synthetic fixed-case observation (1.262625ms)
+ℹ tests 4
+ℹ suites 0
+ℹ pass 4
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 57.415042

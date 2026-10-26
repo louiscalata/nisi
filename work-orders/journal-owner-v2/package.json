@@ -1,0 +1,14 @@
+{
+  "name": "nisi-private-journal-owner-v2",
+  "version": "0.0.0-private",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "test": "node --test --test-timeout=10000 tests/baseline.test.mjs",
+    "test:acceptance": "node --test --test-timeout=10000 tests/owner.test.mjs",
+    "test:boundaries": "node --test --test-timeout=10000 tests/adjudication-boundaries.test.mjs tests/store-boundary.test.mjs",
+    "test:integration": "node --test --test-timeout=10000 tests/windows-xpc-integration.test.mjs",
+    "test:mutants": "node tests/run-owner-mutants.mjs && node tests/run-xpc-mutant.mjs",
+    "check": "node --test --test-timeout=10000 tests/baseline.test.mjs tests/owner.test.mjs tests/adjudication-boundaries.test.mjs tests/store-boundary.test.mjs tests/windows-xpc-integration.test.mjs"
+  }
+}

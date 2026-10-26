@@ -1,0 +1,29 @@
+{
+  "source": "work-orders/run-journal/scripts/test-history-mutants.mjs",
+  "target": "scripts/test-history-mutants.mjs",
+  "beforeSha256": "f318bb8ec2ff3e11a7827e548e49efbf2d582719e64ffd334d4eb375cce4bc35",
+  "afterSha256": "69304e339c57a3313fee0b0eaa69ad46e4be5c713cfc8e4be3cc850d8b2b4d23",
+  "replacements": [
+    {
+      "before": "'src/run-journal-v1.mjs'",
+      "after": "'history/run-journal-v1.mjs'"
+    },
+    {
+      "before": "25355f0d280a262243f1fe707fd4e0de5fc795926ce37d910c40a12721390c6d",
+      "after": "2d46da21f23b6d58156db162ca5dfd45ca78b095c383411f9ac858cb20aeb12a"
+    },
+    {
+      "before": "'../src/run-journal-v1.mjs'",
+      "after": "'../history/run-journal-v1.mjs'"
+    },
+    {
+      "before": "join(root,'evidence','mutants-'",
+      "after": "join(root,'.build','history-mutants-'"
+    },
+    {
+      "before": "mkdirSync(out);",
+      "after": "mkdirSync(out,{recursive:true});"
+    }
+  ],
+  "scope": "Prepared runner only; product paths, relocated oracle hash and .build evidence output. Accepted journal module unchanged."
+}

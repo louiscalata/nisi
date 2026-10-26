@@ -1,0 +1,274 @@
+>> Online code mode preflight...
+
+============================================================
+  ONLINE CODE MODE V5 CORE — PREFLIGHT
+============================================================
+  Share:        MOUNTED
+    Health:     ready
+    Free:       173.1 GB
+    Rules:      yes
+    Queue:      yes
+  PC Worker:    ADVERTISED (not inference/native parity)
+    Models:     Qwen3-Coder-Next 80B-A3B Q4_K_M, gpt-oss-20b
+    Heartbeat:  3.945s ago
+  Local models: ADVERTISED (not inference health)
+    Count:      9 models
+    Models:     qwen/qwen3.8-27b, google/gemma-3-4b, text-embedding-nomic-embed-text-v2-moe, openai/gpt-oss-20b, gemma-4-26b-tuned, qwen/qwen3.6-35b-a3b...
+  Zen (Big Pickle): NOT CONFIGURED
+    Reason:     endpoint unavailable: HTTPError
+    Env var:    OPENCODE_ZEN_API_KEY
+  Model tiers:
+    [UP  ] afm    ondevice afm/apple-foundation             on-device binary present, no network
+    [UP  ] local  local  lmstudio/qwen/qwen3.8-27b        9 models, 11ms · model loaded
+    [UP  ] free   remote opencode/big-pickle              70 models, 177ms
+    [UP  ] go     remote opencode-go/kimi-k2.7-code       70 models, 164ms
+    Evidence:   inventory + credential only; not inference health
+    Usable:     afm, local, free, go   (name one with CHAMI_PACKET_TIER for packets)
+  Pinned guards: 31 pins · OK
+    [UNRELATED] TRANSPORT_SHA256 in ~/bin/codemode-batch/batch_admission.py
+    [UNRELATED] PROFILE_HELPER_SHA256 in ~/bin/chami-admission/broker.py
+============================================================
+
+>> Launching pipeline...
+
+>> PC inference: worker advertised, not inference-tested (Qwen3-Coder-Next 80B-A3B Q4_K_M, gpt-oss-20b), heartbeat 5.524s
+>> Runtime diagnostics: ~/code-runs/online-coordinator-20260914-013219-1123-450199000
+>> codemode [online/python]  draft=google/gemma-4-26b-a4b-qat  max_iters=3
+>> Context: DISABLED (0 UTF-8 bytes; tokens unknown)
+>> Acceptance tests: loaded from acceptance_tests.py (immutable)
+>> Stage: drafting (Gemma)...
+>> Verify (tests): FAIL
+>> Acceptance tests: FAIL
+>> Run scope: mac-only  |  manifest=~/code-runs/codemode-20260914-013219-1128-782800000/run.json
+>> Reported metric tokens: 4823 | known rows=1/1; draft=4823; not a complete all-request total
+>> Reported summed request-seconds: 68.700 | timed rows=1/1; not wall time or a complete request total
+>> UNVERIFIED after repairs; escalate to Codex for inspection and repair.
+>> Saved to ~/pending-review/codemode-20260914-013219-1128-782800000.txt
+>> Coordinator: LOCAL_FAILED (~/code-runs/online-coordinator-20260914-013219-1123-450199000/comparison.json)
+# ⚠ UNVERIFIED — tests-not-run failing. Review before use.
+from enum import Enum
+
+class RowState(Enum):
+    OPEN = "open"
+    FULL = "full"
+    CHECKING = "checking"
+    PASSED = "passed"
+    CLEARED = "cleared"
+    QUARANTINED = "quarantined"
+
+class WellError(Exception):
+    pass
+
+class Well:
+    def __init__(self, layers, tiles, deps=None, is_hole=None, max_reopens=2):
+        if not layers or len(layers) != len(set(layers)):
+            raise WellError("Invalid layers")
+        if not tiles or len(tiles) != len(set(tiles)):
+            raise WellError("Invalid tiles")
+        
+        self.layers = list(layers)
+        self.tiles = list(tiles)
+        self.max_reopens = max_reopens
+        
+        self.is_hole = is_hole if is_hole else lambda x: not x or not str(x).strip() or "TODO" in str(x)
+        
+        # Dependency Graph
+        self.deps_map = {}
+        if deps is None:
+            for i, layer in enumerate(self.layers):
+                if i > 0:
+                    self.deps_map[layer] = {self.layers[i-1]}
+                else:
+                    self.deps_map[layer] = set()
+        else:
+            for layer, d_set in deps.items():
+                if layer not in self.layers:
+                    raise WellError("Unknown layer in deps")
+                d_set = set(d_set)
+                if layer in d_set:
+                    raise WellError("Self-dependency")
+                for d in d_set:
+                    if d not in self.layers:
+                        raise WellError("Unknown layer in deps")
+                self.deps_map[layer] = d_set
+        
+        # Cycle detection
+        for start_node in self.layers:
+            visited = set()
+            stack = [start_node]
+            while stack:
+                curr = stack.pop()
+                if curr in visited:
+                    raise WellError("Cycle detected")
+                visited.add(curr)
+                stack.extend(self.deps_map.get(curr, []))
+
+        # State storage
+        # row_data[layer] = {"state": RowState, "reopens": int, "cells": {tile: {"source": str, "output": str}}}
+        self.row_data = {}
+        for layer in self.layers:
+            self.row_data[layer] = {
+                "state": RowState.OPEN,
+                "reopens": 0,
+                "cells": {tile: {"source": None, "output": ""} for tile in self.tiles}
+            }
+
+    def _get_transitive_dependents(self, layer):
+        dependents = []
+        for potential in self.layers:
+            if potential == layer:
+                continue
+            # Check if layer is in the transitive dependency set of potential
+            visited = set()
+            stack = [potential]
+            is_dep = False
+            while stack:
+                curr = stack.pop()
+                if curr == layer:
+                    is_dep = True
+                    break
+                if curr not in visited:
+                    visited.add(curr)
+                    stack.extend(list(self.deps_map.get(curr, [])))
+            if is_dep:
+                dependents.append(potential)
+        return dependents
+
+    def state(self, layer):
+        if layer not in self.row_data: raise WellError()
+        return self.row_data[layer]["state"]
+
+    def deps(self, layer):
+        if layer not in self.row_data: raise WellError()
+        return set(self.deps_map.get(layer, []))
+
+    def dependents(self, layer):
+        if layer not in self.row_data: raise WellError()
+        # Return in layers order
+        return [l for l in self.layers if l in self._get_transitive_dependents(layer)]
+
+    def reopens(self, layer):
+        if layer not in self.row_data: raise WellError()
+        return self.row_data[layer]["reopens"]
+
+    def holes(self, layer):
+        if layer not in self.row_data: raise WellError()
+        row = self.row_data[layer]
+        return [t for t in self.tiles if self.is_hole(row["cells"][t]["output"])]
+
+    def place(self, layer, tile, output, source):
+        if layer not in self.row_data: raise WellError()
+        if tile not in self.tiles: raise WellError()
+        s = self.row_data[layer]["state"]
+        if s not in (RowState.OPEN, RowState.FULL):
+            raise WellError()
+        
+        self.row_data[layer]["cells"][tile] = {"source": source, "output": output}
+        
+        # Check if row is now FULL
+        all_non_holes = True
+        for t in self.tiles:
+            if self.is_hole(self.row_data[layer]["cells"][t]["output"]):
+                all_non_holes = False
+                break
+        
+        new_state = RowState.FULL if all_non_holes else RowState.OPEN
+        self.row_data[layer]["state"] = new_state
+        return new_state
+
+    def begin_check(self, layer):
+        if self.row_data[layer]["state"] != RowState.FULL:
+            raise WellError()
+        self.row_data[layer]["state"] = RowState.CHECKING
+
+    def report_check(self, layer, validity, quality, failed_tiles=()):
+        if self.row_data[layer]["state"] != RowState.CHECKING:
+            raise WellError()
+        
+        if validity and quality:
+            self.row_data[layer]["state"] = RowState.PASSED
+            # Cascade
+            changed = True
+            while changed:
+                changed = False
+                for l in self.layers:
+                    if self.row_data[l]["state"] == RowState.PASSED:
+                        # Check if all deps are CLEARED
+                        deps_cleared = True
+                        for d in self.deps_map.get(l, []):
+                            if self.row_data[d]["state"] != RowState.CLEARED:
+                                deps_cleared = False
+                                break
+                        if deps_cleared:
+                            self.row_data[l]["state"] = RowState.CLEARED
+                            changed = True
+            return self.row_data[layer]["state"]
+        else:
+            self.row_data[layer]["state"] = RowState.OPEN
+            if not failed_tiles:
+                for t in self.tiles:
+                    self.row_data[layer]["cells"][t] = {"source": None, "output": ""}
+            else:
+                for t in failed_tiles:
+                    if t not in self.tiles: raise WellError()
+                    self.row_data[layer]["cells"][t] = {"source": None, "output": ""}
+            return RowState.OPEN
+
+    def reopen(self, layer, tiles, reason):
+        if self.row_data[layer]["state"] not in (RowState.PASSED, RowState.CLEARED):
+            raise WellError()
+        
+        self.row_data[layer]["reopens"] += 1
+        if self.row_data[layer]["reopens"] > self.max_reopens:
+            self.row_data[layer]["state"] = RowState.QUARANTINED
+            return RowState.QUARANTINED
+        
+        # Blank tiles
+        target_tiles = list(tiles) if tiles else self.tiles
+        for t in target_tiles:
+            if t not in self.tiles: raise WellError()
+            self.row_data[layer]["cells"][t] = {"source": None, "output": ""}
+        
+        self.row_data[layer]["state"] = RowState.OPEN
+        
+        # Invalidate dependents
+        for dep in self._get_transitive_dependents(layer):
+            s = self.row_data[dep]["state"]
+            if s in (RowState.CHECKING, RowState.PASSED, RowState.CLEARED):
+                self.row_data[dep]["state"] = RowState.FULL
+                # Note: content remains intact, but state is now FULL. 
+                # A later report_check on this will raise WellError because it's not CHECKING.
+        return RowState.OPEN
+
+    def height(self):
+        return len([l for l in self.layers if self.row_data[l]["state"] != RowState.CLEARED])
+
+    def done(self):
+        return all(self.row_data[l]["state"] == RowState.CLEARED for l in self.layers)
+
+    def stuck(self):
+        return any(self.row_data[l]["state"] == RowState.QUARANTINED for l in self.layers)
+
+    def snapshot(self):
+        return {
+            "layers": self.layers,
+            "tiles": self.tiles,
+            "rows": {
+                l: {
+                    "state": self.row_data[l]["state"].value,
+                    "reopens": self.row_data[l]["reopens"],
+                    "cells": {
+                        t: {
+                            "source": self.row_data[l]["cells"][t]["source"],
+                            "hole": self.is_hole(self.row_data[l]["cells"][t]["output"])
+                        } for t in self.tiles
+                    }
+                } for l in self.layers
+            }
+        }
+
+# --- last error output ---
+# acceptance tests failed:
+# 
+# [assertion execution: UNSUPPORTED_NAMESPACE_INTROSPECTION]
+exit=1

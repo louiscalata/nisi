@@ -1,0 +1,22 @@
+{
+  "candidateHashMatched": true,
+  "codeSignatureVerified": true,
+  "configuredModelLoaded": true,
+  "defaultStoreMessages": 16,
+  "gitPushPerformed": false,
+  "installedAppPath": "~/nisi/work-orders/v1-chat-slice/build/Nisi.app",
+  "installedExecutableInode": 160531913,
+  "installedExecutableSha256": "ff9f32759446da7920830b938330ec1d38c8a51883ddafc14016ec1b89261c2f",
+  "liveCliOutputSha256": "b74669ef24ff75d208a00ddcc00681bbd0ae8280c0083eb55016c303c91c6237",
+  "liveCliReceipt": "live-local/RESULT.md",
+  "liveGuiTurnRun": false,
+  "previousBundlePath": "/tmp/nisi-window-repro.mEu9Nq/Nisi.before.app",
+  "previousExecutableSha256": "9ea3e96c448905ca00aac0dda818b190ff87a82654eb35c20f0617d83ab848c5",
+  "recordedAtUtc": "2026-09-24T11:54:57.501414+00:00",
+  "runningCommand": "~/nisi/work-orders/v1-chat-slice/build/Nisi.app/Contents/MacOS/nisi-chat-window",
+  "runningPid": 35630,
+  "schemaVersion": 1,
+  "sourceHashesMatchedAfterInstall": 10,
+  "sourceManifest": "app-build-manifest-preinstall.json",
+  "sourceManifestSha256": "bc2593164fda1e70f618c0d5a1e9b8978737e4f43a05246bd9911a5e26ef63e9"
+}

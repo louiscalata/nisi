@@ -1,0 +1,27 @@
+{
+  "invocation_status": "failed",
+  "status": "NOT_RUN",
+  "attempts": 3,
+  "prior_attempts": [
+    {
+      "requested_model": "fable",
+      "status": "NOT_RUN",
+      "error": "{\"subtype\": \"success\", \"errors\": null, \"error\": null, \"result\": \"Failed to authenticate: OAuth session expired and could not be refreshed\"}"
+    },
+    {
+      "requested_model": "sonnet",
+      "status": "NOT_RUN",
+      "error": "{\"subtype\": \"success\", \"errors\": null, \"error\": null, \"result\": \"Failed to authenticate: OAuth session expired and could not be refreshed\"}"
+    },
+    {
+      "requested_model": "opus",
+      "status": "NOT_RUN",
+      "error": "{\"subtype\": \"success\", \"errors\": null, \"error\": null, \"result\": \"Failed to authenticate: OAuth session expired and could not be refreshed\"}"
+    }
+  ],
+  "error": "No usable Claude response within the bounded model ladder",
+  "model_usage": null,
+  "tools_enabled": false,
+  "session_persisted": false,
+  "write_owner": "codex"
+}

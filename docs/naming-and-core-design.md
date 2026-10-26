@@ -33,3 +33,22 @@ File admission now checks the opened object and its before/after identity and me
 The static checker covers direct syntactic patterns in the codec's marked region. It is not a general purity proof; aliases, computed calls and unrelated methods with matching names are outside its claimed precision. Passing tests are scoped evidence, not a security certification.
 
 See [Workflow API](workflow-api.md), [File Policy](file-policy.md), [Apple Adapter](apple-foundation-models.md), [Local Models](local-models.md), and [Verification](verification.md) for runnable behavior and its limits. The canonical [roadmap](../roadmap.md) tracks work that remains.
+
+## Suite name — AGIW (Louis, 2026-09-21)
+
+Suite manifest: `docs/suite.md` — the whole connected suite is AGIW; **Nisi
+inference is its first build** (build #1, per the 2026-09-23 manifest).
+
+**AGIW** (a Filipino word for *spiderweb*) is the name of the whole connected
+suite: the workflow/orchestration engine, adapters, native seams, orchestration
+skills/tools, the Windows worker lane, and every verification surface — one
+interconnected web of components.
+
+**Nisi is the inference member of AGIW.** "Nisi" names inference itself: the
+on-device Mac inference suite (AFM chat seam, loopback local-model route,
+`nisi-chat` / `nisi-session` CLIs, the Nisi window), and by extension the
+Windows worker inference lane (shared schema-1 chat worker via Windows
+OpenCode) — structurally heterogeneous by design. Code/artifact names keep the
+inference identity (`nisi-chat`, `nisi-session`, `Nisi.app`, `ConversationStore`
+paths under `~/Library/Application Support/Nisi/`); AGIW is the suite-level
+brand above them. No artifacts were renamed by this decision.

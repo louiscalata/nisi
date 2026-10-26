@@ -1,0 +1,100 @@
+{
+  "summary": "Review of the U02-04 run-journal disk store v1 bounded contract. Five corrections to make before Astra freezes node:test tests: pin the result shape and error taxonomy (returned vs thrown, fs state after each injected failure), define exactly what expectedPreviousSha256 hashes and how corrupt/absent existing files interact with it, resolve the same-content idempotent path, specify the envelope byte semantics (well-formed UTF-16, byteLength + sha256 both required), and enumerate the exact fs surface and inner-framing rules so injected fakes and validation are symmetric. Based only on the supplied proposal; no code, no execution.",
+  "deliverable": "Five corrections before tests freeze (U02-04 run-journal-store-v1):\n\n1. Pin the result contract and post-failure state. \"Every result has durable false\" is not testable until the shape is fixed. Define a discriminated result: ok:true {durable, bytesWritten, sha256, unchanged} vs ok:false {code, message, durable:false}, with a closed code set (INVALID_INPUT, CONFLICT, EXISTING_CORRUPT, IO_WRITE, IO_RENAME, READBACK_MISMATCH, ENVELOPE_INVALID, INNER_FRAMING_INVALID). State which conditions return vs throw (suggest: programmer errors like missing fs throw; everything else returns). For each injected failure point, state required disk state: fsync(file) fail \u2192 continue, durable false; rename fail \u2192 original intact, temp removed; fsync(dir) fail after rename \u2192 committed, durable false; readback mismatch \u2192 temp removed, original intact. Tests should assert directory listing after every failure.\n\n2. Define expectedPreviousSha256 precisely. Specify it hashes the inner serialized UTF-8 bytes (not the envelope file bytes), lowercase hex. Fix the matrix: file absent + expected given \u2192 CONFLICT; file present + expected absent \u2192 CONFLICT; file present but envelope/framing invalid \u2192 EXISTING_CORRUPT regardless of expected (no silent overwrite; v1 offers no override flag, so state that explicitly). Otherwise \"refuse conflicts without mutation\" is untestable.\n\n3. Resolve the same-content path. \"Idempotent with durable false unless re-flushed\" is ambiguous. Choose one: (a) no-op returning ok, unchanged:true, durable:false, or (b) always rewrite via temp+rename so durable can be true. Recommend (a) for simplicity but require unchanged to be explicit so tests can distinguish it from a real write.\n\n4. Specify envelope byte semantics. JSON.stringify of a string with lone surrogates yields bytes whose UTF-8 length/sha differ from the original string; require rejecting non-well-formed strings (INVALID_INPUT). Envelope: single JSON object, fixed key order, own trailing newline; fields version:1, byteLength, sha256, serialized. Reader must check both byteLength and sha256 against recomputed values and reject extra bytes after the envelope (truncation and appended garbage). Note the on-disk file is not the raw JSONL; \"preserve exact bytes\" applies to the returned serialized string\u2014state this so no test expects the file to be readable as JSONL.\n\n5. Enumerate fs surface and inner-framing rules. List the exact sync methods the injected fs must provide (openSync with 'wx', writeSync, fsyncSync, closeSync, readFileSync, renameSync, unlinkSync, statSync) and that the parent directory must already exist (no mkdir). Define temp naming (path + '.tmp-' + pid + random) and behavior when wx collides (single retry, then IO_WRITE). Define minimal inner framing shared by writer and reader: non-empty, ends with '\\n', \u22652 lines, first line JSON with schema === 'nisi-run-journal-v1', last line JSON containing a footer marker, every line JSON.parse-able; nothing more, to avoid a hidden parser dependency. Same validator must run on write and read so tests are symmetric.\n\nUncertainty: footer marker field name and whether entries may be zero are not in the evidence; Astra should confirm from the journal schema before writing those tests.",
+  "risks": [
+    "Result shape and error codes are inferred suggestions; if Astra already has a shared result convention, align to it rather than this list.",
+    "Inner framing rules (footer marker, min lines) are guesses from the described journal format; wrong assumptions would freeze incorrect tests.",
+    "Choosing no-op for same-content writes means a caller can never force a re-flush in v1; may need a v2 flag.",
+    "Injected fake fs tests validate ordering, not real durability; power-loss behavior remains uncertified as scoped."
+  ],
+  "verification": [
+    "Confirm footer line field name and whether zero-entry journals are valid against the nisi-run-journal-v1 schema before freezing framing tests.",
+    "Walk each injected failure point and confirm the required disk state (temp removed, original intact) is asserted via directory listing in the tests.",
+    "Verify sha256 test vectors are computed over inner UTF-8 bytes, including a multibyte and a lone-surrogate rejection case.",
+    "Check the injected fs fake implements every method in the enumerated list so tests do not pass by accident on a missing method path."
+  ],
+  "invocation_status": "succeeded",
+  "status": "succeeded",
+  "model_usage": {
+    "claude-haiku-4-5-20251001": {
+      "inputTokens": 1324,
+      "outputTokens": 18,
+      "cacheReadInputTokens": 0,
+      "cacheCreationInputTokens": 0,
+      "webSearchRequests": 0,
+      "costUSD": 0.0014140000000000001,
+      "contextWindow": 200000,
+      "maxOutputTokens": 32000,
+      "thinkingTokens": 0,
+      "canonicalModel": "claude-haiku-4-5",
+      "provider": "firstParty",
+      "costBasis": "list"
+    },
+    "claude-fable-5-1": {
+      "inputTokens": 2,
+      "outputTokens": 3004,
+      "cacheReadInputTokens": 737,
+      "cacheCreationInputTokens": 1112,
+      "webSearchRequests": 0,
+      "costUSD": 0.17264425,
+      "contextWindow": 1000000,
+      "maxOutputTokens": 64000,
+      "thinkingTokens": 1132,
+      "canonicalModel": "claude-fable-5-1",
+      "provider": "firstParty",
+      "costBasis": "list"
+    }
+  },
+  "reported_models": [
+    "claude-haiku-4-5-20251001",
+    "claude-fable-5-1"
+  ],
+  "usage": {
+    "input_tokens": 2,
+    "cache_creation_input_tokens": 1112,
+    "cache_read_input_tokens": 737,
+    "output_tokens": 3004,
+    "output_tokens_details": {
+      "thinking_tokens": 1132
+    },
+    "server_tool_use": {
+      "web_search_requests": 0,
+      "web_fetch_requests": 0
+    },
+    "service_tier": "standard",
+    "cache_creation": {
+      "ephemeral_1h_input_tokens": 1112,
+      "ephemeral_5m_input_tokens": 0
+    },
+    "inference_geo": "not_available",
+    "iterations": [
+      {
+        "input_tokens": 2,
+        "output_tokens": 3004,
+        "cache_read_input_tokens": 737,
+        "cache_creation_input_tokens": 1112,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 1112
+        },
+        "type": "message",
+        "model": null
+      }
+    ],
+    "speed": "standard"
+  },
+  "total_cost_usd": 0.17405825,
+  "duration_ms": 48375,
+  "tools_enabled": false,
+  "session_persisted": false,
+  "write_owner": "codex",
+  "requested_model": "fable",
+  "mode": "delegate",
+  "attempts": 1,
+  "wall_seconds": 49.085,
+  "created_at": "2026-09-13T20:38:08.282419+00:00",
+  "prior_attempts": [],
+  "total_wall_seconds": 49.086,
+  "prior_attempt_usage": [],
+  "total_usage_complete": true
+}

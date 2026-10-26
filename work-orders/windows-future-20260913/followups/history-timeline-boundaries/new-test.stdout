@@ -1,0 +1,13 @@
+✔ buildTimeline: exactly 200 events with bounded fields (1.683459ms)
+✔ buildTimeline: 128-char strings accepted unchanged (0.090583ms)
+✔ buildTimeline: MAX_SAFE attempt and createdAt (0.066667ms)
+✔ buildTimeline: large finite durations preserved (0.065541ms)
+✔ buildTimeline: out-of-order events sorted correctly (0.080709ms)
+ℹ tests 5
+ℹ suites 0
+ℹ pass 5
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 41.430125

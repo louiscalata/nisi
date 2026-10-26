@@ -1,0 +1,8 @@
+{
+  "schema_version": 1,
+  "id": "mac-20260913-161950-bb509ac67905fc49c1677a95bc30177d",
+  "status": "success",
+  "output": "READY",
+  "model": "gpt-oss-20b",
+  "elapsed_seconds": 4.3
+}

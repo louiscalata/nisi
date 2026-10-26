@@ -1,0 +1,95 @@
+{
+  "verdict": "FAIL",
+  "issues": [
+    "PASS/FAIL not disjoint: semantic FAIL with exit=0, signal=null and no required nonblank reason matches PASS criteria exactly; FAIL must require a nonblank reason or explicit failure marker.",
+    "Non-null signal is forbidden for PASS/FAIL/NOT_RUN but not explicitly routed to ERROR/INCONCLUSIVE; state that any signal forces non-success (not FAIL).",
+    "Started-not-closed and closed-not-started receipts match no status; must be explicitly ERROR/INCONCLUSIVE (closed-without-started = malformed).",
+    "Unknown drain: unspecified whether it yields ERROR or INCONCLUSIVE, and engine stop records have drain absent rather than unknown; absent must be treated as unknown/non-success.",
+    "Stop records are described as 'UNAVAILABLE' (a v1 value) without a bundle status; must specify bundle status (e.g. ERROR) and that binding+reason+error code alone satisfies it, since 'retains process problems' implies fields stop records cannot carry.",
+    "v1 mapping omits PASS->PASS and FAIL->FAIL, and gives no criterion distinguishing ERROR from INCONCLUSIVE though both map to UNAVAILABLE."
+  ],
+  "invocation_status": "succeeded",
+  "status": "FAIL",
+  "model_usage": {
+    "claude-haiku-4-5-20251001": {
+      "inputTokens": 1239,
+      "outputTokens": 15,
+      "cacheReadInputTokens": 0,
+      "cacheCreationInputTokens": 0,
+      "webSearchRequests": 0,
+      "costUSD": 0.001314,
+      "contextWindow": 200000,
+      "maxOutputTokens": 32000,
+      "thinkingTokens": 0,
+      "canonicalModel": "claude-haiku-4-5",
+      "provider": "firstParty",
+      "costBasis": "list"
+    },
+    "claude-fable-5-1": {
+      "inputTokens": 2,
+      "outputTokens": 2740,
+      "cacheReadInputTokens": 626,
+      "cacheCreationInputTokens": 1048,
+      "webSearchRequests": 0,
+      "costUSD": 0.15813649999999999,
+      "contextWindow": 1000000,
+      "maxOutputTokens": 64000,
+      "thinkingTokens": 1322,
+      "canonicalModel": "claude-fable-5-1",
+      "provider": "firstParty",
+      "costBasis": "list"
+    }
+  },
+  "reported_models": [
+    "claude-haiku-4-5-20251001",
+    "claude-fable-5-1"
+  ],
+  "usage": {
+    "input_tokens": 2,
+    "cache_creation_input_tokens": 1048,
+    "cache_read_input_tokens": 626,
+    "output_tokens": 2740,
+    "output_tokens_details": {
+      "thinking_tokens": 1322
+    },
+    "server_tool_use": {
+      "web_search_requests": 0,
+      "web_fetch_requests": 0
+    },
+    "service_tier": "standard",
+    "cache_creation": {
+      "ephemeral_1h_input_tokens": 1048,
+      "ephemeral_5m_input_tokens": 0
+    },
+    "inference_geo": "not_available",
+    "iterations": [
+      {
+        "input_tokens": 2,
+        "output_tokens": 2740,
+        "cache_read_input_tokens": 626,
+        "cache_creation_input_tokens": 1048,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 1048
+        },
+        "type": "message",
+        "model": null
+      }
+    ],
+    "speed": "standard"
+  },
+  "total_cost_usd": 0.1594505,
+  "duration_ms": 33422,
+  "tools_enabled": false,
+  "session_persisted": false,
+  "write_owner": "codex",
+  "requested_model": "fable",
+  "mode": "review",
+  "attempts": 1,
+  "wall_seconds": 34.372,
+  "created_at": "2026-09-12T17:56:29.411729+00:00",
+  "prior_attempts": [],
+  "total_wall_seconds": 34.373,
+  "prior_attempt_usage": [],
+  "total_usage_complete": true
+}

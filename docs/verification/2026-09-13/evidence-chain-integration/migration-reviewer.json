@@ -1,0 +1,17 @@
+{
+  "reviewer": "gpt-5.6-luna",
+  "role": "read-only migration reviewer; Astra sole writer",
+  "status": "ACCEPT_SCOPED",
+  "pathSubstitutions": 36,
+  "droppedFrozenModulePins": 6,
+  "preflightEditCountsMatched": true,
+  "impermissibleDeltas": [],
+  "notes": [
+    "All behavioral assertions and fixture hash literals unchanged.",
+    "Inherited baseline test titles still mention frozen modules; kept unchanged to preserve preflight bytes. Migrated baselines retain only fixture pins.",
+    "Structural checker targets existing canonical JSON pure region only."
+  ],
+  "localModelLoads": 0,
+  "packetRuns": 0,
+  "writes": 0
+}

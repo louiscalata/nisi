@@ -1,0 +1,82 @@
+[
+  {
+    "id": "base-native-author-chat-reviewer",
+    "argv": ["--approved-reviewed-fixture", "--author-api", "NATIVE_API", "--reviewer-api", "CHAT_COMPLETIONS", "--author-endpoint", "http://127.0.0.1:1234/api/v1/chat", "--reviewer-endpoint", "http://127.0.0.1:1234/v1/chat/completions", "--author-model", "synthetic.author", "--reviewer-model", "synthetic.reviewer", "--author-instance", "synthetic.instance", "--author-profile", "nisi-native-chat-content-v1", "--author-reasoning", "off", "--reviewer-output-mode", "json_schema"],
+    "acceptV3": true
+  },
+  {
+    "id": "reversed-chat-author-native-reviewer",
+    "argv": ["--approved-reviewed-fixture", "--author-api", "CHAT_COMPLETIONS", "--reviewer-api", "NATIVE_API", "--author-endpoint", "http://127.0.0.1:1234/v1/chat/completions", "--reviewer-endpoint", "http://127.0.0.1:1234/api/v1/chat", "--author-model", "synthetic.author", "--reviewer-model", "synthetic.reviewer", "--author-output-mode", "json_instruction", "--reviewer-instance", "synthetic.review.instance", "--reviewer-profile", "nisi-native-chat-content-v1", "--reviewer-reasoning", "off"],
+    "acceptV3": true
+  },
+  {
+    "id": "both-native-distinct-instances",
+    "argv": ["--approved-reviewed-fixture", "--author-api", "NATIVE_API", "--reviewer-api", "NATIVE_API", "--author-endpoint", "http://127.0.0.1:1234/api/v1/chat", "--reviewer-endpoint", "http://127.0.0.1:1234/api/v1/chat", "--author-model", "synthetic.author", "--reviewer-model", "synthetic.reviewer", "--author-instance", "synthetic.instance", "--author-profile", "nisi-native-chat-content-v1", "--author-reasoning", "off", "--reviewer-instance", "synthetic.review.instance", "--reviewer-profile", "nisi-native-chat-content-v1", "--reviewer-reasoning", "off"],
+    "acceptV3": true
+  },
+  {
+    "id": "missing-reviewer-api",
+    "argv": ["--approved-reviewed-fixture", "--author-api", "NATIVE_API", "--author-endpoint", "http://127.0.0.1:1234/api/v1/chat", "--reviewer-endpoint", "http://127.0.0.1:1234/v1/chat/completions", "--author-model", "synthetic.author", "--reviewer-model", "synthetic.reviewer", "--author-instance", "synthetic.instance", "--author-profile", "nisi-native-chat-content-v1", "--author-reasoning", "off", "--reviewer-output-mode", "json_schema"],
+    "acceptV3": false
+  },
+  {
+    "id": "unknown-author-api",
+    "argv": ["--approved-reviewed-fixture", "--author-api", "UNKNOWN_API", "--reviewer-api", "CHAT_COMPLETIONS", "--author-endpoint", "http://127.0.0.1:1234/api/v1/chat", "--reviewer-endpoint", "http://127.0.0.1:1234/v1/chat/completions", "--author-model", "synthetic.author", "--reviewer-model", "synthetic.reviewer", "--author-instance", "synthetic.instance", "--author-profile", "nisi-native-chat-content-v1", "--author-reasoning", "off", "--reviewer-output-mode", "json_schema"],
+    "acceptV3": false
+  },
+  {
+    "id": "legacy-endpoint-present",
+    "argv": ["--approved-reviewed-fixture", "--author-api", "NATIVE_API", "--reviewer-api", "CHAT_COMPLETIONS", "--author-endpoint", "http://127.0.0.1:1234/api/v1/chat", "--reviewer-endpoint", "http://127.0.0.1:1234/v1/chat/completions", "--author-model", "synthetic.author", "--reviewer-model", "synthetic.reviewer", "--author-instance", "synthetic.instance", "--author-profile", "nisi-native-chat-content-v1", "--author-reasoning", "off", "--reviewer-output-mode", "json_schema", "--endpoint", "http://127.0.0.1:1234/v1/chat/completions"],
+    "acceptV3": false
+  },
+  {
+    "id": "native-author-output-mode",
+    "argv": ["--approved-reviewed-fixture", "--author-api", "NATIVE_API", "--reviewer-api", "CHAT_COMPLETIONS", "--author-endpoint", "http://127.0.0.1:1234/api/v1/chat", "--reviewer-endpoint", "http://127.0.0.1:1234/v1/chat/completions", "--author-model", "synthetic.author", "--reviewer-model", "synthetic.reviewer", "--author-instance", "synthetic.instance", "--author-profile", "nisi-native-chat-content-v1", "--author-reasoning", "off", "--reviewer-output-mode", "json_schema", "--author-output-mode", "json_schema"],
+    "acceptV3": false
+  },
+  {
+    "id": "chat-reviewer-instance",
+    "argv": ["--approved-reviewed-fixture", "--author-api", "NATIVE_API", "--reviewer-api", "CHAT_COMPLETIONS", "--author-endpoint", "http://127.0.0.1:1234/api/v1/chat", "--reviewer-endpoint", "http://127.0.0.1:1234/v1/chat/completions", "--author-model", "synthetic.author", "--reviewer-model", "synthetic.reviewer", "--author-instance", "synthetic.instance", "--author-profile", "nisi-native-chat-content-v1", "--author-reasoning", "off", "--reviewer-output-mode", "json_schema", "--reviewer-instance", "synthetic.review.instance"],
+    "acceptV3": false
+  },
+  {
+    "id": "native-reasoning-auto",
+    "argv": ["--approved-reviewed-fixture", "--author-api", "NATIVE_API", "--reviewer-api", "CHAT_COMPLETIONS", "--author-endpoint", "http://127.0.0.1:1234/api/v1/chat", "--reviewer-endpoint", "http://127.0.0.1:1234/v1/chat/completions", "--author-model", "synthetic.author", "--reviewer-model", "synthetic.reviewer", "--author-instance", "synthetic.instance", "--author-profile", "nisi-native-chat-content-v1", "--author-reasoning", "auto", "--reviewer-output-mode", "json_schema"],
+    "acceptV3": false
+  },
+  {
+    "id": "unknown-native-profile",
+    "argv": ["--approved-reviewed-fixture", "--author-api", "NATIVE_API", "--reviewer-api", "CHAT_COMPLETIONS", "--author-endpoint", "http://127.0.0.1:1234/api/v1/chat", "--reviewer-endpoint", "http://127.0.0.1:1234/v1/chat/completions", "--author-model", "synthetic.author", "--reviewer-model", "synthetic.reviewer", "--author-instance", "synthetic.instance", "--author-profile", "unknown-native-profile", "--author-reasoning", "off", "--reviewer-output-mode", "json_schema"],
+    "acceptV3": false
+  },
+  {
+    "id": "native-endpoint-chat-path",
+    "argv": ["--approved-reviewed-fixture", "--author-api", "NATIVE_API", "--reviewer-api", "CHAT_COMPLETIONS", "--author-endpoint", "http://127.0.0.1:1234/v1/chat/completions", "--reviewer-endpoint", "http://127.0.0.1:1234/v1/chat/completions", "--author-model", "synthetic.author", "--reviewer-model", "synthetic.reviewer", "--author-instance", "synthetic.instance", "--author-profile", "nisi-native-chat-content-v1", "--author-reasoning", "off", "--reviewer-output-mode", "json_schema"],
+    "acceptV3": false
+  },
+  {
+    "id": "chat-endpoint-native-path",
+    "argv": ["--approved-reviewed-fixture", "--author-api", "NATIVE_API", "--reviewer-api", "CHAT_COMPLETIONS", "--author-endpoint", "http://127.0.0.1:1234/api/v1/chat", "--reviewer-endpoint", "http://127.0.0.1:1234/api/v1/chat", "--author-model", "synthetic.author", "--reviewer-model", "synthetic.reviewer", "--author-instance", "synthetic.instance", "--author-profile", "nisi-native-chat-content-v1", "--author-reasoning", "off", "--reviewer-output-mode", "json_schema"],
+    "acceptV3": false
+  },
+  {
+    "id": "author-endpoint-nonloopback",
+    "argv": ["--approved-reviewed-fixture", "--author-api", "NATIVE_API", "--reviewer-api", "CHAT_COMPLETIONS", "--author-endpoint", "http://192.0.2.1:1234/api/v1/chat", "--reviewer-endpoint", "http://127.0.0.1:1234/v1/chat/completions", "--author-model", "synthetic.author", "--reviewer-model", "synthetic.reviewer", "--author-instance", "synthetic.instance", "--author-profile", "nisi-native-chat-content-v1", "--author-reasoning", "off", "--reviewer-output-mode", "json_schema"],
+    "acceptV3": false
+  },
+  {
+    "id": "same-models",
+    "argv": ["--approved-reviewed-fixture", "--author-api", "NATIVE_API", "--reviewer-api", "CHAT_COMPLETIONS", "--author-endpoint", "http://127.0.0.1:1234/api/v1/chat", "--reviewer-endpoint", "http://127.0.0.1:1234/v1/chat/completions", "--author-model", "synthetic.author", "--reviewer-model", "synthetic.author", "--author-instance", "synthetic.instance", "--author-profile", "nisi-native-chat-content-v1", "--author-reasoning", "off", "--reviewer-output-mode", "json_schema"],
+    "acceptV3": false
+  },
+  {
+    "id": "duplicate-api-flag",
+    "argv": ["--approved-reviewed-fixture", "--author-api", "NATIVE_API", "--reviewer-api", "CHAT_COMPLETIONS", "--author-endpoint", "http://127.0.0.1:1234/api/v1/chat", "--reviewer-endpoint", "http://127.0.0.1:1234/v1/chat/completions", "--author-model", "synthetic.author", "--reviewer-model", "synthetic.reviewer", "--author-instance", "synthetic.instance", "--author-profile", "nisi-native-chat-content-v1", "--author-reasoning", "off", "--reviewer-output-mode", "json_schema", "--author-api", "NATIVE_API"],
+    "acceptV3": false
+  },
+  {
+    "id": "missing-approved-flag",
+    "argv": ["--author-api", "NATIVE_API", "--reviewer-api", "CHAT_COMPLETIONS", "--author-endpoint", "http://127.0.0.1:1234/api/v1/chat", "--reviewer-endpoint", "http://127.0.0.1:1234/v1/chat/completions", "--author-model", "synthetic.author", "--reviewer-model", "synthetic.reviewer", "--author-instance", "synthetic.instance", "--author-profile", "nisi-native-chat-content-v1", "--author-reasoning", "off", "--reviewer-output-mode", "json_schema"],
+    "acceptV3": false
+  }
+]

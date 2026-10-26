@@ -1,0 +1,107 @@
+{
+  "summary": "Coauthored implementation contract for packets C01\u2013C07 as bounded seams over existing modules (no new recovery/admission/drain/registry/paired-trial contracts). Corrects the prior P09 sentence: a fresh residency check never proves inference; it only proves presence/shape at check time. P08 self-review labeling is treated as already existing exactly. C08\u2013C10 remain owner-led and are not addressed beyond dependency notes. Each section: intended change, discriminating tests, dependencies, owner-review stop. Security/concurrency implementation is held for owner-led review; nothing is published automatically.",
+  "deliverable": "CORRECTION TO PRIOR P09\nRetracted: any wording implying a fresh residency check proves inference. Corrected: a residency check proves only that an artifact/directory/marker is present with a given kind and hash at the moment of the check. It proves nothing about what was executed, compiled, or inferred. P08 self-review labeling already exists exactly and is not re-specified here.\n\nGLOBAL BOUNDS (apply to all seven)\n- No recreation of recovery, admission, drain, registry or paired-trial contracts; wire to existing ones only.\n- No cache-artifact creation, no frozen-source/pin changes, no production install, no automatic publication.\n- All new tests join graded `npm test`. Synthetic/pure tests precede any real-build or real-host path.\n- Security/concurrency pieces (C04, C05, C06, C07) end at an owner-review stop before merge.\n\nC01 \u2014 Native-overlay artifact tolerance (NX04/07)\nIntended change: In tests/nisi-native-overlay.test.mjs and work-orders/parallel-seven-tracks-v1/build-nisi-macos.mjs, replace the hard requirement (exactly one excluded dir native/macos/CodenameVeritasFramework/.build with markers .buildSystem_debug and CACHEDIR.TAG) with a two-state acceptance: (a) CLEAN_ABSENT \u2014 the directory does not exist; (b) HISTORICAL_MARKERS \u2014 the directory exists and contains exactly {.buildSystem_debug, CACHEDIR.TAG} as regular files with the retained historical byte hashes. Reject any other entry, wrong kind, symlink, or mutation between the before/after hidden-state snapshots. Factor a pure inventory validator (input: enumerated entries with kind+hash; output: CLEAN_ABSENT | HISTORICAL_MARKERS | REJECT+reason) separate from the real build path. Keep the existing compiled-symlink walk against the manifest and before/after hidden-state snapshot unchanged.\nTests that discriminate: (1) absent dir \u2192 CLEAN_ABSENT; (2) exact marker set with matching hashes \u2192 HISTORICAL_MARKERS; (3) marker set plus one unknown file \u2192 REJECT; (4) marker with wrong bytes \u2192 REJECT; (5) marker as symlink or directory \u2192 REJECT; (6) marker present before, absent/changed after build snapshot \u2192 REJECT (mutation); (7) 225 source hashes still match and all 13 frozen-import verifier tests still pass; (8) the two currently failing overlay tests now pass on the absent-dir case without any artifact creation (assert dir still absent after test).\nDependencies: retained evidence for historical marker byte hashes; existing manifest/snapshot code.\nOwner-review stop: If historical marker hashes cannot be resolved from retained evidence, ship only CLEAN_ABSENT acceptance and keep HISTORICAL_MARKERS owner-held. This packet is NOT native build/launch/signing acceptance.\n\nC02 \u2014 Fixture bundle/receipt truth (NX04)\nIntended change: In work-orders/parallel-seven-tracks-v1/track1/, replace the fabricated bundle stub in the 10-test oracle with a re-read through the product reader readRepositoryRunBundleV1(bundle,{report, preparation: prepared.repaired, suite, nodeRegistrationFingerprint: bundle.nodeRegistrationFingerprint, plans: staticHistory.map(x=>x.plan), groups: staticHistory.map(x=>x.group), executions: testHistory.map(x=>x.execution)}). Runner retains, in order: preflight.json first (exact source manifest + fingerprint), engine-report.json, host-result.json, then runner-receipt.json written only on completion. All writes exclusive (wx). Every digest computed from actual on-disk bytes. Receipt binds run id, repaired candidate, reviewedSourceFingerprint, bundleFingerprint, and reviewDefaults {a:false,b:false} both false.\nTests that discriminate: (1) reader returns CONSISTENT; (2) finalChecksRecordedPass === true; (3) testCount === recordedTestPasses === 1; (4) bundle fingerprint equals exact expected; (5) retry-settings.mjs recorded as MODIFY with actual before/after hashes (mutant: swap hashes \u2192 FAIL); (6) static history FAIL then PASS in that order (mutant: PASS-only \u2192 FAIL); (7) preflight.json exists and predates engine-report.json; receipt absent when run aborts pre-completion; (8) second write to any retained file throws EEXIST; (9) digest mismatch when a retained file is tampered after write.\nDependencies: product reader readRepositoryRunBundleV1; existing track1 runner/oracle.\nOwner-review stop: Confirm reader option names against actual source before freeze; no production install.\n\nC03 \u2014 Fixture cleanup/outcome (depends C02)\nIntended change: Compute the result after cleanup, not before `finally`. Completed predicate exactly: settled && report.outcome === 'COMPLETED' && report.workflowOutcome === 'COMPLETED' && bundleError === null && proposedChanges !== null. SETTLED alone no longer maps to COMPLETED; prefer report.code for CANCELLED/TIMED_OUT. Derive `cleaned` from lstat after fsp.rm: ENOENT \u2192 cleaned:true; any other outcome \u2192 cleaned:false, cleanupError set, adverse status, no accepted receipt. mkdtemp/chmod failure must not leave a root behind (remove partial root; if that removal fails, report it, do not claim removal).\nTests that discriminate: (1) CANCELLED engine with settled=true \u2192 not COMPLETED; (2) each predicate clause negated individually \u2192 not COMPLETED; (3) residue inspected BEFORE harness cleanup: denied removal (read-only parent) \u2192 cleaned:false + cleanupError, receipt absent; (4) mkdtemp failure \u2192 no root left; (5) chmod failure \u2192 root removed or failure reported, never silently leaked; (6) cancellation before/after bundle write \u2192 correct code and residue state; (7) settlement rejection \u2192 adverse status, no receipt; (8) fsp.rm error no longer swallowed (mutant: swallow \u2192 test fails).\nDependencies: C02 receipt semantics.\nOwner-review stop: Confirm adverse-status vocabulary matches existing reporting before merge.\n\nC04 \u2014 Fixture containment oracle (depends C03)\nIntended change: Enforce a write boundary equal to the owned root realpath after allocation; zero writes before profile/source validation. Remove reliance on the old lexical guard and late cleanup. Harden the test helper: resolve realpath of the deepest existing ancestor; intercept all write-capable paths (fsp.open with write flags, fs.open callback, fs.writeFile callback/sync/promise, fs.createWriteStream, rename/copy/link/symlink with both source and destination). Use exclusively owned synthetic escape roots; never touch unrelated temp entries.\nTests that discriminate: six named mutants, each counted separately via assertions (not import errors): (1) parentRoot escape; (2) fsp.open write outside; (3) callback fs.writeFile outside; (4) symlink ancestor pointing outside; (5) link/.. normalization escape; (6) write before validation. Plus: no write observed under any path before validation completes; helper reports per-mutant catch count === 1 each.\nDependencies: C03 cleanup ordering; owned synthetic roots.\nOwner-review stop: This is test containment, NOT an OS sandbox. Owner security review required before merge; do not present as isolation.\n\nC05 \u2014 Fixture closed inputs/imports (depends C04)\nIntended change: Accept only input keys {parentRoot, profile} plus optional {signal, sources, inject}; inject accepts only testsOwner (confirm in actual source before freeze); reject inject.staticOwner and unknown endpoint/model/reviewHistory/reviewIncidents fields. Validate own-property descriptors, accessors, prototype keys and symbol keys before any side effect. Static audit: literal dynamic imports, re-exports, non-literal import()/createRequire/process.binding flagged; approved import set is exact (no padding to \u22658). Runtime guard observes socket connect, TLS, dgram, http2 and DNS attempts.\nTests that discriminate: (1) each unknown field individually \u2192 rejection before any fs/network call (assert zero side effects); (2) getter-based key, prototype-injected key, symbol key \u2192 rejected; (3) inject.staticOwner \u2192 rejected; (4) static audit fixtures: literal dynamic import, re-export chain, non-literal import, createRequire, process.binding \u2192 each flagged; (5) approved import set equality (mutant adds one import \u2192 fail); (6) runtime guard: each of connect/TLS/dgram/http2/DNS observed and reported.\nDependencies: C04 helper; actual source for inject keys.\nOwner-review stop: Bounded regression guards only, NOT proof that arbitrary JS cannot escape. Owner review before merge.\n\nC06 \u2014 Host restart wiring (NX05/07)\nIntended change: history/bundle-restart-demo.mjs and history/recovery-worker.mjs remain as-is (already integrated with fresh-process tests). Author a held contract/test seam under reviewed-workflow-v1.mjs that consumes exact settled run/bundle identities and records a historical observation only. Explicitly no resume, no replay of side effects, no permission restoration, no implicit storage, no learning. Use the existing interruption decision (pure classifier) unchanged. No invented production API names; the seam is a named test-facing surface pending owner naming.\nTests that discriminate: (1) refusal: unsettled or mismatched run/bundle identity \u2192 observation refused, nothing recorded; (2) crash: process killed mid-observation \u2192 on fresh process, no partial observation accepted, no side effects replayed; (3) partial write: truncated observation file \u2192 detected and rejected, not repaired; (4) classifier invoked with identical inputs yields identical output (purity); (5) no storage created unless explicitly supplied.\nDependencies: existing classifier; settled identities from C02/C03.\nOwner-review stop: Owner decisions needed: seam name/location, observation schema, whether observations are retained at all. No automatic wiring.\n\nC07 \u2014 Native incident admission (NX05)\nIntended change: Keep native-incident-source-v1.mjs issuance unchanged: SOURCE_BOUND plans in WeakMap, raw source read only via issued accessor; status nativeRerun NOT_RUN, executionVerified false, learningEligible false, requiresSeparateAdmission true. Only staticChecks recorded FAIL accepted; Node test failures unsupported. Draft the held design note (not code) connecting the exact issued plan to the existing Swift owner with a separate admission/capture choice, preserving original vs fresh evidence and matching on digest/profile/task/run/candidate, plus TTL/revoke and cancel/drain failure paths.\nTests that discriminate: (1) plan not in WeakMap \u2192 rejected; (2) public hash alone without issued plan \u2192 rejected (no weakening); (3) Node test failure input \u2192 unsupported; (4) any mismatch among digest/profile/task/run/candidate \u2192 rejected; (5) expired TTL or revoked plan \u2192 rejected; (6) cancel/drain during capture \u2192 failure recorded, status fields unchanged; (7) original and fresh evidence remain distinguishable in output.\nDependencies: existing Swift owner and existing admission/drain contracts (reused, not recreated).\nOwner-review stop: Design is owner-led; no connection to Swift owner is implemented in this packet.\n\nNOT COVERED: C08 (OpenCode agent integration smoke), C09 (clean Node22/types/package consumer), C10 (feature/gate acceptance inventory, NX06/07/08 owner actions) are owner-led. Ten packets alone do not complete the roadmap; seven Fable assignments is workload allocation, not measured 70% wall time or independence.",
+  "risks": [
+    "C01: historical marker byte hashes may not be recoverable from retained evidence; then HISTORICAL_MARKERS acceptance must stay owner-held and only CLEAN_ABSENT ships.",
+    "C02: reader option names (preparation, suite, plans/groups/executions) are taken from the brief and must be confirmed against actual readRepositoryRunBundleV1 signature.",
+    "C03: adverse-status vocabulary and report.code values for CANCELLED/TIMED_OUT are assumed to exist in current reporting; mismatch would require owner naming.",
+    "C04/C05: guards are regression tests, not isolation; presenting them as sandboxing would be a misclaim.",
+    "C05: inject key set (testsOwner only) is unconfirmed against source; freezing before confirmation could reject valid inputs.",
+    "C06: any seam naming risks becoming a de facto production API; must remain test-facing until owner decides.",
+    "C07: pressure to accept public-hash authorization as equivalent to issued plan would weaken the contract; explicitly refused.",
+    "Cross-cutting: all counts, test names and orderings here are drafted from the brief, not executed; nothing has been run."
+  ],
+  "verification": [
+    "C01: run tests/nisi-native-overlay.test.mjs with dir absent; confirm both overlay tests pass, 13 frozen-import tests pass, 225 hashes match, and no .build dir is created.",
+    "C02: run track1 oracle against product reader; confirm CONSISTENT, testCount=recordedTestPasses=1, MODIFY hashes, FAIL\u2192PASS ordering, and EEXIST on second write.",
+    "C03: run residue-inspection tests before harness cleanup; confirm denied removal yields cleaned:false and no receipt.",
+    "C04: run six mutants; confirm per-mutant assertion counts of 1 and zero import errors.",
+    "C05: run closed-input suite; confirm zero side effects before rejection and exact approved import set.",
+    "C06/C07: owner reviews design notes and refusal/crash/partial-write tests before any wiring or Swift-owner connection.",
+    "Confirm all new tests appear in graded npm test output."
+  ],
+  "invocation_status": "succeeded",
+  "status": "succeeded",
+  "model_usage": {
+    "claude-haiku-4-5-20251001": {
+      "inputTokens": 2515,
+      "outputTokens": 19,
+      "cacheReadInputTokens": 0,
+      "cacheCreationInputTokens": 0,
+      "webSearchRequests": 0,
+      "costUSD": 0.00261,
+      "contextWindow": 200000,
+      "maxOutputTokens": 32000,
+      "thinkingTokens": 0,
+      "canonicalModel": "claude-haiku-4-5",
+      "provider": "firstParty",
+      "costBasis": "list"
+    },
+    "claude-fable-5-1": {
+      "inputTokens": 2,
+      "outputTokens": 5299,
+      "cacheReadInputTokens": 737,
+      "cacheCreationInputTokens": 2978,
+      "webSearchRequests": 0,
+      "costUSD": 0.32471425000000004,
+      "contextWindow": 1000000,
+      "maxOutputTokens": 64000,
+      "thinkingTokens": 90,
+      "canonicalModel": "claude-fable-5-1",
+      "provider": "firstParty",
+      "costBasis": "list"
+    }
+  },
+  "reported_models": [
+    "claude-haiku-4-5-20251001",
+    "claude-fable-5-1"
+  ],
+  "usage": {
+    "input_tokens": 2,
+    "cache_creation_input_tokens": 2978,
+    "cache_read_input_tokens": 737,
+    "output_tokens": 5299,
+    "output_tokens_details": {
+      "thinking_tokens": 90
+    },
+    "server_tool_use": {
+      "web_search_requests": 0,
+      "web_fetch_requests": 0
+    },
+    "service_tier": "standard",
+    "cache_creation": {
+      "ephemeral_1h_input_tokens": 2978,
+      "ephemeral_5m_input_tokens": 0
+    },
+    "inference_geo": "not_available",
+    "iterations": [
+      {
+        "input_tokens": 2,
+        "output_tokens": 5299,
+        "cache_read_input_tokens": 737,
+        "cache_creation_input_tokens": 2978,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 2978
+        },
+        "type": "message",
+        "model": null
+      }
+    ],
+    "speed": "standard"
+  },
+  "total_cost_usd": 0.32732425000000004,
+  "duration_ms": 62649,
+  "tools_enabled": false,
+  "session_persisted": false,
+  "write_owner": "codex",
+  "requested_model": "claude-fable-5-1",
+  "mode": "delegate",
+  "attempts": 1,
+  "wall_seconds": 63.354,
+  "created_at": "2026-09-19T00:00:57.851448+00:00",
+  "prior_attempts": [],
+  "total_wall_seconds": 63.354,
+  "prior_attempt_usage": [],
+  "total_usage_complete": true
+}

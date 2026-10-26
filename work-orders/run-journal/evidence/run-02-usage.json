@@ -1,0 +1,21 @@
+{
+  "sessionId": "ses_f6408d717ffeqodgvIQxTEHsuG",
+  "reportedTokens": {
+    "total": 56951,
+    "input": 48588,
+    "output": 264,
+    "reasoning": 8099
+  },
+  "lastFinish": "length",
+  "lastTokens": {
+    "total": 24322,
+    "input": 16323,
+    "output": 0,
+    "reasoning": 7999,
+    "cache": {
+      "write": 0,
+      "read": 0
+    }
+  },
+  "sourceDiffEmpty": true
+}

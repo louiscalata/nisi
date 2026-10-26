@@ -1,0 +1,7 @@
+{
+  "schema_version": 1,
+  "id": "mac-20260913-162358-a111078d79191daa77277215a4565ffc",
+  "status": "error",
+  "error": "The operation was aborted due to timeout",
+  "elapsed_seconds": 180
+}

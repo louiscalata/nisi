@@ -1,0 +1,133 @@
+{
+ "verdict": "ACCEPT_WITH_DEFECTS",
+ "summary": "Both first-review blockers are fixed and verified: the read domain now equals the canonical-json-v1 digest domain (every ok() fixture digests; -1.5, 2**53, -0 and lone surrogates refused at member level) and the reader works from one descriptor-walk snapshot, never calling a method on caller objects (own-map array, Array subclass, Symbol.species, throwing getters, non-enumerable and symbol keys all refuse NOT_OBJECT at $). Oracle 15/15 on Node 24.18.0, structural-check sourceDigest equals the module's SHA256SUMS entry, all 11 handoff checksums verify. Three defects survive, none a blocker: snapshot() never releases its `seen` mark so a shared non-cyclic reference is refused NOT_OBJECT at $ where CONTRACT.md lists only 'any cycle' (the sibling render-tile-v1 the handoff claims to mirror uses a path stack), the ordering clause is still only partially pinned (14 non-equivalent reorder mutants pass, including rule4-rev-first, rule5-after-6 and rule8 no-quality-fail-before-reviewer that the first review named), and the oracle's getter vectors are root-only so a snapshot that enforces descriptor rules only at depth 0 passes 15/15 while accepting and invoking a nested getter.",
+ "first_review_findings_status": [
+  {
+   "title": "digestRenderReceiptV1 throws a foreign CanonicalJSONErrorV1 for receipts the reader accepts (fractional/non-safe numbers, lone surrogates)",
+   "status": "fixed",
+   "note": "CONTRACT.md lines 39-43 narrow MEASURE to null | safe integer (not -0) | well-formed TEXT and require well-formed models; module isMeasure/isText/isModel (lines 87-98) enforce it; probes: measured -1.5 and 2**53 -> CHECKS @ $.checks[0].measured, model lone surrogate -> SOURCE @ $.source.model; the ok() helper (test lines 28-35) digests and re-reads every accepted fixture; pinned digests unchanged."
+  },
+  {
+   "title": "checks copy calls input.checks.map and for-of on the caller's array: a hijacked map, Array subclass or Symbol.species injects arbitrary content into an ok:true receipt, returns the caller's own array, or makes the reader throw",
+   "status": "fixed",
+   "note": "snapshot() (module lines 47-74) copies by index from descriptors before validation; output built by index at lines 392-396; own-map array, Array subclass, null-prototype array and Symbol.species array all refuse NOT_OBJECT @ $ (test lines 228-233, reproduced); receipt.checks is a fresh Array.prototype array, deep-frozen, no input reference survives."
+  },
+  {
+   "title": "Members are re-read from the input at each use: accessor properties and Proxy traps can throw out of the reader or swap values between validation and copy",
+   "status": "fixed",
+   "note": "Module reads only the snapshot; throwing getter, two-phase getter, getPrototypeOf/ownKeys Proxy traps refuse NOT_OBJECT @ $ (test lines 222-227, reproduced; a throwing getter nested in source also refuses). The oracle side of required item 3(c) is only root-level, see confirmed finding 3."
+  },
+  {
+   "title": "Oracle does not pin the accept side of any length limit, any CODE length, non-string source.block, or the frozen-ness of four constants; 9 boundary mutants survive",
+   "status": "fixed",
+   "note": "Accept vectors at 128/128/256/64 (test lines 124, 147, 152, 165), refuse vectors for code 65, reviewer.model 129, source.block 7, isFrozen on all seven freezable constants (line 61). Re-run under $TMPDIR: idlen127 (fail 3), textlt, srcmodel127 (fail 2), codelen63, code-nolen, block-nonstr, kinds-unfrozen, scopes-unfrozen all caught. They are caught but not recorded in evidence/mutants.json (nit below)."
+  },
+  {
+   "title": "Oracle does not pin any ordering clause: reorder mutants across the member walk and consistency rules 1-8 survive",
+   "status": "partially_fixed",
+   "note": "The new 'check order' test (lines 246-256, eight refuse() calls) pins source unknown-before-missing, candidate-before-verdict, duplicate-before-kind, rule 1 before 2, rule 3 sub-order, rule 6 both sub-orders, and rule 8 validity-fail-before-reviewer. Of the eleven the first review listed, rule4-rev-first, rule5-after-6 and rule8-sub (reviewer before the no-quality-fail test) still pass 15/15; eleven further member-walk reorders also survive. See confirmed finding 2."
+  },
+  {
+   "title": "Non-enumerable own required members count as present and non-enumerable or symbol-keyed extras pass the closed-schema check, against 'only own enumerable members count'",
+   "status": "fixed",
+   "note": "snapshot() refuses non-enumerable and symbol-keyed properties at any level (lines 60, 68, 70); non-enumerable tokens and a symbol key refuse NOT_OBJECT @ $ (test lines 234-237, reproduced)."
+  },
+  {
+   "title": "CONTRACT.md Definitions sentence on __proto__/prototype/constructor keys ('code of the enclosing member') is inherited tile wording that never fires in the receipt schema",
+   "status": "fixed",
+   "note": "CONTRACT.md lines 54-56 now state RENDER_RECEIPT_UNKNOWN_MEMBER with the path to that key; JSON.parse('{\"__proto__\":1}') -> UNKNOWN_MEMBER @ $.__proto__ at root and at $.checks[0].__proto__ (test lines 92, 149, reproduced)."
+  },
+  {
+   "title": "required_before_integration: record the added mutants in evidence/mutants.json",
+   "status": "partially_fixed",
+   "note": "evidence/mutants.json holds M1-M13; only M10-code-length-off, M11-source-model-off-by-one and M13-rule1-after-rule2 map onto the requested list. The eight boundary mutants are caught but unrecorded; ten of the eleven reorders were not run and three of them survive."
+  },
+  {
+   "title": "required_before_integration: HANDOFF.md states the author != reviewer rule is a record-level string comparison vacuous for assemble sources",
+   "status": "fixed",
+   "note": "CONTRACT.md lines 121-125 carry the design note; HANDOFF.md lines 65-67 state it."
+  }
+ ],
+ "confirmed_findings": [
+  {
+   "title": "snapshot() never releases its visited mark, so a shared non-cyclic reference is refused NOT_OBJECT at $ where CONTRACT.md line 50 lists only 'any cycle'; the handoff's 'same descriptor-walk snapshot as render-tile-v1' is inaccurate on this point",
+   "severity": "defect",
+   "file": "/Users/louiscalata/nisi-next-private/work-orders/nisi-render-receipt-v1/src/render-receipt-v1.mjs",
+   "line": 50,
+   "claim": "`seen.add(x)` at line 50 is never paired with a delete before either `return out` (lines 63, 73), so `seen.has(x)` at line 49 fires for any object reached twice in the whole walk, not only for an ancestor. CONTRACT.md lines 46-51 enumerate the snapshot refusals exhaustively and a DAG is not a cycle; lines 81-89 then require the member walk to report the first failure. Reproduced: checks [c, c] with one shared check object -> NOT_OBJECT @ $ (two distinct equal objects -> CHECKS @ $.checks[1].checkId); one empty array as both checks and tokens -> NOT_OBJECT @ $ (distinct -> TOKENS @ $.tokens); source === reviewer -> NOT_OBJECT @ $ (a copy -> UNKNOWN_MEMBER @ $.reviewer.kind). The sibling render-tile-v1.mjs (lines 45-51, 73) uses a path stack with `stack.delete(x)` on exit and its contract line 48 says shared sub-objects are copied again, so HANDOFF.md line 60 overstates the mirroring. The mutant with `seen.delete(x)` before each return passes the oracle 15/15, gives the contract-correct codes on all three probes, and still refuses a true cycle NOT_OBJECT @ $. No contract-valid receipt can carry a shared object (source and reviewer have disjoint member sets; two shared checks always duplicate checkId), and JSON.parse never produces one, so accept/refuse never diverges: the effect is a wrong refusal code and path for in-process callers, plus an oracle that pins neither behaviour.",
+   "fix": "Add `seen.delete(x);` before `return out;` at lines 63 and 73 so `seen` holds only the ancestor chain (matching render-tile-v1 and the contract's 'any cycle'), or amend CONTRACT.md line 50 to 'any object reached twice' if the owner prefers the stricter reading. In either case add oracle vectors for a shared check object (expect CHECKS @ $.checks[1].checkId under the fix) and a shared empty array in checks and tokens (expect TOKENS @ $.tokens), and keep the existing true-cycle vector. Correct HANDOFF.md line 60."
+  },
+  {
+   "title": "Ordering clause still only partially pinned: 14 non-equivalent reorder mutants pass the revision-2 oracle, including rule4-rev-first, rule5-after-6 and rule8 no-quality-fail-before-reviewer that the first review named",
+   "severity": "defect",
+   "file": "/Users/louiscalata/nisi-next-private/work-orders/nisi-render-receipt-v1/tests/render-receipt-v1.test.mjs",
+   "line": 246,
+   "claim": "CONTRACT.md lines 81-89 fix the member walk order and lines 110-119 say the consistency rules are 'evaluated in this order' with 'then' sub-orders. The module conforms on every probe, but the 'check order' test (lines 246-256) has eight vectors and these reorder mutants each pass 15/15 while differing from the module on a two-fault input (module | mutant): rule4-rev-first, APRON_STALE + checks + reviewer -> $.checks | $.reviewer; rule5-after-6, PASS + candidate null + reviewer null -> $.candidate | $.reviewer; rule5-before-3, REPLAY + checks + candidate null -> $.checks | $.candidate; rule8 reviewer-before-no-quality-fail, QUALITY_FAIL with no failing check + reviewer null -> $.checks | $.reviewer; reviewer-missing-before-unknown, reviewer {id, extra} -> UNKNOWN $.reviewer.extra | MISSING $.reviewer.model; profile-before-schemaVersion -> SCHEMA_VERSION | PROFILE; source-id-before-kind, {kind:'cloud', id:7} -> $.source.kind | $.source.id; tokens-before-elapsedMs -> ELAPSED | TOKENS; check-outcome-before-kind -> .kind | .outcome; root-missing-reverse-order, tileId and tokens both absent -> $.tileId | $.tokens; plus identity-before-tileId, source-before-attempt, reviewer-before-checks and check-threshold-before-measured reported by the lens and consistent with the same test shape. The one rule-8 variant that moves the reviewer tests ahead of both checks tests is caught by test line 255, which is why one refuter reported rule8-sub as caught; the variant that moves them ahead of only the no-quality-fail test survives. Root and check-entry unknown-before-missing are pinned incidentally by lines 92 and 149. Only 'rule-1-before-rule-2' of the reorders is recorded in evidence/mutants.json (M13).",
+   "fix": "Add one two-fault vector per surviving pair to the 'check order' test, at minimum: refuse({ ...stale(), checks: [check()], reviewer: pass().reviewer }, 'RENDER_RECEIPT_CONSISTENCY', '$.checks'); refuse({ ...pass(), candidate: null, reviewer: null }, 'RENDER_RECEIPT_CONSISTENCY', '$.candidate'); refuse({ ...replay(), checks: [check()], candidate: null }, 'RENDER_RECEIPT_CONSISTENCY', '$.checks'); refuse({ ...qfail(), checks: [check(), review()], reviewer: null }, 'RENDER_RECEIPT_CONSISTENCY', '$.checks'); refuse({ ...pass(), reviewer: { id: 'v', extra: 1 } }, 'RENDER_RECEIPT_UNKNOWN_MEMBER', '$.reviewer.extra'); and the scalar pairs (schemaVersion+profile, tileId+identity, attempt+source, source kind+id, checks+reviewer, elapsedMs+tokens, check kind+outcome, measured+threshold). For several missing members CONTRACT.md is silent; add 'missing members are reported in schema order, unknown members in own-key order' at line 83 before pinning the two-missing vector. Record every reorder mutant as caught in evidence/mutants.json."
+  },
+  {
+   "title": "Oracle getter vectors are root-only: a snapshot that enforces the descriptor rules only at depth 0 passes 15/15 while accepting a nested accessor and invoking it",
+   "severity": "defect",
+   "file": "/Users/louiscalata/nisi-next-private/work-orders/nisi-render-receipt-v1/tests/render-receipt-v1.test.mjs",
+   "line": 222,
+   "claim": "CONTRACT.md lines 46-53 refuse any accessor property at any level and promise no input method is ever called; the first review's required item 3(c) asked for throwing and two-phase getters on a root member, a source member, a check member and reviewer. The revision-2 oracle has them only on root members (lines 222-225). Mutant under $TMPDIR (object branch line 70 changed to enforce `own(d,'value') && d.enumerable` only when depth === 0 and otherwise read `d.get.call(x)`): passes the oracle 15/15; on a source.id getter it returns ok:true with the getter's first value, calling the caller's function, where the module refuses NOT_OBJECT @ $. The shipped module is correct; the gap is that the acceptance gate cannot see this class of drafter divergence.",
+   "fix": "Add to 'hostile inputs are refused, never thrown on': a throwing getter and a two-phase getter defined on source.id, on checks[0].measured and on reviewer.id, each expected RENDER_RECEIPT_NOT_OBJECT at $ (plus a Proxy as source and as a check entry), and record a 'nested-accessor-allowed' mutant as caught in evidence/mutants.json."
+  },
+  {
+   "title": "TEXT and model limits are stated in 'characters' (or with no unit) but enforced in UTF-16 code units; astral-plane strings are unpinned by the oracle",
+   "severity": "nit",
+   "file": "/Users/louiscalata/nisi-next-private/work-orders/nisi-render-receipt-v1/CONTRACT.md",
+   "line": 39,
+   "claim": "CONTRACT.md lines 39-40 say TEXT is 'at most limits.textLength characters' and lines 67/73 bound model with no unit; the module uses s.length (lines 91, 94). Reproduced with U+1F600: measured of 128 astral code points (256 units) ok and digests, 129 (258 units) -> CHECKS @ $.checks[0].measured; model of 64 astral ok, 65 -> SOURCE @ $.source.model. A mutant counting code points ([...s].length) passes the oracle 15/15 since every length vector is BMP. The module's reading is the house convention (docs/file-policy.md and docs/workflow-api.md say UTF-16 code units; the sibling render-tile contract writes 'length <=' and its isModel is identical) and both readings stay inside the codec's domain, so this is contract wording and oracle coverage only, not a module defect; two refuters refuted it on that basis and I agree it does not rise above nit.",
+   "fix": "State the unit in CONTRACT.md lines 39-40, 67 and 73 ('UTF-16 code units, i.e. String.prototype.length') and add accept/refuse vectors of 128/129 astral code points for measured and 64/65 for source.model."
+  },
+  {
+   "title": "Snapshot clause edges are unpinned: the depth-64 boundary has no oracle vector (SNAPSHOT_MAX_DEPTH 63 and 65 both pass) and the contract does not say whether a nested function is 'an object that is not plain'",
+   "severity": "nit",
+   "file": "/Users/louiscalata/nisi-next-private/work-orders/nisi-render-receipt-v1/CONTRACT.md",
+   "line": 49,
+   "claim": "Reproduced: 64 nested arrays under tokens -> TOKENS @ $.tokens, 65 -> NOT_OBJECT @ $; mutants with SNAPSHOT_MAX_DEPTH 63 and 65 both pass the oracle 15/15 and differ from the module at 64 and 65 nesting (the only depth vector is 20000 deep, test line 238). A function nested as tokens or checks[0].measured is refused at member level (TOKENS @ $.tokens, CHECKS @ $.checks[0].measured) while a Date, Map or class instance in the same slot is NOT_OBJECT @ $; the contract's own plain-object definition (line 44, typeof === 'object') makes the module's reading the direct one, so this half is a wording precision point, not a divergence. No valid receipt is affected either way (schema depth is 3; functions are never valid values).",
+   "fix": "State in CONTRACT.md that the root sits at depth 0 so 64 nested containers walk and 65 refuse, and that non-object values (including functions) fall through to the member rule; add oracle vectors for 64-deep (member-level refusal) vs 65-deep (NOT_OBJECT at $) and for a function at $.tokens."
+  },
+  {
+   "title": "evidence/mutants.json does not record the mutant set the first review required; HANDOFF.md line 70's '13/13 caught' is true of a different, smaller list and line 60's render-tile mirroring claim is inaccurate",
+   "severity": "nit",
+   "file": "/Users/louiscalata/nisi-next-private/work-orders/nisi-render-receipt-v1/handoff-claude-20260914/HANDOFF.md",
+   "line": 70,
+   "claim": "claude-review.json required_before_integration[3] asked that idlen127, textlt, srcmodel127, revmodel-nolen, codelen63, code-nolen, block-nonstr, kinds/scopes-unfrozen, the nine reorders, rule1-2 and rule8-sub be recorded as caught. mutants.json holds M1-M13; only M10, M11 and M13 map onto that list. Re-run: the eight boundary mutants are all caught by the revision-2 oracle but unrecorded; of the reorders only rule1-2 was run and three survive. HANDOFF.md line 70 sits in the 'REJECT -> fixed' section without saying item 4 was partially executed, and line 60 says the snapshot is 'the same descriptor-walk snapshot as render-tile-v1' although it lacks that module's path-stack release and node budget.",
+   "fix": "Append the boundary mutants (as caught now), the reorder set and the nested-accessor mutant to evidence/mutants.json after the new vectors land, regenerate SHA256SUMS, and reword HANDOFF.md lines 60 and 70 to name precisely what was mirrored and what was run."
+  }
+ ],
+ "refuted_findings": [
+  {
+   "title": "Snapshot walks unbounded width before the 256-check limit: a 32 MB JSON checks array costs ~3.5 s and ~1.6 GB of heap before refusal, and above 2^24 entries the refusal code silently changes",
+   "why_refuted": "Behaviour reproduces (Reflect.ownKeys on a 2^24-element array throws RangeError 'Too many properties to enumerate'; 2^24 checks -> NOT_OBJECT @ $ in 1.5 s, 2^24-1 -> CHECKS @ $.checks in 2.9 s) but the revised CONTRACT.md lines 46-53 mandate a full copy before any validation, name depth as the only bound, and state that anything that throws during the walk refuses NOT_OBJECT at $, so both regimes are the contract's own outcomes and line 29 (never throws) holds. The reviewer frames the fix as an owner contract decision. Recorded as an optional improvement: the sibling render-tile-v1 carries SNAPSHOT_MAX_NODES = 200,000 and its contract states it; the receipt contract could adopt a width or node bound the same way."
+  },
+  {
+   "title": "A shared (non-cyclic) object reference is refused as a cycle (adversarial-lens duplicate, rated nit)",
+   "why_refuted": "Not refuted on substance; merged into confirmed finding 1, which the contract-conformance lens rated defect. The narrower nit rating is noted there: accept/refuse never diverges and JSON.parse cannot produce the input."
+  },
+  {
+   "title": "Two consistency-rule reorder mutants still pass the revised oracle: rule 4 sub-order and rule 5 before rule 6 (adversarial-lens duplicate, rated nit)",
+   "why_refuted": "Not refuted on substance; merged into confirmed finding 2, which covers the same two mutants plus twelve more."
+  }
+ ],
+ "required_before_integration": [
+  "Decide the shared-reference semantics: add `seen.delete(x)` before each `return out` in snapshot() (src/render-receipt-v1.mjs lines 63 and 73; matches render-tile-v1 and CONTRACT.md's 'any cycle') or amend CONTRACT.md line 50 to 'any object reached twice'; add oracle vectors for a shared check object and a shared empty array in checks and tokens pinning the chosen code and path; correct HANDOFF.md line 60.",
+  "Pin the ordering clause: add the two-fault vectors listed in confirmed finding 2 to the 'check order' test (the four consistency ones first: APRON_STALE + checks + reviewer -> $.checks; PASS + candidate null + reviewer null -> $.candidate; REPLAY + checks + candidate null -> $.checks; QUALITY_FAIL with no failing check + reviewer null -> $.checks), plus reviewer {id, extra} -> $.reviewer.extra and the scalar member-order pairs; state in CONTRACT.md line 83 that missing members are reported in schema order and unknown members in own-key order.",
+  "Add nested accessor vectors (throwing getter and two-phase getter on source.id, checks[0].measured and reviewer.id, plus a Proxy as source and as a check entry), each expected RENDER_RECEIPT_NOT_OBJECT at $, completing first-review required item 3(c).",
+  "Re-run and record the full mutant set in evidence/mutants.json (idlen127, textlt, srcmodel127, revmodel-nolen, codelen63, code-nolen, block-nonstr, kinds/scopes-unfrozen, the fourteen reorders, nested-accessor-allowed, seen-released-after-walk or its contract counterpart), regenerate handoff-claude-20260914/SHA256SUMS, and reword HANDOFF.md lines 60 and 70.",
+  "Optional (nits): state the length unit for TEXT and model in CONTRACT.md lines 39-40, 67, 73; state that the root sits at depth 0 and that non-object values such as functions fall through to the member rule; add 128/129-astral, 64/65-astral, 64/65-deep and nested-function vectors; consider a width or node bound for the snapshot as render-tile-v1 has."
+ ],
+ "oracle_gaps": [
+  "No shared-reference vector in either direction: `seen.delete(x)` before each return in snapshot() passes 15/15, as does the current whole-walk set.",
+  "Fourteen reorder mutants pass 15/15: rule4-rev-first, rule5-after-6, rule5-before-3, rule8 reviewer-before-no-quality-fail, reviewer-missing-before-unknown, profile-before-schemaVersion, identity-before-tileId, source-before-attempt, source-id-before-kind, reviewer-before-checks, tokens-before-elapsedMs, check-outcome-before-kind, check-threshold-before-measured, root-missing-reverse-order.",
+  "Getter and Proxy vectors exist only on root members (lines 222-227); a snapshot that enforces descriptor rules only at depth 0 passes 15/15 and accepts a nested getter.",
+  "Every length boundary vector is BMP; a code-point-counting mutant ([...s].length) for TEXT and model passes 15/15.",
+  "The only depth vector is 20000 deep (line 238); SNAPSHOT_MAX_DEPTH 63 and 65 both pass 15/15.",
+  "No vector for a function nested as a member value (only a root-level function at line 83).",
+  "evidence/mutants.json records 13 mutants; none of the reorders beyond rule1-2, none of the eight boundary mutants under the requested names, and no nested-accessor or shared-reference mutant."
+ ],
+ "reviewer": "claude-workflow rereview-render-readers",
+ "date": "2026-09-14"
+}

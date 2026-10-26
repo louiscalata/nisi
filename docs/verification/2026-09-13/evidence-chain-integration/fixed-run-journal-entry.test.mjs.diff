@@ -1,0 +1,31 @@
+--- work-orders/fixed-run-journal-entry/tests/entry.test.mjs
++++ tests/fixed-run-journal-entry.test.mjs
+@@ -1,10 +1,10 @@
+ import test from 'node:test';
+ import assert from 'node:assert/strict';
+ import { readFile } from 'node:fs/promises';
+-import { fixedRunJournalEntry as build } from '../src/fixed-run-journal-entry.mjs';
+-import { createRunJournal, reopen } from '../src/run-journal-v1.mjs';
+-
+-const load = async (name) => JSON.parse(await readFile(new URL(`../fixtures/${name}.json`, import.meta.url), 'utf8'));
++import { fixedRunJournalEntry as build } from '../history/fixed-run-journal-entry.mjs';
++import { createRunJournal, reopen } from '../history/run-journal-v1.mjs';
++
++const load = async (name) => JSON.parse(await readFile(new URL(`./fixtures/fixed-run/${name}.json`, import.meta.url), 'utf8'));
+ const OBSERVED = await load('summary-observed');
+ const NOT_MATCHED = await load('summary-canaries-not-matched');
+ const TIMEOUT = await load('summary-timeout');
+@@ -292,11 +292,11 @@
+ });
+ 
+ test('entry module has no imports, exports only the builder and stays pure', async () => {
+-  const source = await readFile(new URL('../src/fixed-run-journal-entry.mjs', import.meta.url), 'utf8');
++  const source = await readFile(new URL('../history/fixed-run-journal-entry.mjs', import.meta.url), 'utf8');
+   assert.doesNotMatch(source, /\bimport\b/);
+   assert.doesNotMatch(source, /\b(?:require|process|fetch|XMLHttpRequest|eval|Function|setTimeout|setInterval|globalThis|structuredClone)\b/);
+   assert.doesNotMatch(source, /\b(?:Date|performance)\b|Math\s*\.\s*random\b/);
+-  const namespace = await import('../src/fixed-run-journal-entry.mjs');
++  const namespace = await import('../history/fixed-run-journal-entry.mjs');
+   assert.deepEqual(Object.keys(namespace), ['fixedRunJournalEntry']);
+   assert.equal(typeof namespace.fixedRunJournalEntry, 'function');
+ });

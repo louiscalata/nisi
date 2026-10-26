@@ -1,0 +1,14 @@
+
+> nisi-future-history-timeline@0.0.0-private test
+> node --test --test-timeout=10000 tests/baseline.test.mjs
+
+✔ private dependency-free ESM package (0.376125ms)
+✔ named synchronous API placeholder exists (0.048458ms)
+ℹ tests 2
+ℹ suites 0
+ℹ pass 2
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 34.267542

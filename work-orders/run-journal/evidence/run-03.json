@@ -1,0 +1,23 @@
+{
+  "command": "CHAMI_PACKET_TIER=local /Users/louiscalata/bin/packet-run /Users/louiscalata/nisi-next-private/work-orders/run-journal/.packets/nisi-run-journal.packet.md",
+  "tier": "local",
+  "started": "2026-09-13T11:27:43.506934-07:00",
+  "elapsedSeconds": 604.569,
+  "exit": 1,
+  "beforeSha256": {
+    "package.json": "bf9426c4d4d00fb0c449ad92855437e48217a163d313de361393b81ed7410a9a",
+    "tests/baseline.test.mjs": "adb784891764841fe628e00b0aa9d9fdf025035e659aaacdedd766cafa81b8d3",
+    "tests/run-journal.test.mjs": "25355f0d280a262243f1fe707fd4e0de5fc795926ce37d910c40a12721390c6d",
+    "roadmap.md": "c8e8976d23bf11db54592424f76c206824ff8c16eaf514a9c35e9782ce5ca8e2",
+    "src/run-journal-v1.mjs": "c9a4cc003509d25ec798f80233c0460e89f52ec6df7e454e4133139df65d96a5",
+    ".packets/nisi-run-journal.packet.md": "3a97daea6e19e964ada329c3b8ef9f0ed487b3e2dcf45451f5af934ee69cd849"
+  },
+  "afterSha256": {
+    "package.json": "bf9426c4d4d00fb0c449ad92855437e48217a163d313de361393b81ed7410a9a",
+    "tests/baseline.test.mjs": "adb784891764841fe628e00b0aa9d9fdf025035e659aaacdedd766cafa81b8d3",
+    "tests/run-journal.test.mjs": "25355f0d280a262243f1fe707fd4e0de5fc795926ce37d910c40a12721390c6d",
+    "roadmap.md": "c8e8976d23bf11db54592424f76c206824ff8c16eaf514a9c35e9782ce5ca8e2",
+    "src/run-journal-v1.mjs": "c9a4cc003509d25ec798f80233c0460e89f52ec6df7e454e4133139df65d96a5",
+    ".packets/nisi-run-journal.packet.md": "3a97daea6e19e964ada329c3b8ef9f0ed487b3e2dcf45451f5af934ee69cd849"
+  }
+}

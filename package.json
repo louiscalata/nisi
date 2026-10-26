@@ -1,9 +1,9 @@
 {
   "name": "nisi",
-  "version": "0.2.0",
-  "private": false,
-  "description": "A Node.js CLI and library for bounded AI-assisted coding workflows and validated run reports.",
-  "license": "Apache-2.0",
+  "version": "0.2.0-private.0",
+  "private": true,
+  "description": "A Node.js workflow orchestrator for AI-assisted coding, with bounded repairs and validated run reports.",
+  "license": "UNLICENSED",
   "author": "Louis Calata",
   "repository": {
     "type": "git",
@@ -19,35 +19,22 @@
   },
   "scripts": {
     "test": "node scripts/require-node.cjs && node --test tests/*.test.mjs",
+    "test:type-prerequisite": "node --test tests/type-prerequisite.test.mjs",
     "check:structural": "node scripts/require-node.cjs && node scripts/structural-check.mjs",
     "check": "npm run check:structural && npm test",
-    "check:cli-package": "node scripts/require-node.cjs && node scripts/check-cli-package.mjs",
     "bench": "node scripts/bench.mjs",
     "ab:purity": "node scripts/ab-purity.mjs contracts/structural-fixtures.json ${AFM:-afm}",
     "check:static": "node scripts/require-node.cjs && node tools/check-side-effects.mjs",
     "example:workflow": "node scripts/require-node.cjs && node examples/workflow.mjs",
-    "preflight": "node scripts/require-node.cjs",
-    "example:local-model": "node scripts/require-node.cjs && node examples/local-model-workflow.mjs"
+    "preflight": "node scripts/require-node.cjs && node tests/type-prerequisite.test.mjs --check-types-prerequisite",
+    "example:local-model": "node scripts/require-node.cjs && node examples/local-model-workflow.mjs",
+    "test:types": "tsc --noEmit --ignoreConfig --strict --exactOptionalPropertyTypes --noUncheckedIndexedAccess --module NodeNext --target ES2022 --types node tests/private-consumer/*.mts",
+    "check:private-package": "node scripts/check-private-package.mjs"
   },
   "devDependencies": {
+    "@types/node": "24.13.3",
     "typescript": "^6.0.3"
   },
-  "files": [
-    "README.md",
-    "LICENSE",
-    "bin/nisi.mjs",
-    "examples/workflow.mjs",
-    "examples/local-model-workflow.mjs",
-    "index.mjs",
-    "adapters/*.mjs",
-    "canonical/*.mjs",
-    "gate/*.mjs",
-    "history/run-journal-v1.mjs",
-    "history/run-journal-store-v1.mjs",
-    "policy/*.mjs",
-    "serialization/*.mjs",
-    "workflow/*.mjs"
-  ],
   "keywords": [
     "canonical-json",
     "capability-security",
@@ -56,31 +43,88 @@
     "foundation-models"
   ],
   "main": "./index.mjs",
-  "bin": {
-    "nisi": "./bin/nisi.mjs"
-  },
   "exports": {
-    ".": "./index.mjs",
-    "./workflow": "./workflow/engine.mjs",
-    "./policy": "./policy/file-access.mjs",
-    "./serialization": "./serialization/canonical-json-v1.mjs",
-    "./adapters/apple-foundation-models": "./adapters/apple-foundation-models.mjs",
-    "./adapters/local-chat": "./adapters/local-chat.mjs",
-    "./history/run-journal": "./history/run-journal-v1.mjs",
-    "./history/run-journal-store": "./history/run-journal-store-v1.mjs",
-    "./index.mjs": "./index.mjs",
-    "./package.json": "./package.json",
-    "./workflow/engine.mjs": "./workflow/engine.mjs",
-    "./workflow/contracts.mjs": "./workflow/contracts.mjs",
-    "./policy/file-access.mjs": "./policy/file-access.mjs",
-    "./serialization/canonical-json-v1.mjs": "./serialization/canonical-json-v1.mjs",
-    "./adapters/apple-foundation-models.mjs": "./adapters/apple-foundation-models.mjs",
-    "./adapters/local-chat.mjs": "./adapters/local-chat.mjs",
-    "./canonical/canonical-json-v1.mjs": "./canonical/canonical-json-v1.mjs",
-    "./gate/content-consent.mjs": "./gate/content-consent.mjs",
-    "./gate/afm-content-executor.mjs": "./gate/afm-content-executor.mjs",
-    "./history/run-journal-v1.mjs": "./history/run-journal-v1.mjs",
-    "./history/run-journal-store-v1.mjs": "./history/run-journal-store-v1.mjs"
+    ".": {
+      "types": "./types/index.d.ts",
+      "default": "./index.mjs"
+    },
+    "./workflow": {
+      "types": "./types/workflow.d.ts",
+      "default": "./workflow/engine.mjs"
+    },
+    "./policy": {
+      "types": "./types/policy.d.ts",
+      "default": "./policy/file-access.mjs"
+    },
+    "./serialization": {
+      "types": "./types/serialization.d.ts",
+      "default": "./serialization/canonical-json-v1.mjs"
+    },
+    "./adapters/apple-foundation-models": {
+      "types": "./types/apple-foundation-models.d.ts",
+      "default": "./adapters/apple-foundation-models.mjs"
+    },
+    "./adapters/local-chat": {
+      "types": "./types/local-chat.d.ts",
+      "default": "./adapters/local-chat.mjs"
+    },
+    "./adapters/native-chat": {
+      "types": "./types/native-chat.d.ts",
+      "default": "./adapters/native-chat-v1.mjs"
+    },
+    "./adapters/repair-guidance": {
+      "types": "./types/repair-guidance.d.ts",
+      "default": "./adapters/repair-guidance-v1.mjs"
+    },
+    "./index.mjs": {
+      "types": "./types/index.d.ts",
+      "default": "./index.mjs"
+    },
+    "./workflow/engine.mjs": {
+      "types": "./types/workflow.d.ts",
+      "default": "./workflow/engine.mjs"
+    },
+    "./workflow/contracts.mjs": {
+      "types": "./types/contracts.d.ts",
+      "default": "./workflow/contracts.mjs"
+    },
+    "./policy/file-access.mjs": {
+      "types": "./types/policy.d.ts",
+      "default": "./policy/file-access.mjs"
+    },
+    "./serialization/canonical-json-v1.mjs": {
+      "types": "./types/serialization.d.ts",
+      "default": "./serialization/canonical-json-v1.mjs"
+    },
+    "./adapters/apple-foundation-models.mjs": {
+      "types": "./types/apple-foundation-models.d.ts",
+      "default": "./adapters/apple-foundation-models.mjs"
+    },
+    "./adapters/local-chat.mjs": {
+      "types": "./types/local-chat.d.ts",
+      "default": "./adapters/local-chat.mjs"
+    },
+    "./adapters/native-chat-v1.mjs": {
+      "types": "./types/native-chat.d.ts",
+      "default": "./adapters/native-chat-v1.mjs"
+    },
+    "./adapters/repair-guidance-v1.mjs": {
+      "types": "./types/repair-guidance.d.ts",
+      "default": "./adapters/repair-guidance-v1.mjs"
+    },
+    "./canonical/canonical-json-v1.mjs": {
+      "types": "./types/canonical.d.ts",
+      "default": "./canonical/canonical-json-v1.mjs"
+    },
+    "./gate/content-consent.mjs": {
+      "types": "./types/content-consent.d.ts",
+      "default": "./gate/content-consent.mjs"
+    },
+    "./gate/afm-content-executor.mjs": {
+      "types": "./types/afm-content-executor.d.ts",
+      "default": "./gate/afm-content-executor.mjs"
+    },
+    "./*": "./*"
   },
   "devEngines": {
     "runtime": {
@@ -88,5 +132,36 @@
       "version": ">=22",
       "onFail": "error"
     }
-  }
+  },
+  "types": "./types/index.d.ts",
+  "files": [
+    "adapters/apple-foundation-models.mjs",
+    "adapters/local-chat.mjs",
+    "adapters/native-chat-v1.mjs",
+    "adapters/native-chat-protocol-v1.mjs",
+    "adapters/repair-guidance-v1.mjs",
+    "canonical/canonical-json-v1.mjs",
+    "gate/afm-content-executor.mjs",
+    "gate/content-consent.mjs",
+    "hosts/repository/snapshot-contract.mjs",
+    "hosts/swift-verifier/owned-child.mjs",
+    "hosts/swift-verifier/protocol.mjs",
+    "index.mjs",
+    "policy/file-access.mjs",
+    "serialization/canonical-json-v1.mjs",
+    "workflow/contracts.mjs",
+    "workflow/engine.mjs",
+    "types/afm-content-executor.d.ts",
+    "types/apple-foundation-models.d.ts",
+    "types/canonical.d.ts",
+    "types/content-consent.d.ts",
+    "types/contracts.d.ts",
+    "types/index.d.ts",
+    "types/local-chat.d.ts",
+    "types/native-chat.d.ts",
+    "types/repair-guidance.d.ts",
+    "types/policy.d.ts",
+    "types/serialization.d.ts",
+    "types/workflow.d.ts"
+  ]
 }

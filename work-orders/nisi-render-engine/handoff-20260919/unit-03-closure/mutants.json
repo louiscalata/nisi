@@ -1,0 +1,17 @@
+{
+ "M1-attempt-in-identity": {
+  "caught": true
+ },
+ "M2-no-tombstone": {
+  "caught": true
+ },
+ "M3-replay-ignores-tombstone": {
+  "caught": true
+ },
+ "M4-journal-not-shared": {
+  "caught": true
+ },
+ "M5-cascade-clears-journal": {
+  "caught": true
+ }
+}

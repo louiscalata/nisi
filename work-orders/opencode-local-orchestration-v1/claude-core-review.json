@@ -1,0 +1,101 @@
+{
+  "summary": "Bounded review of the OpenCode local advisory orchestrator (no tools, no execution). Two actionable findings: (1) `reviewRelationship` can assert `different_reported_model` when receipts carry no reported model at all (or more than two), overstating reviewer independence; (2) caller cancellation\u2014including an already-aborted upstream signal with no request in flight\u2014permanently quarantines the orchestrator and stops the transport owner, conflating cancel with failure. Destination pinning and residency checks look sound on the evidence shown; several adapter/discovery contract assumptions need verification.",
+  "deliverable": "FINDING 1 \u2014 Reviewer-independence claim can be forged by absence (forged evidence / stale binding)\nLocation: `work()`, success path: `const distinctReportedModelCount = new Set(receipts.map(r => r.reportedModel).filter(Boolean)).size;` and the following `reviewRelationship` ternary.\nDefect: In `draft_review` mode the ternary only distinguishes `=== 1` (self_review) from everything else (`different_reported_model`). If the transport receipts carry no `reportedModel` (count 0 \u2014 e.g. server omits `model` in the completion body, or the adapter only records it on some receipts), or if retries/multiple receipts yield 3+ distinct values, the sealed advisory output states `different_reported_model`, which reads as \"independent reviewer\" even though nothing was proven. This is the exact attribute a downstream consumer would trust, and it is derived from server-controlled text, not from the host's requested models.\nFix: Compute the relationship only when exactly one draft receipt and exactly one review receipt each have a non-empty `reportedModel`; otherwise emit `'unknown_reported_model'`. Additionally cross-check `reportedModel` against `input.authorModel` / `input.reviewerModel` and fail `OPENCODE_MODEL_MISMATCH` on divergence (this also closes the residency TOCTOU between `ready()` and the chat call if the adapters do not already do so).\n\nFINDING 2 \u2014 Caller cancellation is treated as a fault and permanently quarantines the host (cancellation lifecycle)\nLocation: `work()`: `if (upstream?.aborted) abort();` \u2192 first `guard()` inside `try` \u2192 `catch (error) { quarantine = true; owner.stop(); ... }`.\nDefect: Any `OPENCODE_CANCELLED` path (including a signal that was already aborted before any network activity) sets `quarantine = true`, calls `owner.stop()`, and returns `recoveryRequired: true`. After that every subsequent `work()`/`discover()` fails `OPENCODE_ORCHESTRATOR_QUARANTINED` until an external recovery that this module does not expose. Cancellation is a normal caller action, not evidence of a transport/model fault; quarantining on it turns a routine cancel into a denial-of-service on the advisory host. The same applies to `OPENCODE_DEADLINE_EXCEEDED` when the deadline fires before any request was issued.\nFix: Distinguish stop codes from faults: if `stopCode` is set and no adapter call was in flight (track a `inFlight` flag set around `adapter[operation]`/`discovery.discover`), do not quarantine; if a call was in flight, keep `owner.stop()` (socket state is unknown) but consider a bounded recovery path. Also, check `upstream?.aborted` before `available(); active = true;` so a pre-aborted request never claims the orchestrator.\n\nNO THIRD FINDING at the confidence bar. Items below need verification rather than being asserted as defects.\n\nReviewed-and-acceptable (on shown evidence):\n- Destination: `directFetch` ignores the URL host entirely and hardcodes `127.0.0.1:1234`, whitelists exactly two (path, method) pairs, `agent: false`, no redirect handling \u2014 proxy env vars cannot redirect it. Injected `fetch` is explicitly a trusted boundary.\n- Timer/listener cleanup: `clearTimeout`, `removeEventListener`, `active = false` all in `finally`; `optionsSignal`/`normalize` run before `active = true` so validation errors do not leak state.\n- Binding: `runId` is namespaced (`opencode.advisory:`), `bindingNamespace` and `accepted: false`/`checks: 'NOT_RUN'` prevent reuse as workflow evidence; review path checks `candidateFingerprint` against the host-held candidate, not the model's text.\n- Residency: `ready()` is re-run per invocation, instance-id uniqueness enforced, cold start only when no other LLM is resident.",
+  "risks": [
+    "Draft-path evidence check may be unsatisfiable: `bound.candidateFingerprint` is null when drafting, yet the host requires `result.evidence.candidateFingerprint === next.fingerprint`. This only works if `createLocalChatAuthorAdapter` recomputes the fingerprint from the validated produced candidate; if it stamps from the payload binding as the comment implies, every draft fails `OPENCODE_EVIDENCE_STALE`.",
+    "`directFetch` returns a minimal object (no `headers`, no `text()/json()`, `body: null` on non-2xx). If discovery or adapters use Fetch Response APIs, HTTP failures surface as TypeError \u2192 `OPENCODE_UNAVAILABLE`, losing the real status in sealed evidence; on 2xx an undrained body leaves a socket open until GC.",
+    "`seal()` throwing `OPENCODE_OUTPUT_TOO_LARGE` inside the `catch` block escapes `work()` as a raw rejection rather than a sealed UNAVAILABLE result, after quarantine is already set.",
+    "Residency is checked before the chat call, not proven at call time; if adapters do not verify `reportedModel` against the requested model, a server-side swap between `ready()` and completion goes undetected."
+  ],
+  "verification": [
+    "Test: draft_review run where the local server omits `model` from completion responses \u2014 confirm current output says `different_reported_model` with `distinctReportedModelCount: 0`.",
+    "Test: call `work()` with an already-aborted AbortSignal, then call `status()` and a second `work()` \u2014 confirm QUARANTINED/`OPENCODE_ORCHESTRATOR_QUARANTINED` without any network activity.",
+    "Inspect `createLocalChatAuthorAdapter` to confirm how `evidence.candidateFingerprint` is derived for drafts (payload binding vs. produced candidate).",
+    "Inspect `createLocalModelDiscovery` and the chat adapters for use of `response.headers`, `response.text()`, `response.json()` against the `directFetch` return shape.",
+    "Confirm whether adapters compare `reportedModel` to the requested model and reject on mismatch."
+  ],
+  "invocation_status": "succeeded",
+  "status": "succeeded",
+  "model_usage": {
+    "claude-haiku-4-5-20251001": {
+      "inputTokens": 4637,
+      "outputTokens": 15,
+      "cacheReadInputTokens": 0,
+      "cacheCreationInputTokens": 0,
+      "webSearchRequests": 0,
+      "costUSD": 0.004712,
+      "contextWindow": 200000,
+      "maxOutputTokens": 32000,
+      "thinkingTokens": 0,
+      "canonicalModel": "claude-haiku-4-5",
+      "provider": "firstParty",
+      "costBasis": "list"
+    },
+    "claude-fable-5-1": {
+      "inputTokens": 2,
+      "outputTokens": 6605,
+      "cacheReadInputTokens": 737,
+      "cacheCreationInputTokens": 5773,
+      "webSearchRequests": 0,
+      "costUSD": 0.44591425,
+      "contextWindow": 1000000,
+      "maxOutputTokens": 64000,
+      "thinkingTokens": 4205,
+      "canonicalModel": "claude-fable-5-1",
+      "provider": "firstParty",
+      "costBasis": "list"
+    }
+  },
+  "reported_models": [
+    "claude-haiku-4-5-20251001",
+    "claude-fable-5-1"
+  ],
+  "usage": {
+    "input_tokens": 2,
+    "cache_creation_input_tokens": 5773,
+    "cache_read_input_tokens": 737,
+    "output_tokens": 6605,
+    "output_tokens_details": {
+      "thinking_tokens": 4205
+    },
+    "server_tool_use": {
+      "web_search_requests": 0,
+      "web_fetch_requests": 0
+    },
+    "service_tier": "standard",
+    "cache_creation": {
+      "ephemeral_1h_input_tokens": 5773,
+      "ephemeral_5m_input_tokens": 0
+    },
+    "inference_geo": "not_available",
+    "iterations": [
+      {
+        "input_tokens": 2,
+        "output_tokens": 6605,
+        "cache_read_input_tokens": 737,
+        "cache_creation_input_tokens": 5773,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 5773
+        },
+        "type": "message",
+        "model": null
+      }
+    ],
+    "speed": "standard"
+  },
+  "total_cost_usd": 0.45062625,
+  "duration_ms": 84849,
+  "tools_enabled": false,
+  "session_persisted": false,
+  "write_owner": "codex",
+  "requested_model": "fable",
+  "mode": "delegate",
+  "attempts": 1,
+  "wall_seconds": 86.068,
+  "created_at": "2026-09-18T23:21:21.700291+00:00",
+  "prior_attempts": [],
+  "total_wall_seconds": 86.068,
+  "prior_attempt_usage": [],
+  "total_usage_complete": true
+}

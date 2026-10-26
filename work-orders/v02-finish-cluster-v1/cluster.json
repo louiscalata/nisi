@@ -1,0 +1,595 @@
+{
+  "schema": "nisi.v02.packet-cluster.v1",
+  "private": true,
+  "publicationAuthorized": false,
+  "overallMilestones": {
+    "accepted": 3,
+    "total": 10,
+    "percent": 30
+  },
+  "executionState": "C01_C02_C03_C04_C05_C06_C07_NODE_IMPLEMENTATION_ACCEPTED",
+  "assignmentTarget": {
+    "fablePackets": 7,
+    "totalPackets": 10,
+    "percent": 70,
+    "metric": "bounded coauthor/review assignments; not runtime or token share"
+  },
+  "packets": [
+    {
+      "id": "C01",
+      "packet": ".packets/nisi-v02-c01-overlay-clean-state.packet.md",
+      "title": "Accept a clean native overlay without recreating stale build artifacts",
+      "coauthor": "Fable 5.1",
+      "dependencies": [],
+      "state": "NODE_IMPLEMENTATION_ACCEPTED",
+      "ownerRelease": {
+        "releasedBy": "louis",
+        "date": "2026-09-18",
+        "writeOwner": "opencode",
+        "contractSha256": "838c6dc6d0af6d7651b21c1abaa78e3b81ec313f6890b548d4629bd838913fc1",
+        "oracleSha256": "8c3454f675ed090924ef6b6081938c23b5d46b8333c659e130907819ca2bec9f",
+        "sourceRevision": "main@eca33e0 plus documented dirty worktree preserved",
+        "fableRevisedCoReview": "FAIL resolved: regular-file sha256, nested accessors, explicit traversal root",
+        "contractSha256Note": "refrozen after lint-compliance gate fix (P1 accept -> test:oracle); owner edit 2026-09-18",
+        "oracleSha256Note": "refrozen 2026-09-20 by the Fable coauthor under Louis's 'work on nisi to completion' directive: the accessor-on-length mutation was inexpressible (Object.defineProperty on an Array's non-configurable length throws TypeError before validate ran), replaced by a sparse-length data property; previous dfe1e48101cb9268b87947760a25ba6a04d669d2a40781caf5a493fb0ea63347",
+        "latchNote": "dispatch-check.mjs hashes the contract with its status line normalized to `ready` since 2026-09-20; contractSha256 unchanged"
+      },
+      "allowedFiles": [
+        "scripts/native-overlay-inventory-v1.mjs",
+        "tests/native-overlay-inventory-v1.test.mjs",
+        "tests/nisi-native-overlay.test.mjs",
+        "work-orders/parallel-seven-tracks-v1/build-nisi-macos.mjs"
+      ],
+      "readOnlySources": [
+        "tests/nisi-native-overlay.test.mjs",
+        "work-orders/parallel-seven-tracks-v1/build-nisi-macos.mjs",
+        "scripts/verify-veritas-import.mjs",
+        "docs/verification/2026-09-14/nisi-app-bundle/nisi-app-bundle-debug-GKiX5y.verification.json"
+      ],
+      "implementationAccepted": true,
+      "integrationRecord": "work-orders/v02-finish-cluster-v1/fable-c01-integration-20260920.json",
+      "ownerAcceptance": {
+        "scope": "TRUSTED_LOCAL_CHECKOUT_NODE_ONLY",
+        "acceptedBy": "codex",
+        "candidateRevision": 4,
+        "ownerCorrection": "Codex post-tool exclusion equality; Fable revision-4 record remains historical",
+        "nativeBuildAccepted": false,
+        "publicationAuthorized": false,
+        "evidence": ".packet-diagnostics/c01-owner-review-R9UQUi/final-graded-gates.json",
+        "sourceHashes": {
+          "scripts/native-overlay-inventory-v1.mjs": "ade8c7c5c319a53c9211f764f0bf485453b456882a9812b49eb98ca82f1ddd20",
+          "tests/native-overlay-inventory-v1.test.mjs": "8c3454f675ed090924ef6b6081938c23b5d46b8333c659e130907819ca2bec9f",
+          "tests/nisi-native-overlay.test.mjs": "0cbb983fa4cd2c01da846ab6f3dcf75056df248605336081710cf267200bcee1",
+          "work-orders/parallel-seven-tracks-v1/build-nisi-macos.mjs": "b63a63c406b30db1f18b91e5ddd7a900178bfd7adc3216b4bd9f3ebf6c559dae"
+        }
+      }
+    },
+    {
+      "id": "C02",
+      "packet": ".packets/nisi-v02-c02-fixture-receipt.packet.md",
+      "title": "Bind fixture receipts to real product bundles and actual retained bytes",
+      "coauthor": "Fable 5.1",
+      "dependencies": [],
+      "state": "NODE_IMPLEMENTATION_ACCEPTED",
+      "allowedFiles": [
+        "work-orders/parallel-seven-tracks-v1/track1/repository-fixture-runner.mjs",
+        "work-orders/parallel-seven-tracks-v1/track1/repository-fixture-runner.test.mjs",
+        "work-orders/parallel-seven-tracks-v1/track1/findings-cluster-receipt.test.mjs",
+        "tests/fixture-receipt-completion.test.mjs"
+      ],
+      "readOnlySources": [
+        "work-orders/parallel-seven-tracks-v1/track1/README.md",
+        "work-orders/parallel-seven-tracks-v1/track1/repository-fixture-runner.mjs",
+        "work-orders/parallel-seven-tracks-v1/track1/repository-fixture-runner.test.mjs",
+        "receipts/repository-run-v1.mjs"
+      ],
+      "implementationAccepted": true,
+      "ownerAcceptance": {
+        "scope": "INERT_FIXTURE_RECEIPT_NODE_ONLY",
+        "acceptedBy": "codex",
+        "integrationRoute": "FABLE_DRAFT_WITH_OWNER_CORRECTION",
+        "openCodeExecuted": false,
+        "nativeBuildAccepted": false,
+        "publicationAuthorized": false,
+        "evidence": ".packet-diagnostics/c04-owner-review-1lSoKr/final-evidence.json",
+        "sourceHashes": {
+          "work-orders/parallel-seven-tracks-v1/track1/repository-fixture-runner.mjs": "a928400e7d0c075c8865259102c4177f2139c68ae39bce88374462cb47804e42",
+          "work-orders/parallel-seven-tracks-v1/track1/repository-fixture-runner.test.mjs": "aecb01ec2889498af1482ea1145c709a46b1b0afa296359e47528818f9934f39",
+          "work-orders/parallel-seven-tracks-v1/track1/findings-cluster-receipt.test.mjs": "43d27ef43f95fe3aca989a426e93085bd05d75188322e4374c15b0adb5a9d0b0",
+          "tests/fixture-receipt-completion.test.mjs": "083ce0b675188bc7274926608472a5bb26a5574631e6ac4cbe08f0d656e8e403"
+        },
+        "revalidation": {
+          "by": "C03",
+          "previousEvidence": ".packet-diagnostics/c02-owner-review-tfKOcX/final-graded-gates.json",
+          "previousSourceHashes": {
+            "work-orders/parallel-seven-tracks-v1/track1/repository-fixture-runner.mjs": "07020b778c9bb59b1ea354246977eb67a8854063c913c74888f1d9f525510ddb",
+            "work-orders/parallel-seven-tracks-v1/track1/repository-fixture-runner.test.mjs": "f5e2886261ef4af77e08c6f7ff54d142aac7e03d64fde2fe92ba29d92958b119",
+            "work-orders/parallel-seven-tracks-v1/track1/findings-cluster-receipt.test.mjs": "43d27ef43f95fe3aca989a426e93085bd05d75188322e4374c15b0adb5a9d0b0",
+            "tests/fixture-receipt-completion.test.mjs": "083ce0b675188bc7274926608472a5bb26a5574631e6ac4cbe08f0d656e8e403"
+          },
+          "note": "C03 adds verified cleanup; original oracle changes only its node:util import allowlist. All C02 assertions revalidated."
+        }
+      }
+    },
+    {
+      "id": "C03",
+      "packet": ".packets/nisi-v02-c03-fixture-cleanup.packet.md",
+      "title": "Report cleanup, cancellation and completion from observed outcomes",
+      "coauthor": "Fable 5.1",
+      "dependencies": [
+        "C02"
+      ],
+      "state": "NODE_IMPLEMENTATION_ACCEPTED",
+      "allowedFiles": [
+        "work-orders/parallel-seven-tracks-v1/track1/repository-fixture-runner.mjs",
+        "work-orders/parallel-seven-tracks-v1/track1/repository-fixture-runner.test.mjs",
+        "work-orders/parallel-seven-tracks-v1/track1/findings-cluster-cleanup.test.mjs",
+        "tests/fixture-cleanup-boundaries.test.mjs",
+        "tests/fixture-cleanup-state.test.mjs",
+        "tests/fixture-completion-reader.test.mjs",
+        "work-orders/parallel-seven-tracks-v1/track1/README.md"
+      ],
+      "readOnlySources": [
+        "work-orders/parallel-seven-tracks-v1/track1/repository-fixture-runner.mjs",
+        "work-orders/parallel-seven-tracks-v1/track1/repository-fixture-runner.test.mjs",
+        "work-orders/parallel-seven-tracks-v1/track1/README.md"
+      ],
+      "implementationAccepted": true,
+      "ownerAcceptance": {
+        "scope": "INERT_FIXTURE_CLEANUP_NODE_ONLY",
+        "acceptedBy": "codex",
+        "integrationRoute": "FABLE_DRAFT_WITH_OWNER_CORRECTION",
+        "openCodeExecuted": false,
+        "nativeBuildAccepted": false,
+        "publicationAuthorized": false,
+        "evidence": ".packet-diagnostics/c04-owner-review-1lSoKr/final-evidence.json",
+        "sourceHashes": {
+          "work-orders/parallel-seven-tracks-v1/track1/repository-fixture-runner.mjs": "a928400e7d0c075c8865259102c4177f2139c68ae39bce88374462cb47804e42",
+          "work-orders/parallel-seven-tracks-v1/track1/repository-fixture-runner.test.mjs": "aecb01ec2889498af1482ea1145c709a46b1b0afa296359e47528818f9934f39",
+          "work-orders/parallel-seven-tracks-v1/track1/findings-cluster-cleanup.test.mjs": "d52b38e96e418d3e0707c67927c8b2b807329b62e7f544944a7076a58a3c0e22",
+          "tests/fixture-cleanup-boundaries.test.mjs": "8a077f56be660b8dbb7e4d41fed2f75daafb03c4c8062815cde47f7e7526693c",
+          "tests/fixture-cleanup-state.test.mjs": "8f6ef54b1f8dc54f6a79232ddecb3c8ed05ac2567eb679b8938c04f2f827f8a5",
+          "tests/fixture-completion-reader.test.mjs": "35a91340236a4092e06e43a7b6f763eee4f33e721b998087ac638e05fb7f47e7",
+          "work-orders/parallel-seven-tracks-v1/track1/README.md": "833973e62f772f29bada3d5224709f141e7c2036be1d2dc829b651e586db6ffd"
+        }
+      }
+    },
+    {
+      "id": "C04",
+      "packet": ".packets/nisi-v02-c04-fixture-containment.packet.md",
+      "title": "Close the fixture oracle's known escape-test blind spots",
+      "coauthor": "Fable 5.1",
+      "dependencies": [
+        "C03"
+      ],
+      "state": "NODE_IMPLEMENTATION_ACCEPTED",
+      "allowedFiles": [
+        "work-orders/parallel-seven-tracks-v1/track1/repository-fixture-runner.mjs",
+        "work-orders/parallel-seven-tracks-v1/track1/repository-fixture-runner.test.mjs",
+        "work-orders/parallel-seven-tracks-v1/track1/findings-cluster-containment.test.mjs",
+        "work-orders/parallel-seven-tracks-v1/track1/fixture-write-guard.mjs"
+      ],
+      "readOnlySources": [
+        "work-orders/parallel-seven-tracks-v1/track1/repository-fixture-runner.test.mjs",
+        "work-orders/parallel-seven-tracks-v1/track1/README.md",
+        "tests/helpers/live-cli-side-effect-guard.mjs",
+        "tests/helpers/owned-temp.mjs"
+      ],
+      "implementationAccepted": true,
+      "ownerAcceptance": {
+        "scope": "INERT_FIXTURE_WRITE_GUARD_NODE_ONLY",
+        "acceptedBy": "codex",
+        "integrationRoute": "OWNER_IMPLEMENTATION_WITH_LUNA_TESTS_DAYBREAK_REVIEW",
+        "openCodeExecuted": false,
+        "nativeBuildAccepted": false,
+        "publicationAuthorized": false,
+        "evidence": ".packet-diagnostics/c04-owner-review-1lSoKr/final-evidence.json",
+        "sourceHashes": {
+          "work-orders/parallel-seven-tracks-v1/track1/fixture-write-guard.mjs": "407eb2f1506b6756add1b6f86e6b3fc343df566aef9a38cdaf39ad9695d14682",
+          "work-orders/parallel-seven-tracks-v1/track1/repository-fixture-runner.mjs": "a928400e7d0c075c8865259102c4177f2139c68ae39bce88374462cb47804e42",
+          "work-orders/parallel-seven-tracks-v1/track1/repository-fixture-runner.test.mjs": "aecb01ec2889498af1482ea1145c709a46b1b0afa296359e47528818f9934f39",
+          "work-orders/parallel-seven-tracks-v1/track1/findings-cluster-containment.test.mjs": "ae2c1880cfe725c1c4eab3efc4766ee12c231a3c73f0ff0db19ea2cf5f4f1754"
+        },
+        "evidenceSha256": "eb47554c6435d8ae786321d88e0ced41e7a786697b01342cae11e02c3748e368"
+      }
+    },
+    {
+      "id": "C05",
+      "packet": ".packets/nisi-v02-c05-fixture-input-imports.packet.md",
+      "title": "Reject unsupported fixture inputs and audit the actual import surface",
+      "coauthor": "Fable 5.1",
+      "dependencies": [
+        "C04"
+      ],
+      "state": "NODE_IMPLEMENTATION_ACCEPTED",
+      "allowedFiles": [
+        "work-orders/parallel-seven-tracks-v1/track1/repository-fixture-runner.mjs",
+        "work-orders/parallel-seven-tracks-v1/track1/repository-fixture-runner.test.mjs",
+        "work-orders/parallel-seven-tracks-v1/track1/fixture-write-guard.mjs",
+        "work-orders/parallel-seven-tracks-v1/track1/findings-cluster-input-imports.test.mjs",
+        "work-orders/parallel-seven-tracks-v1/track1/findings-cluster-cleanup.test.mjs"
+      ],
+      "readOnlySources": [
+        "work-orders/parallel-seven-tracks-v1/track1/repository-fixture-runner.mjs",
+        "work-orders/parallel-seven-tracks-v1/track1/repository-fixture-runner.test.mjs",
+        "work-orders/parallel-seven-tracks-v1/track1/README.md",
+        "integrity/record-utils.mjs"
+      ],
+      "implementationAccepted": true,
+      "ownerAcceptance": {
+        "scope": "INERT_FIXTURE_INPUT_IMPORTS_NODE_ONLY",
+        "acceptedBy": "codex",
+        "integrationRoute": "OWNER_IMPLEMENTATION_WITH_LUNA_TESTS_DAYBREAK_REVIEW",
+        "openCodeExecuted": false,
+        "nativeBuildAccepted": false,
+        "publicationAuthorized": false,
+        "evidence": ".packet-diagnostics/c05-owner-review-PeEuLA/final-evidence.json",
+        "evidenceSha256": "64c4a986fde4787743365cb2e7352d95b535ed6fec6cff1be664313b0779db9f",
+        "sourceHashes": {
+          "work-orders/parallel-seven-tracks-v1/track1/repository-fixture-runner.mjs": "5267ad2ee84f6ac9394280773220fb260e40e1a9f7eb0f64e9b3a586571c4967",
+          "work-orders/parallel-seven-tracks-v1/track1/repository-fixture-runner.test.mjs": "c2b458cd3083bfeeb52b2e22e2ba4cb35386b6eca879337fdffa7ae7a239277f",
+          "work-orders/parallel-seven-tracks-v1/track1/fixture-write-guard.mjs": "bf615353eee044cf0a3289b027b5ea05e3b18fde5eff7ae12d06f61f6ac05f43",
+          "work-orders/parallel-seven-tracks-v1/track1/findings-cluster-input-imports.test.mjs": "beaa83d4584e133b605ae6e31fa51aad97288bc7f095132fa5004aec84c37d77",
+          "work-orders/parallel-seven-tracks-v1/track1/findings-cluster-cleanup.test.mjs": "c3d47f379018ce679e02c9a33e6dc8f4f9c861b672df1c7ee44d283f3878cc15"
+        }
+      }
+    },
+    {
+      "id": "C06",
+      "packet": ".packets/nisi-v02-c06-restart-integration-oracle.packet.md",
+      "title": "Prepare restart integration acceptance without granting resume authority",
+      "coauthor": "Fable 5.1",
+      "dependencies": [
+        "C02",
+        "C03"
+      ],
+      "state": "NODE_IMPLEMENTATION_ACCEPTED",
+      "allowedFiles": [
+        "history/host-journal-bundle.mjs",
+        "work-orders/v02-finish-cluster-v1/restart/host-bundle-integration.test.mjs",
+        "tests/host-journal-bundle.test.mjs",
+        "work-orders/v02-finish-cluster-v1/restart/README.md"
+      ],
+      "readOnlySources": [
+        "history/host-journal-bundle.mjs",
+        "history/bundle-restart-demo.mjs",
+        "history/recovery-worker.mjs",
+        "hosts/repository/interrupted-run-decision-v1.mjs",
+        "hosts/repository/reviewed-workflow-v1.mjs",
+        "tests/bundle-restart-demo.test.mjs",
+        "tests/journal-restart-recovery.test.mjs"
+      ],
+      "implementationAccepted": true,
+      "ownerAcceptance": {
+        "scope": "CALLER_SUPPLIED_HOST_OBSERVATION_NODE_ONLY",
+        "acceptedBy": "codex",
+        "integrationRoute": "OWNER_FABLE_DESIGN_DAYBREAK_IMPLEMENTATION_LUNA_REVIEW",
+        "openCodeExecuted": false,
+        "nativeBuildAccepted": false,
+        "publicationAuthorized": false,
+        "evidence": ".packet-diagnostics/c06-owner-draft-20260920/final-evidence.json",
+        "evidenceSha256": "922cfd9585df6ad86eaf252fd17c9b3b94d1f7e681a7d824625e2cbfea3af4ce",
+        "sourceHashes": {
+          "history/host-journal-bundle.mjs": "e2954caeaa987993fd17e1904d4222e5b030b29e7f028c816809fe83ae0ace6b",
+          "work-orders/v02-finish-cluster-v1/restart/host-bundle-integration.test.mjs": "b24f8c1d8599fd91b636e960fb2dc841d646ca0347b3be075457ab7195e03817",
+          "tests/host-journal-bundle.test.mjs": "815556218a0ef5907f11acdf4de22259ca171e3725be977e08c2fa7001a3dabf",
+          "work-orders/v02-finish-cluster-v1/restart/README.md": "588f548cdce3616d5c239d4d343bdf5693d3862ae3f53deb54468ac99ebee9f1"
+        }
+      }
+    },
+    {
+      "id": "C07",
+      "packet": ".packets/nisi-v02-c07-native-incident-oracle.packet.md",
+      "title": "Prepare native incident admission and rerun refusal coverage",
+      "coauthor": "Fable 5.1",
+      "dependencies": [
+        "C01",
+        "C06"
+      ],
+      "state": "NODE_IMPLEMENTATION_ACCEPTED",
+      "allowedFiles": [
+        "hosts/repository/native-incident-source-v1.mjs",
+        "hosts/repository/native-incident-admission-v1.mjs",
+        "work-orders/v02-finish-cluster-v1/native-incident/admission-integration.test.mjs",
+        "work-orders/v02-finish-cluster-v1/native-incident/native-incident-source-v1.test.mjs",
+        "work-orders/v02-finish-cluster-v1/native-incident/README.md"
+      ],
+      "readOnlySources": [
+        "hosts/repository/native-incident-source-v1.mjs",
+        "hosts/swift-verifier/executor.mjs",
+        "hosts/swift-verifier/protocol.mjs",
+        "tests/native-incident-source.test.mjs",
+        "tests/native-incident-source-host.test.mjs",
+        "tests/native-incident-source-boundaries.test.mjs"
+      ],
+      "implementationAccepted": true,
+      "ownerAcceptance": {
+        "scope": "CALLER_SUPPLIED_NATIVE_INCIDENT_EVIDENCE_NODE_ONLY",
+        "acceptedBy": "codex",
+        "integrationRoute": "OWNER_IMPLEMENTATION_WITH_LUNA_TESTS_DAYBREAK_REVIEW",
+        "openCodeExecuted": false,
+        "nativeBuildAccepted": false,
+        "nativeExecutionAttested": false,
+        "publicationAuthorized": false,
+        "sourceAuthenticityAttested": false,
+        "resumeGranted": false,
+        "inference": "NOT_RUN",
+        "evidence": ".packet-diagnostics/c07-owner-draft-20260920/final-evidence.json",
+        "evidenceSha256": "7909ceae8efe9290c63163834f31485894458fef3faa79506db3c5ede592ea10",
+        "sourceHashes": {
+          "hosts/repository/native-incident-source-v1.mjs": "6a1ddf192be45ff14e4471e08470429a6fcea300642e4f681d10f187b7540e74",
+          "hosts/repository/native-incident-admission-v1.mjs": "fd333e82263b1fa7953880d592dc73615f98bca615ebc95ffcf6432692e82fdf",
+          "work-orders/v02-finish-cluster-v1/native-incident/admission-integration.test.mjs": "de732e0241db59e7f4f4a7e75d473add44dd0a47bdff32c9b5716c2d6ab321cb",
+          "work-orders/v02-finish-cluster-v1/native-incident/native-incident-source-v1.test.mjs": "b59e4880e742a07ed9d883024c173dd1d30ba94bdc253b4a5446c2abb3df2a51",
+          "work-orders/v02-finish-cluster-v1/native-incident/README.md": "8bb2cb2835aff33f658e50e921a1e0b87d61e53e23af3f2d9fab49a194209f75"
+        }
+      }
+    },
+    {
+      "id": "C08",
+      "packet": ".packets/nisi-v02-c08-opencode-agent-proof.packet.md",
+      "title": "Qualify an actual OpenCode agent task using Nisi advisory tools",
+      "coauthor": "Codex",
+      "dependencies": [],
+      "state": "HARNESS_REVIEW_AND_LIVE_OPT_IN",
+      "allowedFiles": [
+        "work-orders/v02-finish-cluster-v1/agent/agent-evidence-v1.mjs",
+        "work-orders/v02-finish-cluster-v1/agent/agent-evidence-v1.test.mjs",
+        "work-orders/v02-finish-cluster-v1/agent/README.md"
+      ],
+      "readOnlySources": [
+        "hosts/local-models/opencode-orchestration-v1.mjs",
+        "tests/opencode-orchestration-v1.test.mjs",
+        "work-orders/opencode-local-orchestration-v1/live-smoke.mjs",
+        "work-orders/opencode-local-orchestration-v1/verify-local.mjs"
+      ],
+      "implementationAccepted": false
+    },
+    {
+      "id": "C09",
+      "packet": ".packets/nisi-v02-c09-private-consumer-matrix.packet.md",
+      "title": "Make private package evidence explicit for each supported Node runtime",
+      "coauthor": "Codex",
+      "dependencies": [
+        "C01"
+      ],
+      "state": "RUNTIME_SELECTION_REVIEW",
+      "allowedFiles": [
+        "work-orders/v02-finish-cluster-v1/consumer/runtime-matrix-v1.mjs",
+        "work-orders/v02-finish-cluster-v1/consumer/runtime-matrix-v1.test.mjs",
+        "work-orders/v02-finish-cluster-v1/consumer/README.md"
+      ],
+      "readOnlySources": [
+        "scripts/check-private-package.mjs",
+        "scripts/private-package-contract.mjs",
+        "tests/private-package-contract.test.mjs",
+        "tests/private-consumer.test.mjs",
+        "tests/private-consumer/declaration-regressions.test.mjs"
+      ],
+      "implementationAccepted": false
+    },
+    {
+      "id": "C10",
+      "packet": ".packets/nisi-v02-c10-finish-evidence-index.packet.md",
+      "title": "Reconcile the complete v0.2 finish gates without manufacturing readiness",
+      "coauthor": "Codex",
+      "dependencies": [
+        "C01",
+        "C02",
+        "C03",
+        "C04",
+        "C05",
+        "C06",
+        "C07",
+        "C08",
+        "C09"
+      ],
+      "state": "FINAL_EVIDENCE_REVIEW",
+      "allowedFiles": [
+        "work-orders/v02-finish-cluster-v1/finish/evidence-index-v1.json",
+        "work-orders/v02-finish-cluster-v1/finish/evidence-index-v1.test.mjs",
+        "work-orders/v02-finish-cluster-v1/finish/PRIVATE-HANDOFF.md"
+      ],
+      "readOnlySources": [
+        "roadmap.md",
+        "work-orders/parallel-seven-tracks-v1/track6/check-product-readiness.mjs",
+        "work-orders/parallel-seven-tracks-v1/track7/check-release-readiness.mjs",
+        "evaluation/paired-trial-v1.mjs",
+        "hosts/repository/execution-coordinator-v1.mjs",
+        "experimental/module-registry-v1.mjs"
+      ],
+      "implementationAccepted": false
+    }
+  ],
+  "acceptanceSupersessions": [
+    {
+      "by": "C04",
+      "scope": "INERT_FIXTURE_WRITE_GUARD_NODE_ONLY",
+      "previousAcceptances": {
+        "C02": {
+          "scope": "INERT_FIXTURE_RECEIPT_NODE_ONLY",
+          "acceptedBy": "codex",
+          "integrationRoute": "FABLE_DRAFT_WITH_OWNER_CORRECTION",
+          "openCodeExecuted": false,
+          "nativeBuildAccepted": false,
+          "publicationAuthorized": false,
+          "evidence": ".packet-diagnostics/c03-owner-review-ChO55Q/final-graded-gates.json",
+          "sourceHashes": {
+            "work-orders/parallel-seven-tracks-v1/track1/repository-fixture-runner.mjs": "4e890614183b8a0cdd1ea6171907a1587f5f39b6f6d8d335221a99189b9e2c26",
+            "work-orders/parallel-seven-tracks-v1/track1/repository-fixture-runner.test.mjs": "72a8e7f474bb5ec6a13342bf1181d29b2852143a1dafd187f535d03ae89bdddc",
+            "work-orders/parallel-seven-tracks-v1/track1/findings-cluster-receipt.test.mjs": "43d27ef43f95fe3aca989a426e93085bd05d75188322e4374c15b0adb5a9d0b0",
+            "tests/fixture-receipt-completion.test.mjs": "083ce0b675188bc7274926608472a5bb26a5574631e6ac4cbe08f0d656e8e403"
+          },
+          "revalidation": {
+            "by": "C03",
+            "previousEvidence": ".packet-diagnostics/c02-owner-review-tfKOcX/final-graded-gates.json",
+            "previousSourceHashes": {
+              "work-orders/parallel-seven-tracks-v1/track1/repository-fixture-runner.mjs": "07020b778c9bb59b1ea354246977eb67a8854063c913c74888f1d9f525510ddb",
+              "work-orders/parallel-seven-tracks-v1/track1/repository-fixture-runner.test.mjs": "f5e2886261ef4af77e08c6f7ff54d142aac7e03d64fde2fe92ba29d92958b119",
+              "work-orders/parallel-seven-tracks-v1/track1/findings-cluster-receipt.test.mjs": "43d27ef43f95fe3aca989a426e93085bd05d75188322e4374c15b0adb5a9d0b0",
+              "tests/fixture-receipt-completion.test.mjs": "083ce0b675188bc7274926608472a5bb26a5574631e6ac4cbe08f0d656e8e403"
+            },
+            "note": "C03 adds verified cleanup; original oracle changes only its node:util import allowlist. All C02 assertions revalidated."
+          }
+        },
+        "C03": {
+          "scope": "INERT_FIXTURE_CLEANUP_NODE_ONLY",
+          "acceptedBy": "codex",
+          "integrationRoute": "FABLE_DRAFT_WITH_OWNER_CORRECTION",
+          "openCodeExecuted": false,
+          "nativeBuildAccepted": false,
+          "publicationAuthorized": false,
+          "evidence": ".packet-diagnostics/c03-owner-review-ChO55Q/final-graded-gates.json",
+          "sourceHashes": {
+            "work-orders/parallel-seven-tracks-v1/track1/repository-fixture-runner.mjs": "4e890614183b8a0cdd1ea6171907a1587f5f39b6f6d8d335221a99189b9e2c26",
+            "work-orders/parallel-seven-tracks-v1/track1/repository-fixture-runner.test.mjs": "72a8e7f474bb5ec6a13342bf1181d29b2852143a1dafd187f535d03ae89bdddc",
+            "work-orders/parallel-seven-tracks-v1/track1/findings-cluster-cleanup.test.mjs": "d52b38e96e418d3e0707c67927c8b2b807329b62e7f544944a7076a58a3c0e22",
+            "tests/fixture-cleanup-boundaries.test.mjs": "8a077f56be660b8dbb7e4d41fed2f75daafb03c4c8062815cde47f7e7526693c",
+            "tests/fixture-cleanup-state.test.mjs": "8f6ef54b1f8dc54f6a79232ddecb3c8ed05ac2567eb679b8938c04f2f827f8a5",
+            "tests/fixture-completion-reader.test.mjs": "35a91340236a4092e06e43a7b6f763eee4f33e721b998087ac638e05fb7f47e7",
+            "work-orders/parallel-seven-tracks-v1/track1/README.md": "833973e62f772f29bada3d5224709f141e7c2036be1d2dc829b651e586db6ffd"
+          }
+        }
+      },
+      "evidence": ".packet-diagnostics/c04-owner-review-1lSoKr/final-evidence.json"
+    },
+    {
+      "by": "C05",
+      "scope": "INERT_FIXTURE_INPUT_IMPORTS_NODE_ONLY",
+      "previousAcceptances": {
+        "C02": {
+          "scope": "INERT_FIXTURE_RECEIPT_NODE_ONLY",
+          "acceptedBy": "codex",
+          "integrationRoute": "FABLE_DRAFT_WITH_OWNER_CORRECTION",
+          "openCodeExecuted": false,
+          "nativeBuildAccepted": false,
+          "publicationAuthorized": false,
+          "evidence": ".packet-diagnostics/c04-owner-review-1lSoKr/final-evidence.json",
+          "sourceHashes": {
+            "work-orders/parallel-seven-tracks-v1/track1/repository-fixture-runner.mjs": "a928400e7d0c075c8865259102c4177f2139c68ae39bce88374462cb47804e42",
+            "work-orders/parallel-seven-tracks-v1/track1/repository-fixture-runner.test.mjs": "aecb01ec2889498af1482ea1145c709a46b1b0afa296359e47528818f9934f39",
+            "work-orders/parallel-seven-tracks-v1/track1/findings-cluster-receipt.test.mjs": "43d27ef43f95fe3aca989a426e93085bd05d75188322e4374c15b0adb5a9d0b0",
+            "tests/fixture-receipt-completion.test.mjs": "083ce0b675188bc7274926608472a5bb26a5574631e6ac4cbe08f0d656e8e403"
+          },
+          "revalidation": {
+            "by": "C03",
+            "previousEvidence": ".packet-diagnostics/c02-owner-review-tfKOcX/final-graded-gates.json",
+            "previousSourceHashes": {
+              "work-orders/parallel-seven-tracks-v1/track1/repository-fixture-runner.mjs": "07020b778c9bb59b1ea354246977eb67a8854063c913c74888f1d9f525510ddb",
+              "work-orders/parallel-seven-tracks-v1/track1/repository-fixture-runner.test.mjs": "f5e2886261ef4af77e08c6f7ff54d142aac7e03d64fde2fe92ba29d92958b119",
+              "work-orders/parallel-seven-tracks-v1/track1/findings-cluster-receipt.test.mjs": "43d27ef43f95fe3aca989a426e93085bd05d75188322e4374c15b0adb5a9d0b0",
+              "tests/fixture-receipt-completion.test.mjs": "083ce0b675188bc7274926608472a5bb26a5574631e6ac4cbe08f0d656e8e403"
+            },
+            "note": "C03 adds verified cleanup; original oracle changes only its node:util import allowlist. All C02 assertions revalidated."
+          }
+        },
+        "C03": {
+          "scope": "INERT_FIXTURE_CLEANUP_NODE_ONLY",
+          "acceptedBy": "codex",
+          "integrationRoute": "FABLE_DRAFT_WITH_OWNER_CORRECTION",
+          "openCodeExecuted": false,
+          "nativeBuildAccepted": false,
+          "publicationAuthorized": false,
+          "evidence": ".packet-diagnostics/c04-owner-review-1lSoKr/final-evidence.json",
+          "sourceHashes": {
+            "work-orders/parallel-seven-tracks-v1/track1/repository-fixture-runner.mjs": "a928400e7d0c075c8865259102c4177f2139c68ae39bce88374462cb47804e42",
+            "work-orders/parallel-seven-tracks-v1/track1/repository-fixture-runner.test.mjs": "aecb01ec2889498af1482ea1145c709a46b1b0afa296359e47528818f9934f39",
+            "work-orders/parallel-seven-tracks-v1/track1/findings-cluster-cleanup.test.mjs": "d52b38e96e418d3e0707c67927c8b2b807329b62e7f544944a7076a58a3c0e22",
+            "tests/fixture-cleanup-boundaries.test.mjs": "8a077f56be660b8dbb7e4d41fed2f75daafb03c4c8062815cde47f7e7526693c",
+            "tests/fixture-cleanup-state.test.mjs": "8f6ef54b1f8dc54f6a79232ddecb3c8ed05ac2567eb679b8938c04f2f827f8a5",
+            "tests/fixture-completion-reader.test.mjs": "35a91340236a4092e06e43a7b6f763eee4f33e721b998087ac638e05fb7f47e7",
+            "work-orders/parallel-seven-tracks-v1/track1/README.md": "833973e62f772f29bada3d5224709f141e7c2036be1d2dc829b651e586db6ffd"
+          }
+        },
+        "C04": {
+          "scope": "INERT_FIXTURE_WRITE_GUARD_NODE_ONLY",
+          "acceptedBy": "codex",
+          "integrationRoute": "OWNER_IMPLEMENTATION_WITH_LUNA_TESTS_DAYBREAK_REVIEW",
+          "openCodeExecuted": false,
+          "nativeBuildAccepted": false,
+          "publicationAuthorized": false,
+          "evidence": ".packet-diagnostics/c04-owner-review-1lSoKr/final-evidence.json",
+          "sourceHashes": {
+            "work-orders/parallel-seven-tracks-v1/track1/fixture-write-guard.mjs": "407eb2f1506b6756add1b6f86e6b3fc343df566aef9a38cdaf39ad9695d14682",
+            "work-orders/parallel-seven-tracks-v1/track1/repository-fixture-runner.mjs": "a928400e7d0c075c8865259102c4177f2139c68ae39bce88374462cb47804e42",
+            "work-orders/parallel-seven-tracks-v1/track1/repository-fixture-runner.test.mjs": "aecb01ec2889498af1482ea1145c709a46b1b0afa296359e47528818f9934f39",
+            "work-orders/parallel-seven-tracks-v1/track1/findings-cluster-containment.test.mjs": "ae2c1880cfe725c1c4eab3efc4766ee12c231a3c73f0ff0db19ea2cf5f4f1754"
+          },
+          "evidenceSha256": "eb47554c6435d8ae786321d88e0ced41e7a786697b01342cae11e02c3748e368"
+        }
+      },
+      "evidence": ".packet-diagnostics/c05-owner-review-PeEuLA/final-evidence.json"
+    }
+  ],
+  "historyHardening": {
+    "scope": "NODE_HISTORY_PROXY_BOUNDARIES",
+    "evidence": ".packet-diagnostics/history-proxy-owner-20260920/integration/evidence.json",
+    "evidenceSha256": "1c66ba2186e2d488c36c3ec22f1d221e5f79957cd81a4b053a3d1991661217b9",
+    "transitions": [
+      {
+        "path": "history/journal-owner-v2.mjs",
+        "oldSha256": "b64e21ae717870faf220baf3f0ddc9c44841f0492415805f7b75b812828e7184",
+        "newSha256": "2120bf0c75d9aa6122c06a2b34d55b3256a08f024d0e5fa43d8877e4eb67e44f"
+      },
+      {
+        "path": "history/run-journal-v1.mjs",
+        "oldSha256": "dee9f490c091000b2560cd9464d945885e7f341091b87dde9ae4f2b7cdbd359e",
+        "newSha256": "0164f10da27f6d12cfd1f3d443bd8e0f7c237b46363353570ae4a759a97f749b"
+      }
+    ],
+    "affectedAcceptances": [
+      "C04",
+      "C05",
+      "C06",
+      "C07"
+    ]
+  },
+  "dependencySupersessions": [
+    {
+      "by": "C07",
+      "path": "hosts/repository/native-incident-source-v1.mjs",
+      "oldSha256": "ab08ed666126011f3e57f7d3975dce8602a1d570f81c8c544f1c58a2f0616a26",
+      "newSha256": "6a1ddf192be45ff14e4471e08470429a6fcea300642e4f681d10f187b7540e74",
+      "affectedAcceptances": [
+        "C04",
+        "C05",
+        "C06"
+      ],
+      "evidence": ".packet-diagnostics/c07-owner-draft-20260920/final-evidence.json",
+      "evidenceSha256": "7909ceae8efe9290c63163834f31485894458fef3faa79506db3c5ede592ea10"
+    }
+  ],
+  "c07BaselineControl": {
+    "version": 3,
+    "currentTest": "tests/run-journal-baseline.test.mjs",
+    "historicalV1Test": "work-orders/v02-finish-cluster-v1/c07-baseline-v3/history/run-journal-baseline-v1.test.mjs",
+    "proposalRecord": "work-orders/v02-finish-cluster-v1/c07-baseline-v3/proposed-transition-v3.json",
+    "currentCommand": "npm run test:c07:v3 --prefix work-orders/v02-finish-cluster-v1",
+    "fullSuiteCommand": "npm test",
+    "selectionPolicy": "V1_PRESERVED_HISTORICAL_V3_SOURCE_SELECTION",
+    "ownerAcceptance": "SEPARATE_EXTERNAL_RECEIPT_REQUIRED"
+  },
+  "baselineSupersessions": [
+    {
+      "by": "C07_BASELINE_ORACLE_V3",
+      "path": "tests/run-journal-baseline.test.mjs",
+      "oldSha256": "17a8de142999f7ebdbe164336d81ce5c0a7ef27b00e105ff7bf7a1113ea37e7f",
+      "newSha256": "e5003eb51c32eaa988b6aa9313b9863bc60579b3f7d5739c56d4b9aa95bb5f86",
+      "record": "work-orders/v02-finish-cluster-v1/c07-baseline-v3/proposed-transition-v3.json"
+    },
+    {
+      "by": "C07_BASELINE_ORACLE_V3",
+      "path": "work-orders/v02-finish-cluster-v1/package.json",
+      "oldSha256": "5a648d3057b70061e6947c895981df7ce9308b4a01c578e4e3abd31aff85f935",
+      "newSha256": "ca463f3c1e23901fd687b98c43b0cd5198470a9ee6cfe09a443f5049a544dfea",
+      "record": "work-orders/v02-finish-cluster-v1/c07-baseline-v3/proposed-transition-v3.json"
+    },
+    {
+      "by": "C07_BASELINE_ORACLE_V3",
+      "path": ".packets/nisi-v02-c07-native-incident-oracle.packet.md",
+      "oldSha256": "872ce897b91cb3b0e93338e80060a7cb7787c97e1e15e27babf043a9c73e9af4",
+      "newSha256": "43c24dee53f6906799f256c913e6497e0fa3ac8cdf8f770e80316d5015e06a6c",
+      "record": "work-orders/v02-finish-cluster-v1/c07-baseline-v3/proposed-transition-v3.json"
+    }
+  ]
+}

@@ -1,0 +1,20 @@
+{
+  "schema": "nisi-track2-pin-mutation-receipt/v1",
+  "date": "2026-09-14",
+  "owner": "Claude (co-author, takeover)",
+  "source": {"path": "hosts/repository/native-incident-source-v1.mjs", "sha256": "ab08ed666126011f3e57f7d3975dce8602a1d570f81c8c544f1c58a2f0616a26", "changed": false},
+  "tests": {
+    "native-incident-source.test.mjs": {"sha256": "dc61cf16187deafe0e677013f14fe2456fb9a308ce1ff34b7ca4b8e0585f474e", "changed": true, "change": "two test-only strengthenings from the review's survivor list: deep-freeze + copy assertions on the public envelope (test 'public selection metadata is copied and deeply frozen against later mutation'); two well-formed 64-hex near-miss rowIds expecting ROW_MISSING (test 'missing, partial, malformed and noncanonical row ids refuse without fallback selection')"},
+    "native-incident-source-host.test.mjs": {"changed": false},
+    "native-incident-source-boundaries.test.mjs": {"changed": false}
+  },
+  "baseline": {"tests": 31, "pass": 31, "fail": 0},
+  "mutation": {
+    "harness": ".build/nis-mutants-review/harness.mjs (single-instance mutant, tests copied path-only, canonical never edited)",
+    "before_strengthening": {"mutants": 9, "caught": 7, "survivors": ["M7-public-envelope-shallow-freeze", "M30-prefix-rowid"]},
+    "after_strengthening": {"rerun": ["baseline 31/31", "M7 killed (1 failing)", "M30 killed (1 failing)", "M1-brand-skip killed (1)", "M4-issued-always-true killed (4)"], "survivors": []}
+  },
+  "review": {"verdict": "ACCEPT", "confirmed_source_defects": 0, "candidates": 5, "refuted": 5, "report": "claude-review-and-mutation.md"},
+  "notClaimed": ["Swift bridge", "native execution or rerun", "transcript comparison (design-request.md:70-72)", "full-suite run in this receipt (see roadmap for suite state)", "milestone closure"],
+  "authorizing": false
+}

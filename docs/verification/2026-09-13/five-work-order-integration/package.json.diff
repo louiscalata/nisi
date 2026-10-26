@@ -1,0 +1,41 @@
+--- before/package.json
++++ package.json
+@@ -67,6 +67,10 @@
+       "types": "./types/local-chat.d.ts",
+       "default": "./adapters/local-chat.mjs"
+     },
++    "./adapters/native-chat": {
++      "types": "./types/native-chat.d.ts",
++      "default": "./adapters/native-chat-v1.mjs"
++    },
+     "./index.mjs": {
+       "types": "./types/index.d.ts",
+       "default": "./index.mjs"
+@@ -95,6 +99,10 @@
+       "types": "./types/local-chat.d.ts",
+       "default": "./adapters/local-chat.mjs"
+     },
++    "./adapters/native-chat-v1.mjs": {
++      "types": "./types/native-chat.d.ts",
++      "default": "./adapters/native-chat-v1.mjs"
++    },
+     "./canonical/canonical-json-v1.mjs": {
+       "types": "./types/canonical.d.ts",
+       "default": "./canonical/canonical-json-v1.mjs"
+@@ -120,6 +128,8 @@
+   "files": [
+     "adapters/apple-foundation-models.mjs",
+     "adapters/local-chat.mjs",
++    "adapters/native-chat-v1.mjs",
++    "adapters/native-chat-protocol-v1.mjs",
+     "canonical/canonical-json-v1.mjs",
+     "gate/afm-content-executor.mjs",
+     "gate/content-consent.mjs",
+@@ -138,6 +148,7 @@
+     "types/contracts.d.ts",
+     "types/index.d.ts",
+     "types/local-chat.d.ts",
++    "types/native-chat.d.ts",
+     "types/policy.d.ts",
+     "types/serialization.d.ts",
+     "types/workflow.d.ts"

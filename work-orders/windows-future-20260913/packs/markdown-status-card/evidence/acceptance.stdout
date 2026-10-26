@@ -1,0 +1,23 @@
+
+> nisi-future-markdown-status-card@0.0.0-private test:acceptance
+> node --test --test-timeout=10000 tests/acceptance.test.mjs
+
+✔ empty card has exact explicit empty row (0.575458ms)
+✔ known zero, empty text and unknown remain distinct (0.090167ms)
+✔ title and values cannot add headings or table columns (0.058167ms)
+✔ all specified ASCII metacharacters are escaped once (0.0735ms)
+✔ control, separator and bidi characters are visible entities (0.371916ms)
+✔ ordinary Unicode and spaces are not normalized away (0.06025ms)
+✔ closed shapes, bounds and invalid numeric values refuse (0.138416ms)
+✔ duplicate labels remain separate supplied rows (0.048458ms)
+✔ negative and fractional numeric fields render literally (0.05925ms)
+✔ render is deterministic and does not mutate inputs (0.106084ms)
+ℹ tests 10
+ℹ suites 0
+ℹ pass 10
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 33.450125
+EXIT=0

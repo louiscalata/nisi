@@ -1,0 +1,25 @@
+--- work-orders/native-canary-summary/tests/summary.test.mjs
++++ tests/native-canary-summary.test.mjs
+@@ -1,10 +1,10 @@
+ import test from 'node:test';
+ import assert from 'node:assert/strict';
+ import { readFile } from 'node:fs/promises';
+-import { summarizeFixedRun as summarize } from '../src/native-canary-summary.mjs';
++import { summarizeFixedRun as summarize } from '../hosts/macos-xpc/native-canary-summary.mjs';
+ 
+-const RECEIPT = JSON.parse(await readFile(new URL('../fixtures/inherit-run-service-raw.json', import.meta.url), 'utf8'));
+-const STDOUT = await readFile(new URL('../fixtures/inherit-run-node.stdout', import.meta.url), 'utf8');
++const RECEIPT = JSON.parse(await readFile(new URL('./fixtures/native-canary/inherit-run-service-raw.json', import.meta.url), 'utf8'));
++const STDOUT = await readFile(new URL('./fixtures/native-canary/inherit-run-node.stdout', import.meta.url), 'utf8');
+ const TABLE = 'Fixed canary adjudication\nOverall: ALL_MATCHED\nRows:\n'
+   + '- own-write: expected ALLOWED errno 0, observed ALLOWED (errno 0) -> MATCH\n'
+   + '- own-read: expected ALLOWED errno 0, observed ALLOWED (errno 0) -> MATCH\n'
+@@ -133,7 +133,7 @@
+ });
+ 
+ test('summary module imports only its two sibling modules and stays pure otherwise', async () => {
+-  const source = await readFile(new URL('../src/native-canary-summary.mjs', import.meta.url), 'utf8');
++  const source = await readFile(new URL('../hosts/macos-xpc/native-canary-summary.mjs', import.meta.url), 'utf8');
+   const imports = [...source.matchAll(/^\s*import\b[^\n]*from\s+['"]([^'"]+)['"]/gm)].map(m => m[1]);
+   assert.deepEqual([...new Set(imports)].sort(), ['./native-canary-adapter.mjs', './native-canary-adjudicator.mjs']);
+   assert.doesNotMatch(source, /\b(?:require|process|fetch|XMLHttpRequest|eval|Function|setTimeout|setInterval)\b/);

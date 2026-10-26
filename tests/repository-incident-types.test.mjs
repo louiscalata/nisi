@@ -1,0 +1,12 @@
+import test from 'node:test';
+import assert from 'node:assert/strict';
+import fs from 'node:fs';
+import path from 'node:path';
+import {spawnSync} from 'node:child_process';
+import {fileURLToPath} from 'node:url';
+const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
+const compiler = path.join(root, 'node_modules/typescript/bin/tsc');
+const flags = ['--noEmit','--ignoreConfig','--strict','--exactOptionalPropertyTypes','--noUncheckedIndexedAccess','--module','NodeNext','--target','ES2022','--types','node','--typeRoots',path.join(root,'node_modules/@types')];
+const compile = file => spawnSync(process.execPath,[compiler,...flags,file],{cwd:root,encoding:'utf8',timeout:15000,maxBuffer:1048576});
+test('repository incident positive type consumer compiles',()=>{const r=compile(path.join(root,'tests/typechecks/repository-incident-positive.mts'));assert.equal(r.error,undefined);assert.equal(r.signal,null);assert.equal(r.status,0,r.stdout+r.stderr);assert.equal(r.stdout,'');assert.equal(r.stderr,'');});
+test('repository incident negative controls produce all expected diagnostics',{timeout:15000},t=>{const file=path.join(root,'tests/typechecks/repository-incident-negative.mts'),lines=fs.readFileSync(file,'utf8').split('\n'),expected=[];for(let i=0;i<lines.length;i++)if(lines[i].includes('@ts-expect-error')){expected.push(i+2);lines[i]=lines[i].replace('@ts-expect-error','type-error expectation intentionally disabled');}assert.equal(expected.length,9);const dir=fs.mkdtempSync(path.join(root,'.build/repository-incident-types-')),target=path.join(dir,'negative.mts');t.after(()=>fs.rmSync(dir,{recursive:true,force:true}));fs.writeFileSync(target,lines.join('\n'),{flag:'wx'});const r=compile(target);assert.equal(r.error,undefined);assert.equal(r.signal,null);assert.equal(r.status,2,r.stdout+r.stderr);assert.equal(r.stderr,'');const actual=[...r.stdout.matchAll(/negative\.mts\((\d+),\d+\): error TS\d+:/g)].map(m=>Number(m[1]));assert.deepEqual([...new Set(actual)].sort((a,b)=>a-b),expected.sort((a,b)=>a-b));assert.equal(actual.length,9);});

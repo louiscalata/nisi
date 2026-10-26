@@ -1,0 +1,70 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://veritas.invalid/private/schemas/stage5/fi0-event.v1.json",
+  "title": "Veritas FI-0 inert incident adjudication event",
+  "description": "Structural fixture shape only. Runtime validation additionally enforces exact incident binding, a source-frozen self-administered genesis, contiguous ordinals, one child per predecessor, linear ordering, event digests, source-stream binding, and an inconclusive-only self-administered transition. This schema does not prove protected adjudication, durable append, real event observation, or authority.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schemaVersion",
+    "recordType",
+    "profile",
+    "eventId",
+    "incidentId",
+    "incidentDigest",
+    "ordinal",
+    "predecessorDigest",
+    "sourceStreamId",
+    "sourceStreamHeadDigest",
+    "actorPrincipalDigest",
+    "actorSessionDigest",
+    "actorRole",
+    "decision",
+    "priorState",
+    "nextState",
+    "reasonCode",
+    "protectedAuthorityVerified",
+    "authorizing",
+    "eventDigest"
+  ],
+  "properties": {
+    "schemaVersion": { "const": 1 },
+    "recordType": { "const": "FI0_INCIDENT_ADJUDICATION_EVENT" },
+    "profile": { "const": "veritas-fi0-inert-incident-contract-v1" },
+    "eventId": { "$ref": "#/$defs/fixtureId" },
+    "incidentId": { "$ref": "#/$defs/fixtureId" },
+    "incidentDigest": { "$ref": "#/$defs/sha256" },
+    "ordinal": { "type": "integer", "minimum": 1, "maximum": 16 },
+    "predecessorDigest": { "$ref": "#/$defs/sha256" },
+    "sourceStreamId": { "$ref": "#/$defs/fixtureId" },
+    "sourceStreamHeadDigest": { "$ref": "#/$defs/sha256" },
+    "actorPrincipalDigest": { "$ref": "#/$defs/sha256" },
+    "actorSessionDigest": { "$ref": "#/$defs/sha256" },
+    "actorRole": { "const": "SELF_ADMIN_FIXTURE" },
+    "decision": { "const": "MARK_INCONCLUSIVE" },
+    "priorState": { "enum": ["CANDIDATE", "INCONCLUSIVE"] },
+    "nextState": { "const": "INCONCLUSIVE" },
+    "reasonCode": {
+      "enum": [
+        "INSUFFICIENT_INDEPENDENT_AUTHORITY",
+        "EVIDENCE_COMPLETENESS_FIXTURE_ONLY",
+        "NO_PROTECTED_ADJUDICATION_STATE"
+      ]
+    },
+    "protectedAuthorityVerified": { "const": false },
+    "authorizing": { "const": false },
+    "eventDigest": { "$ref": "#/$defs/sha256" }
+  },
+  "$defs": {
+    "sha256": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{64}$"
+    },
+    "fixtureId": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 128,
+      "pattern": "^[a-z][a-z0-9]*(?:[.-][a-z0-9]+)*(?:/[a-z][a-z0-9]*(?:[.-][a-z0-9]+)*)*$"
+    }
+  }
+}

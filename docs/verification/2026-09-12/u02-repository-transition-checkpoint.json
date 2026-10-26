@@ -1,0 +1,153 @@
+{
+  "schemaVersion": 1,
+  "date": "2026-09-12",
+  "scope": "PRIVATE_REPOSITORY_DESTINATION_AND_NEXT_CAPTURE_SCOPE",
+  "userDecision": "change the repository to nisi as well after the merger. Veritas will be obsolete",
+  "decision": "Nisi is the sole active product and repository after merger acceptance. Retire Veritas as a separate product; preserve source and evidence history.",
+  "implementationStatus": "PLAN_UPDATED_REPOSITORY_CUTOVER_NOT_PERFORMED",
+  "changedSinceReceiptCheckpoint": [
+    "roadmap.md",
+    "/Volumes/SharedChami/Veritas Local Repository/SYSTEM-EQUATION.md"
+  ],
+  "sourceFiles": [
+    {
+      "path": "roadmap.md",
+      "sha256": "da4be052c1c80f9b101f1b85c0c78dd2f636d9e76f658c2b70341a9ea7168021"
+    },
+    {
+      "path": "docs/nisi-v0.1-v0.2-before-after.md",
+      "sha256": "897be117a9e6aa2f3677593f41e904cafcd2c54257f362d1907e0dec8774ddb3"
+    },
+    {
+      "path": "/Volumes/SharedChami/Veritas Local Repository/SYSTEM-EQUATION.md",
+      "sha256": "4b8ced344a6e001787e01fb00654677f9134a78d3dc3d8314b6ff31e41c651a9"
+    },
+    {
+      "path": "docs/verification/2026-09-12/u02-receipt-checkpoint.json",
+      "sha256": "77335550291ff6ed153e0203016e3c903f1c11b1b48f5e7b3b37fde3a359fb3b"
+    },
+    {
+      "path": "docs/verification/2026-09-12/u02-admission-fable-draft.json",
+      "sha256": "d87a214e8a2df3bfb1a0bbb3977a93a51cd918a46d7f6995d6457f647b1abd29"
+    },
+    {
+      "path": "docs/verification/2026-09-12/u02-admission-fable-focused-request.txt",
+      "sha256": "1568cf3854c753f500231ef84c42056fc1d6ede1a49991e4dafb3b61347a830c"
+    },
+    {
+      "path": "docs/verification/2026-09-12/u02-admission-fable-focused-review.json",
+      "sha256": "49e43f60e85e52e13161bb58d0973f697fc1b3eca5e7fd14c49cbad754fe386d"
+    },
+    {
+      "path": "docs/verification/2026-09-12/u02-admission-fable-request.txt",
+      "sha256": "fca0831ba1b3c462470731436d8f27d878ec29767070311c762dc2df6dcc50f4"
+    },
+    {
+      "path": ".build/u02-repository-transition-RY0M1r/SYSTEM-EQUATION.md",
+      "sha256": "c3c3904290ea41c3d4900acf2c71661dba0dc8ecb19b32cb2f0f00097170123f"
+    },
+    {
+      "path": ".build/u02-repository-transition-RY0M1r/nisi-v0.1-v0.2-before-after.md",
+      "sha256": "42eb410468514b1ee972950e940760eacd6701249c018ef365abaf624f981551"
+    },
+    {
+      "path": ".build/u02-repository-transition-RY0M1r/roadmap.md",
+      "sha256": "db4544021c1a21bb939dcf2a5b37fbe49221b4985574f0ae08a970ced5a57ac7"
+    }
+  ],
+  "codeAndTestHashesUnchanged": true,
+  "repositoryObservations": [
+    {
+      "path": "/Users/louiscalata/nisi",
+      "originHost": "github.com",
+      "originPath": "/louiscalata/nisi.git",
+      "head": "df321f8676f1da6b21885ad0781c7bd0549e1f32",
+      "status": "CLEAN"
+    },
+    {
+      "path": "/Users/louiscalata/nisi-next-private",
+      "originHost": "github.com",
+      "originPath": "/louiscalata/nisi.git",
+      "relationship": "Existing detached private worktree of Nisi; not a new remote repository."
+    },
+    {
+      "path": "/Volumes/SharedChami/Veritas Local Repository",
+      "configuredRemotes": [],
+      "scope": "Local git configuration only; not a search for other remote repositories."
+    }
+  ],
+  "codeMode": {
+    "coreStatus": "SHARED_VERIFIED",
+    "corePath": "/Volumes/SharedChami/opencode/releases/v5-mac-archive-20260906/llm-lab/CODE-MODE-CORE.md",
+    "coreSha256": "fd7ecc408cc1a4d29ab427f8aae332a70dcb07ef2bc2454a62af2fd3832f02a5",
+    "policyRevision": "5.3.2",
+    "pinAudit": {
+      "pins": 25,
+      "filesWithPins": 9,
+      "filesHashed": 439,
+      "orphaned": 0,
+      "unrelated": 0,
+      "exitCode": 0
+    },
+    "route": "Codex single writer with bounded tool-disabled Fable CLI reviews; no dummy task, Go/Zen routing or public changes."
+  },
+  "nextCaptureScope": {
+    "status": "SCOPE_REVIEWED_NOT_IMPLEMENTED",
+    "precondition": "Operator-selected trusted static local fixture directory before generated code; explicit finite path manifest.",
+    "excluded": [
+      "adversarial concurrent filesystem isolation",
+      "atomic capture",
+      "network-share capture",
+      "secret-free guarantees",
+      "real process sandbox",
+      "enforceable JS filesystem I/O deadline"
+    ]
+  },
+  "fable": {
+    "actualModel": "claude-fable-5-1",
+    "auxiliaryModel": "claude-haiku-4-5-20251001",
+    "toolsEnabled": false,
+    "sessionPersisted": false,
+    "writeOwner": "codex",
+    "attempts": [
+      {
+        "request": "docs/verification/2026-09-12/u02-admission-fable-request.txt",
+        "receipt": "docs/verification/2026-09-12/u02-admission-fable-draft.json",
+        "result": "NOT_RUN",
+        "reason": "45-second cap exceeded",
+        "usage": null
+      },
+      {
+        "request": "docs/verification/2026-09-12/u02-admission-fable-focused-request.txt",
+        "receipt": "docs/verification/2026-09-12/u02-admission-fable-focused-review.json",
+        "result": "PASS",
+        "scope": "Proposed trusted-static capture precondition only; not an unseen implementation review",
+        "reportedCostUSD": 0.0861185
+      }
+    ]
+  },
+  "engineeringEvidence": {
+    "previousCheckpoint": "docs/verification/2026-09-12/u02-receipt-checkpoint.json",
+    "sourceHashesRechecked": true,
+    "unchangedCodeAndTests": true,
+    "tests": 220,
+    "focusedReceiptTests": 19,
+    "targetedReceiptMutants": 5,
+    "result": "Previous exact-code results retained; this follow-up changes documentation only.",
+    "whitespaceCheck": "git diff --check: exit 0"
+  },
+  "pendingCutover": [
+    "Complete private engineering acceptance and feature reconciliation.",
+    "Switch active local project/tooling paths with verified source retention and coordinated ownership.",
+    "Retire Veritas as active product while preserving historical receipt/hash identities.",
+    "Public merger/cutover remains conditional on exact-artifact legal/engineering gates and scoped release authorization."
+  ],
+  "filesystemCaptureImplemented": false,
+  "repositoryRenamed": false,
+  "archived": false,
+  "deleted": false,
+  "committed": false,
+  "pushed": false,
+  "published": false,
+  "wholeMergerComplete": false
+}

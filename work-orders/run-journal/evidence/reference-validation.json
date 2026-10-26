@@ -1,0 +1,18 @@
+{
+  "scope": "reference text only; canonical src remains placeholder; original test files unchanged; only module import URL redirected in memory",
+  "referenceSha256": "dee9f490c091000b2560cd9464d945885e7f341091b87dde9ae4f2b7cdbd359e",
+  "results": [
+    {
+      "check": "contract",
+      "exit": 0,
+      "oracleSha256": "25355f0d280a262243f1fe707fd4e0de5fc795926ce37d910c40a12721390c6d",
+      "tail": " exact replay is idempotent across object key order and capacity (0.217917ms)\n\u2714 05 same id with changed binding, lifecycle or redacted content is CONFLICT (0.254708ms)\n\u2714 06 terminal replay never becomes new work; retries need new id and valid citation (0.165667ms)\n\u2714 07 TTL boundary, irreversible payload retention and caller time validation (0.168375ms)\n\u2714 08 stale heartbeat is UNKNOWN and never sufficient for retry (0.169833ms)\n\u2714 09 maxEntries bounds retained payloads in insertion order but never forgets ids (0.458417ms)\n\u2714 10 revocation cites an existing exact attempt and candidate without deleting it (0.264875ms)\n\u2714 11 revocation survives tombstones, expiry, revoker revocation and reopen (0.415917ms)\n\u2714 12 declared payload paths redact nested values and arrays before exposure (0.330417ms)\n\u2714 13 complete persisted reopen is historical through replay and serialization cycles (0.407084ms)\n\u2714 14 truncation recovers only committed prefix and cannot be resealed or appended (0.2835ms)\n\u2714 15 invalid line stops recovery; deletion or reordering cannot bless later entries (0.218416ms)\n\u2714 16 footer mismatches and data after footer report uncertainty without losing recovered ids (0.465791ms)\n\u2714 17 closed persisted schema rejects profiles, duplicate ids and semantically invalid records (0.910917ms)\n\u2714 18 snapshots are deeply frozen, caller-independent and serialization is deterministic (0.302083ms)\n\u2139 tests 18\n\u2139 suites 0\n\u2139 pass 18\n\u2139 fail 0\n\u2139 cancelled 0\n\u2139 skipped 0\n\u2139 todo 0\n\u2139 duration_ms 10.017875\n"
+    },
+    {
+      "check": "owner",
+      "exit": 0,
+      "oracleSha256": "bf70a86a8703c5bbdd1c7cb08aa2ce9f03b9b71152364b0a7e91fde90049c082",
+      "tail": "\u2714 owner: all footer and record damage seals the recovered journal (2.437417ms)\n\u2714 owner: reopened retry relationships are checked against earlier prefix (0.837917ms)\n\u2714 owner: persisted TTL, retention capacity and redaction markers each fail closed (0.679292ms)\n\u2714 owner: duplicate, conflict, refusals and exceptions never advance time (0.428958ms)\n\u2714 owner: parseable unterminated records are uncommitted and sealed (0.138125ms)\n\u2714 owner: accessor and cyclic intake is rejected without invocation or mutation (0.140084ms)\n\u2714 owner: lexical canonical keys and strict serialized field validation (0.133292ms)\n\u2139 tests 7\n\u2139 suites 0\n\u2139 pass 7\n\u2139 fail 0\n\u2139 cancelled 0\n\u2139 skipped 0\n\u2139 todo 0\n\u2139 duration_ms 7.104916\n"
+    }
+  ]
+}

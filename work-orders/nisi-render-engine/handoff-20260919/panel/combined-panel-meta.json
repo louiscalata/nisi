@@ -1,0 +1,119 @@
+{
+ "late": [
+  {
+   "key": "product",
+   "model": "opus",
+   "ideas": 6
+  },
+  {
+   "key": "ai-native",
+   "model": "sonnet",
+   "ideas": 6
+  }
+ ],
+ "judged": [
+  {
+   "title": "Open provenance sidecars for Unreal Movie Render Graph and Unity Recorder",
+   "origin": "local",
+   "survives": false,
+   "score": 10,
+   "votes": 2
+  },
+  {
+   "title": "Release 0: the closed frame-checker and its sidecar as a free wedge, no daemon and no queue",
+   "survives": false,
+   "score": 13,
+   "votes": 1
+  },
+  {
+   "title": "The nightly cinematic render as a CI job, with commit-level REPLAY",
+   "survives": false,
+   "score": 7,
+   "votes": 1
+  },
+  {
+   "title": "First paying user: the Unreal linear-content shop already paying Epic per seat; ship Unreal first, Unity second",
+   "origin": "claude-late",
+   "survives": false,
+   "score": 10,
+   "votes": 1
+  },
+  {
+   "title": "Named deterministic validity metrics for image/texture tiles",
+   "origin": "claude-late",
+   "survives": false,
+   "score": 10,
+   "votes": 1
+  },
+  {
+   "title": "Offline, deterministic VFX shot revision with full provenance",
+   "origin": "local",
+   "survives": false,
+   "score": 12,
+   "votes": 1
+  },
+  {
+   "title": "Show the failing check, not just the verdict, in the Watch panel",
+   "origin": "claude-late",
+   "survives": false,
+   "score": 11,
+   "votes": 1
+  },
+  {
+   "title": "Shader/material tiles get a probe-render diff as their deterministic validity, not just compile success",
+   "origin": "claude-late",
+   "survives": false,
+   "score": 12,
+   "votes": 1
+  },
+  {
+   "title": "Automated Texture Patching & Conflict Resolution",
+   "origin": "local",
+   "survives": false,
+   "score": 13,
+   "votes": 0
+  },
+  {
+   "title": "Local Scene Evolution via Iterative Refinement",
+   "origin": "local",
+   "survives": false,
+   "score": 10,
+   "votes": 0
+  },
+  {
+   "title": "Privacy-First Asset Restoration & Recombination",
+   "origin": "local",
+   "survives": false,
+   "score": 13,
+   "votes": 0
+  },
+  {
+   "title": "Open durable queue protocol for local heterogeneous render farms",
+   "origin": "local",
+   "survives": false,
+   "score": 11,
+   "votes": 0
+  },
+  {
+   "title": "The frame ledger: one sidecar, three consumers (checker, CI, tracker), with the build in the identity",
+   "origin": "merged-r3",
+   "survives": false,
+   "score": 8,
+   "votes": 0
+  },
+  {
+   "title": "Signed Row Sidecar",
+   "origin": "merged-r3",
+   "survives": false,
+   "score": 9,
+   "votes": 0
+  },
+  {
+   "title": "Notes-driven resubmission with a visible diff receipt",
+   "origin": "merged-r3",
+   "survives": false,
+   "score": 9,
+   "votes": 0
+  }
+ ]
+}

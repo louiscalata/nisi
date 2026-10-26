@@ -1,0 +1,15 @@
+{
+  "oracleVersion": 1,
+  "scopeID": "scope.test",
+  "runID": "run.test",
+  "shape": [1, 2, 1],
+  "weightHex": "00000040000040c0000080bf0000803f000080400000a040000000c0",
+  "weightsSHA256": "3c5a72f6536e3b57724b24f5410c5bb7fe553991b239b9f4472c61509ebefa20",
+  "modelSHA256": "bd66b189a31d0818cb2818881feb26403382e3336ff5e3300ed8c44167693a63",
+  "inputHex": "000080bf",
+  "inputSHA256": "c68830a25204a09f8e77aada6bc5807f607cccaaa0ebb2a7122d317584478a8b",
+  "preparedSHA256": "097344a6d12547cc99c421572737c3d5b54551b3834784d2fe79e2d60b9793d8",
+  "outputHex": "00009041",
+  "outputSHA256": "1ad3b99b167daa0cd4b231cd3584ca2f6b81a26323ede5d0ac662402e2835030",
+  "resultSHA256": "f16761a12a2cf256cd2bed02c17df07cab49971301268dd0c72b2450eef12920"
+}

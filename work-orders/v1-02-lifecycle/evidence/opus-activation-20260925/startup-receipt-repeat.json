@@ -1,0 +1,12 @@
+{
+  "appLaunch": "request-accepted",
+  "generationObserved": false,
+  "inventoryScope": "127.0.0.1:1234/api/v1/models",
+  "loadedBefore": [
+    "google/gemma-4-26b-a4b-qat"
+  ],
+  "model": "already-loaded",
+  "modelKey": "google/gemma-4-26b-a4b-qat",
+  "schemaVersion": 1,
+  "timeUtc": "2026-09-25T15:10:07.268598+00:00"
+}

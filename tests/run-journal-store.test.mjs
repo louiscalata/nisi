@@ -1,5 +1,3 @@
-// Copyright 2026 Louis Calata
-// SPDX-License-Identifier: Apache-2.0
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import * as realFs from 'node:fs';
@@ -12,7 +10,6 @@ const hash = value => createHash('sha256').update(value).digest('hex');
 const canonical = value => Array.isArray(value) ? '[' + value.map(canonical).join(',') + ']'
   : value && typeof value === 'object' ? '{' + Object.keys(value).sort().map(k => JSON.stringify(k) + ':' + canonical(value[k])).join(',') + '}'
     : JSON.stringify(value);
-const DIRECTORY = process.platform === 'win32' ? 'r+' : 'r';
 
 function journal(payload = 'café 🌱', empty = false, count = 1) {
   const header = { type: 'header', schema: 'nisi-run-journal-v1', config: { projectId: 'store', maxEntries: 10, heartbeatTtlMs: 100, redactPaths: [] }, now: 10 };
@@ -111,20 +108,6 @@ test('exclusive same-directory temp, file sync and temp verification precede ren
   assert.deepEqual(f.events[renameAt].args, [tempOpen.args[0], f.path]);
 });
 
-test('a temp orphan from a killed writer does not block an identical retry', t => {
-  const f = fixture(t);
-  const serialized = journal();
-  const oldFixedTemp = `${f.path}.${hash(Buffer.from(serialized))}.tmp`;
-  realFs.writeFileSync(oldFixedTemp, 'orphan from an earlier process');
-  const result = write({ ...f, serialized });
-  written(result, serialized);
-  assert.equal(realFs.readFileSync(f.path, 'utf8'), serialized);
-  assert.equal(realFs.readFileSync(oldFixedTemp, 'utf8'), 'orphan from an earlier process');
-  const newTemp = f.events.find(e => e.name === 'openSync' && e.args[1] === 'wx')?.args[0];
-  assert.match(newTemp, new RegExp(`^${f.path.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')}\\.[0-9a-f]{64}\\.[0-9a-f-]{36}\\.tmp$`));
-  assert.notEqual(newTemp, oldFixedTemp);
-});
-
 test('short writes are completed; zero progress is refused and the owned temp is cleaned', t => {
   const f = fixture(t, { writeSync: ({ args }) => realFs.writeSync(args[0], args[1], args[2], Math.min(7, args[3]), args[4]) });
   written(write({ ...f, serialized: journal() }), journal());
@@ -152,7 +135,7 @@ test('file fsync failure is recorded, still writes and verifies, and cannot clai
 test('directory fsync or directory-open failure records a committed but non-durable write', t => {
   for (const point of ['fsyncSync', 'openSync']) {
     const f = fixture(t, { [point]: (e, invoke) => {
-      if (point === 'openSync' ? e.args[1] === DIRECTORY : e.descriptor.flags === DIRECTORY) throw Object.assign(new Error('unsupported'), { code: 'ENOTSUP' });
+      if (point === 'openSync' ? e.args[1] === 'r' : e.descriptor.flags === 'r') throw Object.assign(new Error('unsupported'), { code: 'ENOTSUP' });
       return invoke();
     } });
     const result = write({ ...f, serialized: journal() });
@@ -250,38 +233,6 @@ test('read refuses malformed UTF-8, corrupt chain/footer/schema, trailing data a
   assert.equal(read(f).serialized, journal('two entries', false, 2));
   realFs.writeFileSync(f.path, journal('empty', true));
   assert.equal(read(f).serialized, journal('empty', true));
-});
-
-test('store refuses a self-consistent chain with an invalid journal entry', t => {
-  const f = fixture(t);
-  const lines = journal().trimEnd().split('\n').map(JSON.parse);
-  lines[1].record.entry.state = 'IMPOSSIBLE';
-  lines[1].hash = hash('nisi-run-journal/record/v1\n' + canonical({
-    seq: lines[1].seq, previousHash: lines[1].previousHash, record: lines[1].record
-  }));
-  lines[2].lastHash = lines[1].hash;
-  const invalid = lines.map(canonical).join('\n') + '\n';
-  realFs.writeFileSync(f.path, invalid);
-  refused(read(f), 'INVALID_JOURNAL');
-  refused(write({ ...f, serialized: invalid }), 'INVALID_JOURNAL');
-});
-
-test('store refuses a rehashed chain with the wrong retained entry fingerprint', t => {
-  const f = fixture(t);
-  const lines = journal().trimEnd().split('\n').map(JSON.parse);
-  lines[1].record.fingerprint = lines[1].record.fingerprint === '0'.repeat(64) ? '1'.repeat(64) : '0'.repeat(64);
-  lines[1].hash = hash('nisi-run-journal/record/v1\n' + canonical({
-    seq: lines[1].seq, previousHash: lines[1].previousHash, record: lines[1].record,
-  }));
-  lines[2].lastHash = lines[1].hash;
-  const invalid = lines.map(canonical).join('\n') + '\n';
-
-  realFs.writeFileSync(f.path, invalid);
-  refused(read(f), 'INVALID_JOURNAL');
-  f.events.length = 0;
-  refused(write({ ...f, serialized: invalid }), 'INVALID_JOURNAL');
-  assert.deepEqual(f.events, []);
-  assert.equal(realFs.readFileSync(f.path, 'utf8'), invalid);
 });
 
 test('write validates strings, framing and expected hash before mutation; corrupt existing data stays intact', t => {
@@ -389,12 +340,12 @@ test('file close failure refuses before rename, preserves destination and cannot
 test('combined directory fsync and close failures preserve both codes in a committed non-durable write', t => {
   const f = fixture(t, {
     fsyncSync: (e, invoke) => {
-      if (e.descriptor.flags === DIRECTORY) throw Object.assign(new Error('directory fsync failed'), { code: 'EFSYNC' });
+      if (e.descriptor.flags === 'r') throw Object.assign(new Error('directory fsync failed'), { code: 'EFSYNC' });
       return invoke();
     },
     closeSync: (e, invoke) => {
       const value = invoke();
-      if (e.descriptor.flags === DIRECTORY) throw Object.assign(new Error('directory close failed'), { code: 'ECLOSE' });
+      if (e.descriptor.flags === 'r') throw Object.assign(new Error('directory close failed'), { code: 'ECLOSE' });
       return value;
     }
   });
@@ -416,5 +367,5 @@ test('combined directory fsync and close failures preserve both codes in a commi
   const closes = f.events.filter(e => e.name === 'closeSync');
   assert.equal(closes.length, 2);
   assert.equal(closes.filter(e => e.descriptor.flags === 'wx').length, 1);
-  assert.equal(closes.filter(e => e.descriptor.flags === DIRECTORY).length, 1);
+  assert.equal(closes.filter(e => e.descriptor.flags === 'r').length, 1);
 });

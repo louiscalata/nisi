@@ -1,0 +1,285 @@
+>> Online code mode preflight...
+
+============================================================
+  ONLINE CODE MODE V5 CORE — PREFLIGHT
+============================================================
+  Share:        MOUNTED
+    Health:     ready
+    Free:       173.2 GB
+    Rules:      yes
+    Queue:      yes
+  PC Worker:    ADVERTISED (not inference/native parity)
+    Models:     Qwen3-Coder-Next 80B-A3B Q4_K_M, gpt-oss-20b
+    Heartbeat:  21.02s ago
+  Local models: ADVERTISED (not inference health)
+    Count:      9 models
+    Models:     qwen/qwen3.8-27b, openai/gpt-oss-20b, google/gemma-3-4b, text-embedding-nomic-embed-text-v2-moe, gemma-4-26b-tuned, qwen/qwen3.6-35b-a3b...
+  Zen (Big Pickle): NOT CONFIGURED
+    Reason:     endpoint unavailable: HTTPError
+    Env var:    OPENCODE_ZEN_API_KEY
+  Model tiers:
+    [UP  ] afm    ondevice afm/apple-foundation             on-device binary present, no network
+    [UP  ] local  local  lmstudio/qwen/qwen3.8-27b        9 models, 10ms · model loaded
+    [UP  ] free   remote opencode/big-pickle              70 models, 166ms
+    [UP  ] go     remote opencode-go/kimi-k2.7-code       70 models, 205ms
+    Evidence:   inventory + credential only; not inference health
+    Usable:     afm, local, free, go   (name one with CHAMI_PACKET_TIER for packets)
+  Pinned guards: 31 pins · OK
+    [UNRELATED] TRANSPORT_SHA256 in ~/bin/codemode-batch/batch_admission.py
+    [UNRELATED] PROFILE_HELPER_SHA256 in ~/bin/chami-admission/broker.py
+============================================================
+
+>> Launching pipeline...
+
+>> PC inference: worker advertised, not inference-tested (Qwen3-Coder-Next 80B-A3B Q4_K_M, gpt-oss-20b), heartbeat 22.717s
+>> Runtime diagnostics: ~/code-runs/online-coordinator-20260914-020337-11328-059282000
+>> codemode [online/python]  draft=google/gemma-4-26b-a4b-qat  max_iters=3
+>> Context: DISABLED (0 UTF-8 bytes; tokens unknown)
+>> Acceptance tests: loaded from acceptance_tests.py (immutable)
+>> Stage: drafting (Gemma)...
+>> Verify (tests): FAIL
+>> Acceptance tests: FAIL
+>> Failure class: SPECIFICATION — The task description contains contradictory or incomplete rules (e.g., unclear handling of ancestor state changes during reopen, ambiguous apron staleness logic), making it impossible to implement a d
+>> Failure class: SPECIFICATION (The task description contains contradictory or incomplete rules (e.g., unclear handling of ancestor state changes during reopen, ambiguous apron staleness logic), making it impossible to implement a d)
+>> Classifier routing: first failure classified as SPECIFICATION; no repair loop to avoid thrash.
+>> Run scope: mac-only  |  manifest=~/code-runs/codemode-20260914-020337-11333-221979000/run.json
+>> Reported metric tokens: 8845 | known rows=2/2; classify=4479 draft=4366; not a complete all-request total
+>> Reported summed request-seconds: 65.400 | timed rows=2/2; not wall time or a complete request total
+>> UNVERIFIED after repairs; escalate to Codex for inspection and repair.
+>> Saved to ~/pending-review/codemode-20260914-020337-11333-221979000.txt
+>> Coordinator: LOCAL_FAILED (~/code-runs/online-coordinator-20260914-020337-11328-059282000/comparison.json)
+# ⚠ UNVERIFIED — classification/specification failing. Review before use.
+import json
+import hashlib
+from enum import Enum
+
+class TileState(Enum):
+    OPEN = "open"
+    RENDERED = "rendered"
+    PROMOTED = "promoted"
+    QUARANTINED = "quarantined"
+
+class TileError(Exception):
+    pass
+
+def canonical(x):
+    return json.dumps(x, sort_keys=True, separators=(",", ":"))
+
+def digest(s):
+    return hashlib.sha256(s.encode("utf-8")).hexdigest()
+
+class Loop:
+    def __init__(self, max_attempts=3, max_reopens=2):
+        self.max_attempts = max_attempts
+        self.max_reopens = max_reopens
+        self.tiles = {}
+        self.journal = {}  # identity -> output_digest
+        self.parents = {}  # child_id -> parent_id
+
+    def add(self, tile_id, inputs, recipe, neighbours=(), children=()):
+        if tile_id in self.tiles:
+            raise TileError("Duplicate ID")
+        
+        # Validate neighbors and children
+        for nid in neighbours:
+            if nid not in self.tiles:
+                raise TileError("Unknown neighbor")
+            if nid == tile_id:
+                raise TileError("Self-reference")
+        for cid in children:
+            if cid not in self.tiles:
+                raise TileError("Unknown child")
+            if cid == tile_id:
+                raise TileError("Self-reference")
+            if self.parents.get(cid) is not None:
+                raise TileError("Child already has parent")
+        
+        self.tiles[tile_id] = {
+            "state": TileState.OPEN,
+            "attempt": 0,
+            "reopens": 0,
+            "inputs": inputs,
+            "recipe": recipe,
+            "children": list(children),
+            "neighbours": list(neighbours),
+            "output": None,
+            "last_code": None,
+            "source": None,
+            "apron_snapshot": None,
+            "candidate_digest": None
+        }
+        for cid in children:
+            self.parents[cid] = tile_id
+
+    def state(self, tile_id):
+        self._check_exists(tile_id)
+        return self.tiles[tile_id]["state"]
+
+    def attempt(self, tile_id):
+        self._check_exists(tile_id)
+        return self.tiles[tile_id]["attempt"]
+
+    def reopens(self, tile_id):
+        self._check_exists(tile_id)
+        return self.tiles[tile_id]["reopens"]
+
+    def output(self, tile_id):
+        self._check_exists(tile_id)
+        return self.tiles[tile_id]["output"]
+
+    def last_code(self, tile_id):
+        self._check_exists(tile_id)
+        return self.tiles[tile_id]["last_code"]
+
+    def apron(self, tile_id):
+        self._check_exists(tile_id)
+        t = self.tiles[tile_id]
+        return {nid: self.output(nid) for nid in t["neighbours"] if self.output(nid) is not None}
+
+    def identity(self, tile_id):
+        self._check_exists(tile_id)
+        t = self.tiles[tile_id]
+        apron_dict = self.apron(tile_id)
+        child_outputs = [self.output(cid) for cid in t["children"]]
+        data = {
+            "apron": apron_dict,
+            "attempt": t["attempt"],
+            "children": child_outputs,
+            "inputs": t["inputs"],
+            "recipe": t["recipe"]
+        }
+        return digest(canonical(data))
+
+    def render(self, tile_id, output=None, source=None):
+        self._check_exists(tile_id)
+        t = self.tiles[tile_id]
+        if t["state"] != TileState.OPEN:
+            raise TileError("Not OPEN")
+        
+        # Replay check
+        current_id = self.identity(tile_id)
+        if current_id in self.journal:
+            t["state"] = TileState.PROMOTED
+            t["output"] = self.journal[current_id]
+            t["last_code"] = "REPLAY"
+            t["source"] = "journal"
+            return TileState.PROMOTED
+
+        if not t["children"]:  # Leaf
+            if not isinstance(output, str) or not source or not isinstance(source, str):
+                raise TileError("Invalid leaf render params")
+            t["candidate_digest"] = digest(output)
+            t["source"] = source
+        else:  # Parent
+            for cid in t["children"]:
+                if self.tiles[cid]["state"] != TileState.PROMOTED:
+                    raise TileError("Children not promoted")
+            t["candidate_digest"] = digest(canonical([self.output(cid) for cid in t["children"]]))
+            t["source"] = "assemble"
+        
+        t["apron_snapshot"] = self.apron(tile_id)
+        t["state"] = TileState.RENDERED
+        return TileState.RENDERED
+
+    def verify(self, tile_id, validity, quality, reviewer):
+        self._check_exists(tile_id)
+        t = self.tiles[tile_id]
+        if t["state"] != TileState.RENDERED:
+            raise TileError("Not RENDERED")
+        if not reviewer or reviewer == t["source"]:
+            raise TileError("Invalid reviewer")
+
+        if self.apron(tile_id) != t["apron_snapshot"]:
+            t["state"] = TileState.OPEN
+            t["last_code"] = "APRON_STALE"
+            return TileState.OPEN
+
+        if validity and quality:
+            t["state"] = TileState.PROMOTED
+            t["output"] = t["candidate_digest"]
+            t["last_code"] = "PASS"
+            self.journal[self.identity(tile_id)] = t["output"]
+            return TileState.PROMOTED
+        else:
+            t["attempt"] += 1
+            t["last_code"] = "VALIDITY_FAIL" if not validity else "QUALITY_FAIL"
+            if t["attempt"] > self.max_attempts:
+                t["state"] = TileState.QUARANTINED
+            else:
+                t["state"] = TileState.OPEN
+            return t["state"]
+
+    def reopen(self, tile_id, reason):
+        self._check_exists(tile_id)
+        t = self.tiles[tile_id]
+        if t["state"] != TileState.PROMOTED:
+            raise TileError("Not PROMOTED")
+        
+        t["reopens"] += 1
+        if t["reopens"] > self.max_reopens:
+            t["state"] = TileState.QUARANTINED
+            return TileState.QUARANTINED
+        
+        t["state"] = TileState.OPEN
+        t["output"] = None
+        t["attempt"] += 1
+        
+        # Cascade upward
+        curr = self.parents.get(tile_id)
+        while curr:
+            pt = self.tiles[curr]
+            if pt["state"] in (TileState.RENDERED, TileState.PROMOTED):
+                pt["state"] = TileState.OPEN
+                pt["output"] = None
+            curr = self.parents.get(curr)
+        return t["state"]
+
+    def height(self):
+        return sum(1 for t in self.tiles.values() if t["state"] != TileState.PROMOTED)
+
+    def done(self):
+        return all(t["state"] == TileState.PROMOTED for t in self.tiles.values())
+
+    def stuck(self):
+        return any(t["state"] == TileState.QUARANTINED for t in self.tiles.values())
+
+    def snapshot(self):
+        return {
+            "tiles": {
+                tid: {
+                    "state": v["state"].value,
+                    "attempt": v["attempt"],
+                    "reopens": v["reopens"],
+                    "children": v["children"],
+                    "neighbours": v["neighbours"],
+                    "output": v["output"],
+                    "last_code": v["last_code"]
+                } for tid, v in self.tiles.items()
+            }
+        }
+
+    def _check_exists(self, tile_id):
+        if tile_id not in self.tiles:
+            raise TileError("Unknown tile id")
+
+# --- last error output ---
+# acceptance tests failed:
+# Traceback (most recent call last):
+#   File "~/bin/codemode-assertion-runner.py", line 377, in worker
+#     exec(code, module.__dict__)
+#     ~~~~^^^^^^^^^^^^^^^^^^^^^^^
+#   File "~/code-runs/codemode-20260914-020337-11333-221979000/attempt0-acceptance-execution/source.py", line 430, in <module>
+#     test_reopen_cascades_upward_only()
+#     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^
+#   File "~/code-runs/codemode-20260914-020337-11333-221979000/attempt0-acceptance-execution/source.py", line 327, in test_reopen_cascades_upward_only
+#     _promote(lp, "b", "b1")
+#     ~~~~~~~~^^^^^^^^^^^^^^^
+#   File "~/code-runs/codemode-20260914-020337-11333-221979000/attempt0-acceptance-execution/source.py", line 233, in _promote
+#     return lp.verify(tid, True, True, reviewer)
+#            ~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^
+#   File "~/code-runs/codemode-20260914-020337-11333-221979000/attempt0-acceptance-execution/source.py", line 137, in verify
+#     raise TileError("Not RENDERED")
+# TileError: Not RENDERED
+# 
+# [assertion execution: EXECUTION_ERROR]
+exit=1

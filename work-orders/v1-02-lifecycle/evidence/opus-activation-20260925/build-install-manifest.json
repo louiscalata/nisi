@@ -1,0 +1,119 @@
+{
+  "appBuild": {
+    "argv": [
+      "xcrun",
+      "swiftc",
+      "-O",
+      "-parse-as-library",
+      "-target",
+      "arm64-apple-macos26.0",
+      "NisiChatLog.swift",
+      "NisiTurnController.swift",
+      "NisiChatSession.swift",
+      "../../v1-02-lifecycle/session-seam/NativeTranscriptBuilder.swift",
+      "../../v1-02-lifecycle/session-seam/LocalModelBackend.swift",
+      "../../v1-02-lifecycle/session-seam/ConversationStore.swift",
+      "../../v1-02-lifecycle/session-seam/ConversationListing.swift",
+      "../../v1-03-project-context/session-seam/TemporaryContextStore.swift",
+      "NisiChatWindow.swift",
+      "NisiChatApp.swift",
+      "-o",
+      "/tmp/nisi-opus-activation-20260925/Nisi-final.app/Contents/MacOS/nisi-chat-window"
+    ],
+    "cwd": "~/nisi/work-orders/v1-chat-slice/session-seam",
+    "installArgv": [
+      [
+        "ditto",
+        "/tmp/nisi-opus-activation-20260925/Nisi-final.app",
+        "~/Applications/Nisi.next.app"
+      ],
+      [
+        "mv",
+        "~/Applications/Nisi.app",
+        "~/Applications/.Nisi-before-opus-20260925.app"
+      ],
+      [
+        "mv",
+        "~/Applications/Nisi.next.app",
+        "~/Applications/Nisi.app"
+      ]
+    ],
+    "installedExecutable": {
+      "path": "~/Applications/Nisi.app/Contents/MacOS/nisi-chat-window",
+      "sha256": "f1917f4726df89c86062ce091c469ca92dc6b6604b133e7a24027f1c5460795f"
+    },
+    "installedInfoPlist": {
+      "path": "~/Applications/Nisi.app/Contents/Info.plist",
+      "sha256": "11bd2937035970dd798068388d8ef65b93f4f22a758dae2dc0e8fff73e0e7c67"
+    },
+    "plistAssembly": [
+      "ditto",
+      "~/nisi/work-orders/v1-chat-slice/build/Nisi.app/Contents/Info.plist",
+      "/tmp/nisi-opus-activation-20260925/Nisi-final.app/Contents/Info.plist"
+    ],
+    "plistSource": "~/nisi/work-orders/v1-chat-slice/build/Nisi.app/Contents/Info.plist",
+    "signArgv": [
+      "codesign",
+      "--force",
+      "--sign",
+      "-",
+      "--timestamp=none",
+      "/tmp/nisi-opus-activation-20260925/Nisi-final.app"
+    ],
+    "sources": [
+      {
+        "path": "work-orders/v1-chat-slice/session-seam/NisiChatLog.swift",
+        "sha256": "49912e3985b245f0e48411d48acf8eefa7e24713baa3d365d71a5638c5854779"
+      },
+      {
+        "path": "work-orders/v1-chat-slice/session-seam/NisiTurnController.swift",
+        "sha256": "884bedd4787937d322cd3910a1029639f1d95b48bdeecb73eced9b0eef74ace0"
+      },
+      {
+        "path": "work-orders/v1-chat-slice/session-seam/NisiChatSession.swift",
+        "sha256": "053f55ee1016eb9bd911bdf70954651d6bb5056d7bcfaaeb42c1345355b4d54d"
+      },
+      {
+        "path": "work-orders/v1-02-lifecycle/session-seam/NativeTranscriptBuilder.swift",
+        "sha256": "84930491f2c92a397b019899876eac48834d2ba295f7786964cfa5a268b4a674"
+      },
+      {
+        "path": "work-orders/v1-02-lifecycle/session-seam/LocalModelBackend.swift",
+        "sha256": "2276947f978d473243c0341f861107ac6888c4f4481ee3e318e823a12f805559"
+      },
+      {
+        "path": "work-orders/v1-02-lifecycle/session-seam/ConversationStore.swift",
+        "sha256": "cf20a6f48bccd355056c319a097eb0543ee52865e6e18879db409dbb9a22dad9"
+      },
+      {
+        "path": "work-orders/v1-02-lifecycle/session-seam/ConversationListing.swift",
+        "sha256": "d0b2e637fa9866a5e52031bb194491d13564a08a7789e33f3f474758120a22b3"
+      },
+      {
+        "path": "work-orders/v1-03-project-context/session-seam/TemporaryContextStore.swift",
+        "sha256": "2e8ed2dc42ca74e27b26e300d014643fd55cc7c2400e0ae47e892a1d9eff1d05"
+      },
+      {
+        "path": "work-orders/v1-chat-slice/session-seam/NisiChatWindow.swift",
+        "sha256": "ae0e68839a6516bb00b9e4e504eadf6ec67649b2bd817647734385f4518d177d"
+      },
+      {
+        "path": "work-orders/v1-chat-slice/session-seam/NisiChatApp.swift",
+        "sha256": "4857697832ed500faa48de5aef7d541780cd68cfc599d1e2d176908e72d784ec"
+      }
+    ]
+  },
+  "createdAtUtc": "2026-09-25T15:11:20.435407+00:00",
+  "schemaVersion": 1,
+  "scope": "Private Mac Nisi v1 local activation; not public Node v0.2",
+  "scratchTools": {
+    "sessionSha256": "aa5da0e9f5cede512d71aeae4826e6413d1a489324da69355e034bf8bed52cde",
+    "statusSha256": "3370d5709e4a74bc2fbd2140c9ee1e70a387f816b94bfe9cda34c30a318688bb"
+  },
+  "startup": {
+    "plistInstalledSha256": "2e45995b88d3e851742a5e53754ded2b860a34cdeaaf66fc294a9ffdf033a548",
+    "plistSourceSha256": "2e45995b88d3e851742a5e53754ded2b860a34cdeaaf66fc294a9ffdf033a548",
+    "scriptInstalledSha256": "5ff9463f27fa1437df2cd8ebd12cf1ee840e65375410820e510e85ea498b7188",
+    "scriptSourceSha256": "5ff9463f27fa1437df2cd8ebd12cf1ee840e65375410820e510e85ea498b7188"
+  }
+}

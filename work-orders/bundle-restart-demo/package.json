@@ -1,0 +1,11 @@
+{
+  "name": "nisi-bundle-restart-demo",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "license": "UNLICENSED",
+  "scripts": {
+    "test": "node --test tests/baseline.test.mjs",
+    "test:demo": "node --test tests/demo.test.mjs"
+  }
+}

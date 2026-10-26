@@ -1,0 +1,1971 @@
+{
+  "schemaVersion": 1,
+  "date": "2026-09-12",
+  "scope": "PRIVATE_OWNED_ONE_ARTIFACT_SWIFT_ADAPTER",
+  "status": "ONE_ARTIFACT_NATIVE_FIXTURES_VERIFIED_FULL_REPOSITORY_HOST_PENDING",
+  "sourceFiles": [
+    {
+      "path": "hosts/repository/snapshot-contract.mjs",
+      "sha256": "2b52c23bac3a817769b7892eed71baba79cb81954b6a63724d107a9c258ba13f"
+    },
+    {
+      "path": "workflow/contracts.mjs",
+      "sha256": "c28a3ee3db6e9a936cd58fca8b8ee3f2744ca25c259e2ea278b3b09cdbb73d82"
+    },
+    {
+      "path": "workflow/engine.mjs",
+      "sha256": "c67c63baeadc725a8487af7108b01d3a38dd50e64ff35f1be66471c81e5f979b"
+    },
+    {
+      "path": "tests/afm-content-executor.test.mjs",
+      "sha256": "a5bea26338f78d2203ac2e2fb9d3cd71ec02b1ef08e8bff7ff8631983a4259ad"
+    },
+    {
+      "path": "tests/canonical-json-v1.test.mjs",
+      "sha256": "36d24e7de51ad13fc3f0bca1d504f711f517a56a2b9684b7156a9cc4ffc07dd7"
+    },
+    {
+      "path": "tests/component-hardening.test.mjs",
+      "sha256": "876fa7045f77bf2b8b45168f81c023d2423d8e10d7947533662c6c21e105aa12"
+    },
+    {
+      "path": "tests/content-consent.test.mjs",
+      "sha256": "df9143818b835daf023f7c9e0ef52bf5f1049f4711f37a14c65e9d8f8257889b"
+    },
+    {
+      "path": "tests/example.test.mjs",
+      "sha256": "61ccb6fbcc426b6d77c9c8b526f1d378c3296b6dfca57562b6d480a4edc58c1f"
+    },
+    {
+      "path": "tests/local-chat-extra.test.mjs",
+      "sha256": "91a6722f3a736f54e826a3224ab99892a22c5e013be3fce727c12958f2336304"
+    },
+    {
+      "path": "tests/local-chat.test.mjs",
+      "sha256": "8b3339ac52a00916d800389fb473c52b90e7f0821d55d48f01d0fe30d8bee5b8"
+    },
+    {
+      "path": "tests/onboarding.test.mjs",
+      "sha256": "594494cc5f3a80e4ca05f2abfd94ae789cf3dc31cdfb383ba42cf88e8bbb18e7"
+    },
+    {
+      "path": "tests/public-api.test.mjs",
+      "sha256": "d972ae6c54b47e4d0cc61383e128e9ab5012eb83bca291e764b1d52489b2fd31"
+    },
+    {
+      "path": "tests/repository-snapshot.test.mjs",
+      "sha256": "17c914c416ad7fa057e900cf69f65bf5c7e6765082eca2ca31c92253c737e6a1"
+    },
+    {
+      "path": "tests/veritas-import-snapshot.test.mjs",
+      "sha256": "ff548efe38f61145e3a05ca535a84f6f247502268f606022c11a146f7c47d902"
+    },
+    {
+      "path": "tests/veritas-import.test.mjs",
+      "sha256": "198b7b505d03715010c00bcf5e240ddcbd42fc95a74de36991cf8a28d706f13d"
+    },
+    {
+      "path": "tests/workflow-example.test.mjs",
+      "sha256": "a9515369dc1cb39aef83ad44a91742a96b75d2e17eef0a725901a47548028162"
+    },
+    {
+      "path": "tests/workflow.test.mjs",
+      "sha256": "8ce9c6f50928da474d8f9a53a3702bd49cdbbc8cedc17713006439c1528ac5d3"
+    },
+    {
+      "path": "adapters/apple-foundation-models.mjs",
+      "sha256": "311f4898c31b4e0693093361fc19c344086c1f24946909fe134c14d37e25d080"
+    },
+    {
+      "path": "adapters/local-chat.mjs",
+      "sha256": "75dc8b128883fb14e524ceb05b4696e53406c2c8038ec4340b42f0ca471fe043"
+    },
+    {
+      "path": "canonical/canonical-json-v1.mjs",
+      "sha256": "d1049a26d2bea0d14e959c0af22af15b975345091c5fa5360e8bd685637f8e59"
+    },
+    {
+      "path": "gate/afm-content-executor.mjs",
+      "sha256": "6a4c23a3495a00dbf98e9ff5c68a9008f421d6fe225a3768b6863d4e12324ed6"
+    },
+    {
+      "path": "gate/content-consent.mjs",
+      "sha256": "a735eb35cb1373b3f3744dc7b3caa8b24ebbf394babba53d4f722136c72a0820"
+    },
+    {
+      "path": "policy/file-access.mjs",
+      "sha256": "92f9f60220e1869ad0d6571ae2b5a8ddc9259b2463c4cf617d4cecee6eacc1d3"
+    },
+    {
+      "path": "serialization/canonical-json-v1.mjs",
+      "sha256": "1e5eb6222da2c7baae3cd45a5077ccc1e8ae25b5bc184646d9e55170dec53625"
+    },
+    {
+      "path": "examples/allow-a-file.mjs",
+      "sha256": "5099c90b4df7a83c5b0c55cca392cce55aeace90bc97d0791e02d5757f84dbea"
+    },
+    {
+      "path": "examples/local-model-workflow.mjs",
+      "sha256": "10bebdef922bb63c3716baa107cd037d3de6432b93a2e058e22151578738a2c1"
+    },
+    {
+      "path": "examples/workflow.mjs",
+      "sha256": "0d365578db02cb9aeda0aaa500aef61cad506e1dfdd0ce36a76235781d9795fd"
+    },
+    {
+      "path": "scripts/ab-purity.mjs",
+      "sha256": "e1a56f8405b94008d9232517082c1730c49512b0f8cc2c7ab81000b5ff374408"
+    },
+    {
+      "path": "scripts/bench.mjs",
+      "sha256": "031ca9342140bc0c25e7c549b1ef9e670cf63135ea7906a13eac7ee283f695c7"
+    },
+    {
+      "path": "scripts/common.mjs",
+      "sha256": "8913cd47ecf759146a5269f2941ec318e3eef06807f9fb5b4eeea94ca74220a8"
+    },
+    {
+      "path": "scripts/require-node.cjs",
+      "sha256": "1fd03efd0af99292fe704212e794122fca89ce39ddbc70183ec5bab2aff6d49b"
+    },
+    {
+      "path": "scripts/structural-check.mjs",
+      "sha256": "d3efa7860992764eca28c4c1a112288a1ae6a7f9987e4b918b83d8de28fcfbf1"
+    },
+    {
+      "path": "scripts/test-repository-snapshot-mutants.mjs",
+      "sha256": "8608bc913c413f73e2ea610bfba1f4531f768e8aae09b34a7c6bc51a4d5cfc9c"
+    },
+    {
+      "path": "scripts/test-veritas-import-mutants.mjs",
+      "sha256": "2e57780d25fc6257cd2fba0018b9065925552538fdcd52aeff5e5d21ab5bc4eb"
+    },
+    {
+      "path": "scripts/verify-veritas-import.mjs",
+      "sha256": "40542fd223dc538fd6c93003284809dff59fc2706eae69e9f516eb87dc70d48c"
+    },
+    {
+      "path": "tools/check-side-effects.mjs",
+      "sha256": "9be4a8b68a100b89279bd533cdc85fb1b9bda765f2459f1f577ba868794816ff"
+    },
+    {
+      "path": "contracts/canonical-json-v1-profile.md",
+      "sha256": "e7b636053519fe4ac21db0bc369d905e07ba80786f2b42234ddef4648f99b3da"
+    },
+    {
+      "path": "contracts/canonical-vectors.json",
+      "sha256": "51a69125be3029ed925575e2c3b32983d5d499acb48cd54875d0200a2d2021d9"
+    },
+    {
+      "path": "contracts/structural-fixtures.json",
+      "sha256": "2ddaca12d7b2319bb02b43f7db6a6cd3ab7f7683c85586749f46235176ac64c9"
+    },
+    {
+      "path": "index.mjs",
+      "sha256": "066c90d65209854cd6aeb838924ce28dca90d7dc75d0cd533d17fbba8e1c3db7"
+    },
+    {
+      "path": "package.json",
+      "sha256": "6b5c0271f5ad95d62af409c9782a2abb0b18a9844356c01a2fcf469063f7897f"
+    },
+    {
+      "path": "package-lock.json",
+      "sha256": "396284ceeb20491293a83094a9558cb32368bb9ccc71b75e0d10da52e86b0912"
+    },
+    {
+      "path": "integrations/veritas/import-manifest.json",
+      "sha256": "8207efbc465ec99f0c16a7a281c349bb7ce8819349dbbafe17534f72dd527bcb"
+    },
+    {
+      "path": "roadmap.md",
+      "sha256": "0b9dc923cdba41a2c51a19855904df00b09d4a5f6ff199d9f0f3ea48da91ca70"
+    },
+    {
+      "path": "/Volumes/SharedChami/Veritas Local Repository/SYSTEM-EQUATION.md",
+      "sha256": "dab885e7523be37e45de47dbf5fe766ab8fd3c7fca158551d960e473da19b4ae"
+    },
+    {
+      "path": "docs/verification/2026-09-12/u02-snapshot-claude-review.json",
+      "sha256": "f48b36ce007ddbf69133e03a82f1b2c950a09bf7c8c21a9ecc47ba92d6a5bfbf"
+    },
+    {
+      "path": "docs/verification/2026-09-12/u02-snapshot-fable-after-login-request.txt",
+      "sha256": "ffb1b80b7c7722d58c90340a76229f691526bba4f52426746dfdc5498bce6795"
+    },
+    {
+      "path": "docs/verification/2026-09-12/u02-snapshot-fable-after-login-review.json",
+      "sha256": "d87a214e8a2df3bfb1a0bbb3977a93a51cd918a46d7f6995d6457f647b1abd29"
+    },
+    {
+      "path": "docs/verification/2026-09-12/u02-snapshot-fable-bounded-request.txt",
+      "sha256": "8a53c230c9609fa84db2930d3444f082ae118fca2925bbd9822a787574e5a7e5"
+    },
+    {
+      "path": "docs/verification/2026-09-12/u02-snapshot-fable-bounded-review.json",
+      "sha256": "a05d2585f0014b34ed13077bf6f18f5d07846ffddb6544652ae1d984d394bb56"
+    },
+    {
+      "path": "docs/verification/2026-09-12/u02-snapshot-fable-request.txt",
+      "sha256": "fc5b599d90e043ae7c9d2e4d04804e37b27604e4d925ca6395b08fe2a2325994"
+    },
+    {
+      "path": "receipts/repository-execution-v1.mjs",
+      "sha256": "7317e06c094bdf33e51645ce39348fc9e2d5a11ad0921af87434e34c45828cc2"
+    },
+    {
+      "path": "tests/repository-execution-receipt.test.mjs",
+      "sha256": "1075990a6f96276df2057f525df9914bb56a5c1da43d7d544956c86567ad983d"
+    },
+    {
+      "path": "scripts/test-repository-receipt-mutants.mjs",
+      "sha256": "19585d4767f842f24b034d10dbb03c02ea80fcddb8c655a66a47203e236789d5"
+    },
+    {
+      "path": "docs/verification/2026-09-12/u02-receipt-fable-focused-request.txt",
+      "sha256": "80eb13e6c128ff5fdef4ebfe094087cfca12b4f1f81ba686213bd0b3c20c9328"
+    },
+    {
+      "path": "docs/verification/2026-09-12/u02-receipt-fable-focused-review.json",
+      "sha256": "83f9391171d7037a2cae710af0184350cf43d22745c2c8f6c4ac676a0dff4e7b"
+    },
+    {
+      "path": "docs/verification/2026-09-12/u02-receipt-fable-request.txt",
+      "sha256": "975e26eba7ba5733eb413d79fbed1f27435f17ab4a136a5682e52576430bed2d"
+    },
+    {
+      "path": "docs/verification/2026-09-12/u02-receipt-fable-resolution-request.txt",
+      "sha256": "436e2eb0f4e454c09b60b7a036f4f5146b654d82b974dc9ac9b15e8be1372e2b"
+    },
+    {
+      "path": "docs/verification/2026-09-12/u02-receipt-fable-resolution-review.json",
+      "sha256": "816d420d43dca5318414b89e23edb9307de09cd82e7e8e2aac06f7a4654b7cc3"
+    },
+    {
+      "path": "docs/verification/2026-09-12/u02-receipt-fable-review.json",
+      "sha256": "d87a214e8a2df3bfb1a0bbb3977a93a51cd918a46d7f6995d6457f647b1abd29"
+    },
+    {
+      "path": "hosts/repository/disk-capture.mjs",
+      "sha256": "972c8cd690a3f34253c9f4722c336b6e847dffe1b0c924aa8492384c800ae547"
+    },
+    {
+      "path": "tests/repository-disk-capture.test.mjs",
+      "sha256": "ff4a2bf5164647b47d92eae6d05f506e3d72324faa52c57d538aa58fc1d983c5"
+    },
+    {
+      "path": "scripts/test-repository-disk-mutants.mjs",
+      "sha256": "ad4e7c4df85203cbde4b72a62b803bc27cd8ebb9163e00760c48b75cff651f70"
+    },
+    {
+      "path": "docs/nisi-v0.1-v0.2-before-after.md",
+      "sha256": "76548e8e313a3bc9ff9935de3103c520d2bacc3e84804ba8ee024b72e280a3a3"
+    },
+    {
+      "path": "docs/verification/2026-09-12/u02-repository-transition-checkpoint.json",
+      "sha256": "932044470abb178aef0c1550f5529b9d155c3ea8151327ab31e32646722c9e76"
+    },
+    {
+      "path": "docs/verification/2026-09-12/u02-disk-capture-fable-request.txt",
+      "sha256": "430b2a5403bd3638bafca5c24b100f3968006ac0cf98b9312666d0218f271162"
+    },
+    {
+      "path": "docs/verification/2026-09-12/u02-disk-capture-fable-review.json",
+      "sha256": "b7d3eeb81dada17b47003e22282e9159e2d719d7399f74cdd3c9b4a60005a364"
+    },
+    {
+      "path": "docs/verification/2026-09-12/u02-disk-capture-fable-source-review.json",
+      "sha256": "668d9aad8b4d89d816fee6d4b79932b61029eee6a30045649ac5ecc720a9f537"
+    },
+    {
+      "path": "hosts/swift-verifier/main.swift",
+      "sha256": "0d4e15b22b3231d990cfd5e7de1c52f4fdfebf4f4ab6da15b0ae22c74cea910c"
+    },
+    {
+      "path": "hosts/swift-verifier/protocol.mjs",
+      "sha256": "7557d81836f263c13e06ac7613ebfa61ce7fbeeb7b0f7db98889473806f322cc"
+    },
+    {
+      "path": "hosts/swift-verifier/build.mjs",
+      "sha256": "ae063b627e853fc0b651e3db103dd1af01c6815374d36781e79270b7d48934fb"
+    },
+    {
+      "path": "tests/swift-kernel-protocol.test.mjs",
+      "sha256": "eb03a6358bbd2e4e9178fc6b722ec873e418264e6ccc6f7495e484181583dc1a"
+    },
+    {
+      "path": "tests/native/swift-kernel.test.mjs",
+      "sha256": "e6726c94a1b7359c2e3042a0e8ddb71973255088da82373f7988cd3bb6873699"
+    },
+    {
+      "path": "scripts/test-swift-kernel-mutants.mjs",
+      "sha256": "538b3c4b789e4fcb72ab0b9785e3c8503a7e25e3c98cc83eb5e8cdd29bd0f281"
+    },
+    {
+      "path": "docs/verification/2026-09-12/u02-swift-kernel-fable-request.txt",
+      "sha256": "4081a0e33e06f3dc60951bb4302798f316796c58da41b9c6d28fc2bb087074b8"
+    },
+    {
+      "path": "docs/verification/2026-09-12/u02-swift-kernel-fable-draft.json",
+      "sha256": "d87a214e8a2df3bfb1a0bbb3977a93a51cd918a46d7f6995d6457f647b1abd29"
+    },
+    {
+      "path": "docs/verification/2026-09-12/u02-swift-kernel-fable-focused-request.txt",
+      "sha256": "1660591ca80717f09bdab75cd06026ad7470d7ff3d537799c1a54b512718f141"
+    },
+    {
+      "path": "docs/verification/2026-09-12/u02-swift-kernel-fable-focused-draft.json",
+      "sha256": "18bfb8a77b0c3016faefe101a0e265314efdb3a68b60057c482dcee03588adb9"
+    },
+    {
+      "path": "/Volumes/SharedChami/Veritas Local Repository/roadmap.md",
+      "sha256": "e0a476b0f74b0810e10a9907d2ad909ce398afa669155b0e46ae82525b469110"
+    },
+    {
+      "path": "hosts/swift-verifier/owned-child.mjs",
+      "sha256": "0304290bb6cd42074e088ff2026f3f21d3d401af1aeb4e6efb676bdeecd42af7"
+    },
+    {
+      "path": "hosts/swift-verifier/reservation.mjs",
+      "sha256": "6d7573d23a3d2b0ecdb4b396cb58f4f9ae8e5997190616c08c1b93bd0ab376fd"
+    },
+    {
+      "path": "hosts/swift-verifier/executor.mjs",
+      "sha256": "aac08e19aa6cbed3791ce31aab06a033967dfec4611d70cd7e8bae5910dabe98"
+    },
+    {
+      "path": "hosts/swift-verifier/adapter.mjs",
+      "sha256": "c92c21fcbf7fe91d949f60bc51a96d4cb5f185be9172d0a214c4e87d2b649388"
+    },
+    {
+      "path": "tests/swift-owned-child.test.mjs",
+      "sha256": "06eb398528823100f13487052d9c864ce006df8e84dfb117401fbea70f53f966"
+    },
+    {
+      "path": "tests/swift-reservation.test.mjs",
+      "sha256": "29f5437902b835c4e4b04f12ceff35fbd10ea061956fe250cc9a515650b9510d"
+    },
+    {
+      "path": "tests/native/swift-executor.test.mjs",
+      "sha256": "9e3bb4f07124166cdf8974797266ed86a78a04f854683ae2df86065cd66ea99f"
+    },
+    {
+      "path": "scripts/test-swift-owner-mutants.mjs",
+      "sha256": "88f8d5af50b404acaec78477d2e73dd9c9d64861b4930b47c745531062ae8ded"
+    },
+    {
+      "path": "docs/verification/2026-09-12/u02-process-owner-fable-request.txt",
+      "sha256": "6e25f76da1ef03852d9ffa82d2bb30c2b7520be37a6bb3e80e7bfdba444cda3e"
+    },
+    {
+      "path": "docs/verification/2026-09-12/u02-process-owner-fable-review.json",
+      "sha256": "16d159b4f8b0d2e36d28e68a4f5396e535152d668e387f0f2919d8f5f895a355"
+    },
+    {
+      "path": "docs/verification/2026-09-12/u02-process-owner-fable-resolution-request.txt",
+      "sha256": "2c2501f9fb032057907d79720f73fe4d7d8253bde8d98ed8c3877395438cf030"
+    },
+    {
+      "path": "docs/verification/2026-09-12/u02-process-owner-fable-resolution-review.json",
+      "sha256": "100ca0088a10ee833bfaa8c803fcbfcdfc46c11a3da1d1b7dc5cc9cfa3d24afe"
+    },
+    {
+      "path": "docs/verification/2026-09-12/u02-process-owner-fable-clarification-request.txt",
+      "sha256": "a8afa900a93186b12e2b6700c79f672d61434c2113ea3b921e7c2bf2ac1f5f96"
+    },
+    {
+      "path": "docs/verification/2026-09-12/u02-process-owner-fable-clarification-review.json",
+      "sha256": "51665425e378998165cd12a5a9374d4593994146c79b22b788b0349237b2e59d"
+    }
+  ],
+  "previousChanges": [
+    {
+      "path": "roadmap.md",
+      "before": "131a4a949e28f5ab115798115b1f22fb569aabeb9339a19c24f085467222550a",
+      "after": "0b9dc923cdba41a2c51a19855904df00b09d4a5f6ff199d9f0f3ea48da91ca70"
+    },
+    {
+      "path": "/Volumes/SharedChami/Veritas Local Repository/SYSTEM-EQUATION.md",
+      "before": "c569c53e45142d619762df57bd461038a1851e06775ddcb30f365a0ee42362a4",
+      "after": "dab885e7523be37e45de47dbf5fe766ab8fd3c7fca158551d960e473da19b4ae"
+    },
+    {
+      "path": "docs/nisi-v0.1-v0.2-before-after.md",
+      "before": "3bb7c7f7f3095d839be21fe122a12898da5ecd441201804c2f233768bca403f8",
+      "after": "76548e8e313a3bc9ff9935de3103c520d2bacc3e84804ba8ee024b72e280a3a3"
+    },
+    {
+      "path": "hosts/swift-verifier/build.mjs",
+      "before": "fe6939e802f982b0cd65ce708c9fd9d7e44bb07c81c255877e92d60c26788003",
+      "after": "ae063b627e853fc0b651e3db103dd1af01c6815374d36781e79270b7d48934fb"
+    },
+    {
+      "path": "/Volumes/SharedChami/Veritas Local Repository/roadmap.md",
+      "before": "a3e810676caab4d4677ed362bfe4f6f81477bdf4db9e5018c0f999c2a8bdf811",
+      "after": "e0a476b0f74b0810e10a9907d2ad909ce398afa669155b0e46ae82525b469110"
+    }
+  ],
+  "evidenceFiles": [
+    {
+      "path": "docs/verification/2026-09-12/u02-swift-kernel-checkpoint.json",
+      "sha256": "efab7134d5088d2c1fff1e1be54a5d5885c704b63c3e153665e4e890d93fdea8"
+    },
+    {
+      "path": ".build/u02-owner-docs-YUqgYZ/nisi-roadmap.md",
+      "sha256": "131a4a949e28f5ab115798115b1f22fb569aabeb9339a19c24f085467222550a"
+    },
+    {
+      "path": ".build/u02-owner-docs-YUqgYZ/comparison.md",
+      "sha256": "3bb7c7f7f3095d839be21fe122a12898da5ecd441201804c2f233768bca403f8"
+    },
+    {
+      "path": ".build/u02-owner-docs-YUqgYZ/system-equation.md",
+      "sha256": "c569c53e45142d619762df57bd461038a1851e06775ddcb30f365a0ee42362a4"
+    },
+    {
+      "path": ".build/u02-owner-docs-YUqgYZ/original-roadmap.md",
+      "sha256": "a3e810676caab4d4677ed362bfe4f6f81477bdf4db9e5018c0f999c2a8bdf811"
+    },
+    {
+      "path": ".build/nisi-swift-kernel-QDi4IJ/build-manifest.json",
+      "sha256": "350991788f946290dea12b19a73f5147f5c8200a9ea69c55efdc0d18bba16323"
+    },
+    {
+      "path": ".build/nisi-swift-kernel-QDi4IJ/build-commands.json",
+      "sha256": "1b35436a9c7c0ec5923e86c3f01d2dc554c404caaf15322b01988d2fd59c09cb"
+    },
+    {
+      "path": ".build/nisi-swift-kernel-QDi4IJ/executor-fixture-observations.json",
+      "sha256": "5de6739ae40d4682b0e9aa443be497eec53dd57e768d2acf08a9c98e26af5f23"
+    },
+    {
+      "path": ".build/nisi-swift-kernel-QDi4IJ/pre-correction-adapter.mjs",
+      "sha256": "8dbfd4f010f723805ffc54abdf9485c6060efcde12922dd7130f5c376ebec535"
+    },
+    {
+      "path": ".build/nisi-swift-kernel-KI3CAI/build-manifest.json",
+      "sha256": "375a2ab1da7f0edb35645a005c35ff70f8984a446b28f36a0c7e7c3fdd15d37f"
+    },
+    {
+      "path": ".build/nisi-swift-kernel-KI3CAI/build-commands.json",
+      "sha256": "cfb8e4c4d4cc1cb3c96d1ff2872cfeda84cb5c10da77993f1c684648550d23d1"
+    },
+    {
+      "path": ".build/nisi-swift-kernel-KI3CAI/executor-fixture-observations.json",
+      "sha256": "432cf4d580d417133406877e70727b1968efc883ccd9b0dcccc2c0790ae23ea6"
+    },
+    {
+      "path": ".build/nisi-swift-kernel-KI3CAI/nisi-artifact-verifier",
+      "sha256": "3d8abbd653fabe9ac40da5f49557802317c5cc284fcb2746fb680ee67a656d62"
+    },
+    {
+      "path": ".build/nisi-swift-kernel-KI3CAI/BuildIdentity.swift",
+      "sha256": "1eeca09cb541698d1867d1787e6ea89df06b667502771db09354701b70c0c72f"
+    },
+    {
+      "path": ".build/nisi-swift-kernel-GnkMcc/executor-fixture-observations.json",
+      "sha256": "1ea06ecfa00aedeedbd569092d3a26d591a68bb9e735dfaf60e94eae032741c6"
+    },
+    {
+      "path": ".build/swift-kernel-mutants-CQsFQP/results.json",
+      "sha256": "e7d8eb7e452214a2546b9ad2de934b6bb7205f1cca90b8eedafac3197f91d8c8"
+    },
+    {
+      "path": ".build/swift-kernel-mutants-CQsFQP/stdout.txt",
+      "sha256": "a462dd0d17b1dbb980bbbf0b713616be9643cbbef2497efa161b429f0d589e19"
+    },
+    {
+      "path": ".build/swift-kernel-mutants-CQsFQP/stderr.txt",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": ".build/nisi-swift-kernel-1HPWRz/build-manifest.json",
+      "sha256": "94ab5812853637f12c3e527f1fab62669465b5cb57d5abff247b85350377b041"
+    },
+    {
+      "path": ".build/nisi-swift-kernel-1HPWRz/build-commands.json",
+      "sha256": "b3833d8fa907852741fa83b3af6519f5eb1a6c71508e449ad8c17cac4d179478"
+    },
+    {
+      "path": ".build/nisi-swift-kernel-1HPWRz/native-fixture-results.json",
+      "sha256": "48782867afe2ae560b981166c026519f109749028ff44fff051c5310ad1daa49"
+    },
+    {
+      "path": ".build/nisi-swift-kernel-5NyZK7/build-commands.json",
+      "sha256": "eddd236fbf2eae8e06c072f71c8bd23b2254da6139f69f49b3a1187c2a590abf"
+    },
+    {
+      "path": ".build/nisi-swift-kernel-nae8ch/pre-correction-protocol.test.mjs",
+      "sha256": "6012fc028d4dbd98e6b3087a5733bbe76278c56036810b37a64d39425217a34b"
+    },
+    {
+      "path": ".build/nisi-swift-kernel-nae8ch/native-fixture-results.json",
+      "sha256": "97c486b4a4f496774f09a9e56310297354fe389ac4083da2be514efb4b467037"
+    },
+    {
+      "path": ".build/u02-swift-docs-TodjHF/SYSTEM-EQUATION.md",
+      "sha256": "5bae80caa832cc17179fa5d0a71d2aa8ba8958ab767cc0b8b3b6447fbb0c616b"
+    },
+    {
+      "path": ".build/u02-swift-docs-TodjHF/comparison.md",
+      "sha256": "897be117a9e6aa2f3677593f41e904cafcd2c54257f362d1907e0dec8774ddb3"
+    },
+    {
+      "path": ".build/u02-swift-docs-TodjHF/retained-roadmap.md",
+      "sha256": "5240902d0926fb5a36f2cef2f0a203e4fd79cf7cfafa6092bc811d5ae38b28d6"
+    },
+    {
+      "path": ".build/u02-swift-docs-TodjHF/roadmap.md",
+      "sha256": "d80c75b635c1422235d381d6a40aa483c250ee0966db8b53f0dd801414731424"
+    },
+    {
+      "path": ".build/swift-owner-mutants-JCDz1D/O01-late-spawn-containment/canonical/canonical-json-v1.mjs",
+      "sha256": "d1049a26d2bea0d14e959c0af22af15b975345091c5fa5360e8bd685637f8e59"
+    },
+    {
+      "path": ".build/swift-owner-mutants-JCDz1D/O01-late-spawn-containment/hosts/repository/snapshot-contract.mjs",
+      "sha256": "2b52c23bac3a817769b7892eed71baba79cb81954b6a63724d107a9c258ba13f"
+    },
+    {
+      "path": ".build/swift-owner-mutants-JCDz1D/O01-late-spawn-containment/hosts/swift-verifier/owned-child.mjs",
+      "sha256": "882b35bc1301d403dc56f12edf8e3ff6a81dec44e6d494fcf7fa99abc3a3d597"
+    },
+    {
+      "path": ".build/swift-owner-mutants-JCDz1D/O01-late-spawn-containment/hosts/swift-verifier/protocol.mjs",
+      "sha256": "7557d81836f263c13e06ac7613ebfa61ce7fbeeb7b0f7db98889473806f322cc"
+    },
+    {
+      "path": ".build/swift-owner-mutants-JCDz1D/O01-late-spawn-containment/hosts/swift-verifier/reservation.mjs",
+      "sha256": "6d7573d23a3d2b0ecdb4b396cb58f4f9ae8e5997190616c08c1b93bd0ab376fd"
+    },
+    {
+      "path": ".build/swift-owner-mutants-JCDz1D/O01-late-spawn-containment/stderr.txt",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": ".build/swift-owner-mutants-JCDz1D/O01-late-spawn-containment/stdout.txt",
+      "sha256": "49d67526b86f5974690728a5f8fd049e99799f224c553a7a9754bea5f068efe6"
+    },
+    {
+      "path": ".build/swift-owner-mutants-JCDz1D/O01-late-spawn-containment/tests/swift-owned-child.test.mjs",
+      "sha256": "06eb398528823100f13487052d9c864ce006df8e84dfb117401fbea70f53f966"
+    },
+    {
+      "path": ".build/swift-owner-mutants-JCDz1D/O01-late-spawn-containment/tests/swift-reservation.test.mjs",
+      "sha256": "29f5437902b835c4e4b04f12ceff35fbd10ea061956fe250cc9a515650b9510d"
+    },
+    {
+      "path": ".build/swift-owner-mutants-JCDz1D/O01-late-spawn-containment/workflow/contracts.mjs",
+      "sha256": "c28a3ee3db6e9a936cd58fca8b8ee3f2744ca25c259e2ea278b3b09cdbb73d82"
+    },
+    {
+      "path": ".build/swift-owner-mutants-JCDz1D/O02-final-duration/canonical/canonical-json-v1.mjs",
+      "sha256": "d1049a26d2bea0d14e959c0af22af15b975345091c5fa5360e8bd685637f8e59"
+    },
+    {
+      "path": ".build/swift-owner-mutants-JCDz1D/O02-final-duration/hosts/repository/snapshot-contract.mjs",
+      "sha256": "2b52c23bac3a817769b7892eed71baba79cb81954b6a63724d107a9c258ba13f"
+    },
+    {
+      "path": ".build/swift-owner-mutants-JCDz1D/O02-final-duration/hosts/swift-verifier/owned-child.mjs",
+      "sha256": "dc9099e83b396f99ec9f11ade96200ff809f6477be1c483602b2a3ccb2626dbb"
+    },
+    {
+      "path": ".build/swift-owner-mutants-JCDz1D/O02-final-duration/hosts/swift-verifier/protocol.mjs",
+      "sha256": "7557d81836f263c13e06ac7613ebfa61ce7fbeeb7b0f7db98889473806f322cc"
+    },
+    {
+      "path": ".build/swift-owner-mutants-JCDz1D/O02-final-duration/hosts/swift-verifier/reservation.mjs",
+      "sha256": "6d7573d23a3d2b0ecdb4b396cb58f4f9ae8e5997190616c08c1b93bd0ab376fd"
+    },
+    {
+      "path": ".build/swift-owner-mutants-JCDz1D/O02-final-duration/stderr.txt",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": ".build/swift-owner-mutants-JCDz1D/O02-final-duration/stdout.txt",
+      "sha256": "491a40f5d36947e6df2e50455b2eb9f3881a55980bb050398d28ecef87fb24fb"
+    },
+    {
+      "path": ".build/swift-owner-mutants-JCDz1D/O02-final-duration/tests/swift-owned-child.test.mjs",
+      "sha256": "06eb398528823100f13487052d9c864ce006df8e84dfb117401fbea70f53f966"
+    },
+    {
+      "path": ".build/swift-owner-mutants-JCDz1D/O02-final-duration/tests/swift-reservation.test.mjs",
+      "sha256": "29f5437902b835c4e4b04f12ceff35fbd10ea061956fe250cc9a515650b9510d"
+    },
+    {
+      "path": ".build/swift-owner-mutants-JCDz1D/O02-final-duration/workflow/contracts.mjs",
+      "sha256": "c28a3ee3db6e9a936cd58fca8b8ee3f2744ca25c259e2ea278b3b09cdbb73d82"
+    },
+    {
+      "path": ".build/swift-owner-mutants-JCDz1D/O03-unknown-close-quarantine/canonical/canonical-json-v1.mjs",
+      "sha256": "d1049a26d2bea0d14e959c0af22af15b975345091c5fa5360e8bd685637f8e59"
+    },
+    {
+      "path": ".build/swift-owner-mutants-JCDz1D/O03-unknown-close-quarantine/hosts/repository/snapshot-contract.mjs",
+      "sha256": "2b52c23bac3a817769b7892eed71baba79cb81954b6a63724d107a9c258ba13f"
+    },
+    {
+      "path": ".build/swift-owner-mutants-JCDz1D/O03-unknown-close-quarantine/hosts/swift-verifier/owned-child.mjs",
+      "sha256": "d5ad1f1a092b3a9c043dde41db3878bf15b338be232941ba2436a1f6edf392b5"
+    },
+    {
+      "path": ".build/swift-owner-mutants-JCDz1D/O03-unknown-close-quarantine/hosts/swift-verifier/protocol.mjs",
+      "sha256": "7557d81836f263c13e06ac7613ebfa61ce7fbeeb7b0f7db98889473806f322cc"
+    },
+    {
+      "path": ".build/swift-owner-mutants-JCDz1D/O03-unknown-close-quarantine/hosts/swift-verifier/reservation.mjs",
+      "sha256": "6d7573d23a3d2b0ecdb4b396cb58f4f9ae8e5997190616c08c1b93bd0ab376fd"
+    },
+    {
+      "path": ".build/swift-owner-mutants-JCDz1D/O03-unknown-close-quarantine/stderr.txt",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": ".build/swift-owner-mutants-JCDz1D/O03-unknown-close-quarantine/stdout.txt",
+      "sha256": "b49e617970c9a560a30949ccc5fe7242c4b86ee29a5b833e07968f2d66cf4899"
+    },
+    {
+      "path": ".build/swift-owner-mutants-JCDz1D/O03-unknown-close-quarantine/tests/swift-owned-child.test.mjs",
+      "sha256": "06eb398528823100f13487052d9c864ce006df8e84dfb117401fbea70f53f966"
+    },
+    {
+      "path": ".build/swift-owner-mutants-JCDz1D/O03-unknown-close-quarantine/tests/swift-reservation.test.mjs",
+      "sha256": "29f5437902b835c4e4b04f12ceff35fbd10ea061956fe250cc9a515650b9510d"
+    },
+    {
+      "path": ".build/swift-owner-mutants-JCDz1D/O03-unknown-close-quarantine/workflow/contracts.mjs",
+      "sha256": "c28a3ee3db6e9a936cd58fca8b8ee3f2744ca25c259e2ea278b3b09cdbb73d82"
+    },
+    {
+      "path": ".build/swift-owner-mutants-JCDz1D/O04-output-retention-cap/canonical/canonical-json-v1.mjs",
+      "sha256": "d1049a26d2bea0d14e959c0af22af15b975345091c5fa5360e8bd685637f8e59"
+    },
+    {
+      "path": ".build/swift-owner-mutants-JCDz1D/O04-output-retention-cap/hosts/repository/snapshot-contract.mjs",
+      "sha256": "2b52c23bac3a817769b7892eed71baba79cb81954b6a63724d107a9c258ba13f"
+    },
+    {
+      "path": ".build/swift-owner-mutants-JCDz1D/O04-output-retention-cap/hosts/swift-verifier/owned-child.mjs",
+      "sha256": "38ed1a4e461705891a32bd222bed487c359a4f3bbcc8eedd5a0bf8ed6168827b"
+    },
+    {
+      "path": ".build/swift-owner-mutants-JCDz1D/O04-output-retention-cap/hosts/swift-verifier/protocol.mjs",
+      "sha256": "7557d81836f263c13e06ac7613ebfa61ce7fbeeb7b0f7db98889473806f322cc"
+    },
+    {
+      "path": ".build/swift-owner-mutants-JCDz1D/O04-output-retention-cap/hosts/swift-verifier/reservation.mjs",
+      "sha256": "6d7573d23a3d2b0ecdb4b396cb58f4f9ae8e5997190616c08c1b93bd0ab376fd"
+    },
+    {
+      "path": ".build/swift-owner-mutants-JCDz1D/O04-output-retention-cap/stderr.txt",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": ".build/swift-owner-mutants-JCDz1D/O04-output-retention-cap/stdout.txt",
+      "sha256": "3604dacf25f811bbedd1458244f0e6b27112231408a296b9483c9dbc7615274a"
+    },
+    {
+      "path": ".build/swift-owner-mutants-JCDz1D/O04-output-retention-cap/tests/swift-owned-child.test.mjs",
+      "sha256": "06eb398528823100f13487052d9c864ce006df8e84dfb117401fbea70f53f966"
+    },
+    {
+      "path": ".build/swift-owner-mutants-JCDz1D/O04-output-retention-cap/tests/swift-reservation.test.mjs",
+      "sha256": "29f5437902b835c4e4b04f12ceff35fbd10ea061956fe250cc9a515650b9510d"
+    },
+    {
+      "path": ".build/swift-owner-mutants-JCDz1D/O04-output-retention-cap/workflow/contracts.mjs",
+      "sha256": "c28a3ee3db6e9a936cd58fca8b8ee3f2744ca25c259e2ea278b3b09cdbb73d82"
+    },
+    {
+      "path": ".build/swift-owner-mutants-JCDz1D/R01-parent-sync/canonical/canonical-json-v1.mjs",
+      "sha256": "d1049a26d2bea0d14e959c0af22af15b975345091c5fa5360e8bd685637f8e59"
+    },
+    {
+      "path": ".build/swift-owner-mutants-JCDz1D/R01-parent-sync/hosts/repository/snapshot-contract.mjs",
+      "sha256": "2b52c23bac3a817769b7892eed71baba79cb81954b6a63724d107a9c258ba13f"
+    },
+    {
+      "path": ".build/swift-owner-mutants-JCDz1D/R01-parent-sync/hosts/swift-verifier/owned-child.mjs",
+      "sha256": "0304290bb6cd42074e088ff2026f3f21d3d401af1aeb4e6efb676bdeecd42af7"
+    },
+    {
+      "path": ".build/swift-owner-mutants-JCDz1D/R01-parent-sync/hosts/swift-verifier/protocol.mjs",
+      "sha256": "7557d81836f263c13e06ac7613ebfa61ce7fbeeb7b0f7db98889473806f322cc"
+    },
+    {
+      "path": ".build/swift-owner-mutants-JCDz1D/R01-parent-sync/hosts/swift-verifier/reservation.mjs",
+      "sha256": "beaca6ca287f7228777cf561c5568f30b1f49f0f5b50f2f37c4ce6474a395acf"
+    },
+    {
+      "path": ".build/swift-owner-mutants-JCDz1D/R01-parent-sync/stderr.txt",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": ".build/swift-owner-mutants-JCDz1D/R01-parent-sync/stdout.txt",
+      "sha256": "887675164205f52e48009c7de616613b175fa58631dca13e194c0e02318f6589"
+    },
+    {
+      "path": ".build/swift-owner-mutants-JCDz1D/R01-parent-sync/tests/swift-owned-child.test.mjs",
+      "sha256": "06eb398528823100f13487052d9c864ce006df8e84dfb117401fbea70f53f966"
+    },
+    {
+      "path": ".build/swift-owner-mutants-JCDz1D/R01-parent-sync/tests/swift-reservation.test.mjs",
+      "sha256": "29f5437902b835c4e4b04f12ceff35fbd10ea061956fe250cc9a515650b9510d"
+    },
+    {
+      "path": ".build/swift-owner-mutants-JCDz1D/R01-parent-sync/workflow/contracts.mjs",
+      "sha256": "c28a3ee3db6e9a936cd58fca8b8ee3f2744ca25c259e2ea278b3b09cdbb73d82"
+    },
+    {
+      "path": ".build/swift-owner-mutants-JCDz1D/R02-marker-content-identity/canonical/canonical-json-v1.mjs",
+      "sha256": "d1049a26d2bea0d14e959c0af22af15b975345091c5fa5360e8bd685637f8e59"
+    },
+    {
+      "path": ".build/swift-owner-mutants-JCDz1D/R02-marker-content-identity/hosts/repository/snapshot-contract.mjs",
+      "sha256": "2b52c23bac3a817769b7892eed71baba79cb81954b6a63724d107a9c258ba13f"
+    },
+    {
+      "path": ".build/swift-owner-mutants-JCDz1D/R02-marker-content-identity/hosts/swift-verifier/owned-child.mjs",
+      "sha256": "0304290bb6cd42074e088ff2026f3f21d3d401af1aeb4e6efb676bdeecd42af7"
+    },
+    {
+      "path": ".build/swift-owner-mutants-JCDz1D/R02-marker-content-identity/hosts/swift-verifier/protocol.mjs",
+      "sha256": "7557d81836f263c13e06ac7613ebfa61ce7fbeeb7b0f7db98889473806f322cc"
+    },
+    {
+      "path": ".build/swift-owner-mutants-JCDz1D/R02-marker-content-identity/hosts/swift-verifier/reservation.mjs",
+      "sha256": "8809fe4cd135304d2d912ff4bcdd71d3a6f52ebb3a9095d250328bb99cf44632"
+    },
+    {
+      "path": ".build/swift-owner-mutants-JCDz1D/R02-marker-content-identity/stderr.txt",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": ".build/swift-owner-mutants-JCDz1D/R02-marker-content-identity/stdout.txt",
+      "sha256": "1e4bbeaa8053a883a8bcc2e3c27e615e3dd1d8d3c7b29d2093203d7bc6efc654"
+    },
+    {
+      "path": ".build/swift-owner-mutants-JCDz1D/R02-marker-content-identity/tests/swift-owned-child.test.mjs",
+      "sha256": "06eb398528823100f13487052d9c864ce006df8e84dfb117401fbea70f53f966"
+    },
+    {
+      "path": ".build/swift-owner-mutants-JCDz1D/R02-marker-content-identity/tests/swift-reservation.test.mjs",
+      "sha256": "29f5437902b835c4e4b04f12ceff35fbd10ea061956fe250cc9a515650b9510d"
+    },
+    {
+      "path": ".build/swift-owner-mutants-JCDz1D/R02-marker-content-identity/workflow/contracts.mjs",
+      "sha256": "c28a3ee3db6e9a936cd58fca8b8ee3f2744ca25c259e2ea278b3b09cdbb73d82"
+    },
+    {
+      "path": ".build/swift-owner-mutants-JCDz1D/results.json",
+      "sha256": "b06ebc2e4374b3ebd888ac9b7a513b02839ee35ac8384e21680b684afe0bcd79"
+    },
+    {
+      "path": ".build/swift-owner-mutants-JCDz1D/stderr.txt",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": ".build/swift-owner-mutants-JCDz1D/stdout.txt",
+      "sha256": "c4f1a3925dbd04717f883d0b0df88f10aae6a3d102d69474249256e1a1f320e4"
+    },
+    {
+      "path": ".build/swift-kernel-mutants-m8zLvU/J01-bound-identity/canonical/canonical-json-v1.mjs",
+      "sha256": "d1049a26d2bea0d14e959c0af22af15b975345091c5fa5360e8bd685637f8e59"
+    },
+    {
+      "path": ".build/swift-kernel-mutants-m8zLvU/J01-bound-identity/hosts/repository/snapshot-contract.mjs",
+      "sha256": "2b52c23bac3a817769b7892eed71baba79cb81954b6a63724d107a9c258ba13f"
+    },
+    {
+      "path": ".build/swift-kernel-mutants-m8zLvU/J01-bound-identity/hosts/swift-verifier/build.mjs",
+      "sha256": "ae063b627e853fc0b651e3db103dd1af01c6815374d36781e79270b7d48934fb"
+    },
+    {
+      "path": ".build/swift-kernel-mutants-m8zLvU/J01-bound-identity/hosts/swift-verifier/main.swift",
+      "sha256": "0d4e15b22b3231d990cfd5e7de1c52f4fdfebf4f4ab6da15b0ae22c74cea910c"
+    },
+    {
+      "path": ".build/swift-kernel-mutants-m8zLvU/J01-bound-identity/hosts/swift-verifier/protocol.mjs",
+      "sha256": "93ad9dafa29d62a4891a3bcc33f7825a187cd16865298603120fa192751eee00"
+    },
+    {
+      "path": ".build/swift-kernel-mutants-m8zLvU/J01-bound-identity/integrations/veritas/import-manifest.json",
+      "sha256": "8207efbc465ec99f0c16a7a281c349bb7ce8819349dbbafe17534f72dd527bcb"
+    },
+    {
+      "path": ".build/swift-kernel-mutants-m8zLvU/J01-bound-identity/integrations/veritas/native/macos/CodenameVeritasFramework/Sources/VeritasCore/ArtifactSnapshot.swift",
+      "sha256": "013e796d11a844dda345f223894a8d76713b19b0f46f6a7f84019aa5b7bc0f22"
+    },
+    {
+      "path": ".build/swift-kernel-mutants-m8zLvU/J01-bound-identity/integrations/veritas/native/macos/CodenameVeritasFramework/Sources/VeritasCore/DeterministicChecks.swift",
+      "sha256": "4d234fd389895cf0a55bf7daf0f5d082077ab3677880165f7d0e1236a88be474"
+    },
+    {
+      "path": ".build/swift-kernel-mutants-m8zLvU/J01-bound-identity/integrations/veritas/native/macos/CodenameVeritasFramework/Sources/VeritasCore/StrictJSONDocumentValidator.swift",
+      "sha256": "bd6173e012890f2fde2e26be94c5e577cd9e098841bdad98a377b1c88dff1b2c"
+    },
+    {
+      "path": ".build/swift-kernel-mutants-m8zLvU/J01-bound-identity/stderr.txt",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": ".build/swift-kernel-mutants-m8zLvU/J01-bound-identity/stdout.txt",
+      "sha256": "a555706c62494ab5ade8a86cb41066205ff0e64b8dbed9d7f009ef94a9a692c9"
+    },
+    {
+      "path": ".build/swift-kernel-mutants-m8zLvU/J01-bound-identity/tests/native/swift-kernel.test.mjs",
+      "sha256": "e6726c94a1b7359c2e3042a0e8ddb71973255088da82373f7988cd3bb6873699"
+    },
+    {
+      "path": ".build/swift-kernel-mutants-m8zLvU/J01-bound-identity/tests/swift-kernel-protocol.test.mjs",
+      "sha256": "eb03a6358bbd2e4e9178fc6b722ec873e418264e6ccc6f7495e484181583dc1a"
+    },
+    {
+      "path": ".build/swift-kernel-mutants-m8zLvU/J01-bound-identity/workflow/contracts.mjs",
+      "sha256": "c28a3ee3db6e9a936cd58fca8b8ee3f2744ca25c259e2ea278b3b09cdbb73d82"
+    },
+    {
+      "path": ".build/swift-kernel-mutants-m8zLvU/J02-outcome-inventory/canonical/canonical-json-v1.mjs",
+      "sha256": "d1049a26d2bea0d14e959c0af22af15b975345091c5fa5360e8bd685637f8e59"
+    },
+    {
+      "path": ".build/swift-kernel-mutants-m8zLvU/J02-outcome-inventory/hosts/repository/snapshot-contract.mjs",
+      "sha256": "2b52c23bac3a817769b7892eed71baba79cb81954b6a63724d107a9c258ba13f"
+    },
+    {
+      "path": ".build/swift-kernel-mutants-m8zLvU/J02-outcome-inventory/hosts/swift-verifier/build.mjs",
+      "sha256": "ae063b627e853fc0b651e3db103dd1af01c6815374d36781e79270b7d48934fb"
+    },
+    {
+      "path": ".build/swift-kernel-mutants-m8zLvU/J02-outcome-inventory/hosts/swift-verifier/main.swift",
+      "sha256": "0d4e15b22b3231d990cfd5e7de1c52f4fdfebf4f4ab6da15b0ae22c74cea910c"
+    },
+    {
+      "path": ".build/swift-kernel-mutants-m8zLvU/J02-outcome-inventory/hosts/swift-verifier/protocol.mjs",
+      "sha256": "16eee3d4c962a15e23b9fb10d5805ee570f5fe8302cade0f03e46022925579ab"
+    },
+    {
+      "path": ".build/swift-kernel-mutants-m8zLvU/J02-outcome-inventory/integrations/veritas/import-manifest.json",
+      "sha256": "8207efbc465ec99f0c16a7a281c349bb7ce8819349dbbafe17534f72dd527bcb"
+    },
+    {
+      "path": ".build/swift-kernel-mutants-m8zLvU/J02-outcome-inventory/integrations/veritas/native/macos/CodenameVeritasFramework/Sources/VeritasCore/ArtifactSnapshot.swift",
+      "sha256": "013e796d11a844dda345f223894a8d76713b19b0f46f6a7f84019aa5b7bc0f22"
+    },
+    {
+      "path": ".build/swift-kernel-mutants-m8zLvU/J02-outcome-inventory/integrations/veritas/native/macos/CodenameVeritasFramework/Sources/VeritasCore/DeterministicChecks.swift",
+      "sha256": "4d234fd389895cf0a55bf7daf0f5d082077ab3677880165f7d0e1236a88be474"
+    },
+    {
+      "path": ".build/swift-kernel-mutants-m8zLvU/J02-outcome-inventory/integrations/veritas/native/macos/CodenameVeritasFramework/Sources/VeritasCore/StrictJSONDocumentValidator.swift",
+      "sha256": "bd6173e012890f2fde2e26be94c5e577cd9e098841bdad98a377b1c88dff1b2c"
+    },
+    {
+      "path": ".build/swift-kernel-mutants-m8zLvU/J02-outcome-inventory/stderr.txt",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": ".build/swift-kernel-mutants-m8zLvU/J02-outcome-inventory/stdout.txt",
+      "sha256": "f3666546d3adc004e9e1bebd9be383de7412c73f948f7651963d8e4d1be95694"
+    },
+    {
+      "path": ".build/swift-kernel-mutants-m8zLvU/J02-outcome-inventory/tests/native/swift-kernel.test.mjs",
+      "sha256": "e6726c94a1b7359c2e3042a0e8ddb71973255088da82373f7988cd3bb6873699"
+    },
+    {
+      "path": ".build/swift-kernel-mutants-m8zLvU/J02-outcome-inventory/tests/swift-kernel-protocol.test.mjs",
+      "sha256": "eb03a6358bbd2e4e9178fc6b722ec873e418264e6ccc6f7495e484181583dc1a"
+    },
+    {
+      "path": ".build/swift-kernel-mutants-m8zLvU/J02-outcome-inventory/workflow/contracts.mjs",
+      "sha256": "c28a3ee3db6e9a936cd58fca8b8ee3f2744ca25c259e2ea278b3b09cdbb73d82"
+    },
+    {
+      "path": ".build/swift-kernel-mutants-m8zLvU/J03-aggregate/canonical/canonical-json-v1.mjs",
+      "sha256": "d1049a26d2bea0d14e959c0af22af15b975345091c5fa5360e8bd685637f8e59"
+    },
+    {
+      "path": ".build/swift-kernel-mutants-m8zLvU/J03-aggregate/hosts/repository/snapshot-contract.mjs",
+      "sha256": "2b52c23bac3a817769b7892eed71baba79cb81954b6a63724d107a9c258ba13f"
+    },
+    {
+      "path": ".build/swift-kernel-mutants-m8zLvU/J03-aggregate/hosts/swift-verifier/build.mjs",
+      "sha256": "ae063b627e853fc0b651e3db103dd1af01c6815374d36781e79270b7d48934fb"
+    },
+    {
+      "path": ".build/swift-kernel-mutants-m8zLvU/J03-aggregate/hosts/swift-verifier/main.swift",
+      "sha256": "0d4e15b22b3231d990cfd5e7de1c52f4fdfebf4f4ab6da15b0ae22c74cea910c"
+    },
+    {
+      "path": ".build/swift-kernel-mutants-m8zLvU/J03-aggregate/hosts/swift-verifier/protocol.mjs",
+      "sha256": "d9101091a8565915c2b8e7081729b81cb756f59cc893f44287acc88531b71662"
+    },
+    {
+      "path": ".build/swift-kernel-mutants-m8zLvU/J03-aggregate/integrations/veritas/import-manifest.json",
+      "sha256": "8207efbc465ec99f0c16a7a281c349bb7ce8819349dbbafe17534f72dd527bcb"
+    },
+    {
+      "path": ".build/swift-kernel-mutants-m8zLvU/J03-aggregate/integrations/veritas/native/macos/CodenameVeritasFramework/Sources/VeritasCore/ArtifactSnapshot.swift",
+      "sha256": "013e796d11a844dda345f223894a8d76713b19b0f46f6a7f84019aa5b7bc0f22"
+    },
+    {
+      "path": ".build/swift-kernel-mutants-m8zLvU/J03-aggregate/integrations/veritas/native/macos/CodenameVeritasFramework/Sources/VeritasCore/DeterministicChecks.swift",
+      "sha256": "4d234fd389895cf0a55bf7daf0f5d082077ab3677880165f7d0e1236a88be474"
+    },
+    {
+      "path": ".build/swift-kernel-mutants-m8zLvU/J03-aggregate/integrations/veritas/native/macos/CodenameVeritasFramework/Sources/VeritasCore/StrictJSONDocumentValidator.swift",
+      "sha256": "bd6173e012890f2fde2e26be94c5e577cd9e098841bdad98a377b1c88dff1b2c"
+    },
+    {
+      "path": ".build/swift-kernel-mutants-m8zLvU/J03-aggregate/stderr.txt",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": ".build/swift-kernel-mutants-m8zLvU/J03-aggregate/stdout.txt",
+      "sha256": "2eedaeac4f7b5e1520bc73e458af51c5a921f28a61846243d79754a172a4f6e0"
+    },
+    {
+      "path": ".build/swift-kernel-mutants-m8zLvU/J03-aggregate/tests/native/swift-kernel.test.mjs",
+      "sha256": "e6726c94a1b7359c2e3042a0e8ddb71973255088da82373f7988cd3bb6873699"
+    },
+    {
+      "path": ".build/swift-kernel-mutants-m8zLvU/J03-aggregate/tests/swift-kernel-protocol.test.mjs",
+      "sha256": "eb03a6358bbd2e4e9178fc6b722ec873e418264e6ccc6f7495e484181583dc1a"
+    },
+    {
+      "path": ".build/swift-kernel-mutants-m8zLvU/J03-aggregate/workflow/contracts.mjs",
+      "sha256": "c28a3ee3db6e9a936cd58fca8b8ee3f2744ca25c259e2ea278b3b09cdbb73d82"
+    },
+    {
+      "path": ".build/swift-kernel-mutants-m8zLvU/N01-artifact-digest/.build/nisi-swift-kernel-pfD3UY/ArtifactSnapshot.swift",
+      "sha256": "013e796d11a844dda345f223894a8d76713b19b0f46f6a7f84019aa5b7bc0f22"
+    },
+    {
+      "path": ".build/swift-kernel-mutants-m8zLvU/N01-artifact-digest/.build/nisi-swift-kernel-pfD3UY/BuildIdentity.swift",
+      "sha256": "fe9e95dfe0e545f5e8fdfeea87f81c3e787b1058c39aa4dde861097d57727624"
+    },
+    {
+      "path": ".build/swift-kernel-mutants-m8zLvU/N01-artifact-digest/.build/nisi-swift-kernel-pfD3UY/DeterministicChecks.swift",
+      "sha256": "4d234fd389895cf0a55bf7daf0f5d082077ab3677880165f7d0e1236a88be474"
+    },
+    {
+      "path": ".build/swift-kernel-mutants-m8zLvU/N01-artifact-digest/.build/nisi-swift-kernel-pfD3UY/StrictJSONDocumentValidator.swift",
+      "sha256": "bd6173e012890f2fde2e26be94c5e577cd9e098841bdad98a377b1c88dff1b2c"
+    },
+    {
+      "path": ".build/swift-kernel-mutants-m8zLvU/N01-artifact-digest/.build/nisi-swift-kernel-pfD3UY/TemporaryDirectory.3ruBAK/.keep-directory",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": ".build/swift-kernel-mutants-m8zLvU/N01-artifact-digest/.build/nisi-swift-kernel-pfD3UY/build-commands.json",
+      "sha256": "7b7a9b9ada4d2b972c70d431e95a717d53086a498160f07d3a209144570e051b"
+    },
+    {
+      "path": ".build/swift-kernel-mutants-m8zLvU/N01-artifact-digest/.build/nisi-swift-kernel-pfD3UY/build-manifest.json",
+      "sha256": "e42ed7a63be28f49b21ea8051db429dd117e31a4a97446bcc4fae6915ba38897"
+    },
+    {
+      "path": ".build/swift-kernel-mutants-m8zLvU/N01-artifact-digest/.build/nisi-swift-kernel-pfD3UY/main.swift",
+      "sha256": "aac088a32e4fc58e3221e3d46ccba4aaedb59d1519f36ecb381241d44498f0db"
+    },
+    {
+      "path": ".build/swift-kernel-mutants-m8zLvU/N01-artifact-digest/.build/nisi-swift-kernel-pfD3UY/native-fixture-results.json",
+      "sha256": "da3cad080efb17baed3a3b583a6d76ca35db6c59eb40a4188142c27f22a7bfb4"
+    },
+    {
+      "path": ".build/swift-kernel-mutants-m8zLvU/N01-artifact-digest/.build/nisi-swift-kernel-pfD3UY/nisi-artifact-verifier",
+      "sha256": "1b541d74de490df3f2783b6372f72b0343a8d62023b40d9690b84a0853fc9104"
+    },
+    {
+      "path": ".build/swift-kernel-mutants-m8zLvU/N01-artifact-digest/canonical/canonical-json-v1.mjs",
+      "sha256": "d1049a26d2bea0d14e959c0af22af15b975345091c5fa5360e8bd685637f8e59"
+    },
+    {
+      "path": ".build/swift-kernel-mutants-m8zLvU/N01-artifact-digest/hosts/repository/snapshot-contract.mjs",
+      "sha256": "2b52c23bac3a817769b7892eed71baba79cb81954b6a63724d107a9c258ba13f"
+    },
+    {
+      "path": ".build/swift-kernel-mutants-m8zLvU/N01-artifact-digest/hosts/swift-verifier/build.mjs",
+      "sha256": "ae063b627e853fc0b651e3db103dd1af01c6815374d36781e79270b7d48934fb"
+    },
+    {
+      "path": ".build/swift-kernel-mutants-m8zLvU/N01-artifact-digest/hosts/swift-verifier/main.swift",
+      "sha256": "aac088a32e4fc58e3221e3d46ccba4aaedb59d1519f36ecb381241d44498f0db"
+    },
+    {
+      "path": ".build/swift-kernel-mutants-m8zLvU/N01-artifact-digest/hosts/swift-verifier/protocol.mjs",
+      "sha256": "7557d81836f263c13e06ac7613ebfa61ce7fbeeb7b0f7db98889473806f322cc"
+    },
+    {
+      "path": ".build/swift-kernel-mutants-m8zLvU/N01-artifact-digest/integrations/veritas/import-manifest.json",
+      "sha256": "8207efbc465ec99f0c16a7a281c349bb7ce8819349dbbafe17534f72dd527bcb"
+    },
+    {
+      "path": ".build/swift-kernel-mutants-m8zLvU/N01-artifact-digest/integrations/veritas/native/macos/CodenameVeritasFramework/Sources/VeritasCore/ArtifactSnapshot.swift",
+      "sha256": "013e796d11a844dda345f223894a8d76713b19b0f46f6a7f84019aa5b7bc0f22"
+    },
+    {
+      "path": ".build/swift-kernel-mutants-m8zLvU/N01-artifact-digest/integrations/veritas/native/macos/CodenameVeritasFramework/Sources/VeritasCore/DeterministicChecks.swift",
+      "sha256": "4d234fd389895cf0a55bf7daf0f5d082077ab3677880165f7d0e1236a88be474"
+    },
+    {
+      "path": ".build/swift-kernel-mutants-m8zLvU/N01-artifact-digest/integrations/veritas/native/macos/CodenameVeritasFramework/Sources/VeritasCore/StrictJSONDocumentValidator.swift",
+      "sha256": "bd6173e012890f2fde2e26be94c5e577cd9e098841bdad98a377b1c88dff1b2c"
+    },
+    {
+      "path": ".build/swift-kernel-mutants-m8zLvU/N01-artifact-digest/stderr.txt",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": ".build/swift-kernel-mutants-m8zLvU/N01-artifact-digest/stdout.txt",
+      "sha256": "10aa6cccbb5e93c6b180aa2766fbce3dd8ab48da676057ee9acf597d28581781"
+    },
+    {
+      "path": ".build/swift-kernel-mutants-m8zLvU/N01-artifact-digest/tests/native/swift-kernel.test.mjs",
+      "sha256": "e6726c94a1b7359c2e3042a0e8ddb71973255088da82373f7988cd3bb6873699"
+    },
+    {
+      "path": ".build/swift-kernel-mutants-m8zLvU/N01-artifact-digest/tests/swift-kernel-protocol.test.mjs",
+      "sha256": "eb03a6358bbd2e4e9178fc6b722ec873e418264e6ccc6f7495e484181583dc1a"
+    },
+    {
+      "path": ".build/swift-kernel-mutants-m8zLvU/N01-artifact-digest/workflow/contracts.mjs",
+      "sha256": "c28a3ee3db6e9a936cd58fca8b8ee3f2744ca25c259e2ea278b3b09cdbb73d82"
+    },
+    {
+      "path": ".build/swift-kernel-mutants-m8zLvU/N02-source-identity/.build/nisi-swift-kernel-sHW4Yp/ArtifactSnapshot.swift",
+      "sha256": "013e796d11a844dda345f223894a8d76713b19b0f46f6a7f84019aa5b7bc0f22"
+    },
+    {
+      "path": ".build/swift-kernel-mutants-m8zLvU/N02-source-identity/.build/nisi-swift-kernel-sHW4Yp/BuildIdentity.swift",
+      "sha256": "b557339016cd458f420a279dd61f0f31041137d9954ae272a53905c1dfee4ebb"
+    },
+    {
+      "path": ".build/swift-kernel-mutants-m8zLvU/N02-source-identity/.build/nisi-swift-kernel-sHW4Yp/DeterministicChecks.swift",
+      "sha256": "4d234fd389895cf0a55bf7daf0f5d082077ab3677880165f7d0e1236a88be474"
+    },
+    {
+      "path": ".build/swift-kernel-mutants-m8zLvU/N02-source-identity/.build/nisi-swift-kernel-sHW4Yp/StrictJSONDocumentValidator.swift",
+      "sha256": "bd6173e012890f2fde2e26be94c5e577cd9e098841bdad98a377b1c88dff1b2c"
+    },
+    {
+      "path": ".build/swift-kernel-mutants-m8zLvU/N02-source-identity/.build/nisi-swift-kernel-sHW4Yp/TemporaryDirectory.qEomHA/.keep-directory",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": ".build/swift-kernel-mutants-m8zLvU/N02-source-identity/.build/nisi-swift-kernel-sHW4Yp/build-commands.json",
+      "sha256": "8c89c3664c4aabc5c66bad11cd077b7abd9521aaefba4a548e27cc17ca93cd44"
+    },
+    {
+      "path": ".build/swift-kernel-mutants-m8zLvU/N02-source-identity/.build/nisi-swift-kernel-sHW4Yp/build-manifest.json",
+      "sha256": "b965003d9dcaf8dd33e9b3a07e06d0b51d1d4fb781997e6cb26a32cbebba02fb"
+    },
+    {
+      "path": ".build/swift-kernel-mutants-m8zLvU/N02-source-identity/.build/nisi-swift-kernel-sHW4Yp/main.swift",
+      "sha256": "2cf73b3599c9c1b427aea41b4fbc41df719bff63ed79626acbae33567e7f61aa"
+    },
+    {
+      "path": ".build/swift-kernel-mutants-m8zLvU/N02-source-identity/.build/nisi-swift-kernel-sHW4Yp/native-fixture-results.json",
+      "sha256": "bdf6785350976d11b6985cfbcfdcec9bc0e626c2de9ee549cd36cbb20ae5c3e8"
+    },
+    {
+      "path": ".build/swift-kernel-mutants-m8zLvU/N02-source-identity/.build/nisi-swift-kernel-sHW4Yp/nisi-artifact-verifier",
+      "sha256": "822fdb12d6836c757105b55a623c210d886a9761d7d565d70f7abd0cc8b38fec"
+    },
+    {
+      "path": ".build/swift-kernel-mutants-m8zLvU/N02-source-identity/canonical/canonical-json-v1.mjs",
+      "sha256": "d1049a26d2bea0d14e959c0af22af15b975345091c5fa5360e8bd685637f8e59"
+    },
+    {
+      "path": ".build/swift-kernel-mutants-m8zLvU/N02-source-identity/hosts/repository/snapshot-contract.mjs",
+      "sha256": "2b52c23bac3a817769b7892eed71baba79cb81954b6a63724d107a9c258ba13f"
+    },
+    {
+      "path": ".build/swift-kernel-mutants-m8zLvU/N02-source-identity/hosts/swift-verifier/build.mjs",
+      "sha256": "ae063b627e853fc0b651e3db103dd1af01c6815374d36781e79270b7d48934fb"
+    },
+    {
+      "path": ".build/swift-kernel-mutants-m8zLvU/N02-source-identity/hosts/swift-verifier/main.swift",
+      "sha256": "2cf73b3599c9c1b427aea41b4fbc41df719bff63ed79626acbae33567e7f61aa"
+    },
+    {
+      "path": ".build/swift-kernel-mutants-m8zLvU/N02-source-identity/hosts/swift-verifier/protocol.mjs",
+      "sha256": "7557d81836f263c13e06ac7613ebfa61ce7fbeeb7b0f7db98889473806f322cc"
+    },
+    {
+      "path": ".build/swift-kernel-mutants-m8zLvU/N02-source-identity/integrations/veritas/import-manifest.json",
+      "sha256": "8207efbc465ec99f0c16a7a281c349bb7ce8819349dbbafe17534f72dd527bcb"
+    },
+    {
+      "path": ".build/swift-kernel-mutants-m8zLvU/N02-source-identity/integrations/veritas/native/macos/CodenameVeritasFramework/Sources/VeritasCore/ArtifactSnapshot.swift",
+      "sha256": "013e796d11a844dda345f223894a8d76713b19b0f46f6a7f84019aa5b7bc0f22"
+    },
+    {
+      "path": ".build/swift-kernel-mutants-m8zLvU/N02-source-identity/integrations/veritas/native/macos/CodenameVeritasFramework/Sources/VeritasCore/DeterministicChecks.swift",
+      "sha256": "4d234fd389895cf0a55bf7daf0f5d082077ab3677880165f7d0e1236a88be474"
+    },
+    {
+      "path": ".build/swift-kernel-mutants-m8zLvU/N02-source-identity/integrations/veritas/native/macos/CodenameVeritasFramework/Sources/VeritasCore/StrictJSONDocumentValidator.swift",
+      "sha256": "bd6173e012890f2fde2e26be94c5e577cd9e098841bdad98a377b1c88dff1b2c"
+    },
+    {
+      "path": ".build/swift-kernel-mutants-m8zLvU/N02-source-identity/stderr.txt",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": ".build/swift-kernel-mutants-m8zLvU/N02-source-identity/stdout.txt",
+      "sha256": "b9c212a0a8f0aba67a663f68fe5fbe41d6054c3978d5e7e97da2b5116b6be607"
+    },
+    {
+      "path": ".build/swift-kernel-mutants-m8zLvU/N02-source-identity/tests/native/swift-kernel.test.mjs",
+      "sha256": "e6726c94a1b7359c2e3042a0e8ddb71973255088da82373f7988cd3bb6873699"
+    },
+    {
+      "path": ".build/swift-kernel-mutants-m8zLvU/N02-source-identity/tests/swift-kernel-protocol.test.mjs",
+      "sha256": "eb03a6358bbd2e4e9178fc6b722ec873e418264e6ccc6f7495e484181583dc1a"
+    },
+    {
+      "path": ".build/swift-kernel-mutants-m8zLvU/N02-source-identity/workflow/contracts.mjs",
+      "sha256": "c28a3ee3db6e9a936cd58fca8b8ee3f2744ca25c259e2ea278b3b09cdbb73d82"
+    },
+    {
+      "path": ".build/swift-kernel-mutants-m8zLvU/N03-artifact-limit/.build/nisi-swift-kernel-5Wd5Xx/ArtifactSnapshot.swift",
+      "sha256": "013e796d11a844dda345f223894a8d76713b19b0f46f6a7f84019aa5b7bc0f22"
+    },
+    {
+      "path": ".build/swift-kernel-mutants-m8zLvU/N03-artifact-limit/.build/nisi-swift-kernel-5Wd5Xx/BuildIdentity.swift",
+      "sha256": "4b1898064b6a0a77caac68eae9f485997e20e1db3258505807bc55577652aa85"
+    },
+    {
+      "path": ".build/swift-kernel-mutants-m8zLvU/N03-artifact-limit/.build/nisi-swift-kernel-5Wd5Xx/DeterministicChecks.swift",
+      "sha256": "4d234fd389895cf0a55bf7daf0f5d082077ab3677880165f7d0e1236a88be474"
+    },
+    {
+      "path": ".build/swift-kernel-mutants-m8zLvU/N03-artifact-limit/.build/nisi-swift-kernel-5Wd5Xx/StrictJSONDocumentValidator.swift",
+      "sha256": "bd6173e012890f2fde2e26be94c5e577cd9e098841bdad98a377b1c88dff1b2c"
+    },
+    {
+      "path": ".build/swift-kernel-mutants-m8zLvU/N03-artifact-limit/.build/nisi-swift-kernel-5Wd5Xx/TemporaryDirectory.LZ1MN0/.keep-directory",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": ".build/swift-kernel-mutants-m8zLvU/N03-artifact-limit/.build/nisi-swift-kernel-5Wd5Xx/build-commands.json",
+      "sha256": "bececb98ba28aa5aa824983f848b20b9c179721cfebee7b0fc7c0fba57a11114"
+    },
+    {
+      "path": ".build/swift-kernel-mutants-m8zLvU/N03-artifact-limit/.build/nisi-swift-kernel-5Wd5Xx/build-manifest.json",
+      "sha256": "109520023767b32a364ce41c9e8e61d6fd9128c794287781cdd60ae0125d3a81"
+    },
+    {
+      "path": ".build/swift-kernel-mutants-m8zLvU/N03-artifact-limit/.build/nisi-swift-kernel-5Wd5Xx/main.swift",
+      "sha256": "ec185edf8de049521374fb1ab809c558513b052bd74f8959c091b431d5e511c4"
+    },
+    {
+      "path": ".build/swift-kernel-mutants-m8zLvU/N03-artifact-limit/.build/nisi-swift-kernel-5Wd5Xx/native-fixture-results.json",
+      "sha256": "c97e0829395bde21bacb673e1c755cc3308460cc789519efd1abbfc78568d816"
+    },
+    {
+      "path": ".build/swift-kernel-mutants-m8zLvU/N03-artifact-limit/.build/nisi-swift-kernel-5Wd5Xx/nisi-artifact-verifier",
+      "sha256": "13534a65a3836c2557ae90cbe2cda4bf33eb391bff4a557aab9ecd6a1a09fe14"
+    },
+    {
+      "path": ".build/swift-kernel-mutants-m8zLvU/N03-artifact-limit/canonical/canonical-json-v1.mjs",
+      "sha256": "d1049a26d2bea0d14e959c0af22af15b975345091c5fa5360e8bd685637f8e59"
+    },
+    {
+      "path": ".build/swift-kernel-mutants-m8zLvU/N03-artifact-limit/hosts/repository/snapshot-contract.mjs",
+      "sha256": "2b52c23bac3a817769b7892eed71baba79cb81954b6a63724d107a9c258ba13f"
+    },
+    {
+      "path": ".build/swift-kernel-mutants-m8zLvU/N03-artifact-limit/hosts/swift-verifier/build.mjs",
+      "sha256": "ae063b627e853fc0b651e3db103dd1af01c6815374d36781e79270b7d48934fb"
+    },
+    {
+      "path": ".build/swift-kernel-mutants-m8zLvU/N03-artifact-limit/hosts/swift-verifier/main.swift",
+      "sha256": "ec185edf8de049521374fb1ab809c558513b052bd74f8959c091b431d5e511c4"
+    },
+    {
+      "path": ".build/swift-kernel-mutants-m8zLvU/N03-artifact-limit/hosts/swift-verifier/protocol.mjs",
+      "sha256": "7557d81836f263c13e06ac7613ebfa61ce7fbeeb7b0f7db98889473806f322cc"
+    },
+    {
+      "path": ".build/swift-kernel-mutants-m8zLvU/N03-artifact-limit/integrations/veritas/import-manifest.json",
+      "sha256": "8207efbc465ec99f0c16a7a281c349bb7ce8819349dbbafe17534f72dd527bcb"
+    },
+    {
+      "path": ".build/swift-kernel-mutants-m8zLvU/N03-artifact-limit/integrations/veritas/native/macos/CodenameVeritasFramework/Sources/VeritasCore/ArtifactSnapshot.swift",
+      "sha256": "013e796d11a844dda345f223894a8d76713b19b0f46f6a7f84019aa5b7bc0f22"
+    },
+    {
+      "path": ".build/swift-kernel-mutants-m8zLvU/N03-artifact-limit/integrations/veritas/native/macos/CodenameVeritasFramework/Sources/VeritasCore/DeterministicChecks.swift",
+      "sha256": "4d234fd389895cf0a55bf7daf0f5d082077ab3677880165f7d0e1236a88be474"
+    },
+    {
+      "path": ".build/swift-kernel-mutants-m8zLvU/N03-artifact-limit/integrations/veritas/native/macos/CodenameVeritasFramework/Sources/VeritasCore/StrictJSONDocumentValidator.swift",
+      "sha256": "bd6173e012890f2fde2e26be94c5e577cd9e098841bdad98a377b1c88dff1b2c"
+    },
+    {
+      "path": ".build/swift-kernel-mutants-m8zLvU/N03-artifact-limit/stderr.txt",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": ".build/swift-kernel-mutants-m8zLvU/N03-artifact-limit/stdout.txt",
+      "sha256": "78b9724481b368de7d80fdecae1d9ca1e51bed0e99612adab5e7c7f9847941b2"
+    },
+    {
+      "path": ".build/swift-kernel-mutants-m8zLvU/N03-artifact-limit/tests/native/swift-kernel.test.mjs",
+      "sha256": "e6726c94a1b7359c2e3042a0e8ddb71973255088da82373f7988cd3bb6873699"
+    },
+    {
+      "path": ".build/swift-kernel-mutants-m8zLvU/N03-artifact-limit/tests/swift-kernel-protocol.test.mjs",
+      "sha256": "eb03a6358bbd2e4e9178fc6b722ec873e418264e6ccc6f7495e484181583dc1a"
+    },
+    {
+      "path": ".build/swift-kernel-mutants-m8zLvU/N03-artifact-limit/workflow/contracts.mjs",
+      "sha256": "c28a3ee3db6e9a936cd58fca8b8ee3f2744ca25c259e2ea278b3b09cdbb73d82"
+    },
+    {
+      "path": ".build/swift-kernel-mutants-m8zLvU/results.json",
+      "sha256": "7104c73786bb524e7493e9ab1144711a05e7d94545ba18648799f9733784ee72"
+    },
+    {
+      "path": ".build/swift-kernel-mutants-m8zLvU/stderr.txt",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": ".build/swift-kernel-mutants-m8zLvU/stdout.txt",
+      "sha256": "32c02f2b6667067edc9aa66700408f9e8f05b930e50b8830e3e03de47237ccaf"
+    }
+  ],
+  "historicalEquationUnchanged": true,
+  "historicalEquationSha256": "32a43e7c243f2cc7b2d05435ec06ab9d4ef057c6ef8795daf9d8b3caae461540",
+  "historicalOriginalRoadmapUnchanged": true,
+  "historicalOriginalRoadmapSha256": "bcd9503e2243c7b6c18ccf2533dc7c3c8ce21db6f134b3430a46f6e6234199cc",
+  "build": {
+    "schemaVersion": 1,
+    "status": "COMPILED_FIXED_KERNEL_ONLY",
+    "directory": "/Users/louiscalata/nisi-next-private/.build/nisi-swift-kernel-KI3CAI",
+    "sourceFiles": [
+      {
+        "path": "integrations/veritas/native/macos/CodenameVeritasFramework/Sources/VeritasCore/ArtifactSnapshot.swift",
+        "sha256": "013e796d11a844dda345f223894a8d76713b19b0f46f6a7f84019aa5b7bc0f22"
+      },
+      {
+        "path": "integrations/veritas/native/macos/CodenameVeritasFramework/Sources/VeritasCore/StrictJSONDocumentValidator.swift",
+        "sha256": "bd6173e012890f2fde2e26be94c5e577cd9e098841bdad98a377b1c88dff1b2c"
+      },
+      {
+        "path": "integrations/veritas/native/macos/CodenameVeritasFramework/Sources/VeritasCore/DeterministicChecks.swift",
+        "sha256": "4d234fd389895cf0a55bf7daf0f5d082077ab3677880165f7d0e1236a88be474"
+      },
+      {
+        "path": "hosts/swift-verifier/main.swift",
+        "sha256": "0d4e15b22b3231d990cfd5e7de1c52f4fdfebf4f4ab6da15b0ae22c74cea910c"
+      }
+    ],
+    "sourceFingerprint": "dc50ee94c62f52ef9030bf1ff082b1c86aea0a3722397e82948d6a8986cec252",
+    "compiler": "/Applications/Xcode-27.0.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/swiftc",
+    "compilerVersion": "Apple Swift version 6.4 (swiftlang-6.4.0.27.1 clang-2100.3.27.1)\nTarget: arm64-apple-macosx27.0.0",
+    "compilerSha256": "63f3ca45b1cc6ee81ccf2b6a11e9de3e7deeef85438915403ad5fa0bd5bccde8",
+    "sdk": "/Applications/Xcode-27.0.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX27.0.sdk",
+    "argv": [
+      "-swift-version",
+      "6",
+      "-O",
+      "-sdk",
+      "/Applications/Xcode-27.0.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX27.0.sdk",
+      "-target",
+      "arm64-apple-macosx27.0",
+      "-module-name",
+      "NisiArtifactVerifier",
+      "ArtifactSnapshot.swift",
+      "StrictJSONDocumentValidator.swift",
+      "DeterministicChecks.swift",
+      "main.swift",
+      "BuildIdentity.swift",
+      "-o",
+      "/Users/louiscalata/nisi-next-private/.build/nisi-swift-kernel-KI3CAI/nisi-artifact-verifier"
+    ],
+    "identitySha256": "1eeca09cb541698d1867d1787e6ea89df06b667502771db09354701b70c0c72f",
+    "executable": "/Users/louiscalata/nisi-next-private/.build/nisi-swift-kernel-KI3CAI/nisi-artifact-verifier",
+    "executableSha256": "3d8abbd653fabe9ac40da5f49557802317c5cc284fcb2746fb680ee67a656d62",
+    "hostEnvironment": {
+      "PATH": "/usr/bin:/bin",
+      "LANG": "C",
+      "LC_ALL": "C",
+      "TMPDIR": "/Users/louiscalata/nisi-next-private/.build/nisi-swift-kernel-KI3CAI"
+    },
+    "generatedAt": "2026-09-12T19:18:13.681Z",
+    "authorizing": false
+  },
+  "nativeOperations": 12,
+  "nativeStarted": 9,
+  "nativeClosed": 9,
+  "reservationPresent": false,
+  "ownerMutants": {
+    "schemaVersion": 1,
+    "scope": "FOUR_LIFECYCLE_DOUBLE_AND_TWO_REAL_LOCAL_RESERVATION_MUTANTS_ONLY",
+    "controlExitCode": 0,
+    "evidenceDirectory": "/Users/louiscalata/nisi-next-private/.build/swift-owner-mutants-JCDz1D",
+    "sourceHashes": [
+      {
+        "file": "hosts/swift-verifier/owned-child.mjs",
+        "sha256": "0304290bb6cd42074e088ff2026f3f21d3d401af1aeb4e6efb676bdeecd42af7"
+      },
+      {
+        "file": "hosts/swift-verifier/reservation.mjs",
+        "sha256": "6d7573d23a3d2b0ecdb4b396cb58f4f9ae8e5997190616c08c1b93bd0ab376fd"
+      },
+      {
+        "file": "tests/swift-owned-child.test.mjs",
+        "sha256": "06eb398528823100f13487052d9c864ce006df8e84dfb117401fbea70f53f966"
+      },
+      {
+        "file": "tests/swift-reservation.test.mjs",
+        "sha256": "29f5437902b835c4e4b04f12ceff35fbd10ea061956fe250cc9a515650b9510d"
+      },
+      {
+        "file": "hosts/swift-verifier/protocol.mjs",
+        "sha256": "7557d81836f263c13e06ac7613ebfa61ce7fbeeb7b0f7db98889473806f322cc"
+      },
+      {
+        "file": "hosts/repository/snapshot-contract.mjs",
+        "sha256": "2b52c23bac3a817769b7892eed71baba79cb81954b6a63724d107a9c258ba13f"
+      },
+      {
+        "file": "workflow/contracts.mjs",
+        "sha256": "c28a3ee3db6e9a936cd58fca8b8ee3f2744ca25c259e2ea278b3b09cdbb73d82"
+      },
+      {
+        "file": "canonical/canonical-json-v1.mjs",
+        "sha256": "d1049a26d2bea0d14e959c0af22af15b975345091c5fa5360e8bd685637f8e59"
+      }
+    ],
+    "results": [
+      {
+        "id": "O01-late-spawn-containment",
+        "expectedFailures": [
+          "spawn arriving after grace finalization is contained without rewriting the old observation"
+        ],
+        "exitCode": 1,
+        "signal": null,
+        "errorCode": null,
+        "failedChecks": 1,
+        "failures": [
+          "spawn arriving after grace finalization is contained without rewriting the old observation"
+        ],
+        "caught": true
+      },
+      {
+        "id": "O02-final-duration",
+        "expectedFailures": [
+          "published duration includes the final monotonic sample rather than a previous sample"
+        ],
+        "exitCode": 1,
+        "signal": null,
+        "errorCode": null,
+        "failedChecks": 1,
+        "failures": [
+          "published duration includes the final monotonic sample rather than a previous sample"
+        ],
+        "caught": true
+      },
+      {
+        "id": "O03-unknown-close-quarantine",
+        "expectedFailures": [
+          "unknown close after abort quarantines even after a late close or additional output",
+          "spawn arriving after grace finalization is contained without rewriting the old observation"
+        ],
+        "exitCode": 1,
+        "signal": null,
+        "errorCode": null,
+        "failedChecks": 2,
+        "failures": [
+          "unknown close after abort quarantines even after a late close or additional output",
+          "spawn arriving after grace finalization is contained without rewriting the old observation"
+        ],
+        "caught": true
+      },
+      {
+        "id": "O04-output-retention-cap",
+        "expectedFailures": [
+          "output overflow retains bounded bytes and continues counting until close"
+        ],
+        "exitCode": 1,
+        "signal": null,
+        "errorCode": null,
+        "failedChecks": 1,
+        "failures": [
+          "output overflow retains bounded bytes and continues counting until close"
+        ],
+        "caught": true
+      },
+      {
+        "id": "R01-parent-sync",
+        "expectedFailures": [
+          "parent directory sync failure leaves an uncertain marker before any launch"
+        ],
+        "exitCode": 1,
+        "signal": null,
+        "errorCode": null,
+        "failedChecks": 1,
+        "failures": [
+          "parent directory sync failure leaves an uncertain marker before any launch"
+        ],
+        "caught": true
+      },
+      {
+        "id": "R02-marker-content-identity",
+        "expectedFailures": [
+          "same-length marker corruption is detected by content identity before release"
+        ],
+        "exitCode": 1,
+        "signal": null,
+        "errorCode": null,
+        "failedChecks": 1,
+        "failures": [
+          "same-length marker corruption is detected by content identity before release"
+        ],
+        "caught": true
+      }
+    ],
+    "platform": "darwin",
+    "architecture": "arm64",
+    "nodeVersion": "v24.18.0",
+    "nativeProcessExecuted": false,
+    "wholeHostVerified": false,
+    "authorizing": false
+  },
+  "kernelMutants": {
+    "schemaVersion": 1,
+    "scope": "THREE_COMPILED_KERNEL_AND_THREE_READER_MUTANTS_ONLY",
+    "controlExitCode": 0,
+    "evidenceDirectory": "/Users/louiscalata/nisi-next-private/.build/swift-kernel-mutants-m8zLvU",
+    "sourceHashes": [
+      {
+        "file": "hosts/swift-verifier/main.swift",
+        "sha256": "0d4e15b22b3231d990cfd5e7de1c52f4fdfebf4f4ab6da15b0ae22c74cea910c"
+      },
+      {
+        "file": "hosts/swift-verifier/protocol.mjs",
+        "sha256": "7557d81836f263c13e06ac7613ebfa61ce7fbeeb7b0f7db98889473806f322cc"
+      },
+      {
+        "file": "hosts/swift-verifier/build.mjs",
+        "sha256": "ae063b627e853fc0b651e3db103dd1af01c6815374d36781e79270b7d48934fb"
+      },
+      {
+        "file": "tests/native/swift-kernel.test.mjs",
+        "sha256": "e6726c94a1b7359c2e3042a0e8ddb71973255088da82373f7988cd3bb6873699"
+      },
+      {
+        "file": "tests/swift-kernel-protocol.test.mjs",
+        "sha256": "eb03a6358bbd2e4e9178fc6b722ec873e418264e6ccc6f7495e484181583dc1a"
+      },
+      {
+        "file": "hosts/repository/snapshot-contract.mjs",
+        "sha256": "2b52c23bac3a817769b7892eed71baba79cb81954b6a63724d107a9c258ba13f"
+      },
+      {
+        "file": "workflow/contracts.mjs",
+        "sha256": "c28a3ee3db6e9a936cd58fca8b8ee3f2744ca25c259e2ea278b3b09cdbb73d82"
+      },
+      {
+        "file": "canonical/canonical-json-v1.mjs",
+        "sha256": "d1049a26d2bea0d14e959c0af22af15b975345091c5fa5360e8bd685637f8e59"
+      },
+      {
+        "file": "integrations/veritas/import-manifest.json",
+        "sha256": "8207efbc465ec99f0c16a7a281c349bb7ce8819349dbbafe17534f72dd527bcb"
+      },
+      {
+        "file": "integrations/veritas/native/macos/CodenameVeritasFramework/Sources/VeritasCore/ArtifactSnapshot.swift",
+        "sha256": "013e796d11a844dda345f223894a8d76713b19b0f46f6a7f84019aa5b7bc0f22"
+      },
+      {
+        "file": "integrations/veritas/native/macos/CodenameVeritasFramework/Sources/VeritasCore/StrictJSONDocumentValidator.swift",
+        "sha256": "bd6173e012890f2fde2e26be94c5e577cd9e098841bdad98a377b1c88dff1b2c"
+      },
+      {
+        "file": "integrations/veritas/native/macos/CodenameVeritasFramework/Sources/VeritasCore/DeterministicChecks.swift",
+        "sha256": "4d234fd389895cf0a55bf7daf0f5d082077ab3677880165f7d0e1236a88be474"
+      }
+    ],
+    "results": [
+      {
+        "id": "N01-artifact-digest",
+        "expectedFailure": "real native header rejects ambiguous schema values and stale source rules or artifact identities",
+        "exitCode": 1,
+        "signal": null,
+        "errorCode": null,
+        "failedChecks": 1,
+        "failures": [
+          "real native header rejects ambiguous schema values and stale source rules or artifact identities"
+        ],
+        "caught": true
+      },
+      {
+        "id": "N02-source-identity",
+        "expectedFailure": "real native header rejects ambiguous schema values and stale source rules or artifact identities",
+        "exitCode": 1,
+        "signal": null,
+        "errorCode": null,
+        "failedChecks": 1,
+        "failures": [
+          "real native header rejects ambiguous schema values and stale source rules or artifact identities"
+        ],
+        "caught": true
+      },
+      {
+        "id": "N03-artifact-limit",
+        "expectedFailure": "real native input cap uses UTF8 bytes and keeps exact boundary artifacts",
+        "exitCode": 1,
+        "signal": null,
+        "errorCode": null,
+        "failedChecks": 1,
+        "failures": [
+          "real native input cap uses UTF8 bytes and keeps exact boundary artifacts"
+        ],
+        "caught": true
+      },
+      {
+        "id": "J01-bound-identity",
+        "expectedFailure": "Swift report reader rejects every substituted header identity and request byte count",
+        "exitCode": 1,
+        "signal": null,
+        "errorCode": null,
+        "failedChecks": 1,
+        "failures": [
+          "Swift report reader rejects every substituted header identity and request byte count"
+        ],
+        "caught": true
+      },
+      {
+        "id": "J02-outcome-inventory",
+        "expectedFailure": "Swift report reader requires the exact ordered complete check inventory",
+        "exitCode": 1,
+        "signal": null,
+        "errorCode": null,
+        "failedChecks": 1,
+        "failures": [
+          "Swift report reader requires the exact ordered complete check inventory"
+        ],
+        "caught": true
+      },
+      {
+        "id": "J03-aggregate",
+        "expectedFailure": "Swift unknown incomplete and contradictory statuses cannot become PASS",
+        "exitCode": 1,
+        "signal": null,
+        "errorCode": null,
+        "failedChecks": 1,
+        "failures": [
+          "Swift unknown incomplete and contradictory statuses cannot become PASS"
+        ],
+        "caught": true
+      }
+    ],
+    "platform": "darwin",
+    "architecture": "arm64",
+    "nodeVersion": "v24.18.0",
+    "wholeHostVerified": false,
+    "authorizing": false
+  },
+  "reviews": [
+    {
+      "path": "docs/verification/2026-09-12/u02-process-owner-fable-review.json",
+      "status": "FAIL",
+      "issues": [
+        "Executable-hash TOCTOU: 'validates current executable hash' after close does not prove what ran. Hash (and record dev/inode/size/mtime) in the immutable initial observation before spawn, spawn from that same path in the same tick, re-check after close, and require both digests and inode identity to match; bind the receipt to the pre-spawn digest, not the post-run one.",
+        "Kill/PID-reuse and signal-attribution race: sending SIGKILL after 'exit' was already observed (or after close) can hit ESRCH or a reused PID, and an exit with signal=SIGKILL cannot be distinguished from an external kill. Only kill via the live ChildProcess handle while state is RUNNING, record kill-issued monotonic timestamp and the kill() return in the initial observation, and treat any SIGKILL exit without a recorded adapter kill as INCONCLUSIVE rather than 'cancelled'.",
+        "No linearization point between abort and receipt issue: the abort check 'during parsing or final hashing' is a flag read, so an abort that lands between the last check and receipt emission can lose. Make state transitions a single CAS (RUNNING->ISSUING vs RUNNING->ABORTING) and perform the final abort/deadline check and receipt issuance in the same synchronous tick with no awaits in between.",
+        "Stream capture at 16KiB must keep draining after the cap: if the reader stops consuming, the pipe fills, the child blocks on write, and the deadline fires, misattributing a truncation as a hang. Continue consuming and counting bytes past the cap, and make any truncated stream or code===null (signal exit) a hard non-PASS in frame validation, never mapping null to 0.",
+        "Bounded finalization budget vs workflow deadline: 'await bounded owner finalization' can itself be cut off by the Nisi DEADLINE_EXCEEDED, leaving no bundle at all. Reserve the 500ms close wait plus margin inside the workflow deadline (kill at deadline-minus-budget), and if the wait is preempted, still emit the bundle from the existing initial observation with drain=UNKNOWN and the exact stop reason.",
+        "QUARANTINED latch is in-process only: a host restart forgets the unclosed child and may spawn a new single-flight owner alongside it. Persist a quarantine marker (owner id, pid, process start time, spawn nonce) durably before spawning, clear it only on observed close, and refuse new owners at startup while the marker is present until explicit reconciliation."
+      ],
+      "requestedModel": "fable",
+      "reportedModels": [
+        "claude-haiku-4-5-20251001",
+        "claude-fable-5-1"
+      ],
+      "reportedCostUSD": 0.14024350000000002,
+      "wallSeconds": 36.562,
+      "toolsEnabled": false,
+      "sessionPersisted": false,
+      "usage": {
+        "claude-haiku-4-5-20251001": {
+          "inputTokens": 1267,
+          "outputTokens": 18,
+          "cacheReadInputTokens": 0,
+          "cacheCreationInputTokens": 0,
+          "webSearchRequests": 0,
+          "costUSD": 0.001357,
+          "contextWindow": 200000,
+          "maxOutputTokens": 32000,
+          "thinkingTokens": 0,
+          "canonicalModel": "claude-haiku-4-5",
+          "provider": "firstParty",
+          "costBasis": "list"
+        },
+        "claude-fable-5-1": {
+          "inputTokens": 2,
+          "outputTokens": 2339,
+          "cacheReadInputTokens": 626,
+          "cacheCreationInputTokens": 1088,
+          "webSearchRequests": 0,
+          "costUSD": 0.13888650000000002,
+          "contextWindow": 1000000,
+          "maxOutputTokens": 64000,
+          "thinkingTokens": 1423,
+          "canonicalModel": "claude-fable-5-1",
+          "provider": "firstParty",
+          "costBasis": "list"
+        }
+      }
+    },
+    {
+      "path": "docs/verification/2026-09-12/u02-process-owner-fable-resolution-review.json",
+      "status": "FAIL",
+      "issues": [
+        "#3: result is stated to be deeply frozen before the final signal+monotonic sample is taken, yet 'final duration uses that final sample'; a frozen result cannot carry a later-derived duration. Clarify whether duration is only in the separate metadata copy or correct the stated ordering.",
+        "#6 vs #2: 'no-launch permits identity-checked marker removal' conflicts with #2's timeout-before-spawn case where a late spawn may still arrive and quarantine remains latched. 'No-launch' must be explicitly limited to a synchronously observed spawn failure, not timeout-before-spawn.",
+        "#6 (accuracy note): existing marker always refuses + no PID aging + recovery never auto-clears means a host crash permanently blocks the lane until manual clearance; the disposition should state manual clearance as the only recovery path.",
+        "Acknowledged OPEN, not certified: #1 general-host/same-account hostile mutation containment and #5 full two-layer bundle/adapter/host integration. Passing local owner/reservation tests are the evidence; this review is not a substitute."
+      ],
+      "requestedModel": "fable",
+      "reportedModels": [
+        "claude-haiku-4-5-20251001",
+        "claude-fable-5-1"
+      ],
+      "reportedCostUSD": 0.1504185,
+      "wallSeconds": 29.961,
+      "toolsEnabled": false,
+      "sessionPersisted": false,
+      "usage": {
+        "claude-haiku-4-5-20251001": {
+          "inputTokens": 1542,
+          "outputTokens": 14,
+          "cacheReadInputTokens": 0,
+          "cacheCreationInputTokens": 0,
+          "webSearchRequests": 0,
+          "costUSD": 0.001612,
+          "contextWindow": 200000,
+          "maxOutputTokens": 32000,
+          "thinkingTokens": 0,
+          "canonicalModel": "claude-haiku-4-5",
+          "provider": "firstParty",
+          "costBasis": "list"
+        },
+        "claude-fable-5-1": {
+          "inputTokens": 2,
+          "outputTokens": 2373,
+          "cacheReadInputTokens": 626,
+          "cacheCreationInputTokens": 1499,
+          "webSearchRequests": 0,
+          "costUSD": 0.1488065,
+          "contextWindow": 1000000,
+          "maxOutputTokens": 64000,
+          "thinkingTokens": 1260,
+          "canonicalModel": "claude-fable-5-1",
+          "provider": "firstParty",
+          "costBasis": "list"
+        }
+      }
+    },
+    {
+      "path": "docs/verification/2026-09-12/u02-process-owner-fable-clarification-review.json",
+      "status": "PASS",
+      "issues": [],
+      "requestedModel": "fable",
+      "reportedModels": [
+        "claude-haiku-4-5-20251001",
+        "claude-fable-5-1"
+      ],
+      "reportedCostUSD": 0.0568955,
+      "wallSeconds": 7.867,
+      "toolsEnabled": false,
+      "sessionPersisted": false,
+      "usage": {
+        "claude-haiku-4-5-20251001": {
+          "inputTokens": 1599,
+          "outputTokens": 16,
+          "cacheReadInputTokens": 0,
+          "cacheCreationInputTokens": 0,
+          "webSearchRequests": 0,
+          "costUSD": 0.001679,
+          "contextWindow": 200000,
+          "maxOutputTokens": 32000,
+          "thinkingTokens": 0,
+          "canonicalModel": "claude-haiku-4-5",
+          "provider": "firstParty",
+          "costBasis": "list"
+        },
+        "claude-fable-5-1": {
+          "inputTokens": 2,
+          "outputTokens": 468,
+          "cacheReadInputTokens": 626,
+          "cacheCreationInputTokens": 1582,
+          "webSearchRequests": 0,
+          "costUSD": 0.0552165,
+          "contextWindow": 1000000,
+          "maxOutputTokens": 64000,
+          "thinkingTokens": 389,
+          "canonicalModel": "claude-fable-5-1",
+          "provider": "firstParty",
+          "costBasis": "list"
+        }
+      }
+    }
+  ],
+  "reviewTotalCostUSD": 0.3475575,
+  "verification": {
+    "portableCheck": {
+      "command": "npm run check",
+      "structural": "PASS_SCOPED_CANONICAL_PURITY_CHECK",
+      "tests": 261,
+      "pass": 261,
+      "fail": 0,
+      "start": {
+        "chunk_id": "d1f695",
+        "wall_time_seconds": 1.001325708,
+        "session_id": 28070,
+        "original_token_count": 583,
+        "output": "\n> nisi@0.2.0-private.0 check\n> npm run check:structural && npm test\n\n\n> nisi@0.2.0-private.0 check:structural\n> node scripts/require-node.cjs && node scripts/structural-check.mjs\n\n{\"mutationResults\":[{\"caught\":true,\"expectedRule\":\"process-spawn\",\"id\":\"STRUCT-001-SPAWN\",\"observedRules\":[\"process-spawn\"]},{\"caught\":true,\"expectedRule\":\"filesystem-write\",\"id\":\"STRUCT-002-WRITE\",\"observedRules\":[\"filesystem-write\"]},{\"caught\":true,\"expectedRule\":\"network-effect\",\"id\":\"STRUCT-003-NETWORK\",\"observedRules\":[\"network-effect\"]},{\"caught\":true,\"expectedRule\":\"dynamic-code\",\"id\":\"STRUCT-004-EVAL\",\"observedRules\":[\"dynamic-code\"]},{\"caught\":true,\"expectedRule\":\"dynamic-import\",\"id\":\"STRUCT-005-IMPORT\",\"observedRules\":[\"dynamic-import\"]},{\"caught\":true,\"expectedRule\":\"module-load\",\"id\":\"STRUCT-006-REQUIRE\",\"observedRules\":[\"module-load\"]},{\"caught\":true,\"expectedRule\":\"process-mutation\",\"id\":\"STRUCT-007-PROCESS-EXIT\",\"observedRules\":[\"process-mutation\"]},{\"caught\":true,\"expectedRule\":\"dynamic-or-worker-construction\",\"id\":\"STRUCT-008-WORKER\",\"observedRules\":[\"dynamic-or-worker-construction\"]}],\"positiveResults\":[{\"findingCount\":0,\"id\":\"ALLOW-001-CANONICAL\"},{\"findingCount\":0,\"id\":\"ALLOW-002-VALIDATE\"},{\"findingCount\":0,\"id\":\"ALLOW-003-EVAL-SUBSTRING\"},{\"findingCount\":0,\"id\":\"ALLOW-004-FORBIDDEN-WORDS-AS-DATA\"},{\"findingCount\":0,\"id\":\"ALLOW-005-FORBIDDEN-WORD-IN-STRING\"},{\"findingCount\":0,\"id\":\"ALLOW-006-METHOD-DECLARATION-NOT-CALL\"},{\"findingCount\":0,\"id\":\"ALLOW-007-ORDINARY-COLLECTION-WORK\"},{\"findingCount\":0,\"id\":\"ALLOW-008-HASHING-IS-PERMITTED\"}],\"resultDigest\":\"66d9c396e18a434690c34ad059279774154062982313c2973fdb14f54c52eef0\",\"schemaVersion\":1,\"sourceDigest\":\"d1049a26d2bea0d14e959c0af22af15b975345091c5fa5360e8bd685637f8e59\",\"sourceFindings\":[],\"status\":\"PASS\"}\n\n> nisi@0.2.0-private.0 test\n> node scripts/require-node.cjs && node --test tests/*.test.mjs\n\n✔ construction refuses anything outside the closed option set (5.53275ms)\n✔ no grant is refusal, not a permissive default (5.146875ms)\n✔ a consented item is read and answered, and only digests come back (195.427417ms)\n✔ the same content under the same grant answers with the same digest (131.180667ms)\n✔ a request with no declared content never reaches a process (1.419792ms)\n✔ content the grant refuses never reaches a process (2.280167ms)\n"
+      },
+      "completion": {
+        "chunk_id": "e145c1",
+        "wall_time_seconds": 0.000001042,
+        "exit_code": 0,
+        "original_token_count": 5349,
+        "output": "✔ revocation stops the executor immediately and terminally (133.398292ms)\n✔ evidence that claims authority is refused rather than interpreted (1763.550208ms)\n✔ evidence about different content, or a different grant, is refused (519.608167ms)\n✔ an advisory over the granted cap, or one that does not match its digest, is refused (520.185375ms)\n✔ the binary is re-verified before every launch (62.095708ms)\n✔ child failures are refused with their own causes, never as evidence (467.743667ms)\n✔ an aborted run is refused and leaves no reading behind (53.624667ms)\n✔ a request that is not bytes is refused before the grant is consulted (0.951541ms)\n✔ every field of the evidence reader is load-bearing, not decorative (484.07975ms)\n✔ the answer digest binds the request bytes, not only the content (82.462625ms)\n✔ pre-aborted and malformed contexts resolve to refusals without admission or spawn (0.828208ms)\n✔ abort during listener registration prevents spawning (1.090708ms)\n✔ evidence refuses malformed UTF-8, duplicate keys, wrong prompts and malformed limitations (1270.444875ms)\n✔ zero advisory cap, UTF-8 BOM and frozen item mappings follow the native contract (53.643916ms)\n✔ canonical JSON v1 exact bytes: numeric-key-order (1.6605ms)\n✔ canonical JSON v1 exact bytes: proto-survival (0.140625ms)\n✔ canonical JSON v1 exact bytes: scalar-order (0.313916ms)\n✔ canonical JSON v1 exact bytes: decoded-key (0.175041ms)\n✔ canonical JSON v1 exact bytes: null-value (0.092334ms)\n✔ canonical JSON v1 exact bytes: empty-object (0.061584ms)\n✔ canonical JSON v1 exact bytes: empty-array (0.102875ms)\n✔ canonical JSON v1 exact bytes: array-order (0.223458ms)\n✔ canonical JSON v1 exact bytes: true (0.19125ms)\n✔ canonical JSON v1 exact bytes: false (0.131666ms)\n✔ canonical JSON v1 exact bytes: null (0.068458ms)\n✔ canonical JSON v1 exact bytes: whitespace (0.084083ms)\n✔ canonical JSON v1 exact bytes: nfd-value-preserved (0.076167ms)\n✔ canonical JSON v1 exact bytes: embedded-bom (0.094292ms)\n✔ canonical JSON v1 exact bytes: surrogate-pair (0.044583ms)\n✔ canonical JSON v1 exact bytes: maximum-scalar (0.045458ms)\n✔ canonical JSON v1 exact bytes: escapes (0.047542ms)\n✔ canonical JSON v1 exact bytes: raw-noncontrols (0.124833ms)\n✔ canonical JSON v1 integer boundary accepts 0 (0.11675ms)\n✔ canonical JSON v1 integer boundary accepts 1 (0.046542ms)\n✔ canonical JSON v1 integer boundary accepts -1 (0.042458ms)\n✔ canonical JSON v1 integer boundary accepts 9007199254740991 (0.032208ms)\n✔ canonical JSON v1 integer boundary accepts -9007199254740991 (0.027ms)\n✔ canonical JSON v1 number refuses exact source -0 (0.23575ms)\n✔ canonical JSON v1 number refuses exact source 1.0 (0.050916ms)\n✔ canonical JSON v1 number refuses exact source 1.5 (0.031708ms)\n✔ canonical JSON v1 number refuses exact source 1e0 (0.026208ms)\n✔ canonical JSON v1 number refuses exact source 1E+3 (0.183458ms)\n✔ canonical JSON v1 number refuses exact source 1e-7 (0.130208ms)\n✔ canonical JSON v1 number refuses exact source 01 (0.070708ms)\n✔ canonical JSON v1 number refuses exact source -01 (0.034458ms)\n✔ canonical JSON v1 number refuses exact source +1 (0.038792ms)\n✔ canonical JSON v1 number refuses exact source - (0.028833ms)\n✔ canonical JSON v1 number refuses exact source NaN (0.024875ms)\n✔ canonical JSON v1 number refuses exact source Infinity (0.021083ms)\n✔ canonical JSON v1 number refuses exact source -Infinity (0.029166ms)\n✔ canonical JSON v1 number refuses exact source 9007199254740992 (0.025417ms)\n✔ canonical JSON v1 number refuses exact source -9007199254740992 (0.023166ms)\n✔ canonical JSON v1 number refuses exact source -9223372036854775808 (0.059833ms)\n✔ canonical JSON v1 number refuses exact source 18446744073709551615 (0.032167ms)\n✔ canonical JSON v1 number refuses exact source 999999999999999999999999 (0.031375ms)\n✔ canonical JSON v1 refusal: same-key (0.046333ms)\n✔ canonical JSON v1 refusal: escaped-same-key (0.592584ms)\n✔ canonical JSON v1 refusal: nested-same-key (0.0365ms)\n✔ canonical JSON v1 refusal: nul-key (0.029084ms)\n✔ canonical JSON v1 refusal: nfd-key (0.023875ms)\n✔ canonical JSON v1 refusal: nfc-nfd-collision (0.02025ms)\n✔ canonical JSON v1 refusal: lone-high (0.018959ms)\n✔ canonical JSON v1 refusal: lone-low (0.017292ms)\n✔ canonical JSON v1 refusal: high-then-wrong-low (0.021625ms)\n✔ canonical JSON v1 refusal: high-then-raw (0.016458ms)\n✔ canonical JSON v1 refusal: surrogate-key (0.016959ms)\n✔ canonical JSON v1 refusal: bad-escape (0.017041ms)\n✔ canonical JSON v1 refusal: truncated-hex (0.043666ms)\n✔ canonical JSON v1 refusal: invalid-hex (0.016541ms)\n✔ canonical JSON v1 refusal: truncated-escape (0.018375ms)\n✔ canonical JSON v1 refusal: raw-control (0.016125ms)\n✔ canonical JSON v1 refusal: unterminated (0.398792ms)\n✔ canonical JSON v1 refusal: object-trailing-comma (0.040125ms)\n✔ canonical JSON v1 refusal: array-trailing-comma (0.026125ms)\n✔ canonical JSON v1 refusal: top-level-tail (0.022ms)\n✔ canonical JSON v1 refusal: literal-tail (0.034459ms)\n✔ canonical JSON v1 refusal: empty-document (0.028375ms)\n✔ canonical JSON v1 refusal: missing-value (0.034375ms)\n✔ canonical JSON v1 refusal: missing-colon (0.026042ms)\n✔ canonical JSON v1 refusal: duplicate-proto (0.020625ms)\n✔ canonical JSON v1 refusal: fraction-without-integer (0.018042ms)\n✔ canonical JSON v1 refusal: exponent-without-mantissa (0.017167ms)\n✔ canonical JSON v1 refusal: negative-fraction-without-integer (0.026333ms)\n✔ canonical JSON v1 exact raw-byte refusal: invalid-ff-in-string (0.044416ms)\n✔ canonical JSON v1 exact raw-byte refusal: overlong (0.022625ms)\n✔ canonical JSON v1 exact raw-byte refusal: encoded-surrogate (0.033709ms)\n✔ canonical JSON v1 exact raw-byte refusal: truncated-multibyte (0.022792ms)\n✔ canonical JSON v1 exact raw-byte refusal: above-unicode-range (0.02825ms)\n✔ canonical JSON v1 exact raw-byte refusal: leading-bom (0.028375ms)\n✔ canonical JSON v1 depth 128 admitted, 129 and exact generated 512 refused (0.201583ms)\n✔ canonical JSON v1 object limit is per object, checked at 4096/4097 and generated 10000 (30.741042ms)\n✔ canonical JSON v1 input-byte cap accepts exactly 1 MiB and refuses above it (45.760584ms)\n✔ canonical JSON v1 input cannot be an arbitrary object, string, proxy or shared buffer (0.172208ms)\n✔ canonical JSON v1 handles sliced views and refuses detached input (0.278583ms)\n✔ canonical JSON v1 ignores spoofed typed-array properties and never consults input hooks (0.111667ms)\n✔ canonical JSON v1 primitive-only emission never calls container toJSON (0.126541ms)\n✔ canonical JSON v1 key insertion permutations produce identical canonical digests (0.730583ms)\n✔ canonical JSON v1 agrees with the independent serializer on every corpus vector (2.112125ms)\n✔ canonical JSON v1 does not silently migrate legacy numeric-key or proto records (0.16575ms)\n✔ canonical JSON v1 decoded astral duplicates and prefix/scalar key boundaries (0.091083ms)\n✔ canonical JSON v1 size is the view length, not its larger backing allocation (0.092708ms)\n✔ canonical JSON v1 captures current resized views and refuses out-of-bounds views (0.183ms)\n✔ canonical JSON v1 exact documented 400002-byte mixed string is admitted unchanged (5.262083ms)\n✔ canonical JSON v1 integer magnitude is checked by value, not by digit count (0.167708ms)\n✔ content item traps and symbol extras are CONTENT_ITEM_INVALID before reads or admission count (4.207375ms)\n✔ same-size in-place mutation between read and final identity check is CONTENT_CHANGED_DURING_READ (1.257291ms)\n✔ executor rejects malformed item maps and snapshots valid mappings at construction (203.236583ms)\n✔ legacy payload digest remains exact while execution digest binds task identity (128.563209ms)\n✔ a grant must be presented as canonical bytes (5.51325ms)\n✔ a grant is refused unless every declared boundary is the boundary (3.65ms)\n✔ a valid grant admits content inside its scope and returns the file, not the caller claim (1.310459ms)\n✔ scope is a path boundary, not a string prefix (2.882625ms)\n✔ a symlink cannot carry content across the boundary (1.123667ms)\n✔ each item is checked on its own terms (6.396167ms)\n✔ a grant does not outlive its declared lifetime (3.46375ms)\n✔ a clock that moves backwards is refused, not trusted (2.8955ms)\n✔ revocation is immediate and terminal (6.523209ms)\n✔ a grant reports what it is and claims nothing more (3.952417ms)\n✔ the declared limits are the module constants, not per-call opinions (0.959875ms)\n✔ the consent digest is pinned to its v1 domain string (0.56525ms)\n✔ later clock failures are named refusals and status samples the clock once (4.301042ms)\n✔ a final-component replacement after validation is refused before content is returned (1.1615ms)\n✔ file kind is a declared label; the v1 policy does not parse JSON content (0.732416ms)\n✔ the README example runs and prints what the README says it prints (76.4555ms)\n✔ example repairs an acceptance failure, reruns checks/tests, and reviews with evidence (11.619625ms)\n✔ malformed model identity, finish reason, envelope schema, Unicode, and duplicate keys fail closed (1.69225ms)\n✔ configuration enforces exact loopback HTTP scope and bounded numeric caps (0.250375ms)\n✔ pre-aborted upstream signal and abort during listener registration prevent fetch (0.580958ms)\n✔ request and response byte caps fail before transport or cancel an active reader (0.492834ms)\n✔ throwing and hanging fetches produce explicit unavailable and timeout receipts (20.435958ms)\n✔ adapter snapshots configuration and freezes receipt snapshots (0.592791ms)\n✔ response cleanup preserves its original error even when cancellation throws (0.421084ms)\n✔ strict codec rejects duplicate object keys and accepts one JSON fence (0.847833ms)\n✔ factory requires literal loopback HTTP destination and rejects redirects by request policy (1.8315ms)\n✔ author builds draft result from model data and preserves exact engine binding (4.066458ms)\n✔ reviewer derives PASS or FAIL and identity from its configuration (0.562333ms)\n✔ length finish reason and oversized streamed body are refused (0.581917ms)\n✔ Node preflight validates actual process.version and rejects unsupported versions (0.564208ms)\n✔ CLI parser is pure, requires exactly three arguments, and validates endpoint/model config (0.936542ms)\n✔ programmatic example API remains callable with injected deterministic transport (4.087458ms)\n✔ real CLI exits 2 for invalid argument and never reaches inference (44.086166ms)\n✔ descriptive public names preserve the original v1 factories and imports (1.883833ms)\n✔ real disk bytes feed the existing immutable snapshot and protected-candidate preparation (40.781625ms)\n✔ empty files and UTF-8 BOM bytes are preserved without normalization (9.702042ms)\n✔ invalid roots profiles path manifests and getters are rejected before all filesystem I/O (0.751917ms)\n✔ root leaf and intermediate symlinks are refused without reading their targets (14.245083ms)\n✔ directories FIFOs and multiply linked files are refused before any content open (11.900791ms)\n✔ missing paths return bounded diagnostics without partial content or absolute root leakage (3.732208ms)\n✔ malformed UTF-8 and NUL-bearing binary data are refused and their owned handles close (5.750166ms)\n✔ actual files obey inclusive per-file and aggregate byte limits before content opens (25.980041ms)\n✔ file-count overflow is rejected for a real fixture before its files are opened (431.714583ms)\n✔ short real reads preserve all bytes and the fixed no-follow nonblocking flags (8.079541ms)\n✔ early EOF is refused instead of silently admitting truncated text (1.864166ms)\n✔ same-size in-place changes during reading are detected and the handle closes (2.26825ms)\n✔ final pass detects a previously read file changed while a later file was read (2.977667ms)\n✔ read errors close owned handles and suppress raw filesystem error messages (2.029625ms)\n✔ close uncertainty refuses capture and retains a primary read refusal without inventing closure (3.043542ms)\n✔ execution expectations require issued preparations and preserve immutable distinct identities (6.57025ms)\n✔ profiles reject shell-shaped argv, ambiguous cwd, malformed values and extra authority (3.434334ms)\n✔ receipt identity rejects each cross-run candidate snapshot profile and command substitution (4.785583ms)\n✔ receipt schemas reject getters hidden fields symbols prototypes and missing data without invocation (0.44475ms)\n✔ PASS requires confirmed drain even when the child reports exit zero (0.333792ms)\n✔ passing and failed checks cannot hide interruption truncation error or unclosed execution (0.612625ms)\n✔ contradictory process states are refused even in adverse receipts (2.186334ms)\n✔ NOT_RUN ERROR and INCONCLUSIVE retain distinct non-success semantics (0.890584ms)\n✔ output summaries enforce byte bounds digest shape and exact truncation without inventing content proof (0.984583ms)\n✔ bundle links synthetic workflow records without changing v1 completion or granting authority (3.693708ms)\n✔ bundle binds final report digest not the preliminary store acknowledgement (8.965125ms)\n✔ bundle refuses extra missing duplicate reordered and cross-linked receipt inventories (7.284ms)\n✔ bundle refuses stage status contradictions even with a recomputed bundle digest (2.117542ms)\n✔ adverse receipts and engine exception stops remain readable without PASS coercion (6.549875ms)\n✔ all checks passing does not imply a completed workflow or a releasable product (2.682167ms)\n✔ bundle rejects stale expected run attempt or snapshot and malformed authority fields (2.105708ms)\n✔ cancellation and deadlines retain UNAVAILABLE and refuse a late passing receipt (2.265791ms)\n✔ repaired candidates require fresh receipts while adverse attempt history remains intact (3.470875ms)\n✔ bundle preserves adverse reasons and exact exception cancellation and deadline classifications (6.891292ms)\n✔ snapshot sorts and binds UTF-8 encoding of captured text with a domain-separated identity (2.137958ms)\n✔ captured input and returned snapshots cannot mutate identity or file content (0.241917ms)\n✔ snapshot objects reject unknown keys, accessors and prototypes without invoking getters (0.2115ms)\n✔ file arrays reject sparse, decorated and accessor entries and enforce file-count bounds (10.105292ms)\n✔ initial path profile refuses unsupported spellings and ambiguous platform paths (0.798959ms)\n✔ case-folded duplicate and prefix paths are refused in either order (1.123ms)\n✔ content is well-formed text only, never binary or deletion markers (0.324583ms)\n✔ UTF-8 accounting admits exact byte bounds and rejects multibyte overflow (20.653958ms)\n✔ preparation overlays only changed files and preserves omitted dependencies and tests (2.280084ms)\n✔ unchanged dependency changes preparation identity despite the same task and candidate (0.616917ms)\n✔ serialized or forged baselines cannot impersonate factory-issued snapshots (0.257167ms)\n✔ all protected baseline files must exist with their fixed digests even if omitted by candidate (0.573834ms)\n✔ existing task, author, candidate scope and schemas remain enforced (0.52225ms)\n✔ overlay rechecks combined path collisions and final resource bounds (16.15325ms)\n✔ repository scope refuses ambiguous or unsupported allowed and protected paths (0.59975ms)\n✔ preparation descriptors reject getters and hidden fields without reading them (0.393666ms)\n✔ preparation identities agree with the unchanged workflow candidate and run binding (2.396209ms)\n✔ Swift requests bind one issued materialized file and the complete immutable frame (6.719458ms)\n✔ Swift report consistency never grants execution proof or hides completed failure (0.985042ms)\n✔ Swift report reader rejects every substituted header identity and request byte count (1.7325ms)\n✔ Swift report reader requires the exact ordered complete check inventory (1.669ms)\n✔ Swift unknown incomplete and contradictory statuses cannot become PASS (0.831334ms)\n✔ Swift wire reader refuses extra partial duplicate-key oversized or non-JSON output (0.461083ms)\n✔ owned child publishes exactly one immutable observation after close and validation (5.593667ms)\n✔ exit zero alone keeps the owner busy and never validates or releases the slot (1.8585ms)\n✔ pre-abort and abort during listener registration prevent launch entirely (0.379208ms)\n✔ unknown close after abort quarantines even after a late close or additional output (12.589167ms)\n✔ spawn arriving after grace finalization is contained without rewriting the old observation (15.928458ms)\n✔ deadline after exit does not signal an exited child and cannot infer pipe closure (16.926ms)\n✔ output overflow retains bounded bytes and continues counting until close (0.440583ms)\n✔ nonzero exit and external signal remain inconclusive without claiming adapter cancellation (0.335375ms)\n✔ spawn failure has explicit error with unstarted receipt fields and observed infrastructure close (0.23425ms)\n✔ primary stream error survives later cancellation and clean child closure (0.204875ms)\n✔ abort during synchronous validation vetoes success with no post-exit kill (0.207167ms)\n✔ deadline during final validation and invalid clocks cannot accept late output (0.271125ms)\n✔ published duration includes the final monotonic sample rather than a previous sample (0.104833ms)\n✔ throwing validation and unexpected stderr are errors not artifact failures (0.153916ms)\n✔ durable reservation excludes a second owner and clears only its exact issued marker (20.597292ms)\n✔ a marker from an earlier host is not reclaimed based on an absent PID (1.045125ms)\n✔ changed or replaced reservation is retained rather than deleting another owner state (9.655375ms)\n✔ sync failure leaves an uncertain marker and no second acquisition is allowed (1.125208ms)\n✔ same-length marker corruption is detected by content identity before release (15.693333ms)\n✔ parent directory sync failure leaves an uncertain marker before any launch (5.889917ms)\n✔ retained real private snapshot matches its frozen inventory (74.38525ms)\n✔ frozen import matches exact content; scope never expands to integration or release (9.201333ms)\n✔ import refuses same-size content edit (14.791958ms)\n✔ import refuses new source (8.979875ms)\n✔ import refuses missing source (18.706083ms)\n✔ import refuses duplicate inventory entry (3.119958ms)\n✔ import refuses path traversal (2.503667ms)\n✔ import refuses unknown authority field (7.959417ms)\n✔ import refuses wrong schema (3.327208ms)\n✔ import refuses empty inventory (3.191209ms)\n✔ import refuses invalid digest (3.521208ms)\n✔ import refuses scope changed (3.164417ms)\n✔ import refuses file symlink (2.761208ms)\n✔ excluded build and hidden entries are named but not traversed or accepted as source (4.151ms)\n✔ runnable workflow example executes failing and passing assertions, repairs, reviews and saves its report (75.6335ms)\n✔ normal edit mode produces a bound completed report (4.358667ms)\n✔ review mode validates the supplied candidate and never invokes draft or repair (0.539625ms)\n✔ a repair reruns all checks, tests, and reviewers with a new attempt binding (0.801667ms)\n✔ failed, unavailable, and not-run statuses remain non-successes with distinct outcomes (0.938458ms)\n✔ repair budget, no progress, and repeated fingerprints are explicit (1.310375ms)\n✔ actual task and candidate mutation attempts fail while frozen snapshots remain unchanged (0.594625ms)\n✔ replay identity binds task, run, attempt, and candidate evidence (0.678ms)\n✔ stale or malformed evidence and protected or out-of-scope candidates are blocked (1.326417ms)\n✔ cancellation before and during listener registration prevents adapter calls (0.365709ms)\n✔ async timeout and synchronous clock advancement are timed out before later adapters (17.067416ms)\n✔ clock regression and deadline overflow fail closed (0.348959ms)\n✔ a storage acknowledgement copied after the deadline is rejected even when storage is optional (1.009416ms)\n✔ report stores receive exact frozen report and binding hashes; required failure blocks (1.065125ms)\n✔ task specification and candidate inputs are frozen and schema-checked (0.578208ms)\n✔ captured reviewer list, IDs and methods survive caller mutation after authorization (0.67375ms)\n✔ reviewers receive immutable fresh check and test evidence; all required reviewers run (0.897458ms)\n✔ captured evidence cannot replay across task, run, candidate or repair attempt (2.381667ms)\n✔ test status and assertion count invariants reject contradictory evidence (1.657584ms)\n✔ all valid repair responses retain evidence, including fixed points and cycles (1.967791ms)\n✔ post-task setup refusals retain identity, and all invalid clocks have CLOCK_INVALID (0.778416ms)\n✔ valid store refusals, invalid receipts, exceptions, timeout and cancellation preserve the workflow outcome (47.195333ms)\nℹ tests 261\nℹ suites 0\nℹ pass 261\nℹ fail 0\nℹ cancelled 0\nℹ skipped 0\nℹ todo 0\nℹ duration_ms 5837.041792\n"
+      }
+    },
+    "focusedOwnerReservation": {
+      "command": "node --test tests/swift-owned-child.test.mjs tests/swift-reservation.test.mjs",
+      "tests": 20,
+      "pass": 20,
+      "fail": 0,
+      "lifecycleDoubleTests": 14,
+      "realLocalReservationTests": 6,
+      "includedInPortableTotal": true,
+      "rawControl": ".build/swift-owner-mutants-JCDz1D/stdout.txt"
+    },
+    "nativeAdapter": {
+      "command": "node --test --test-reporter=tap tests/native/swift-executor.test.mjs",
+      "tests": 11,
+      "pass": 11,
+      "fail": 0,
+      "operations": 12,
+      "startedChildren": 9,
+      "closedChildren": 9,
+      "start": {
+        "chunk_id": "c95f3e",
+        "wall_time_seconds": 1.000564875,
+        "session_id": 56053,
+        "original_token_count": 4,
+        "output": "TAP version 13\n"
+      },
+      "completion": {
+        "chunk_id": "859647",
+        "wall_time_seconds": 0.000001542,
+        "exit_code": 0,
+        "original_token_count": 766,
+        "output": "# Subtest: actual async Swift execution produces issued expectation and consistent real process receipt\nok 1 - actual async Swift execution produces issued expectation and consistent real process receipt\n  ---\n  duration_ms: 160.207334\n  type: 'test'\n  ...\n# Subtest: actual executor refuses forged build and requires explicit exclusive static local scope\nok 2 - actual executor refuses forged build and requires explicit exclusive static local scope\n  ---\n  duration_ms: 0.553875\n  type: 'test'\n  ...\n# Subtest: pre-cancelled real executor creates no reservation or process\nok 3 - pre-cancelled real executor creates no reservation or process\n  ---\n  duration_ms: 1.247667\n  type: 'test'\n  ...\n# Subtest: an executor refuses exact replay and conflicting reuse of a terminal run attempt\nok 4 - an executor refuses exact replay and conflicting reuse of a terminal run attempt\n  ---\n  duration_ms: 20.441083\n  type: 'test'\n  ...\n# Subtest: same executor refuses overlap and an actual abort never grants PASS\nok 5 - same executor refuses overlap and an actual abort never grants PASS\n  ---\n  duration_ms: 13.301541\n  type: 'test'\n  ...\n# Subtest: a second executor cannot bypass the durable reservation of an active operation\nok 6 - a second executor cannot bypass the durable reservation of an active operation\n  ---\n  duration_ms: 21.191333\n  type: 'test'\n  ...\n# Subtest: changed retained build source is refused before execution without modifying the original import\nok 7 - changed retained build source is refused before execution without modifying the original import\n  ---\n  duration_ms: 1.8325\n  type: 'test'\n  ...\n# Subtest: real Swift static adapter runs inside Nisi while other fixture stages retain their exact scope\nok 8 - real Swift static adapter runs inside Nisi while other fixture stages retain their exact scope\n  ---\n  duration_ms: 23.7815\n  type: 'test'\n  ...\n# Subtest: native FAIL stops Nisi before later stages and retains actual failed check explanations\nok 9 - native FAIL stops Nisi before later stages and retains actual failed check explanations\n  ---\n  duration_ms: 23.986458\n  type: 'test'\n  ...\n# Subtest: Nisi cancellation returns before cleanup but settled collects a compatible observed interruption\nok 10 - Nisi cancellation returns before cleanup but settled collects a compatible observed interruption\n  ---\n  duration_ms: 16.327708\n  type: 'test'\n  ...\n# {\"buildManifest\":\"/Users/louiscalata/nisi-next-private/.build/nisi-swift-kernel-KI3CAI/build-manifest.json\",\"observations\":\"/Users/louiscalata/nisi-next-private/.build/nisi-swift-kernel-KI3CAI/executor-fixture-observations.json\",\"count\":12,\"nativeScope\":\"ONE_FIXED_ARTIFACT_AT_A_TIME\",\"modelReview\":false,\"fullHost\":false}\n# Subtest: engine deadline after native completion does not rewrite passing raw process evidence\nok 11 - engine deadline after native completion does not rewrite passing raw process evidence\n  ---\n  duration_ms: 21.813958\n  type: 'test'\n  ...\n1..11\n# tests 11\n# suites 0\n# pass 11\n# fail 0\n# cancelled 0\n# skipped 0\n# todo 0\n# duration_ms 4230.09425\n"
+      },
+      "rawRecords": ".build/nisi-swift-kernel-KI3CAI/executor-fixture-observations.json"
+    },
+    "ownerReservationMutants": {
+      "command": "node scripts/test-swift-owner-mutants.mjs",
+      "caught": 6,
+      "controlPassed": true,
+      "expectedFailedChecks": [
+        1,
+        1,
+        2,
+        1,
+        1,
+        1
+      ],
+      "raw": ".build/swift-owner-mutants-JCDz1D/results.json"
+    },
+    "kernelMutants": {
+      "command": "node scripts/test-swift-kernel-mutants.mjs",
+      "compiledSwift": 3,
+      "pureReader": 3,
+      "caught": 6,
+      "controlTests": 13,
+      "controlNativeTests": 7,
+      "controlPureTests": 6,
+      "controlPassed": true,
+      "raw": ".build/swift-kernel-mutants-m8zLvU/results.json"
+    },
+    "sourceFreeze": {
+      "chunk_id": "44399b",
+      "wall_time_seconds": 0.000004542,
+      "exit_code": 0,
+      "original_token_count": 47,
+      "output": "{\n  \"status\": \"PASS_SOURCE_FREEZE_ONLY\",\n  \"files\": 225,\n  \"totalBytes\": 8027242,\n  \"excluded\": [],\n  \"originRechecked\": false,\n  \"integrationVerified\": false,\n  \"legalClearance\": false\n}\n"
+    },
+    "privateWhitespace": {
+      "chunk_id": "3522f9",
+      "wall_time_seconds": 0.000004333,
+      "exit_code": 0,
+      "original_token_count": 0,
+      "output": ""
+    },
+    "originalCurrentDocumentsWhitespace": {
+      "chunk_id": "17c7a0",
+      "wall_time_seconds": 0.000003375,
+      "exit_code": 0,
+      "original_token_count": 0,
+      "output": ""
+    }
+  },
+  "retainedAdverseResults": [
+    {
+      "scope": "Initial Fable process-owner design review",
+      "status": "FAIL",
+      "receipt": "docs/verification/2026-09-12/u02-process-owner-fable-review.json",
+      "resolution": "Implemented explicit owned lifecycle, final guard, bounded continuing capture, late containment, fixed build observations, settlement accessor and reservation; general-host containment and two-layer bundle remain OPEN."
+    },
+    {
+      "scope": "Fable disposition wording review",
+      "status": "FAIL",
+      "receipt": "docs/verification/2026-09-12/u02-process-owner-fable-resolution-review.json",
+      "resolution": "Clarified new final metadata copy versus mutation of frozen prepared object; no-launch means launch function never called; manual reconciliation is only recovery. Final bounded excerpt/wording review PASS, not full-host audit."
+    },
+    {
+      "scope": "First actual native adapter integration",
+      "tests": 8,
+      "pass": 7,
+      "fail": 1,
+      "reason": "Extra path property in findings violated existing closed v1 workflow evidence schema.",
+      "beforeSource": ".build/nisi-swift-kernel-QDi4IJ/pre-correction-adapter.mjs",
+      "observations": ".build/nisi-swift-kernel-QDi4IJ/executor-fixture-observations.json",
+      "resolution": "Removed extra property and prefixed path to allowed message field. Existing engine schema unchanged. First run terminal text was observed in session 44370; no separate complete TAP file retained."
+    }
+  ],
+  "collaborators": {
+    "fable": {
+      "model": "claude-fable-5-1",
+      "role": "Bounded design and disposition reviews; final clarification PASS only in supplied wording/source-excerpt scope",
+      "auxiliaryModel": "claude-haiku-4-5-20251001",
+      "reportedCostUSD": 0.3475575,
+      "totalProjectCostKnown": false
+    },
+    "luna": {
+      "model": "gpt-5.6-luna",
+      "role": "Read-only negative-test design for engine/receipt and process outcomes",
+      "edits": false
+    },
+    "daybreak": {
+      "model": "gpt-daybreak-blue-latest",
+      "role": "Read-only source review and focused lifecycle recheck",
+      "edits": false,
+      "testsRun": false,
+      "findings": [
+        {
+          "issue": "Late spawn after grace lacked containment",
+          "disposition": "Fixed; immutable receipt/quarantine retained; best-effort kill logged; targeted regression and mutant"
+        },
+        {
+          "issue": "Final duration was earlier than last monotonic guard",
+          "disposition": "Fixed with new small frozen metadata copy; targeted regression and mutant"
+        },
+        {
+          "issue": "Late event evidence inaccessible through product API",
+          "disposition": "Fixed with executor/adapter lateObservations and operation key; native tests check accessor availability; late event itself uses lifecycle double"
+        },
+        {
+          "issue": "Stale roadmap described new one-artifact owner as wholly pending",
+          "disposition": "Current descriptions corrected; historical checkpoint left intact"
+        },
+        {
+          "issue": "Path-based executable identity TOCTOU",
+          "disposition": "OPEN for general host; mandatory static-exclusive operational precondition and no attestation claim"
+        },
+        {
+          "issue": "Path-based reservation unlink TOCTOU",
+          "disposition": "OPEN for same-account hostile mutation; exclusive cooperating namespace precondition only"
+        }
+      ],
+      "finalRecheck": "No additional concrete lifecycle or adapter correctness defect identified in bounded source review; no-launch excludes timeout-before-spawn; final copy uses last guard sample."
+    },
+    "root": {
+      "role": "Sole source writer, integration, deterministic/native execution, evidence and final scoped acceptance",
+      "modelUsageNotClaimed": true
+    },
+    "unusedThisSlice": [
+      "Go",
+      "Zen",
+      "live AFM product inference",
+      "OpenCode",
+      "Spark",
+      "native app/UI"
+    ]
+  },
+  "evidenceCeilings": [
+    "One fixed reviewed Swift artifact checker per child and receipt; candidate contents are data, never executed programs.",
+    "Mandatory operator-exclusive-static-local-v1 is an operational precondition, not isolation from same-account hostile processes.",
+    "Source/binary/compiler hashes and metadata are observations, not executed-image attestation or trusted SDK verification.",
+    "Native preparations are issued in memory; prior real disk capture is not yet connected to this adapter.",
+    "Completed workflow fixture uses fixture authorization/reviewer callbacks and one real JSON behavior assertion; no live model, repository repair or independent reviewer acceptance.",
+    "Owner observes direct child close, not global provider drain or arbitrary descendants; lifecycle uncertain/late events are controlled doubles.",
+    "Reservation has local fsync/refusal tests including prior-host marker; actual process-crash/power-loss tests are not run. No automatic clear/recovery API.",
+    "No-launch means launch function never invoked, not lack of spawn event. Unknown launch/closure retains marker and quarantine.",
+    "Late observations are at most 16 in-memory entries. They never revise already issued receipts or clear quarantine and are not a durable journal.",
+    "Run/attempt replay prevention is bounded to one executor instance, not cross-restart exactly-once semantics.",
+    "Owner budget begins after bounded synchronous build preflight; event-loop timers do not preempt synchronous work. Nisi checks an independent workflow deadline.",
+    "Actual native PASS followed by engine TIMED_OUT is retained, and the existing v1 bundle rejects it. A versioned two-layer outcome contract is still required; no fabricated native flags.",
+    "Markdown profile checks raw heading markers including fenced examples, not content completeness or code correctness.",
+    "Native EINTR/EPIPE, hostile tree containment, full multi-file host, live-model repository workflow, native app/UI and whole merger acceptance remain unverified."
+  ],
+  "repositoryDecision": {
+    "product": "Nisi",
+    "destination": "Existing louiscalata/nisi repository",
+    "retirement": "Veritas obsolete as a separate product after engineering merger acceptance; preserve source/evidence/history.",
+    "privateWorktree": "/Users/louiscalata/nisi-next-private",
+    "privateRemote": {
+      "chunk_id": "b65bf5",
+      "wall_time_seconds": 0.000003417,
+      "exit_code": 0,
+      "original_token_count": 28,
+      "output": "origin\thttps://github.com/louiscalata/nisi.git (fetch)\norigin\thttps://github.com/louiscalata/nisi.git (push)\n"
+    },
+    "publicCheckout": "/Users/louiscalata/nisi",
+    "publicHead": "df321f8676f1da6b21885ad0781c7bd0549e1f32",
+    "publicStatus": {
+      "chunk_id": "5a25b1",
+      "wall_time_seconds": 0.000004709,
+      "exit_code": 0,
+      "original_token_count": 0,
+      "output": ""
+    },
+    "originalVeritasConfiguredRemotes": {
+      "chunk_id": "107640",
+      "wall_time_seconds": 0.000004041,
+      "exit_code": 0,
+      "original_token_count": 0,
+      "output": ""
+    },
+    "localConfigurationObservationOnly": true,
+    "cutoverPerformed": false
+  },
+  "next": [
+    "Specify and test a versioned two-layer disposition reader preserving actual process outcomes separately from engine deadline/cancellation/acceptance.",
+    "Connect trusted disk capture and all required artifacts to a bounded repository host; explicitly represent each child rather than collapsing several into a v1 process receipt.",
+    "Demonstrate reviewed baseline defect, candidate repair, fresh checks/tests/review and real retained records, with live-model acceptance separately gated.",
+    "Complete failure-history, evaluated-prevention, scheduler/native and experimental module integration before whole-product acceptance.",
+    "Perform Nisi-only local cutover after whole engineering acceptance; exact-artifact legal/release gates still control publication."
+  ],
+  "wholeMergerComplete": false,
+  "oneArtifactScopedAdapterVerified": true,
+  "productionNativeBridgeVerified": false,
+  "fullHostVerified": false,
+  "sourceDeleted": false,
+  "committed": false,
+  "pushed": false,
+  "published": false,
+  "authorizing": false
+}

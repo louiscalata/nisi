@@ -1,0 +1,9 @@
+{
+  "configured": [
+    {
+      "key": "google/gemma-4-26b-a4b-qat",
+      "loaded_instances": []
+    }
+  ],
+  "all_loaded": []
+}

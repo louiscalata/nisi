@@ -1,0 +1,266 @@
+{
+  "schemaVersion": 1,
+  "experimentId": "E16",
+  "manifestVersion": "stage5-preparation-v1",
+  "status": "NOT_RUN",
+  "evidenceClass": "SELF_ADMINISTERED_STRUCTURAL_PREPARATION",
+  "denominator": 24,
+  "familyDenominators": {
+    "AUTHORITY_MUTATION": 8,
+    "DIGEST_SUBSTITUTION": 6,
+    "PROMOTION_CRASH_OR_RACE": 6,
+    "PRIOR_TARGET_RECOVERY": 4
+  },
+  "cases": [
+    {
+      "schemaVersion": 1,
+      "caseId": "E16-S5-AUTH-001",
+      "family": "AUTHORITY_MUTATION",
+      "mutation": "Substitute the policy digest after authority freeze and before decision.",
+      "expectedOutcome": "REFUSE_BEFORE_DECISION",
+      "runStatus": "NOT_RUN",
+      "evidenceClass": "SELF_ADMINISTERED_STRUCTURAL_PREPARATION",
+      "credits": { "protectedAuthority": false, "nativeRuntime": false, "t164ThroughT183": false, "m4": false, "e16": false, "patent": false, "production": false, "release": false }
+    },
+    {
+      "schemaVersion": 1,
+      "caseId": "E16-S5-AUTH-002",
+      "family": "AUTHORITY_MUTATION",
+      "mutation": "Substitute the verifier-set digest after authority freeze.",
+      "expectedOutcome": "REFUSE_BEFORE_DECISION",
+      "runStatus": "NOT_RUN",
+      "evidenceClass": "SELF_ADMINISTERED_STRUCTURAL_PREPARATION",
+      "credits": { "protectedAuthority": false, "nativeRuntime": false, "t164ThroughT183": false, "m4": false, "e16": false, "patent": false, "production": false, "release": false }
+    },
+    {
+      "schemaVersion": 1,
+      "caseId": "E16-S5-AUTH-003",
+      "family": "AUTHORITY_MUTATION",
+      "mutation": "Substitute the evidence-adapter-set digest after authority freeze.",
+      "expectedOutcome": "REFUSE_BEFORE_DECISION",
+      "runStatus": "NOT_RUN",
+      "evidenceClass": "SELF_ADMINISTERED_STRUCTURAL_PREPARATION",
+      "credits": { "protectedAuthority": false, "nativeRuntime": false, "t164ThroughT183": false, "m4": false, "e16": false, "patent": false, "production": false, "release": false }
+    },
+    {
+      "schemaVersion": 1,
+      "caseId": "E16-S5-AUTH-004",
+      "family": "AUTHORITY_MUTATION",
+      "mutation": "Substitute the hook-set digest after authority freeze.",
+      "expectedOutcome": "REFUSE_BEFORE_DECISION",
+      "runStatus": "NOT_RUN",
+      "evidenceClass": "SELF_ADMINISTERED_STRUCTURAL_PREPARATION",
+      "credits": { "protectedAuthority": false, "nativeRuntime": false, "t164ThroughT183": false, "m4": false, "e16": false, "patent": false, "production": false, "release": false }
+    },
+    {
+      "schemaVersion": 1,
+      "caseId": "E16-S5-AUTH-005",
+      "family": "AUTHORITY_MUTATION",
+      "mutation": "Substitute the trusted-command-set digest after authority freeze.",
+      "expectedOutcome": "REFUSE_BEFORE_DECISION",
+      "runStatus": "NOT_RUN",
+      "evidenceClass": "SELF_ADMINISTERED_STRUCTURAL_PREPARATION",
+      "credits": { "protectedAuthority": false, "nativeRuntime": false, "t164ThroughT183": false, "m4": false, "e16": false, "patent": false, "production": false, "release": false }
+    },
+    {
+      "schemaVersion": 1,
+      "caseId": "E16-S5-AUTH-006",
+      "family": "AUTHORITY_MUTATION",
+      "mutation": "Substitute the base revision after authority freeze.",
+      "expectedOutcome": "REFUSE_BEFORE_DECISION",
+      "runStatus": "NOT_RUN",
+      "evidenceClass": "SELF_ADMINISTERED_STRUCTURAL_PREPARATION",
+      "credits": { "protectedAuthority": false, "nativeRuntime": false, "t164ThroughT183": false, "m4": false, "e16": false, "patent": false, "production": false, "release": false }
+    },
+    {
+      "schemaVersion": 1,
+      "caseId": "E16-S5-AUTH-007",
+      "family": "AUTHORITY_MUTATION",
+      "mutation": "Attempt writer self-approval while the profile requires role separation.",
+      "expectedOutcome": "REFUSE_BEFORE_DECISION",
+      "runStatus": "NOT_RUN",
+      "evidenceClass": "SELF_ADMINISTERED_STRUCTURAL_PREPARATION",
+      "credits": { "protectedAuthority": false, "nativeRuntime": false, "t164ThroughT183": false, "m4": false, "e16": false, "patent": false, "production": false, "release": false }
+    },
+    {
+      "schemaVersion": 1,
+      "caseId": "E16-S5-AUTH-008",
+      "family": "AUTHORITY_MUTATION",
+      "mutation": "Advance the dependency epoch after freeze and before decision.",
+      "expectedOutcome": "REFUSE_BEFORE_DECISION",
+      "runStatus": "NOT_RUN",
+      "evidenceClass": "SELF_ADMINISTERED_STRUCTURAL_PREPARATION",
+      "credits": { "protectedAuthority": false, "nativeRuntime": false, "t164ThroughT183": false, "m4": false, "e16": false, "patent": false, "production": false, "release": false }
+    },
+    {
+      "schemaVersion": 1,
+      "caseId": "E16-S5-DIGEST-001",
+      "family": "DIGEST_SUBSTITUTION",
+      "mutation": "Replace the final candidate after verification with a different digest.",
+      "expectedOutcome": "REFUSE_BEFORE_PROMOTION",
+      "runStatus": "NOT_RUN",
+      "evidenceClass": "SELF_ADMINISTERED_STRUCTURAL_PREPARATION",
+      "credits": { "protectedAuthority": false, "nativeRuntime": false, "t164ThroughT183": false, "m4": false, "e16": false, "patent": false, "production": false, "release": false }
+    },
+    {
+      "schemaVersion": 1,
+      "caseId": "E16-S5-DIGEST-002",
+      "family": "DIGEST_SUBSTITUTION",
+      "mutation": "Replace the decision record with a redigested decision for another subject.",
+      "expectedOutcome": "REFUSE_BEFORE_PROMOTION",
+      "runStatus": "NOT_RUN",
+      "evidenceClass": "SELF_ADMINISTERED_STRUCTURAL_PREPARATION",
+      "credits": { "protectedAuthority": false, "nativeRuntime": false, "t164ThroughT183": false, "m4": false, "e16": false, "patent": false, "production": false, "release": false }
+    },
+    {
+      "schemaVersion": 1,
+      "caseId": "E16-S5-DIGEST-003",
+      "family": "DIGEST_SUBSTITUTION",
+      "mutation": "Bind the accepted-artifact record to the model-response digest.",
+      "expectedOutcome": "REFUSE_BEFORE_PROMOTION",
+      "runStatus": "NOT_RUN",
+      "evidenceClass": "SELF_ADMINISTERED_STRUCTURAL_PREPARATION",
+      "credits": { "protectedAuthority": false, "nativeRuntime": false, "t164ThroughT183": false, "m4": false, "e16": false, "patent": false, "production": false, "release": false }
+    },
+    {
+      "schemaVersion": 1,
+      "caseId": "E16-S5-DIGEST-004",
+      "family": "DIGEST_SUBSTITUTION",
+      "mutation": "Write object bytes whose digest differs from the accepted artifact.",
+      "expectedOutcome": "ROLL_BACK_TO_PRIOR_TARGET",
+      "runStatus": "NOT_RUN",
+      "evidenceClass": "SELF_ADMINISTERED_STRUCTURAL_PREPARATION",
+      "credits": { "protectedAuthority": false, "nativeRuntime": false, "t164ThroughT183": false, "m4": false, "e16": false, "patent": false, "production": false, "release": false }
+    },
+    {
+      "schemaVersion": 1,
+      "caseId": "E16-S5-DIGEST-005",
+      "family": "DIGEST_SUBSTITUTION",
+      "mutation": "Swap the destination reference to an unverified object digest.",
+      "expectedOutcome": "ROLL_BACK_TO_PRIOR_TARGET",
+      "runStatus": "NOT_RUN",
+      "evidenceClass": "SELF_ADMINISTERED_STRUCTURAL_PREPARATION",
+      "credits": { "protectedAuthority": false, "nativeRuntime": false, "t164ThroughT183": false, "m4": false, "e16": false, "patent": false, "production": false, "release": false }
+    },
+    {
+      "schemaVersion": 1,
+      "caseId": "E16-S5-DIGEST-006",
+      "family": "DIGEST_SUBSTITUTION",
+      "mutation": "Reuse a destination receipt for a different destination-result digest.",
+      "expectedOutcome": "REFUSE_BEFORE_PROMOTION",
+      "runStatus": "NOT_RUN",
+      "evidenceClass": "SELF_ADMINISTERED_STRUCTURAL_PREPARATION",
+      "credits": { "protectedAuthority": false, "nativeRuntime": false, "t164ThroughT183": false, "m4": false, "e16": false, "patent": false, "production": false, "release": false }
+    },
+    {
+      "schemaVersion": 1,
+      "caseId": "E16-S5-PROMO-001",
+      "family": "PROMOTION_CRASH_OR_RACE",
+      "mutation": "Crash after preparation and before immutable-object write.",
+      "expectedOutcome": "CONVERGE_IDEMPOTENTLY",
+      "runStatus": "NOT_RUN",
+      "evidenceClass": "SELF_ADMINISTERED_STRUCTURAL_PREPARATION",
+      "credits": { "protectedAuthority": false, "nativeRuntime": false, "t164ThroughT183": false, "m4": false, "e16": false, "patent": false, "production": false, "release": false }
+    },
+    {
+      "schemaVersion": 1,
+      "caseId": "E16-S5-PROMO-002",
+      "family": "PROMOTION_CRASH_OR_RACE",
+      "mutation": "Crash after object write and before reference swap.",
+      "expectedOutcome": "CONVERGE_IDEMPOTENTLY",
+      "runStatus": "NOT_RUN",
+      "evidenceClass": "SELF_ADMINISTERED_STRUCTURAL_PREPARATION",
+      "credits": { "protectedAuthority": false, "nativeRuntime": false, "t164ThroughT183": false, "m4": false, "e16": false, "patent": false, "production": false, "release": false }
+    },
+    {
+      "schemaVersion": 1,
+      "caseId": "E16-S5-PROMO-003",
+      "family": "PROMOTION_CRASH_OR_RACE",
+      "mutation": "Crash after reference swap and before destination readback.",
+      "expectedOutcome": "WITHHOLD_AS_UNCERTAIN",
+      "runStatus": "NOT_RUN",
+      "evidenceClass": "SELF_ADMINISTERED_STRUCTURAL_PREPARATION",
+      "credits": { "protectedAuthority": false, "nativeRuntime": false, "t164ThroughT183": false, "m4": false, "e16": false, "patent": false, "production": false, "release": false }
+    },
+    {
+      "schemaVersion": 1,
+      "caseId": "E16-S5-PROMO-004",
+      "family": "PROMOTION_CRASH_OR_RACE",
+      "mutation": "Retry the same transaction after a lost successful response.",
+      "expectedOutcome": "CONVERGE_IDEMPOTENTLY",
+      "runStatus": "NOT_RUN",
+      "evidenceClass": "SELF_ADMINISTERED_STRUCTURAL_PREPARATION",
+      "credits": { "protectedAuthority": false, "nativeRuntime": false, "t164ThroughT183": false, "m4": false, "e16": false, "patent": false, "production": false, "release": false }
+    },
+    {
+      "schemaVersion": 1,
+      "caseId": "E16-S5-PROMO-005",
+      "family": "PROMOTION_CRASH_OR_RACE",
+      "mutation": "Race two writers from the same expected destination generation.",
+      "expectedOutcome": "WITHHOLD_AS_UNCERTAIN",
+      "runStatus": "NOT_RUN",
+      "evidenceClass": "SELF_ADMINISTERED_STRUCTURAL_PREPARATION",
+      "credits": { "protectedAuthority": false, "nativeRuntime": false, "t164ThroughT183": false, "m4": false, "e16": false, "patent": false, "production": false, "release": false }
+    },
+    {
+      "schemaVersion": 1,
+      "caseId": "E16-S5-PROMO-006",
+      "family": "PROMOTION_CRASH_OR_RACE",
+      "mutation": "Linearize a dependency event after acceptance and before readback.",
+      "expectedOutcome": "RECALL_AFTER_ACCEPTANCE",
+      "runStatus": "NOT_RUN",
+      "evidenceClass": "SELF_ADMINISTERED_STRUCTURAL_PREPARATION",
+      "credits": { "protectedAuthority": false, "nativeRuntime": false, "t164ThroughT183": false, "m4": false, "e16": false, "patent": false, "production": false, "release": false }
+    },
+    {
+      "schemaVersion": 1,
+      "caseId": "E16-S5-ROLLBACK-001",
+      "family": "PRIOR_TARGET_RECOVERY",
+      "mutation": "Corrupt the prepared immutable object before reference swap.",
+      "expectedOutcome": "ROLL_BACK_TO_PRIOR_TARGET",
+      "runStatus": "NOT_RUN",
+      "evidenceClass": "SELF_ADMINISTERED_STRUCTURAL_PREPARATION",
+      "credits": { "protectedAuthority": false, "nativeRuntime": false, "t164ThroughT183": false, "m4": false, "e16": false, "patent": false, "production": false, "release": false }
+    },
+    {
+      "schemaVersion": 1,
+      "caseId": "E16-S5-ROLLBACK-002",
+      "family": "PRIOR_TARGET_RECOVERY",
+      "mutation": "Corrupt the current target reference during rollback.",
+      "expectedOutcome": "WITHHOLD_AS_UNCERTAIN",
+      "runStatus": "NOT_RUN",
+      "evidenceClass": "SELF_ADMINISTERED_STRUCTURAL_PREPARATION",
+      "credits": { "protectedAuthority": false, "nativeRuntime": false, "t164ThroughT183": false, "m4": false, "e16": false, "patent": false, "production": false, "release": false }
+    },
+    {
+      "schemaVersion": 1,
+      "caseId": "E16-S5-ROLLBACK-003",
+      "family": "PRIOR_TARGET_RECOVERY",
+      "mutation": "Delete or substitute the prior-target object before recovery.",
+      "expectedOutcome": "WITHHOLD_AS_UNCERTAIN",
+      "runStatus": "NOT_RUN",
+      "evidenceClass": "SELF_ADMINISTERED_STRUCTURAL_PREPARATION",
+      "credits": { "protectedAuthority": false, "nativeRuntime": false, "t164ThroughT183": false, "m4": false, "e16": false, "patent": false, "production": false, "release": false }
+    },
+    {
+      "schemaVersion": 1,
+      "caseId": "E16-S5-ROLLBACK-004",
+      "family": "PRIOR_TARGET_RECOVERY",
+      "mutation": "Return stale readback bytes after rollback reports success.",
+      "expectedOutcome": "WITHHOLD_AS_UNCERTAIN",
+      "runStatus": "NOT_RUN",
+      "evidenceClass": "SELF_ADMINISTERED_STRUCTURAL_PREPARATION",
+      "credits": { "protectedAuthority": false, "nativeRuntime": false, "t164ThroughT183": false, "m4": false, "e16": false, "patent": false, "production": false, "release": false }
+    }
+  ],
+  "credits": {
+    "protectedAuthority": false,
+    "nativeRuntime": false,
+    "t164ThroughT183": false,
+    "m4": false,
+    "e16": false,
+    "patent": false,
+    "production": false,
+    "release": false
+  }
+}

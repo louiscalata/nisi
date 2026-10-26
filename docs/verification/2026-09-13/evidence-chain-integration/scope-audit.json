@@ -1,0 +1,101 @@
+{
+  "status": "FAIL_UNEXPECTED_PREEXISTING_FILE_DRIFT",
+  "failure": {
+    "stage": "final scope audit after step e",
+    "reason": "A pre-existing file outside the authorized integration paths changed since the pre-state snapshot. The first scope-audit assertion stopped completion.",
+    "firstObservedUnexpectedPath": "work-orders/windows-future-20260913/packs/usage-table/tests/acceptance.test.mjs",
+    "beforeSha256": "0d594a693f25421fd87b371eaaf91a67985d12bd24a9c664ad01b8546cdf39bc",
+    "reportingSnapshotSha256": "2c66e069ed0d59f2a1cf3c31b738ddf2500ddfdc846a25830c0684f7abe418dc",
+    "integrationWroteThisPath": false,
+    "externalWriterIdentity": "unknown; not attributed",
+    "action": "Stopped further integration actions. Did not modify or revert this path. Only failure-reporting evidence written after the audit failure."
+  },
+  "basis": "SHA256 comparison of tracked and non-ignored untracked files against live pre-state; normal ignored .build/OS temporary check outputs are outside this audit.",
+  "initialFileCount": 940,
+  "preExistingFilesChanged": [
+    {
+      "path": "roadmap.md",
+      "beforeSha256": "e9aa7539faa41a15d4a7c35bbef057d20d4cc127f3bd78e6ffdaa3b265dead29",
+      "afterSha256": "eb7afa5608aba3fb44c03558c581d7c5b70e5df679100e93646a510d9c37176d",
+      "authorizedRoadmapEdit": true
+    },
+    {
+      "path": "work-orders/fixed-run-journal-entry/roadmap.md",
+      "beforeSha256": "471b6cfbe3ab77ff8e42a606fc60546c6fcad3427a18ff14bc4692435ce04a8b",
+      "afterSha256": "1aa2f53189ef4dc8ff8d927d1fbfde1047fa4a22d98bbda33902d641986105b3",
+      "authorizedRoadmapEdit": true
+    },
+    {
+      "path": "work-orders/host-journal-bundle/roadmap.md",
+      "beforeSha256": "1bb57934242a3e3ca0aaa12604fadf5411a2e953a797433955023be4f3197c79",
+      "afterSha256": "20ba30358414d43cb3455ad03ea6ec74445ffce000cd7dc896ef0dcd8d98ec1e",
+      "authorizedRoadmapEdit": true
+    },
+    {
+      "path": "work-orders/journal-restart-recovery/roadmap.md",
+      "beforeSha256": "1df4cdafd6a881f1d7187b5bbfc6c0d76928239d0c8d1767adfc9fb5763a1bca",
+      "afterSha256": "94aab5f5f7428cc129d71cedd2e3aeb560ef1ed2012ebaec535a87220eb502c0",
+      "authorizedRoadmapEdit": false
+    },
+    {
+      "path": "work-orders/native-canary-summary/roadmap.md",
+      "beforeSha256": "532994e96ffc4b538c35a975925f448c86dd4a0152ee91a369b0bb0a2c0439d7",
+      "afterSha256": "aa4daee191bdec8581b9ba7f4001ab7d62fffffa4a2c669c82c0ad7e230075c6",
+      "authorizedRoadmapEdit": true
+    },
+    {
+      "path": "work-orders/run-journal-store/roadmap.md",
+      "beforeSha256": "6f227ea1dc7089f734681cf447d8b414e7ccf40dce9f6b7fd7d2b7d891dc0a32",
+      "afterSha256": "ccd10b5b66d80792cfdcee1581c0788f6cc858a402d7cd0d5a6090b53288e216",
+      "authorizedRoadmapEdit": true
+    },
+    {
+      "path": "work-orders/windows-future-20260913/packs/usage-table/src/index.mjs",
+      "beforeSha256": "b0feb39698ad4042c4c672026ddffbe1b32bf146f10aa697450bae206fb31612",
+      "afterSha256": "caf7a70b5ecfec0ac9f928bf90615312968ad2470d1eed7210cf74a05a661c3a",
+      "authorizedRoadmapEdit": false
+    },
+    {
+      "path": "work-orders/windows-future-20260913/packs/usage-table/tests/acceptance.test.mjs",
+      "beforeSha256": "0d594a693f25421fd87b371eaaf91a67985d12bd24a9c664ad01b8546cdf39bc",
+      "afterSha256": "2c66e069ed0d59f2a1cf3c31b738ddf2500ddfdc846a25830c0684f7abe418dc",
+      "authorizedRoadmapEdit": false
+    }
+  ],
+  "preExistingFilesUnchanged": 932,
+  "unexpectedChangedPaths": [
+    "work-orders/journal-restart-recovery/roadmap.md",
+    "work-orders/windows-future-20260913/packs/usage-table/src/index.mjs",
+    "work-orders/windows-future-20260913/packs/usage-table/tests/acceptance.test.mjs"
+  ],
+  "unexpectedNewPaths": [
+    "work-orders/journal-restart-recovery/evidence/owner-acceptance.json",
+    "work-orders/windows-future-20260913/packs/comparison-table/tests/acceptance.test.mjs",
+    "work-orders/windows-future-20260913/packs/markdown-status-card/tests/acceptance.test.mjs",
+    "work-orders/windows-future-20260913/packs/usage-table/evidence/draft-1.json",
+    "work-orders/windows-future-20260913/packs/usage-table/worker-revision-1.md",
+    "work-orders/windows-future-20260913/preflight.json",
+    "work-orders/windows-future-20260913/queue.json",
+    "work-orders/windows-future-20260913/roadmap.md"
+  ],
+  "newProductPlacementCount": 22,
+  "all22PlacementsStillMatchSources": true,
+  "protectedFilesInTheseFourWorkOrders": 44,
+  "protectedFilesInTheseFourWorkOrdersUnchanged": true,
+  "allWorkOrderProtectedFilesInspected": 102,
+  "allWorkOrderProtectedFilesUnchanged": false,
+  "productScriptFilesChecked": 16,
+  "productScriptsUnchanged": true,
+  "retainedPreflightFilesChecked": 20,
+  "retainedPreflightUnchanged": true,
+  "packageJsonUnchanged": true,
+  "packageLockUnchanged": true,
+  "allRoadmapEditsAppendOnly": true,
+  "roadmapFinalHashesMatch": false,
+  "gitHeadUnchanged": true,
+  "requestedPrivatePackageGeneratedOutput": ".build/private-package-6XXmhf",
+  "reportingNotes": [
+    "Additional concurrent drift appeared while writing the stop report: three pre-existing non-target paths changed and eight non-target paths appeared at the reporting snapshot. These files were not written by this integration.",
+    "The canonical roadmap also changed after the integration append. Its recorded roadmapChanges afterSha256 denotes bytes immediately after our append; scopeAudit and postStopReportingObservation record the later shared-tree hash. No external writer is attributed."
+  ]
+}

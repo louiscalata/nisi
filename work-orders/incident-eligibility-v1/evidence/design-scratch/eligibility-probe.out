@@ -1,0 +1,94 @@
+=== REAL PRODUCERS: paged host fixture (13 static FAIL rows, settled) ===
+plan.status/reason => ["SOURCE_BOUND",null]
+capture.status/entryId => ["STORED","ric1.f2e76f7cbdb"]
+query.status => AVAILABLE_OBSERVATION
+query.journalSha256 present => true
+
+=== T1 baseline: real query + real plan ===
+decision => {"status":"ELIGIBLE","reason":null,"checks":{"journal":"OK","observation":"OK","project":"OK","row":"OK","source":"OK","identity":"OK"},"entryId":"ric1.f2e76f7","journalSha256":"9ca67759","sourcePlanDigest":"0fff9303"}
+Object.keys(decision) => ["schemaVersion","status","reason","checks","entryId","journalSha256","sourcePlanDigest","authorizing","admitted","learningEnabled"]
+deepFrozen => true
+entryId echoed === query.entryId => true
+journalSha256 echoed === query.journalSha256 => true
+sourcePlanDigest echoed === plan.sourcePlanDigest => true
+T2 determinism: second call deepEqual => true
+T19 key-order independence (observation keys are cloneFreeze-sorted) => ["authorizing","consentAuthenticityAttested","consentClass","declarationDigest"]
+
+=== lifecycle via REAL query results ===
+T11 EXPIRED (now=10100) => {"status":"INELIGIBLE","reason":"EXPIRED","checks":{"journal":"OK","observation":"EXPIRED","project":"NOT_EVALUATED","row":"NOT_EVALUATED","source":"NOT_EVALUATED","identity":"NOT_EVALUATED"},"entryId":"ric1.f2e76f7","journalSha256":"9ca67759","sourcePlanDigest":"0fff9303"}
+T9a MISSING (unknown id, file exists) => {"status":"INELIGIBLE","reason":"MISSING","checks":{"journal":"OK","observation":"MISSING","project":"NOT_EVALUATED","row":"NOT_EVALUATED","source":"NOT_EVALUATED","identity":"NOT_EVALUATED"},"entryId":"ric1.fffffff","journalSha256":"9ca67759","sourcePlanDigest":"0fff9303"}
+T9b MISSING (no file) => {"status":"INELIGIBLE","reason":"MISSING","checks":{"journal":"OK","observation":"MISSING","project":"NOT_EVALUATED","row":"NOT_EVALUATED","source":"NOT_EVALUATED","identity":"NOT_EVALUATED"},"entryId":"ric1.f2e76f7","journalSha256":null,"sourcePlanDigest":"0fff9303"}
+T5 JOURNAL_UNAVAILABLE (wrong projectId at query) => {"status":"UNCERTAIN","reason":"JOURNAL_UNAVAILABLE","checks":{"journal":"JOURNAL_UNAVAILABLE","observation":"NOT_EVALUATED","project":"NOT_EVALUATED","row":"NOT_EVALUATED","source":"NOT_EVALUATED","identity":"NOT_EVALUATED"},"entryId":"ric1.f2e76f7","journalSha256":null,"sourcePlanDigest":"0fff9303"}
+T8 query REFUSED/INVALID_INPUT (bad now) => {"status":"INELIGIBLE","reason":"INVALID_OBSERVATION","checks":{"journal":"OK","observation":"INVALID_INPUT","project":"NOT_EVALUATED","row":"NOT_EVALUATED","source":"NOT_EVALUATED","identity":"NOT_EVALUATED"},"entryId":null,"journalSha256":null,"sourcePlanDigest":"0fff9303"}
+tombstone record => ["RECORDED",null]
+T10 REVOKED => {"status":"INELIGIBLE","reason":"REVOKED","checks":{"journal":"OK","observation":"REVOKED","project":"NOT_EVALUATED","row":"NOT_EVALUATED","source":"NOT_EVALUATED","identity":"NOT_EVALUATED"},"entryId":"ric1.f2e76f7","journalSha256":"db6c9948","sourcePlanDigest":"0fff9303"}
+T6 JOURNAL_NOT_OPEN (truncated footer) => {"status":"UNCERTAIN","reason":"JOURNAL_NOT_OPEN","checks":{"journal":"JOURNAL_NOT_OPEN","observation":"NOT_EVALUATED","project":"NOT_EVALUATED","row":"NOT_EVALUATED","source":"NOT_EVALUATED","identity":"NOT_EVALUATED"},"entryId":"ric1.f2e76f7","journalSha256":null,"sourcePlanDigest":"0fff9303"}
+second-row capture => ["STORED",null]
+third-row capture (prunes the first) => ["STORED",null]
+query status => NOT_RETAINED
+T12 NOT_RETAINED => {"status":"INELIGIBLE","reason":"NOT_RETAINED","checks":{"journal":"OK","observation":"NOT_RETAINED","project":"NOT_EVALUATED","row":"NOT_EVALUATED","source":"NOT_EVALUATED","identity":"NOT_EVALUATED"},"entryId":"ric1.f836cb2","journalSha256":"41a831ed","sourcePlanDigest":"fc2ffa4d"}
+redacted capture/query => ["STORED","REFUSED","INVALID_OBSERVATION","journalSha256 null? false","entryId null? false"]
+T7 INVALID_OBSERVATION (redacted on disk) => {"status":"INELIGIBLE","reason":"INVALID_OBSERVATION","checks":{"journal":"OK","observation":"INVALID_OBSERVATION","project":"NOT_EVALUATED","row":"NOT_EVALUATED","source":"NOT_EVALUATED","identity":"NOT_EVALUATED"},"entryId":"ric1.f2e76f7","journalSha256":"4a33a8ec","sourcePlanDigest":"0fff9303"}
+
+=== T13 project isolation at the decision boundary ===
+projectId differs from row.binding.taskFingerprint => {"status":"INELIGIBLE","reason":"PROJECT_MISMATCH","checks":{"journal":"OK","observation":"OK","project":"PROJECT_MISMATCH","row":"NOT_EVALUATED","source":"NOT_EVALUATED","identity":"NOT_EVALUATED"},"entryId":"ric1.f2e76f7","journalSha256":"9ca67759","sourcePlanDigest":"0fff9303"}
+
+=== T16 plan refusals (real refusal envelopes) ===
+plan REFUSED/INVALID_INPUT => ["INELIGIBLE","INVALID_EVIDENCE","INVALID_INPUT",null]
+plan REFUSED/INVALID_PREVIEW => ["INELIGIBLE","INVALID_PREVIEW","INVALID_PREVIEW",null]
+plan REFUSED/PREVIEW_MISMATCH => ["INELIGIBLE","PREVIEW_MISMATCH","PREVIEW_MISMATCH",null]
+plan REFUSED/ROW_MISSING => ["INELIGIBLE","ROW_MISSING","ROW_MISSING",null]
+plan REFUSED/ROW_NOT_FAILURE => ["INELIGIBLE","ROW_NOT_FAILURE","ROW_NOT_FAILURE",null]
+plan REFUSED/UNSUPPORTED_STAGE => ["INELIGIBLE","UNSUPPORTED_STAGE","UNSUPPORTED_STAGE",null]
+plan REFUSED/SOURCE_MISMATCH => ["INELIGIBLE","SOURCE_MISMATCH","SOURCE_MISMATCH",null]
+plan REFUSED/INVALID_EVIDENCE => ["INELIGIBLE","INVALID_EVIDENCE","INVALID_EVIDENCE",null]
+plan REFUSED/ARTIFACT_LIMIT => ["INELIGIBLE","ARTIFACT_LIMIT","ARTIFACT_LIMIT",null]
+plan REFUSED/HOST_NOT_SETTLED => ["INELIGIBLE","HOST_NOT_SETTLED","HOST_NOT_SETTLED",null]
+real refusal from host for an unknown rowId => {"status":"INELIGIBLE","reason":"ROW_MISSING","checks":{"journal":"OK","observation":"OK","project":"OK","row":"OK","source":"ROW_MISSING","identity":"NOT_EVALUATED"},"entryId":"ric1.f2e76f7","journalSha256":"9ca67759","sourcePlanDigest":null}
+
+=== T17 identity join (forged from the real envelopes) ===
+rowId differs => {"status":"INELIGIBLE","reason":"ROW_MISMATCH","checks":{"journal":"OK","observation":"OK","project":"OK","row":"OK","source":"OK","identity":"ROW_MISMATCH"},"entryId":"ric1.f2e76f7","journalSha256":"9ca67759","sourcePlanDigest":"0fff9303"}
+rowFingerprint differs => {"status":"INELIGIBLE","reason":"CONFLICT","checks":{"journal":"OK","observation":"OK","project":"OK","row":"OK","source":"OK","identity":"CONFLICT"},"entryId":"ric1.f2e76f7","journalSha256":"9ca67759","sourcePlanDigest":"0fff9303"}
+binding.attempt differs => {"status":"INELIGIBLE","reason":"CONFLICT","checks":{"journal":"OK","observation":"OK","project":"OK","row":"OK","source":"OK","identity":"CONFLICT"},"entryId":"ric1.f2e76f7","journalSha256":"9ca67759","sourcePlanDigest":"0fff9303"}
+source.receiptSha256 differs => {"status":"INELIGIBLE","reason":"CONFLICT","checks":{"journal":"OK","observation":"OK","project":"OK","row":"OK","source":"OK","identity":"CONFLICT"},"entryId":"ric1.f2e76f7","journalSha256":"9ca67759","sourcePlanDigest":"0fff9303"}
+previewSha256 differs => {"status":"INELIGIBLE","reason":"PREVIEW_MISMATCH","checks":{"journal":"OK","observation":"OK","project":"OK","row":"OK","source":"OK","identity":"PREVIEW_MISMATCH"},"entryId":"ric1.f2e76f7","journalSha256":"9ca67759","sourcePlanDigest":"0fff9303"}
+plan for eligible[1] against observation of eligible[0] => {"status":"INELIGIBLE","reason":"ROW_MISMATCH","checks":{"journal":"OK","observation":"OK","project":"OK","row":"OK","source":"OK","identity":"ROW_MISMATCH"},"entryId":"ric1.f2e76f7","journalSha256":"9ca67759","sourcePlanDigest":"fc2ffa4d"}
+
+=== T14/T15 row mapping ===
+tests-stage FAILURE_CANDIDATE observation + plan UNSUPPORTED_STAGE => {"status":"INELIGIBLE","reason":"UNSUPPORTED_STAGE","checks":{"journal":"OK","observation":"OK","project":"OK","row":"UNSUPPORTED_STAGE","source":"NOT_EVALUATED","identity":"NOT_EVALUATED"},"entryId":"ric1.aaaaaaa","journalSha256":"9ca67759","sourcePlanDigest":null}
+static PASS row (forged as stored) + real plan ROW_NOT_FAILURE => {"status":"INELIGIBLE","reason":"ROW_NOT_FAILURE","checks":{"journal":"OK","observation":"OK","project":"OK","row":"ROW_NOT_FAILURE","source":"NOT_EVALUATED","identity":"NOT_EVALUATED"},"entryId":"ric1.aaaaaaa","journalSha256":"9ca67759","sourcePlanDigest":null}
+static PASS row + forged matching SOURCE_BOUND plan => {"status":"INELIGIBLE","reason":"ROW_NOT_FAILURE","checks":{"journal":"OK","observation":"OK","project":"OK","row":"ROW_NOT_FAILURE","source":"NOT_EVALUATED","identity":"NOT_EVALUATED"},"entryId":"ric1.aaaaaaa","journalSha256":"9ca67759","sourcePlanDigest":"0fff9303"}
+
+=== T3/T4/T20 shape and hostile inputs ===
+undefined => ["INELIGIBLE","INVALID_INPUT",true,null,null,null]
+null => ["INELIGIBLE","INVALID_INPUT",true,null,null,null]
+{} => ["INELIGIBLE","INVALID_INPUT",true,null,null,null]
+extra key => ["INELIGIBLE","INVALID_INPUT",true,null,null,null]
+missing plan => ["INELIGIBLE","INVALID_INPUT",true,null,null,null]
+symbol key => ["INELIGIBLE","INVALID_INPUT",true,null,null,null]
+getter projectId => ["INELIGIBLE","INVALID_INPUT",true,null,null,null]
+class instance => ["INELIGIBLE","INVALID_INPUT",true,null,null,null]
+projectId not task: => ["INELIGIBLE","INVALID_INPUT",true,null,null,null]
+query.sourceTrust other => ["INELIGIBLE","INVALID_INPUT",true,null,null,null]
+observation flag true => ["INELIGIBLE","INVALID_INPUT",true,null,null,null]
+row flag true => ["INELIGIBLE","INVALID_INPUT",true,null,null,null]
+T20 [REDACTED] in row.source.reportSha256 (forged AVAILABLE) => ["INELIGIBLE","INVALID_INPUT",true,null,null,null]
+[REDACTED] in failureCodes => ["INELIGIBLE","INVALID_INPUT",true,null,null,null]
+plan.executionVerified true => ["INELIGIBLE","INVALID_INPUT",true,null,null,null]
+plan.requiresSeparateAdmission false => ["INELIGIBLE","INVALID_INPUT",true,null,null,null]
+plan SOURCE_BOUND selection null => ["INELIGIBLE","INVALID_INPUT",true,null,null,null]
+plan REFUSED with selection => ["INELIGIBLE","INVALID_INPUT",true,null,null,null]
+profile.modelParticipationRequired true => ["INELIGIBLE","INVALID_INPUT",true,null,null,null]
+profile.rulesFingerprint != source.rulesetSha256 => ["INELIGIBLE","INVALID_INPUT",true,null,null,null]
+artifactByteLength 1 MiB + 1 => ["INELIGIBLE","INVALID_INPUT",true,null,null,null]
+selection.binding.stage tests => ["INELIGIBLE","INVALID_INPUT",true,null,null,null]
+query REFUSED with observation present => ["INELIGIBLE","INVALID_INPUT",true,null,null,null]
+query unknown status => ["INELIGIBLE","INVALID_INPUT",true,null,null,null]
+query REFUSED unknown reason => ["INELIGIBLE","INVALID_INPUT",true,null,null,null]
+plan REFUSED unknown reason => ["INELIGIBLE","INVALID_INPUT",true,null,null,null]
+failureCodes unsorted => ["INELIGIBLE","INVALID_INPUT",true,null,null,null]
+revoked proxy => ["INELIGIBLE","INVALID_INPUT",true,null,null,null]
+throwing getPrototypeOf trap => ["INELIGIBLE","INVALID_INPUT",true,null,null,null]
+throwing ownKeys inside query => ["INELIGIBLE","INVALID_INPUT",true,null,null,null]
+throwing index on failureCodes => ["INELIGIBLE","INVALID_INPUT",true,null,null,null]
+failureCodes with all four static codes (valid) => {"status":"ELIGIBLE","reason":null,"checks":{"journal":"OK","observation":"OK","project":"OK","row":"OK","source":"OK","identity":"OK"},"entryId":"ric1.f2e76f7","journalSha256":"9ca67759","sourcePlanDigest":"0fff9303"}

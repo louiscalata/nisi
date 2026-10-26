@@ -1,0 +1,229 @@
+[
+  {
+    "source": "work-orders/native-probe-summary/src/native-probe-summary.mjs",
+    "target": "hosts/macos-xpc/native-probe-summary.mjs",
+    "beforeSha256": "c048df362405ffbd3053de93aedd05a0b51ec5c64417d19c9ee5ea22a6d90056",
+    "afterSha256": "c048df362405ffbd3053de93aedd05a0b51ec5c64417d19c9ee5ea22a6d90056",
+    "sourceBytes": 1833,
+    "targetBytes": 1833,
+    "replacements": []
+  },
+  {
+    "source": "work-orders/native-canary-adjudicator/src/native-canary-adjudicator.mjs",
+    "target": "hosts/macos-xpc/native-canary-adjudicator.mjs",
+    "beforeSha256": "cf875eaa7adf335ceab49ae16f9941e2d9b5b9780f5ca15c22eea4c97405de00",
+    "afterSha256": "cf875eaa7adf335ceab49ae16f9941e2d9b5b9780f5ca15c22eea4c97405de00",
+    "sourceBytes": 8536,
+    "targetBytes": 8536,
+    "replacements": []
+  },
+  {
+    "source": "work-orders/native-canary-adapter/src/native-canary-adapter.mjs",
+    "target": "hosts/macos-xpc/native-canary-adapter.mjs",
+    "beforeSha256": "ac9c9cfaacfad91a27f08d2daee461b1f0580892509dc76693ccd36bd35a5c8f",
+    "afterSha256": "ac9c9cfaacfad91a27f08d2daee461b1f0580892509dc76693ccd36bd35a5c8f",
+    "sourceBytes": 9491,
+    "targetBytes": 9491,
+    "replacements": []
+  },
+  {
+    "source": "work-orders/native-chat-types/types/native-chat.d.ts",
+    "target": "types/native-chat.d.ts",
+    "beforeSha256": "4513f9e6e75f94b34f6216fae05a5f22e2c7c7baf8aa7dfd51f43fedcfbfbf51",
+    "afterSha256": "4513f9e6e75f94b34f6216fae05a5f22e2c7c7baf8aa7dfd51f43fedcfbfbf51",
+    "sourceBytes": 5061,
+    "targetBytes": 5061,
+    "replacements": []
+  },
+  {
+    "source": "work-orders/run-journal/src/run-journal-v1.mjs",
+    "target": "history/run-journal-v1.mjs",
+    "beforeSha256": "dee9f490c091000b2560cd9464d945885e7f341091b87dde9ae4f2b7cdbd359e",
+    "afterSha256": "dee9f490c091000b2560cd9464d945885e7f341091b87dde9ae4f2b7cdbd359e",
+    "sourceBytes": 13125,
+    "targetBytes": 13125,
+    "replacements": []
+  },
+  {
+    "source": "work-orders/native-canary-adapter/fixtures/inherit-run-node.stdout",
+    "target": "tests/fixtures/native-canary/inherit-run-node.stdout",
+    "beforeSha256": "51612e7ba818bfe7dd2a42d46e8c0cf8e84332d63f2562132842e9879bc3dddc",
+    "afterSha256": "51612e7ba818bfe7dd2a42d46e8c0cf8e84332d63f2562132842e9879bc3dddc",
+    "sourceBytes": 781,
+    "targetBytes": 781,
+    "replacements": []
+  },
+  {
+    "source": "work-orders/native-canary-adjudicator/package.json",
+    "target": "tests/fixtures/native-canary-adjudicator-package.json",
+    "beforeSha256": "63ac60508b1000f6fd45a334b2c408b58dcb00bf8218aeb6b4ff3d3f510e3938",
+    "afterSha256": "63ac60508b1000f6fd45a334b2c408b58dcb00bf8218aeb6b4ff3d3f510e3938",
+    "sourceBytes": 407,
+    "targetBytes": 407,
+    "replacements": []
+  },
+  {
+    "source": "work-orders/native-canary-adapter/package.json",
+    "target": "tests/fixtures/native-canary-adapter-package.json",
+    "beforeSha256": "76c4da320ab687b303eb33c288e344fbed2fc7a929437ea8048e5c4f8832a823",
+    "afterSha256": "76c4da320ab687b303eb33c288e344fbed2fc7a929437ea8048e5c4f8832a823",
+    "sourceBytes": 321,
+    "targetBytes": 321,
+    "replacements": []
+  },
+  {
+    "source": "work-orders/native-probe-summary/tests/native-probe-summary.test.mjs",
+    "target": "tests/native-probe-summary.test.mjs",
+    "beforeSha256": "203ab14a1096a6de072af45e45ef39d527c9b6c3b6053985185e130986cc4e67",
+    "afterSha256": "6ff76741de5e4970077bb26d77dbe446282c7e1a7a5f111a3ca88666b7c9f5be",
+    "sourceBytes": 7268,
+    "targetBytes": 7292,
+    "replacements": [
+      {
+        "before": "../src/native-probe-summary.mjs",
+        "after": "../hosts/macos-xpc/native-probe-summary.mjs",
+        "occurrences": 2
+      }
+    ]
+  },
+  {
+    "source": "work-orders/native-canary-adjudicator/tests/adjudicate.test.mjs",
+    "target": "tests/native-canary-adjudicator.test.mjs",
+    "beforeSha256": "95b3c2b18fa84a44ca201cd786b9c6aac09b712a02a68cd3fbc9db0a8dbe84a6",
+    "afterSha256": "106eb4fe2ea39b87b7094c5a56bfff01813a14b69ebbc057b96ed7c4c5ddfdc8",
+    "sourceBytes": 8650,
+    "targetBytes": 8674,
+    "replacements": [
+      {
+        "before": "../src/native-canary-adjudicator.mjs",
+        "after": "../hosts/macos-xpc/native-canary-adjudicator.mjs",
+        "occurrences": 2
+      }
+    ]
+  },
+  {
+    "source": "work-orders/native-canary-adjudicator/tests/format.test.mjs",
+    "target": "tests/native-canary-table.test.mjs",
+    "beforeSha256": "f980156c71ff918db3a7da1e5ad50964a79c22531b7fb25c1a3f4e5a575e1584",
+    "afterSha256": "f3f5472db904abb9a3af32df75cf115801b9ad361b7771684b42d32275aa2afe",
+    "sourceBytes": 4061,
+    "targetBytes": 4073,
+    "replacements": [
+      {
+        "before": "../src/native-canary-adjudicator.mjs",
+        "after": "../hosts/macos-xpc/native-canary-adjudicator.mjs",
+        "occurrences": 1
+      }
+    ]
+  },
+  {
+    "source": "work-orders/native-canary-adjudicator/tests/baseline.test.mjs",
+    "target": "tests/native-canary-adjudicator-baseline.test.mjs",
+    "beforeSha256": "177b83c2a19bb8eb7bcf494e56277bc7ff32d5c6844cc9688c09bafa2077de9b",
+    "afterSha256": "6ce47a651d8139e198b7b3d585229913481832004ffbaa03e7941306643b185e",
+    "sourceBytes": 873,
+    "targetBytes": 919,
+    "replacements": [
+      {
+        "before": "../src/native-canary-adjudicator.mjs",
+        "after": "../hosts/macos-xpc/native-canary-adjudicator.mjs",
+        "occurrences": 1
+      },
+      {
+        "before": "../package.json",
+        "after": "./fixtures/native-canary-adjudicator-package.json",
+        "occurrences": 1
+      }
+    ]
+  },
+  {
+    "source": "work-orders/native-canary-adapter/tests/adapter.test.mjs",
+    "target": "tests/native-canary-adapter.test.mjs",
+    "beforeSha256": "21c383e51d0fb156b170bae87cc26d860680299c60c9e149477f16598b20b9af",
+    "afterSha256": "aa3c70c9c2174e126d87840596b553e6495c635fd82755877ac6c174c1026f55",
+    "sourceBytes": 18923,
+    "targetBytes": 18972,
+    "replacements": [
+      {
+        "before": "../src/native-canary-adapter.mjs",
+        "after": "../hosts/macos-xpc/native-canary-adapter.mjs",
+        "occurrences": 2
+      },
+      {
+        "before": "../src/native-canary-adjudicator.mjs",
+        "after": "../hosts/macos-xpc/native-canary-adjudicator.mjs",
+        "occurrences": 1
+      },
+      {
+        "before": "../fixtures/inherit-run-node.stdout",
+        "after": "./fixtures/native-canary/inherit-run-node.stdout",
+        "occurrences": 1
+      }
+    ]
+  },
+  {
+    "source": "work-orders/native-canary-adapter/tests/baseline.test.mjs",
+    "target": "tests/native-canary-adapter-baseline.test.mjs",
+    "beforeSha256": "26a6689dae6763114af5a5c17d4b51894b5c323d49313d9d502535f6e88c699b",
+    "afterSha256": "046d29c1c2ad8a1b42cdecf627c00018cb1157fe27b42bd39a6375ea80eee410",
+    "sourceBytes": 1796,
+    "targetBytes": 1875,
+    "replacements": [
+      {
+        "before": "../src/native-canary-adapter.mjs",
+        "after": "../hosts/macos-xpc/native-canary-adapter.mjs",
+        "occurrences": 1
+      },
+      {
+        "before": "../src/native-canary-adjudicator.mjs",
+        "after": "../hosts/macos-xpc/native-canary-adjudicator.mjs",
+        "occurrences": 2
+      },
+      {
+        "before": "../fixtures/inherit-run-node.stdout",
+        "after": "./fixtures/native-canary/inherit-run-node.stdout",
+        "occurrences": 1
+      },
+      {
+        "before": "../package.json",
+        "after": "./fixtures/native-canary-adapter-package.json",
+        "occurrences": 1
+      }
+    ]
+  },
+  {
+    "source": "work-orders/run-journal/tests/run-journal.test.mjs",
+    "target": "tests/run-journal.test.mjs",
+    "beforeSha256": "25355f0d280a262243f1fe707fd4e0de5fc795926ce37d910c40a12721390c6d",
+    "afterSha256": "2d46da21f23b6d58156db162ca5dfd45ca78b095c383411f9ac858cb20aeb12a",
+    "sourceBytes": 16915,
+    "targetBytes": 16919,
+    "replacements": [
+      {
+        "before": "../src/run-journal-v1.mjs",
+        "after": "../history/run-journal-v1.mjs",
+        "occurrences": 1
+      }
+    ]
+  },
+  {
+    "source": "work-orders/native-chat-types/tests/consumer/native-chat.mts",
+    "target": "tests/private-consumer/native-chat.mts",
+    "beforeSha256": "8c5a6bec3593f2a20903bda436e592d2b40766e72f21fb411e0af7304ce1b1aa",
+    "afterSha256": "4417aa2a221a61bbb3cff0ddaa5485b5abced9abd476afe4082342e7e0ebe8d2",
+    "sourceBytes": 5723,
+    "targetBytes": 5711,
+    "replacements": [
+      {
+        "before": "../../types/native-chat.js",
+        "after": "nisi/adapters/native-chat",
+        "occurrences": 2
+      },
+      {
+        "before": "../../types/workflow.js",
+        "after": "nisi/workflow",
+        "occurrences": 1
+      }
+    ]
+  }
+]

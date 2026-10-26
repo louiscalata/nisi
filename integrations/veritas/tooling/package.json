@@ -1,0 +1,53 @@
+{
+  "name": "@veritas/private-stage5-tooling",
+  "version": "0.1.0",
+  "private": true,
+  "license": "UNLICENSED",
+  "type": "module",
+  "engines": {
+    "node": "24.18.0",
+    "npm": "11.16.0"
+  },
+  "packageManager": "npm@11.16.0",
+  "scripts": {
+    "check:installation": "node scripts/verify-installation.mjs",
+    "check:types": "tsc --project tsconfig.json --pretty false",
+    "check:lint": "node scripts/lint.mjs",
+    "check:structural": "node scripts/structural-check.mjs",
+    "check:e14-freeze": "node scripts/e14-freeze-verifier.mjs",
+    "check:e16-reference": "node scripts/e16-reference-oracle.mjs",
+    "check:e16-implementation": "node scripts/e16-implementation-runner.mjs",
+    "check:contracts": "node scripts/verify-contracts.mjs",
+    "check": "node scripts/run-stage5.mjs",
+    "test:schema-registry": "node --test tests/schema-registry-completeness.test.mjs",
+    "test:task-response-combiner": "node --test tests/task-response-combiner.test.mjs",
+    "test:default-contribution-round": "node --test tests/default-contribution-round.test.mjs",
+    "test:default-contribution-rounds": "node --test tests/default-contribution-rounds.test.mjs",
+    "test:admitted-run-owner": "node --test tests/admitted-run-owner.test.mjs",
+    "test:contribution-admission": "node --test tests/contribution-admission.test.mjs",
+    "test:typed-contribution-combiner": "node --test tests/typed-contribution-combiner.test.mjs",
+    "test:contribution-flow": "node --test tests/contribution-flow.test.mjs",
+    "test:chain-harness": "node --test tests/chain-harness.test.mjs",
+    "test:node-enhancements": "node --test tests/node-enhancements.test.mjs",
+    "test:input-bounds": "node --test tests/input-bound-ordering.test.mjs",
+    "test:neural": "node --test tests/neural-contracts.test.mjs tests/dual-face-contracts.test.mjs tests/neural-output-budget.test.mjs tests/courier-queue.test.mjs tests/courier-queue-boundary.test.mjs tests/shared-work-slot-scheduler.test.mjs tests/scheduler-response-boundary.test.mjs tests/scheduler-quota.test.mjs",
+    "test:afm-dispatcher": "node --test tests/afm-dispatcher.test.mjs",
+    "test:afm-executor": "node --test tests/afm-executor.test.mjs",
+    "test:mac1-json": "node --test tests/mac1-json-v1.test.mjs",
+    "test:owner-lifecycle": "node --test tests/owner-lifecycle.test.mjs",
+    "test:typed-lifecycle": "node --test tests/typed-lifecycle.test.mjs",
+    "test:scheduled-run-owner": "node --test tests/scheduled-run-owner.test.mjs",
+    "test:scheduled-afm-probe": "node --test tests/scheduled-afm-probe.test.mjs",
+    "test:content-consent": "node --test tests/content-consent.test.mjs",
+    "test:afm-content-executor": "node --test tests/afm-content-executor.test.mjs",
+    "test": "node --test tests/*.test.mjs"
+  },
+  "devDependencies": {
+    "@eslint/js": "10.0.1",
+    "@types/node": "24.13.3",
+    "ajv": "8.20.0",
+    "eslint": "10.9.1",
+    "typescript": "6.0.3",
+    "typescript-eslint": "8.68.0"
+  }
+}

@@ -1,0 +1,22 @@
+{
+  "invocation_status": "failed",
+  "status": "NOT_RUN",
+  "attempts": 2,
+  "prior_attempts": [
+    {
+      "requested_model": "fable",
+      "status": "NOT_RUN",
+      "error": "{\"subtype\": \"error_max_budget_usd\", \"errors\": [\"Reached maximum budget ($0.39999999999999997)\"], \"error\": null, \"result\": null}"
+    },
+    {
+      "requested_model": "sonnet",
+      "status": "NOT_RUN",
+      "error": "Claude exceeded 10.230607458001032s cap"
+    }
+  ],
+  "error": "No usable Claude response within the bounded model ladder",
+  "model_usage": null,
+  "tools_enabled": false,
+  "session_persisted": false,
+  "write_owner": "codex"
+}

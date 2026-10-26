@@ -1,0 +1,7 @@
+{
+  "command": "CHAMI_PACKET_TIER=local ~/bin/packet-run /Users/louiscalata/nisi-next-private/work-orders/run-journal-store/.packets/nisi-run-journal-store-v1.packet.md",
+  "started": "2026-09-13T13:46:30.779314-07:00",
+  "finished": "2026-09-13T14:01:35.458181-07:00",
+  "elapsed_seconds": 904.678,
+  "exit_code": 1
+}

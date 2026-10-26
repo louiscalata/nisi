@@ -1,0 +1,21 @@
+{
+  "schemaVersion": 1,
+  "project": "nisi",
+  "roadmapDigest": "dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd",
+  "workOrder": {
+    "id": "AFM-DEMO-2",
+    "goal": "Prove deterministic test-run planning end to end.",
+    "acceptance": "plan is pinned and bounded"
+  },
+  "lastReceipts": [],
+  "allowedSteps": [
+    "implement",
+    "test",
+    "document"
+  ],
+  "allowedChecks": [
+    "afm-v1-oracle",
+    "bridge-contract",
+    "v2-module-check"
+  ]
+}

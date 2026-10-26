@@ -1,0 +1,55 @@
+{
+  "schema_version": 1,
+  "scope": "history-timeline-boundaries-owner-verification",
+  "worker_outer_response": "NONCOMPLIANT_FENCED_WITH_LITERAL_ESCAPES_OUTSIDE_STRINGS",
+  "extraction": {
+    "complete_path_content_pairs": 1,
+    "path": "tests/windows-boundaries.test.mjs",
+    "decoded_source_sha256": "dac942115b19eab97eb542ec2e662b54de8c953507a3d3d18331774683be817d",
+    "decoded_bytes": 4135,
+    "decoded_terminal_lf": false
+  },
+  "installed": {
+    "path": "packs/history-timeline/tests/windows-boundaries.test.mjs",
+    "sha256": "2c22e9093c2d55fad816748a3332a19c488b6b7ff5d2181fea2186518ca2e8da",
+    "owner_assertion_lines_added": 9,
+    "terminal_lf_added": true
+  },
+  "protected_pins": {
+    "packs/history-timeline/src/index.mjs": "a3c770f6534c7b2243bca1288fd642627294bf54203f432df702a07173960f79",
+    "packs/history-timeline/package.json": "f4502e3198e93540f3b55d7cc21fc9d3883e6068e74ca9311024b4c5cd5ada48",
+    "packs/history-timeline/tests/baseline.test.mjs": "15ab9087fe868d8f674fd537de83aedee31dd6c175484c23f21786260505c209",
+    "packs/history-timeline/tests/acceptance.test.mjs": "fd4b944e8d85e4c54bddf36c68723b3bcedb3c4d25a455cee8809199ed0f08bb"
+  },
+  "checks": [
+    {"command":"node --test --test-timeout=10000 tests/windows-boundaries.test.mjs","exit":0,"tests":5,"pass":5,"fail":0,"output":"new-test.stdout"},
+    {"command":"npm test","exit":0,"tests":2,"pass":2,"fail":0,"output":"baseline.stdout"},
+    {"command":"npm run test:acceptance","exit":0,"tests":11,"pass":11,"fail":0,"output":"acceptance.stdout"}
+  ],
+  "defect_proof": {
+    "change": "reverse attempt comparator in isolated retained source copy",
+    "historical_tmp_path": "/tmp/nisi-history-boundary-defect.IgIeZb",
+    "exit": 1,
+    "tests": 5,
+    "pass": 4,
+    "fail": 1,
+    "output": "defect-proof.stdout",
+    "pack_source_unchanged": true,
+    "durable_copy": {
+      "directory": "evidence/mutant",
+      "source_sha256": "6826cd3177c3427893829ee05c781065a0778defabaa3511450f3668b4d21a22",
+      "test_sha256": "2c22e9093c2d55fad816748a3332a19c488b6b7ff5d2181fea2186518ca2e8da",
+      "bytes_exactly_match_historical_tmp": true,
+      "command": "node --test --test-timeout=10000 tests/windows-boundaries.test.mjs",
+      "exit": 1,
+      "tests": 5,
+      "pass": 4,
+      "fail": 1,
+      "output": "durable-defect-proof.stdout"
+    }
+  },
+  "limitations": [
+    "Qwen-authored test draft is not independent review of the Qwen implementation",
+    "missing GPT review still prevents owner acceptance"
+  ]
+}

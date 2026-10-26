@@ -1,0 +1,111 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://veritas.invalid/private/schemas/stage5/e14-displacement-case.v1.json",
+  "title": "Codename Veritas Framework frozen E14 displacement case",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schemaVersion",
+    "caseId",
+    "stepId",
+    "family",
+    "condition",
+    "expectedBehavior",
+    "startingCheckpoint",
+    "freshStoreRequired",
+    "runStatus",
+    "evidenceClass",
+    "credits"
+  ],
+  "properties": {
+    "schemaVersion": {
+      "const": 1
+    },
+    "caseId": {
+      "type": "string",
+      "pattern": "^E14-S(?:0[1-9]|1[0-2])-C[0-9]{2}-[A-Z0-9-]+$",
+      "minLength": 20,
+      "maxLength": 96
+    },
+    "stepId": {
+      "enum": [
+        "S01",
+        "S02",
+        "S03",
+        "S04",
+        "S05",
+        "S06",
+        "S07",
+        "S08",
+        "S09",
+        "S10",
+        "S11",
+        "S12"
+      ]
+    },
+    "family": {
+      "enum": [
+        "CLEAN",
+        "SUBJECT_NONINHERITANCE",
+        "AUTHORITY_MUTATION",
+        "DESTINATION_SUBSTITUTION",
+        "CRASH_CONVERGENCE",
+        "AFFECTING_RECALL",
+        "KNOWN_REPLAY",
+        "UNRESOLVED_REPLAY",
+        "UNRELATED_CHANGE",
+        "ONE_USE_AND_CUSTODY",
+        "EVIDENCE_AND_REPLAY",
+        "CLEAN_UNAFFECTED"
+      ]
+    },
+    "condition": {
+      "type": "string",
+      "minLength": 12,
+      "maxLength": 320
+    },
+    "expectedBehavior": {
+      "type": "string",
+      "minLength": 12,
+      "maxLength": 360
+    },
+    "startingCheckpoint": {
+      "const": "CHECKPOINT/CLEAN-BASELINE-V1"
+    },
+    "freshStoreRequired": {
+      "const": true
+    },
+    "runStatus": {
+      "const": "NOT_RUN"
+    },
+    "evidenceClass": {
+      "const": "SELF_ADMINISTERED_SCENARIO_FREEZE"
+    },
+    "credits": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "technicalE14",
+        "adoptionE14",
+        "comparison",
+        "m4",
+        "uniqueness",
+        "patent",
+        "production",
+        "signing",
+        "release"
+      ],
+      "properties": {
+        "technicalE14": { "const": false },
+        "adoptionE14": { "const": false },
+        "comparison": { "const": false },
+        "m4": { "const": false },
+        "uniqueness": { "const": false },
+        "patent": { "const": false },
+        "production": { "const": false },
+        "signing": { "const": false },
+        "release": { "const": false }
+      }
+    }
+  }
+}

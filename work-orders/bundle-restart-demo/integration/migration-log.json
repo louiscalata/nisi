@@ -1,0 +1,44 @@
+{
+  "migration": "bundle-restart-demo product-suite tests — path-only edits, as docs/verification/2026-09-13/evidence-chain-integration/preflight-tests/ did for the four integrated modules",
+  "date": "2026-09-14",
+  "author": "OpenCode (O4)",
+  "rule": "drop any frozen-copy hash pin that points at a product module, never re-pin one; do not place anything in tests/, history/ or hosts/",
+  "scratchTree": "integration/scratch/ holds byte-identical copies of the product modules from history/ plus the work-order fixtures and demo src.",
+  "files": {
+    "integration/baseline.test.mjs": {
+      "from": "work-orders/bundle-restart-demo/tests/baseline.test.mjs",
+      "edits": [
+        "import runBundleDemoRequest from '../src/bundle-restart-demo.mjs' -> './scratch/src/bundle-restart-demo.mjs'",
+        "package.json probe '../package.json' stays (integration/ is inside the work order)",
+        "DROPPED frozen-copy hash pins for run-journal-v1.mjs, run-journal-store-v1.mjs, fixed-run-journal-entry.mjs, host-journal-bundle.mjs (all point at product modules; never re-pin)",
+        "fixture pins '../fixtures/summary-observed.json' and '../fixtures/summary-timeout.json' -> './scratch/fixtures/' copies, unchanged hashes",
+        "renamed test 3 to 'baseline fixtures are byte-identical to the work-order accepted fixtures'"
+      ]
+    },
+    "integration/demo.test.mjs": {
+      "from": "work-orders/bundle-restart-demo/tests/demo.test.mjs",
+      "edits": [
+        "import {createRunJournal, reopen} from '../frozen/run-journal-v1.mjs' -> './scratch/history/run-journal-v1.mjs' (product module)",
+        "cli path 'fixtures/demo-cli.mjs' -> 'integration/scratch/fixtures/demo-cli.mjs'",
+        "scratch root '.scratch' -> 'integration/scratch/.scratch'",
+        "fixture reads 'fixtures/summary-*.json' -> 'integration/scratch/fixtures/summary-*.json'",
+        "scratch-boundary outside probe 'join(dirname(scratch), package.json)' now resolves inside integration/scratch (scratch package.json copy)",
+        "import-surface test reads '../src/bundle-restart-demo.mjs' -> './scratch/src/bundle-restart-demo.mjs' and now expects ['../history/host-journal-bundle.mjs','node:fs','node:path','node:url']",
+        "import-surface ns probe '../src/bundle-restart-demo.mjs' -> './scratch/src/bundle-restart-demo.mjs'",
+        "all path-only; zero assertion, fixture, or behavior edits"
+      ]
+    }
+  },
+  "scratchConstruction": {
+    "integration/scratch/history/": "byte-identical copies of history/run-journal-v1.mjs, run-journal-store-v1.mjs, fixed-run-journal-entry.mjs, host-journal-bundle.mjs (sha256 verified)",
+    "integration/scratch/src/bundle-restart-demo.mjs": "copy of work-order src with import '../frozen/host-journal-bundle.mjs' -> '../history/host-journal-bundle.mjs' (path-only)",
+    "integration/scratch/fixtures/": "byte-identical copies of demo-cli.mjs, summary-observed.json, summary-timeout.json",
+    "integration/scratch/package.json": "byte-identical copy of work-order package.json"
+  },
+  "verification": {
+    "command": "node --test integration/baseline.test.mjs integration/demo.test.mjs",
+    "result": "12/12 pass, 0 fail",
+    "productTreeHashes": "all 4 scratch/history modules match history/ by sha256",
+    "originalSuitesStillGreen": "tests/baseline.test.mjs + tests/demo.test.mjs still 12/12 pass"
+  }
+}

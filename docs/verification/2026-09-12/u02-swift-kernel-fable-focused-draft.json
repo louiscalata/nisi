@@ -1,0 +1,102 @@
+{
+  "summary": "Draft of an isolated, synchronous Swift 6 framing helper `readBounded(fd:cap:)` using `Darwin.read` with a fixed 16 KiB stack/array buffer, cap+1 sentinel-byte bound, partial-read accumulation, true EOF detection, an 8-retry EINTR budget, and hard failure on any other errno. Not compiled or tested; root owns integration and verification.",
+  "deliverable": "```swift\nimport Foundation\nimport Darwin\n\nenum ReadBoundedError: Error, Equatable {\n    case io(errno: Int32)\n    case oversize\n}\n\n/// Reads from `fd` until EOF, retaining at most `cap` bytes.\n/// If more than `cap` bytes exist, throws `.oversize` after reading one sentinel byte.\nfunc readBounded(fd: Int32, cap: Int) throws -> Data {\n    precondition(cap >= 0 && cap < Int.max, \"cap out of range\")\n    let limit = cap + 1                                  // cap + one-byte overflow sentinel\n    var out = Data(capacity: min(limit, 16384))\n    var buf = [UInt8](repeating: 0, count: 16384)        // fixed 16 KiB scratch buffer\n    var eintrBudget = 8                                  // total EINTR retries allowed\n    while out.count < limit {\n        let want = min(buf.count, limit - out.count)     // never fetch past the sentinel\n        let n = buf.withUnsafeMutableBytes { raw -> Int in\n            Darwin.read(fd, raw.baseAddress, want)\n        }\n        if n > 0 {                                       // partial read: accumulate, keep going\n            out.append(contentsOf: buf[0..<n])\n            continue\n        }\n        if n == 0 { return out }                         // actual EOF within bound\n        let err = errno                                  // n < 0: inspect errno immediately\n        if err == EINTR, eintrBudget > 0 { eintrBudget -= 1; continue }\n        throw ReadBoundedError.io(errno: err)\n    }\n    throw ReadBoundedError.oversize                      // sentinel byte arrived: input > cap\n}\n```\n\nNotes for the root integrator:\n- Retained input never exceeds `cap + 1` bytes; `want` shrinks so the final `read` cannot overshoot the sentinel.\n- `.oversize` is thrown as soon as byte `cap + 1` is observed; the fd is left positioned after that byte (caller decides whether to drain/close).\n- EINTR budget is total (8), not per-call; a 9th EINTR surfaces as `.io(errno: EINTR)`.\n- EAGAIN/EWOULDBLOCK on a non-blocking fd is treated as a hard `.io` error by design; no polling or timeout is attempted.",
+  "risks": [
+    "Not compiled: `Data(capacity:)`, `append(contentsOf: ArraySlice<UInt8>)`, and the `withUnsafeMutableBytes` return type inference should be checked under Swift 6 strict concurrency (errno is a thread-local accessor; fine on a single thread).",
+    "`Data` may internally allocate more than cap+1 when growing; the retained *content* is bounded but transient heap capacity is not strictly capped.",
+    "The overflow sentinel byte is consumed from the fd and discarded; if the caller needs it (e.g., to resync a stream), a different signature is required.",
+    "Non-blocking fds (EAGAIN) fail immediately rather than waiting; only appropriate for blocking descriptors.",
+    "`cap == Int.max` is rejected by precondition to avoid `cap + 1` overflow; root must ensure callers never pass it."
+  ],
+  "verification": [
+    "Compile under Swift 6 language mode with strict concurrency; confirm no warnings around `errno` or the closure capture of `buf`.",
+    "Test EOF exactly at cap (returns cap bytes), at cap+1 (throws .oversize), and 0 bytes (returns empty Data).",
+    "Test partial reads via a pipe writing in chunks smaller than 16384 and larger than 16384; assert full accumulation.",
+    "Simulate EINTR (e.g., signal delivery to a blocked read on a pipe) and confirm up to 8 retries succeed and the 9th throws .io(EINTR).",
+    "Pass an invalid fd (e.g., -1 or a closed fd) and confirm .io(errno: EBADF)."
+  ],
+  "invocation_status": "succeeded",
+  "status": "succeeded",
+  "model_usage": {
+    "claude-haiku-4-5-20251001": {
+      "inputTokens": 1047,
+      "outputTokens": 14,
+      "cacheReadInputTokens": 0,
+      "cacheCreationInputTokens": 0,
+      "webSearchRequests": 0,
+      "costUSD": 0.001117,
+      "contextWindow": 200000,
+      "maxOutputTokens": 32000,
+      "thinkingTokens": 0,
+      "canonicalModel": "claude-haiku-4-5",
+      "provider": "firstParty",
+      "costBasis": "list"
+    },
+    "claude-fable-5-1": {
+      "inputTokens": 2,
+      "outputTokens": 2746,
+      "cacheReadInputTokens": 737,
+      "cacheCreationInputTokens": 737,
+      "webSearchRequests": 0,
+      "costUSD": 0.15224425,
+      "contextWindow": 1000000,
+      "maxOutputTokens": 64000,
+      "thinkingTokens": 1161,
+      "canonicalModel": "claude-fable-5-1",
+      "provider": "firstParty",
+      "costBasis": "list"
+    }
+  },
+  "reported_models": [
+    "claude-haiku-4-5-20251001",
+    "claude-fable-5-1"
+  ],
+  "usage": {
+    "input_tokens": 2,
+    "cache_creation_input_tokens": 737,
+    "cache_read_input_tokens": 737,
+    "output_tokens": 2746,
+    "output_tokens_details": {
+      "thinking_tokens": 1161
+    },
+    "server_tool_use": {
+      "web_search_requests": 0,
+      "web_fetch_requests": 0
+    },
+    "service_tier": "standard",
+    "cache_creation": {
+      "ephemeral_1h_input_tokens": 737,
+      "ephemeral_5m_input_tokens": 0
+    },
+    "inference_geo": "not_available",
+    "iterations": [
+      {
+        "input_tokens": 2,
+        "output_tokens": 2746,
+        "cache_read_input_tokens": 737,
+        "cache_creation_input_tokens": 737,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 737
+        },
+        "type": "message",
+        "model": null
+      }
+    ],
+    "speed": "standard"
+  },
+  "total_cost_usd": 0.15336125,
+  "duration_ms": 32270,
+  "tools_enabled": false,
+  "session_persisted": false,
+  "write_owner": "codex",
+  "requested_model": "fable",
+  "mode": "delegate",
+  "attempts": 1,
+  "wall_seconds": 32.993,
+  "created_at": "2026-09-12T18:37:31.184670+00:00",
+  "prior_attempts": [],
+  "total_wall_seconds": 32.993,
+  "prior_attempt_usage": [],
+  "total_usage_complete": true
+}

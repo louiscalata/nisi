@@ -1,0 +1,6 @@
+{
+  "content" : "Acknowledged.",
+  "model" : "SystemLanguageModel.default",
+  "usage.input" : 71,
+  "usage.output" : 7
+}

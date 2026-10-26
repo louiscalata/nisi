@@ -1,0 +1,47 @@
+{
+  "migration": "journal-restart-recovery product-suite tests — path-only edits, as docs/verification/2026-09-13/evidence-chain-integration/preflight-tests/ did for the four integrated modules",
+  "date": "2026-09-14",
+  "author": "OpenCode (O4)",
+  "rule": "drop any frozen-copy hash pin that points at a product module, never re-pin one; do not place anything in tests/, history/ or hosts/",
+  "scratchTree": "integration/scratch/ holds byte-identical copies of the product modules from history/ plus the work-order fixtures and worker src.",
+  "files": {
+    "integration/baseline.test.mjs": {
+      "from": "work-orders/journal-restart-recovery/tests/baseline.test.mjs",
+      "edits": [
+        "import runRecoveryRequest from '../src/recovery-worker.mjs' -> './scratch/src/recovery-worker.mjs'",
+        "package.json probe '../package.json' stays (integration/ is inside the work order)",
+        "DROPPED frozen-copy hash pins for run-journal-v1.mjs and run-journal-store-v1.mjs (both point at product modules; never re-pin)",
+        "verification test now asserts the worker binds ../history/* and carries no ../frozen/* import (replaces the dropped pins)"
+      ]
+    },
+    "integration/recovery.test.mjs": {
+      "from": "work-orders/journal-restart-recovery/tests/recovery.test.mjs",
+      "edits": [
+        "import {createRunJournal} from '../frozen/run-journal-v1.mjs' -> './scratch/history/run-journal-v1.mjs' (product module)",
+        "cli path 'fixtures/worker-cli.mjs' -> 'integration/scratch/fixtures/worker-cli.mjs'",
+        "scratch root '.scratch' -> 'integration/scratch/.scratch'",
+        "all path-only; zero assertion, fixture, or behavior edits"
+      ]
+    },
+    "integration/owner-boundaries.test.mjs": {
+      "from": "work-orders/journal-restart-recovery/tests/owner-boundaries.test.mjs",
+      "edits": [
+        "import runRecoveryRequest from '../src/recovery-worker.mjs' -> './scratch/src/recovery-worker.mjs'",
+        "scratch root '../.scratch/' -> './scratch/.scratch/' (relative to integration/)",
+        "all other probes and assertions unchanged"
+      ]
+    }
+  },
+  "scratchConstruction": {
+    "integration/scratch/history/": "byte-identical copies of history/run-journal-v1.mjs, history/run-journal-store-v1.mjs (sha256 verified)",
+    "integration/scratch/src/recovery-worker.mjs": "copy of work-order src with imports '../frozen/run-journal-v1.mjs' and '../frozen/run-journal-store-v1.mjs' -> '../history/' equivalents (path-only)",
+    "integration/scratch/fixtures/": "byte-identical copies of worker-cli.mjs",
+    "integration/scratch/package.json": "byte-identical copy of work-order package.json"
+  },
+  "verification": {
+    "command": "node --test --test-timeout=10000 integration/baseline.test.mjs integration/recovery.test.mjs integration/owner-boundaries.test.mjs",
+    "result": "17/17 pass, 0 fail",
+    "productTreeHashes": "both scratch/history modules match history/ by sha256",
+    "originalSuitesStillGreen": "tests/baseline.test.mjs + tests/recovery.test.mjs + tests/owner-boundaries.test.mjs still 17/17 pass"
+  }
+}

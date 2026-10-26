@@ -1,0 +1,515 @@
+{
+  "schemaVersion": 1,
+  "date": "2026-09-12",
+  "scope": "PRIVATE_U02_00_EXECUTION_RECEIPT_AND_HOST_BUNDLE_CONTRACT_SLICE_ONLY",
+  "status": "RECEIPT_CONSISTENCY_TESTED_U02_00_PARTIAL",
+  "environment": {
+    "node": "v24.18.0",
+    "platform": "darwin",
+    "architecture": "arm64"
+  },
+  "sourceFiles": [
+    {
+      "path": "hosts/repository/snapshot-contract.mjs",
+      "sha256": "2b52c23bac3a817769b7892eed71baba79cb81954b6a63724d107a9c258ba13f"
+    },
+    {
+      "path": "workflow/contracts.mjs",
+      "sha256": "c28a3ee3db6e9a936cd58fca8b8ee3f2744ca25c259e2ea278b3b09cdbb73d82"
+    },
+    {
+      "path": "workflow/engine.mjs",
+      "sha256": "c67c63baeadc725a8487af7108b01d3a38dd50e64ff35f1be66471c81e5f979b"
+    },
+    {
+      "path": "tests/afm-content-executor.test.mjs",
+      "sha256": "a5bea26338f78d2203ac2e2fb9d3cd71ec02b1ef08e8bff7ff8631983a4259ad"
+    },
+    {
+      "path": "tests/canonical-json-v1.test.mjs",
+      "sha256": "36d24e7de51ad13fc3f0bca1d504f711f517a56a2b9684b7156a9cc4ffc07dd7"
+    },
+    {
+      "path": "tests/component-hardening.test.mjs",
+      "sha256": "876fa7045f77bf2b8b45168f81c023d2423d8e10d7947533662c6c21e105aa12"
+    },
+    {
+      "path": "tests/content-consent.test.mjs",
+      "sha256": "df9143818b835daf023f7c9e0ef52bf5f1049f4711f37a14c65e9d8f8257889b"
+    },
+    {
+      "path": "tests/example.test.mjs",
+      "sha256": "61ccb6fbcc426b6d77c9c8b526f1d378c3296b6dfca57562b6d480a4edc58c1f"
+    },
+    {
+      "path": "tests/local-chat-extra.test.mjs",
+      "sha256": "91a6722f3a736f54e826a3224ab99892a22c5e013be3fce727c12958f2336304"
+    },
+    {
+      "path": "tests/local-chat.test.mjs",
+      "sha256": "8b3339ac52a00916d800389fb473c52b90e7f0821d55d48f01d0fe30d8bee5b8"
+    },
+    {
+      "path": "tests/onboarding.test.mjs",
+      "sha256": "594494cc5f3a80e4ca05f2abfd94ae789cf3dc31cdfb383ba42cf88e8bbb18e7"
+    },
+    {
+      "path": "tests/public-api.test.mjs",
+      "sha256": "d972ae6c54b47e4d0cc61383e128e9ab5012eb83bca291e764b1d52489b2fd31"
+    },
+    {
+      "path": "tests/repository-snapshot.test.mjs",
+      "sha256": "17c914c416ad7fa057e900cf69f65bf5c7e6765082eca2ca31c92253c737e6a1"
+    },
+    {
+      "path": "tests/veritas-import-snapshot.test.mjs",
+      "sha256": "ff548efe38f61145e3a05ca535a84f6f247502268f606022c11a146f7c47d902"
+    },
+    {
+      "path": "tests/veritas-import.test.mjs",
+      "sha256": "198b7b505d03715010c00bcf5e240ddcbd42fc95a74de36991cf8a28d706f13d"
+    },
+    {
+      "path": "tests/workflow-example.test.mjs",
+      "sha256": "a9515369dc1cb39aef83ad44a91742a96b75d2e17eef0a725901a47548028162"
+    },
+    {
+      "path": "tests/workflow.test.mjs",
+      "sha256": "8ce9c6f50928da474d8f9a53a3702bd49cdbbc8cedc17713006439c1528ac5d3"
+    },
+    {
+      "path": "adapters/apple-foundation-models.mjs",
+      "sha256": "311f4898c31b4e0693093361fc19c344086c1f24946909fe134c14d37e25d080"
+    },
+    {
+      "path": "adapters/local-chat.mjs",
+      "sha256": "75dc8b128883fb14e524ceb05b4696e53406c2c8038ec4340b42f0ca471fe043"
+    },
+    {
+      "path": "canonical/canonical-json-v1.mjs",
+      "sha256": "d1049a26d2bea0d14e959c0af22af15b975345091c5fa5360e8bd685637f8e59"
+    },
+    {
+      "path": "gate/afm-content-executor.mjs",
+      "sha256": "6a4c23a3495a00dbf98e9ff5c68a9008f421d6fe225a3768b6863d4e12324ed6"
+    },
+    {
+      "path": "gate/content-consent.mjs",
+      "sha256": "a735eb35cb1373b3f3744dc7b3caa8b24ebbf394babba53d4f722136c72a0820"
+    },
+    {
+      "path": "policy/file-access.mjs",
+      "sha256": "92f9f60220e1869ad0d6571ae2b5a8ddc9259b2463c4cf617d4cecee6eacc1d3"
+    },
+    {
+      "path": "serialization/canonical-json-v1.mjs",
+      "sha256": "1e5eb6222da2c7baae3cd45a5077ccc1e8ae25b5bc184646d9e55170dec53625"
+    },
+    {
+      "path": "examples/allow-a-file.mjs",
+      "sha256": "5099c90b4df7a83c5b0c55cca392cce55aeace90bc97d0791e02d5757f84dbea"
+    },
+    {
+      "path": "examples/local-model-workflow.mjs",
+      "sha256": "10bebdef922bb63c3716baa107cd037d3de6432b93a2e058e22151578738a2c1"
+    },
+    {
+      "path": "examples/workflow.mjs",
+      "sha256": "0d365578db02cb9aeda0aaa500aef61cad506e1dfdd0ce36a76235781d9795fd"
+    },
+    {
+      "path": "scripts/ab-purity.mjs",
+      "sha256": "e1a56f8405b94008d9232517082c1730c49512b0f8cc2c7ab81000b5ff374408"
+    },
+    {
+      "path": "scripts/bench.mjs",
+      "sha256": "031ca9342140bc0c25e7c549b1ef9e670cf63135ea7906a13eac7ee283f695c7"
+    },
+    {
+      "path": "scripts/common.mjs",
+      "sha256": "8913cd47ecf759146a5269f2941ec318e3eef06807f9fb5b4eeea94ca74220a8"
+    },
+    {
+      "path": "scripts/require-node.cjs",
+      "sha256": "1fd03efd0af99292fe704212e794122fca89ce39ddbc70183ec5bab2aff6d49b"
+    },
+    {
+      "path": "scripts/structural-check.mjs",
+      "sha256": "d3efa7860992764eca28c4c1a112288a1ae6a7f9987e4b918b83d8de28fcfbf1"
+    },
+    {
+      "path": "scripts/test-repository-snapshot-mutants.mjs",
+      "sha256": "8608bc913c413f73e2ea610bfba1f4531f768e8aae09b34a7c6bc51a4d5cfc9c"
+    },
+    {
+      "path": "scripts/test-veritas-import-mutants.mjs",
+      "sha256": "2e57780d25fc6257cd2fba0018b9065925552538fdcd52aeff5e5d21ab5bc4eb"
+    },
+    {
+      "path": "scripts/verify-veritas-import.mjs",
+      "sha256": "40542fd223dc538fd6c93003284809dff59fc2706eae69e9f516eb87dc70d48c"
+    },
+    {
+      "path": "tools/check-side-effects.mjs",
+      "sha256": "9be4a8b68a100b89279bd533cdc85fb1b9bda765f2459f1f577ba868794816ff"
+    },
+    {
+      "path": "contracts/canonical-json-v1-profile.md",
+      "sha256": "e7b636053519fe4ac21db0bc369d905e07ba80786f2b42234ddef4648f99b3da"
+    },
+    {
+      "path": "contracts/canonical-vectors.json",
+      "sha256": "51a69125be3029ed925575e2c3b32983d5d499acb48cd54875d0200a2d2021d9"
+    },
+    {
+      "path": "contracts/structural-fixtures.json",
+      "sha256": "2ddaca12d7b2319bb02b43f7db6a6cd3ab7f7683c85586749f46235176ac64c9"
+    },
+    {
+      "path": "index.mjs",
+      "sha256": "066c90d65209854cd6aeb838924ce28dca90d7dc75d0cd533d17fbba8e1c3db7"
+    },
+    {
+      "path": "package.json",
+      "sha256": "6b5c0271f5ad95d62af409c9782a2abb0b18a9844356c01a2fcf469063f7897f"
+    },
+    {
+      "path": "package-lock.json",
+      "sha256": "396284ceeb20491293a83094a9558cb32368bb9ccc71b75e0d10da52e86b0912"
+    },
+    {
+      "path": "integrations/veritas/import-manifest.json",
+      "sha256": "8207efbc465ec99f0c16a7a281c349bb7ce8819349dbbafe17534f72dd527bcb"
+    },
+    {
+      "path": "roadmap.md",
+      "sha256": "db4544021c1a21bb939dcf2a5b37fbe49221b4985574f0ae08a970ced5a57ac7"
+    },
+    {
+      "path": "/Volumes/SharedChami/Veritas Local Repository/SYSTEM-EQUATION.md",
+      "sha256": "c3c3904290ea41c3d4900acf2c71661dba0dc8ecb19b32cb2f0f00097170123f"
+    },
+    {
+      "path": "docs/verification/2026-09-12/u02-snapshot-claude-review.json",
+      "sha256": "f48b36ce007ddbf69133e03a82f1b2c950a09bf7c8c21a9ecc47ba92d6a5bfbf"
+    },
+    {
+      "path": "docs/verification/2026-09-12/u02-snapshot-fable-after-login-request.txt",
+      "sha256": "ffb1b80b7c7722d58c90340a76229f691526bba4f52426746dfdc5498bce6795"
+    },
+    {
+      "path": "docs/verification/2026-09-12/u02-snapshot-fable-after-login-review.json",
+      "sha256": "d87a214e8a2df3bfb1a0bbb3977a93a51cd918a46d7f6995d6457f647b1abd29"
+    },
+    {
+      "path": "docs/verification/2026-09-12/u02-snapshot-fable-bounded-request.txt",
+      "sha256": "8a53c230c9609fa84db2930d3444f082ae118fca2925bbd9822a787574e5a7e5"
+    },
+    {
+      "path": "docs/verification/2026-09-12/u02-snapshot-fable-bounded-review.json",
+      "sha256": "a05d2585f0014b34ed13077bf6f18f5d07846ffddb6544652ae1d984d394bb56"
+    },
+    {
+      "path": "docs/verification/2026-09-12/u02-snapshot-fable-request.txt",
+      "sha256": "fc5b599d90e043ae7c9d2e4d04804e37b27604e4d925ca6395b08fe2a2325994"
+    },
+    {
+      "path": "receipts/repository-execution-v1.mjs",
+      "sha256": "7317e06c094bdf33e51645ce39348fc9e2d5a11ad0921af87434e34c45828cc2"
+    },
+    {
+      "path": "tests/repository-execution-receipt.test.mjs",
+      "sha256": "1075990a6f96276df2057f525df9914bb56a5c1da43d7d544956c86567ad983d"
+    },
+    {
+      "path": "scripts/test-repository-receipt-mutants.mjs",
+      "sha256": "19585d4767f842f24b034d10dbb03c02ea80fcddb8c655a66a47203e236789d5"
+    },
+    {
+      "path": "docs/verification/2026-09-12/u02-receipt-fable-focused-request.txt",
+      "sha256": "80eb13e6c128ff5fdef4ebfe094087cfca12b4f1f81ba686213bd0b3c20c9328"
+    },
+    {
+      "path": "docs/verification/2026-09-12/u02-receipt-fable-focused-review.json",
+      "sha256": "83f9391171d7037a2cae710af0184350cf43d22745c2c8f6c4ac676a0dff4e7b"
+    },
+    {
+      "path": "docs/verification/2026-09-12/u02-receipt-fable-request.txt",
+      "sha256": "975e26eba7ba5733eb413d79fbed1f27435f17ab4a136a5682e52576430bed2d"
+    },
+    {
+      "path": "docs/verification/2026-09-12/u02-receipt-fable-resolution-request.txt",
+      "sha256": "436e2eb0f4e454c09b60b7a036f4f5146b654d82b974dc9ac9b15e8be1372e2b"
+    },
+    {
+      "path": "docs/verification/2026-09-12/u02-receipt-fable-resolution-review.json",
+      "sha256": "816d420d43dca5318414b89e23edb9307de09cd82e7e8e2aac06f7a4654b7cc3"
+    },
+    {
+      "path": "docs/verification/2026-09-12/u02-receipt-fable-review.json",
+      "sha256": "d87a214e8a2df3bfb1a0bbb3977a93a51cd918a46d7f6995d6457f647b1abd29"
+    }
+  ],
+  "beforeFiles": [
+    {
+      "path": ".build/u02-receipts-uXEfId/SYSTEM-EQUATION.md",
+      "sha256": "d58be86e02a418245c543a421693e73c963235c284af7118f84db544c97e56a0"
+    },
+    {
+      "path": ".build/u02-receipts-uXEfId/pre-stop-link-fix.mjs",
+      "sha256": "1ad620d8883cf04bec14f7033e31b3f7e0c6e461c8fd977adae6af26801b829d"
+    },
+    {
+      "path": ".build/u02-receipts-uXEfId/roadmap.md",
+      "sha256": "9580049d5f82c26a2b9dcbf3c5d664615303b9242b61d8c8a1423cacb196c8f5"
+    },
+    {
+      "path": ".build/u02-receipts-uXEfId/snapshot-contract.mjs",
+      "sha256": "e725df7ba68c81058342319e058ff770b7dd6f3d928bc450e8f90432be04207b"
+    }
+  ],
+  "historicalEquationUnchanged": true,
+  "priorCheckpointSha256": "f53e3d576425a649bc56cd4080bfdb3ac70fc2538bba2fcfdf96971765237bcb",
+  "priorCheckpoint": "docs/verification/2026-09-12/u02-snapshot-checkpoint.json",
+  "beforeChangeRetention": "Before-change files are private local copies. Original snapshot-checkpoint hashes remain historical; they were not rewritten. Final hashes bind this checkpoint only.",
+  "contractBoundaries": [
+    "Pure closed object reader and immutable expectations; no wire parsing, disk admission, real candidate process, native tool, model, sandbox, durable storage, execution authorization or authenticated origin.",
+    "Trusted caller supplies issued preparations/profiles and actual final engine report separately from untrusted receipts/bundle. Context validation checks links, not the entire v1 state machine.",
+    "A rich process receipt cannot be fabricated from a v1 stop record alone. Interrupted runner metadata and confirmed descendant drain require actual future host observation.",
+    "COMPLETED semantics and all existing v1 report schemas/digest domains unchanged. New host-final-report digest is distinct from preliminary report-store digest.",
+    "allChecksReportedPass covers every retained check attempt, not review success, whole-workflow acceptance, universal correctness or publication approval.",
+    "Unknown drain remains inspectable as non-success; preventing actual slot reuse is pending scheduler integration."
+  ],
+  "tests": {
+    "focused": {
+      "command": "node --test --test-reporter=tap tests/repository-execution-receipt.test.mjs",
+      "finalControlTests": 19,
+      "result": "PASS",
+      "details": "Final mutation harness control covers exact final source/test hashes.",
+      "priorGreen": {
+        "chunk_id": "fcc799",
+        "wall_time_seconds": 0.000004458,
+        "exit_code": 0,
+        "original_token_count": 1165,
+        "output": "TAP version 13\n# Subtest: execution expectations require issued preparations and preserve immutable distinct identities\nok 1 - execution expectations require issued preparations and preserve immutable distinct identities\n  ---\n  duration_ms: 2.789375\n  type: 'test'\n  ...\n# Subtest: profiles reject shell-shaped argv, ambiguous cwd, malformed values and extra authority\nok 2 - profiles reject shell-shaped argv, ambiguous cwd, malformed values and extra authority\n  ---\n  duration_ms: 2.428667\n  type: 'test'\n  ...\n# Subtest: receipt identity rejects each cross-run candidate snapshot profile and command substitution\nok 3 - receipt identity rejects each cross-run candidate snapshot profile and command substitution\n  ---\n  duration_ms: 1.152625\n  type: 'test'\n  ...\n# Subtest: receipt schemas reject getters hidden fields symbols prototypes and missing data without invocation\nok 4 - receipt schemas reject getters hidden fields symbols prototypes and missing data without invocation\n  ---\n  duration_ms: 0.253083\n  type: 'test'\n  ...\n# Subtest: PASS requires confirmed drain even when the child reports exit zero\nok 5 - PASS requires confirmed drain even when the child reports exit zero\n  ---\n  duration_ms: 0.192292\n  type: 'test'\n  ...\n# Subtest: passing and failed checks cannot hide interruption truncation error or unclosed execution\nok 6 - passing and failed checks cannot hide interruption truncation error or unclosed execution\n  ---\n  duration_ms: 0.375959\n  type: 'test'\n  ...\n# Subtest: contradictory process states are refused even in adverse receipts\nok 7 - contradictory process states are refused even in adverse receipts\n  ---\n  duration_ms: 0.437125\n  type: 'test'\n  ...\n# Subtest: NOT_RUN ERROR and INCONCLUSIVE retain distinct non-success semantics\nok 8 - NOT_RUN ERROR and INCONCLUSIVE retain distinct non-success semantics\n  ---\n  duration_ms: 0.299583\n  type: 'test'\n  ...\n# Subtest: output summaries enforce byte bounds digest shape and exact truncation without inventing content proof\nok 9 - output summaries enforce byte bounds digest shape and exact truncation without inventing content proof\n  ---\n  duration_ms: 0.298458\n  type: 'test'\n  ...\n# Subtest: bundle links synthetic workflow records without changing v1 completion or granting authority\nok 10 - bundle links synthetic workflow records without changing v1 completion or granting authority\n  ---\n  duration_ms: 2.240625\n  type: 'test'\n  ...\n# Subtest: bundle binds final report digest not the preliminary store acknowledgement\nok 11 - bundle binds final report digest not the preliminary store acknowledgement\n  ---\n  duration_ms: 1.009458\n  type: 'test'\n  ...\n# Subtest: bundle refuses extra missing duplicate reordered and cross-linked receipt inventories\nok 12 - bundle refuses extra missing duplicate reordered and cross-linked receipt inventories\n  ---\n  duration_ms: 1.125\n  type: 'test'\n  ...\n# Subtest: bundle refuses stage status contradictions even with a recomputed bundle digest\nok 13 - bundle refuses stage status contradictions even with a recomputed bundle digest\n  ---\n  duration_ms: 0.713834\n  type: 'test'\n  ...\n# Subtest: adverse receipts and engine exception stops remain readable without PASS coercion\nok 14 - adverse receipts and engine exception stops remain readable without PASS coercion\n  ---\n  duration_ms: 3.043166\n  type: 'test'\n  ...\n# Subtest: all checks passing does not imply a completed workflow or a releasable product\nok 15 - all checks passing does not imply a completed workflow or a releasable product\n  ---\n  duration_ms: 0.666875\n  type: 'test'\n  ...\n# Subtest: bundle rejects stale expected run attempt or snapshot and malformed authority fields\nok 16 - bundle rejects stale expected run attempt or snapshot and malformed authority fields\n  ---\n  duration_ms: 1.125\n  type: 'test'\n  ...\n# Subtest: cancellation and deadlines retain UNAVAILABLE and refuse a late passing receipt\nok 17 - cancellation and deadlines retain UNAVAILABLE and refuse a late passing receipt\n  ---\n  duration_ms: 1.244833\n  type: 'test'\n  ...\n# Subtest: repaired candidates require fresh receipts while adverse attempt history remains intact\nok 18 - repaired candidates require fresh receipts while adverse attempt history remains intact\n  ---\n  duration_ms: 2.151583\n  type: 'test'\n  ...\n# Subtest: bundle preserves adverse reasons and exact exception cancellation and deadline classifications\nok 19 - bundle preserves adverse reasons and exact exception cancellation and deadline classifications\n  ---\n  duration_ms: 2.00075\n  type: 'test'\n  ...\n1..19\n# tests 19\n# suites 0\n# pass 19\n# fail 0\n# cancelled 0\n# skipped 0\n# todo 0\n# duration_ms 63.881959\n"
+      }
+    },
+    "regressionBeforeFix": {
+      "chunk_id": "9c48f6",
+      "wall_time_seconds": 0.000010042,
+      "exit_code": 1,
+      "original_token_count": 1317,
+      "output": "TAP version 13\n# Subtest: execution expectations require issued preparations and preserve immutable distinct identities\nok 1 - execution expectations require issued preparations and preserve immutable distinct identities\n  ---\n  duration_ms: 3.565125\n  type: 'test'\n  ...\n# Subtest: profiles reject shell-shaped argv, ambiguous cwd, malformed values and extra authority\nok 2 - profiles reject shell-shaped argv, ambiguous cwd, malformed values and extra authority\n  ---\n  duration_ms: 2.395084\n  type: 'test'\n  ...\n# Subtest: receipt identity rejects each cross-run candidate snapshot profile and command substitution\nok 3 - receipt identity rejects each cross-run candidate snapshot profile and command substitution\n  ---\n  duration_ms: 1.065417\n  type: 'test'\n  ...\n# Subtest: receipt schemas reject getters hidden fields symbols prototypes and missing data without invocation\nok 4 - receipt schemas reject getters hidden fields symbols prototypes and missing data without invocation\n  ---\n  duration_ms: 0.234\n  type: 'test'\n  ...\n# Subtest: PASS requires confirmed drain even when the child reports exit zero\nok 5 - PASS requires confirmed drain even when the child reports exit zero\n  ---\n  duration_ms: 0.169541\n  type: 'test'\n  ...\n# Subtest: passing and failed checks cannot hide interruption truncation error or unclosed execution\nok 6 - passing and failed checks cannot hide interruption truncation error or unclosed execution\n  ---\n  duration_ms: 0.366875\n  type: 'test'\n  ...\n# Subtest: contradictory process states are refused even in adverse receipts\nok 7 - contradictory process states are refused even in adverse receipts\n  ---\n  duration_ms: 0.448375\n  type: 'test'\n  ...\n# Subtest: NOT_RUN ERROR and INCONCLUSIVE retain distinct non-success semantics\nok 8 - NOT_RUN ERROR and INCONCLUSIVE retain distinct non-success semantics\n  ---\n  duration_ms: 0.29225\n  type: 'test'\n  ...\n# Subtest: output summaries enforce byte bounds digest shape and exact truncation without inventing content proof\nok 9 - output summaries enforce byte bounds digest shape and exact truncation without inventing content proof\n  ---\n  duration_ms: 0.296042\n  type: 'test'\n  ...\n# Subtest: bundle links synthetic workflow records without changing v1 completion or granting authority\nok 10 - bundle links synthetic workflow records without changing v1 completion or granting authority\n  ---\n  duration_ms: 2.180291\n  type: 'test'\n  ...\n# Subtest: bundle binds final report digest not the preliminary store acknowledgement\nok 11 - bundle binds final report digest not the preliminary store acknowledgement\n  ---\n  duration_ms: 1.056583\n  type: 'test'\n  ...\n# Subtest: bundle refuses extra missing duplicate reordered and cross-linked receipt inventories\nok 12 - bundle refuses extra missing duplicate reordered and cross-linked receipt inventories\n  ---\n  duration_ms: 0.992667\n  type: 'test'\n  ...\n# Subtest: bundle refuses stage status contradictions even with a recomputed bundle digest\nok 13 - bundle refuses stage status contradictions even with a recomputed bundle digest\n  ---\n  duration_ms: 1.003667\n  type: 'test'\n  ...\n# Subtest: adverse receipts and engine exception stops remain readable without PASS coercion\nok 14 - adverse receipts and engine exception stops remain readable without PASS coercion\n  ---\n  duration_ms: 3.208041\n  type: 'test'\n  ...\n# Subtest: all checks passing does not imply a completed workflow or a releasable product\nok 15 - all checks passing does not imply a completed workflow or a releasable product\n  ---\n  duration_ms: 0.686833\n  type: 'test'\n  ...\n# Subtest: bundle rejects stale expected run attempt or snapshot and malformed authority fields\nok 16 - bundle rejects stale expected run attempt or snapshot and malformed authority fields\n  ---\n  duration_ms: 1.156917\n  type: 'test'\n  ...\n# Subtest: cancellation and deadlines retain UNAVAILABLE and refuse a late passing receipt\nok 17 - cancellation and deadlines retain UNAVAILABLE and refuse a late passing receipt\n  ---\n  duration_ms: 1.356583\n  type: 'test'\n  ...\n# Subtest: repaired candidates require fresh receipts while adverse attempt history remains intact\nok 18 - repaired candidates require fresh receipts while adverse attempt history remains intact\n  ---\n  duration_ms: 2.096375\n  type: 'test'\n  ...\n# Subtest: bundle preserves adverse reasons and exact exception cancellation and deadline classifications\nnot ok 19 - bundle preserves adverse reasons and exact exception cancellation and deadline classifications\n  ---\n  duration_ms: 0.878958\n  type: 'test'\n  location: '/Users/louiscalata/nisi-next-private/tests/repository-execution-receipt.test.mjs:313:1'\n  failureType: 'testCodeFailure'\n  error: 'Missing expected exception.'\n  code: 'ERR_ASSERTION'\n  name: 'AssertionError'\n  stack: |-\n    rejects (file:///Users/louiscalata/nisi-next-private/tests/repository-execution-receipt.test.mjs:14:38)\n    TestContext.<anonymous> (file:///Users/louiscalata/nisi-next-private/tests/repository-execution-receipt.test.mjs:315:3)\n    async Test.run (node:internal/test_runner/test:1332:7)\n    async Test.processPendingSubtests (node:internal/test_runner/test:911:7)\n  ...\n1..19\n# tests 19\n# suites 0\n# pass 18\n# fail 1\n# cancelled 0\n# skipped 0\n# todo 0\n# duration_ms 63.28975\n"
+    },
+    "fullCheck": {
+      "command": "npm run check",
+      "result": "PASS",
+      "structuralScope": "Existing project direct-call structural checker; not a new whole-repository or sandbox proof.",
+      "tests": 220,
+      "start": {
+        "chunk_id": "112642",
+        "wall_time_seconds": 1.00240325,
+        "session_id": 52666,
+        "original_token_count": 602,
+        "output": "\n> nisi@0.2.0-private.0 check\n> npm run check:structural && npm test\n\n\n> nisi@0.2.0-private.0 check:structural\n> node scripts/require-node.cjs && node scripts/structural-check.mjs\n\n{\"mutationResults\":[{\"caught\":true,\"expectedRule\":\"process-spawn\",\"id\":\"STRUCT-001-SPAWN\",\"observedRules\":[\"process-spawn\"]},{\"caught\":true,\"expectedRule\":\"filesystem-write\",\"id\":\"STRUCT-002-WRITE\",\"observedRules\":[\"filesystem-write\"]},{\"caught\":true,\"expectedRule\":\"network-effect\",\"id\":\"STRUCT-003-NETWORK\",\"observedRules\":[\"network-effect\"]},{\"caught\":true,\"expectedRule\":\"dynamic-code\",\"id\":\"STRUCT-004-EVAL\",\"observedRules\":[\"dynamic-code\"]},{\"caught\":true,\"expectedRule\":\"dynamic-import\",\"id\":\"STRUCT-005-IMPORT\",\"observedRules\":[\"dynamic-import\"]},{\"caught\":true,\"expectedRule\":\"module-load\",\"id\":\"STRUCT-006-REQUIRE\",\"observedRules\":[\"module-load\"]},{\"caught\":true,\"expectedRule\":\"process-mutation\",\"id\":\"STRUCT-007-PROCESS-EXIT\",\"observedRules\":[\"process-mutation\"]},{\"caught\":true,\"expectedRule\":\"dynamic-or-worker-construction\",\"id\":\"STRUCT-008-WORKER\",\"observedRules\":[\"dynamic-or-worker-construction\"]}],\"positiveResults\":[{\"findingCount\":0,\"id\":\"ALLOW-001-CANONICAL\"},{\"findingCount\":0,\"id\":\"ALLOW-002-VALIDATE\"},{\"findingCount\":0,\"id\":\"ALLOW-003-EVAL-SUBSTRING\"},{\"findingCount\":0,\"id\":\"ALLOW-004-FORBIDDEN-WORDS-AS-DATA\"},{\"findingCount\":0,\"id\":\"ALLOW-005-FORBIDDEN-WORD-IN-STRING\"},{\"findingCount\":0,\"id\":\"ALLOW-006-METHOD-DECLARATION-NOT-CALL\"},{\"findingCount\":0,\"id\":\"ALLOW-007-ORDINARY-COLLECTION-WORK\"},{\"findingCount\":0,\"id\":\"ALLOW-008-HASHING-IS-PERMITTED\"}],\"resultDigest\":\"66d9c396e18a434690c34ad059279774154062982313c2973fdb14f54c52eef0\",\"schemaVersion\":1,\"sourceDigest\":\"d1049a26d2bea0d14e959c0af22af15b975345091c5fa5360e8bd685637f8e59\",\"sourceFindings\":[],\"status\":\"PASS\"}\n\n> nisi@0.2.0-private.0 test\n> node scripts/require-node.cjs && node --test tests/*.test.mjs\n\n✔ construction refuses anything outside the closed option set (2.888625ms)\n✔ no grant is refusal, not a permissive default (0.893917ms)\n✔ a consented item is read and answered, and only digests come back (189.396792ms)\n✔ the same content under the same grant answers with the same digest (132.885709ms)\n✔ a request with no declared content never reaches a process (1.488542ms)\n✔ content the grant refuses never reaches a process (2.222458ms)\n✔ revocation stops the executor immediately and terminally (137.557583ms)\n"
+      },
+      "completion": {
+        "chunk_id": "398a41",
+        "wall_time_seconds": 0.000001292,
+        "exit_code": 0,
+        "original_token_count": 4330,
+        "output": "✔ evidence that claims authority is refused rather than interpreted (1684.206ms)\n✔ evidence about different content, or a different grant, is refused (654.864666ms)\n✔ an advisory over the granted cap, or one that does not match its digest, is refused (703.485875ms)\n✔ the binary is re-verified before every launch (55.205667ms)\n✔ child failures are refused with their own causes, never as evidence (474.368583ms)\n✔ an aborted run is refused and leaves no reading behind (52.930375ms)\n✔ a request that is not bytes is refused before the grant is consulted (1.308708ms)\n✔ every field of the evidence reader is load-bearing, not decorative (374.577459ms)\n✔ the answer digest binds the request bytes, not only the content (83.502167ms)\n✔ pre-aborted and malformed contexts resolve to refusals without admission or spawn (1.105458ms)\n✔ abort during listener registration prevents spawning (0.895167ms)\n✔ evidence refuses malformed UTF-8, duplicate keys, wrong prompts and malformed limitations (1735.872708ms)\n✔ zero advisory cap, UTF-8 BOM and frozen item mappings follow the native contract (58.287709ms)\n✔ canonical JSON v1 exact bytes: numeric-key-order (2.637167ms)\n✔ canonical JSON v1 exact bytes: proto-survival (0.251ms)\n✔ canonical JSON v1 exact bytes: scalar-order (0.1305ms)\n✔ canonical JSON v1 exact bytes: decoded-key (0.219583ms)\n✔ canonical JSON v1 exact bytes: null-value (0.182083ms)\n✔ canonical JSON v1 exact bytes: empty-object (0.086667ms)\n✔ canonical JSON v1 exact bytes: empty-array (0.361791ms)\n✔ canonical JSON v1 exact bytes: array-order (0.07425ms)\n✔ canonical JSON v1 exact bytes: true (0.108292ms)\n✔ canonical JSON v1 exact bytes: false (0.086959ms)\n✔ canonical JSON v1 exact bytes: null (0.0435ms)\n✔ canonical JSON v1 exact bytes: whitespace (0.051041ms)\n✔ canonical JSON v1 exact bytes: nfd-value-preserved (0.354291ms)\n✔ canonical JSON v1 exact bytes: embedded-bom (0.112459ms)\n✔ canonical JSON v1 exact bytes: surrogate-pair (0.090917ms)\n✔ canonical JSON v1 exact bytes: maximum-scalar (0.041875ms)\n✔ canonical JSON v1 exact bytes: escapes (0.036792ms)\n✔ canonical JSON v1 exact bytes: raw-noncontrols (0.023958ms)\n✔ canonical JSON v1 integer boundary accepts 0 (0.035417ms)\n✔ canonical JSON v1 integer boundary accepts 1 (0.017958ms)\n✔ canonical JSON v1 integer boundary accepts -1 (0.028ms)\n✔ canonical JSON v1 integer boundary accepts 9007199254740991 (0.020291ms)\n✔ canonical JSON v1 integer boundary accepts -9007199254740991 (0.018167ms)\n✔ canonical JSON v1 number refuses exact source -0 (0.174458ms)\n✔ canonical JSON v1 number refuses exact source 1.0 (0.029916ms)\n✔ canonical JSON v1 number refuses exact source 1.5 (0.018917ms)\n✔ canonical JSON v1 number refuses exact source 1e0 (0.018083ms)\n✔ canonical JSON v1 number refuses exact source 1E+3 (0.018208ms)\n✔ canonical JSON v1 number refuses exact source 1e-7 (0.018042ms)\n✔ canonical JSON v1 number refuses exact source 01 (0.023375ms)\n✔ canonical JSON v1 number refuses exact source -01 (0.017667ms)\n✔ canonical JSON v1 number refuses exact source +1 (0.023084ms)\n✔ canonical JSON v1 number refuses exact source - (0.02225ms)\n✔ canonical JSON v1 number refuses exact source NaN (0.018875ms)\n✔ canonical JSON v1 number refuses exact source Infinity (0.02075ms)\n✔ canonical JSON v1 number refuses exact source -Infinity (0.0255ms)\n✔ canonical JSON v1 number refuses exact source 9007199254740992 (0.021542ms)\n✔ canonical JSON v1 number refuses exact source -9007199254740992 (0.056416ms)\n✔ canonical JSON v1 number refuses exact source -9223372036854775808 (0.086ms)\n✔ canonical JSON v1 number refuses exact source 18446744073709551615 (0.040958ms)\n✔ canonical JSON v1 number refuses exact source 999999999999999999999999 (0.047916ms)\n✔ canonical JSON v1 refusal: same-key (1.090792ms)\n✔ canonical JSON v1 refusal: escaped-same-key (0.053209ms)\n✔ canonical JSON v1 refusal: nested-same-key (0.03275ms)\n✔ canonical JSON v1 refusal: nul-key (0.024167ms)\n✔ canonical JSON v1 refusal: nfd-key (0.028667ms)\n✔ canonical JSON v1 refusal: nfc-nfd-collision (0.031875ms)\n✔ canonical JSON v1 refusal: lone-high (0.027916ms)\n✔ canonical JSON v1 refusal: lone-low (0.021583ms)\n✔ canonical JSON v1 refusal: high-then-wrong-low (0.021542ms)\n✔ canonical JSON v1 refusal: high-then-raw (0.019458ms)\n✔ canonical JSON v1 refusal: surrogate-key (0.020791ms)\n✔ canonical JSON v1 refusal: bad-escape (0.02075ms)\n✔ canonical JSON v1 refusal: truncated-hex (0.020584ms)\n✔ canonical JSON v1 refusal: invalid-hex (0.019541ms)\n✔ canonical JSON v1 refusal: truncated-escape (0.02275ms)\n✔ canonical JSON v1 refusal: raw-control (0.020709ms)\n✔ canonical JSON v1 refusal: unterminated (0.020833ms)\n✔ canonical JSON v1 refusal: object-trailing-comma (0.024292ms)\n✔ canonical JSON v1 refusal: array-trailing-comma (0.02475ms)\n✔ canonical JSON v1 refusal: top-level-tail (0.021834ms)\n✔ canonical JSON v1 refusal: literal-tail (0.020833ms)\n✔ canonical JSON v1 refusal: empty-document (0.025375ms)\n✔ canonical JSON v1 refusal: missing-value (0.035959ms)\n✔ canonical JSON v1 refusal: missing-colon (0.027083ms)\n✔ canonical JSON v1 refusal: duplicate-proto (0.026ms)\n✔ canonical JSON v1 refusal: fraction-without-integer (0.021333ms)\n✔ canonical JSON v1 refusal: exponent-without-mantissa (0.0185ms)\n✔ canonical JSON v1 refusal: negative-fraction-without-integer (0.023417ms)\n✔ canonical JSON v1 exact raw-byte refusal: invalid-ff-in-string (0.067125ms)\n✔ canonical JSON v1 exact raw-byte refusal: overlong (0.028167ms)\n✔ canonical JSON v1 exact raw-byte refusal: encoded-surrogate (0.036625ms)\n✔ canonical JSON v1 exact raw-byte refusal: truncated-multibyte (0.024833ms)\n✔ canonical JSON v1 exact raw-byte refusal: above-unicode-range (0.024834ms)\n✔ canonical JSON v1 exact raw-byte refusal: leading-bom (0.027791ms)\n✔ canonical JSON v1 depth 128 admitted, 129 and exact generated 512 refused (0.256125ms)\n✔ canonical JSON v1 object limit is per object, checked at 4096/4097 and generated 10000 (22.176584ms)\n✔ canonical JSON v1 input-byte cap accepts exactly 1 MiB and refuses above it (27.660625ms)\n✔ canonical JSON v1 input cannot be an arbitrary object, string, proxy or shared buffer (0.225875ms)\n✔ canonical JSON v1 handles sliced views and refuses detached input (0.166583ms)\n✔ canonical JSON v1 ignores spoofed typed-array properties and never consults input hooks (0.060833ms)\n✔ canonical JSON v1 primitive-only emission never calls container toJSON (0.092958ms)\n✔ canonical JSON v1 key insertion permutations produce identical canonical digests (0.158917ms)\n✔ canonical JSON v1 agrees with the independent serializer on every corpus vector (0.809625ms)\n✔ canonical JSON v1 does not silently migrate legacy numeric-key or proto records (0.082959ms)\n✔ canonical JSON v1 decoded astral duplicates and prefix/scalar key boundaries (0.05825ms)\n✔ canonical JSON v1 size is the view length, not its larger backing allocation (0.04125ms)\n✔ canonical JSON v1 captures current resized views and refuses out-of-bounds views (0.066708ms)\n✔ canonical JSON v1 exact documented 400002-byte mixed string is admitted unchanged (4.207875ms)\n✔ canonical JSON v1 integer magnitude is checked by value, not by digit count (0.142709ms)\n✔ content item traps and symbol extras are CONTENT_ITEM_INVALID before reads or admission count (3.651666ms)\n✔ same-size in-place mutation between read and final identity check is CONTENT_CHANGED_DURING_READ (0.979208ms)\n✔ executor rejects malformed item maps and snapshots valid mappings at construction (189.97875ms)\n✔ legacy payload digest remains exact while execution digest binds task identity (132.087417ms)\n✔ a grant must be presented as canonical bytes (3.123709ms)\n✔ a grant is refused unless every declared boundary is the boundary (3.01325ms)\n✔ a valid grant admits content inside its scope and returns the file, not the caller claim (0.816291ms)\n✔ scope is a path boundary, not a string prefix (1.416417ms)\n✔ a symlink cannot carry content across the boundary (1.683ms)\n✔ each item is checked on its own terms (2.278792ms)\n✔ a grant does not outlive its declared lifetime (0.971ms)\n✔ a clock that moves backwards is refused, not trusted (1.094708ms)\n✔ revocation is immediate and terminal (0.70775ms)\n✔ a grant reports what it is and claims nothing more (0.538083ms)\n✔ the declared limits are the module constants, not per-call opinions (1.21375ms)\n✔ the consent digest is pinned to its v1 domain string (0.269958ms)\n✔ later clock failures are named refusals and status samples the clock once (0.756709ms)\n✔ a final-component replacement after validation is refused before content is returned (1.406708ms)\n✔ file kind is a declared label; the v1 policy does not parse JSON content (0.79875ms)\n✔ the README example runs and prints what the README says it prints (46.602416ms)\n✔ example repairs an acceptance failure, reruns checks/tests, and reviews with evidence (6.124458ms)\n✔ malformed model identity, finish reason, envelope schema, Unicode, and duplicate keys fail closed (1.589541ms)\n✔ configuration enforces exact loopback HTTP scope and bounded numeric caps (0.239292ms)\n✔ pre-aborted upstream signal and abort during listener registration prevent fetch (0.262708ms)\n✔ request and response byte caps fail before transport or cancel an active reader (0.354416ms)\n✔ throwing and hanging fetches produce explicit unavailable and timeout receipts (20.839791ms)\n✔ adapter snapshots configuration and freezes receipt snapshots (0.5105ms)\n✔ response cleanup preserves its original error even when cancellation throws (0.274042ms)\n✔ strict codec rejects duplicate object keys and accepts one JSON fence (0.980125ms)\n✔ factory requires literal loopback HTTP destination and rejects redirects by request policy (1.654166ms)\n✔ author builds draft result from model data and preserves exact engine binding (1.294459ms)\n✔ reviewer derives PASS or FAIL and identity from its configuration (0.302791ms)\n✔ length finish reason and oversized streamed body are refused (0.454708ms)\n✔ Node preflight validates actual process.version and rejects unsupported versions (0.525834ms)\n✔ CLI parser is pure, requires exactly three arguments, and validates endpoint/model config (0.923584ms)\n✔ programmatic example API remains callable with injected deterministic transport (5.422625ms)\n✔ real CLI exits 2 for invalid argument and never reaches inference (38.459208ms)\n✔ descriptive public names preserve the original v1 factories and imports (1.50975ms)\n✔ execution expectations require issued preparations and preserve immutable distinct identities (3.299625ms)\n✔ profiles reject shell-shaped argv, ambiguous cwd, malformed values and extra authority (3.537917ms)\n✔ receipt identity rejects each cross-run candidate snapshot profile and command substitution (4.04875ms)\n✔ receipt schemas reject getters hidden fields symbols prototypes and missing data without invocation (0.5715ms)\n✔ PASS requires confirmed drain even when the child reports exit zero (0.293875ms)\n✔ passing and failed checks cannot hide interruption truncation error or unclosed execution (0.540084ms)\n✔ contradictory process states are refused even in adverse receipts (0.649833ms)\n✔ NOT_RUN ERROR and INCONCLUSIVE retain distinct non-success semantics (0.417375ms)\n✔ output summaries enforce byte bounds digest shape and exact truncation without inventing content proof (0.425458ms)\n✔ bundle links synthetic workflow records without changing v1 completion or granting authority (2.902583ms)\n✔ bundle binds final report digest not the preliminary store acknowledgement (1.415375ms)\n✔ bundle refuses extra missing duplicate reordered and cross-linked receipt inventories (1.800584ms)\n✔ bundle refuses stage status contradictions even with a recomputed bundle digest (1.68975ms)\n✔ adverse receipts and engine exception stops remain readable without PASS coercion (5.936ms)\n✔ all checks passing does not imply a completed workflow or a releasable product (0.9005ms)\n✔ bundle rejects stale expected run attempt or snapshot and malformed authority fields (1.971ms)\n✔ cancellation and deadlines retain UNAVAILABLE and refuse a late passing receipt (2.265208ms)\n✔ repaired candidates require fresh receipts while adverse attempt history remains intact (3.275625ms)\n✔ bundle preserves adverse reasons and exact exception cancellation and deadline classifications (3.177375ms)\n✔ snapshot sorts and binds UTF-8 encoding of captured text with a domain-separated identity (2.245167ms)\n✔ captured input and returned snapshots cannot mutate identity or file content (0.321333ms)\n✔ snapshot objects reject unknown keys, accessors and prototypes without invoking getters (0.26775ms)\n✔ file arrays reject sparse, decorated and accessor entries and enforce file-count bounds (8.372875ms)\n✔ initial path profile refuses unsupported spellings and ambiguous platform paths (0.530709ms)\n✔ case-folded duplicate and prefix paths are refused in either order (0.197542ms)\n✔ content is well-formed text only, never binary or deletion markers (0.238375ms)\n✔ UTF-8 accounting admits exact byte bounds and rejects multibyte overflow (13.438458ms)\n✔ preparation overlays only changed files and preserves omitted dependencies and tests (1.895541ms)\n✔ unchanged dependency changes preparation identity despite the same task and candidate (0.500625ms)\n✔ serialized or forged baselines cannot impersonate factory-issued snapshots (0.234625ms)\n✔ all protected baseline files must exist with their fixed digests even if omitted by candidate (0.562667ms)\n✔ existing task, author, candidate scope and schemas remain enforced (0.476083ms)\n✔ overlay rechecks combined path collisions and final resource bounds (14.278875ms)\n✔ repository scope refuses ambiguous or unsupported allowed and protected paths (0.354458ms)\n✔ preparation descriptors reject getters and hidden fields without reading them (0.293833ms)\n✔ preparation identities agree with the unchanged workflow candidate and run binding (2.518958ms)\n✔ retained real private snapshot matches its frozen inventory (57.542ms)\n✔ frozen import matches exact content; scope never expands to integration or release (6.497ms)\n✔ import refuses same-size content edit (3.716125ms)\n✔ import refuses new source (3.381917ms)\n✔ import refuses missing source (2.937375ms)\n✔ import refuses duplicate inventory entry (2.749625ms)\n✔ import refuses path traversal (2.493459ms)\n✔ import refuses unknown authority field (2.656083ms)\n✔ import refuses wrong schema (2.06275ms)\n✔ import refuses empty inventory (1.589541ms)\n✔ import refuses invalid digest (2.677125ms)\n✔ import refuses scope changed (2.682375ms)\n✔ import refuses file symlink (2.170583ms)\n✔ excluded build and hidden entries are named but not traversed or accepted as source (8.148167ms)\n✔ runnable workflow example executes failing and passing assertions, repairs, reviews and saves its report (71.240458ms)\n✔ normal edit mode produces a bound completed report (6.139792ms)\n✔ review mode validates the supplied candidate and never invokes draft or repair (0.691834ms)\n✔ a repair reruns all checks, tests, and reviewers with a new attempt binding (1.061958ms)\n✔ failed, unavailable, and not-run statuses remain non-successes with distinct outcomes (1.380291ms)\n✔ repair budget, no progress, and repeated fingerprints are explicit (1.300333ms)\n✔ actual task and candidate mutation attempts fail while frozen snapshots remain unchanged (0.391125ms)\n✔ replay identity binds task, run, attempt, and candidate evidence (0.595208ms)\n✔ stale or malformed evidence and protected or out-of-scope candidates are blocked (1.073584ms)\n✔ cancellation before and during listener registration prevents adapter calls (0.352125ms)\n✔ async timeout and synchronous clock advancement are timed out before later adapters (15.930542ms)\n✔ clock regression and deadline overflow fail closed (0.381584ms)\n✔ a storage acknowledgement copied after the deadline is rejected even when storage is optional (0.840334ms)\n✔ report stores receive exact frozen report and binding hashes; required failure blocks (1.8195ms)\n✔ task specification and candidate inputs are frozen and schema-checked (0.933583ms)\n✔ captured reviewer list, IDs and methods survive caller mutation after authorization (0.847583ms)\n✔ reviewers receive immutable fresh check and test evidence; all required reviewers run (0.543125ms)\n✔ captured evidence cannot replay across task, run, candidate or repair attempt (2.566959ms)\n✔ test status and assertion count invariants reject contradictory evidence (1.747917ms)\n✔ all valid repair responses retain evidence, including fixed points and cycles (2.038667ms)\n✔ post-task setup refusals retain identity, and all invalid clocks have CLOCK_INVALID (0.778458ms)\n✔ valid store refusals, invalid receipts, exceptions, timeout and cancellation preserve the workflow outcome (46.493167ms)\nℹ tests 220\nℹ suites 0\nℹ pass 220\nℹ fail 0\nℹ cancelled 0\nℹ skipped 0\nℹ todo 0\nℹ duration_ms 6398.583333\n"
+      }
+    },
+    "receiptMutants": {
+      "schemaVersion": 1,
+      "scope": "FIVE_TARGETED_REPOSITORY_RECEIPT_MUTANTS_ONLY",
+      "nodeVersion": "v24.18.0",
+      "platform": "darwin",
+      "architecture": "arm64",
+      "controlExitCode": 0,
+      "evidenceDirectory": "/Users/louiscalata/nisi-next-private/.build/repository-receipt-mutants-Zw6DVD",
+      "sourceHashes": [
+        {
+          "file": "receipts/repository-execution-v1.mjs",
+          "sha256": "7317e06c094bdf33e51645ce39348fc9e2d5a11ad0921af87434e34c45828cc2"
+        },
+        {
+          "file": "tests/repository-execution-receipt.test.mjs",
+          "sha256": "1075990a6f96276df2057f525df9914bb56a5c1da43d7d544956c86567ad983d"
+        },
+        {
+          "file": "hosts/repository/snapshot-contract.mjs",
+          "sha256": "2b52c23bac3a817769b7892eed71baba79cb81954b6a63724d107a9c258ba13f"
+        },
+        {
+          "file": "workflow/contracts.mjs",
+          "sha256": "c28a3ee3db6e9a936cd58fca8b8ee3f2744ca25c259e2ea278b3b09cdbb73d82"
+        },
+        {
+          "file": "workflow/engine.mjs",
+          "sha256": "c67c63baeadc725a8487af7108b01d3a38dd50e64ff35f1be66471c81e5f979b"
+        }
+      ],
+      "results": [
+        {
+          "id": "M01-drain",
+          "expectedFailure": "PASS requires confirmed drain even when the child reports exit zero",
+          "exitCode": 1,
+          "signal": null,
+          "errorCode": null,
+          "failedChecks": 1,
+          "failures": [
+            "PASS requires confirmed drain even when the child reports exit zero"
+          ],
+          "caught": true
+        },
+        {
+          "id": "M02-binding",
+          "expectedFailure": "receipt identity rejects each cross-run candidate snapshot profile and command substitution",
+          "exitCode": 1,
+          "signal": null,
+          "errorCode": null,
+          "failedChecks": 1,
+          "failures": [
+            "receipt identity rejects each cross-run candidate snapshot profile and command substitution"
+          ],
+          "caught": true
+        },
+        {
+          "id": "M03-final-report",
+          "expectedFailure": "bundle binds final report digest not the preliminary store acknowledgement",
+          "exitCode": 1,
+          "signal": null,
+          "errorCode": null,
+          "failedChecks": 1,
+          "failures": [
+            "bundle binds final report digest not the preliminary store acknowledgement"
+          ],
+          "caught": true
+        },
+        {
+          "id": "M04-stop-classification",
+          "expectedFailure": "bundle preserves adverse reasons and exact exception cancellation and deadline classifications",
+          "exitCode": 1,
+          "signal": null,
+          "errorCode": null,
+          "failedChecks": 1,
+          "failures": [
+            "bundle preserves adverse reasons and exact exception cancellation and deadline classifications"
+          ],
+          "caught": true
+        },
+        {
+          "id": "M05-inventory",
+          "expectedFailure": "bundle refuses extra missing duplicate reordered and cross-linked receipt inventories",
+          "exitCode": 1,
+          "signal": null,
+          "errorCode": null,
+          "failedChecks": 1,
+          "failures": [
+            "bundle refuses extra missing duplicate reordered and cross-linked receipt inventories"
+          ],
+          "caught": true
+        }
+      ],
+      "candidateExecutionVerified": false,
+      "legalClearance": false
+    },
+    "snapshotMutants": {
+      "result": "PASS",
+      "targetedMutants": 4,
+      "evidenceDirectory": ".build/repository-snapshot-mutants-XbaAo6",
+      "detail": "Passing control; exactly one expected failing test for each mutant; source preparation WeakSet seam remains compatible."
+    },
+    "frozenImport": {
+      "result": "PASS_SOURCE_FREEZE_ONLY",
+      "files": 225,
+      "totalBytes": 8027242,
+      "originRechecked": false,
+      "integrationVerified": false,
+      "legalClearance": false
+    },
+    "whitespace": {
+      "command": "git diff --check",
+      "exitCode": 0
+    }
+  },
+  "reviewers": {
+    "fable": {
+      "actualModel": "claude-fable-5-1",
+      "auxiliaryModel": "claude-haiku-4-5-20251001",
+      "writeOwner": "codex",
+      "toolsEnabled": false,
+      "sessionPersisted": false,
+      "scope": "Bounded status-rule proposal and explicit resolution, not complete source audit.",
+      "attempts": [
+        {
+          "packet": "u02-receipt-fable-request.txt",
+          "receipt": "u02-receipt-fable-review.json",
+          "result": "NOT_RUN",
+          "reason": "45-second cap exceeded",
+          "usage": null
+        },
+        {
+          "packet": "u02-receipt-fable-focused-request.txt",
+          "receipt": "u02-receipt-fable-focused-review.json",
+          "result": "FAIL",
+          "reportedCostUSD": 0.1594505
+        },
+        {
+          "packet": "u02-receipt-fable-resolution-request.txt",
+          "receipt": "u02-receipt-fable-resolution-review.json",
+          "result": "PASS",
+          "reportedCostUSD": 0.1672605
+        }
+      ],
+      "usageNote": "Known two successful-call costs total 0.326711 USD including their auxiliary usage. Timed-out call usage unknown; not a total task cost or savings claim.",
+      "findingsDisposition": [
+        "PASS versus exit-zero semantic FAIL: explicit result.status plus empty PASS/nonblank adverse reason; clarify rather than infer status solely from exit.",
+        "Signals and open processes cannot satisfy clean PASS/FAIL predicates; closed-without-started refused.",
+        "Required drain field is never defaulted. ERROR requires host errorCode; INCONCLUSIVE retains uncertainty; neither is successful.",
+        "Rich receipts and v1 engine stop records remain separate. Reject missing host metadata rather than weakening receipt requirements.",
+        "Explicit identity mapping for PASS/FAIL/NOT_RUN and ERROR/INCONCLUSIVE to UNAVAILABLE; no generic PASS coercion.",
+        "Independent source finding led to exact adverse reason and stop error/classification bindings; Fable follow-up accepted the explicit resolution."
+      ]
+    },
+    "luna": {
+      "model": "gpt-5.6-luna",
+      "role": "Read-only negative-test design",
+      "participated": true
+    },
+    "daybreak": {
+      "model": "gpt-daybreak-blue-latest",
+      "role": "Read-only source defensive review and focused fix recheck",
+      "participated": true,
+      "finding": "The reader collapsed ERROR/INCONCLUSIVE to UNAVAILABLE without linking reason/error code to the actual stop; fixture itself had divergent ADAPTER_EXCEPTION reasons.",
+      "redEvidence": "One newly added regression fails with Missing expected exception before repair, retained above and pre-stop-link-fix.mjs.",
+      "fix": "Exact reason equality; exception stop ERROR with matching code; ABORTED/DEADLINE_EXCEEDED INCONCLUSIVE with cancellation requested, no host error and exact reason.",
+      "recheck": "PASS, issue resolved; 19/19 focused checks. Earlier reviewer 16/16 is historical, not final."
+    }
+  },
+  "changes": [
+    "New receipts/repository-execution-v1.mjs and 19-test suite.",
+    "Added factory-issued preparation identity seam, retaining original preparation fingerprint/data and NOT_RUN/authorizing false semantics.",
+    "Five targeted mutation harness with retained control, mutant sources and raw outputs.",
+    "Canonical private roadmap and original System Equation current-Nisi section updated; historical Veritas section unchanged."
+  ],
+  "next": [
+    "Finish disk-admission, symlink/containment, command allowlist, isolation, transport and persistence/restart boundaries.",
+    "Implement real fixed-profile Swift bridge and repository process host; no synthetic receipts for production acceptance.",
+    "Retain full failure history, evaluated prevention, native scheduler/providers, modules and whole-product acceptance scope."
+  ],
+  "publicCheckout": {
+    "path": "/Users/louiscalata/nisi",
+    "head": "df321f8676f1da6b21885ad0781c7bd0549e1f32",
+    "status": "CLEAN",
+    "modifiedThisTurn": false
+  },
+  "nativeExecutionVerified": false,
+  "wholeMergerComplete": false,
+  "publicationAuthorized": false,
+  "committed": false,
+  "pushed": false,
+  "authorizing": false
+}

@@ -1,0 +1,1 @@
+nisi-ckpt: refusing - signing env injected (run from your own shell or Codex, not a Claude session)

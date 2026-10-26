@@ -1,0 +1,13 @@
+{
+  "capability.guidedGeneration" : true,
+  "capability.reasoning" : false,
+  "capability.toolCalling" : true,
+  "capability.vision" : true,
+  "isAvailable" : true,
+  "model" : "SystemLanguageModel.default",
+  "provider" : "Apple Foundation Models (macOS 27, on-device)",
+  "useCases" : [
+    "general",
+    "contentTagging"
+  ]
+}

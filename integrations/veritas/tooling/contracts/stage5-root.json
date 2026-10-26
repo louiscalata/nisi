@@ -1,0 +1,6 @@
+{
+  "schemaVersion": 1,
+  "profile": "veritas-stage5-private-git-root-v1",
+  "stage5ManifestSha256": "f1d169711211c9c09fcfed7a7d7ec06db58003865117e778759fbc711b0b1b9e",
+  "digestManifestSha256": "e0096408ce0fcece404ac22289a604a4123aed68bb99740dbfaf3844f5b2ab53"
+}

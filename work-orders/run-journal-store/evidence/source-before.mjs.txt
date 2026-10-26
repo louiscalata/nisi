@@ -1,0 +1,7 @@
+export function writeSerializedJournal() {
+  return { status: 'REFUSED', reason: 'UNIMPLEMENTED', durable: false };
+}
+
+export function readSerializedJournal() {
+  return { status: 'REFUSED', reason: 'UNIMPLEMENTED', durable: false };
+}

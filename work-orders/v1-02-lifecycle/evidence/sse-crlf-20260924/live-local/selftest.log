@@ -1,0 +1,78 @@
+PASS save returns a raw sha256 digest (got 64 hex chars)
+PASS loadWithDigest returns the verified save digest and restored conversation
+PASS manifest roundtrips exactly
+PASS transcript roundtrips exactly
+PASS both entries restored
+PASS tampered data refused (threw checksumMismatch)
+PASS loadWithDigest refuses tampered data (threw checksumMismatch)
+PASS truncated file refused (threw checksumMismatch)
+PASS missing sidecar refused (threw missingSidecar)
+PASS save refuses unsupported schema (threw malformedHeader)
+PASS unsupported schema refused (threw unsupportedSchema(1))
+PASS rehashed invalid manifest refused (threw malformedHeader)
+PASS malformed header refused (threw malformedHeader)
+PASS malformed entry line refused (threw malformedEntryLine(1))
+PASS load caps at maxEntries (got 8)
+PASS load keeps the newest tail
+PASS save prunes oldest entries to fit the file cap (kept 2)
+PASS pruned save keeps the newest
+PASS oversized stored file refused before parsing (threw refused("conversation file exceeds cap"))
+PASS symlinked conversation file refused
+PASS file exists before delete
+PASS file removed by delete
+PASS sidecar removed by delete
+PASS load after delete is missingFile (threw missingFile)
+PASS conversation and digest remain owner-only after atomic save
+PASS conversation and digest remain owner-only after atomic save
+PASS transcript seeds instructions + 2 messages (got 3)
+PASS instructions entry comes first
+PASS stored user text becomes prompt entry
+PASS stored assistant text becomes response entry
+PASS sampling is random(top: 50)
+PASS temperature is 0.7
+PASS maxTokens passes through
+PASS default instructions stay honest
+PASS request-local references are labelled untrusted and cited
+PASS source text cannot close a trusted wrapper before the prompt ends
+PASS no-reference request remains unchanged
+PASS project references keep the newest whole prior message within budget
+PASS oversized reference request is refused (threw streamError("PROJECT_REFERENCES_EXCEED_CONTEXT"))
+PASS configured local model endpoint is loopback-only
+PASS off-device local model endpoint is refused
+PASS local request includes prior context and one current user turn
+PASS body carries the resident model id
+PASS body carries max_tokens
+PASS body streams
+PASS body temperature 0.8
+PASS body message order kept (system, user)
+PASS SSE content delta extracted
+PASS empty delta ignored
+PASS non-data line ignored
+PASS [DONE] recognised
+PASS regular payload is not [DONE]
+PASS partial local stream yields its content
+PASS local EOF without DONE is refused (threw streamFailed("SSE_INCOMPLETE"))
+PASS local stream completes only after DONE
+PASS bounded SSE decoder completes a line
+PASS CRLF SSE lines remove only their terminal CR
+PASS byte-fed CRLF content and completion finish the local stream
+PASS CR byte counts toward the SSE line cap (threw streamFailed("SSE_LINE_TOO_LARGE"))
+PASS oversized SSE line refused (threw streamFailed("SSE_LINE_TOO_LARGE"))
+PASS oversized total SSE stream refused (threw streamFailed("SSE_STREAM_TOO_LARGE"))
+PASS trimmed model context excludes the current user turn
+PASS another turn cannot roll back the active user
+PASS another turn is refused while a turn is pending
+PASS deletion refuses an active session before removing its file
+PASS aborted turn restores even entries dropped by the pending append
+PASS deleting an idle conversation clears both disk and model-facing history
+PASS a second stream cannot claim the same turn
+PASS local turn commits its own user and assistant exactly once
+PASS listing finds exactly the two conversation files (got 2)
+PASS verified conversation listed as verified
+PASS verified summary carries message count + utf16 total
+PASS verified summary carries manifest id/schema
+PASS tampered conversation listed as corrupt, not deleted
+PASS listing is newest-first
+PASS summary carries the exact file path for deletion
+PASS delete removes the conversation from the listing
+SELF-TEST OK (77 checks)

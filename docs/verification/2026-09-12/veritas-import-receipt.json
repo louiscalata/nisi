@@ -1,0 +1,156 @@
+{
+  "schemaVersion": 1,
+  "date": "2026-09-12T17:01:26.477Z",
+  "scope": "NX03_SOURCE_FREEZE_AND_CHECKER_ONLY",
+  "platform": "darwin",
+  "architecture": "arm64",
+  "nodeVersion": "v24.18.0",
+  "privateWorkspace": "/Users/louiscalata/nisi-next-private",
+  "nisiBaseline": "02a0b39146596da6abaf279316ff7086cd70ec52",
+  "source": [
+    {
+      "path": "scripts/verify-veritas-import.mjs",
+      "sha256": "40542fd223dc538fd6c93003284809dff59fc2706eae69e9f516eb87dc70d48c"
+    },
+    {
+      "path": "scripts/test-veritas-import-mutants.mjs",
+      "sha256": "2e57780d25fc6257cd2fba0018b9065925552538fdcd52aeff5e5d21ab5bc4eb"
+    },
+    {
+      "path": "tests/veritas-import.test.mjs",
+      "sha256": "198b7b505d03715010c00bcf5e240ddcbd42fc95a74de36991cf8a28d706f13d"
+    },
+    {
+      "path": "tests/veritas-import-snapshot.test.mjs",
+      "sha256": "ff548efe38f61145e3a05ca535a84f6f247502268f606022c11a146f7c47d902"
+    },
+    {
+      "path": "integrations/veritas/import-manifest.json",
+      "sha256": "8207efbc465ec99f0c16a7a281c349bb7ce8819349dbbafe17534f72dd527bcb"
+    }
+  ],
+  "originComparison": {
+    "includedFiles": 225,
+    "matched": true,
+    "scope": "prior direct local comparison during this task; subsequent CLI is manifest-only",
+    "authenticatedProvenance": false
+  },
+  "commands": [
+    {
+      "executable": "/usr/local/bin/node",
+      "args": [
+        "scripts/verify-veritas-import.mjs"
+      ],
+      "exitCode": 0,
+      "error": null,
+      "stdout": "{\n  \"status\": \"PASS_SOURCE_FREEZE_ONLY\",\n  \"files\": 225,\n  \"totalBytes\": 8027242,\n  \"excluded\": [],\n  \"originRechecked\": false,\n  \"integrationVerified\": false,\n  \"legalClearance\": false\n}\n",
+      "stderr": ""
+    },
+    {
+      "executable": "/usr/local/bin/node",
+      "args": [
+        "--test",
+        "--test-reporter=tap",
+        "tests/veritas-import.test.mjs",
+        "tests/veritas-import-snapshot.test.mjs"
+      ],
+      "exitCode": 0,
+      "error": null,
+      "stdout": "TAP version 13\n# Subtest: retained real private snapshot matches its frozen inventory\nok 1 - retained real private snapshot matches its frozen inventory\n  ---\n  duration_ms: 11.24675\n  type: 'test'\n  ...\n# Subtest: frozen import matches exact content; scope never expands to integration or release\nok 2 - frozen import matches exact content; scope never expands to integration or release\n  ---\n  duration_ms: 2.987166\n  type: 'test'\n  ...\n# Subtest: import refuses same-size content edit\nok 3 - import refuses same-size content edit\n  ---\n  duration_ms: 1.856333\n  type: 'test'\n  ...\n# Subtest: import refuses new source\nok 4 - import refuses new source\n  ---\n  duration_ms: 1.67575\n  type: 'test'\n  ...\n# Subtest: import refuses missing source\nok 5 - import refuses missing source\n  ---\n  duration_ms: 1.570792\n  type: 'test'\n  ...\n# Subtest: import refuses duplicate inventory entry\nok 6 - import refuses duplicate inventory entry\n  ---\n  duration_ms: 1.404958\n  type: 'test'\n  ...\n# Subtest: import refuses path traversal\nok 7 - import refuses path traversal\n  ---\n  duration_ms: 1.27625\n  type: 'test'\n  ...\n# Subtest: import refuses unknown authority field\nok 8 - import refuses unknown authority field\n  ---\n  duration_ms: 1.35325\n  type: 'test'\n  ...\n# Subtest: import refuses wrong schema\nok 9 - import refuses wrong schema\n  ---\n  duration_ms: 1.464792\n  type: 'test'\n  ...\n# Subtest: import refuses empty inventory\nok 10 - import refuses empty inventory\n  ---\n  duration_ms: 1.372209\n  type: 'test'\n  ...\n# Subtest: import refuses invalid digest\nok 11 - import refuses invalid digest\n  ---\n  duration_ms: 1.252792\n  type: 'test'\n  ...\n# Subtest: import refuses scope changed\nok 12 - import refuses scope changed\n  ---\n  duration_ms: 1.169708\n  type: 'test'\n  ...\n# Subtest: import refuses file symlink\nok 13 - import refuses file symlink\n  ---\n  duration_ms: 1.348375\n  type: 'test'\n  ...\n# Subtest: excluded build and hidden entries are named but not traversed or accepted as source\nok 14 - excluded build and hidden entries are named but not traversed or accepted as source\n  ---\n  duration_ms: 1.874584\n  type: 'test'\n  ...\n1..14\n# tests 14\n# suites 0\n# pass 14\n# fail 0\n# cancelled 0\n# skipped 0\n# todo 0\n# duration_ms 53.832917\n",
+      "stderr": ""
+    },
+    {
+      "executable": "/usr/local/bin/node",
+      "args": [
+        "scripts/test-veritas-import-mutants.mjs"
+      ],
+      "exitCode": 0,
+      "error": null,
+      "stdout": "{\n  \"scope\": \"FOUR_TARGETED_IMPORT_READER_MUTANTS_ONLY\",\n  \"source\": \"scripts/verify-veritas-import.mjs\",\n  \"results\": [\n    {\n      \"id\": \"M01-digest-disabled\",\n      \"exitCode\": 1,\n      \"failedChecks\": 1,\n      \"failures\": [\n        \"import refuses same-size content edit\"\n      ],\n      \"caught\": true\n    },\n    {\n      \"id\": \"M02-inventory-guard-disabled\",\n      \"exitCode\": 1,\n      \"failedChecks\": 1,\n      \"failures\": [\n        \"import refuses new source\"\n      ],\n      \"caught\": true\n    },\n    {\n      \"id\": \"M03-schema-version-accepted\",\n      \"exitCode\": 1,\n      \"failedChecks\": 1,\n      \"failures\": [\n        \"import refuses wrong schema\"\n      ],\n      \"caught\": true\n    },\n    {\n      \"id\": \"M04-authority-field-accepted\",\n      \"exitCode\": 1,\n      \"failedChecks\": 1,\n      \"failures\": [\n        \"import refuses unknown authority field\"\n      ],\n      \"caught\": true\n    }\n  ],\n  \"evidenceDirectory\": \"/Users/louiscalata/nisi-next-private/.build/import-mutants-HM0ZQZ\"\n}\n",
+      "stderr": ""
+    }
+  ],
+  "mutationEvidence": [
+    {
+      "path": "/Users/louiscalata/nisi-next-private/.build/import-mutants-HM0ZQZ/results.json",
+      "sha256": "c52ed836f2a1107a839d0779c33c22121820cb95c9f668f00f90d40accb497cf"
+    },
+    {
+      "path": "/Users/louiscalata/nisi-next-private/.build/import-mutants-HM0ZQZ/control-stdout.txt",
+      "sha256": "4fb56548c59c541d4db6f7db77a3ae53f064f2d3016945569fe28b818c416c44"
+    },
+    {
+      "path": "/Users/louiscalata/nisi-next-private/.build/import-mutants-HM0ZQZ/control-stderr.txt",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "/Users/louiscalata/nisi-next-private/.build/import-mutants-HM0ZQZ/M01-digest-disabled/scripts/verify-veritas-import.mjs",
+      "sha256": "e4815448d5e1e95126835121c686c439379044b2e3adc99bdc5b0d53da341962"
+    },
+    {
+      "path": "/Users/louiscalata/nisi-next-private/.build/import-mutants-HM0ZQZ/M01-digest-disabled/tests/veritas-import.test.mjs",
+      "sha256": "198b7b505d03715010c00bcf5e240ddcbd42fc95a74de36991cf8a28d706f13d"
+    },
+    {
+      "path": "/Users/louiscalata/nisi-next-private/.build/import-mutants-HM0ZQZ/M01-digest-disabled/stdout.txt",
+      "sha256": "7c7b4abfbe9ea3ec5f253fe0f9ab7c51537aa9754515c8857ae2f79682841323"
+    },
+    {
+      "path": "/Users/louiscalata/nisi-next-private/.build/import-mutants-HM0ZQZ/M01-digest-disabled/stderr.txt",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "/Users/louiscalata/nisi-next-private/.build/import-mutants-HM0ZQZ/M02-inventory-guard-disabled/scripts/verify-veritas-import.mjs",
+      "sha256": "ddcc9f7002a157a846acc3218c5653dcc4c658f895089c63aa0f3fa618406814"
+    },
+    {
+      "path": "/Users/louiscalata/nisi-next-private/.build/import-mutants-HM0ZQZ/M02-inventory-guard-disabled/tests/veritas-import.test.mjs",
+      "sha256": "198b7b505d03715010c00bcf5e240ddcbd42fc95a74de36991cf8a28d706f13d"
+    },
+    {
+      "path": "/Users/louiscalata/nisi-next-private/.build/import-mutants-HM0ZQZ/M02-inventory-guard-disabled/stdout.txt",
+      "sha256": "78e452e427345110431d3c711af3f9e5f02f53747f900247704dfc49dde0857b"
+    },
+    {
+      "path": "/Users/louiscalata/nisi-next-private/.build/import-mutants-HM0ZQZ/M02-inventory-guard-disabled/stderr.txt",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "/Users/louiscalata/nisi-next-private/.build/import-mutants-HM0ZQZ/M03-schema-version-accepted/scripts/verify-veritas-import.mjs",
+      "sha256": "74818135c9dab37846c313172c79766b3c95a6d37bb64797b3477e60ffdf43ea"
+    },
+    {
+      "path": "/Users/louiscalata/nisi-next-private/.build/import-mutants-HM0ZQZ/M03-schema-version-accepted/tests/veritas-import.test.mjs",
+      "sha256": "198b7b505d03715010c00bcf5e240ddcbd42fc95a74de36991cf8a28d706f13d"
+    },
+    {
+      "path": "/Users/louiscalata/nisi-next-private/.build/import-mutants-HM0ZQZ/M03-schema-version-accepted/stdout.txt",
+      "sha256": "dd82ef3c7d0f2f07f3536f1e27665601b242ed0b4668d2d1c23d12f1047de165"
+    },
+    {
+      "path": "/Users/louiscalata/nisi-next-private/.build/import-mutants-HM0ZQZ/M03-schema-version-accepted/stderr.txt",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "/Users/louiscalata/nisi-next-private/.build/import-mutants-HM0ZQZ/M04-authority-field-accepted/scripts/verify-veritas-import.mjs",
+      "sha256": "a0ca060c18e5d91ff3041282396e9c8f5bdd82820f366cc3e0212d598b4089ca"
+    },
+    {
+      "path": "/Users/louiscalata/nisi-next-private/.build/import-mutants-HM0ZQZ/M04-authority-field-accepted/tests/veritas-import.test.mjs",
+      "sha256": "198b7b505d03715010c00bcf5e240ddcbd42fc95a74de36991cf8a28d706f13d"
+    },
+    {
+      "path": "/Users/louiscalata/nisi-next-private/.build/import-mutants-HM0ZQZ/M04-authority-field-accepted/stdout.txt",
+      "sha256": "d0f575a4400efd083ef1c4bd0c87ad9cf00abf4d5ff03b2fb78868058ed86d65"
+    },
+    {
+      "path": "/Users/louiscalata/nisi-next-private/.build/import-mutants-HM0ZQZ/M04-authority-field-accepted/stderr.txt",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    }
+  ],
+  "integrationVerified": false,
+  "legacyRuntimeExecuted": false,
+  "nativeTestsExecuted": false,
+  "modelsExecuted": false,
+  "releaseAuthorized": false
+}

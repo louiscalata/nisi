@@ -1,5 +1,35 @@
 # Nisi v0.2
 
+> **Suite name: AGIW** (2026-09-21, Louis — a Filipino word for "spiderweb").
+> The whole connected suite is AGIW; **Nisi is AGIW's inference member** —
+> the on-device Mac inference suite (AFM seam, loopback local-model route,
+> `nisi-session` / `nisi-status`) plus the
+> Windows worker inference lane, heterogeneous by design. Code artifacts keep
+> the inference identity; nothing was renamed by this decision. See
+> [naming-and-core-design.md](docs/naming-and-core-design.md) and the
+> [suite manifest](docs/suite.md) — **Nisi inference is build #1**.
+>
+> **Current state (2026-10-26):** the Nisi chat app (`nisi-chat`, the Nisi
+> window) was retired on 2026-09-25 and is archival only. This branch combines
+> the Mac v0.2 integration work with the public `main` benchmarks; the public
+> `nisi` CLI entry and `history/*` package aliases from `main` are pending an
+> owner re-freeze of the C04–C07 evidence (see `tests/public-v02-pending/`).
+
+> [!WARNING]
+> **Private next-version integration workspace — not the public 0.1.0 release.**
+> This working copy is preparing the Veritas-to-Nisi merger. Its development
+> identifier is `0.2.0-private.0`; package publication is disabled. The existing
+> Apache-2.0 license continues to accompany the original Nisi code; it does not
+> grant publication permission for newly staged private material. Do not publish
+> this tree, its designs, examples, tests or results without the existing exact
+> legal and engineering release approvals. See [the roadmap](roadmap.md).
+>
+> **Why this matters:** A private working copy and a package flag reduce accidental
+> release risk; neither prevents a Git push or establishes legal clearance.
+
+The following documentation describes the retained Nisi foundation. Staging a
+Veritas component here does not make it an integrated or released Nisi feature.
+
 **A Node.js command-line tool and library for AI-assisted coding workflows.**
 
 Use Nisi when your application needs to coordinate drafting, checks, tests,
@@ -221,6 +251,15 @@ Nisi validates what adapters report. `COMPLETED` means the required stages
 returned valid passing evidence; callback honesty and actual file access remain
 host responsibilities. The host also owns applying changes and release decisions.
 
+## Bounded routing proposals
+
+The private Jev integration can classify a task against an allowlisted route
+registry with `proposeRouting`. The Nisi routing contract binds the proposal to
+the normalized task and Jev request/response hashes and emits a queue-safe job
+for the existing host ledger. The model result never writes a queue record,
+claims work, dispatches a message, retries an uncertain send, or accepts a
+change. See [`workflow/routing-queue-v1.mjs`](workflow/routing-queue-v1.mjs)
+and [`integrations/jev/README.md`](integrations/jev/README.md).
 ## Benchmarks
 
 The benchmark tooling and graphs are on `main`; the v0.2.0 tag and release
