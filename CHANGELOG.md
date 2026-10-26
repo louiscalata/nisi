@@ -5,6 +5,9 @@ public source tree and does not include private experiments.
 
 ## Unreleased source update
 
+- Copy local-chat binding identity before the response is awaited, so a receipt
+  and its returned evidence keep the candidate that call sent when the payload
+  changes in flight.
 - Add source-checkout workflow-control, mocked-interface, and inert-overhead
   benchmarks, plus a 12-task exploratory pilot against one configured local
   Gemma chat endpoint. Retain raw pilot candidates, reports, and request
