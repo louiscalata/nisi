@@ -78,6 +78,22 @@ test('configured payload redaction occurs before serialization and survives reop
   assert.equal(row.authorizing, false);
 });
 
+test('redaction covers every alias of a shared payload object and still refuses cycles', () => {
+  const journal = createRunJournal(config({ redactPaths: ['payload.a.secret'] }));
+  const shared = { secret: 'super-secret', note: 'visible' };
+  assert.equal(journal.append(entry('alias', { payload: { a: shared, b: shared } }), 100).status, 'APPENDED');
+  const serialized = journal.serialize();
+  assert.doesNotMatch(serialized, /super-secret/);
+  const [row] = journal.list(100);
+  assert.equal(row.entry.payload.a.secret, '[REDACTED]');
+  assert.equal(row.entry.payload.b.secret, '[REDACTED]');
+  assert.equal(row.entry.payload.a, row.entry.payload.b);
+  const cyclic = createRunJournal(config());
+  const payload = { note: 'loop' };
+  payload.self = payload;
+  assert.throws(() => cyclic.append(entry('cycle', { payload }), 100), error => error.code === 'ENTRY');
+});
+
 test('revocation changes the target view and expiry retires payload data', () => {
   const journal = createRunJournal(config());
   assert.equal(journal.append(entry('active', { state: 'RUNNING', heartbeatAt: 100 }), 100).status, 'APPENDED');

@@ -1,7 +1,7 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { createCandidate, createTaskSpecification, runWorkflow } from '../workflow/engine.mjs';
-import { sha256Text, stableStringify } from '../workflow/contracts.mjs';
+import { cloneFreeze, sha256Text, stableStringify, WorkflowInputError } from '../workflow/contracts.mjs';
 
 const BASE_TEXT = 'export const answer = 42;\n';
 const file = content => ({ path: 'src/app.js', content });
@@ -267,6 +267,37 @@ test('captured reviewer list, IDs and methods survive caller mutation after auth
   const reviews = report.stages.filter(stage => stage.stage === 'review');
   assert.equal(reviews.length, 1);
   assert.equal(reviews[0].evidence.reviewerId, 'reviewer.one');
+});
+
+test('the reviewer list is read once, so a later getter value cannot skip review', async () => {
+  const base = adapters();
+  let reads = 0;
+  const report = await runWorkflow(makeTask(), { adapters: {
+    ...base,
+    get reviewers() {
+      reads += 1;
+      return reads < 3 ? base.reviewers : [];
+    },
+  } });
+  assert.equal(reads, 1);
+  assert.equal(report.outcome, 'COMPLETED');
+  assert.equal(report.stages.filter(stage => stage.stage === 'review').length, 1);
+});
+
+test('snapshots reject binary containers quickly and copy a shared object once', () => {
+  const started = performance.now();
+  assert.throws(() => cloneFreeze(Buffer.alloc(2_000_000)), error => error instanceof WorkflowInputError && error.code === 'INPUT_OBJECT_INVALID');
+  assert.ok(performance.now() - started < 500, 'enumerating a binary container stalled the snapshot');
+  const shared = { n: 1 };
+  let node = shared;
+  for (let depth = 0; depth < 22; depth += 1) node = { a: node, b: node };
+  const copyStarted = performance.now();
+  const copy = cloneFreeze(node);
+  assert.ok(performance.now() - copyStarted < 1000, 'shared references were copied exponentially');
+  assert.equal(copy.a, copy.b);
+  const cycle = { n: 1 };
+  cycle.self = cycle;
+  assert.throws(() => cloneFreeze(cycle), error => error.code === 'INPUT_CYCLE');
 });
 
 test('reviewers receive immutable fresh check and test evidence; all required reviewers run', async () => {

@@ -36,7 +36,7 @@ function fixture(t, hooks = {}) {
   const events = [];
   const descriptors = new Map();
   const fs = {};
-  for (const name of ['openSync', 'writeSync', 'fsyncSync', 'closeSync', 'readFileSync', 'renameSync', 'unlinkSync']) {
+  for (const name of ['lstatSync', 'openSync', 'writeSync', 'fsyncSync', 'closeSync', 'readFileSync', 'renameSync', 'unlinkSync']) {
     fs[name] = (...args) => {
       const descriptor = descriptors.get(args[0]);
       const event = { name, args, descriptor };
@@ -185,7 +185,8 @@ test('different existing content needs exact previous sha256; conflicts preserve
     f.events.length = 0;
     refused(write({ ...f, serialized: journal('new'), expectedPreviousSha256 }), 'CONFLICT');
     assert.equal(realFs.readFileSync(f.path, 'utf8'), before);
-    assert.ok(f.events.every(e => e.name === 'readFileSync'));
+    assert.ok(f.events.every(e => e.name === 'readFileSync' || e.name === 'lstatSync'));
+    assert.ok(f.events.some(e => e.name === 'lstatSync'));
   }
   written(write({ ...f, serialized: journal('new'), expectedPreviousSha256: hash(before) }), journal('new'));
   assert.equal(realFs.readFileSync(f.path, 'utf8'), journal('new'));
@@ -200,7 +201,8 @@ test('same bytes are an explicit non-durable no-op; supplied stale expected hash
     assert.equal(result.status, 'UNCHANGED');
     assert.equal(result.sha256, hash(journal()));
     assert.equal(result.durable, false);
-    assert.ok(f.events.every(e => e.name === 'readFileSync'));
+    assert.ok(f.events.every(e => e.name === 'readFileSync' || e.name === 'lstatSync'));
+    assert.ok(f.events.some(e => e.name === 'lstatSync'));
   }
   refused(write({ ...f, serialized: journal(), expectedPreviousSha256: '0'.repeat(64) }), 'CONFLICT');
   const missing = fixture(t);
@@ -305,7 +307,8 @@ test('missing and unreadable files are refusals, and read never attempts mutatio
   const bad = fixture(t, { readFileSync: () => { throw Object.assign(new Error('denied'), { code: 'EACCES' }); } });
   refused(read(bad), 'READ_FAILED');
   refused(write({ ...bad, serialized: journal() }), 'READ_FAILED');
-  assert.ok(bad.events.every(e => e.name === 'readFileSync'));
+  assert.ok(bad.events.every(e => e.name === 'readFileSync' || e.name === 'lstatSync'));
+  assert.ok(bad.events.some(e => e.name === 'lstatSync'));
   refused(read({ path: '', fs: f.fs }), 'INVALID_INPUT');
   refused(write({ path: '', serialized: journal(), fs: f.fs }), 'INVALID_INPUT');
 });
@@ -417,4 +420,33 @@ test('combined directory fsync and close failures preserve both codes in a commi
   assert.equal(closes.length, 2);
   assert.equal(closes.filter(e => e.descriptor.flags === 'wx').length, 1);
   assert.equal(closes.filter(e => e.descriptor.flags === DIRECTORY).length, 1);
+});
+
+test('a symlink destination is refused and neither the link nor its target is replaced', t => {
+  const f = fixture(t);
+  const real = join(f.dir, 'real.jsonl');
+  const serialized = journal();
+  realFs.writeFileSync(real, serialized);
+  try {
+    realFs.symlinkSync(real, f.path);
+  } catch (error) {
+    if (process.platform === 'win32' && (error.code === 'EPERM' || error.code === 'EACCES')) {
+      t.skip(`Windows symlink creation unavailable: ${error.code}`);
+      return;
+    }
+    throw error;
+  }
+  const result = write({ ...f, serialized: journal('next'), expectedPreviousSha256: hash(serialized) });
+  refused(result, 'SYMLINK');
+  assert.equal(result.committed, false);
+  assert.equal(realFs.lstatSync(f.path).isSymbolicLink(), true);
+  assert.equal(realFs.readFileSync(real, 'utf8'), serialized);
+  assert.deepEqual(f.events.map(event => event.name), ['lstatSync']);
+});
+
+test('a filesystem without lstatSync cannot write', t => {
+  const f = fixture(t);
+  delete f.fs.lstatSync;
+  refused(write({ ...f, serialized: journal() }), 'INVALID_INPUT');
+  assert.deepEqual(realFs.readdirSync(f.dir), []);
 });

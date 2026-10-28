@@ -40,12 +40,16 @@ path must be absolute and the kind must be permitted by the declaration. Kind
 is a caller-provided label: labeling arbitrary UTF-8 text `json` does not parse
 or validate its JSON structure.
 
-The policy checks liveness, resolves the file and root, enforces directory
-scope, checks a regular nonempty file and its size, opens the resolved file,
-compares descriptor identity and nanosecond metadata, reads with a hard byte
-cap, rechecks the opened file, and validates UTF-8. Where available, the open
-uses `O_NOFOLLOW` and `O_NONBLOCK`. The successful record contains copied bytes,
+The policy checks liveness, resolves the file and root with the operating-system
+realpath, enforces directory scope, checks a regular nonempty file and its size,
+opens the resolved file, compares descriptor identity and nanosecond metadata,
+reads with a hard byte cap, rechecks the opened file, and validates UTF-8. Where
+available, the open uses `O_NOFOLLOW` and `O_NONBLOCK`. The successful record
+contains copied bytes,
 content digest/length, consent digest, kind and advisory cap.
+
+A path is admitted only when that realpath names a file. A `..` component
+through a symlink is not rewritten onto a different in-scope file.
 
 The opened-object checks reduce replacement and mutation races. A same-size
 in-place write is detected when the filesystem reports changed metadata; a

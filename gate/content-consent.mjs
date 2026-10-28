@@ -108,12 +108,13 @@ class ContentConsentGrant {
     if (typeof filePath !== 'string' || !path.isAbsolute(filePath)) return fail('CONTENT_PATH_INVALID');
     if (!this.#value.allowedKinds.includes(kind)) return fail('CONTENT_KIND_REFUSED');
 
-    // Resolve symlinks before the scope test: a link inside the approved root
-    // that points outside it must not smuggle content past the boundary.
+    // The operating-system realpath decides which file this path names. The
+    // JavaScript realpath rewrites ".." before it resolves a symlink, and can
+    // therefore admit a different in-scope file than the one the OS would open.
     let resolved, rootResolved;
     try {
-      resolved = fs.realpathSync(filePath);
-      rootResolved = fs.realpathSync(this.#value.scopeRoot);
+      resolved = fs.realpathSync.native(filePath);
+      rootResolved = fs.realpathSync.native(this.#value.scopeRoot);
     } catch { return fail('CONTENT_PATH_UNRESOLVABLE'); }
     const prefix = rootResolved.endsWith(path.sep) ? rootResolved : rootResolved + path.sep;
     if (!resolved.startsWith(prefix)) return fail('CONTENT_OUT_OF_SCOPE');

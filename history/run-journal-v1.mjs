@@ -17,15 +17,19 @@ const exact = (o, keys) => o && typeof o === 'object' && !Array.isArray(o) &&
   Object.keys(o).length === keys.length && keys.every(k => own(o, k));
 const safe = n => Number.isSafeInteger(n) && n >= 0 && !Object.is(n, -0);
 
-function copy(x, stack = new Set()) {
+function copy(x, stack = new Set(), memo = new WeakMap()) {
   // Reject ordinary and revoked Proxies before reflection, including nested data.
+  // One copied object is shared by every reference. A second copy would let a
+  // redacted value survive under another path and be stored.
   if (nodeTypes.isProxy(x)) throw err('ENTRY');
   if (x === null || typeof x === 'string' || typeof x === 'boolean') {
     if (typeof x === 'string') for (let i=0;i<x.length;i++) { const n=x.charCodeAt(i); if (n>=0xd800&&n<=0xdbff) { const m=x.charCodeAt(++i); if (!(m>=0xdc00&&m<=0xdfff)) throw err('ENTRY'); } else if (n>=0xdc00&&n<=0xdfff) throw err('ENTRY'); }
     return x;
   }
   if (typeof x === 'number') { if (!Number.isSafeInteger(x) || Object.is(x, -0)) throw err('ENTRY'); return x; }
-  if (!x || typeof x !== 'object' || stack.has(x)) throw err('ENTRY');
+  if (!x || typeof x !== 'object') throw err('ENTRY');
+  if (memo.has(x)) return memo.get(x);
+  if (stack.has(x)) throw err('ENTRY');
   const proto = Object.getPrototypeOf(x); if (Array.isArray(x) ? proto !== Array.prototype : proto !== Object.prototype && proto !== null) throw err('ENTRY');
   stack.add(x);
   let out;
@@ -36,7 +40,7 @@ function copy(x, stack = new Set()) {
     for (let i=0;i<x.length;i++) {
       const d = Object.getOwnPropertyDescriptor(x, String(i));
       if (!d || !d.enumerable || !('value' in d)) throw err('ENTRY');
-      out.push(copy(d.value, stack));
+      out.push(copy(d.value, stack, memo));
     }
   } else {
     const names = Object.getOwnPropertyNames(x), keys = Object.keys(x);
@@ -46,10 +50,10 @@ function copy(x, stack = new Set()) {
       if (BAD.has(k) || !k.isWellFormed()) throw err('ENTRY');
       const d = Object.getOwnPropertyDescriptor(x, k);
       if (!d || !d.enumerable || !('value' in d)) throw err('ENTRY');
-      out[k] = copy(d.value, stack);
+      out[k] = copy(d.value, stack, memo);
     }
   }
-  stack.delete(x); return out;
+  stack.delete(x); memo.set(x, out); return out;
 }
 
 function C(x) {

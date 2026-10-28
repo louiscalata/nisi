@@ -101,7 +101,7 @@ export async function runCli(args, options = {}) {
   if (args.length === 1 && args[0] === 'demo') {
     try {
       const runExample = options.runExample ?? (await import(new URL('../examples/workflow.mjs', physicalEntryURL).href)).runExample;
-      const { report } = await runExample();
+      const { report } = await runExample({ cleanup: true });
       const written = await emit(stdout, JSON.stringify({ ...summarize(report), reportStored: report?.reportStored === true, modelCalls: 0 }, null, 2));
       if (!written) return 2;
       return report?.outcome === 'COMPLETED' && report?.reportStored === true ? 0 : 1;
