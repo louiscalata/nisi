@@ -141,6 +141,20 @@ test('a symlink cannot carry content across the boundary', () => {
   assert.equal(grant.status().admittedItems, 0);
 });
 
+test('a dotdot component through a symlink is not admitted as a different in-scope file', () => {
+  const root = tempRoot();
+  const outside = tempRoot();
+  const grant = grantOf(root);
+  const inside = write(root, 'ok.json', '{"ok":true}');
+  fs.symlinkSync(outside, path.join(root, 'link'));
+  const lexical = root + path.sep + 'link' + path.sep + '..' + path.sep + 'ok.json';
+  const result = grant.admitContent({ filePath: lexical, kind: 'json' });
+  assert.equal(result.ok, false);
+  assert.notEqual(result.code, 'CONTENT_ADMITTED');
+  assert.equal(grant.status().admittedItems, 0);
+  assert.equal(grant.admitContent({ filePath: inside, kind: 'json' }).ok, true);
+});
+
 test('each item is checked on its own terms', () => {
   const root = tempRoot();
   const grant = grantOf(root);

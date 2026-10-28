@@ -5,6 +5,21 @@ public source tree and does not include private experiments.
 
 ## Unreleased source update
 
+- Refuse a journal-store destination that is a symbolic link (`SYMLINK`) instead
+  of replacing the link and reporting a durable write. Writes require `lstatSync`
+  on the injected filesystem.
+- Resolve file-admission paths with the operating-system realpath, so a `..`
+  component through a symlink is not admitted as a different in-scope file.
+- Read the workflow reviewer list once. A getter that changes between checks
+  can no longer produce `COMPLETED` with no review.
+- Copy a run-journal object once, so a value shared by a redacted path and
+  another path is redacted everywhere and is not stored a second time.
+- Copy a local-chat binding when the call starts. Receipts and returned evidence
+  keep that binding if the caller edits it while the request is in flight.
+- Reject binary containers in workflow snapshots without enumerating their bytes,
+  and copy a shared object once instead of once per reference.
+- Remove the temporary report directory created by `nisi demo` after the summary
+  is printed.
 - Add source-checkout workflow-control, mocked-interface, and inert-overhead
   benchmarks, plus a 12-task exploratory pilot against one configured local
   Gemma chat endpoint. Retain raw pilot candidates, reports, and request

@@ -18,3 +18,8 @@ test('runnable workflow example executes failing and passing assertions, repairs
   assert.equal(saved.outcome, 'COMPLETED');
   assert.equal(report.reportStoreEvidence.evidence.reportSha256, report.storedReportSha256);
 });
+
+test('cleanup removes the temporary report directory after the report is verified', async () => {
+  const { directory } = await runExample({ cleanup: true });
+  await assert.rejects(fs.stat(directory), error => error.code === 'ENOENT');
+});

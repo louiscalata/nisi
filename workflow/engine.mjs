@@ -37,8 +37,9 @@ function snapshotAdapters(task, source) {
   const authorize = method(source.authorizeContext, 'authorize', 'AUTHORIZATION_ADAPTER_REQUIRED');
   const check = method(source.staticChecks, 'check', 'STATIC_CHECK_ADAPTER_REQUIRED');
   const tests = method(source.tests, 'run', 'TEST_ADAPTER_REQUIRED');
-  if (!Array.isArray(source.reviewers) || source.reviewers.length !== task.policy.requiredReviewers) reject('REVIEW_ADAPTER_COUNT');
-  const reviewers = Object.freeze(source.reviewers.map(reviewer => Object.freeze({
+  const reviewerSource = source.reviewers;
+  if (!Array.isArray(reviewerSource) || reviewerSource.length !== task.policy.requiredReviewers) reject('REVIEW_ADAPTER_COUNT');
+  const reviewers = Object.freeze(reviewerSource.map(reviewer => Object.freeze({
     id: validateAdapterIdentity(reviewer, 'reviewer'),
     review: method(reviewer, 'review', 'REVIEW_ADAPTER_REQUIRED'),
   })));

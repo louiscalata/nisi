@@ -213,6 +213,48 @@ test('adapter snapshots configuration and freezes receipt snapshots', async () =
   assert.equal(adapter.receipts()[0].usage.totalTokens, 16);
 });
 
+test('receipts and evidence keep the binding captured when the call starts', async () => {
+  const live = { ...binding, runId: 'run-kept', candidateFingerprint: 'c'.repeat(64) };
+  const sent = payload({ binding: live, candidate: { files: [{ path: 'config.json', content: '{}' }] } });
+  const adapter = reviewer({ fetch: async () => {
+    live.runId = 'run-replaced';
+    live.candidateFingerprint = 'd'.repeat(64);
+    sent.binding = { ...live, runId: 'swapped-object' };
+    return reviewerResponse('review-model', { findings: [], summary: 'kept the original binding' });
+  } });
+  const result = await adapter.review(sent);
+  assert.equal(result.evidence.runId, 'run-kept');
+  assert.equal(result.evidence.candidateFingerprint, 'c'.repeat(64));
+  const [receipt] = adapter.receipts();
+  assert.equal(receipt.status, 'RESPONSE_VALIDATED');
+  assert.equal(receipt.runId, 'run-kept');
+  assert.equal(receipt.inputCandidateFingerprint, 'c'.repeat(64));
+
+  const authorBinding = { ...binding, runId: 'draft-kept', candidateFingerprint: 'e'.repeat(64) };
+  const author = createLocalChatAuthorAdapter({
+    destination: 'LOOPBACK_HTTP', endpoint: 'http://127.0.0.1:1234/v1/chat/completions',
+    model: 'author-model', id: 'extra.author', fetch: async () => {
+      authorBinding.runId = 'draft-replaced';
+      return jsonResponse(envelope('author-model', {
+        status: 'REPAIRED', candidate: { files: [{ path: 'config.json', content: '{"ok":true}' }] }, note: 'repaired',
+      }));
+    },
+  });
+  const repaired = await author.repair(payload({ binding: authorBinding, candidate: { files: [{ path: 'config.json', content: '{}' }] } }));
+  assert.equal(repaired.evidence.runId, 'draft-kept');
+  assert.equal(repaired.evidence.baseCandidateFingerprint, 'e'.repeat(64));
+  assert.equal(author.receipts()[0].runId, 'draft-kept');
+
+  const failedBinding = { ...binding, runId: 'fail-kept' };
+  const failing = reviewer({ fetch: async () => {
+    failedBinding.runId = 'fail-replaced';
+    throw Object.assign(new Error('down'), { code: 'LOCAL_CHAT_UNAVAILABLE' });
+  } });
+  await rejectsCode(() => failing.review(payload({ binding: failedBinding })), 'LOCAL_CHAT_UNAVAILABLE');
+  assert.equal(failing.receipts()[0].runId, 'fail-kept');
+  assert.equal(failing.receipts()[0].status, 'UNAVAILABLE');
+});
+
 test('response cleanup preserves its original error even when cancellation throws', async () => {
   let cancelled = 0;
   const unavailable = reviewer({ fetch: async () => ({ok: false, body: {cancel() {cancelled += 1; throw Error('cleanup');}}}) });

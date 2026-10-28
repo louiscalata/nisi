@@ -38,7 +38,8 @@ Two limits are worth stating plainly because they are easy to misread:
 - The consent gate proves that a declaration was presented and enforced. It is
   not captured user-interface consent, and a local process cannot witness one.
 
-- File access relies on stable trusted parent directories. Descriptor identity,
+- File access relies on stable trusted parent directories. Paths are resolved
+  with the operating-system realpath before the scope check. Descriptor identity,
   bounded reads and metadata checks reduce replacement races, but do not form
   an operating-system sandbox. Binary hashing and launch also require a stable
   trusted helper directory. Revocation blocks future admission, not prior use.
@@ -62,7 +63,8 @@ Two limits are worth stating plainly because they are easy to misread:
   the checked chain; they do not authenticate an author or provide a signature.
   A valid chain does not prove that recorded events happened as described.
 - Journal-store durability depends on the filesystem and operating system
-  honoring the requested sync and rename behavior. The API reports confirmed
+  honoring the requested sync and rename behavior. A symbolic link at the
+  destination is refused and is not replaced. The API reports confirmed
   commit and durability separately; it cannot prove hardware persistence.
 - Generic report storage is a trusted callback acknowledgement. Its receipt
   identifies the preliminary report; it does not establish retention or

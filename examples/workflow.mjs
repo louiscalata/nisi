@@ -12,8 +12,17 @@ import { pathToFileURL } from 'node:url';
 import { createCandidate, runWorkflow } from '../workflow/engine.mjs';
 import { sha256Text, stableStringify } from '../workflow/contracts.mjs';
 
-export async function runExample() {
+export async function runExample(options = {}) {
+  const cleanup = options?.cleanup === true;
   const directory = await fs.mkdtemp(path.join(os.tmpdir(), 'nisi-workflow-'));
+  try {
+    return await runExampleBody(directory);
+  } finally {
+    if (cleanup) await fs.rm(directory, { recursive: true, force: true });
+  }
+}
+
+async function runExampleBody(directory) {
   const task = {
     taskId: 'example.answer', mode: 'edit', language: 'javascript',
     allowedFiles: ['answer.mjs'], protectedFiles: [], protectedSnapshots: {},

@@ -88,12 +88,26 @@ export function readSerializedJournal(options) {
   return { ...state, status: 'READ', serialized, sha256: digest(found.bytes), bytes: found.bytes.length, verified: true };
 }
 
+function destinationKind(fs, path) {
+  try {
+    const stat = fs.lstatSync(path);
+    if (!stat || typeof stat.isSymbolicLink !== 'function') return { error: 'READ_FAILED' };
+    if (stat.isSymbolicLink()) return { kind: 'symlink' };
+    return { kind: 'present' };
+  } catch (error) {
+    return error?.code === 'ENOENT' ? { kind: 'absent' } : { error: 'READ_FAILED' };
+  }
+}
+
 export function writeSerializedJournal(options) {
   const state = initial();
-  if (!options || !validPath(options.path) || !hasMethods(options.fs, ['readFileSync', 'openSync', 'writeSync', 'closeSync', 'renameSync', 'unlinkSync'])) return refusal(state, 'INVALID_INPUT');
+  if (!options || !validPath(options.path) || !hasMethods(options.fs, ['lstatSync', 'readFileSync', 'openSync', 'writeSync', 'closeSync', 'renameSync', 'unlinkSync'])) return refusal(state, 'INVALID_INPUT');
   const { path, serialized, fs, expectedPreviousSha256 } = options;
   if (!validJournal(serialized)) return refusal(state, 'INVALID_JOURNAL');
   if (expectedPreviousSha256 !== undefined && !hex(expectedPreviousSha256)) return refusal(state, 'INVALID_INPUT');
+  const destination = destinationKind(fs, path);
+  if (destination.error) return refusal(state, destination.error);
+  if (destination.kind === 'symlink') return refusal(state, 'SYMLINK');
   const bytes = Buffer.from(serialized, 'utf8');
   const sha256 = digest(bytes);
   const before = existingBytes(fs, path);
@@ -155,6 +169,9 @@ export function writeSerializedJournal(options) {
   const current = existingBytes(fs, path);
   if (current.error) return fail(current.error);
   if (current.absent !== before.absent || !current.absent && (!Buffer.isBuffer(current.bytes) || !current.bytes.equals(before.bytes))) return fail('CONFLICT');
+  const raced = destinationKind(fs, path);
+  if (raced.error) return fail(raced.error);
+  if (raced.kind === 'symlink') return fail('SYMLINK');
   try { fs.renameSync(temp, path); } catch { return fail('RENAME_FAILED'); }
   state.committed = true;
   ownedTemp = false;

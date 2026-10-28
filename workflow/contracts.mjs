@@ -30,10 +30,14 @@ const reject = code => { throw new WorkflowInputError(code); };
 const ownKeys = value => JSON.stringify(Object.keys(value).sort());
 const isPlainObject = value => value !== null && typeof value === 'object' && !Array.isArray(value) &&
   (Object.getPrototypeOf(value) === Object.prototype || Object.getPrototypeOf(value) === null);
+// Binary containers expose one own property per byte. Refuse them before enumeration.
+const isBinaryContainer = value => ArrayBuffer.isView(value)
+  || value instanceof ArrayBuffer
+  || (typeof SharedArrayBuffer !== 'undefined' && value instanceof SharedArrayBuffer);
 const isId = value => typeof value === 'string' && /^[a-z][a-z0-9_.-]{0,95}$/u.test(value);
 const isHex64 = value => typeof value === 'string' && /^[0-9a-f]{64}$/u.test(value);
 
-export function cloneFreeze(value, seen = new WeakSet(), depth = 0) {
+export function cloneFreeze(value, seen = new WeakSet(), depth = 0, memo = new WeakMap()) {
   if (depth > 64) reject('INPUT_DEPTH_LIMIT');
   if (value === null || typeof value === 'string' || typeof value === 'boolean') return value;
   if (typeof value === 'number') {
@@ -41,6 +45,8 @@ export function cloneFreeze(value, seen = new WeakSet(), depth = 0) {
     return value;
   }
   if (typeof value !== 'object') reject('INPUT_VALUE_INVALID');
+  if (isBinaryContainer(value)) reject('INPUT_OBJECT_INVALID');
+  if (memo.has(value)) return memo.get(value);
   if (seen.has(value)) reject('INPUT_CYCLE');
   seen.add(value);
   let copy;
@@ -52,17 +58,19 @@ export function cloneFreeze(value, seen = new WeakSet(), depth = 0) {
     copy = [];
     for (let index = 0; index < value.length; index += 1) {
       if (!Object.hasOwn(descriptors, index)) reject('INPUT_ARRAY_INVALID');
-      copy.push(cloneFreeze(descriptors[index].value, seen, depth + 1));
+      copy.push(cloneFreeze(descriptors[index].value, seen, depth + 1, memo));
     }
   } else if (isPlainObject(value)) {
     copy = Object.create(null);
     for (const key of Object.keys(descriptors)) {
       if (!descriptors[key].enumerable) reject('INPUT_PROPERTY_INVALID');
-      copy[key] = cloneFreeze(descriptors[key].value, seen, depth + 1);
+      copy[key] = cloneFreeze(descriptors[key].value, seen, depth + 1, memo);
     }
   } else reject('INPUT_OBJECT_INVALID');
   seen.delete(value);
-  return Object.freeze(copy);
+  const frozen = Object.freeze(copy);
+  memo.set(value, frozen);
+  return frozen;
 }
 
 export function stableStringify(value) {

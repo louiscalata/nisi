@@ -28,7 +28,9 @@ node bin/nisi.mjs demo
 
 The example drafts an intentionally incorrect JavaScript module, runs a syntax
 check and two assertions, repairs it once, obtains a separate review callback's
-result, and writes and verifies a report. It makes no model calls.
+result, and writes and verifies a report. It makes no model calls. `nisi demo`
+deletes that temporary report after printing the summary. Running
+`examples/workflow.mjs` directly leaves the report path it prints.
 The output includes:
 
 ```json
@@ -87,13 +89,16 @@ to this public package.
   module imports only `node:crypto` and `node:util`.
   Fingerprints and duplicate detection use the redacted entry. Changes only to
   redacted values therefore compare as duplicates; the original values cannot
-  be reconstructed from the journal.
+  be reconstructed from the journal. A value shared by a redacted path and
+  another path is redacted at every occurrence.
 - **Journal store** (`history/run-journal-store-v1.mjs`, import `nisi/history/run-journal-store`).
   `writeSerializedJournal` and `readSerializedJournal` move a serialized
-  journal to and from disk through a caller-supplied `fs`. A write validates
-  the chain first, goes through an exclusive temp file in the same directory,
-  syncs the file and its directory, verifies by reading back, and renames into
-  place. Each write attempt uses its own temporary filename, so an orphaned
+  journal to and from disk through a caller-supplied `fs`. A write requires
+  `lstatSync` and refuses a symbolic-link destination with `SYMLINK`, leaving
+  the link and its target unchanged. The write validates the chain first, goes
+  through an exclusive temp file in the same directory, syncs the file and its
+  directory, verifies by reading back, and renames into place. Each write
+  attempt uses its own temporary filename, so an orphaned
   temporary file from a stopped process does not block an identical retry.
   `expectedPreviousSha256` detects stale **sequential** writes; it is not an
   atomic guard for concurrent writers. Use one writer per journal and

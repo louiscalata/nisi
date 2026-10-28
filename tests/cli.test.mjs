@@ -65,6 +65,21 @@ test('demo runs the public deterministic workflow and reports no model calls', (
   assert.equal(result.stderr, '');
 });
 
+test('demo removes its temporary report directory', () => {
+  const directory = fs.mkdtempSync(path.join(os.tmpdir(), 'nisi-cli-demo-'));
+  try {
+    const result = spawnSync(process.execPath, [cli, 'demo'], {
+      cwd: directory, encoding: 'utf8', timeout: 15_000, maxBuffer: 128 * 1024,
+      env: { ...process.env, TMPDIR: directory, TMP: directory, TEMP: directory },
+    });
+    assert.equal(result.status, 0, result.stderr);
+    assert.equal(JSON.parse(result.stdout).outcome, 'COMPLETED');
+    assert.deepEqual(fs.readdirSync(directory), []);
+  } finally {
+    fs.rmSync(directory, { recursive: true, force: true });
+  }
+});
+
 test('external symlink invokes the physical CLI with --preserve-symlinks-main', t => {
   const cwd = fs.mkdtempSync(path.join(os.tmpdir(), 'nisi-cli-symlink-'));
   const link = path.join(cwd, 'nisi-link.mjs');
