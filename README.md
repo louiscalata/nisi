@@ -268,7 +268,7 @@ and [study plan](benchmarks/value/LIVE-STUDY.md) for scope and next tests.
 ### Package footprint
 
 The published v0.2.0 npm-format archive is **42,439 bytes with 18 files**.
-At public `main` commit `3cfe3ae`, the source checkout had 118 tracked files
+At public `main` commit `46c5c66`, the source checkout had 118 tracked files
 totaling 1,194,053 bytes, including tests, docs, and benchmark evidence. The
 chart compares pinned Node package archives, excluding dependency packages;
 LangGraph.js and Mastra offer broader capabilities and use different packaging.

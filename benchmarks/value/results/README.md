@@ -6,7 +6,7 @@ is SHA-256 `17c117821d347bf4ad248b70b319d8847bbedc2647edebf6b0a2e8edf996b10a`.
 The [source manifest](pilot-local-gemma-source-sha256.json) pins the exact runner,
 released workflow, local-chat adapter, checked-loop reference, dataset, and test
 source used for this run. The current runner was subsequently revised to make
-the shared-router gate configurable and to retain partial output on interruption;
+the optional router gate configurable and to retain partial output on interruption;
 its source hash therefore differs from the historical collection manifest.
 Those operational changes did not alter the model prompts or scoring rule. The
 retained candidate contents below allow independent rescoring without relying
@@ -50,5 +50,6 @@ sample. The server's cache behavior was not measured. Row times in the raw
 result are observed local times, not isolated engine overhead or latency
 estimates for other hardware. This run uses one model, one local endpoint, one
 non-streaming adapter, and no live Windows or hosted provider. It does not
-establish broad AGIW-suite interoperability, cost savings, or production task
-accuracy. See the [study protocol](../LIVE-STUDY.md) for the next tests.
+establish interoperability with other tools or hosts, cost savings, or
+production task accuracy. See the [study protocol](../LIVE-STUDY.md) for the
+next tests.

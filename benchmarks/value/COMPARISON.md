@@ -18,7 +18,7 @@ dependencies. It is a fixed release artifact; the later benchmark files on
 `main` are not in it.
 
 At public `main` commit
-[`3cfe3ae`](https://github.com/louiscalata/nisi/commit/3cfe3ae63269c96138ed96e45f36cfa28b059b66),
+[`46c5c66`](https://github.com/louiscalata/nisi/commit/46c5c667486a9a14cca050d1ce07c558df6d0686),
 the source checkout had **118 tracked files totaling 1,194,053 bytes**. That
 number includes tests, documentation, examples, and retained benchmark evidence.
 It excludes Git history, ignored dependencies, and untracked files. It describes

@@ -67,27 +67,32 @@ those APIs:
 node --test tests/run-journal.test.mjs tests/run-journal-store.test.mjs
 ```
 
-For the public code at `d2eaf44`, all 24 focused tests passed on macOS arm64
+Commit identities in this record refer to today's `main`. Its history was
+rewritten after these checks. The cited commits kept identical source trees,
+but the linked CI runs show their earlier identities: `759d76e` was `d2eaf44`,
+`61be5ae` was `004b728`, `b7fc3e2` was `17d6178`, and `143a778` was `a3319d1`.
+
+For the public code at `759d76e`, all 24 focused tests passed on macOS arm64
 with Node v24.18.0. The full `npm run check` passed 197 tests and skipped one
 Windows-only launcher control; the scoped static check and all 12 editable
 README checks passed. The package archive contained 15 declared files
 with no worker or private artifacts, and an installed consumer imported the
-declared entrypoints successfully. The earlier `a3319d1` candidate also passed
+declared entrypoints successfully. The earlier `143a778` candidate also passed
 the full 197-test Mac suite on Node v22.23.2.
 
 [GitHub CI run 35897012299](https://github.com/louiscalata/nisi/actions/runs/35897012299)
-passed on `d2eaf44`: hosted Windows Node 22 and 24 each passed 198/198 Node
+passed on `759d76e`: hosted Windows Node 22 and 24 each passed 198/198 Node
 tests; hosted Linux Node 22 and 24 each passed 197 with the Windows-only control
 skipped. Every job also passed the 24 focused journal/store tests, scoped static
 check and 12 editable README checks. The Windows launcher runs registered
 stand-in probes through Node; this does not exercise an Apple model or a native
-Windows Nisi application. The separate Windows PC handoff has no exact result.
+Windows Nisi application. No result from a physical Windows PC is recorded.
 Live provider behavior, performance, signed native distribution, and production
 readiness remain unverified for this public candidate. After publication, the
 GitHub prerelease tag `v0.2.0-rc.1` was verified at
-`004b728959f70b379333137e66fd0d1aadac1807`.
+`61be5ae53e7ef2eb19822d9ae21f3fa47951aef3`.
 [CI run 35897477859](https://github.com/louiscalata/nisi/actions/runs/35897477859)
-passed all four hosted Windows/Linux Node 22/24 jobs on that exact commit.
+passed all four hosted Windows/Linux Node 22/24 jobs on that source tree.
 
 ## rc.2 correction and release baseline
 
@@ -104,9 +109,9 @@ with one Windows-only control skipped. The package dry run contained 15
 declared files, and `npm audit --omit=dev` found zero production dependency
 vulnerabilities. These checks do not verify native Windows operation or live
 provider behavior. The published rc.2 tag targets
-`17d6178e15ea0cd40a277c19ba8a26bcb3813597`; its
+`b7fc3e23089c2ef8b5197e10d0d4671130fe7bd3`; its
 [four-job Windows/Linux Node 22/24 CI run](https://github.com/louiscalata/nisi/actions/runs/35901126815)
-passed on that exact commit. The CLI added for stable v0.2.0 requires fresh
+passed on that source tree. The CLI added for stable v0.2.0 requires fresh
 checks on the final stable commit.
 
 The prior v0.1 workflow, local-chat and platform evidence remains in the

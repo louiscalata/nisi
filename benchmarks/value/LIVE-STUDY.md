@@ -17,11 +17,11 @@ node benchmarks/value/live-pilot.mjs --allow-live \
 ```
 
 `MODEL_ID` must be the exact identity reported by an already resident local
-loopback chat server. The runner never loads or swaps a model. On hosts using
-the separate online-code-mode router, set `NISI_ROUTER_COMMAND` to that
-executable's path. The runner then checks its status before starting and before
-every arm; an active run or unavailable status stops the pilot. Other hosts do
-not need Louis's private router. The output file must not exist: the runner
+loopback chat server. The runner never loads or swaps a model. On hosts that
+use an optional run router, set `NISI_ROUTER_COMMAND` to that executable's
+path. The runner then checks its status before starting and before every arm;
+an active run or unavailable status stops the pilot. Other hosts can leave it
+unset. The output file must not exist: the runner
 reserves it before inference and appends each completed arm to a `.rows.jsonl`
 sidecar. If interrupted, the output records `PARTIAL` and the remaining row
 count, while the sidecar retains completed rows. Use a single task ID in place

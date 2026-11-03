@@ -28,13 +28,16 @@ publication. npm registry publication remains separate.
 - [x] Review the final outgoing tree after recovery-worker removal and test the
   declared imports from a packed, installed archive on Mac.
 - [x] Run the full public checks on Node 22 and 24 on Mac for the initial
-  `a3319d1` candidate; later public code passed the hosted four-job matrix.
+  `143a778` candidate; later public code passed the hosted four-job matrix.
 - [x] Obtain hosted Windows Node 22/24 results for the public v0.2 code at
-  `d2eaf44`; both jobs passed 198/198 tests. Native Windows application and
-  separate PC handoff results remain open.
-- [x] Recheck CI against the exact GitHub prerelease tag commit
-  `004b728959f70b379333137e66fd0d1aadac1807`;
-  [all four hosted jobs passed](https://github.com/louiscalata/nisi/actions/runs/35897477859).
+  `759d76e`; both jobs passed 198/198 tests. Native Windows application and
+  physical Windows PC results remain open.
+- [x] Recheck CI against the GitHub prerelease tag commit
+  `61be5ae53e7ef2eb19822d9ae21f3fa47951aef3`;
+  [all four hosted jobs passed](https://github.com/louiscalata/nisi/actions/runs/35897477859)
+  on its source tree. These identities refer to today's `main`; the
+  [verification record](docs/verification-v0.2.md) maps them to the identities
+  shown in the CI runs.
 
 ## Nisi v0.1 follow-up
 
