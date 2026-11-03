@@ -15,8 +15,9 @@ commit `fc8bf1b`.
   unsafe example execution, safe CLI diagnostics and bounded journal history.
 - [x] Document unkeyed hashes, pruning compatibility, destructive time watermark,
   report-storage deadline limits and separate journal/workflow serialization.
-- [ ] Review a separate report-storage grace-budget design and journal format
-  migration/authentication before adding either feature.
+- [x] Add a bounded `storeTimeoutMs` grace budget for required TIMED_OUT and
+  CANCELLED report storage, preserving existing behavior for other storage.
+- [ ] Review journal format migration/authentication before adding either feature.
 - [ ] Release/CI/tag provenance remains a separate task; this local review makes
   no publication or historical verification claim. Package-registry publication
   remains open independently of the existing GitHub archive.

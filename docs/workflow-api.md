@@ -83,6 +83,7 @@ const report = await runWorkflow(task, {
   },
   signal: abortController.signal, // optional
   reportStore: { store },        // optional unless policy requires it
+  storeTimeoutMs: 1000,          // optional budget for required terminal storage
 });
 ```
 
@@ -208,10 +209,26 @@ an actual write, file sync and read-back digest check.
 failures leave `outcome` unchanged and set `reportStoreCode`. Required-store
 failures make it BLOCKED. Cancellation or expiry during either kind of storage
 produces CANCELLED or TIMED_OUT. A missing required store blocks before any work.
-The store uses the run's remaining deadline and the same abort signal. If the
-run has already timed out or been cancelled, the store callback is not invoked,
-even with `requireReportStore: true`; `reportStored` remains false and
-`reportStoreCode` is `DEADLINE_EXCEEDED` or `ABORTED`. Hosts needing an audit trail
-for these outcomes must persist the returned report outside the run. A separate
-storage grace budget is not implemented.
+When `requireReportStore: true` and the workflow has already reached TIMED_OUT or
+CANCELLED, the engine offers that terminal report to the store once, using a
+fresh, non-aborted signal independent of the caller's signal. This includes
+cancellation before the first adapter runs. Its separate deadline starts just
+before the storage attempt, using the same host clock. The `runWorkflow` option
+`storeTimeoutMs` defaults to **1000 ms** and must be an integer from 1 through
+86,400,000; invalid values cause a setup refusal with `STORE_TIMEOUT_INVALID`.
+The extra budget can extend the call beyond `totalDeadlineMs`.
+
+A valid PASS receipt preserves the terminal outcome and sets `reportStored` to
+true. If this storage attempt expires, its signal is aborted, the final outcome
+is TIMED_OUT and `reportStoreCode` is `DEADLINE_EXCEEDED`; `workflowOutcome`
+continues to identify the original outcome. Other required-store failures make
+the final outcome BLOCKED. A timer cannot interrupt synchronous JavaScript;
+late results, including receipts copied after the deadline, are rejected.
+
+For every other outcome, and whenever `requireReportStore` is false, storage
+continues to use the run's remaining deadline and cancellation signal;
+`storeTimeoutMs` does not change that behavior. An optional store is therefore
+not invoked after timeout or cancellation: `reportStored` remains false and
+`reportStoreCode` is `DEADLINE_EXCEEDED` or `ABORTED`. Setup refusals still never
+invoke the store.
 COMPLETED is not a claim of universal correctness or permission to apply or ship.
