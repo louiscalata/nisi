@@ -560,3 +560,43 @@ test('terminal storage clock setup failure returns a failed storage report', asy
   assert.equal(report.outcome, 'BLOCKED');
   assert.equal(report.reportStoreCode, 'CLOCK_INVALID');
 });
+
+for (const terminal of ['timeout', 'pre-cancel', 'in-run-cancel']) {
+  test(`required terminal storage rejects clock regression after ${terminal}`, async () => {
+    const task = makeTask();
+    task.policy.requireReportStore = true;
+    task.policy.totalDeadlineMs = 100;
+    const controller = new AbortController();
+    const host = adapters();
+    let calls = 0;
+    let samples;
+    if (terminal === 'pre-cancel') {
+      controller.abort();
+      samples = [100, 50];
+    } else if (terminal === 'timeout') {
+      samples = [0, 100, 50];
+    } else {
+      samples = [0, 100, 100, 50];
+      task.policy.totalDeadlineMs = 200;
+      host.authorizeContext.authorize = () => {
+        controller.abort();
+        return new Promise(() => {});
+      };
+    }
+    const report = await runWorkflow(task, {
+      adapters: host, signal: controller.signal, clock: () => samples.shift() ?? 50,
+      reportStore: { store({ report, reportSha256, binding }) {
+        calls += 1;
+        return { status: 'PASS', evidence: { ...binding, outcome: report.outcome, reportSha256 } };
+      } },
+    });
+    assert.equal(calls, 0);
+    assert.equal(report.workflowOutcome, terminal === 'timeout' ? 'TIMED_OUT' : 'CANCELLED');
+    assert.equal(report.outcome, 'BLOCKED');
+    assert.equal(report.code, 'CLOCK_INVALID');
+    assert.equal(report.reportStoreCode, 'CLOCK_INVALID');
+    assert.equal(report.reportStored, false);
+    assert.equal(report.reportStoreEvidence, null);
+    assert.equal(report.storedReportSha256, null);
+  });
+}

@@ -17,6 +17,8 @@ commit `fc8bf1b`.
   report-storage deadline limits and separate journal/workflow serialization.
 - [x] Add a bounded `storeTimeoutMs` grace budget for required TIMED_OUT and
   CANCELLED report storage, preserving existing behavior for other storage.
+- [x] Preserve the clock watermark across terminal storage and reconcile the
+  grace-budget API documentation, review disposition and changelog.
 - [ ] Review journal format migration/authentication before adding either feature.
 - [ ] Release/CI/tag provenance remains a separate task; this local review makes
   no publication or historical verification claim. Package-registry publication
