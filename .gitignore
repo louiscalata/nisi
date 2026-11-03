@@ -8,3 +8,13 @@ probes/afm-concurrency-probe
 DerivedData/
 *.o
 .DS_Store
+# local secrets and npm artifacts: never committed
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+npm-debug.log*
+*.tgz
+# live-pilot progress sidecars written beside the chosen output file
+*.rows.jsonl
