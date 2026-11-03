@@ -5,6 +5,10 @@ public source tree and does not include private experiments.
 
 ## Unreleased source update (0.2.1-dev)
 
+- Add `storeTimeoutMs` (default 1000 ms) for one required terminal report-storage
+  attempt after workflow timeout or cancellation, using an independent signal
+  and preserving the clock watermark and original `workflowOutcome`.
+
 - Validate every journal fingerprint, including pruned rows. Pruning now hashes
   the stored null-payload projection; re-appending discarded original content
   conflicts. Older pruned records with unreconstructable fingerprints are rejected.

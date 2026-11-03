@@ -176,9 +176,11 @@ const report = await runWorkflow(task, {
 Within this checkout, the package import resolves to Nisi's workflow module.
 See the [Workflow API](docs/workflow-api.md)
 for callback inputs, return schemas, error outcomes, and optional report storage.
-Report storage shares the run's deadline and abort signal. A run already timed
-out or cancelled does not invoke its store, even when storage is required.
-Hosts needing those reports persisted must store the returned report separately.
+With `requireReportStore: true`, a run already timed out or cancelled offers its
+terminal report to the store using a fresh signal and a separate bounded budget.
+The `runWorkflow` option `storeTimeoutMs` defaults to 1000 ms for this attempt.
+Optional storage and storage for other outcomes retain the run's deadline and
+cancellation behavior. Storage acknowledgements remain trusted host reports.
 Your application decides whether to apply the candidate's file contents.
 
 ## Local model adapters

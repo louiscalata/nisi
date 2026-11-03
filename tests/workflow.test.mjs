@@ -406,3 +406,197 @@ test('factory and report candidates compose with review mode and revalidate iden
     assert.equal(report.outcome, 'BLOCKED');
   }
 });
+
+test('required timed-out reports are stored with a fresh signal and deadline', async () => {
+  for (const timeout of ['async', 'clock']) {
+    const task = makeTask();
+    task.policy.requireReportStore = true;
+    task.policy.totalDeadlineMs = 15;
+    let now = 0, runSignal, stored;
+    const host = adapters();
+    host.authorizeContext.authorize = ({ signal, binding }) => {
+      runSignal = signal;
+      if (timeout === 'async') return new Promise(() => {});
+      now = 15;
+      return passAuthorize(task, binding);
+    };
+    const report = await runWorkflow(task, {
+      adapters: host, ...(timeout === 'clock' ? { clock: () => now } : {}),
+      reportStore: { store({ report, reportSha256, binding, signal }) {
+        assert.equal(runSignal.aborted, true);
+        assert.equal(signal.aborted, false);
+        assert.notEqual(signal, runSignal);
+        assert.equal(Object.isFrozen(report), true);
+        assert.equal(report.outcome, 'TIMED_OUT');
+        assert.equal(reportSha256, sha256Text(`nisi/run-report/v1\0${stableStringify(report)}`));
+        stored = report;
+        return { status: 'PASS', evidence: { ...binding, outcome: report.outcome, reportSha256 } };
+      } },
+    });
+    assert.equal(stored.runId, report.runId);
+    assert.equal(report.workflowOutcome, 'TIMED_OUT');
+    assert.equal(report.outcome, 'TIMED_OUT');
+    assert.equal(report.code, 'DEADLINE_EXCEEDED');
+    assert.equal(report.reportStored, true);
+    assert.equal(report.reportStoreCode, null);
+  }
+});
+
+test('required cancelled reports are stored before or during a run with a fresh signal', async () => {
+  for (const before of [true, false]) {
+    const task = makeTask(); task.policy.requireReportStore = true;
+    const controller = new AbortController();
+    const events = [];
+    const host = adapters({ events });
+    if (before) controller.abort();
+    else host.authorizeContext.authorize = () => { controller.abort(); return new Promise(() => {}); };
+    let calls = 0;
+    const report = await runWorkflow(task, {
+      adapters: host, signal: controller.signal,
+      reportStore: { store({ report, reportSha256, binding, signal }) {
+        calls += 1;
+        assert.equal(controller.signal.aborted, true);
+        assert.equal(signal.aborted, false);
+        assert.notEqual(signal, controller.signal);
+        assert.equal(report.outcome, 'CANCELLED');
+        return { status: 'PASS', evidence: { ...binding, outcome: report.outcome, reportSha256 } };
+      } },
+    });
+    assert.equal(calls, 1);
+    assert.deepEqual(events, []);
+    assert.equal(report.outcome, 'CANCELLED');
+    assert.equal(report.workflowOutcome, 'CANCELLED');
+    assert.equal(report.code, 'ABORTED');
+    assert.equal(report.reportStored, true);
+    assert.equal(report.reportStoreCode, null);
+  }
+});
+
+test('required terminal storage honours its timeout even if the store never settles', { timeout: 2000 }, async () => {
+  const task = makeTask(); task.policy.requireReportStore = true;
+  const controller = new AbortController(); controller.abort();
+  let storeSignal;
+  const report = await runWorkflow(task, {
+    adapters: adapters(), signal: controller.signal, storeTimeoutMs: 15,
+    reportStore: { store({ signal }) { storeSignal = signal; return new Promise(() => {}); } },
+  });
+  assert.equal(storeSignal.aborted, true);
+  assert.equal(report.workflowOutcome, 'CANCELLED');
+  assert.equal(report.outcome, 'TIMED_OUT');
+  assert.equal(report.reportStored, false);
+  assert.equal(report.reportStoreCode, 'DEADLINE_EXCEEDED');
+});
+
+test('terminal storage starts its default or custom budget at storage and rejects late receipt copies', async () => {
+  for (const storeTimeoutMs of [undefined, 25]) {
+    const task = makeTask(); task.policy.requireReportStore = true;
+    const controller = new AbortController(); controller.abort();
+    let now = 500, storeSignal;
+    const report = await runWorkflow(task, {
+      adapters: adapters(), signal: controller.signal, clock: () => now, storeTimeoutMs,
+      reportStore: { store({ report, reportSha256, binding, signal }) {
+        storeSignal = signal;
+        const receipt = { status: 'PASS', evidence: { ...binding, outcome: report.outcome, reportSha256 } };
+        return new Proxy(receipt, { ownKeys(target) {
+          now = 500 + (storeTimeoutMs ?? 1000);
+          return Reflect.ownKeys(target);
+        } });
+      } },
+    });
+    assert.equal(report.workflowOutcome, 'CANCELLED');
+    assert.equal(report.outcome, 'TIMED_OUT');
+    assert.equal(report.reportStoreCode, 'DEADLINE_EXCEEDED');
+    assert.equal(report.reportStored, false);
+    assert.equal(report.reportStoreEvidence, null);
+    assert.equal(storeSignal.aborted, true);
+  }
+});
+
+test('optional terminal storage retains the run deadline and cancellation signal', async () => {
+  for (const outcome of ['TIMED_OUT', 'CANCELLED']) {
+    const task = makeTask(); task.policy.totalDeadlineMs = 15;
+    const controller = new AbortController();
+    if (outcome === 'CANCELLED') controller.abort();
+    let now = 0, calls = 0;
+    const host = adapters();
+    host.authorizeContext.authorize = ({ binding }) => { now = 15; return passAuthorize(task, binding); };
+    const report = await runWorkflow(task, {
+      adapters: host, signal: controller.signal, clock: () => now, storeTimeoutMs: 100,
+      reportStore: { store() { calls += 1; } },
+    });
+    assert.equal(calls, 0);
+    assert.equal(report.outcome, outcome);
+    assert.equal(report.reportStored, false);
+    assert.equal(report.reportStoreCode, outcome === 'CANCELLED' ? 'ABORTED' : 'DEADLINE_EXCEEDED');
+  }
+});
+
+test('invalid storage budgets fail setup before invoking adapters or storage', async () => {
+  for (const storeTimeoutMs of [null, 0, -1, 1.5, NaN, Infinity, '15', 86_400_001]) {
+    const task = makeTask(); task.policy.requireReportStore = true;
+    const events = [];
+    const report = await runWorkflow(task, {
+      adapters: adapters({ events }), storeTimeoutMs,
+      reportStore: { store() { events.push('store'); } },
+    });
+    assert.equal(report.outcome, 'BLOCKED');
+    assert.equal(report.code, 'STORE_TIMEOUT_INVALID');
+    assert.equal(report.runId, null);
+    assert.deepEqual(events, []);
+  }
+});
+
+test('terminal storage clock setup failure returns a failed storage report', async () => {
+  const task = makeTask(); task.policy.requireReportStore = true;
+  const controller = new AbortController(); controller.abort();
+  let clockCalls = 0, stored = false;
+  const report = await runWorkflow(task, {
+    adapters: adapters(), signal: controller.signal,
+    clock: () => { if (clockCalls++ > 0) throw Error('clock unavailable'); return 0; },
+    reportStore: { store() { stored = true; } },
+  });
+  assert.equal(stored, false);
+  assert.equal(report.workflowOutcome, 'CANCELLED');
+  assert.equal(report.outcome, 'BLOCKED');
+  assert.equal(report.reportStoreCode, 'CLOCK_INVALID');
+});
+
+for (const terminal of ['timeout', 'pre-cancel', 'in-run-cancel']) {
+  test(`required terminal storage rejects clock regression after ${terminal}`, async () => {
+    const task = makeTask();
+    task.policy.requireReportStore = true;
+    task.policy.totalDeadlineMs = 100;
+    const controller = new AbortController();
+    const host = adapters();
+    let calls = 0;
+    let samples;
+    if (terminal === 'pre-cancel') {
+      controller.abort();
+      samples = [100, 50];
+    } else if (terminal === 'timeout') {
+      samples = [0, 100, 50];
+    } else {
+      samples = [0, 100, 100, 50];
+      task.policy.totalDeadlineMs = 200;
+      host.authorizeContext.authorize = () => {
+        controller.abort();
+        return new Promise(() => {});
+      };
+    }
+    const report = await runWorkflow(task, {
+      adapters: host, signal: controller.signal, clock: () => samples.shift() ?? 50,
+      reportStore: { store({ report, reportSha256, binding }) {
+        calls += 1;
+        return { status: 'PASS', evidence: { ...binding, outcome: report.outcome, reportSha256 } };
+      } },
+    });
+    assert.equal(calls, 0);
+    assert.equal(report.workflowOutcome, terminal === 'timeout' ? 'TIMED_OUT' : 'CANCELLED');
+    assert.equal(report.outcome, 'BLOCKED');
+    assert.equal(report.code, 'CLOCK_INVALID');
+    assert.equal(report.reportStoreCode, 'CLOCK_INVALID');
+    assert.equal(report.reportStored, false);
+    assert.equal(report.reportStoreEvidence, null);
+    assert.equal(report.storedReportSha256, null);
+  });
+}

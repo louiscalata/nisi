@@ -90,10 +90,10 @@ function validateResult(raw, stage, binding) {
 
 // A timer cannot preempt synchronous JavaScript. Check the monotonic clock both
 // before invocation and after settlement, rejecting a result that arrived late.
-function createInvoker(signal, clock, totalDeadlineMs) {
+function createInvoker(signal, clock, totalDeadlineMs, minimumSample = 0) {
   let previous;
   try { previous = clock(); } catch { reject('CLOCK_INVALID'); }
-  if (!Number.isSafeInteger(previous) || previous < 0 || !Number.isSafeInteger(previous + totalDeadlineMs)) reject('CLOCK_INVALID');
+  if (!Number.isSafeInteger(previous) || previous < minimumSample || !Number.isSafeInteger(previous + totalDeadlineMs)) reject('CLOCK_INVALID');
   const deadline = previous + totalDeadlineMs;
   const guard = () => {
     try {
@@ -148,22 +148,24 @@ function createInvoker(signal, clock, totalDeadlineMs) {
       }, () => finish(guard() ?? { kind: 'error', code: 'ADAPTER_EXCEPTION' }));
     });
   };
-  return { invoke, guard };
+  return { invoke, guard, get lastSample() { return previous; } };
 }
 
 /** Run a bounded edit/review task and return an immutable report. A COMPLETED
  * report means the configured checks passed; applying a candidate remains a
  * separate host action. Adapter identity and execution are host trust inputs. */
 export async function runWorkflow(taskInput, options = {}) {
-  let task, adapters, candidate = null, signal, invoker, store = null, storeInvalid = false;
+  let task, adapters, candidate = null, signal, clock, invoker, storeTimeoutMs, store = null, storeInvalid = false;
   try {
     task = createTaskSpecification(taskInput);
     if (!options || typeof options !== 'object' || Array.isArray(options) ||
-        Reflect.ownKeys(options).some(key => !['adapters', 'candidate', 'candidateAuthorId', 'clock', 'reportStore', 'signal'].includes(key))) reject('OPTIONS_SCHEMA');
+        Reflect.ownKeys(options).some(key => !['adapters', 'candidate', 'candidateAuthorId', 'clock', 'reportStore', 'signal', 'storeTimeoutMs'].includes(key))) reject('OPTIONS_SCHEMA');
     adapters = snapshotAdapters(task, options.adapters);
     signal = options.signal;
     if (signal !== undefined && !(signal instanceof AbortSignal)) reject('SIGNAL_INVALID');
-    const clock = options.clock ?? (() => Math.floor(performance.now()));
+    storeTimeoutMs = options.storeTimeoutMs === undefined ? 1000 : options.storeTimeoutMs;
+    if (!Number.isSafeInteger(storeTimeoutMs) || storeTimeoutMs < 1 || storeTimeoutMs > 86_400_000) reject('STORE_TIMEOUT_INVALID');
+    clock = options.clock ?? (() => Math.floor(performance.now()));
     if (typeof clock !== 'function') reject('CLOCK_INVALID');
     invoker = createInvoker(signal, clock, task.policy.totalDeadlineMs);
     if (task.mode === 'review') {
@@ -283,7 +285,15 @@ export async function runWorkflow(taskInput, options = {}) {
     const preliminary = freezeReport(report);
     const reportSha256 = sha256Text(`nisi/run-report/v1\0${stableStringify(preliminary)}`);
     const bound = binding();
-    const call = await invoker.invoke(store, { report: preliminary, reportSha256, binding: bound });
+    let call;
+    try {
+      // Required terminal reports get one fresh, bounded storage attempt. Other
+      // reports retain the run's deadline and cancellation behavior. Carry the
+      // last accepted clock sample across the fresh deadline boundary.
+      const storeInvoker = task.policy.requireReportStore && ['TIMED_OUT', 'CANCELLED'].includes(outcome)
+        ? createInvoker(undefined, clock, storeTimeoutMs, invoker.lastSample) : invoker;
+      call = await storeInvoker.invoke(store, { report: preliminary, reportSha256, binding: bound });
+    } catch (error) { call = { kind: 'error', code: codeOf(error, 'REPORT_STORE_INVALID') }; }
     let storeCode = null;
     if (call.kind !== 'result') storeCode = call.code;
     else try {
