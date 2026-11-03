@@ -299,3 +299,23 @@ test('file kind is a declared label; the v1 policy does not parse JSON content',
   assert.equal(result.kind, 'json');
   assert.equal(result.bytes.toString(), 'plain UTF-8, not JSON');
 });
+
+for (const expired of [false, true]) test(`clock rollback after ${expired ? 'expiry' : 'admission'} cannot revive consent`, t => {
+  const root = tempRoot(); t.after(() => fs.rmSync(root, { recursive: true, force: true }));
+  let now = 100;
+  const grant = grantOf(root, { lifetimeMs: 10 }, () => now);
+  const item = { filePath: write(root, 'fixture.txt', 'fixture'), kind: 'text' };
+  now = expired ? 110 : 105;
+  assert.equal(grant.admitContent(item).code, expired ? 'CONSENT_EXPIRED' : 'CONTENT_ADMITTED');
+  now = expired ? 106 : 104;
+  assert.equal(grant.admitContent(item).code, expired ? 'CONSENT_EXPIRED' : 'CONSENT_CLOCK_REGRESSION');
+  assert.equal(grant.status().live, false);
+});
+
+test('hard links are refused at the opened file boundary', t => {
+  const root = tempRoot(); t.after(() => fs.rmSync(root, { recursive: true, force: true }));
+  const scope = path.join(root, 'scope'); fs.mkdirSync(scope);
+  const outside = write(root, 'fixture.txt', 'public-test-fixture');
+  const linked = path.join(scope, 'linked.txt'); fs.linkSync(outside, linked);
+  assert.equal(grantOf(scope).admitContent({ filePath: linked, kind: 'text' }).code, 'CONTENT_HARDLINK_REFUSED');
+});

@@ -67,9 +67,8 @@ install models or start a model server.
 v0.2 adds the public `nisi` command, a **run journal**, and a disk store for it.
 The journal is an append-only, hash-chained record of what a run observed. A host can write it,
 reopen it after a process restart, and check it before relying on its rows.
-These modules live under `history/`. The v0.1 workflow and local-model adapter
-are unchanged; results measured with a separate private adapter do not apply
-to this public package.
+These modules live under `history/`. The unreleased source changes are listed in [CHANGELOG.md](CHANGELOG.md);
+results measured with a separate private adapter do not apply to this public package.
 
 - **Run journal** (`history/run-journal-v1.mjs`, import `nisi/history/run-journal`).
   `createRunJournal(config)` validates every entry (fixed keys, identifier
@@ -82,7 +81,8 @@ to this public package.
   the final state of a `SUCCEEDED`, `FAILED`, or `CANCELLED` entry, `EXPIRED`
   for any other entry past its TTL, `UNKNOWN` for a `RUNNING` entry without a
   fresh heartbeat, and otherwise `QUEUED` or `RUNNING`; each view also reports
-  `expired` separately. `serialize()` produces canonical JSON lines with a
+  `expired` separately. `serialize(now)` first retires expired payloads and
+  produces canonical JSON lines with a
   header, a SHA-256 chain, and a footer;
   `reopen(serialized)` rebuilds the journal and returns a recovery report
   (`COMPLETE`, `INCOMPLETE` for truncated input, or `INVALID`). A journal
@@ -92,35 +92,68 @@ to this public package.
   redacted values therefore compare as duplicates, and values at redacted paths
   are not stored. Redaction is by path: the same value reachable through
   another unredacted path, including a second reference to a shared object, is
-  stored there.
+  stored there. Missing redaction paths are ignored, including null payloads.
+  Pruning recomputes the fingerprint from the stored null-payload entry; a
+  re-append with the discarded original payload conflicts. Reopen rejects older
+  pruned rows whose fingerprints cannot be recomputed from their stored entries.
+  `append`, `list(now)`, `retain(now)`, and `serialize(now)` can permanently
+  retire payloads. `list`, `retain`, and `serialize` advance the time watermark;
+  successful appends do too. Use one nondecreasing safe-integer millisecond
+  clock: a future timestamp cannot be rolled back, including after reopen.
+  Omitting the time from `serialize()` uses the last watermark, not wall time.
+  Retention scans only retained rows (at most `maxEntries` plus the new append);
+  metadata and ID history have a separate 10,000-record ceiling. New IDs beyond it return
+  `REFUSED` / `HISTORY_LIMIT`; duplicates and conflicts still resolve. Reopen
+  rejects larger histories. Hosts must rotate journals before this limit and
+  bound input bytes themselves; there is no serialized-byte limit. Entry copying
+  refuses nesting deeper than 64 levels with `ENTRY` (entry root at depth zero).
+  Retries must be queued, refer to an eligible earlier entry in the same run,
+  and increase its attempt. A second ID for the same retry target and attempt
+  is refused with `RETRY_DUPLICATE`. Terminal targets, including `SUCCEEDED`,
+  remain eligible; hosts decide whether retrying a success makes sense.
 - **Journal store** (`history/run-journal-store-v1.mjs`, import `nisi/history/run-journal-store`).
   `writeSerializedJournal` and `readSerializedJournal` move a serialized
   journal to and from disk through a caller-supplied `fs`. A write validates
   the chain first, goes through an exclusive temp file in the same directory,
-  syncs the file and its directory, verifies by reading back, and renames into
-  place. Each write attempt uses its own temporary filename, so an orphaned
+  syncs and reads back that file, renames it into place, syncs the directory,
+  and reads back the destination. Each write attempt uses its own temporary filename, so an orphaned
   temporary file from a stopped process does not block an identical retry.
   `expectedPreviousSha256` detects stale **sequential** writes; it is not an
-  atomic guard for concurrent writers. Use one writer per journal and
+  atomic guard for concurrent writers or a history-continuity check. A matching
+  previous digest permits replacement with any valid journal, including an
+  empty journal or another project. Use one writer per journal and
   serialize writes in the host. The store reports `committed` and `durable`
   separately, so a write that landed without confirmed file and directory
   sync is never reported as durable. A read refuses truncated, non-canonical,
   malformed-UTF-8, or chain-broken files instead of returning partial data.
+  `verified: true` means internal format and hash consistency, not authenticity.
+  The unkeyed chain and footer can be rewritten together; detecting malicious
+  replacement requires a trusted digest or authentication outside the journal.
 
 The public package does not include a recovery worker. Package exports are
 limited to the declared runtime modules; old undocumented deep imports may no
 longer resolve. A host owns the journal
 location outside the package and can call `readSerializedJournal` followed by
-`reopen` after a restart. A stopped write may leave a file named
+`reopen` after a restart for a valid stored journal. For damaged input the store
+returns `INVALID_JOURNAL` and refuses replacement with `EXISTING_INVALID`.
+A host can separately read the raw bytes and call `reopen` for sealed recovery;
+preservation, quarantine and recovery to a new path are host responsibilities.
+A stopped write may leave a file named
 `journal.jsonl.<sha256>.<uuid>.tmp` beside the journal. Inspect the owner and
 destination before removing an orphan. Journal views and recovery reports carry
 `authorizing: false`; they record observations and grant no authority.
 
 ## Use it in an application
 
-Start with the complete [workflow example](https://github.com/louiscalata/nisi/blob/main/examples/workflow.mjs).
-Replace its fixed task and callbacks with your application's requirements and
-tools. A task defines allowed file names, acceptance criteria, a deadline,
+Start with the complete [workflow example](examples/workflow.mjs).
+Its assertions recognize only the fixed `export const answer = 41;` or `42;`
+source shape as data; candidate source is never imported. Replace its fixed task
+and callbacks with your application's requirements and tools. Callbacks are
+trusted code; an application that executes generated code must provide isolation.
+`nisi demo` removes its temporary report after write/read-back verification.
+Running the example directly keeps the report and prints its path; programmatic
+callers can use `runExample({ keepReport: false })` for cleanup.
+A task defines allowed file names, acceptance criteria, a deadline,
 a repair budget, and the required reviewer count.
 
 The integration has this shape; `task` and the callbacks below are supplied by
@@ -141,8 +174,11 @@ const report = await runWorkflow(task, {
 ```
 
 Within this checkout, the package import resolves to Nisi's workflow module.
-See the [Workflow API](https://github.com/louiscalata/nisi/blob/main/docs/workflow-api.md)
+See the [Workflow API](docs/workflow-api.md)
 for callback inputs, return schemas, error outcomes, and optional report storage.
+Report storage shares the run's deadline and abort signal. A run already timed
+out or cancelled does not invoke its store, even when storage is required.
+Hosts needing those reports persisted must store the returned report separately.
 Your application decides whether to apply the candidate's file contents.
 
 ## Local model adapters
@@ -268,8 +304,7 @@ and [study plan](benchmarks/value/LIVE-STUDY.md) for scope and next tests.
 ### Package footprint
 
 The published v0.2.0 npm-format archive is **42,439 bytes with 18 files**.
-At public `main` commit `46c5c66`, the source checkout had 118 tracked files
-totaling 1,194,053 bytes, including tests, docs, and benchmark evidence. The
+The source checkout also contains tests, docs, and benchmark evidence. The
 chart compares pinned Node package archives, excluding dependency packages;
 LangGraph.js and Mastra offer broader capabilities and use different packaging.
 Package size is not the amount of context sent to a model and cannot establish
@@ -284,7 +319,7 @@ savings claim.
 
 ## Documentation
 
-- [Workflow API reference](https://github.com/louiscalata/nisi/blob/main/docs/workflow-api.md) — task, candidate, callback, and report contracts.
+- [Workflow API reference](docs/workflow-api.md) — task, candidate, callback, and report contracts.
 - [Architecture](https://github.com/louiscalata/nisi/blob/main/docs/architecture.md) — components, terminology, and trust boundaries.
 - [Local models](https://github.com/louiscalata/nisi/blob/main/docs/local-models.md), [file access](https://github.com/louiscalata/nisi/blob/main/docs/file-policy.md), and [Apple integration](https://github.com/louiscalata/nisi/blob/main/docs/apple-foundation-models.md) — integration setup and limits.
 - [v0.1 verification](https://github.com/louiscalata/nisi/blob/main/docs/verification.md) and [v0.2 verification](https://github.com/louiscalata/nisi/blob/main/docs/verification-v0.2.md) — version-scoped results and limits.

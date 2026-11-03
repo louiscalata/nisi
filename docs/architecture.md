@@ -19,6 +19,15 @@ The application supplies all executable work through adapters. The engine does
 not read files, start processes, call a model endpoint, modify a candidate on
 disk, commit, publish, or release. A report store is also an injected callback.
 
+## Journal boundary
+
+`history/run-journal-v1.mjs` and its disk store are separate recordkeeping APIs.
+The workflow does not automatically write journal entries, and journal states
+are not workflow outcomes. A host must supply any mapping or report-store adapter.
+The journal's JSON-lines profile sorts keys by JavaScript UTF-16 code units;
+it is distinct from the scalar-key-order canonical JSON v1 codec. Changing those
+serializers would change stored bytes and digests and requires a format migration.
+
 ## Execution flow
 
 The Workflow Orchestrator carries one task through a fixed path:

@@ -49,3 +49,13 @@ test('length finish reason and oversized streamed body are refused', async () =>
   const large = createLocalChatReviewerAdapter({ destination: 'LOOPBACK_HTTP', endpoint: 'http://127.0.0.1/review', model: 'm', id: 'reviewer', maxResponseBytes: 256, fetch: async () => response({ choices: [{ finish_reason: 'stop', message: { content: 'x'.repeat(1000) } }] }) });
   await assert.rejects(() => large.review({ task, candidate: null, acceptanceCriteria: task.acceptanceCriteria, binding }), error => error.code === 'LOCAL_CHAT_RESPONSE_TOO_LARGE');
 });
+
+test('review response schema advertises the enforced finding string bounds', async () => {
+  const seen = {};
+  const adapter = createLocalChatReviewerAdapter({ destination: 'LOOPBACK_HTTP', endpoint: 'http://127.0.0.1/chat', model: 'm', id: 'reviewer', fetch: fetchFor({ findings: [], summary: 'ok' }, seen) });
+  await adapter.review({ task, candidate: null, acceptanceCriteria: task.acceptanceCriteria, binding });
+  const properties = JSON.parse(seen.request.body).response_format.json_schema.schema.properties;
+  assert.deepEqual(properties.findings.items.properties.code, { type: 'string', minLength: 1, maxLength: 128, pattern: '\\S' });
+  assert.deepEqual(properties.findings.items.properties.message, { type: 'string', minLength: 1, maxLength: 2048, pattern: '\\S' });
+  assert.equal(properties.summary.pattern, '\\S');
+});

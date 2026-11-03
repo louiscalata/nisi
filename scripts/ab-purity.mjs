@@ -3,8 +3,9 @@
 //
 // A/B: the deterministic structural checker vs. a language model reading the
 // same code. Same 16 fixtures from contracts/structural-fixtures.json, same
-// question, nothing simulated. Backs the "With Nisi, versus asking a model"
-// table in the README.
+// question, nothing simulated. This is a historical codec experiment, separate
+// from the current workflow benchmarks. The npm shortcut requires a POSIX shell;
+// on Windows invoke this file directly with an explicit helper path.
 //
 // Requires the `afm` CLI (macOS 26+ with Apple Intelligence), so this is not
 // part of `npm run check` and CI does not run it.

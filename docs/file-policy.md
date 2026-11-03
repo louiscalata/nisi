@@ -42,6 +42,7 @@ or validate its JSON structure.
 
 The policy checks liveness, resolves the file and root, enforces directory
 scope, checks a regular nonempty file and its size, opens the resolved file,
+refuses an opened file with more than one hard link (`CONTENT_HARDLINK_REFUSED`),
 compares descriptor identity and nanosecond metadata, reads with a hard byte
 cap, rechecks the opened file, and validates UTF-8. Where available, the open
 uses `O_NOFOLLOW` and `O_NONBLOCK`. The successful record contains copied bytes,
@@ -57,7 +58,9 @@ change.
 `grant.revoke()` is terminal and prevents future admissions. It does not retract
 returned bytes or cancel a model already running. `grant.status()` reports the
 current liveness and admission count. Later clock failures are named refusals;
-an operation samples its liveness once.
+an operation samples its liveness once. A clock below the last valid observed
+value is refused with `CONSENT_CLOCK_REGRESSION`. Once expiry is observed, the
+grant remains expired even if the clock rolls back.
 
 ## Host responsibility
 

@@ -157,8 +157,10 @@ test('stale or malformed evidence and protected or out-of-scope candidates are b
   const protectedText = 'assert.equal(answer, 42);\n';
   const protectedTask = makeTask('edit', { allowedFiles: ['src/app.js', 'test/app.test.js'], protectedFiles: ['test/app.test.js'], protectedSnapshots: { 'test/app.test.js': sha256Text(protectedText) } });
   const protectedAdapter = adapters();
-  protectedAdapter.author.draft = async ({ binding }) => ({ candidate: { files: [{ path: 'test/app.test.js', content: 'changed' }] }, evidence: { ...binding, candidateFingerprint: '0'.repeat(64), note: 'bad' } });
-  assert.equal((await runWorkflow(protectedTask, { adapters: protectedAdapter })).outcome, 'BLOCKED');
+  protectedAdapter.author.draft = async ({ binding }) => ({ candidate: { files: [{ path: 'test/app.test.js', content: 'changed' }] }, evidence: { ...binding, candidateFingerprint: createCandidate({ files: [{ path: 'test/app.test.js', content: 'changed' }] }, { authorId: 'author.one' }).fingerprint, note: 'bad' } });
+  const protectedReport = await runWorkflow(protectedTask, { adapters: protectedAdapter });
+  assert.equal(protectedReport.outcome, 'BLOCKED');
+  assert.equal(protectedReport.code, 'PROTECTED_FILE_CHANGED');
 });
 
 test('cancellation before and during listener registration prevents adapter calls', async () => {
@@ -380,9 +382,27 @@ test('valid store refusals, invalid receipts, exceptions, timeout and cancellati
     assert.equal(cancelled.workflowOutcome, 'COMPLETED');
     assert.equal(cancelled.outcome, 'CANCELLED');
     task.policy.totalDeadlineMs = 20;
-    const timed = await runWorkflow(task, {adapters: adapters(), reportStore: {store: () => new Promise(() => {})}});
+    let now = 0;
+    const timed = await runWorkflow(task, {adapters: adapters(), clock: () => now,
+      reportStore: {store: ({report, reportSha256, binding}) => {
+        now = 20;
+        return {status: 'PASS', evidence: {...binding, outcome: report.outcome, reportSha256}};
+      }},
+    });
     assert.equal(timed.workflowOutcome, 'COMPLETED');
     assert.equal(timed.outcome, 'TIMED_OUT');
     assert.equal(timed.reportStored, false);
+  }
+});
+
+test('factory and report candidates compose with review mode and revalidate identity', async () => {
+  const made = candidate();
+  const first = await runWorkflow(makeTask('review'), { adapters: adapters(), candidate: made, candidateAuthorId: 'author.one' });
+  assert.equal(first.outcome, 'COMPLETED');
+  const second = await runWorkflow(makeTask('review'), { adapters: adapters(), candidate: first.candidate, candidateAuthorId: 'author.one' });
+  assert.equal(second.outcome, 'COMPLETED');
+  for (const changed of [{ ...made, authorId: 'other.author' }, { ...made, fingerprint: '0'.repeat(64) }, { ...made, schemaVersion: 999 }, { ...made, files: [file('changed')] }]) {
+    const report = await runWorkflow(makeTask('review'), { adapters: adapters(), candidate: changed, candidateAuthorId: 'author.one' });
+    assert.equal(report.outcome, 'BLOCKED');
   }
 });

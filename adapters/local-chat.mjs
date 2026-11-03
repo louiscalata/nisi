@@ -121,12 +121,12 @@ const INSTRUCTIONS = Object.freeze({
 
 function responseFormat(payload, operation) {
   const object = properties => ({type: 'object', properties, required: Object.keys(properties), additionalProperties: false});
-  const note = {type: 'string', minLength: 1, maxLength: 4096};
+  const note = {type: 'string', minLength: 1, maxLength: 4096, pattern: '\\S'};
   const candidate = object({files: {type: 'array', minItems: 1, maxItems: 256, items: object({
     path: {type: 'string', enum: payload.task.allowedFiles}, content: {type: 'string'},
   })}});
   const schema = operation === 'review'
-    ? object({findings: {type: 'array', maxItems: 256, items: object({code: {type: 'string'}, message: {type: 'string'}})}, summary: note})
+    ? object({findings: {type: 'array', maxItems: 256, items: object({code: {type: 'string', minLength: 1, maxLength: 128, pattern: '\\S'}, message: {type: 'string', minLength: 1, maxLength: 2048, pattern: '\\S'}})}, summary: note})
     : operation === 'repair'
       ? object({status: {type: 'string', enum: ['REPAIRED', 'NO_CHANGE']}, candidate: {anyOf: [candidate, {type: 'null'}]}, note})
       : object({candidate, note});

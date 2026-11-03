@@ -18,6 +18,8 @@ const packDir = path.join(tempRoot, 'pack');
 const consumerDir = path.join(tempRoot, 'consumer');
 fs.mkdirSync(packDir);
 fs.mkdirSync(consumerDir);
+// Keep npm from selecting an ancestor project when TMPDIR is inside a checkout.
+fs.writeFileSync(path.join(consumerDir, 'package.json'), '{"private":true}\n');
 
 function npm(args, cwd, label) {
   const result = spawnSync(process.execPath, [npmCli, ...args], {

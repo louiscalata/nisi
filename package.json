@@ -1,6 +1,6 @@
 {
   "name": "nisi",
-  "version": "0.2.0",
+  "version": "0.2.1-dev",
   "private": false,
   "description": "A Node.js CLI and library for bounded AI-assisted coding workflows and validated run reports.",
   "license": "Apache-2.0",
@@ -49,10 +49,11 @@
     "workflow/*.mjs"
   ],
   "keywords": [
+    "workflow",
+    "cli",
+    "llm",
     "canonical-json",
-    "capability-security",
     "static-analysis",
-    "mutation-testing",
     "foundation-models"
   ],
   "main": "./index.mjs",

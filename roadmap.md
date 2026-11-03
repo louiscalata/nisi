@@ -1,6 +1,6 @@
 # Nisi roadmap
 
-Canonical project roadmap. Updated September 23, 2026. Product name: Nisi.
+Canonical project roadmap. Updated November 3, 2026. Product name: Nisi.
 Public v0.2.0 scope: a Node.js CLI and library with the existing workflow APIs,
 the run journal, and its store. The CLI exposes fixed demonstrations; the private
 native repository workflow and other private features remain outside this
@@ -8,6 +8,21 @@ public release. GitHub rc.1 and rc.2 remain historical prereleases. Package
 registry publication is a separate action.
 The September 12 documentation and onboarding revision started from public
 commit `fc8bf1b`.
+
+## Unreleased review corrections
+
+- [x] Reproduce and fix journal identity, consent lifetime, normalized candidate,
+  unsafe example execution, safe CLI diagnostics and bounded journal history.
+- [x] Document unkeyed hashes, pruning compatibility, destructive time watermark,
+  report-storage deadline limits and separate journal/workflow serialization.
+- [ ] Review a separate report-storage grace-budget design and journal format
+  migration/authentication before adding either feature.
+- [ ] Release/CI/tag provenance remains a separate task; this local review makes
+  no publication or historical verification claim. Package-registry publication
+  remains open independently of the existing GitHub archive.
+
+See [the finding dispositions](docs/reviews/2026-11-03-main-findings.md) for
+scope, regressions, deferred work and local verification.
 
 ## Public v0.2.0 CLI release
 
@@ -152,7 +167,10 @@ names are supplied by the host application.
 - [x] Replace development-only status wording for the GitHub update and retain
   an exact source manifest with the verification record.
 
-## Integration and release work still outside the verified prototype
+## Historical v0.1 prototype gates
+
+These retained checklist entries describe the v0.1 verification boundary, not
+the current GitHub archive status. Current unreleased work is listed above.
 
 - [ ] Host-specific integration for applying candidates, actual independent
   author/reviewer isolation and durable production report storage.

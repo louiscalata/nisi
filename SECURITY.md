@@ -40,7 +40,7 @@ Two limits are worth stating plainly because they are easy to misread:
 
 - File access relies on stable trusted parent directories. Descriptor identity,
   bounded reads and metadata checks reduce replacement races, but do not form
-  an operating-system sandbox. Binary hashing and launch also require a stable
+  an operating-system sandbox. Files with multiple hard links are refused. Binary hashing and launch also require a stable
   trusted helper directory. Revocation blocks future admission, not prior use.
 - Workflow adapters are trusted code. Logical candidate paths do not grant or
   enforce filesystem permissions. Reviewer IDs are declarations, not proof of
@@ -58,9 +58,17 @@ Two limits are worth stating plainly because they are easy to misread:
   uncooperative callback stopped. Hosts must implement isolation and cleanup.
 - The scoped static checker recognizes configured direct syntax patterns in
   one marked source region. It is not a general purity or dependency analysis.
-- Journal hashes detect accidental or unauthorized content changes relative to
-  the checked chain; they do not authenticate an author or provide a signature.
-  A valid chain does not prove that recorded events happened as described.
+- Journal hashes check internal consistency and detect damage that has not been
+  rehashed. They are unkeyed: a writer can replace entries and recompute the
+  fingerprints, chain and footer. `verified: true` is not authentication.
+  Detecting malicious replacement requires a trusted digest or authentication
+  outside the journal; `expectedPreviousSha256` alone is a sequential stale-write
+  guard, not an append-only or project-continuity guarantee. A valid chain does
+  not prove that recorded events happened as described.
+- Journal redaction applies only at configured paths. Copies of a value at
+  other paths remain stored. Neither redaction nor hashing proves that an
+  original value cannot be inferred. Hosts must bound input bytes and rotate
+  histories; payload retention is not a complete memory or disk quota.
 - Journal-store durability depends on the filesystem and operating system
   honoring the requested sync and rename behavior. The API reports confirmed
   commit and durability separately; it cannot prove hardware persistence.
@@ -71,7 +79,7 @@ Two limits are worth stating plainly because they are easy to misread:
 ## Reporting
 
 Open a GitHub issue for public reports. Do not put sensitive exploit details
-in a public issue. If GitHub private vulnerability reporting is enabled for
-this repository, use that channel; otherwise open a minimal issue asking for a
+in a public issue. Use [GitHub private vulnerability reporting](../../security/advisories/new)
+when available; otherwise open a minimal issue asking for a
 private contact route. This personal project has no security bounty, promised
 response time or service-level agreement.

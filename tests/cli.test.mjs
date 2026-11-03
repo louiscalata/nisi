@@ -211,3 +211,60 @@ test('local-model wrapper prints only a fixed report summary for injected succes
   assert.equal(thrownErr.content, 'The local-model workflow failed. Check the local endpoint and model configuration.\n');
   assert.doesNotMatch(thrownErr.content, /private-prompt-marker|127\.0\.0\.1/);
 });
+
+test('local-model diagnostics expose only allowlisted failure codes and operations', async () => {
+  const { runLocalModelExample, parseLocalModelCLI } = await import('../examples/local-model-workflow.mjs');
+  for (const [body, code] of [['{', 'LOCAL_CHAT_JSON_INVALID'], [JSON.stringify({ model: 'wrong', choices: [{ finish_reason: 'stop', message: { content: '{}' } }] }), 'LOCAL_CHAT_MODEL_MISMATCH']]) {
+    const out = captureWritable(); const err = captureWritable();
+    const result = await runCli(['local-model', 'http://127.0.0.1:1/chat', 'author', 'reviewer'], {
+      stdout: out.stream, stderr: err.stream,
+      localModel: { parseLocalModelCLI, runLocalModelExample: config => runLocalModelExample({ ...config, fetch: async () => new Response(body) }) },
+    });
+    assert.equal(result, 1);
+    assert.deepEqual(JSON.parse(out.content).adapterFailures, [{ role: 'author', operation: 'draft', code }]);
+    assert.doesNotMatch(out.content, /127\.0\.0\.1|wrong|choices/);
+  }
+  const out = captureWritable();
+  const result = await runCli(['local-model', 'http://127.0.0.1:1/chat', 'author', 'reviewer'], { stdout: out.stream,
+    localModel: { parseLocalModelCLI, runLocalModelExample: async () => ({ report: { outcome: 'BLOCKED' }, authorReceipts: [{ status: 'UNAVAILABLE', operation: 'draft', code: 'LOCAL_CHAT_PRIVATE_FIXTURE' }] }) },
+  });
+  assert.equal(result, 1);
+  assert.deepEqual(JSON.parse(out.content), {
+    outcome: 'BLOCKED', code: null, repairAttempts: 0, authorCalls: 1, reviewerCalls: 0,
+  });
+  assert.doesNotMatch(out.content, /PRIVATE_FIXTURE/);
+});
+
+test('local-model diagnostics preserve specific createCandidate failure codes', async () => {
+  const { runLocalModelExample, parseLocalModelCLI } = await import('../examples/local-model-workflow.mjs');
+  const cases = [
+    [{}, 'CANDIDATE_SCHEMA'],
+    [{ files: [] }, 'CANDIDATE_FILES_INVALID'],
+    [{ files: [{}] }, 'CANDIDATE_FILE_SCHEMA'],
+    [{ files: [{ path: 'answer.mjs', content: null }] }, 'CANDIDATE_CONTENT_INVALID'],
+    [{ files: [{ path: '/answer.mjs', content: '' }] }, 'PATH_INVALID'],
+    [{ files: [{ path: '../answer.mjs', content: '' }] }, 'PATH_TRAVERSAL'],
+    [{ files: [{ path: 'answer.mjs', content: '' }, { path: 'answer.mjs', content: '' }] }, 'CANDIDATE_DUPLICATE_PATH'],
+  ];
+  for (const [candidate, code] of cases) {
+    const out = captureWritable(); const err = captureWritable();
+    const body = JSON.stringify({ model: 'author', choices: [{ finish_reason: 'stop',
+      message: { content: JSON.stringify({ candidate, note: 'private-candidate-note' }) } }] });
+    const result = await runCli(['local-model', 'http://127.0.0.1:1/chat', 'author', 'reviewer'], {
+      stdout: out.stream, stderr: err.stream,
+      localModel: { parseLocalModelCLI, runLocalModelExample: config => runLocalModelExample({ ...config, fetch: async () => new Response(body) }) },
+    });
+    assert.equal(result, 1);
+    assert.deepEqual(JSON.parse(out.content).adapterFailures, [{ role: 'author', operation: 'draft', code }], code);
+    assert.equal(err.content, '');
+    assert.doesNotMatch(out.content, /private-candidate-note|answer\.mjs|127\.0\.0\.1/);
+  }
+});
+
+test('bare CLI shows help with literal loopback and distinct-model rules', () => {
+  const result = invoke([]);
+  assert.equal(result.status, 0);
+  assert.match(result.stdout, /127\.0\.0\.1/);
+  assert.match(result.stdout, /\[::1\]/);
+  assert.match(result.stdout, /different model names/);
+});

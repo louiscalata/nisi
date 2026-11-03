@@ -1,8 +1,8 @@
 # Apple Foundation Models advisory adapter
 
 `createAppleFoundationModelsAdapter` is the descriptive alias of
-`createAFMContentExecutor`. It connects an admitted UTF-8 file to the bundled
-Swift helper and checks its structured advisory response. It is separate from
+`createAFMContentExecutor`. It connects an admitted UTF-8 file to the Swift helper in the source repository
+(`probes/`, not included in the npm-format archive) and checks its structured advisory response. It is separate from
 the local-chat coding author/reviewer adapters.
 
 The helper needs an Apple Silicon Mac with compatible Apple Intelligence and

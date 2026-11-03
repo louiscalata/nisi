@@ -3,7 +3,24 @@
 Changes to the public Nisi package are recorded here. This file describes the
 public source tree and does not include private experiments.
 
-## Unreleased source update
+## Unreleased source update (0.2.1-dev)
+
+- Validate every journal fingerprint, including pruned rows. Pruning now hashes
+  the stored null-payload projection; re-appending discarded original content
+  conflicts. Older pruned records with unreconstructable fingerprints are rejected.
+- Ignore absent redaction paths, reject duplicate retry target/attempt pairs,
+  cap total history at 10,000 records, bound entry nesting to 64 levels, scan
+  only retained rows during pruning, and add time-aware `serialize(now)`.
+- Refuse consent clock regression after any valid observation, make observed
+  expiry terminal, and refuse files with multiple hard links.
+- Accept revalidated normalized candidates at workflow boundaries. Treat demo
+  source as data, remove CLI demo reports after verification, expose allowlisted
+  local-model failure diagnostics, and align review schema string constraints.
+- Correct journal authentication, redaction, recovery, storage-order and clock
+  wording; document report-store deadline limits and the source-only Swift helper.
+  Earlier main-only redaction/liveness wording corrections are included here;
+  no released archive, history or tag is changed by this source update.
+
 
 - Add source-checkout workflow-control, mocked-interface, and inert-overhead
   benchmarks, plus a 12-task exploratory pilot against one configured local
@@ -11,8 +28,8 @@ public source tree and does not include private experiments.
   receipts so the exact-match results can be rescored.
 - Add GitHub-readable benchmark graphs and a study plan that separates this
   single local integration from untested providers and production outcomes.
-  The released v0.2.0 runtime modules, public API, and package file allowlist
-  are unchanged.
+  Those benchmark additions did not change the released v0.2.0 runtime. The
+  unreleased fixes above do change runtime behavior; the file allowlist is unchanged.
 
 ## 0.2.0
 

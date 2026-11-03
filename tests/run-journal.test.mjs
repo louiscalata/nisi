@@ -164,7 +164,7 @@ test('retained entry fingerprint must match its payload even when the chain is r
   assert.throws(() => recovered.journal.serialize(), { code: 'SEALED' });
 });
 
-test('pruned entry reopens with its original fingerprint and no retained payload', () => {
+test('pruned entry reopens with a verifiable null-payload fingerprint', () => {
   const journal = createRunJournal(config());
   assert.equal(journal.append(entry(), 100).status, 'APPENDED');
   assert.deepEqual(journal.retain(1100), ['entry-a']);
@@ -174,8 +174,87 @@ test('pruned entry reopens with its original fingerprint and no retained payload
   const [row] = recovered.journal.list(1100);
   assert.equal(row.retained, false);
   assert.equal(row.entry.payload, null);
-  assert.equal(recovered.journal.append(entry(), 1100).status, 'DUPLICATE');
+  assert.equal(recovered.journal.append(entry(), 1100).status, 'CONFLICT');
   assert.deepEqual(recovered.journal.append(entry('entry-a', { payload: { note: 'changed' } }), 1100), {
     status: 'CONFLICT', id: 'entry-a', reason: 'ID_CONTENT_MISMATCH',
   });
+});
+
+function rehash(lines) {
+  let previousHash = hash('nisi-run-journal/header/v1\n' + canonical(lines[0]));
+  for (const line of lines.slice(1, -1)) {
+    line.previousHash = previousHash;
+    line.hash = hash('nisi-run-journal/record/v1\n' + canonical({ seq: line.seq, previousHash, record: line.record }));
+    previousHash = line.hash;
+  }
+  lines.at(-1).lastHash = previousHash;
+  return lines.map(canonical).join('\n') + '\n';
+}
+
+test('non-retained fingerprints cannot plant duplicate identity in a rehashed journal', () => {
+  const journal = createRunJournal(config()); journal.append(entry(), 100);
+  const lines = journal.serialize().trimEnd().split('\n').map(JSON.parse);
+  lines[1].record.retained = false; lines[1].record.entry.payload = null;
+  assert.equal(reopen(rehash(lines)).report.status, 'INVALID');
+  lines[1].record.fingerprint = hash('nisi-run-journal/input/v1\n' + canonical(lines[1].record.entry));
+  const recovered = reopen(rehash(lines));
+  assert.equal(recovered.report.status, 'COMPLETE');
+  assert.equal(recovered.journal.append(entry(), 100).status, 'CONFLICT');
+});
+
+test('redaction ignores absent paths including null payloads and revocations', () => {
+  const journal = createRunJournal(config({ redactPaths: ['payload.nested.value'] }));
+  for (const [i, payload] of [null, {}, { nested: {} }, { nested: { value: 'fixture' } }].entries()) {
+    assert.equal(journal.append(entry(`entry-${i}`, { payload }), 100).status, 'APPENDED');
+  }
+  assert.equal(journal.append(entry('revocation', { state: 'REVOKED', revokes: 'entry-0', payload: {} }), 100).status, 'APPENDED');
+  assert.equal(reopen(journal.serialize()).report.status, 'COMPLETE');
+});
+
+test('journal rejects repeated retry target and attempt on append and reopen', () => {
+  const journal = createRunJournal(config()); journal.append(entry('target', { state: 'FAILED' }), 100);
+  const retry = id => entry(id, { state: 'QUEUED', attempt: 1, retryOf: 'target' });
+  assert.equal(journal.append(retry('retry-a'), 100).status, 'APPENDED');
+  assert.equal(journal.append(retry('retry-b'), 100).reason, 'RETRY_DUPLICATE');
+  const lines = journal.serialize().trimEnd().split('\n').map(JSON.parse);
+  const extra = structuredClone(lines[2]); extra.seq = 3; extra.record.entry.id = 'retry-b';
+  extra.record.fingerprint = hash('nisi-run-journal/input/v1\n' + canonical(extra.record.entry));
+  lines.splice(3, 0, extra); lines.at(-1).count = 3;
+  assert.equal(reopen(rehash(lines)).report.status, 'INVALID');
+});
+
+test('journal bounds payload depth before hashing', () => {
+  let payload = null; for (let i = 0; i < 65; i++) payload = { a: payload };
+  const journal = createRunJournal(config());
+  assert.throws(() => journal.append(entry('deep', { payload }), 100), { code: 'ENTRY' });
+  assert.deepEqual(journal.list(100), []);
+  const shallow = createRunJournal(config()); shallow.append(entry(), 100);
+  const lines = shallow.serialize().trimEnd().split('\n').map(JSON.parse);
+  lines[1].record.entry.payload = payload;
+  lines[1].record.fingerprint = hash('nisi-run-journal/input/v1\n' + canonical(lines[1].record.entry));
+  assert.equal(reopen(rehash(lines)).report.status, 'INVALID');
+});
+
+test('serialize with a time retires expired payloads before writing', () => {
+  const journal = createRunJournal(config());
+  journal.append(entry('expiring', { ttlMs: 10, payload: { note: 'expired-fixture' } }), 100);
+  const serialized = journal.serialize(110);
+  assert.doesNotMatch(serialized, /expired-fixture/);
+  assert.equal(reopen(serialized).report.status, 'COMPLETE');
+});
+
+test('journal refuses total history beyond 10000 records without discarding identity', () => {
+  const journal = createRunJournal(config({ maxEntries: 1 }));
+  for (let i = 0; i < 10000; i++) assert.equal(journal.append(entry(`row-${i}`, { payload: null }), 100).status, 'APPENDED');
+  assert.equal(journal.append(entry('overflow'), 100).reason, 'HISTORY_LIMIT');
+  assert.equal(journal.append(entry('row-0', { payload: null }), 100).status, 'DUPLICATE');
+  assert.equal(journal.list(100).filter(row => row.retained).length, 1);
+  const serialized = journal.serialize();
+  assert.equal(reopen(serialized).report.status, 'COMPLETE');
+  const lines = serialized.trimEnd().split('\n').map(JSON.parse);
+  const extra = structuredClone(lines[1]);
+  extra.seq = 10001; extra.record.entry.id = 'overflow';
+  extra.record.fingerprint = hash('nisi-run-journal/input/v1\n' + canonical(extra.record.entry));
+  lines.splice(-1, 0, extra); lines.at(-1).count = 10001;
+  assert.equal(reopen(rehash(lines)).report.status, 'INVALID');
 });

@@ -156,7 +156,14 @@ export function createTaskSpecification(value) {
 }
 
 export function validateCandidateForTask(candidate, task, authorId) {
-  const normalized = createCandidate(candidate, { authorId });
+  candidate = cloneFreeze(candidate);
+  const supplied = isPlainObject(candidate) && Object.hasOwn(candidate, 'schemaVersion');
+  if (supplied) {
+    exactObject(candidate, ['schemaVersion', 'authorId', 'files', 'fingerprint'], 'CANDIDATE_SCHEMA');
+    if (candidate.schemaVersion !== CANDIDATE_SCHEMA_VERSION || candidate.authorId !== authorId) reject('CANDIDATE_IDENTITY_INVALID');
+  }
+  const normalized = createCandidate(supplied ? { files: candidate.files } : candidate, { authorId });
+  if (supplied && candidate.fingerprint !== normalized.fingerprint) reject('CANDIDATE_FINGERPRINT_INVALID');
   for (const file of normalized.files) {
     if (!task.allowedFiles.includes(file.path)) reject('CANDIDATE_FILE_OUT_OF_SCOPE');
     if (task.protectedFiles.includes(file.path) &&

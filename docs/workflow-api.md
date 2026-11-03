@@ -63,6 +63,13 @@ binary content and filesystem application are outside this representation.
 metadata is excluded so repeated content can be detected as no progress. A
 protected file included in a candidate must retain its original source digest.
 
+Workflow candidate boundaries accept either the raw `{ files }` form or the
+normalized `{ schemaVersion, authorId, files, fingerprint }` form returned by
+`createCandidate` or a previous report. Normalized inputs are copied and
+revalidated: schema version and author identity must match, and the fingerprint
+is recomputed from the files. In review mode pass the same `candidateAuthorId`.
+The factory itself continues to take only the raw `{ files }` form.
+
 ## Host adapters
 
 ```js
@@ -201,4 +208,10 @@ an actual write, file sync and read-back digest check.
 failures leave `outcome` unchanged and set `reportStoreCode`. Required-store
 failures make it BLOCKED. Cancellation or expiry during either kind of storage
 produces CANCELLED or TIMED_OUT. A missing required store blocks before any work.
+The store uses the run's remaining deadline and the same abort signal. If the
+run has already timed out or been cancelled, the store callback is not invoked,
+even with `requireReportStore: true`; `reportStored` remains false and
+`reportStoreCode` is `DEADLINE_EXCEEDED` or `ABORTED`. Hosts needing an audit trail
+for these outcomes must persist the returned report outside the run. A separate
+storage grace budget is not implemented.
 COMPLETED is not a claim of universal correctness or permission to apply or ship.
