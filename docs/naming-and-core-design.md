@@ -14,7 +14,7 @@ Nisi keeps its product name. Component names describe their software responsibil
 | Native Model Bridge | `probes/afm-content-probe.swift` | Source path retained; descriptive documentation added |
 | Run Report / Report Store | Frozen engine result and injected `store` callback | New contract; sample store writes and verifies a report |
 
-The package root exports the public APIs. Subpath exports cover workflow, policy, serialization, Apple and local chat adapters. Existing deep imports remain available. Result codes and v1 consent/observation digest formulas are preserved; the new execution-receipt digest has a separate versioned domain.
+The package root exports the public APIs. Subpath exports cover workflow, policy, serialization, Apple and local chat adapters. The legacy canonicalizer and gate import paths remain available as explicit `exports` entries; paths not listed in `exports` do not resolve. Result codes and v1 consent/observation digest formulas are preserved; the new execution-receipt digest has a separate versioned domain.
 
 The prose name **Workflow Orchestrator** describes coordination. The public
 `runWorkflow` function and `workflow/engine.mjs` path remain stable. For workflow,

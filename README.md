@@ -78,16 +78,21 @@ to this public package.
   applies the configured payload redaction before anything is stored, and
   retires entries past their TTL or beyond the configured maximum by clearing
   their payloads while keeping their place in the chain. `list(now)` reports
-  each entry's liveness: `RUNNING` with a fresh heartbeat, `UNKNOWN` once the
-  heartbeat is stale, `EXPIRED` after its TTL, or `REVOKED`. `serialize()`
-  produces canonical JSON lines with a header, a SHA-256 chain, and a footer;
+  each entry's liveness: `REVOKED` for a revocation entry or a revoked entry,
+  the final state of a `SUCCEEDED`, `FAILED`, or `CANCELLED` entry, `EXPIRED`
+  for any other entry past its TTL, `UNKNOWN` for a `RUNNING` entry without a
+  fresh heartbeat, and otherwise `QUEUED` or `RUNNING`; each view also reports
+  `expired` separately. `serialize()` produces canonical JSON lines with a
+  header, a SHA-256 chain, and a footer;
   `reopen(serialized)` rebuilds the journal and returns a recovery report
   (`COMPLETE`, `INCOMPLETE` for truncated input, or `INVALID`). A journal
   reopened from damaged input is sealed and refuses further appends. The
   module imports only `node:crypto` and `node:util`.
   Fingerprints and duplicate detection use the redacted entry. Changes only to
-  redacted values therefore compare as duplicates; the original values cannot
-  be reconstructed from the journal.
+  redacted values therefore compare as duplicates, and values at redacted paths
+  are not stored. Redaction is by path: the same value reachable through
+  another unredacted path, including a second reference to a shared object, is
+  stored there.
 - **Journal store** (`history/run-journal-store-v1.mjs`, import `nisi/history/run-journal-store`).
   `writeSerializedJournal` and `readSerializedJournal` move a serialized
   journal to and from disk through a caller-supplied `fs`. A write validates
