@@ -6,8 +6,9 @@
 the local-chat coding author/reviewer adapters.
 
 The helper needs an Apple Silicon Mac with compatible Apple Intelligence and
-Foundation Models availability. The retained native checks ran on macOS 27
-with Swift 6.4. The source targets macOS 26 or later. Build it locally:
+Foundation Models availability. The retained native checks ran on macOS 27;
+the records do not include a Swift version. The source targets macOS 26 or later.
+Build it locally:
 
 ```bash
 swiftc -O -parse-as-library -target arm64-apple-macos26.0 \
