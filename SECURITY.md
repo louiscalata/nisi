@@ -79,7 +79,7 @@ Two limits are worth stating plainly because they are easy to misread:
 ## Reporting
 
 Open a GitHub issue for public reports. Do not put sensitive exploit details
-in a public issue. Use [GitHub private vulnerability reporting](../../security/advisories/new)
+in a public issue. Use [GitHub private vulnerability reporting](https://github.com/louiscalata/nisi/security/advisories/new)
 when available; otherwise open a minimal issue asking for a
 private contact route. This personal project has no security bounty, promised
 response time or service-level agreement.

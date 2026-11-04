@@ -29,13 +29,15 @@ node bin/nisi.mjs demo
 The example drafts an intentionally incorrect JavaScript module, runs a syntax
 check and two assertions, repairs it once, obtains a separate review callback's
 result, and writes and verifies a report. It makes no model calls.
-The output includes:
+The completed demo prints:
 
 ```json
 {
   "outcome": "COMPLETED",
+  "code": null,
   "repairAttempts": 1,
-  "reportStored": true
+  "reportStored": true,
+  "modelCalls": 0
 }
 ```
 
@@ -62,12 +64,14 @@ install it into a new project folder with
 `.\node_modules\.bin\nisi.cmd demo` in Windows PowerShell. The archive does not
 install models or start a model server.
 
-## What is new in v0.2
+## What is new in v0.2.0
 
 v0.2 adds the public `nisi` command, a **run journal**, and a disk store for it.
 The journal is an append-only, hash-chained record of what a run observed. A host can write it,
 reopen it after a process restart, and check it before relying on its rows.
-These modules live under `history/`. The unreleased source changes are listed in [CHANGELOG.md](CHANGELOG.md);
+These modules live under `history/`. This section describes the v0.2.0 tag;
+changes on main are described under [Unreleased](#unreleased-021-dev-on-main) below.
+The [changelog](CHANGELOG.md) records changes by version;
 results measured with a separate private adapter do not apply to this public package.
 
 - **Run journal** (`history/run-journal-v1.mjs`, import `nisi/history/run-journal`).
@@ -81,35 +85,28 @@ results measured with a separate private adapter do not apply to this public pac
   the final state of a `SUCCEEDED`, `FAILED`, or `CANCELLED` entry, `EXPIRED`
   for any other entry past its TTL, `UNKNOWN` for a `RUNNING` entry without a
   fresh heartbeat, and otherwise `QUEUED` or `RUNNING`; each view also reports
-  `expired` separately. `serialize(now)` first retires expired payloads and
-  produces canonical JSON lines with a
+  `expired` separately. `serialize()` produces canonical JSON lines with a
   header, a SHA-256 chain, and a footer;
   `reopen(serialized)` rebuilds the journal and returns a recovery report
-  (`COMPLETE`, `INCOMPLETE` for truncated input, or `INVALID`). A journal
-  reopened from damaged input is sealed and refuses further appends. The
+  (`COMPLETE`, `INCOMPLETE` for truncated input, or `INVALID`). A missing or
+  invalid header returns no journal. A valid header with a damaged body returns
+  a sealed journal that refuses further appends. The
   module imports only `node:crypto` and `node:util`.
-  Fingerprints and duplicate detection use the redacted entry. Changes only to
-  redacted values therefore compare as duplicates, and values at redacted paths
-  are not stored. Redaction is by path: the same value reachable through
+  The original value at each redacted path is replaced with the stored marker
+  `[REDACTED]` before fingerprinting. Fingerprints and duplicate detection use
+  this redacted entry, so changes only to redacted values compare as duplicates.
+  Redaction is by path: the same value reachable through
   another unredacted path, including a second reference to a shared object, is
-  stored there. Missing redaction paths are ignored, including null payloads.
-  Pruning recomputes the fingerprint from the stored null-payload entry; a
-  re-append with the discarded original payload conflicts. Reopen rejects older
-  pruned rows whose fingerprints cannot be recomputed from their stored entries.
-  `append`, `list(now)`, `retain(now)`, and `serialize(now)` can permanently
-  retire payloads. `list`, `retain`, and `serialize` advance the time watermark;
-  successful appends do too. Use one nondecreasing safe-integer millisecond
-  clock: a future timestamp cannot be rolled back, including after reopen.
-  Omitting the time from `serialize()` uses the last watermark, not wall time.
-  Retention scans only retained rows (at most `maxEntries` plus the new append);
-  metadata and ID history have a separate 10,000-record ceiling. New IDs beyond it return
-  `REFUSED` / `HISTORY_LIMIT`; duplicates and conflicts still resolve. Reopen
-  rejects larger histories. Hosts must rotate journals before this limit and
-  bound input bytes themselves; there is no serialized-byte limit. Entry copying
-  refuses nesting deeper than 64 levels with `ENTRY` (entry root at depth zero).
+  stored there. In v0.2.0, a missing redaction path is refused with `REDACTION`.
+  `append`, `list(now)`, and `retain(now)` can permanently retire payloads.
+  `list` and `retain` advance the time watermark; successful appends do too.
+  Use one nondecreasing safe-integer millisecond clock: a future timestamp
+  cannot be rolled back, including after reopen. `serialize()` uses the last
+  watermark, not wall time. Hosts must rotate histories and bound input bytes
+  themselves; payload retention is not a complete memory or disk quota, and
+  there is no serialized-byte limit.
   Retries must be queued, refer to an eligible earlier entry in the same run,
-  and increase its attempt. A second ID for the same retry target and attempt
-  is refused with `RETRY_DUPLICATE`. Terminal targets, including `SUCCEEDED`,
+  and increase its attempt. Terminal targets, including `SUCCEEDED`,
   remain eligible; hosts decide whether retrying a success makes sense.
 - **Journal store** (`history/run-journal-store-v1.mjs`, import `nisi/history/run-journal-store`).
   `writeSerializedJournal` and `readSerializedJournal` move a serialized
@@ -136,23 +133,60 @@ longer resolve. A host owns the journal
 location outside the package and can call `readSerializedJournal` followed by
 `reopen` after a restart for a valid stored journal. For damaged input the store
 returns `INVALID_JOURNAL` and refuses replacement with `EXISTING_INVALID`.
-A host can separately read the raw bytes and call `reopen` for sealed recovery;
+A host can separately read the raw bytes and call `reopen` for sealed recovery
+when the header is valid;
 preservation, quarantine and recovery to a new path are host responsibilities.
 A stopped write may leave a file named
 `journal.jsonl.<sha256>.<uuid>.tmp` beside the journal. Inspect the owner and
 destination before removing an orphan. Journal views and recovery reports carry
 `authorizing: false`; they record observations and grant no authority.
 
+## Unreleased (0.2.1-dev, on main)
+
+These behaviors are in the current main source and are not included in the
+v0.2.0 tag or archive used by the quick start. See [CHANGELOG.md](CHANGELOG.md)
+for the full unreleased update.
+
+- **Journal validation and retention.** Missing redaction paths are ignored,
+  including null payloads. Pruning recomputes the fingerprint from the stored
+  null-payload entry; a re-append with the discarded original payload conflicts.
+  Reopen rejects older pruned rows whose fingerprints cannot be recomputed from
+  their stored entries. A second ID for the same retry target and attempt is
+  refused with `RETRY_DUPLICATE`.
+  `append`, `list(now)`, `retain(now)`, and `serialize(now)` can permanently
+  retire payloads. `list`, `retain`, and `serialize` advance the time watermark;
+  successful appends do too. Use one nondecreasing safe-integer millisecond
+  clock: a future timestamp cannot be rolled back, including after reopen.
+  Omitting the time from `serialize()` uses the last watermark, not wall time.
+  Retention scans only retained rows (at most `maxEntries` plus the new append);
+  metadata and ID history have a separate 10,000-record ceiling. New IDs beyond
+  it return `REFUSED` / `HISTORY_LIMIT`; duplicates and conflicts still resolve.
+  Reopen rejects larger histories. Hosts must rotate journals before this limit
+  and bound input bytes themselves; there is no serialized-byte limit. Entry
+  copying refuses nesting deeper than 64 levels with `ENTRY` (entry root at
+  depth zero).
+- **Required terminal report storage.** With `requireReportStore: true`, a run
+  already timed out or cancelled offers its terminal report to the store using
+  a fresh signal and a separate bounded budget. The `runWorkflow` option
+  `storeTimeoutMs` defaults to 1000 ms for this attempt. Optional storage and
+  storage for other outcomes retain the run's deadline and cancellation behavior.
+  Storage acknowledgements remain trusted host reports.
+- **Fixed workflow example.** Its assertions recognize only the fixed
+  `export const answer = 41;` or `42;` source shape as data; candidate source is
+  never imported. `nisi demo` removes its temporary report after write/read-back
+  verification. Running the example directly keeps the report and prints its
+  path; programmatic callers can use `runExample({ keepReport: false })` for
+  cleanup. Callbacks remain trusted code; an application that executes generated
+  code must provide isolation.
+
 ## Use it in an application
 
 Start with the complete [workflow example](examples/workflow.mjs).
-Its assertions recognize only the fixed `export const answer = 41;` or `42;`
-source shape as data; candidate source is never imported. Replace its fixed task
-and callbacks with your application's requirements and tools. Callbacks are
-trusted code; an application that executes generated code must provide isolation.
-`nisi demo` removes its temporary report after write/read-back verification.
-Running the example directly keeps the report and prints its path; programmatic
-callers can use `runExample({ keepReport: false })` for cleanup.
+In v0.2.0, its test callback imports the fixed demonstration source. Replace its
+fixed task and callbacks with your application's requirements and tools.
+Callbacks are trusted code; an application that executes generated code must
+provide isolation. The changes to the example on main are described under
+[Unreleased](#unreleased-021-dev-on-main) above.
 A task defines allowed file names, acceptance criteria, a deadline,
 a repair budget, and the required reviewer count.
 
@@ -176,11 +210,7 @@ const report = await runWorkflow(task, {
 Within this checkout, the package import resolves to Nisi's workflow module.
 See the [Workflow API](docs/workflow-api.md)
 for callback inputs, return schemas, error outcomes, and optional report storage.
-With `requireReportStore: true`, a run already timed out or cancelled offers its
-terminal report to the store using a fresh signal and a separate bounded budget.
-The `runWorkflow` option `storeTimeoutMs` defaults to 1000 ms for this attempt.
-Optional storage and storage for other outcomes retain the run's deadline and
-cancellation behavior. Storage acknowledgements remain trusted host reports.
+Storage acknowledgements remain trusted host reports.
 Your application decides whether to apply the candidate's file contents.
 
 ## Local model adapters
@@ -234,7 +264,7 @@ flowchart TD
     cook --> checks
     cook -->|No valid candidate| stop
     checks -->|Checks and tests pass| pass
-    checks -->|Failed check and repair budget remains| repair
+    checks -->|Failed check or test and repair budget remains| repair
     checks -->|Missing evidence or no repair available| stop
     pass -->|All required reviews pass| accept
     pass -->|Failed review and repair budget remains| repair

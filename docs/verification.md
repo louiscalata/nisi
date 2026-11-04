@@ -94,7 +94,8 @@ call a live model. Native and local-model runs are separate evidence.
 - [Native Apple calls](verification/2026-09-11/native-apple.json) contain helper,
   Swift source and adapter source hashes, input digest, returned evidence and
   refusal arrays. Both executions passed on macOS 27.0 / Apple Silicon using
-  Swift 6.4 and Node 24.18.0. These helper/executor source hashes match the manifest.
+  Node 24.18.0. The retained records do not include a Swift version.
+  These helper/executor source hashes match the manifest.
 - [Current completed local-model run](verification/2026-09-11/local-model-completed.json)
   records Gemma 3 (`google/gemma-3-4b`) authoring and Gemma 4
   (`google/gemma-4-26b-a4b-qat`) reviewing the same retry configuration after four
