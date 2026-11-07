@@ -3,7 +3,13 @@
 Changes to the public Nisi package are recorded here. This file describes the
 public source tree and does not include private experiments.
 
-## Unreleased source update (0.2.1-dev)
+## 0.2.1
+
+Fixes found by review of v0.2.0. Runtime behavior changes only for inputs that
+were mishandled. **Compatibility:** an `fs` passed to `writeSerializedJournal`
+must now provide `lstatSync`; older pruned journal rows whose fingerprints cannot
+be recomputed are rejected on reopen; some refusal codes are more specific (see
+below).
 
 - Resolve content-consent paths the way the operating system opens them. On
   POSIX, Node's JavaScript `realpath` removed `link/..` before following
@@ -56,8 +62,6 @@ public source tree and does not include private experiments.
   wording; document report-store deadline limits and the source-only Swift helper.
   Earlier main-only redaction/liveness wording corrections are included here;
   no released archive, history or tag is changed by this source update.
-
-
 - Copy local-chat binding identity before the response is awaited, so a receipt
   and its returned evidence keep the candidate that call sent when the payload
   changes in flight.
@@ -67,8 +71,8 @@ public source tree and does not include private experiments.
   receipts so the exact-match results can be rescored.
 - Add GitHub-readable benchmark graphs and a study plan that separates this
   single local integration from untested providers and production outcomes.
-  Those benchmark additions did not change the released v0.2.0 runtime. The
-  unreleased fixes above do change runtime behavior; the file allowlist is unchanged.
+  The benchmarks are source-checkout tools and are not in the package archive;
+  the package file allowlist is unchanged from v0.2.0.
 
 ## 0.2.0
 

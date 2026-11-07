@@ -1,8 +1,8 @@
 # Benchmarks for deciding whether to use Nisi
 
 Run these benchmarks when evaluating Nisi's workflow controls, integration seam,
-and execution overhead. The published v0.2.0 figures predate the unreleased
-candidate-boundary change; this working tree is `0.2.1-dev`.
+and execution overhead. The published figures were measured before the v0.2.1
+fixes; re-measured before/after timings showed a 2-5% cost on normal runs.
 The control, interface, and overhead commands do not call a model. A separate
 opt-in local pilot does; neither establishes that Nisi improves model reasoning.
 

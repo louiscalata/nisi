@@ -8,7 +8,7 @@ Nisi returns proposed file contents and a report showing what passed, what
 failed, and why the run stopped. Fixed criteria and repair limits keep each
 attempt tied to the original request.
 
-**v0.2.0 is the first public CLI release.** Its command runs a fixed workflow
+**v0.2.1 is the current public CLI release**, a fix release for v0.2.0, the first public one. Its command runs a fixed workflow
 demonstration or a fixed local-model JSON demonstration. Applications can use
 the workflow, journal, and store APIs directly. This release does not run
 arbitrary repositories from the command line. The [v0.1 verification
@@ -21,7 +21,7 @@ records the checks for this release and their limits.
 Install Node.js 22 or newer, then run the fixed, model-free demonstration:
 
 ```bash
-git clone --branch v0.2.0 --depth 1 https://github.com/louiscalata/nisi.git
+git clone --branch v0.2.1 --depth 1 https://github.com/louiscalata/nisi.git
 cd nisi
 node bin/nisi.mjs demo
 ```
@@ -43,8 +43,8 @@ The completed demo prints:
 
 Run `npm ci` followed by `npm run check` to check the codec and run the test
 suite. The package declares Node.js 22 or newer, and the check script validates
-it directly. The [GitHub release](https://github.com/louiscalata/nisi/releases/tag/v0.2.0)
-also provides an npm-format archive for local installation; Nisi v0.2.0 is not
+it directly. The [GitHub release](https://github.com/louiscalata/nisi/releases/tag/v0.2.1)
+also provides an npm-format archive for local installation; Nisi v0.2.1 is not
 published to the npm registry.
 
 ## Command line
@@ -57,20 +57,20 @@ loopback chat server. It does not execute model-generated programs or apply
 changes to a repository. The host application remains responsible for any
 broader coding task and for deciding whether to apply proposed files.
 
-To use the downloadable `nisi-0.2.0.tgz` archive without cloning the source,
+To use the downloadable `nisi-0.2.1.tgz` archive without cloning the source,
 install it into a new project folder with
-`npm install /path/to/nisi-0.2.0.tgz --ignore-scripts`. Run
+`npm install /path/to/nisi-0.2.1.tgz --ignore-scripts`. Run
 `./node_modules/.bin/nisi demo` on macOS or Linux, or
 `.\node_modules\.bin\nisi.cmd demo` in Windows PowerShell. The archive does not
 install models or start a model server.
 
-## What is new in v0.2.0
+## Run journal and store
 
 v0.2 adds the public `nisi` command, a **run journal**, and a disk store for it.
 The journal is an append-only, hash-chained record of what a run observed. A host can write it,
 reopen it after a process restart, and check it before relying on its rows.
-These modules live under `history/`. This section describes the v0.2.0 tag;
-changes on main are described under [Unreleased](#unreleased-021-dev-on-main) below.
+These modules live under `history/`. This section describes v0.2.1;
+[What changed in v0.2.1](#what-changed-in-v021) lists the differences from v0.2.0.
 The [changelog](CHANGELOG.md) records changes by version;
 results measured with a separate private adapter do not apply to this public package.
 
@@ -97,7 +97,7 @@ results measured with a separate private adapter do not apply to this public pac
   this redacted entry, so changes only to redacted values compare as duplicates.
   Redaction is by path: the same value reachable through
   another unredacted path, including a second reference to a shared object, is
-  stored there. In v0.2.0, a missing redaction path is refused with `REDACTION`.
+  stored there. A missing redaction path is ignored (v0.2.0 refused it with `REDACTION`).
   `append`, `list(now)`, and `retain(now)` can permanently retire payloads.
   `list` and `retain` advance the time watermark; successful appends do too.
   Use one nondecreasing safe-integer millisecond clock: a future timestamp
@@ -143,11 +143,28 @@ A stopped write may leave a file named
 destination before removing an orphan. Journal views and recovery reports carry
 `authorizing: false`; they record observations and grant no authority.
 
-## Unreleased (0.2.1-dev, on main)
+## What changed in v0.2.1
 
-These behaviors are in the current main source and are not included in the
-v0.2.0 tag or archive used by the quick start. See [CHANGELOG.md](CHANGELOG.md)
-for the full unreleased update.
+These behaviors are new since v0.2.0. See [CHANGELOG.md](CHANGELOG.md) for the
+full list.
+
+- **Required review cannot be skipped.** The engine reads the reviewer list and
+  its length once. A list that changed between reads could finish a run as
+  `COMPLETED` with no review; a list with a hole now returns `BLOCKED` with
+  `REVIEWER_IDENTITY_INVALID` instead of throwing.
+- **Bounded copies.** Workflow snapshots stop after 1,000,000 copied values
+  (`INPUT_SIZE_LIMIT`) and journal entries after 1,000,000 values or 64 Mi
+  UTF-16 units of copied strings (`ENTRY`). An object shared across many paths
+  used to stall or crash the process before input validation. Typed arrays,
+  Buffers and other non-plain objects are refused before their elements are
+  listed.
+- **Symlinked journal destinations are refused.** `writeSerializedJournal`
+  returns `SYMLINK` instead of replacing the link while the old target keeps
+  its bytes. The caller's `fs` must provide `lstatSync`.
+- **Paths resolve as the system opens them.** On POSIX the consent gate uses the
+  system realpath, so `link/..` is judged by the file `open()` would read.
+- **Local-chat receipts** keep the candidate the call sent, even if the caller
+  changes the payload while the response is in flight.
 
 - **Journal validation and retention.** Missing redaction paths are ignored,
   including null payloads. Pruning recomputes the fingerprint from the stored
@@ -184,11 +201,10 @@ for the full unreleased update.
 ## Use it in an application
 
 Start with the complete [workflow example](examples/workflow.mjs).
-In v0.2.0, its test callback imports the fixed demonstration source. Replace its
+Its test callback treats the candidate as data (v0.2.0 imported it). Replace its
 fixed task and callbacks with your application's requirements and tools.
 Callbacks are trusted code; an application that executes generated code must
-provide isolation. The changes to the example on main are described under
-[Unreleased](#unreleased-021-dev-on-main) above.
+provide isolation.
 A task defines allowed file names, acceptance criteria, a deadline,
 a repair budget, and the required reviewer count.
 

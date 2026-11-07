@@ -1,6 +1,6 @@
 {
   "name": "nisi",
-  "version": "0.2.1-dev",
+  "version": "0.2.1",
   "private": false,
   "description": "A Node.js CLI and library for bounded AI-assisted coding workflows and validated run reports.",
   "license": "Apache-2.0",
