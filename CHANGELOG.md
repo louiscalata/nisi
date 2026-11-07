@@ -12,6 +12,31 @@ public source tree and does not include private experiments.
   realpath; Windows, which removes `..` from the path text itself, is
   unchanged.
 
+- Refuse a journal-store write whose destination is a symlink, with `SYMLINK`.
+  The previous-hash check read the link's target, but the rename replaced the
+  link itself, so the store reported `WRITTEN` while the target kept its old
+  bytes. The check runs before the temp file is written and again just before
+  the rename. **Compatibility:** an injected `fs` must now provide `lstatSync`;
+  one without it is refused with `INVALID_INPUT`.
+
+- Bound workflow snapshots and journal entry copies to 1,000,000 copied values.
+  An object reached by two paths is copied and hashed once per path, so a
+  shared chain 40 levels deep would run for hours before any schema check.
+  Workflow snapshots refuse with `INPUT_SIZE_LIMIT`; journal entries with
+  `ENTRY`. Journal entry copies also stop after 64 Mi UTF-16 code units of
+  copied strings, since one large string reached by many paths is scanned and
+  serialized once per path. Workflow snapshots also refuse typed arrays,
+  Buffers, String objects and other non-plain objects before listing their
+  properties, instead of enumerating one property per element first. Such
+  objects always refused; one carrying a symbol key or accessor now reports
+  `INPUT_OBJECT_INVALID` instead of `INPUT_PROPERTY_INVALID`.
+
+- Read the reviewer list and its length once, then copy exactly the required
+  number of reviewers. A getter or Proxy could pass the count check and then
+  hand the engine an empty list, so a run reported `COMPLETED` with no review.
+  A list with a hole is now refused with `REVIEWER_IDENTITY_INVALID` instead of
+  throwing a `TypeError` out of `runWorkflow`.
+
 - Add `storeTimeoutMs` (default 1000 ms) for one required terminal report-storage
   attempt after workflow timeout or cancellation, using an independent signal
   and preserving the clock watermark and original `workflowOutcome`.
@@ -33,6 +58,9 @@ public source tree and does not include private experiments.
   no released archive, history or tag is changed by this source update.
 
 
+- Copy local-chat binding identity before the response is awaited, so a receipt
+  and its returned evidence keep the candidate that call sent when the payload
+  changes in flight.
 - Add source-checkout workflow-control, mocked-interface, and inert-overhead
   benchmarks, plus a 12-task exploratory pilot against one configured local
   Gemma chat endpoint. Retain raw pilot candidates, reports, and request

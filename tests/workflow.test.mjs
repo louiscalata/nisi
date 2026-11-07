@@ -1,7 +1,7 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { createCandidate, createTaskSpecification, runWorkflow } from '../workflow/engine.mjs';
-import { sha256Text, stableStringify } from '../workflow/contracts.mjs';
+import { cloneFreeze, MAX_SNAPSHOT_VALUES, sha256Text, stableStringify } from '../workflow/contracts.mjs';
 
 const BASE_TEXT = 'export const answer = 42;\n';
 const file = content => ({ path: 'src/app.js', content });
@@ -269,6 +269,65 @@ test('captured reviewer list, IDs and methods survive caller mutation after auth
   const reviews = report.stages.filter(stage => stage.stage === 'review');
   assert.equal(reviews.length, 1);
   assert.equal(reviews[0].evidence.reviewerId, 'reviewer.one');
+});
+
+test('a reviewer list that changes between reads cannot skip the required review', async () => {
+  const base = adapters();
+  let reads = 0;
+  const getter = await runWorkflow(makeTask(), { adapters: {
+    ...base,
+    // The first two reads see one reviewer; a third read would see none.
+    get reviewers() { reads += 1; return reads <= 2 ? base.reviewers : []; },
+  } });
+  assert.equal(getter.stages.filter(stage => stage.stage === 'review').length, 1);
+  assert.equal(getter.outcome, 'COMPLETED');
+  assert.equal(reads, 1);
+});
+
+test('a reviewer Proxy whose length shrinks after the count check cannot skip review', async () => {
+  const base = adapters();
+  let lengthReads = 0;
+  const shrinking = new Proxy(base.reviewers, { get(target, key, receiver) {
+    if (key === 'length') { lengthReads += 1; return lengthReads === 1 ? target.length : 0; }
+    return Reflect.get(target, key, receiver);
+  } });
+  const proxied = await runWorkflow(makeTask(), { adapters: { ...base, reviewers: shrinking } });
+  assert.equal(proxied.stages.filter(stage => stage.stage === 'review').length, 1);
+  assert.equal(proxied.outcome, 'COMPLETED');
+  assert.equal(lengthReads, 1);
+});
+
+test('a reviewer list with a hole is refused before any adapter runs', async () => {
+  const base = adapters();
+  const holey = await runWorkflow(makeTask(undefined, { policy: { ...makeTask().policy, requiredReviewers: 2 } }),
+    { adapters: { ...base, reviewers: [, base.reviewers[0]] } });
+  assert.equal(holey.outcome, 'BLOCKED');
+  assert.equal(holey.stages.filter(stage => stage.stage === 'review').length, 0);
+});
+
+// Each level points at the same child twice, so the copied tree has 2^depth leaves.
+const sharedChain = depth => { let node = { leaf: true }; for (let i = 0; i < depth; i += 1) node = { a: node, b: node }; return node; };
+
+test('snapshots refuse non-plain objects before listing their properties', () => {
+  let listed = 0;
+  const instance = new Proxy(new (class Opaque {})(), { ownKeys(target) { listed += 1; return Reflect.ownKeys(target); } });
+  assert.throws(() => cloneFreeze(instance), { code: 'INPUT_OBJECT_INVALID' });
+  assert.equal(listed, 0);
+  for (const value of [new Uint8Array(1024), Buffer.alloc(16), new String('text'), new Map(), new Date(0)]) {
+    assert.throws(() => cloneFreeze(value), { code: 'INPUT_OBJECT_INVALID' });
+  }
+  assert.equal(JSON.stringify(cloneFreeze([{ a: 'b' }, null, 1, true])), '[{"a":"b"},null,1,true]');
+});
+
+test('snapshots bound the copied tree, so shared references cannot grow it exponentially', async () => {
+  assert.throws(() => cloneFreeze(sharedChain(21)), { code: 'INPUT_SIZE_LIMIT' });
+  const wide = Array.from({ length: MAX_SNAPSHOT_VALUES - 1 }, () => 'x');
+  assert.equal(cloneFreeze(wide).length, MAX_SNAPSHOT_VALUES - 1);
+  assert.throws(() => cloneFreeze([...wide, 'y']), { code: 'INPUT_SIZE_LIMIT' });
+  assert.equal(stableStringify(cloneFreeze(sharedChain(4))).length > 0, true);
+  const report = await runWorkflow(makeTask('edit', { acceptanceCriteria: [sharedChain(21)] }), { adapters: adapters() });
+  assert.equal(report.outcome, 'BLOCKED');
+  assert.equal(report.code, 'INPUT_SIZE_LIMIT');
 });
 
 test('reviewers receive immutable fresh check and test evidence; all required reviewers run', async () => {

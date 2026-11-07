@@ -36,7 +36,7 @@ function fixture(t, hooks = {}) {
   const events = [];
   const descriptors = new Map();
   const fs = {};
-  for (const name of ['openSync', 'writeSync', 'fsyncSync', 'closeSync', 'readFileSync', 'renameSync', 'unlinkSync']) {
+  for (const name of ['lstatSync', 'openSync', 'writeSync', 'fsyncSync', 'closeSync', 'readFileSync', 'renameSync', 'unlinkSync']) {
     fs[name] = (...args) => {
       const descriptor = descriptors.get(args[0]);
       const event = { name, args, descriptor };
@@ -54,6 +54,9 @@ function fixture(t, hooks = {}) {
   }
   return { dir, path, fs, events, descriptors };
 }
+
+// Refusals may inspect the destination (read or lstat) but never open, write or rename.
+const readOnly = event => event.name === 'readFileSync' || event.name === 'lstatSync';
 
 function refused(result, reason) {
   assert.equal(result.status, 'REFUSED');
@@ -185,7 +188,7 @@ test('different existing content needs exact previous sha256; conflicts preserve
     f.events.length = 0;
     refused(write({ ...f, serialized: journal('new'), expectedPreviousSha256 }), 'CONFLICT');
     assert.equal(realFs.readFileSync(f.path, 'utf8'), before);
-    assert.ok(f.events.every(e => e.name === 'readFileSync'));
+    assert.ok(f.events.every(readOnly));
   }
   written(write({ ...f, serialized: journal('new'), expectedPreviousSha256: hash(before) }), journal('new'));
   assert.equal(realFs.readFileSync(f.path, 'utf8'), journal('new'));
@@ -200,7 +203,7 @@ test('same bytes are an explicit non-durable no-op; supplied stale expected hash
     assert.equal(result.status, 'UNCHANGED');
     assert.equal(result.sha256, hash(journal()));
     assert.equal(result.durable, false);
-    assert.ok(f.events.every(e => e.name === 'readFileSync'));
+    assert.ok(f.events.every(readOnly));
   }
   refused(write({ ...f, serialized: journal(), expectedPreviousSha256: '0'.repeat(64) }), 'CONFLICT');
   const missing = fixture(t);
@@ -301,11 +304,11 @@ test('write validates strings, framing and expected hash before mutation; corrup
 test('missing and unreadable files are refusals, and read never attempts mutations or sync', t => {
   const f = fixture(t);
   refused(read(f), 'NOT_FOUND');
-  assert.ok(f.events.every(e => e.name === 'readFileSync'));
+  assert.ok(f.events.every(readOnly));
   const bad = fixture(t, { readFileSync: () => { throw Object.assign(new Error('denied'), { code: 'EACCES' }); } });
   refused(read(bad), 'READ_FAILED');
   refused(write({ ...bad, serialized: journal() }), 'READ_FAILED');
-  assert.ok(bad.events.every(e => e.name === 'readFileSync'));
+  assert.ok(bad.events.every(readOnly));
   refused(read({ path: '', fs: f.fs }), 'INVALID_INPUT');
   refused(write({ path: '', serialized: journal(), fs: f.fs }), 'INVALID_INPUT');
 });
@@ -417,4 +420,47 @@ test('combined directory fsync and close failures preserve both codes in a commi
   assert.equal(closes.length, 2);
   assert.equal(closes.filter(e => e.descriptor.flags === 'wx').length, 1);
   assert.equal(closes.filter(e => e.descriptor.flags === DIRECTORY).length, 1);
+});
+
+function symlinkOrSkip(t, target, path) {
+  try { realFs.symlinkSync(target, path); return true; } catch (error) {
+    if (error?.code !== 'EPERM' && error?.code !== 'EACCES') throw error;
+    t.skip('symlink creation is unavailable on this host');
+    return false;
+  }
+}
+
+test('a symlinked destination is refused before any file is opened, and the link and its target stay intact', t => {
+  const f = fixture(t);
+  const target = join(f.dir, 'target.jsonl');
+  const before = journal('old');
+  realFs.writeFileSync(target, before);
+  if (!symlinkOrSkip(t, target, f.path)) return;
+  refused(write({ path: f.path, serialized: journal('new'), fs: f.fs, expectedPreviousSha256: hash(before) }), 'SYMLINK');
+  assert.equal(realFs.lstatSync(f.path).isSymbolicLink(), true);
+  assert.equal(realFs.readFileSync(target, 'utf8'), before);
+  assert.deepEqual(realFs.readdirSync(f.dir).sort(), ['journal.jsonl', 'target.jsonl']);
+  assert.equal(f.events.some(event => event.name === 'openSync'), false);
+});
+
+test('a symlink that appears at the destination during the write is refused before rename', t => {
+  let planted = null;
+  const f = fixture(t, { writeSync: (event, invoke) => {
+    // A dangling link reads as absent, so the previous-content check alone passes.
+    if (planted === null) planted = symlinkOrSkip(t, join(f.dir, 'elsewhere.jsonl'), f.path);
+    return invoke();
+  } });
+  const result = write({ path: f.path, serialized: journal(), fs: f.fs });
+  if (!planted) return;
+  refused(result, 'SYMLINK');
+  assert.equal(realFs.lstatSync(f.path).isSymbolicLink(), true);
+  assert.equal(f.events.some(event => event.name === 'renameSync'), false);
+  assert.deepEqual(realFs.readdirSync(f.dir), ['journal.jsonl']);
+});
+
+test('an injected filesystem without lstatSync is refused before any mutation', t => {
+  const f = fixture(t);
+  const { lstatSync, ...withoutLstat } = f.fs;
+  refused(write({ path: f.path, serialized: journal(), fs: withoutLstat }), 'INVALID_INPUT');
+  assert.deepEqual(f.events, []);
 });

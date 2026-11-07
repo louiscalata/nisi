@@ -113,7 +113,9 @@ results measured with a separate private adapter do not apply to this public pac
   journal to and from disk through a caller-supplied `fs`. A write validates
   the chain first, goes through an exclusive temp file in the same directory,
   syncs and reads back that file, renames it into place, syncs the directory,
-  and reads back the destination. Each write attempt uses its own temporary filename, so an orphaned
+  and reads back the destination. A destination that is a symlink is refused
+  with `SYMLINK`, both before the temp file is written and again just before
+  the rename, so the caller's `fs` must provide `lstatSync`. Each write attempt uses its own temporary filename, so an orphaned
   temporary file from a stopped process does not block an identical retry.
   `expectedPreviousSha256` detects stale **sequential** writes; it is not an
   atomic guard for concurrent writers or a history-continuity check. A matching
