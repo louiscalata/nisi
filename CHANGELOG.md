@@ -5,6 +5,18 @@ public source tree and does not include private experiments.
 
 ## Unreleased source update (0.2.1-dev)
 
+- Bound workflow snapshots and journal entry copies to 1,000,000 copied values.
+  An object reached by two paths is copied and hashed once per path, so a
+  shared chain 40 levels deep would run for hours before any schema check.
+  Workflow snapshots refuse with `INPUT_SIZE_LIMIT`; journal entries with
+  `ENTRY`. Journal entry copies also stop after 64 Mi UTF-16 code units of
+  copied strings, since one large string reached by many paths is scanned and
+  serialized once per path. Workflow snapshots also refuse typed arrays,
+  Buffers, String objects and other non-plain objects before listing their
+  properties, instead of enumerating one property per element first. Such
+  objects always refused; one carrying a symbol key or accessor now reports
+  `INPUT_OBJECT_INVALID` instead of `INPUT_PROPERTY_INVALID`.
+
 - Add `storeTimeoutMs` (default 1000 ms) for one required terminal report-storage
   attempt after workflow timeout or cancellation, using an independent signal
   and preserving the clock watermark and original `workflowOutcome`.
