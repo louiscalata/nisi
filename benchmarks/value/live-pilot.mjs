@@ -99,7 +99,7 @@ export function orderedArms(taskIndex) {
 }
 
 export async function runPilot({ endpoint, model, fetch, dataset, routerStatus, routerStatusCheck, deadlineMs = 90_000,
-  maxOutputTokens = 1024, selectedTaskIds, onRow } = {}) {
+  maxOutputTokens = 1024, reasoningEffort, selectedTaskIds, onRow } = {}) {
   if (routerStatus !== undefined) assertRouterClear(routerStatus);
   if (!dataset || !Array.isArray(dataset.tasks) || !Number.isSafeInteger(deadlineMs) || deadlineMs < 1000 ||
       !Number.isSafeInteger(maxOutputTokens) || maxOutputTokens < 1) throw new Error('PILOT_CONFIG_INVALID');
@@ -112,7 +112,7 @@ export async function runPilot({ endpoint, model, fetch, dataset, routerStatus, 
     for (const arm of orderedArms(index)) {
       if (routerStatusCheck) assertRouterClear(await routerStatusCheck());
       const author = createLocalChatAuthorAdapter({ endpoint, destination: 'LOOPBACK_HTTP', model,
-        id: 'pilot.author', timeoutMs: deadlineMs, maxOutputTokens, ...(fetch ? { fetch } : {}) });
+        id: 'pilot.author', timeoutMs: deadlineMs, maxOutputTokens, ...(reasoningEffort ? { reasoningEffort } : {}), ...(fetch ? { fetch } : {}) });
       const started = performance.now();
       let report = null, candidate = null, code = null, outcome = null, directRunId = null;
       try {
@@ -147,7 +147,7 @@ export async function runPilot({ endpoint, model, fetch, dataset, routerStatus, 
   return { schemaVersion: 1, study: 'exploratory-structured-output-pilot', datasetId: dataset.datasetId,
     datasetSha256: FROZEN_DATASET_SHA256, model, endpoint,
     routerGate: routerStatus === undefined ? 'NOT_CONFIGURED' : 'CHECKED_BETWEEN_ARMS',
-    settings: { temperature: 0, maxOutputTokens,
+    settings: { temperature: 0, maxOutputTokens, reasoningEffort: reasoningEffort ?? null,
       deadlineMs, repairBudget: 1 }, rows };
 }
 

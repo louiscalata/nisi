@@ -59,3 +59,20 @@ test('review response schema advertises the enforced finding string bounds', asy
   assert.deepEqual(properties.findings.items.properties.message, { type: 'string', minLength: 1, maxLength: 2048, pattern: '\\S' });
   assert.equal(properties.summary.pattern, '\\S');
 });
+
+test('reasoningEffort is sent only when configured, and invalid values are refused', async () => {
+  const sent = {};
+  const plain = createLocalChatAuthorAdapter({ destination: 'LOOPBACK_HTTP', endpoint: 'http://127.0.0.1/chat', model: 'm', id: 'author', fetch: fetchFor({ candidate: { files: [{ path: 'src/a.js', content: 'export default 1;' }] }, note: 'drafted' }, sent) });
+  await plain.draft({ task, candidate: null, acceptanceCriteria: task.acceptanceCriteria, binding });
+  assert.equal('reasoning_effort' in JSON.parse(sent.request.body), false);
+  for (const effort of ['none', 'minimal', 'low', 'medium', 'high']) {
+    const seen = {};
+    const adapter = createLocalChatReviewerAdapter({ destination: 'LOOPBACK_HTTP', endpoint: 'http://127.0.0.1/chat', model: 'm', id: 'reviewer', reasoningEffort: effort, fetch: fetchFor({ findings: [], summary: 'ok' }, seen) });
+    await adapter.review({ task, candidate: null, acceptanceCriteria: task.acceptanceCriteria, binding });
+    assert.equal(JSON.parse(seen.request.body).reasoning_effort, effort);
+    assert.equal(adapter.receipts()[0].requestSha256.length, 64);
+  }
+  for (const effort of ['None', 'off', '', null, 0, true]) {
+    assert.throws(() => createLocalChatAuthorAdapter({ destination: 'LOOPBACK_HTTP', endpoint: 'http://127.0.0.1/chat', model: 'm', id: 'author', reasoningEffort: effort }), { code: 'LOCAL_CHAT_REASONING_EFFORT_INVALID' });
+  }
+});
