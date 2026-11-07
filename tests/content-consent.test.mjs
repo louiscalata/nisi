@@ -141,6 +141,34 @@ test('a symlink cannot carry content across the boundary', () => {
   assert.equal(grant.status().admittedItems, 0);
 });
 
+test('"link/.." is judged by the file the operating system opens for that path', () => {
+  const root = tempRoot();
+  const outside = tempRoot();
+  const grant = grantOf(root);
+  write(root, 'ok.json', '{"where":"inside"}');
+  write(outside, 'ok.json', '{"where":"outside"}');
+  fs.mkdirSync(path.join(outside, 'sub'));
+  fs.symlinkSync(path.join(outside, 'sub'), path.join(root, 'link'));
+  // Built by hand: path.join would remove "link/.." before the gate sees it.
+  const requested = [root, 'link', '..', 'ok.json'].join(path.sep);
+  const opened = fs.readFileSync(requested, 'utf8');
+  const result = grant.admitContent({ filePath: requested, kind: 'json' });
+  if (process.platform === 'win32') {
+    // Windows opens root/ok.json for this path, so admitting it is correct.
+    assert.equal(opened, '{"where":"inside"}');
+    assert.equal(result.ok, true, result.code);
+    assert.equal(result.bytes.toString('utf8'), opened);
+  } else {
+    // POSIX opens outside/ok.json, so the request is outside the scope.
+    assert.equal(opened, '{"where":"outside"}');
+    assert.equal(result.code, 'CONTENT_OUT_OF_SCOPE');
+    assert.equal(grant.status().admittedItems, 0);
+    fs.rmSync(path.join(outside, 'ok.json'));
+    assert.equal(grant.admitContent({ filePath: requested, kind: 'json' }).code, 'CONTENT_PATH_UNRESOLVABLE');
+  }
+  assert.equal(grant.admitContent({ filePath: path.join(root, 'ok.json'), kind: 'json' }).ok, true);
+});
+
 test('each item is checked on its own terms', () => {
   const root = tempRoot();
   const grant = grantOf(root);

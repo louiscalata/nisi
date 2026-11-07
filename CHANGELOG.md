@@ -5,6 +5,13 @@ public source tree and does not include private experiments.
 
 ## Unreleased source update (0.2.1-dev)
 
+- Resolve content-consent paths the way the operating system opens them. On
+  POSIX, Node's JavaScript `realpath` removed `link/..` before following
+  `link`, so `root/link/../ok.json` was admitted as `root/ok.json` even when
+  the system would open a file outside the scope. POSIX now uses the system
+  realpath; Windows, which removes `..` from the path text itself, is
+  unchanged.
+
 - Refuse a journal-store write whose destination is a symlink, with `SYMLINK`.
   The previous-hash check read the link's target, but the rename replaced the
   link itself, so the store reported `WRITTEN` while the target kept its old
