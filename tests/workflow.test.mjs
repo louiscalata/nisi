@@ -271,6 +271,40 @@ test('captured reviewer list, IDs and methods survive caller mutation after auth
   assert.equal(reviews[0].evidence.reviewerId, 'reviewer.one');
 });
 
+test('a reviewer list that changes between reads cannot skip the required review', async () => {
+  const base = adapters();
+  let reads = 0;
+  const getter = await runWorkflow(makeTask(), { adapters: {
+    ...base,
+    // The first two reads see one reviewer; a third read would see none.
+    get reviewers() { reads += 1; return reads <= 2 ? base.reviewers : []; },
+  } });
+  assert.equal(getter.stages.filter(stage => stage.stage === 'review').length, 1);
+  assert.equal(getter.outcome, 'COMPLETED');
+  assert.equal(reads, 1);
+});
+
+test('a reviewer Proxy whose length shrinks after the count check cannot skip review', async () => {
+  const base = adapters();
+  let lengthReads = 0;
+  const shrinking = new Proxy(base.reviewers, { get(target, key, receiver) {
+    if (key === 'length') { lengthReads += 1; return lengthReads === 1 ? target.length : 0; }
+    return Reflect.get(target, key, receiver);
+  } });
+  const proxied = await runWorkflow(makeTask(), { adapters: { ...base, reviewers: shrinking } });
+  assert.equal(proxied.stages.filter(stage => stage.stage === 'review').length, 1);
+  assert.equal(proxied.outcome, 'COMPLETED');
+  assert.equal(lengthReads, 1);
+});
+
+test('a reviewer list with a hole is refused before any adapter runs', async () => {
+  const base = adapters();
+  const holey = await runWorkflow(makeTask(undefined, { policy: { ...makeTask().policy, requiredReviewers: 2 } }),
+    { adapters: { ...base, reviewers: [, base.reviewers[0]] } });
+  assert.equal(holey.outcome, 'BLOCKED');
+  assert.equal(holey.stages.filter(stage => stage.stage === 'review').length, 0);
+});
+
 test('reviewers receive immutable fresh check and test evidence; all required reviewers run', async () => {
   const a = adapters();
   a.reviewers = ['reviewer.one', 'reviewer.two'].map(id => ({ id, review({ checks, tests, binding, reviewerId }) {

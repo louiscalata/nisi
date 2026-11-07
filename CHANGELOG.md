@@ -5,6 +5,12 @@ public source tree and does not include private experiments.
 
 ## Unreleased source update (0.2.1-dev)
 
+- Read the reviewer list and its length once, then copy exactly the required
+  number of reviewers. A getter or Proxy could pass the count check and then
+  hand the engine an empty list, so a run reported `COMPLETED` with no review.
+  A list with a hole is now refused with `REVIEWER_IDENTITY_INVALID` instead of
+  throwing a `TypeError` out of `runWorkflow`.
+
 - Add `storeTimeoutMs` (default 1000 ms) for one required terminal report-storage
   attempt after workflow timeout or cancellation, using an independent signal
   and preserving the clock watermark and original `workflowOutcome`.
