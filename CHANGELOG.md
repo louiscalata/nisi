@@ -5,6 +5,13 @@ public source tree and does not include private experiments.
 
 ## Unreleased source update (0.2.1-dev)
 
+- Refuse a journal-store write whose destination is a symlink, with `SYMLINK`.
+  The previous-hash check read the link's target, but the rename replaced the
+  link itself, so the store reported `WRITTEN` while the target kept its old
+  bytes. The check runs before the temp file is written and again just before
+  the rename. **Compatibility:** an injected `fs` must now provide `lstatSync`;
+  one without it is refused with `INVALID_INPUT`.
+
 - Bound workflow snapshots and journal entry copies to 1,000,000 copied values.
   An object reached by two paths is copied and hashed once per path, so a
   shared chain 40 levels deep would run for hours before any schema check.
