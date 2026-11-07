@@ -151,3 +151,6 @@ Jev's post-analysis is not reliable enough to gate a run. On 31 labelled
 answers it ranked correct above incorrect with AUC 0.78. At a threshold that
 caught 10 of the 13 wrong answers, it also failed 7 of the 18 right ones.
 
+To rerun these settings on your own model, see
+[the harder-task benchmark](../benchmarks/harder/README.md).
+

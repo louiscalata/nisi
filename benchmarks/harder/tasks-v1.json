@@ -1,0 +1,179 @@
+{
+ "datasetId": "nisi-harder-v1",
+ "frozenAt": "2026-11-07",
+ "tasks": [
+  {
+   "id": "t01-iso-week",
+   "prompt": "Compute the ISO 8601 week number and ISO week-year for each date: 2024-12-30, 2021-01-03, 2026-01-01, 2020-12-31. Return answer as an array of objects with keys \"date\", \"week\" (integer) and \"year\" (integer), in the given order.",
+   "expectedAnswer": [
+    {
+     "date": "2024-12-30",
+     "week": 1,
+     "year": 2025
+    },
+    {
+     "date": "2021-01-03",
+     "week": 53,
+     "year": 2020
+    },
+    {
+     "date": "2026-01-01",
+     "week": 1,
+     "year": 2026
+    },
+    {
+     "date": "2020-12-31",
+     "week": 53,
+     "year": 2020
+    }
+   ]
+  },
+  {
+   "id": "t02-multikey-sort",
+   "prompt": "Sort these records by dept ascending, then score descending, then age ascending, then name ascending: [{\"name\": \"ivy\", \"dept\": \"ops\", \"age\": 31, \"score\": 88}, {\"name\": \"abe\", \"dept\": \"eng\", \"age\": 45, \"score\": 92}, {\"name\": \"kai\", \"dept\": \"eng\", \"age\": 31, \"score\": 92}, {\"name\": \"bo\", \"dept\": \"ops\", \"age\": 27, \"score\": 75}, {\"name\": \"cy\", \"dept\": \"eng\", \"age\": 27, \"score\": 81}, {\"name\": \"dee\", \"dept\": \"hr\", \"age\": 31, \"score\": 88}]. Return answer as the array of names in sorted order.",
+   "expectedAnswer": [
+    "kai",
+    "abe",
+    "cy",
+    "dee",
+    "ivy",
+    "bo"
+   ]
+  },
+  {
+   "id": "t03-merge-intervals",
+   "prompt": "Merge overlapping or touching closed intervals [[8,10],[1,3],[2,6],[15,18],[10,12],[17,20],[6,7]] (intervals that share an endpoint merge). Return answer as the sorted array of merged [start, end] pairs.",
+   "expectedAnswer": [
+    [
+     1,
+     7
+    ],
+    [
+     8,
+     12
+    ],
+    [
+     15,
+     20
+    ]
+   ]
+  },
+  {
+   "id": "t04-topo-sort",
+   "prompt": "Edges mean the first task must run before the second: [[\"lint\", \"test\"], [\"build\", \"test\"], [\"fetch\", \"build\"], [\"fetch\", \"lint\"], [\"test\", \"deploy\"], [\"docs\", \"deploy\"]]. Return answer as a topological order of all tasks, always choosing the alphabetically smallest available task next.",
+   "expectedAnswer": [
+    "docs",
+    "fetch",
+    "build",
+    "lint",
+    "test",
+    "deploy"
+   ]
+  },
+  {
+   "id": "t05-business-days",
+   "prompt": "Count business days (Monday to Friday) strictly after 2026-12-18 up to and including 2027-01-08, excluding holidays 2026-12-25 and 2027-01-01. Return answer as an integer.",
+   "expectedAnswer": 13
+  },
+  {
+   "id": "t06-base64",
+   "prompt": "Base64-encode the UTF-8 string \"Nisi: café ☕\" using standard padding. Return answer as the encoded string.",
+   "expectedAnswer": "TmlzaTogY2Fmw6kg4piV"
+  },
+  {
+   "id": "t07-levenshtein",
+   "prompt": "Compute the Levenshtein edit distance (insert, delete, substitute, each cost 1) for each pair: [\"kitten\",\"sitting\"], [\"flaw\",\"lawn\"], [\"intention\",\"execution\"], [\"abc\",\"\"]. Return answer as an array of integers in the given order.",
+   "expectedAnswer": [
+    3,
+    2,
+    5,
+    3
+   ]
+  },
+  {
+   "id": "t08-rle",
+   "prompt": "Run-length encode \"aaabccddddde\" as count followed by character for every run, including runs of length 1. Return answer as the encoded string.",
+   "expectedAnswer": "3a1b2c5d1e"
+  },
+  {
+   "id": "t09-expression",
+   "prompt": "Evaluate 7 - 3 * (2 + 4) / 6 + 2 ** 3 ** 2 / 64 where ** is exponentiation (right-associative, higher precedence than * and /). Return answer as a number.",
+   "expectedAnswer": 12.0
+  },
+  {
+   "id": "t10-group-round",
+   "prompt": "Sum amount by region for [{\"region\": \"north\", \"amount\": 12.345}, {\"region\": \"south\", \"amount\": 7.125}, {\"region\": \"north\", \"amount\": 3.335}, {\"region\": \"east\", \"amount\": 0.005}, {\"region\": \"south\", \"amount\": 2.5}], then round each sum to 2 decimals using round-half-to-even on the exact decimal value. Return answer as an object mapping region to the rounded sum, with keys in alphabetical order.",
+   "expectedAnswer": {
+    "east": 0.0,
+    "north": 15.68,
+    "south": 9.62
+   }
+  },
+  {
+   "id": "t11-e164",
+   "prompt": "Normalize each phone number to E.164, assuming US (+1) when there is no country code and dropping extensions; a number that cannot be normalized becomes null. Numbers: [\"(415) 555-0132\", \"+44 20 7946 0958\", \"415.555.0199 x12\", \"001 212 555 0100\", \"555-0100\"]. A leading 001 is the international prefix for +1. Return answer as an array in the given order.",
+   "expectedAnswer": [
+    "+14155550132",
+    "+442079460958",
+    "+14155550199",
+    "+12125550100",
+    null
+   ]
+  },
+  {
+   "id": "t12-word-freq",
+   "prompt": "In the text \"The quick brown fox, the lazy dog; THE end. A fox! Then the fox ran.\", lowercase every word and strip the punctuation characters . , ; ! from word ends. Return answer as an array of the 3 most frequent words as [word, count] pairs, ordered by count descending then word ascending.",
+   "expectedAnswer": [
+    [
+     "the",
+     4
+    ],
+    [
+     "fox",
+     3
+    ],
+    [
+     "a",
+     1
+    ]
+   ]
+  },
+  {
+   "id": "t13-roman-sum",
+   "prompt": "Convert MCMXCIV and MMXXIV to integers, add them, and return answer as the sum written in Roman numerals.",
+   "expectedAnswer": "MMMMXVIII"
+  },
+  {
+   "id": "t14-fraction",
+   "prompt": "Add 3/8, 5/12 and 7/18 exactly and return answer as an object {\"numerator\": n, \"denominator\": d} in lowest terms.",
+   "expectedAnswer": {
+    "numerator": 85,
+    "denominator": 72
+   }
+  },
+  {
+   "id": "t15-weekday",
+   "prompt": "For each date give the English weekday name: 1969-07-20, 2000-02-29, 2038-01-19, 1900-03-01. Return answer as an array of strings in the given order.",
+   "expectedAnswer": [
+    "Sunday",
+    "Tuesday",
+    "Tuesday",
+    "Thursday"
+   ]
+  },
+  {
+   "id": "t16-semver-sort",
+   "prompt": "Sort these versions by Semantic Versioning 2.0.0 precedence, lowest first: [\"1.0.0\",\"1.0.0-rc.1\",\"1.0.0-alpha\",\"1.0.0-alpha.1\",\"1.0.0-beta.11\",\"1.0.0-beta.2\",\"1.0.0-alpha.beta\",\"1.0.0-beta\"]. Return answer as the sorted array.",
+   "expectedAnswer": [
+    "1.0.0-alpha",
+    "1.0.0-alpha.1",
+    "1.0.0-alpha.beta",
+    "1.0.0-beta",
+    "1.0.0-beta.2",
+    "1.0.0-beta.11",
+    "1.0.0-rc.1",
+    "1.0.0"
+   ]
+  }
+ ]
+}

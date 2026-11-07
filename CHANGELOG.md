@@ -21,6 +21,11 @@ public source tree and does not include private experiments.
   byte-identical to before. Invalid values are refused with
   `LOCAL_CHAT_REASONING_EFFORT_INVALID`. The live pilot accepts the same option.
 
+- Add `benchmarks/harder/`, the opt-in benchmark behind the Jev and
+  reasoning figures: 16 frozen tasks whose answers `make_tasks.py` computes,
+  a one-shot arm and a Nisi arm, and flags for the token cap, reasoning effort,
+  shape-only tests and a host-supplied Jev judge module.
+
 ## 0.2.1
 
 Fixes found by review of v0.2.0. Runtime behavior changes only for inputs that
