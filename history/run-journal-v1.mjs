@@ -18,8 +18,17 @@ const exact = (o, keys) => o && typeof o === 'object' && !Array.isArray(o) &&
   Object.keys(o).length === keys.length && keys.every(k => own(o, k));
 const safe = n => Number.isSafeInteger(n) && n >= 0 && !Object.is(n, -0);
 
-function copy(x, stack = new Set()) {
+// Bounds the copied tree. An object reached by two paths is copied and hashed
+// twice, so shared references can otherwise grow the work exponentially. Count
+// string length too: one large string reached by many paths is small in memory
+// but is scanned and serialized once per path.
+const MAX_COPY_VALUES = 1000000;
+const MAX_COPY_STRING_UNITS = 64 * 1024 * 1024;
+
+function copy(x, stack = new Set(), budget = { values: 0, units: 0 }) {
   if (stack.size > 64) throw err('ENTRY');
+  if (++budget.values > MAX_COPY_VALUES) throw err('ENTRY');
+  if (typeof x === 'string' && (budget.units += x.length) > MAX_COPY_STRING_UNITS) throw err('ENTRY');
   // Reject ordinary and revoked Proxies before reflection, including nested data.
   if (nodeTypes.isProxy(x)) throw err('ENTRY');
   if (x === null || typeof x === 'string' || typeof x === 'boolean') {
@@ -38,7 +47,7 @@ function copy(x, stack = new Set()) {
     for (let i=0;i<x.length;i++) {
       const d = Object.getOwnPropertyDescriptor(x, String(i));
       if (!d || !d.enumerable || !('value' in d)) throw err('ENTRY');
-      out.push(copy(d.value, stack));
+      out.push(copy(d.value, stack, budget));
     }
   } else {
     const names = Object.getOwnPropertyNames(x), keys = Object.keys(x);
@@ -48,7 +57,7 @@ function copy(x, stack = new Set()) {
       if (BAD.has(k) || !k.isWellFormed()) throw err('ENTRY');
       const d = Object.getOwnPropertyDescriptor(x, k);
       if (!d || !d.enumerable || !('value' in d)) throw err('ENTRY');
-      out[k] = copy(d.value, stack);
+      out[k] = copy(d.value, stack, budget);
     }
   }
   stack.delete(x); return out;
