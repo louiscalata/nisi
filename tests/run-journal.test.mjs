@@ -223,6 +223,19 @@ test('journal rejects repeated retry target and attempt on append and reopen', (
   assert.equal(reopen(rehash(lines)).report.status, 'INVALID');
 });
 
+test('journal bounds the copied payload, so shared references cannot grow it exponentially', () => {
+  let payload = { leaf: true }; for (let i = 0; i < 21; i++) payload = { a: payload, b: payload };
+  const journal = createRunJournal(config());
+  assert.throws(() => journal.append(entry('shared', { payload }), 100), { code: 'ENTRY' });
+  assert.deepEqual(journal.list(100), []);
+  let small = { leaf: true }; for (let i = 0; i < 4; i++) small = { a: small, b: small };
+  assert.equal(journal.append(entry('small', { payload: small }), 100).status, 'APPENDED');
+  // One 4 MiB string reached by 32 paths would be scanned and serialized as 128 MiB.
+  let wide = 'x'.repeat(4 * 1024 * 1024); for (let i = 0; i < 5; i++) wide = { a: wide, b: wide };
+  assert.throws(() => journal.append(entry('wide', { payload: wide }), 100), { code: 'ENTRY' });
+  assert.equal(journal.list(100).length, 1);
+});
+
 test('journal bounds payload depth before hashing', () => {
   let payload = null; for (let i = 0; i < 65; i++) payload = { a: payload };
   const journal = createRunJournal(config());
