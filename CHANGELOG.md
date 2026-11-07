@@ -5,6 +5,13 @@ public source tree and does not include private experiments.
 
 ## Unreleased source update (0.2.1-dev)
 
+- Resolve content-consent paths the way the operating system opens them. On
+  POSIX, Node's JavaScript `realpath` removed `link/..` before following
+  `link`, so `root/link/../ok.json` was admitted as `root/ok.json` even when
+  the system would open a file outside the scope. POSIX now uses the system
+  realpath; Windows, which removes `..` from the path text itself, is
+  unchanged.
+
 - Add `storeTimeoutMs` (default 1000 ms) for one required terminal report-storage
   attempt after workflow timeout or cancellation, using an independent signal
   and preserving the clock watermark and original `workflowOutcome`.

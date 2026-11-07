@@ -70,6 +70,13 @@ function grantValid(v) {
   return true;
 }
 
+// Resolve a path to the file the operating system would open for it. On POSIX,
+// "link/.." goes through the link's target, as open() does; Node's JavaScript
+// realpath removes "link/.." first and can name a different in-scope file, so
+// use the system realpath there. Windows removes ".." from the path text
+// before the file system sees it, which is what the JavaScript realpath does.
+const resolveLikeOpen = target => process.platform === 'win32' ? fs.realpathSync(target) : fs.realpathSync.native(target);
+
 class ContentConsentGrant {
   #value; #digest; #clock; #issuedAtMs; #revoked = false; #admitted = 0; #lastObservedMs; #expired = false;
 
@@ -118,8 +125,8 @@ class ContentConsentGrant {
     // that points outside it must not smuggle content past the boundary.
     let resolved, rootResolved;
     try {
-      resolved = fs.realpathSync(filePath);
-      rootResolved = fs.realpathSync(this.#value.scopeRoot);
+      resolved = resolveLikeOpen(filePath);
+      rootResolved = resolveLikeOpen(this.#value.scopeRoot);
     } catch { return fail('CONTENT_PATH_UNRESOLVABLE'); }
     const prefix = rootResolved.endsWith(path.sep) ? rootResolved : rootResolved + path.sep;
     if (!resolved.startsWith(prefix)) return fail('CONTENT_OUT_OF_SCOPE');

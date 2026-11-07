@@ -40,7 +40,9 @@ path must be absolute and the kind must be permitted by the declaration. Kind
 is a caller-provided label: labeling arbitrary UTF-8 text `json` does not parse
 or validate its JSON structure.
 
-The policy checks liveness, resolves the file and root, enforces directory
+The policy checks liveness, resolves the file and root to the file the
+operating system would open (on POSIX `link/..` goes through the link's
+target; Windows removes `..` from the path text first), enforces directory
 scope, checks a regular nonempty file and its size, opens the resolved file,
 refuses an opened file with more than one hard link (`CONTENT_HARDLINK_REFUSED`),
 compares descriptor identity and nanosecond metadata, reads with a hard byte
