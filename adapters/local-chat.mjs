@@ -7,6 +7,10 @@ import { createCandidate, cloneFreeze, sha256Text, validateFindings } from '../w
 
 const DEFAULT_MAX_BYTES = 1_048_576;
 const DEFAULT_MAX_TOKENS = 4096;
+// Sent as the OpenAI-compatible `reasoning_effort` field. Reasoning models
+// otherwise spend most of the output budget on hidden thinking; 'none' asks
+// the server to skip it. Omitted by default, so the request body is unchanged.
+export const LOCAL_CHAT_REASONING_EFFORTS = Object.freeze(['none', 'minimal', 'low', 'medium', 'high']);
 const MAX_TIMEOUT = 86_400_000;
 const isRecord = value => value !== null && typeof value === 'object' && !Array.isArray(value);
 const fail = (code, message = code) => { const error = new Error(message); error.code = code; throw error; };
@@ -24,7 +28,7 @@ function validateEndpoint(value) {
 
 function config(input, role) {
   if (!isRecord(input)) fail('LOCAL_CHAT_CONFIG_INVALID');
-  const keys = ['endpoint', 'destination', 'model', 'id', 'maxResponseBytes', 'maxRequestBytes', 'maxOutputTokens', 'timeoutMs', 'fetch'];
+  const keys = ['endpoint', 'destination', 'model', 'id', 'maxResponseBytes', 'maxRequestBytes', 'maxOutputTokens', 'reasoningEffort', 'timeoutMs', 'fetch'];
   if (Reflect.ownKeys(input).some(key => !keys.includes(key))) fail('LOCAL_CHAT_CONFIG_INVALID');
   if (input.destination !== 'LOOPBACK_HTTP') fail('LOCAL_CHAT_DESTINATION_REQUIRED');
   const endpoint = validateEndpoint(input.endpoint);
@@ -38,7 +42,9 @@ function config(input, role) {
   if (!Number.isSafeInteger(maxOutputTokens) || maxOutputTokens < 1 || maxOutputTokens > 32768) fail('LOCAL_CHAT_TOKEN_CAP_INVALID');
   if (input.timeoutMs !== undefined && (!Number.isSafeInteger(input.timeoutMs) || input.timeoutMs < 1 || input.timeoutMs > MAX_TIMEOUT)) fail('LOCAL_CHAT_TIMEOUT_INVALID');
   if (input.fetch !== undefined && typeof input.fetch !== 'function') fail('LOCAL_CHAT_FETCH_INVALID');
+  if (input.reasoningEffort !== undefined && !LOCAL_CHAT_REASONING_EFFORTS.includes(input.reasoningEffort)) fail('LOCAL_CHAT_REASONING_EFFORT_INVALID');
   return Object.freeze({ endpoint, model: input.model, id: input.id, maxResponseBytes, maxRequestBytes, maxOutputTokens,
+    reasoningEffort: input.reasoningEffort ?? null,
     timeoutMs: input.timeoutMs ?? 120000, fetch: input.fetch ?? globalThis.fetch, role });
 }
 
@@ -156,6 +162,7 @@ async function call(state, payload, operation, receipts, transform) {
     if (upstream?.aborted) abort();
     if (stopCode) fail(stopCode);
     const body = JSON.stringify({ model: state.model, stream: false, temperature: 0, max_tokens: state.maxOutputTokens,
+      ...(state.reasoningEffort === null ? {} : { reasoning_effort: state.reasoningEffort }),
       response_format: responseFormat(payload, operation),
       messages: [{ role: 'system', content: INSTRUCTIONS[operation] }, {role: 'user', content: promptFor(payload, operation)}] });
     if (Buffer.byteLength(body, 'utf8') > state.maxRequestBytes) fail('LOCAL_CHAT_REQUEST_TOO_LARGE');

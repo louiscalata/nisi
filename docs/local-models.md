@@ -47,8 +47,12 @@ runtimes before loading the example.
 ## Configuration and boundaries
 
 Only the fields in the example and `maxRequestBytes`, `maxResponseBytes`,
-`maxOutputTokens`, `timeoutMs` and an optional test `fetch` implementation are
-accepted. The default request/response cap is 1 MiB each (allowed range 256 bytes
+`maxOutputTokens`, `reasoningEffort`, `timeoutMs` and an optional test `fetch`
+implementation are accepted. `reasoningEffort` (`none`, `minimal`, `low`, `medium`
+or `high`) is sent as the OpenAI-compatible `reasoning_effort` field. With a
+reasoning model, `none` stops hidden reasoning from using up the output budget.
+Without the field, the request body is unchanged. Servers that ignore the field
+behave as before. The default request/response cap is 1 MiB each (allowed range 256 bytes
 to 16 MiB), output cap 4,096 tokens (1–32,768), timeout 120,000 ms
 (1–86,400,000). The engine's total deadline can be shorter. Settings and callback
 references are captured at construction.
@@ -108,3 +112,42 @@ configuration completed within a 90-second total deadline. Other configurations
 were refused: Qwen returned empty final content, and a GPT-OSS review timed out. See [verification](verification.md) for all retained outcomes.
 The adapter is experimental; these runs do not establish general coding quality
 or measured token savings.
+
+## Jev pre- and post-analysis (optional)
+
+`nisi/adapters/jev-advisor` uses Jev, TypeSafe's System One model, to make two
+judgments around a run. Nisi does not call Jev itself. You pass a
+`judge({ state, questions })` function that sends one System One request and
+returns `{ model, answers }`, so the key and transport stay with the host.
+
+```js
+import { planWithJev, createJevReviewer } from 'nisi/adapters/jev-advisor';
+
+const plan = await planWithJev(task, { judge });          // before the run
+const author = createLocalChatAuthorAdapter({ ...config, ...plan.settings });
+const reviewers = [myReviewer, createJevReviewer({ id: 'jev.review', judge })];
+```
+
+- **Pre-analysis** asks whether the task needs the model to reason (`reason`) or
+  follows directly from the input (`direct`), and whether it is missing
+  information (`underspecified`, a probability). The default policy gives
+  `reason` tasks 4,096 output tokens and turns reasoning off for `direct` tasks.
+- **Post-analysis** is a reviewer that records Jev's probability that the
+  candidate meets every acceptance criterion. It is advisory by default: it
+  passes and puts the probability in the review summary. With `gate: true` it
+  fails below `threshold` and sends the candidate to repair.
+
+Measured on 16 frozen harder tasks with `qwen3.8-27b` on LM Studio, Nisi
+arm, one run each:
+
+| Settings | Correct | Time |
+| --- | --- | --- |
+| 1,024-token cap, reasoning on | 10/16 | 9.8 min |
+| 4,096-token cap, reasoning on | 14/16 | 15.4 min |
+| Reasoning off | 8/16 | 2.7 min |
+| Jev plan per task | 14/16 | 12.7 min |
+
+Jev's post-analysis is not reliable enough to gate a run. On 31 labelled
+answers it ranked correct above incorrect with AUC 0.78. At a threshold that
+caught 10 of the 13 wrong answers, it also failed 7 of the 18 right ones.
+

@@ -3,6 +3,24 @@
 Changes to the public Nisi package are recorded here. This file describes the
 public source tree and does not include private experiments.
 
+## Unreleased
+
+- Add `nisi/adapters/jev-advisor`, optional Jev (TypeSafe System One)
+  pre- and post-analysis. `planWithJev(task, { judge })` asks Jev whether a task
+  needs the model to reason and maps the answer to local-chat settings
+  (`direct`: `reasoningEffort: 'none'`, 1,024 tokens; `reason`: 4,096 tokens).
+  `createJevReviewer({ id, judge })` is a reviewer that records Jev's
+  probability that the candidate meets every criterion. It is advisory unless
+  created with `gate: true`. Nisi never calls Jev itself: the host supplies
+  `judge`, and every typed answer is validated.
+
+- Add a `reasoningEffort` option to the local-chat adapters (`none`, `minimal`,
+  `low`, `medium`, `high`), sent as `reasoning_effort`. With a reasoning model,
+  `none` stops hidden thinking from spending the output budget, which otherwise
+  ends calls with `LOCAL_CHAT_FINISH_REFUSED`. Without the option, requests are
+  byte-identical to before. Invalid values are refused with
+  `LOCAL_CHAT_REASONING_EFFORT_INVALID`. The live pilot accepts the same option.
+
 ## 0.2.1
 
 Fixes found by review of v0.2.0. Runtime behavior changes only for inputs that
