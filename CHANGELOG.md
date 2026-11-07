@@ -17,6 +17,12 @@ public source tree and does not include private experiments.
   objects always refused; one carrying a symbol key or accessor now reports
   `INPUT_OBJECT_INVALID` instead of `INPUT_PROPERTY_INVALID`.
 
+- Read the reviewer list and its length once, then copy exactly the required
+  number of reviewers. A getter or Proxy could pass the count check and then
+  hand the engine an empty list, so a run reported `COMPLETED` with no review.
+  A list with a hole is now refused with `REVIEWER_IDENTITY_INVALID` instead of
+  throwing a `TypeError` out of `runWorkflow`.
+
 - Add `storeTimeoutMs` (default 1000 ms) for one required terminal report-storage
   attempt after workflow timeout or cancellation, using an independent signal
   and preserving the clock watermark and original `workflowOutcome`.
@@ -38,6 +44,9 @@ public source tree and does not include private experiments.
   no released archive, history or tag is changed by this source update.
 
 
+- Copy local-chat binding identity before the response is awaited, so a receipt
+  and its returned evidence keep the candidate that call sent when the payload
+  changes in flight.
 - Add source-checkout workflow-control, mocked-interface, and inert-overhead
   benchmarks, plus a 12-task exploratory pilot against one configured local
   Gemma chat endpoint. Retain raw pilot candidates, reports, and request

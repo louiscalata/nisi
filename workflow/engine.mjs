@@ -37,11 +37,21 @@ function snapshotAdapters(task, source) {
   const authorize = method(source.authorizeContext, 'authorize', 'AUTHORIZATION_ADAPTER_REQUIRED');
   const check = method(source.staticChecks, 'check', 'STATIC_CHECK_ADAPTER_REQUIRED');
   const tests = method(source.tests, 'run', 'TEST_ADAPTER_REQUIRED');
-  if (!Array.isArray(source.reviewers) || source.reviewers.length !== task.policy.requiredReviewers) reject('REVIEW_ADAPTER_COUNT');
-  const reviewers = Object.freeze(source.reviewers.map(reviewer => Object.freeze({
-    id: validateAdapterIdentity(reviewer, 'reviewer'),
-    review: method(reviewer, 'review', 'REVIEW_ADAPTER_REQUIRED'),
-  })));
+  // Read the list and its length once, then copy exactly the required number of
+  // entries. A getter or Proxy could otherwise pass the count check and then
+  // hand map() a shorter list, so the run would finish with fewer reviews.
+  const reviewerSource = source.reviewers;
+  const required = task.policy.requiredReviewers;
+  if (!Array.isArray(reviewerSource) || reviewerSource.length !== required) reject('REVIEW_ADAPTER_COUNT');
+  const reviewerList = [];
+  for (let index = 0; index < required; index += 1) {
+    const reviewer = reviewerSource[index];
+    reviewerList.push(Object.freeze({
+      id: validateAdapterIdentity(reviewer, 'reviewer'),
+      review: method(reviewer, 'review', 'REVIEW_ADAPTER_REQUIRED'),
+    }));
+  }
+  const reviewers = Object.freeze(reviewerList);
   if (new Set(reviewers.map(reviewer => reviewer.id)).size !== reviewers.length) reject('DUPLICATE_REVIEWER');
   let author = null;
   if (task.mode === 'edit') {
