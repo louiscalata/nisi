@@ -5,6 +5,12 @@ public source tree and does not include private experiments.
 
 ## Unreleased
 
+- Docs: the README is a short landing page (what it is, try it, how it works, limits,
+  where to read more). The run journal and store reference moved to
+  `docs/run-journal.md`, the benchmark results to `docs/benchmarks.md`, installation
+  and library use to `docs/install.md`, and `docs/README.md` is a documentation
+  index with the repository layout. No behaviour changed.
+
 - Fix: a local-chat `timeoutMs` longer than 300 s now takes effect. The adapters used
   Node's global `fetch`, which ends a request that has received no response headers
   for 300 s, and these requests are not streamed, so a slow model's call failed at
