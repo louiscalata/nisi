@@ -46,16 +46,26 @@ runtimes before loading the example.
 
 ## Configuration and boundaries
 
-Only the fields in the example and `maxRequestBytes`, `maxResponseBytes`,
-`maxOutputTokens`, `reasoningEffort`, `timeoutMs` and an optional test `fetch`
-implementation are accepted. `reasoningEffort` (`none`, `minimal`, `low`, `medium`
-or `high`) is sent as the OpenAI-compatible `reasoning_effort` field. With a
-reasoning model, `none` stops hidden reasoning from using up the output budget.
-Without the field, the request body is unchanged. Servers that ignore the field
-behave as before. The default request/response cap is 1 MiB each (allowed range 256 bytes
-to 16 MiB), output cap 4,096 tokens (1–32,768), timeout 120,000 ms
-(1–86,400,000). The engine's total deadline can be shorter. Settings and callback
+Only these options are accepted; anything else is refused. Settings and callback
 references are captured at construction.
+
+| Option | Default | Notes |
+| --- | --- | --- |
+| `id`, `destination`, `endpoint`, `model` | required | `destination` must be `'LOOPBACK_HTTP'` |
+| `maxOutputTokens` | 4,096 | 1 to 32,768 |
+| `timeoutMs` | 120,000 | 1 to 86,400,000; the engine's total deadline can be shorter |
+| `maxRequestBytes`, `maxResponseBytes` | 1 MiB each | 256 bytes to 16 MiB |
+| `reasoningEffort` | omitted | `none`, `minimal`, `low`, `medium` or `high`; see below |
+| `fetch` | global `fetch` | for tests; an injected implementation is trusted |
+
+### Reasoning effort
+
+`reasoningEffort` is sent as the OpenAI-compatible `reasoning_effort` field. With
+a reasoning model, `none` stops hidden reasoning from using up the output budget.
+Without the option the request body is unchanged, and servers that ignore the
+field behave as before.
+
+### Destination
 
 The destination must resolve through URL parsing to literal IPv4 or IPv6
 loopback (`127.0.0.1` or `[::1]`) over HTTP. Hostname aliases, credentials, queries,
@@ -109,9 +119,10 @@ With the current JSON-schema request format, Gemma 3 (`google/gemma-3-4b`)
 authored a valid candidate, four assertions passed, and Gemma 4
 (`google/gemma-4-26b-a4b-qat`) reviewed the same candidate successfully. That
 configuration completed within a 90-second total deadline. Other configurations
-were refused: Qwen returned empty final content, and a GPT-OSS review timed out. See [verification](verification.md) for all retained outcomes.
-The adapter is experimental; these runs do not establish general coding quality
-or measured token savings.
+were refused: Qwen returned empty final content, and a GPT-OSS review timed out.
+See [verification](verification.md) for all retained outcomes. The adapter is
+experimental; these runs do not establish general coding quality or measured
+token savings.
 
 ## Jev pre- and post-analysis (optional)
 
@@ -153,7 +164,4 @@ answers it ranked correct above incorrect with AUC 0.78. At a threshold of 0.3
 it caught 10 of the 13 wrong answers and failed 7 of the 18 right ones. At the
 default threshold of 0.5 it caught all 13 and failed 14 of the 18, so `gate: true`
 with the default would send most correct candidates to repair.
-
-To rerun these settings on your own model, see
-[the harder-task benchmark](../benchmarks/harder/README.md).
 
