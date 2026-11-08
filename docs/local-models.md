@@ -130,12 +130,49 @@ token savings.
 
 `nisi/adapters/jev-advisor` uses Jev, TypeSafe's System One model (a hosted
 service that returns typed answers and probabilities), to make two judgments
-around a run. Nisi does not call Jev itself. You pass a
-`judge({ state, questions })` function that sends one System One request and
-returns `{ model, answers }`, so the key and transport stay with the host.
+around a run. There is no free or open-weight version of Jev: it is TypeSafe's
+paid API, priced per million input tokens, so check typesafe.ai for current
+rates and any free credit. These calls are small (a task, and for the reviewer
+one candidate), so a call costs a fraction of a cent at the rates third-party
+trackers list.
 
-**What leaves your machine.** Nisi builds `state` and hands it to your `judge`;
-your function decides what is actually sent. For pre-analysis `state` is
+**Quick setup.** Put your TypeSafe key in the `TYPESAFE_API_KEY` environment
+variable and call the advisor without a judge. Nisi then uses its built-in client
+(`nisi/adapters/jev-client`):
+
+```bash
+export TYPESAFE_API_KEY=...   # never commit it
+```
+
+```js
+const plan = await planWithJev(task);                          // uses TYPESAFE_API_KEY
+const reviewer = createJevReviewer({ id: 'jev.review' });      // same
+```
+
+Without the variable, and without a `judge` you pass, both throw
+`JEV_JUDGE_REQUIRED`: nothing is sent anywhere unless you opted in with a key or a
+judge. The client is also available directly, for a pinned model or an explicit
+key: `createJevJudge({ apiKey, model: 'jev-1.14.0', timeoutMs })`. The default
+model is `jev-latest`, which can change; pin a version when you need repeatable
+runs, and the served model is recorded in `evidence.jevModel`.
+
+**What the built-in client does.** It makes one POST of `{ model, state,
+questions }` to `https://api.typesafe.ai/v1/systemone` with your key as a Bearer
+token. The endpoint is fixed, so the key is never sent anywhere else; redirects are
+errors; the request and the response are each limited to 1 MiB; the call times out
+after 60 s by default (1 to 600 s); and neither the key nor the response body
+appears in any error. Its failures use these codes: `JEV_API_KEY_REQUIRED`,
+`JEV_API_KEY_INVALID`, `JEV_MODEL_INVALID`, `JEV_TIMEOUT_INVALID`,
+`JEV_REQUEST_INVALID`, `JEV_REQUEST_TOO_LARGE`, `JEV_AUTH_FAILED` (401 or 403),
+`JEV_RATE_LIMITED` (429), `JEV_HTTP_ERROR` (any other non-2xx status),
+`JEV_TIMEOUT`, `JEV_RESPONSE_TOO_LARGE` and `JEV_UNAVAILABLE` (no connection).
+
+**Your own judge.** To use another transport, a proxy or a different model, pass
+`judge({ state, questions })` yourself; it must return `{ model, answers }` and
+Nisi never needs the key.
+
+**What leaves your machine.** Nisi builds `state` and hands it to the judge (the
+built-in client sends it as is; a judge you write decides what is sent). For pre-analysis `state` is
 `{ task: { taskId, mode, language, allowedFiles, acceptanceCriteria } }` (not
 `protectedFiles`, `protectedSnapshots` or `policy`). For the reviewer it also
 holds `candidate: { files }` and `testsPassed`.

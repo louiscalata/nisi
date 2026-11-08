@@ -10,13 +10,13 @@ Nisi keeps its product name. Component names describe their software responsibil
 | JSON Canonicalizer | `serialization/canonical-json-v1.mjs`, `canonicalizeJsonV1` | `canonicalizeJSONV1`, legacy path and restricted v1 profile retained |
 | Apple Foundation Models Adapter | `adapters/apple-foundation-models.mjs`, `createAppleFoundationModelsAdapter` | `createAFMContentExecutor` and old import path retained |
 | Local Chat Author / Reviewer | `adapters/local-chat.mjs`, `createLocalChatAuthorAdapter`, `createLocalChatReviewerAdapter` | New explicit loopback destination |
-| Jev Advisor (optional) | `adapters/jev-advisor.mjs`, `planWithJev`, `createJevReviewer` | New in v0.3.0; subpath import `nisi/adapters/jev-advisor` |
+| Jev Advisor (optional) | `adapters/jev-advisor.mjs`, `planWithJev`, `createJevReviewer`; built-in client `adapters/jev-client.mjs`, `createJevJudge` | Advisor new in v0.3.0, client after it; subpath imports `nisi/adapters/jev-advisor` and `nisi/adapters/jev-client` |
 | Run Journal / Journal Store | `history/run-journal-v1.mjs`, `history/run-journal-store-v1.mjs` | Subpath imports `nisi/history/run-journal` and `nisi/history/run-journal-store` |
 | Static Analysis Check | `tools/check-side-effects.mjs`, `npm run check:static` | `npm run check:structural` and original CLI retained |
 | Native Model Bridge | `probes/afm-content-probe.swift` | Source path retained; descriptive documentation added |
 | Run Report / Report Store | Frozen engine result and injected `store` callback | New contract; sample store writes and verifies a report |
 
-The package root exports the workflow, policy, serialization and adapter APIs. The Jev advisor and the run journal and store are subpath-only imports (`nisi/adapters/jev-advisor`, `nisi/history/run-journal`, `nisi/history/run-journal-store`), not root exports. The legacy canonicalizer and gate import paths remain available as explicit `exports` entries; paths not listed in `exports` do not resolve. Result codes and v1 consent/observation digest formulas are preserved; the new execution-receipt digest has a separate versioned domain.
+The package root exports the workflow, policy, serialization and adapter APIs. The Jev advisor and client and the run journal and store are subpath-only imports (`nisi/adapters/jev-advisor`, `nisi/adapters/jev-client`, `nisi/history/run-journal`, `nisi/history/run-journal-store`), not root exports. The legacy canonicalizer and gate import paths remain available as explicit `exports` entries; paths not listed in `exports` do not resolve. Result codes and v1 consent/observation digest formulas are preserved; the new execution-receipt digest has a separate versioned domain.
 
 The prose name **Workflow Orchestrator** describes coordination. The public
 `runWorkflow` function and `workflow/engine.mjs` path remain stable. For workflow,

@@ -57,6 +57,20 @@ does not install models or start a model server.
   server (see [Local model adapters](#local-model-adapters)). It does not run
   model-generated programs or change a repository.
 
+## On main, not yet released
+
+- **Built-in Jev client.** Set `TYPESAFE_API_KEY` and `planWithJev(task)` and
+  `createJevReviewer({ id })` call Jev themselves through `nisi/adapters/jev-client`,
+  with no judge function to write. The endpoint is fixed, redirects are errors,
+  the request and response are bounded, calls time out, and the key never appears
+  in an error. With neither a key nor a `judge` you pass, nothing is sent. Jev has
+  no free or open-weight version; see
+  [Jev analysis](https://github.com/louiscalata/nisi/blob/main/docs/local-models.md#jev-pre--and-post-analysis-optional)
+  for setup, the data that is sent and the cost note.
+- **Harder tasks, v2.** `benchmarks/harder` gains 42 more demanding tasks in six
+  categories (`--tasks v2`), with every answer computed by a generator and checked
+  by an independent solver.
+
 ## What changed in v0.3.0
 
 These are new since v0.2.1. All are optional: a request that does not set
@@ -64,9 +78,9 @@ These are new since v0.2.1. All are optional: a request that does not set
 you import it. See the [changelog](https://github.com/louiscalata/nisi/blob/main/CHANGELOG.md) for the full list.
 
 - **Jev analysis.** Jev is TypeSafe's System One model: a hosted service that
-  returns typed answers and probabilities. Nisi never calls it. You pass a
-  `judge({ state, questions })` function that does, so the key and transport stay
-  with you. Nisi builds `state` (the task's id, mode, language, allowed file names
+  returns typed answers and probabilities. In v0.3.0 you pass a
+  `judge({ state, questions })` function that calls it, so the key and transport
+  stay with you (the built-in client above is newer). Nisi builds `state` (the task's id, mode, language, allowed file names
   and acceptance criteria and, for the reviewer, the candidate's files and whether
   the tests passed), and your
   `judge` decides what is actually sent to the service. `nisi/adapters/jev-advisor`

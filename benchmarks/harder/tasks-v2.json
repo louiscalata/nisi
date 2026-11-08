@@ -1,0 +1,1236 @@
+{
+ "datasetId": "nisi-harder-v2",
+ "frozenAt": "2026-11-08",
+ "tasks": [
+  {
+   "id": "state-sim-01",
+   "category": "state-sim",
+   "tier": "medium",
+   "prompt": "A cache holds at most 3 entries (key -> integer value) and starts empty. It evicts by least-recently-used order. Rules: 'put K V' on a key already present replaces its value and makes it the most recently used (nothing is evicted). 'put K V' on a new key first evicts the least recently used entry if the cache already holds 3 entries, then inserts K as the most recently used. 'get K' on a present key returns its value and makes it the most recently used; on an absent key it returns -1 and changes nothing. Keys are single capital letters and are case sensitive. Process these operations in order: get E; put D 23; get A; get B; get E; put E 11; get E; put C 72; get B; put B 23; put B 23; put A 38; put C 39; put A 67; put C 26; put D 82; get C; get C; get D; get A; put B 48; put A 45. Collect the return value of every 'get' in order. After the last operation, list the remaining entries from least recently used to most recently used as [key, value] pairs. Return answer as {\"gets\": [int, ...], \"final\": [[key, value], ...]}.",
+   "expectedAnswer": {
+    "gets": [
+     -1,
+     -1,
+     -1,
+     -1,
+     11,
+     -1,
+     26,
+     26,
+     82,
+     67
+    ],
+    "final": [
+     [
+      "D",
+      82
+     ],
+     [
+      "B",
+      48
+     ],
+     [
+      "A",
+      45
+     ]
+    ]
+   }
+  },
+  {
+   "id": "state-sim-02",
+   "category": "state-sim",
+   "tier": "medium",
+   "prompt": "A token-bucket rate limiter has capacity 6 and starts full (6 tokens) with refill anchor 0. Time is in whole seconds. You are given requests as (time, cost) pairs in non-decreasing time order. Processing one request at time t, in this exact order: (1) n = floor((t - anchor) / 4); (2) tokens = min(6, tokens + n); (3) if tokens is now exactly 6, set anchor = t, otherwise set anchor = anchor + 4*n (leftover partial time is kept); (4) if tokens >= cost, the request is allowed (A) and tokens decreases by cost; otherwise it is denied (D) and tokens is unchanged. The anchor is never changed by step 4. Requests: (0,2), (0,1), (0,3), (1,3), (1,2), (7,1), (8,4), (13,1), (16,1), (21,2), (24,2), (29,2), (30,2), (35,2), (35,2), (41,1), (47,1), (49,3), (50,2), (52,1). Report the A/D outcome of each request in order and the token count after the last request. Return answer as {\"results\": [\"A\" or \"D\", ...], \"tokens\": int}.",
+   "expectedAnswer": {
+    "results": [
+     "A",
+     "A",
+     "A",
+     "D",
+     "D",
+     "A",
+     "D",
+     "A",
+     "A",
+     "A",
+     "D",
+     "A",
+     "D",
+     "D",
+     "D",
+     "A",
+     "A",
+     "A",
+     "D",
+     "A"
+    ],
+    "tokens": 0
+   }
+  },
+  {
+   "id": "state-sim-03",
+   "category": "state-sim",
+   "tier": "medium",
+   "prompt": "A vending machine sells items A (price 135, stock 2), B (price 60, stock 3) and C (price 90, stock 1). Prices and coins are in cents. The coin box holds denominations 100, 25, 10 and 5 with these counts: 100:1, 25:2, 10:3, 5:1. For each transaction 'Item:coins' a customer inserts those coins and selects the item. Check in this order: (1) if the item's stock is 0, outcome SOLDOUT; (2) else if the inserted total is below the price, outcome SHORT; (3) else add the inserted coins to the box, then make change = total - price greedily without backtracking: for denominations 100, 25, 10, 5 in that order, give as many coins of the denomination as fit in the remaining change and are available in the box (the box includes the coins just inserted). If the remaining change is not exactly 0 afterwards, outcome NOCHANGE; otherwise the sale completes and outcome is 'OK:' followed by the change coins in the order given, comma-separated (nothing after the colon if change is 0). SOLDOUT, SHORT and NOCHANGE return the inserted coins to the customer, so the box and item stock stay exactly as before that transaction. A completed sale keeps the inserted coins, removes the change coins from the box and reduces the item stock by 1. Transactions in order: C:25+10+10+5; A:100+100+25+10; B:100+100+100+25; B:25+25+25; B:25+25+5; A:100+25+10+5; B:100+25+25+25; A:10; B:100+25. Return answer as {\"outcomes\": [string, ...], \"coins\": {\"100\": int, \"25\": int, \"10\": int, \"5\": int}} where coins are the box counts after all transactions.",
+   "expectedAnswer": {
+    "outcomes": [
+     "SHORT",
+     "OK:100",
+     "OK:100,100,25,25,10,5",
+     "NOCHANGE",
+     "SHORT",
+     "OK:5",
+     "NOCHANGE",
+     "SOLDOUT",
+     "NOCHANGE"
+    ],
+    "coins": {
+     "100": 4,
+     "25": 3,
+     "10": 4,
+     "5": 0
+    }
+   }
+  },
+  {
+   "id": "state-sim-04",
+   "category": "state-sim",
+   "tier": "hard",
+   "prompt": "Four bank accounts start with balances A=300, B=40, C=650, D=90 (integer currency units). All start unfrozen. Operations are numbered and processed in order. DEP X n adds n to X. WD X n costs X the amount n plus a flat fee of 2. XFER X>Y n costs X the amount n plus a flat fee of 1, and adds n to Y (the fee is not credited to anyone). Outgoing rules: a WD or XFER is rejected, with no effect at all, if its source account is frozen, or if balance - total cost would be below -100. MONTH charges each account in the order A,B,C,D a fee of 10 if its balance at that moment is below 500 (this fee is always charged, even if the balance drops under -100). Overdraft fee: whenever any charge (WD, XFER cost, or monthly fee) moves an account from balance >= 0 to balance < 0, an extra fee of 25 is charged to it immediately (once per such crossing; a deposit that does not restore balance >= 0 does not reset anything). Freeze: after the charge and any overdraft fee, if an account's balance is <= -120 it becomes frozen. A frozen account is unfrozen as soon as a credit (DEP or incoming XFER) leaves its balance >= 0; frozen accounts can still receive credits. Operations: 1.XFER D>B 25; 2.DEP C 35; 3.XFER B>C 160; 4.XFER C>B 110; 5.XFER C>D 70; 6.DEP A 20; 7.XFER D>A 40; 8.XFER D>C 110; 9.XFER B>C 160; 10.WD D 90; 11.XFER B>C 70; 12.XFER A>D 40; 13.XFER A>B 25; 14.XFER B>D 70; 15.WD A 150; 16.MONTH; 17.WD D 150; 18.WD B 60. Return answer as {\"balances\": {\"A\": int, \"B\": int, \"C\": int, \"D\": int}, \"frozen\": [letters of frozen accounts in alphabetical order], \"rejected\": [operation numbers of rejected operations in ascending order]}.",
+   "expectedAnswer": {
+    "balances": {
+     "A": 131,
+     "B": -92,
+     "C": 773,
+     "D": -120
+    },
+    "frozen": [
+     "D"
+    ],
+    "rejected": [
+     9,
+     10,
+     11,
+     18
+    ]
+   }
+  },
+  {
+   "id": "state-sim-05",
+   "category": "state-sim",
+   "tier": "hard",
+   "prompt": "A shop tracks two products, X and Y, as lots [quantity, unit cost], both starting with no lots. 'BUY P q@c' appends a new lot [q, c] for product P as its newest lot (lots with equal cost are never merged). 'SELL P q@s' sells up to q units of P at unit price s. Product X is sold FIFO: units come from the oldest lot first. Product Y is sold LIFO: units come from the newest lot first. A sale takes from a lot as many units as are still needed and available, then moves on to the next lot in that order. If total stock is below q, the sale is a partial fill: it sells only what exists (possibly 0 units) and the unfilled remainder is lost, not backordered. A sale's profit = (units actually sold * s) - (sum of the unit costs of the units actually taken). Lots that reach quantity 0 are removed; a partly used lot keeps its place and cost. 'RECALL P c' removes every lot of P whose unit cost equals c, whatever its quantity (no profit entry). Operations in order: BUY X 4@5; SELL X 9@8; BUY Y 8@6; BUY Y 3@5; BUY X 8@5; RECALL X 5; BUY X 2@6; BUY Y 3@9; SELL Y 4@10; BUY Y 3@6; BUY X 2@6; SELL X 13@12; BUY X 3@4; BUY Y 6@9; SELL X 4@12; SELL X 13@8; BUY Y 5@6; SELL Y 12@12; BUY Y 5@6; SELL Y 7@10; SELL X 2@6; SELL X 2@10. Report the profit of every SELL in order, and the remaining lots of each product listed from the oldest lot to the newest lot. Return answer as {\"profits\": [int, ...], \"remaining\": {\"X\": [[qty, cost], ...], \"Y\": [[qty, cost], ...]}}.",
+   "expectedAnswer": {
+    "profits": [
+     12,
+     8,
+     24,
+     24,
+     0,
+     54,
+     28,
+     0,
+     0
+    ],
+    "remaining": {
+     "X": [],
+     "Y": [
+      [
+       8,
+       6
+      ],
+      [
+       2,
+       5
+      ]
+     ]
+    }
+   }
+  },
+  {
+   "id": "state-sim-06",
+   "category": "state-sim",
+   "tier": "hard",
+   "prompt": "An LFU cache holds at most 3 entries (key -> integer value) and starts empty. Each entry has a use count. 'put K V' on a present key replaces the value and increases its use count by 1. 'put K V' on a new key: if the cache already holds 3 entries, first evict the entry with the lowest use count; if several entries tie for the lowest count, evict the one whose most recent access (a get hit or a put on it, counting its insertion) is oldest. Then insert K with use count 1 (an evicted key that returns starts again at 1). 'get K' on a present key returns its value and increases its use count by 1; on an absent key it returns -1 and changes nothing. Keys are single capital letters. Operations in order: put C 84; put C 61; get F; put D 90; put F 50; put E 28; put B 11; put A 38; get E; put C 60; get D; put C 61; get A; put E 87; put B 89; get C; put A 64; put C 11; put B 94; get D; put C 96; put A 83; put B 89; get B; get D; put B 73. Report the return value of every get in order, the evicted keys in eviction order, and the final entries as [key, value, use count] sorted alphabetically by key. Return answer as {\"gets\": [int, ...], \"evicted\": [key, ...], \"final\": [[key, value, count], ...]}.",
+   "expectedAnswer": {
+    "gets": [
+     -1,
+     -1,
+     -1,
+     38,
+     61,
+     -1,
+     89,
+     -1
+    ],
+    "evicted": [
+     "D",
+     "F",
+     "E",
+     "B",
+     "E"
+    ],
+    "final": [
+     [
+      "A",
+      83,
+      4
+     ],
+     [
+      "B",
+      73,
+      5
+     ],
+     [
+      "C",
+      96,
+      7
+     ]
+    ]
+   }
+  },
+  {
+   "id": "state-sim-07",
+   "category": "state-sim",
+   "tier": "hard",
+   "prompt": "A single elevator serves floors 1 to 9 and holds at most 2 passengers. At time 0 it is at floor 1, empty, with direction UP. Passengers are given as id:requestTime:origin>destination. Time advances in whole steps; moving one floor takes exactly one step. At each time t, do the following in this order: (1) every passenger whose requestTime equals t starts waiting at their origin floor; (2) every passenger on board whose destination is the current floor exits, and is recorded as dropped at time t (several exits at the same time are listed by ascending id); (3) waiting passengers at the current floor board in ascending id order, while fewer than 2 are on board (the rest keep waiting; boarding ignores direction); (4) choose movement: targets are the destinations of passengers on board plus the origins of waiting passengers, ignoring any target equal to the current floor. If there are no targets, the elevator stays and keeps its direction. If some target lies strictly ahead in the current direction, move one floor in that direction. Otherwise reverse direction and move one floor in the new direction. Then t increases by 1. The simulation stops during the step in which the last passenger exits (nothing further happens after step 2 of that step). Passengers: 1:14:9>1, 2:7:2>6, 3:4:2>1, 4:11:1>7, 5:6:9>6, 6:4:5>7, 7:1:7>8, 8:6:2>7, 9:9:9>3. Return answer as {\"drops\": [[id, time], ...] in the order dropped, \"finalFloor\": int} where finalFloor is the floor at the end.",
+   "expectedAnswer": {
+    "drops": [
+     [
+      6,
+      7
+     ],
+     [
+      7,
+      8
+     ],
+     [
+      5,
+      12
+     ],
+     [
+      9,
+      15
+     ],
+     [
+      3,
+      17
+     ],
+     [
+      2,
+      22
+     ],
+     [
+      4,
+      23
+     ],
+     [
+      1,
+      33
+     ],
+     [
+      8,
+      39
+     ]
+    ],
+    "finalFloor": 7
+   }
+  },
+  {
+   "id": "text-formats-01",
+   "category": "text-formats",
+   "tier": "medium",
+   "prompt": "Below is CSV text between the lines <<< and >>> (the marker lines are not part of the data). It follows RFC 4180: fields may be wrapped in double quotes; inside a quoted field a comma is literal, a doubled quote \"\" is one literal quote, and a line break is part of the field. The first record is the header.\n<<<\nid,customer,category,amount_cents,status,note\n101,\"Ng, Alice\",Books,\"1,250\",paid,\"gift \"\"wrap\"\"\"\n102,Bob,books ,800,Paid,\n103,\"Cruz, \"\"Dee\"\"\",Games,2400,REFUNDED,\"line one\nline two\"\n104,Eli,Games,\"3,100\", paid ,\n102,Bob,Toys,9999,paid,duplicate id\n105,Fay,TOYS,1500,void,\n106,Gus,Toys ,700,paid,\"a,b,c\"\n107,Hal,games,450,pending,\n108,\" Ivy \",Books,300,paid,\"say \"\"hi\"\"\"\n109,Jo,Music,1999,paid,\n110,Kim,music,1,paid,\n>>>\nProcess the data records in the order they appear. (1) If a record's id (after trimming spaces) was already seen in an earlier record, ignore this record entirely; otherwise remember the id, even if the record is excluded in the next step. (2) Exclude the record if its status, trimmed and compared case-insensitively, is refunded or void. (3) For the remaining records, trim spaces from category and lowercase it; amount_cents is a whole number of cents in which commas are thousands separators to be removed. Add each amount to the total of its category. Keep only categories whose total is at least 2000. Sort by total descending, ties by category name ascending. Return answer as a JSON array of [category, total] pairs, with category a lowercase string and total an integer.",
+   "expectedAnswer": [
+    [
+     "games",
+     3550
+    ],
+    [
+     "books",
+     2350
+    ],
+    [
+     "music",
+     2000
+    ]
+   ]
+  },
+  {
+   "id": "text-formats-02",
+   "category": "text-formats",
+   "tier": "medium",
+   "prompt": "Define the key of a word in three steps, applied in this order. Step 1: replace each character that appears on the left of the table below with its right-hand text; every other character is kept as is. Table: ß=ss, ø=o, Ø=o, Æ=ae, İ=i, ı=i, Ł=l, ó=o, ü=u, Ü=u, ñ=n, Ñ=n, Œ=oe, ſ=s, é=e, ö=o, ç=c. Step 2: in the result, turn each ASCII capital letter A-Z into its lowercase form (no other character changes). Step 3: delete every hyphen, apostrophe and space. Note that any non-ASCII character not in the table (for example ë or ź) stays unchanged and keeps words apart.\nWords (a word may be listed more than once; identical strings count as one word): [\"Straße\", \"STRASSE\", \"Ørsted\", \"Strasse\", \"Æther\", \"Orsted\", \"strasse\", \"Istanbul\", \"İstanbul\", \"Ko-ko\", \"Łódź\", \"Lodz\", \"Koko\", \"aether\", \"O'Neil\", \"Müller\", \"MÜLLER\", \"Mueller\", \"ıstanbul\", \"Cañon\", \"Canon\", \"ko ko\", \"Œuvre\", \"oeuvre\", \"Zoë\", \"Zoe\", \"Aether\", \"Koko\", \"ørsted\", \"oneil\", \"ONeil\", \"CAÑON\", \"Muller\", \"ſun\", \"SUN\", \"Sun\"]\nGroup the distinct words by key. Keep only groups with at least 2 distinct words. Inside a group, sort the words by Unicode code point (so every capital ASCII letter sorts before every lowercase one, and non-ASCII characters sort after ASCII). Sort the groups by their key, using code point order. Return answer as a JSON array of groups, each group a JSON array of word strings.",
+   "expectedAnswer": [
+    [
+     "Aether",
+     "aether",
+     "Æther"
+    ],
+    [
+     "CAÑON",
+     "Canon",
+     "Cañon"
+    ],
+    [
+     "Istanbul",
+     "İstanbul",
+     "ıstanbul"
+    ],
+    [
+     "Ko-ko",
+     "Koko",
+     "ko ko"
+    ],
+    [
+     "Muller",
+     "MÜLLER",
+     "Müller"
+    ],
+    [
+     "oeuvre",
+     "Œuvre"
+    ],
+    [
+     "O'Neil",
+     "ONeil",
+     "oneil"
+    ],
+    [
+     "Orsted",
+     "Ørsted",
+     "ørsted"
+    ],
+    [
+     "STRASSE",
+     "Strasse",
+     "Straße",
+     "strasse"
+    ],
+    [
+     "SUN",
+     "Sun",
+     "ſun"
+    ]
+   ]
+  },
+  {
+   "id": "text-formats-03",
+   "category": "text-formats",
+   "tier": "medium",
+   "prompt": "Convert this Markdown table (text between the <<< and >>> lines) to JSON.\n<<<\n| Item | Qty | Price | Notes | In stock | QTY | price |\n|:-----|----:|:-----:|-------|----------|-----|-------|\n| Widget \\| Pro | 12 | 1999 | \"fragile\" | true | 007 | -5 |\n| Gadget | 3 | | a\\\\b | false | 4 |\n| Doohickey |  0 | 250 | | TRUE | 0 | 10 | extra |\n| Gizmo | 5 | 0 | x \\| y \\| z | true | -0 | 1 |\n|  | 8 | 12 | | false | 1 | 2 |\n| Neg | -8 | 1 | | true | 1 | 1 |\n>>>\nRules. Row 2 is the alignment row and is ignored. For every row: strip the single leading and single trailing pipe, split on pipes, then trim spaces from each cell. The only escape is backslash-pipe, which stands for a literal pipe character and does not split; any other backslash is an ordinary character kept as is (two backslashes stay two backslashes). Header names are trimmed and lowercased; if a lowercased name repeats, its 2nd occurrence gets the suffix _2 and a 3rd would get _3. Cells beyond the number of headers are ignored; a row with fewer cells leaves the missing columns empty. Cell conversion: text matching a plain integer (0, or an optional minus then a nonzero digit followed by digits, so 007 and -0 do not qualify) becomes a JSON integer; exactly true or false (lowercase) becomes a JSON boolean; an empty cell means the key is omitted from that row's object; anything else stays a string. After conversion, keep only rows whose qty is an integer >= 0. Return answer as a JSON array of objects, one per kept row in table order.",
+   "expectedAnswer": [
+    {
+     "item": "Widget | Pro",
+     "qty": 12,
+     "price": 1999,
+     "notes": "\"fragile\"",
+     "in stock": true,
+     "qty_2": "007",
+     "price_2": -5
+    },
+    {
+     "item": "Gadget",
+     "qty": 3,
+     "notes": "a\\\\b",
+     "in stock": false,
+     "qty_2": 4
+    },
+    {
+     "item": "Doohickey",
+     "qty": 0,
+     "price": 250,
+     "in stock": "TRUE",
+     "qty_2": 0,
+     "price_2": 10
+    },
+    {
+     "item": "Gizmo",
+     "qty": 5,
+     "price": 0,
+     "notes": "x | y | z",
+     "in stock": true,
+     "qty_2": "-0",
+     "price_2": 1
+    },
+    {
+     "qty": 8,
+     "price": 12,
+     "in stock": false,
+     "qty_2": 1,
+     "price_2": 2
+    }
+   ]
+  },
+  {
+   "id": "text-formats-04",
+   "category": "text-formats",
+   "tier": "hard",
+   "prompt": "A log has one event per line in the form: TIMESTAMP [LEVEL] SERVICE rid=ID free text. TIMESTAMP is local time with a numeric UTC offset, YYYY-MM-DDTHH:MM:SS+HH:MM or -HH:MM; the offset says how far the local clock is ahead of (+) or behind (-) UTC, so UTC = local minus offset. Years follow the real Gregorian calendar (2028 is a leap year).\nLog:\n2028-02-29T00:30:00+02:00 [ERROR] api rid=a1 db timeout\n2028-02-28T21:15:10-03:30 [error] web rid=b2 bad gateway\n# 2028-02-28T10:00:00+00:00 [ERROR] api rid=zz commented out\n2028-02-29T04:05:00+05:45 [FATAL] queue rid=c3 oom\n2028-02-28T22:30:00+00:00 [WARN] api rid=a1 retrying\n2028-02-28T23:59:59-12:00 [Error] web rid=d4 cert\n2028-02-29T00:10:00+09:00 [ERROR] api rid=a1 db timeout again\n2028-02-29T06:00:00+14:00 [INFO] web rid=e5 ok\n2028-03-01T00:00:00+00:00 [FATAL] api rid=f6 crash\n2028-02-28T19:00:00-05:00 [ERROR] queue rid=b2 duplicate rid\n2028-12-31T23:50:00-05:00 [fatal] web rid=g7 disk full\n2028-03-01T05:45:00+05:45 [ERROR] api rid=f6 crash retry\n2028-02-28T16:00:00-08:00 [ERROR] web rid=h8 ssl\nProcedure. (1) Ignore lines whose first character is #. (2) Keep only events whose LEVEL is ERROR or FATAL; LEVEL is case-insensitive. (3) Among the kept events only, if several share the same rid, keep just the one with the earliest UTC instant. (4) Convert the kept events to UTC and sort them ascending. Return answer as a JSON array of UTC timestamp strings formatted YYYY-MM-DDTHH:MM:SSZ.",
+   "expectedAnswer": [
+    "2028-02-28T15:10:00Z",
+    "2028-02-28T22:20:00Z",
+    "2028-02-29T00:00:00Z",
+    "2028-02-29T00:00:00Z",
+    "2028-02-29T11:59:59Z",
+    "2028-03-01T00:00:00Z",
+    "2029-01-01T04:50:00Z"
+   ]
+  },
+  {
+   "id": "text-formats-05",
+   "category": "text-formats",
+   "tier": "hard",
+   "prompt": "Render each template against this JSON data (values are never re-scanned for braces): {\"user\":{\"name\":\"Ada\",\"nick\":\"\",\"tags\":[\"x\",\"y\"],\"age\":36,\"admin\":false,\"manager\":null},\"note\":\"use {braces} here\",\"items\":[{\"name\":\"pen\",\"qty\":3},{\"name\":\"ink\",\"qty\":0}]}\nScan a template left to right. At each position: if the text starts with {{ output one literal { and skip both characters; else if it starts with }} output one literal } and skip both; else if it starts with a single { , the placeholder body runs up to the next } (consumed) and is evaluated; any other character is copied. E.g. {{x}} gives {x}, and {{{x}}} gives { + value of x + }.\nA body is PATH or PATH|FALLBACK, split at the first | only (FALLBACK may contain further | ). PATH is dot-separated: a segment indexes an object by key or a list by 0-based position. PATH is missing if any step fails or the final value is null; an empty string IS present. Present values print as is: strings raw, integers in decimal, booleans as true or false. If PATH is missing: with no FALLBACK print <?PATH>; if FALLBACK starts with @, look up the rest as a path and print it (nothing if also missing); otherwise print FALLBACK literally.\nTemplates:\n1) Hi {user.name|guest}, {user.nick|@user.name}!\n2) {{{user.name}}} {{user.name}} }}{{\n3) {note} / {items.1.name}x{items.1.qty} / {items.0.name|none}\n4) {user.manager|@user.name} {user.admin} {user.age} {user.tags.1} {user.tags.5|n/a} {user.zip}\n5) [{user.nick|@user.manager}]|{user.zip|x|y}|{x|@y}\nReturn answer as a JSON array of the 5 rendered strings.",
+   "expectedAnswer": [
+    "Hi Ada, !",
+    "{Ada} {user.name} }{",
+    "use {braces} here / inkx0 / pen",
+    "Ada false 36 y n/a <?user.zip>",
+    "[]|x|y|"
+   ]
+  },
+  {
+   "id": "text-formats-06",
+   "category": "text-formats",
+   "tier": "hard",
+   "prompt": "Parse this INI text (between <<< and >>>) and answer the lookups below.\n<<<\ntimeout = 30 ; seconds\nname=Top\n[Server]\nHost = \"example.com ; main\"   # comment\nport=80\nPORT = 8080\ntag[] = a\nTag[] = b\npath = C:\\temp\\x\n; a comment line\n[db]\nuser = \"adm\\\"in\"\nurl = postgres://h/db#frag\npass = abc;def\nempty =\n[server]\nport = 9090 #  override\ntag[] = c\nquote = say \"hi\"\n>>>\nRules. Trim spaces and tabs from each line's ends. Skip blank lines and lines starting with ; or #. A line [name] starts a section; section names and keys are lowercased; a repeated section continues the same section. Lines before the first section belong to section global. Any other line is key=value split at the first =; trim both parts. Value: if it starts with a double quote, it ends at the next unescaped double quote; inside, backslash-quote means a quote and double-backslash means one backslash, any other backslash stays, and text after the closing quote is ignored. Otherwise the first whitespace character immediately followed by ; or # begins an inline comment, removed with the rest of the line, then trailing spaces are trimmed (; or # not preceded by whitespace is ordinary text; backslashes are ordinary). A key ending with [] collects all its values into a list in order of appearance across the whole file (the key keeps its [] suffix); for any other key the last assignment wins.\nLookups (section.key): global.timeout, global.name, server.host, server.port, server.tag[], server.path, db.user, db.url, db.pass, db.empty, server.quote, server.missing, db.tag[].\nA lookup that finds nothing gives null. Return answer as a JSON array of the 13 results in lookup order (strings, arrays of strings, or null).",
+   "expectedAnswer": [
+    "30",
+    "Top",
+    "example.com ; main",
+    "9090",
+    [
+     "a",
+     "b",
+     "c"
+    ],
+    "C:\\temp\\x",
+    "adm\"in",
+    "postgres://h/db#frag",
+    "abc;def",
+    "",
+    "say \"hi\"",
+    null,
+    null
+   ]
+  },
+  {
+   "id": "text-formats-07",
+   "category": "text-formats",
+   "tier": "hard",
+   "prompt": "Parse the query string of this URL: https://shop.example/search?q=caf%C3%A9+au+lait&tag=a&%74ag=q0&tag=b%26c&&flag&n=1%2B1&tag=&x=%zz%41&=empty&k=v=w&tag[]=z&e=%e2%82%ac5&d=%2541&a%20b=1+2&e=%C3%A9#frag?ignored=1&q=late\nRules, in order. (1) Remove the fragment: drop the first # and everything after it. (2) The query is everything after the first ? that remains. (3) Split the query at every & ; skip empty segments. (4) Split each segment at its first = ; a segment without = has the empty string as value. (5) Decode the key and the value separately: first each + becomes a space, then each % followed by exactly two hex digits (either letter case) becomes one byte, and the whole resulting byte sequence is read as UTF-8 (all inputs here are valid); a % not followed by two hex digits is kept as a literal %. Decoding happens once only, so %2541 gives %41. (6) Skip the segment if its decoded key is empty. (7) Group values by decoded key (case-sensitive; a key such as tag[] is just another key), each key mapping to the list of its values in order of appearance in the URL.\nReturn answer as a JSON object mapping each decoded key to its JSON array of decoded value strings.",
+   "expectedAnswer": {
+    "q": [
+     "café au lait"
+    ],
+    "tag": [
+     "a",
+     "q0",
+     "b&c",
+     ""
+    ],
+    "flag": [
+     ""
+    ],
+    "n": [
+     "1+1"
+    ],
+    "x": [
+     "%zzA"
+    ],
+    "k": [
+     "v=w"
+    ],
+    "tag[]": [
+     "z"
+    ],
+    "e": [
+     "€5",
+     "é"
+    ],
+    "d": [
+     "%41"
+    ],
+    "a b": [
+     "1 2"
+    ]
+   }
+  },
+  {
+   "id": "algorithms-01",
+   "category": "algorithms",
+   "tier": "medium",
+   "prompt": "A build has 12 tasks: m5, n9, m6, n11, n20, n10, n12, n2, n1, n3, n100, m50.\nEach line below means the left task must be completed before the right task. A line may appear more than once; a repeated line is still just one constraint.\nm5 -> n1\nn12 -> n20\nn3 -> n12\nn3 -> n10\nm50 -> n20\nn9 -> m50\nn3 -> n2\nm50 -> n10\nm6 -> n20\nn100 -> m5\nn1 -> n10\nn2 -> n11\nn100 -> n20\nm6 -> n20\nBuild the completion order with this procedure, repeated 12 times: among the not-yet-completed tasks whose prerequisites are ALL already completed, pick the one whose name is smallest when compared as plain text, character by character from the left (so 'n10' comes before 'n2', and 'm6' comes before 'n1'), and complete it.\nReturn answer as a JSON array of the 12 task names in completion order, for example [\"x1\",\"x2\",...].",
+   "expectedAnswer": [
+    "m6",
+    "n100",
+    "m5",
+    "n1",
+    "n3",
+    "n12",
+    "n2",
+    "n11",
+    "n9",
+    "m50",
+    "n10",
+    "n20"
+   ]
+  },
+  {
+   "id": "algorithms-02",
+   "category": "algorithms",
+   "tier": "medium",
+   "prompt": "Twelve meetings must be placed into numbered rooms (Room 1, Room 2, ...). Times are 24-hour HH:MM and each meeting's end time is exclusive, so a meeting ending at 10:00 and one starting at 10:00 may use the same room.\nM1: 11:30-12:00\nM2: 08:30-10:30\nM3: 08:30-09:00\nM4: 08:45-09:45\nM5: 10:00-10:45\nM6: 11:30-13:30\nM7: 08:45-10:00\nM8: 09:45-10:30\nM9: 09:00-10:15\nM10: 11:45-13:00\nM11: 11:00-13:00\nM12: 10:00-11:00\nProcess the meetings in this order: earliest start time first; if starts are equal, the earlier end time first; if still equal, the smaller meeting number first. Put each meeting in the LOWEST-numbered room that is free at its start time (a room is free if its most recently assigned meeting has ended by then). If no existing room is free, open the next unused room number (rooms are opened in order 1, 2, 3, ...).\nReturn answer as a JSON array of 12 integers: the room number of M1, M2, ..., M12 in that order (meeting-number order, not processing order).",
+   "expectedAnswer": [
+    2,
+    2,
+    1,
+    3,
+    4,
+    3,
+    4,
+    3,
+    1,
+    4,
+    1,
+    5
+   ]
+  },
+  {
+   "id": "algorithms-03",
+   "category": "algorithms",
+   "tier": "medium",
+   "prompt": "Decide, for each numbered pair, whether the whole string S matches the glob pattern P. Matching is case-sensitive and must cover the entire string. Pattern syntax: '*' matches any sequence of characters (including none); '?' matches exactly one character; '[...]' matches exactly one character from the set listed inside (a range like a-c means a, b, c); '[!...]' matches exactly one character NOT in the set; inside brackets a '-' that is first (right after '[' or '[!') or last (right before ']') is a literal '-'; the first ']' after the opening bracket closes the set; a backslash makes the next character literal (so \\* is a star, \\[ is a bracket, \\\\ is one backslash). Every character in P and S is shown exactly as it is, with no extra quoting and no surrounding spaces.\n1. P=*.t[xs]t   S=notes.v2.txt\n2. P=[!a-c]*[a-c]   S=zzzb\n3. P=\\*?*   S=*\n4. P=\\*?*   S=*x\n5. P=[a-]x   S=-x\n6. P=[a-]x   S=bx\n7. P=??[0-9][0-9]*   S=ab07\n8. P=??[0-9][0-9]*   S=a1b07\n9. P=*[A-Z]*[a-z]   S=x9Zq9\n10. P=[a-cx-z]*[!a-cx-z]   S=azb7\n11. P=a**b?   S=ab\n12. P=\\[a\\]   S=[a]\n13. P=[a]   S=[a]\n14. P=*?*?*?   S=ab\n15. P=*a*a?   S=baab\n16. P=[!-a]?*   S=-q\n17. P=*\\\\*   S=dir\\file\nReturn answer as a JSON array of 17 booleans (true or false), one per pair in order.",
+   "expectedAnswer": [
+    true,
+    true,
+    false,
+    true,
+    true,
+    false,
+    true,
+    false,
+    false,
+    true,
+    false,
+    true,
+    false,
+    false,
+    true,
+    false,
+    true
+   ]
+  },
+  {
+   "id": "algorithms-04",
+   "category": "algorithms",
+   "tier": "hard",
+   "prompt": "A directed road network has these one-way roads, each written FROM>TO:COST (all costs are positive integers):\nK10>M4:3\nK11>M3:1\nP7>P12:3\nS50>P12:2\nK2>P12:3\nS5>M4:2\nK11>P7:2\nP7>S5:1\nK1>K10:2\nP7>K11:3\nS5>S50:1\nM4>M3:3\nP7>S50:1\nS50>M4:1\nM3>K11:1\nM3>K10:3\nM4>P12:2\nK2>K11:1\nK2>P7:3\nS50>S5:1\nK1>K11:2\nS5>K10:1\nK11>S50:2\nM4>K2:1\nK11>K10:2\nK11>S5:1\nP7>K10:1\nTravel from K1 to P12. Rules: the node M4 is closed, so no route may enter M4 (it is not the start or destination). A route must not visit any node twice. You hold ONE coupon: you may make any single road on your route cost 0 (using it is optional, and you should apply it to whichever road lowers the total most; the cost of a route is the sum of its road costs minus the cost of that one road).\nChoose the route by these rules in order: (1) smallest cost after the best use of the coupon; (2) among those, the fewest roads; (3) among those, the lexicographically smallest list of node names, comparing the lists node by node from the start and comparing each pair of names as plain text character by character (so 'K10' < 'K2' and 'M3' < 'P12').\nReturn answer as {\"cost\": <integer>, \"path\": [<node names from the start to the destination inclusive>]}.",
+   "expectedAnswer": {
+    "cost": 4,
+    "path": [
+     "K1",
+     "K11",
+     "P7",
+     "P12"
+    ]
+   }
+  },
+  {
+   "id": "algorithms-05",
+   "category": "algorithms",
+   "tier": "hard",
+   "prompt": "Choose a subset of the 12 numbered items below with total weight at most 33.\n1: weight 4, value 14\n2: weight 9, value 12\n3: weight 4, value 8\n4: weight 4, value 6\n5: weight 5, value 17\n6: weight 9, value 7\n7: weight 11, value 9\n8: weight 8, value 5\n9: weight 8, value 12\n10: weight 9, value 13\n11: weight 9, value 12\n12: weight 5, value 7\nConflicts: these pairs can never both be chosen: 7 and 8; 4 and 10; 1 and 2. Dependency: item 11 may be chosen only if item 5 is also chosen (item 5 may be chosen without item 11).\nPick the subset with the greatest total value. If several subsets tie on value, pick the one with the fewest items. If still tied, pick the one whose ascending-sorted list of item numbers is smallest when compared numerically, element by element from the first element (so [2,9,11] is smaller than [3,4,5], and [2,9,12] is smaller than [2,10,11]).\nReturn answer as {\"items\": [<chosen item numbers in ascending order>], \"value\": <total value>, \"weight\": <total weight>}.",
+   "expectedAnswer": {
+    "items": [
+     1,
+     3,
+     5,
+     9,
+     10
+    ],
+    "value": 64,
+    "weight": 30
+   }
+  },
+  {
+   "id": "algorithms-06",
+   "category": "algorithms",
+   "tier": "hard",
+   "prompt": "A common subsequence of two strings is a string that can be obtained from each of them by deleting zero or more characters without reordering the rest.\nA = babaadcadbcddc\nB = bbdbcbdcacada\nConsider all common subsequences of A and B that have the maximum possible length L. Among those strings (count each distinct string once, even if it can be formed in several ways), find the one that is smallest in dictionary order (alphabetical, letters a < b < c < d), and also count how many distinct such strings exist.\nReturn answer as {\"length\": <L>, \"lcs\": \"<the dictionary-smallest one>\", \"distinct_count\": <how many distinct strings of length L are common subsequences>}.",
+   "expectedAnswer": {
+    "length": 7,
+    "lcs": "bbdbcdc",
+    "distinct_count": 9
+   }
+  },
+  {
+   "id": "algorithms-07",
+   "category": "algorithms",
+   "tier": "hard",
+   "prompt": "An undirected weighted graph has vertices 1..12 and these edges (label: endpoints, weight); the labels e1, e2, ... define the listing order, with the number after 'e' compared as a number (e2 is listed before e10). An edge such as 7-7 is a self-loop.\ne1: 3-5 w=2\ne2: 11-12 w=3\ne3: 9-6 w=1\ne4: 10-11 w=4\ne5: 2-1 w=1\ne6: 4-2 w=4\ne7: 6-7 w=4\ne8: 3-4 w=2\ne9: 1-5 w=1\ne10: 7-9 w=1\ne11: 4-1 w=1\ne12: 1-3 w=2\ne13: 3-2 w=1\ne14: 4-5 w=4\ne15: 5-2 w=4\ne16: 7-8 w=2\ne17: 11-10 w=4\ne18: 7-7 w=4\ne19: 8-9 w=1\ne20: 10-12 w=2\ne21: 6-8 w=4\nEdges e3, e17 are out of service and must be ignored completely. Run Kruskal's algorithm on the rest: sort by weight ascending, breaking weight ties by listing order (earlier-listed edge first); go through the sorted edges once, and accept an edge only if its two endpoints are not already connected through accepted edges (self-loops are never accepted). The graph may be disconnected, so the result is a spanning forest.\nReturn answer as {\"chosen\": [<accepted edge labels such as \"e3\", in the order they were accepted>], \"total\": <sum of accepted weights>, \"components\": [<one ascending list of vertex numbers per connected component of the final forest, components ordered by their smallest vertex>]}.",
+   "expectedAnswer": {
+    "chosen": [
+     "e5",
+     "e9",
+     "e10",
+     "e11",
+     "e13",
+     "e19",
+     "e20",
+     "e2",
+     "e7"
+    ],
+    "total": 15,
+    "components": [
+     [
+      1,
+      2,
+      3,
+      4,
+      5
+     ],
+     [
+      6,
+      7,
+      8,
+      9
+     ],
+     [
+      10,
+      11,
+      12
+     ]
+    ]
+   }
+  },
+  {
+   "id": "calendar-time-01",
+   "category": "calendar-time",
+   "tier": "medium",
+   "prompt": "A company calendar treats Saturdays, Sundays and observed holidays as non-business days. Nominal holidays: 2027-07-04, 2027-09-06, 2027-11-25, 2027-12-25, 2028-01-01, 2028-01-17. A nominal holiday that falls on a Saturday is observed on the preceding Friday; one that falls on a Sunday is observed on the following Monday; otherwise it is observed on its own date. Only the observed date is a holiday (the nominal weekend day is just a weekend day). To move N business days from a date D (N>0 forward, N<0 backward): repeat |N| times: step one calendar day in that direction, and keep stepping until you land on a business day. D itself need not be a business day. Reference fact: 2027-01-01 is a Friday. Queries (start date, N): 1) 2027-06-30 N=+3; 2) 2027-07-02 N=+1; 3) 2027-07-05 N=-1; 4) 2027-09-03 N=+1; 5) 2027-11-24 N=+2; 6) 2027-12-23 N=+4; 7) 2027-12-30 N=+3; 8) 2028-01-04 N=-3; 9) 2028-01-14 N=+5. Return answer as a JSON array of 9 strings of the form \"YYYY-MM-DD\", one per query, in query order.",
+   "expectedAnswer": [
+    "2027-07-06",
+    "2027-07-06",
+    "2027-07-02",
+    "2027-09-07",
+    "2027-11-29",
+    "2027-12-30",
+    "2028-01-05",
+    "2027-12-29",
+    "2028-01-24"
+   ]
+  },
+  {
+   "id": "calendar-time-02",
+   "category": "calendar-time",
+   "tier": "medium",
+   "prompt": "Use ISO 8601 week dating: weeks run Monday to Sunday; week 1 of a year is the week that contains that year's first Thursday (equivalently the week containing January 4); weekday numbers are Monday=1 ... Sunday=7; the ISO week-year of a date is the calendar year of the Thursday of its week, so it can differ from the date's own year. A year has 52 or 53 ISO weeks. Day-of-year counts January 1 as day 1 and uses Gregorian leap years (divisible by 4, except centuries not divisible by 400). Reference fact: 2024-01-01 is a Monday. For each input below give its ISO week-date as \"<week-year>-W<two-digit week>-<weekday>\" (example form: 2019-W07-3). Inputs, in order: 1) 2020-12-31; 2) 2021-01-03; 3) year 2024 day-of-year 366; 4) 2024-12-29; 5) 2026-12-31; 6) 2027-01-03; 7) 2028-01-02; 8) year 2026 day-of-year 365; 9) year 2021 day-of-year 3; 10) 2032-12-31. Return answer as a JSON array of 10 strings of that form, one per input, in input order.",
+   "expectedAnswer": [
+    "2020-W53-4",
+    "2020-W53-7",
+    "2025-W01-2",
+    "2024-W52-7",
+    "2026-W53-4",
+    "2026-W53-7",
+    "2027-W52-7",
+    "2026-W53-4",
+    "2020-W53-7",
+    "2032-W53-5"
+   ]
+  },
+  {
+   "id": "calendar-time-03",
+   "category": "calendar-time",
+   "tier": "medium",
+   "prompt": "Calendar is Gregorian: a year is leap if divisible by 4, except centuries, which are leap only if divisible by 400 (so 1900 and 2100 are not leap; 2000 and 2096 are). Operations on a date: M+k / M-k = move k calendar months forward/back, keeping the day-of-month, but if the target month is too short use that month's last day. Y+k / Y-k = move k years, i.e. exactly 12k months with the same clamping rule. D+k / D-k = move k calendar days. EOM = set the day to the last day of the date's current month. Each operation uses only the date produced by the previous one (no memory of an earlier, larger day-of-month). Apply the operations of each chain left to right to its start date. Chains: 1) 2024-01-31: M+1, M+1, M-1, Y+1, D-1 | 2) 2000-02-29: Y+100, D+1, M-1, EOM, D+1 | 3) 2099-12-31: D+60, EOM, M-1, Y-4, D+2 | 4) 1900-03-01: D-1, Y+4, EOM, Y+1, M+12 | 5) 2023-08-31: M+6, D+366, M-13, EOM, M+1 | 6) 2026-10-31: M+4, D+1, M-1, D-1, Y+2 | 7) 2096-02-29: Y+4, D+1, Y-4, D-1, M+1. Return answer as a JSON array of 7 strings of the form \"YYYY-MM-DD\", one final date per chain, in chain order.",
+   "expectedAnswer": [
+    "2025-02-27",
+    "2100-03-01",
+    "2096-03-01",
+    "1906-02-28",
+    "2024-03-29",
+    "2029-01-31",
+    "2096-03-29"
+   ]
+  },
+  {
+   "id": "calendar-time-04",
+   "category": "calendar-time",
+   "tier": "hard",
+   "prompt": "A scheduler fires at a given minute when ALL of these hold: the minute is 5 or 35; the hour is 0 or 23; the month is February, March or April; and the calendar day qualifies. A day qualifies if its day-of-month is 29, 30 or 31, OR its weekday is Tuesday (either condition alone is enough; a day meeting both still fires only once per matching time). Blackout dates: nothing fires at any time on 2028-03-07 or 2028-03-29. All times are in one fixed time zone with no daylight saving. 2028 is a leap year. Reference fact: 2028-01-01 is a Saturday. List the next 18 firing times strictly after 2028-02-29 00:05, in chronological order. Return answer as a JSON array of 18 strings of the form \"YYYY-MM-DD HH:MM\" (24-hour clock).",
+   "expectedAnswer": [
+    "2028-02-29 00:35",
+    "2028-02-29 23:05",
+    "2028-02-29 23:35",
+    "2028-03-14 00:05",
+    "2028-03-14 00:35",
+    "2028-03-14 23:05",
+    "2028-03-14 23:35",
+    "2028-03-21 00:05",
+    "2028-03-21 00:35",
+    "2028-03-21 23:05",
+    "2028-03-21 23:35",
+    "2028-03-28 00:05",
+    "2028-03-28 00:35",
+    "2028-03-28 23:05",
+    "2028-03-28 23:35",
+    "2028-03-30 00:05",
+    "2028-03-30 00:35",
+    "2028-03-30 23:05"
+   ]
+  },
+  {
+   "id": "calendar-time-05",
+   "category": "calendar-time",
+   "tier": "hard",
+   "prompt": "Time zone Zeta uses standard time UTC-03:30 and daylight time UTC-02:30. Daylight time starts at 02:00 standard time on the last Sunday of March (clocks jump from 02:00 to 03:00, so local times 02:00-02:59 do not exist that day) and ends at 02:00 daylight time on the last Sunday of October (clocks go back from 02:00 to 01:00, so local times 01:00-01:59 occur twice that day; the tag (first) marks the daylight-time occurrence and (second) the standard-time one). All timestamps are Zeta local times in format YYYY-MM-DD HH:MM. Gregorian leap years apply. Reference fact: 2027-03-01 is a Monday. Part A, real elapsed minutes from the first to the second timestamp: A1) 2027-03-27 22:00 to 2027-03-28 05:00; A2) 2027-10-31 00:30 to 2027-10-31 03:15; A3) 2028-10-29 01:20 (first) to 2028-10-29 01:10 (second); A4) 2028-02-28 12:00 to 2028-03-01 12:00; A5) 2028-03-15 08:00 to 2028-10-20 08:00. Part B, the Zeta local timestamp reached after adding the stated real elapsed minutes (append \" (first)\" or \" (second)\" to the result only if the result falls in a repeated hour): B1) 2028-03-26 01:30 plus 90 minutes; B2) 2028-10-29 00:45 plus 100 minutes; B3) 2029-10-28 01:50 (first) plus 30 minutes; B4) 2028-12-31 22:15 plus 2000 minutes. Return answer as a JSON array of 9 items in order A1..A5, B1..B4: the first 5 are integers, the last 4 are strings like \"YYYY-MM-DD HH:MM\".",
+   "expectedAnswer": [
+    360,
+    225,
+    50,
+    2880,
+    315300,
+    "2028-03-26 04:00",
+    "2028-10-29 01:25 (second)",
+    "2029-10-28 01:20 (second)",
+    "2029-01-02 07:35"
+   ]
+  },
+  {
+   "id": "calendar-time-06",
+   "category": "calendar-time",
+   "tier": "hard",
+   "prompt": "Four people have fixed UTC offsets (no daylight saving): P1 is at UTC+09:30, works 07:00-15:30 local with lunch 12:30-13:15 local; P2 is at UTC+11:00, works 08:00-16:00 local with lunch 13:00-14:00 local; P3 is at UTC+10:00, works 08:00-16:00 local with lunch 12:00-13:15 local; P4 is at UTC-08:00, works 09:00-17:00 local with lunch 13:00-14:15 local. Each person works only on their own local Monday to Friday; local Saturday and Sunday are fully off. A candidate meeting lasts 60 minutes and starts at a UTC time of day on 2026-12-07 that is a multiple of 30 minutes (00:00, 00:30, ..., 23:30). It is feasible when, for every person, the whole meeting lies inside that person's working hours on a local working day (judge each person's local date and time at the meeting, which may differ from the UTC date), and the meeting overlaps no one's lunch (a meeting may end exactly when lunch starts or start exactly when lunch ends). Working hours include their start and end instants. Reference fact: 2026-12-07 is a Monday in UTC. List every feasible start time as a UTC time. Return answer as a JSON array of strings \"HH:MM\" (UTC, 24-hour), in ascending order.",
+   "expectedAnswer": [
+    "22:30",
+    "23:00",
+    "23:30"
+   ]
+  },
+  {
+   "id": "calendar-time-07",
+   "category": "calendar-time",
+   "tier": "hard",
+   "prompt": "A calendar series starts on 2026-12-16 (a Wednesday) and repeats every 2 weeks on Monday and Thursday, with COUNT=16. Weeks run Monday to Sunday; the first week is the week containing the start date, and the series occurs in the first week and in every 2nd week after it. Days before the start date are not part of the series. Reference fact: 2026-12-14 is a Monday. Generate the first 16 occurrences in chronological order (COUNT is counted before any exception below). Then apply, in this order: (1) EXDATES: delete every occurrence whose original date is 2026-12-28 or 2027-01-14. (2) MOVES: an occurrence whose original date is on the left of an arrow is relocated to the date on the right: 2027-02-11 -> 2027-02-08, 2027-01-11 -> 2027-01-16 (a moved date may fall on any weekday). (3) HOLIDAYS: 2026-12-25, 2026-12-31, 2027-01-01, 2027-01-18, 2027-01-25, 2027-02-08. Every remaining occurrence whose current date (after step 2) is a holiday is moved to the first later date that is neither a Saturday, a Sunday nor a holiday; this uses only the holiday list, ignoring other occurrences. If two occurrences end on the same date, keep both entries. Return answer as a JSON array of the final dates as \"YYYY-MM-DD\" strings sorted ascending.",
+   "expectedAnswer": [
+    "2026-12-17",
+    "2027-01-04",
+    "2027-01-16",
+    "2027-01-26",
+    "2027-01-28",
+    "2027-02-09",
+    "2027-02-09",
+    "2027-02-22",
+    "2027-02-25",
+    "2027-03-08",
+    "2027-03-11",
+    "2027-03-22",
+    "2027-03-25",
+    "2027-04-05"
+   ]
+  },
+  {
+   "id": "numbers-01",
+   "category": "numbers",
+   "tier": "medium",
+   "prompt": "A sensor emits 12-bit two's-complement samples, written as 3-digit uppercase hexadecimal strings. The sample sequence, in order, is:\nF9C FA3 FAA FB1 FB1 FB1 FB1 FB1 7B1 7B6 7BB F8A 759 756 753 750 F4F 74E 74D 74D 74D 759\n\nStep 1: decode each sample to its signed decimal value (range -2048..2047).\nStep 2: build a delta list: the first delta is the first decoded value itself; every later delta is (current value minus previous value), then wrapped into the range -2048..2047 by adding or subtracting 4096 as many times as needed (so a raw difference of +2048 or -2048 both become -2048).\nStep 3: run-length encode the delta list: collapse each maximal run of equal consecutive deltas into a pair [delta, count].\nReturn answer as a JSON array of [delta, count] pairs of integers, in order, e.g. {\"answer\": [[-5, 1], [3, 2]]}.",
+   "expectedAnswer": [
+    [
+     -100,
+     1
+    ],
+    [
+     7,
+     3
+    ],
+    [
+     0,
+     4
+    ],
+    [
+     -2048,
+     1
+    ],
+    [
+     5,
+     2
+    ],
+    [
+     1999,
+     2
+    ],
+    [
+     -3,
+     3
+    ],
+    [
+     2047,
+     2
+    ],
+    [
+     -1,
+     1
+    ],
+    [
+     0,
+     2
+    ],
+    [
+     12,
+     1
+    ]
+   ]
+  },
+  {
+   "id": "numbers-02",
+   "category": "numbers",
+   "tier": "medium",
+   "prompt": "Compute the missing check data for six items and return each completed identifier as a string, in the listed order.\n1. LUHN body 446714560695366\n2. ISBN13 body 978840847210\n3. IBAN country GB bban SBPW21945867718050\n4. IBAN country DE bban 578395474285682600\n5. LUHN body 557336301940193\n6. ISBN13 body 979805697818\n\nRules.\nLUHN: the body has no check digit yet. Working from the RIGHTMOST digit of the body, double that digit and every second digit moving left; if a doubled value exceeds 9 subtract 9 from it. Let S be the sum of all resulting digits. The check digit is (10 - S mod 10) mod 10, appended to the right of the body.\nISBN13: the body has 12 digits. Multiply the digits by weights 1,3,1,3,... from the left, sum them as S; the check digit is (10 - S mod 10) mod 10, appended to the right.\nIBAN: form the string bban + country + \"00\", replace each letter by its two-digit value (A=10, B=11, ..., Z=35), read the result as one decimal integer N, and compute check = 98 - (N mod 97), written as exactly two digits with a leading zero if needed. The completed IBAN is country + check + bban, with no spaces.\nReturn answer as a JSON array of 6 strings, e.g. {\"answer\": [\"...\", \"...\", \"...\", \"...\", \"...\", \"...\"]}.",
+   "expectedAnswer": [
+    "4467145606953660",
+    "9788408472100",
+    "GB04SBPW21945867718050",
+    "DE18578395474285682600",
+    "5573363019401932",
+    "9798056978183"
+   ]
+  },
+  {
+   "id": "numbers-03",
+   "category": "numbers",
+   "tier": "medium",
+   "prompt": "Round each decimal value below to the given number of decimal places using the named mode, then add up the twelve ROUNDED values exactly.\n1. value 2.5, 0 decimal places, mode HE\n2. value -2.5, 0 decimal places, mode HU\n3. value 0.125, 2 decimal places, mode HE\n4. value -0.135, 2 decimal places, mode HE\n5. value 7.0449, 2 decimal places, mode TZ\n6. value -7.0451, 2 decimal places, mode TZ\n7. value -0.0049, 2 decimal places, mode TZ\n8. value 1.0005, 3 decimal places, mode HU\n9. value -1.0005, 3 decimal places, mode HE\n10. value 123.4565, 3 decimal places, mode HE\n11. value -0.5, 0 decimal places, mode HE\n12. value 99.9995, 3 decimal places, mode HU\n\nModes. HE = half-even: a value exactly halfway between two candidates goes to the candidate whose last kept digit is even. HU = half-up as taught in school: an exact tie goes to the candidate farther from zero (so -2.5 to 0 places becomes -3). TZ = toward zero: simply drop the extra digits (truncate). All non-tie values round to the nearest candidate under HE and HU.\nFormat. Write every rounded value as a plain decimal string with exactly the requested number of decimal places (for 0 places, no decimal point). Never write negative zero: a result equal to zero is written without a minus sign, e.g. \"0.00\". The final element is the exact sum of the twelve rounded values, written with exactly 3 decimal places.\nReturn answer as a JSON array of 13 strings (twelve rounded values in order, then the sum), e.g. {\"answer\": [\"1.50\", \"-2\", ..., \"0.000\"]}.",
+   "expectedAnswer": [
+    "2",
+    "-3",
+    "0.12",
+    "-0.14",
+    "7.04",
+    "-7.04",
+    "0.00",
+    "1.001",
+    "-1.000",
+    "123.456",
+    "0",
+    "100.000",
+    "222.437"
+   ]
+  },
+  {
+   "id": "numbers-04",
+   "category": "numbers",
+   "tier": "hard",
+   "prompt": "Build a Huffman code for these symbol frequencies: A=5, B=9, C=12, D=13, E=16, F=5, G=9, H=3, I=3, J=14.\n\nUse exactly this procedure. Every node (leaf or internal) has a weight. Nodes are ordered by the key (weight, kind, tiebreak), compared lexicographically: smaller weight first; at equal weight a LEAF comes before an INTERNAL node; two leaves of equal weight are ordered by symbol in alphabetical order; two internal nodes of equal weight are ordered by creation order (the node created earlier comes first). Repeat until one node remains: remove the two smallest nodes under this order; the FIRST one removed becomes the left child (edge label \"0\"), the SECOND one removed becomes the right child (edge label \"1\"); create an internal node whose weight is the sum, and which counts as newly created (internal nodes are numbered 1, 2, 3, ... in creation order). A symbol's code is the string of edge labels from the root down to its leaf.\n\nReport the code of every symbol and the total number of bits needed to encode a message that contains each symbol exactly as many times as its frequency (sum of frequency times code length).\nReturn answer as a JSON object {\"codes\": {\"A\": \"<bits>\", ... for all 10 symbols}, \"total_bits\": <integer>}.",
+   "expectedAnswer": {
+    "codes": {
+     "A": "0110",
+     "B": "1111",
+     "C": "100",
+     "D": "101",
+     "E": "00",
+     "F": "0111",
+     "G": "010",
+     "H": "11100",
+     "I": "11101",
+     "J": "110"
+    },
+    "total_bits": 282
+   }
+  },
+  {
+   "id": "numbers-05",
+   "category": "numbers",
+   "tier": "hard",
+   "prompt": "Start with x0 = 12. Apply the five steps below in order. In step i, x_i = ((x_(i-1) ^ exponent_i) + addend_i) mod modulus_i, where x_(i-1) is the exact integer produced by the previous step and ^ is ordinary exponentiation. The final mod always yields a value in 0..modulus_i - 1 (a negative sum is wrapped up into that range). Exponents are given in full decimal.\nstep 1: exponent 1000000000007, addend -5, modulus 101\nstep 2: exponent 1099511627777, addend 18, modulus 91\nstep 3: exponent 1000000006, addend -40, modulus 360\nstep 4: exponent 847288609443, addend 7, modulus 1001\nstep 5: exponent 1000000000000003, addend 1, modulus 97\n\nReturn answer as a JSON array of the five integers [x_1, x_2, x_3, x_4, x_5], e.g. {\"answer\": [1, 2, 3, 4, 5]}.",
+   "expectedAnswer": [
+    33,
+    42,
+    104,
+    748,
+    68
+   ]
+  },
+  {
+   "id": "numbers-06",
+   "category": "numbers",
+   "tier": "hard",
+   "prompt": "Let A be the continued fraction [-3; 2, 5, 1, 7] and B be the continued fraction [0; 4, 1, 9, 2], where [a0; a1, a2, ...] means a0 + 1/(a1 + 1/(a2 + ...)). Compute the exact rational number\nX = A*B - A + 1/3\nand reduce it to lowest terms with a positive denominator.\n\nThen expand X as a simple continued fraction [c0; c1, c2, ...] where c0 is the FLOOR of X (so c0 is negative if X is negative), every later term is a positive integer, and the expansion is the canonical one whose last term is greater than 1 (unless X is an integer, in which case it has a single term).\n\nFinally list the convergents of that expansion in order (the k-th convergent is the value of [c0; c1, ..., ck] in lowest terms) and report the FIRST convergent whose denominator is at least 20.\nReturn answer as a JSON object {\"fraction\": {\"numerator\": <int>, \"denominator\": <int>}, \"cf\": [<ints>], \"convergent\": {\"numerator\": <int>, \"denominator\": <int>}}.",
+   "expectedAnswer": {
+    "fraction": {
+     "numerator": 12370,
+     "denominator": 5253
+    },
+    "cf": [
+     2,
+     2,
+     1,
+     4,
+     2,
+     169
+    ],
+    "convergent": {
+     "numerator": 73,
+     "denominator": 31
+    }
+   }
+  },
+  {
+   "id": "numbers-07",
+   "category": "numbers",
+   "tier": "hard",
+   "prompt": "A cashier has unlimited coins of values 4, 6, 9, 15 and 25. A way to pay is a multiset of coins (order does not matter; two ways are the same if they use the same number of each denomination). Count the ways to pay exactly 120 that satisfy ALL of these rules: (a) at most 12 coins are used in total; (b) the number of 9-coins used is odd (so at least one 9-coin is used).\n\nReport three integers: the number of valid ways; the smallest total number of coins used by any valid way; and how many valid ways use exactly that smallest number of coins.\nReturn answer as a JSON object {\"ways\": <int>, \"fewest_coins\": <int>, \"ways_with_fewest\": <int>}.",
+   "expectedAnswer": {
+    "ways": 23,
+    "fewest_coins": 7,
+    "ways_with_fewest": 1
+   }
+  },
+  {
+   "id": "structured-data-01",
+   "category": "structured-data",
+   "tier": "medium",
+   "prompt": "Apply an RFC 7386 JSON Merge Patch. Algorithm MergePatch(target, patch): (1) if patch is not an object, the result is patch itself (arrays and scalars replace wholesale). (2) Otherwise, if target is not an object (missing, scalar, array or null), treat target as {}. (3) For each key k in patch: if patch[k] is null, remove k from target (nothing happens if k is absent); otherwise set target[k] = MergePatch(target[k], patch[k]), where an absent target[k] counts as not an object. Null values already present in target, at keys the patch does not mention, are kept.\ntarget = {\"title\":\"Doc\",\"tags\":[\"x\",\"y\"],\"author\":{\"name\":\"Joe\",\"email\":\"j@x\",\"phone\":null},\"meta\":{\"v\":1,\"flags\":{\"a\":true,\"b\":false}},\"stats\":5,\"notes\":[1,{\"k\":2}]}\npatch = {\"title\":null,\"tags\":{\"first\":\"x\"},\"author\":{\"email\":null,\"phone\":\"555\",\"nick\":null},\"meta\":{\"flags\":{\"b\":null,\"c\":[]},\"v\":{\"major\":1,\"minor\":null}},\"stats\":[],\"notes\":{},\"missing\":null,\"fresh\":{\"a\":{\"b\":null},\"c\":3}}\nReturn answer as the resulting JSON object (key order is irrelevant; array order matters).",
+   "expectedAnswer": {
+    "tags": {
+     "first": "x"
+    },
+    "author": {
+     "name": "Joe",
+     "phone": "555"
+    },
+    "meta": {
+     "v": {
+      "major": 1
+     },
+     "flags": {
+      "a": true,
+      "c": []
+     }
+    },
+    "stats": [],
+    "notes": {},
+    "fresh": {
+     "a": {},
+     "c": 3
+    }
+   }
+  },
+  {
+   "id": "structured-data-02",
+   "category": "structured-data",
+   "tier": "medium",
+   "prompt": "Rebuild a nested JSON value from flattened entries, one per line as `raw-key => JSON-value`. The raw key is plain text exactly as shown (it is NOT JSON-escaped). Key syntax: '.' separates object-key segments; a segment may be followed by index tokens like [3] (a non-negative decimal integer), each meaning 'array element at that index'; a backslash makes the next character literal, so \\. is a dot inside a key, \\\\ is one backslash inside a key, and \\[ and \\] are literal brackets inside a key. A segment of digits without brackets (like 0) is an ordinary object key, not an index. Containers are created on first use: an object when the next token is a key, an array when it is an index. Array positions never assigned (gaps, or below the highest index) are null. Assigned values may themselves be null.\nuser.name => \"Ann\"\nuser.emails[2] => \"c@x.io\"\nuser.emails[0] => \"a@x.io\"\nuser.addr\\.v2.zip => \"94110\"\nuser.0 => true\nmatrix[1][0] => 3\nmatrix[0][1] => 2\nmatrix[1][1] => 4\ntags[1] => null\na\\\\b.c => 1\nx\\[0\\].y => 5\np.q[0].r => \"deep\"\np.q[1] => 0\nReturn answer as the resulting JSON object (key order is irrelevant; array order matters).",
+   "expectedAnswer": {
+    "user": {
+     "name": "Ann",
+     "emails": [
+      "a@x.io",
+      null,
+      "c@x.io"
+     ],
+     "addr.v2": {
+      "zip": "94110"
+     },
+     "0": true
+    },
+    "matrix": [
+     [
+      null,
+      2
+     ],
+     [
+      3,
+      4
+     ]
+    ],
+    "tags": [
+     null,
+     null
+    ],
+    "a\\b": {
+     "c": 1
+    },
+    "x[0]": {
+     "y": 5
+    },
+    "p": {
+     "q": [
+      {
+       "r": "deep"
+      },
+      0
+     ]
+    }
+   }
+  },
+  {
+   "id": "structured-data-03",
+   "category": "structured-data",
+   "tier": "medium",
+   "prompt": "Validate the document against this schema and list every violation.\nRoot: object with allowed keys exactly id, email, role, age, tags, items; required: id, email, role, items. id: integer >= 1. email: string with exactly one '@', something before it, and after it a '.' that is neither the first nor the last character of the part after '@'. role: one of admin, user, guest (case-sensitive). age (optional): integer 0..130. tags (optional): array of strings, at most 3 elements, no two equal. items: array of 1..3 objects with allowed keys exactly sku, qty, note; sku and qty required; sku: string of length 3..6; qty: integer 1..99; note (optional): string or null.\n'Integer' = JSON number written with no decimal point or exponent (30.0 and 2.5 are not integers); booleans are not numbers. Check a value's type first; on a type mismatch report only 'type' for it and run no other check on it. Other failures: 'range', 'enum', 'format', 'length'. Arrays: wrong element count gives 'count' at the array's path; any repeated element gives one 'unique' at the array's path; each wrongly typed element gives 'type' at its own path. Missing required keys give 'required' and disallowed keys 'additional', both at that key's path. Paths: $ root, .key, [i] 0-based, e.g. $.items[1].qty. A violation is the string PATH:CODE; duplicates collapse.\ndocument = {\"id\":0,\"email\":\"bob@@x.io\",\"role\":\"Admin\",\"age\":30.0,\"tags\":[\"a\",\"b\",\"a\",\"d\",5],\"items\":[{\"sku\":\"AB\",\"qty\":true,\"note\":7,\"extra\":1},{\"sku\":\"ABCDEFG\",\"qty\":100},{\"sku\":\"ok1\",\"qty\":\"3\"},{\"qty\":2.5}],\"nick\":\"b\"}\nReturn answer as a JSON array of violation strings sorted ascending by plain codepoint string order.",
+   "expectedAnswer": [
+    "$.age:type",
+    "$.email:format",
+    "$.id:range",
+    "$.items:count",
+    "$.items[0].extra:additional",
+    "$.items[0].note:type",
+    "$.items[0].qty:type",
+    "$.items[0].sku:length",
+    "$.items[1].qty:range",
+    "$.items[1].sku:length",
+    "$.items[2].qty:type",
+    "$.items[3].qty:type",
+    "$.items[3].sku:required",
+    "$.nick:additional",
+    "$.role:enum",
+    "$.tags:count",
+    "$.tags:unique",
+    "$.tags[4]:type"
+   ]
+  },
+  {
+   "id": "structured-data-04",
+   "category": "structured-data",
+   "tier": "hard",
+   "prompt": "Apply RFC 6902 JSON Patches P1, P2, P3, P4 in order. Paths are RFC 6901 pointers (~1 = '/', ~0 = '~'; '-' as an array index appends). Notation: `add PATH VALUE`, `remove PATH`, `replace PATH VALUE`, `test PATH VALUE`, `move FROM -> PATH`, `copy FROM -> PATH`. add into an array inserts before that index (index = length appends; larger is an error); add on an object key overwrites. Everything else needs an existing location and in-range indexes. move = remove FROM then add at PATH (PATH indexes are evaluated after the removal); it is an error if FROM is a proper prefix of PATH. copy duplicates the value. test passes only on deep equality (object key order ignored; true is not 1; \"2\" is not 2). Each patch is ATOMIC: if any op errors or a test fails, the whole patch is discarded (document unchanged) and later patches still run. Record the 0-based index of the first failing op of each discarded patch.\ndocument = {\"cfg\":{\"a/b\":[10,20,30,40],\"m~n\":{\"x\":1,\"y\":[true,false]}},\"list\":[\"p\",\"q\",\"r\"],\"meta\":{\"v\":1}}\nP1: add /cfg/a~1b/1 \"new\"; remove /cfg/a~1b/0; move /cfg/a~1b/3 -> /cfg/a~1b/0; copy /cfg/m~0n/y -> /list/-; replace /cfg/m~0n/y/0 false; test /list/3/0 true; add /meta/tags [\"t\"]; move /list/0 -> /list/2; test /meta {\"tags\":[\"t\"],\"v\":1}; replace /meta/v 2; remove /cfg/m~0n/x\nP2: add /list/0 \"head\"; test /meta/v 2; copy /cfg/m~0n -> /cfg/clone; test /cfg/clone/y/0 true\nP3: test /list [\"q\",\"r\",\"p\",[true,false]]; test /cfg/m~0n {\"y\":[false,false]}; replace /list/3/1 true; add /cfg/a~1b/4 \"end\"; move /meta/tags -> /cfg/tags; copy /cfg/tags/0 -> /cfg/a~1b/0; remove /list/1\nP4: add /zzz 1; move /cfg -> /cfg/inner\nReturn answer as {\"doc\": <final document>, \"failures\": [{\"patch\":\"P2\",\"opIndex\":0}, ...]} ordered by patch name (empty array if none).",
+   "expectedAnswer": {
+    "doc": {
+     "cfg": {
+      "a/b": [
+       "t",
+       40,
+       "new",
+       20,
+       30,
+       "end"
+      ],
+      "m~n": {
+       "y": [
+        false,
+        false
+       ]
+      },
+      "tags": [
+       "t"
+      ]
+     },
+     "list": [
+      "q",
+      "p",
+      [
+       true,
+       true
+      ]
+     ],
+     "meta": {
+      "v": 2
+     }
+    },
+    "failures": [
+     {
+      "patch": "P2",
+      "opIndex": 3
+     },
+     {
+      "patch": "P4",
+      "opIndex": 1
+     }
+    ]
+   }
+  },
+  {
+   "id": "structured-data-05",
+   "category": "structured-data",
+   "tier": "hard",
+   "prompt": "Compute merge(merge(base, o1), o2). merge(A, B): (a) B an object: if A is not an object use {}; for each key k of B: B[k] null -> delete k from the result; else result[k] = merge(A[k], B[k]) (an absent A[k] is neither object nor array). (b) A and B both arrays: if every element of both is an object with an \"id\" key (empty arrays qualify), merge by id: start with A's elements; for each B element in order, if an element with an equal id exists (same type and value) then remove it if the B element has \"_delete\": true, else replace it with merge(existing, B element); if none exists, append merge({}, B element) unless it has \"_delete\": true (then ignore it). Else if every element of both is a scalar (empty qualifies): A's elements followed by B's elements not already present (same type and value). Else the result is B. (c) Anything else: the result is B.\nbase = {\"app\":{\"name\":\"core\",\"ports\":[80,443],\"features\":[\"a\",\"b\"],\"limits\":{\"cpu\":1,\"mem\":512},\"hooks\":[{\"id\":\"h1\",\"cmd\":\"x\",\"env\":{\"A\":\"1\",\"B\":\"2\"}},{\"id\":\"h2\",\"cmd\":\"y\"}]},\"owner\":\"ops\",\"labels\":{\"tier\":\"gold\"},\"retries\":3}\no1 = {\"app\":{\"ports\":[443,8080,80,9000],\"features\":[\"c\",\"a\"],\"limits\":{\"mem\":null,\"disk\":10},\"hooks\":[{\"id\":\"h1\",\"env\":{\"B\":null,\"C\":\"3\"}},{\"id\":\"h3\",\"cmd\":\"z\"},{\"id\":\"h2\",\"_delete\":true}]},\"owner\":{\"team\":\"sre\",\"pager\":null},\"labels\":[\"x\"],\"retries\":null,\"extra\":{\"a\":null,\"b\":[]}}\no2 = {\"app\":{\"name\":\"core2\",\"ports\":[],\"features\":[1,\"a\"],\"hooks\":[{\"id\":\"h3\",\"cmd\":null,\"env\":{\"Z\":\"9\"}},{\"id\":\"h9\",\"_delete\":true},{\"id\":\"h4\",\"note\":null},{\"id\":\"h3\",\"cmd\":\"w\"}]},\"owner\":{\"team\":null,\"pager\":\"p1\"},\"labels\":[{\"id\":1,\"v\":2}],\"extra\":{\"b\":[{\"id\":7}]}}\nReturn answer as the final merged JSON object (key order is irrelevant; array order matters).",
+   "expectedAnswer": {
+    "app": {
+     "name": "core2",
+     "ports": [
+      80,
+      443,
+      8080,
+      9000
+     ],
+     "features": [
+      "a",
+      "b",
+      "c",
+      1
+     ],
+     "limits": {
+      "cpu": 1,
+      "disk": 10
+     },
+     "hooks": [
+      {
+       "id": "h1",
+       "cmd": "x",
+       "env": {
+        "A": "1",
+        "C": "3"
+       }
+      },
+      {
+       "id": "h3",
+       "env": {
+        "Z": "9"
+       },
+       "cmd": "w"
+      },
+      {
+       "id": "h4"
+      }
+     ]
+    },
+    "owner": {
+     "pager": "p1"
+    },
+    "labels": [
+     {
+      "id": 1,
+      "v": 2
+     }
+    ],
+    "extra": {
+     "b": [
+      {
+       "id": 7
+      }
+     ]
+    }
+   }
+  },
+  {
+   "id": "structured-data-06",
+   "category": "structured-data",
+   "tier": "hard",
+   "prompt": "Compute the canonical diff turning A into B as a list of RFC 6902 ops (only add, remove, replace). diff(x, y, path): if both are objects, visit the union of their keys in ascending order of the RAW (unescaped) key by plain codepoint comparison (uppercase before lowercase, '-' (45) before '/' (47)); for each key: only in x -> remove; only in y -> add with y's value; in both -> diff(x[k], y[k], path + '/' + escaped key). If both are arrays, let m be the shorter length: diff elements 0..m-1 in order at path/i; then for i = m..len(y)-1 ascending emit add at path/i with y[i]; then for i = len(x)-1 down to m emit remove at path/i. Otherwise, if the two values are not equal, emit replace at path with y's whole value (this covers different types, null vs anything, and true vs 1; equality is deep, key order ignored). Equal values emit nothing. Paths are RFC 6901 pointers: escape '~' as ~0 first, then '/' as ~1. Objects are {\"op\",\"path\",\"value\"}; remove ops have no \"value\" key.\nA = {\"id\":7,\"Name\":\"x\",\"a/b\":{\"k~\":[1,2,3,4,5],\"z\":null},\"a-b\":true,\"list\":[{\"n\":1,\"t\":[\"p\"]},{\"n\":2},5],\"old\":1,\"flag\":1}\nB = {\"id\":7,\"name\":\"x\",\"a/b\":{\"k~\":[1,9,3],\"z\":0,\"w\":{}},\"a-b\":true,\"list\":[{\"n\":1,\"t\":[\"p\",\"q\"]},[2],5,6,7],\"flag\":true,\"new\":[]}\nReturn answer as a JSON array of op objects in emission order, e.g. [{\"op\":\"remove\",\"path\":\"/x\"},{\"op\":\"add\",\"path\":\"/y\",\"value\":1}].",
+   "expectedAnswer": [
+    {
+     "op": "remove",
+     "path": "/Name"
+    },
+    {
+     "op": "replace",
+     "path": "/a~1b/k~0/1",
+     "value": 9
+    },
+    {
+     "op": "remove",
+     "path": "/a~1b/k~0/4"
+    },
+    {
+     "op": "remove",
+     "path": "/a~1b/k~0/3"
+    },
+    {
+     "op": "add",
+     "path": "/a~1b/w",
+     "value": {}
+    },
+    {
+     "op": "replace",
+     "path": "/a~1b/z",
+     "value": 0
+    },
+    {
+     "op": "replace",
+     "path": "/flag",
+     "value": true
+    },
+    {
+     "op": "add",
+     "path": "/list/0/t/1",
+     "value": "q"
+    },
+    {
+     "op": "replace",
+     "path": "/list/1",
+     "value": [
+      2
+     ]
+    },
+    {
+     "op": "add",
+     "path": "/list/3",
+     "value": 6
+    },
+    {
+     "op": "add",
+     "path": "/list/4",
+     "value": 7
+    },
+    {
+     "op": "add",
+     "path": "/name",
+     "value": "x"
+    },
+    {
+     "op": "add",
+     "path": "/new",
+     "value": []
+    },
+    {
+     "op": "remove",
+     "path": "/old"
+    }
+   ]
+  },
+  {
+   "id": "structured-data-07",
+   "category": "structured-data",
+   "tier": "hard",
+   "prompt": "Aggregate these order records, each [region, product, qty, price_cents, status]:\n[\"East \",\"Widget\",3,250,\"ok\"]\n[\" east\",\"widget \",2,250,\"OK\"]\n[\"EAST\",\"Gadget\",null,900,\"ok\"]\n[\"West\",\"Gadget\",1,900,\"ok\"]\n[\"west\",\"Gizmo\",4,100,\"void\"]\n[null,\"Widget\",5,250,\"ok\"]\n[\"\",\"Gizmo\",1,100,\"ok\"]\n[\"North\",\"Gizmo\",2,100,\"Test\"]\n[\"West\",\"gadget\",2,900,\"ok\"]\n[\"West\",\"Widget\",3,null,\"ok\"]\n[\"North\",\"Widget\",1,250,\" ok \"]\n[\"East\",\"Gizmo\",2,100,\"ok\"]\n[\"North\",null,6,50,\"ok\"]\n[\"South\",\"Gadget\",1,900,\"ok\"]\nSteps. (1) Drop records whose status, after trimming spaces and lowercasing, is 'void' or 'test'. (2) Group the rest by region: trim, lowercase; a null or empty region becomes the key '(none)'. (3) Per group compute: orders = number of records; units = sum of qty over records whose qty is not null; revenue = sum of qty*price_cents over records where BOTH qty and price are non-null (so a record with a null price still adds its qty to units but nothing to revenue); avgUnitPrice = revenue/units as a fully reduced fraction {\"numerator\":n,\"denominator\":d} (an integer value still has denominator 1; if units is 0 use null); topProduct = the product (trimmed, lowercased; null products ignored) with the largest sum of qty (null qty counts as 0), ties broken by alphabetically smaller name, or null if no record has a product. (4) Keep only groups with orders >= 2. (5) Sort by revenue descending, ties by region ascending.\nReturn answer as a JSON array of objects {\"region\",\"orders\",\"units\",\"revenue\",\"avgUnitPrice\",\"topProduct\"} in that order.",
+   "expectedAnswer": [
+    {
+     "region": "west",
+     "orders": 3,
+     "units": 6,
+     "revenue": 2700,
+     "avgUnitPrice": {
+      "numerator": 450,
+      "denominator": 1
+     },
+     "topProduct": "gadget"
+    },
+    {
+     "region": "east",
+     "orders": 4,
+     "units": 7,
+     "revenue": 1450,
+     "avgUnitPrice": {
+      "numerator": 1450,
+      "denominator": 7
+     },
+     "topProduct": "widget"
+    },
+    {
+     "region": "(none)",
+     "orders": 2,
+     "units": 6,
+     "revenue": 1350,
+     "avgUnitPrice": {
+      "numerator": 225,
+      "denominator": 1
+     },
+     "topProduct": "widget"
+    },
+    {
+     "region": "north",
+     "orders": 2,
+     "units": 7,
+     "revenue": 550,
+     "avgUnitPrice": {
+      "numerator": 550,
+      "denominator": 7
+     },
+     "topProduct": "widget"
+    }
+   ]
+  }
+ ]
+}

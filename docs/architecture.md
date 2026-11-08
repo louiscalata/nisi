@@ -15,10 +15,11 @@ boundary. `serialization/canonical-json-v1.mjs` gives supported JSON a stable
 representation and digest. The Apple Foundation Models and local chat modules
 are adapters; neither is required by the workflow orchestrator. The optional Jev
 advisor (`adapters/jev-advisor.mjs`) plans local-chat settings and provides an
-advisory reviewer; it is a separate data boundary, because the host's `judge`
-function sends the task (and, for the reviewer, the candidate's files) to a
-hosted service. Nisi builds the `state` the judge receives and never calls the
-service itself.
+advisory reviewer; it is a separate data boundary, because the task (and, for the
+reviewer, the candidate's files) goes to a hosted service. Nisi builds the
+`state`; the service is called by the host's own `judge` function or, when none
+is passed and `TYPESAFE_API_KEY` is set, by the built-in client
+(`adapters/jev-client.mjs`). With neither, nothing is sent.
 
 The application supplies all executable work through adapters. The engine does
 not read files, start processes, call a model endpoint, modify a candidate on
