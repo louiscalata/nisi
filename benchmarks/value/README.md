@@ -6,11 +6,11 @@ fixes; re-measured before/after timings showed a 2-5% cost on normal runs.
 The control, interface, and overhead commands do not call a model. A separate
 opt-in local pilot does; neither establishes that Nisi improves model reasoning.
 
-Use Node.js 22 or newer and clone `main`; the v0.2.0 release tag predates these
-benchmark files:
+Use Node.js 22 or newer and clone a release tag from v0.2.1 onward (the v0.2.0
+tag predates these benchmark files):
 
 ```bash
-git clone --branch main --depth 1 https://github.com/louiscalata/nisi.git
+git clone --branch v0.3.0 --depth 1 https://github.com/louiscalata/nisi.git
 cd nisi
 ```
 

@@ -115,10 +115,13 @@ or measured token savings.
 
 ## Jev pre- and post-analysis (optional)
 
-`nisi/adapters/jev-advisor` uses Jev, TypeSafe's System One model, to make two
-judgments around a run. Nisi does not call Jev itself. You pass a
+`nisi/adapters/jev-advisor` uses Jev, TypeSafe's System One model (a hosted
+service that returns typed answers and probabilities), to make two judgments
+around a run. Nisi does not call Jev itself. You pass a
 `judge({ state, questions })` function that sends one System One request and
 returns `{ model, answers }`, so the key and transport stay with the host.
+Whatever you put in `state` leaves your machine: the task text for pre-analysis,
+and the task plus the candidate's files for the reviewer.
 
 ```js
 import { planWithJev, createJevReviewer } from 'nisi/adapters/jev-advisor';
@@ -131,25 +134,25 @@ const reviewers = [myReviewer, createJevReviewer({ id: 'jev.review', judge })];
 - **Pre-analysis** asks whether the task needs the model to reason (`reason`) or
   follows directly from the input (`direct`), and whether it is missing
   information (`underspecified`, a probability). The default policy gives
-  `reason` tasks 4,096 output tokens and turns reasoning off for `direct` tasks.
+  `reason` tasks 4,096 output tokens, and `direct` tasks no reasoning
+  (`reasoningEffort: 'none'`) and a 1,024-token cap.
 - **Post-analysis** is a reviewer that records Jev's probability that the
   candidate meets every acceptance criterion. It is advisory by default: it
   passes and puts the probability in the review summary. With `gate: true` it
   fails below `threshold` and sends the candidate to repair.
 
-Measured on 16 frozen harder tasks with `qwen3.8-27b` on LM Studio, Nisi
-arm, one run each:
-
-| Settings | Correct | Time |
-| --- | --- | --- |
-| 1,024-token cap, reasoning on | 10/16 | 9.8 min |
-| 4,096-token cap, reasoning on | 14/16 | 15.4 min |
-| Reasoning off | 8/16 | 2.7 min |
-| Jev plan per task | 14/16 | 12.7 min |
+Measured on 16 harder tasks with `qwen3.8-27b` (single runs): the adapter
+defaults (4,096 tokens, 120 s) solve 14, and Jev planning solves 14 in 12.7 min
+against 15.4 min without it at the same 300 s timeout, with the planning calls
+excluded from the time. A single unchecked draft scores the same 14, so these
+are speed results, not accuracy gains. The full table, the flags for each row and
+the caveats are in the [harder-task benchmark](../benchmarks/harder/README.md).
 
 Jev's post-analysis is not reliable enough to gate a run. On 31 labelled
-answers it ranked correct above incorrect with AUC 0.78. At a threshold that
-caught 10 of the 13 wrong answers, it also failed 7 of the 18 right ones.
+answers it ranked correct above incorrect with AUC 0.78. At a threshold of 0.3
+it caught 10 of the 13 wrong answers and failed 7 of the 18 right ones. At the
+default threshold of 0.5 it caught all 13 and failed 14 of the 18, so `gate: true`
+with the default would send most correct candidates to repair.
 
 To rerun these settings on your own model, see
 [the harder-task benchmark](../benchmarks/harder/README.md).

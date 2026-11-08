@@ -70,8 +70,9 @@ export async function planWithJev(task, { judge, policy = DEFAULT_JEV_PLAN_POLIC
 // Post-analysis as a Nisi reviewer. By default it is advisory: it always passes
 // and records Jev's probability in the review summary for the host to read.
 // Measured on 31 labelled answers, right and wrong answers overlapped too much
-// for Jev to gate a run: at a threshold that caught 10 of 13 wrong answers it
-// also failed 7 of 18 right ones. Pass `gate: true` to FAIL below `threshold`,
+// for Jev to gate a run: at a threshold of 0.3 it caught 10 of 13 wrong answers
+// and failed 7 of 18 right ones; at the default 0.5 it caught 13 of 13 and
+// failed 14 of 18. Pass `gate: true` to FAIL below `threshold`,
 // which sends the candidate to repair.
 export function createJevReviewer({ id, judge, gate = false, threshold = 0.5 } = {}) {
   if (typeof id !== 'string' || !/^[a-z][a-z0-9_.-]{0,95}$/u.test(id)) fail('JEV_ID_INVALID');

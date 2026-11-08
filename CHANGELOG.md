@@ -19,7 +19,8 @@ gains one file, `adapters/jev-advisor.mjs` (19 files; the new import path is
   `createJevReviewer({ id, judge })` is a reviewer that records Jev's
   probability that the candidate meets every criterion. It is advisory unless
   created with `gate: true`. Nisi never calls Jev itself: the host supplies
-  `judge`, and every typed answer is validated.
+  `judge`, which sends the task (and, for the reviewer, the candidate's files)
+  to Jev's hosted service, and every typed answer is validated.
 
 - Add a `reasoningEffort` option to the local-chat adapters (`none`, `minimal`,
   `low`, `medium`, `high`), sent as `reasoning_effort`. With a reasoning model,
@@ -30,8 +31,9 @@ gains one file, `adapters/jev-advisor.mjs` (19 files; the new import path is
 
 - Add `benchmarks/harder/`, the opt-in benchmark behind the Jev and
   reasoning figures: 16 frozen tasks whose answers `make_tasks.py` computes,
-  a one-shot arm and a Nisi arm, and flags for the token cap, reasoning effort,
-  shape-only tests and a host-supplied Jev judge module.
+  a one-shot arm and a Nisi arm, and flags for the token cap, timeout, reasoning
+  effort, shape-only tests and a host-supplied Jev judge module. Its defaults
+  match the adapter's (4,096 tokens, 120 s).
 
 ## 0.2.1
 

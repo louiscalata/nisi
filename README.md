@@ -1,4 +1,4 @@
-# Nisi v0.2
+# Nisi
 
 **A Node.js command-line tool and library for AI-assisted coding workflows.**
 
@@ -8,13 +8,17 @@ Nisi returns proposed file contents and a report showing what passed, what
 failed, and why the run stopped. Fixed criteria and repair limits keep each
 attempt tied to the original request.
 
-**v0.3.0 is the current public CLI release**, which adds optional Jev analysis and a reasoning-effort option to v0.2.1. Its command runs a fixed workflow
-demonstration or a fixed local-model JSON demonstration. Applications can use
-the workflow, journal, and store APIs directly. This release does not run
-arbitrary repositories from the command line. The [v0.1 verification
-record](https://github.com/louiscalata/nisi/blob/main/docs/verification.md)
-describes the earlier release. The [v0.2 verification record](https://github.com/louiscalata/nisi/blob/main/docs/verification-v0.2.md)
-records the checks for this release and their limits.
+**v0.3.0 is the current release.** It adds two optional features for local
+models: a `reasoningEffort` setting and a Jev advisor (see
+[What changed in v0.3.0](#what-changed-in-v030)). The CLI runs a fixed workflow
+demonstration or a fixed local-model JSON demonstration; it does not run
+arbitrary repositories. Applications use the workflow, journal, and store APIs
+directly. The [v0.1](https://github.com/louiscalata/nisi/blob/main/docs/verification.md)
+and [v0.2](https://github.com/louiscalata/nisi/blob/main/docs/verification-v0.2.md)
+verification records cover those releases. The v0.2 record covers the CLI,
+journal and store, which v0.3.0 does not change. The v0.3.0 additions are
+covered by `tests/jev-advisor.test.mjs`, `tests/local-chat.test.mjs` and
+`tests/harder-benchmark.test.mjs`, and have no separate verification record.
 
 ## Quick start
 
@@ -72,7 +76,7 @@ reopen it after a process restart, and check it before relying on its rows.
 These modules live under `history/`. This section describes v0.3.0;
 [What changed in v0.3.0](#what-changed-in-v030) lists the differences from v0.2.1.
 The [changelog](CHANGELOG.md) records changes by version;
-results measured with a separate private adapter do not apply to this public package.
+
 
 - **Run journal** (`history/run-journal-v1.mjs`, import `nisi/history/run-journal`).
   `createRunJournal(config)` validates every entry (fixed keys, identifier
@@ -147,19 +151,22 @@ destination before removing an orphan. Journal views and recovery reports carry
 
 These are new since v0.2.1. See [CHANGELOG.md](CHANGELOG.md) for the full list.
 
-- **Jev pre- and post-analysis (optional).** `nisi/adapters/jev-advisor` exports
-  `planWithJev` and `createJevReviewer`. Nisi never calls Jev itself: you pass a
-  `judge({ state, questions })` function, so the key and transport stay with
-  you. Pre-analysis chooses reasoning settings per task; the reviewer records
-  Jev's probability that a candidate meets every criterion and is advisory
-  unless created with `gate: true`. On 31 labelled answers it was too weak to
-  gate a run (AUC 0.78). See [local models](docs/local-models.md).
+- **Jev pre- and post-analysis (optional).** Jev is TypeSafe's System One model:
+  a hosted service that returns typed answers and probabilities. Nisi never
+  calls it. You pass a `judge({ state, questions })` function that does, so the
+  key and transport stay with you, and anything you send in `state` (the task,
+  and for the reviewer the candidate's files) goes to that service.
+  `nisi/adapters/jev-advisor` exports `planWithJev`, which picks reasoning
+  settings per task, and `createJevReviewer`, which records Jev's probability
+  that a candidate meets every criterion. The reviewer is advisory unless created
+  with `gate: true`, and it was too weak to gate a run (AUC 0.78 on 31 labelled
+  answers). See [Jev analysis](docs/local-models.md#jev-pre--and-post-analysis-optional).
 - **`reasoningEffort` for local chat models.** Sent as `reasoning_effort`
   (`none`, `minimal`, `low`, `medium`, `high`); invalid values are refused with
   `LOCAL_CHAT_REASONING_EFFORT_INVALID`. Without it, requests are unchanged.
-- **Harder-task benchmark.** `benchmarks/harder/` holds 16 frozen tasks and an
-  opt-in runner behind the Jev and reasoning figures. It is a source-checkout
-  tool, not part of the package archive.
+- **Harder-task benchmark.** [`benchmarks/harder/`](benchmarks/harder/README.md)
+  holds 16 frozen tasks and an opt-in runner for the Jev and reasoning figures.
+  It is a source-checkout tool, not part of the package archive.
 
 ## What changed in v0.2.1
 
@@ -332,8 +339,10 @@ host responsibilities. The host also owns applying changes and release decisions
 
 ## Benchmarks
 
-The benchmark tooling and graphs are on `main`; the v0.2.0 tag and release
-archive predate this source update.
+The benchmark tooling and graphs ship in the source checkout from v0.2.1
+onward and are not in the package archive. The model-free benchmarks are below;
+the [harder-task benchmark](benchmarks/harder/README.md) is the v0.3.0 addition
+and calls a model.
 
 ### Token use in one local pilot
 
@@ -371,7 +380,8 @@ and [study plan](benchmarks/value/LIVE-STUDY.md) for scope and next tests.
 
 ### Package footprint
 
-The published v0.2.0 npm-format archive is **42,439 bytes with 18 files**.
+The v0.2.0 npm-format archive was **42,439 bytes with 18 files**; v0.3.0 adds
+one file, `adapters/jev-advisor.mjs` (19 files, size not re-measured here).
 The source checkout also contains tests, docs, and benchmark evidence. The
 chart compares pinned Node package archives, excluding dependency packages;
 LangGraph.js and Mastra offer broader capabilities and use different packaging.
@@ -391,6 +401,7 @@ savings claim.
 - [Architecture](https://github.com/louiscalata/nisi/blob/main/docs/architecture.md) — components, terminology, and trust boundaries.
 - [Local models](https://github.com/louiscalata/nisi/blob/main/docs/local-models.md), [file access](https://github.com/louiscalata/nisi/blob/main/docs/file-policy.md), and [Apple integration](https://github.com/louiscalata/nisi/blob/main/docs/apple-foundation-models.md) — integration setup and limits.
 - [v0.1 verification](https://github.com/louiscalata/nisi/blob/main/docs/verification.md) and [v0.2 verification](https://github.com/louiscalata/nisi/blob/main/docs/verification-v0.2.md) — version-scoped results and limits.
+- [Harder-task benchmark](benchmarks/harder/README.md) — the opt-in model benchmark behind the v0.3.0 figures.
 - [Changelog](https://github.com/louiscalata/nisi/blob/main/CHANGELOG.md) — public changes by version.
 - [v0.1 editable README manuscript](https://github.com/louiscalata/nisi/tree/main/docs/editor) — a standalone editor for the earlier README text.
 

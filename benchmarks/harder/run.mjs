@@ -87,7 +87,7 @@ function adaptersFor(t, author, { shapeOnly, jevReview, judge }) {
   };
 }
 
-export async function runHarder({ endpoint, model, fetch, dataset, maxOutputTokens = 1024, reasoningEffort, judge,
+export async function runHarder({ endpoint, model, fetch, dataset, maxOutputTokens = 4096, timeoutMs = 120_000, reasoningEffort, judge,
   plan = false, jevReview = false, shapeOnly = false, arms = ['A', 'C'], selectedTaskIds, onRow } = {}) {
   if ((plan || jevReview) && typeof judge !== 'function') throw new Error('HARDER_JUDGE_REQUIRED');
   if (reasoningEffort !== undefined && !LOCAL_CHAT_REASONING_EFFORTS.includes(reasoningEffort)) throw new Error('HARDER_REASONING_INVALID');
@@ -98,7 +98,7 @@ export async function runHarder({ endpoint, model, fetch, dataset, maxOutputToke
     const task = taskFor(t, jevReview);
     const planned = plan ? await planWithJev(task, { judge }) : null;
     for (const arm of arms) {
-      const author = createLocalChatAuthorAdapter({ endpoint, destination: 'LOOPBACK_HTTP', model, id: 'harder.author', timeoutMs: 300_000,
+      const author = createLocalChatAuthorAdapter({ endpoint, destination: 'LOOPBACK_HTTP', model, id: 'harder.author', timeoutMs,
         maxOutputTokens, ...(reasoningEffort ? { reasoningEffort } : {}), ...(planned ? planned.settings : {}), ...(fetch ? { fetch } : {}) });
       const started = Date.now(); let candidate = null, outcome = null, code = null, report = null;
       try {
@@ -125,18 +125,19 @@ export async function runHarder({ endpoint, model, fetch, dataset, maxOutputToke
     return [arm, { correct: mine.filter(r => r.correct).length, of: mine.length, ms: mine.reduce((s, r) => s + r.ms, 0) }];
   }));
   return { datasetId: dataset.datasetId, datasetSha256: TASKS_SHA256, model,
-    settings: { maxOutputTokens, reasoningEffort: reasoningEffort ?? null, plan, jevReview, tests: shapeOnly ? 'shape' : 'semantic' }, summary, rows };
+    settings: { maxOutputTokens, timeoutMs, reasoningEffort: reasoningEffort ?? null, plan, jevReview, tests: shapeOnly ? 'shape' : 'semantic' }, summary, rows };
 }
 
-const USAGE = 'USAGE: --allow-live <loopback-endpoint> <model> <output-file> [--max-tokens N] [--reasoning EFFORT] [--tests shape] [--judge MODULE] [--plan] [--jev-review] [--task ID]';
+const USAGE = 'USAGE: --allow-live <loopback-endpoint> <model> <output-file> [--max-tokens N] [--timeout-ms N] [--reasoning EFFORT] [--tests shape] [--judge MODULE] [--plan] [--jev-review] [--task ID]';
 
 export function parseArgs(argv) {
   if (argv[0] !== '--allow-live' || argv.length < 4) throw new Error(USAGE);
   const [, endpoint, model, outputFile, ...rest] = argv;
-  const options = { endpoint, model, outputFile, maxOutputTokens: 1024, plan: false, jevReview: false, shapeOnly: false };
+  const options = { endpoint, model, outputFile, maxOutputTokens: 4096, timeoutMs: 120_000, plan: false, jevReview: false, shapeOnly: false };
   for (let i = 0; i < rest.length; i += 1) {
     const flag = rest[i], value = () => { if (rest[i + 1] === undefined) throw new Error(USAGE); return rest[++i]; };
     if (flag === '--max-tokens') { options.maxOutputTokens = Number(value()); if (!Number.isSafeInteger(options.maxOutputTokens) || options.maxOutputTokens < 1) throw new Error(USAGE); }
+    else if (flag === '--timeout-ms') { options.timeoutMs = Number(value()); if (!Number.isSafeInteger(options.timeoutMs) || options.timeoutMs < 1000) throw new Error(USAGE); }
     else if (flag === '--reasoning') options.reasoningEffort = value();
     else if (flag === '--tests') { if (value() !== 'shape') throw new Error(USAGE); options.shapeOnly = true; }
     else if (flag === '--judge') options.judgeModule = value();

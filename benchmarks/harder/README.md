@@ -1,11 +1,12 @@
 # Harder-task benchmark
 
-Sixteen frozen tasks that a small local model gets wrong in one pass: ISO week
-numbers, multi-key sorts, interval merges, topological order, business days,
-Levenshtein distance, banker's rounding, Semantic Versioning order and similar.
-`make_tasks.py` computes every expected answer; none is typed by hand. Run it
-to check the answers, and it rewrites `tasks-v1.json` byte for byte
-(sha256 `c7a521d4…0a99a`, pinned in `run.mjs`).
+Sixteen frozen tasks chosen because a small local model often errs on them: ISO
+week numbers, multi-key sorts, interval merges, topological order, business
+days, Levenshtein distance, banker's rounding, Semantic Versioning order and
+similar. One `qwen3.8-27b` draft solves 7 to 14 of the 16, depending on the
+token budget and reasoning setting. `make_tasks.py` computes every expected
+answer; none is typed by hand. Run it to check the answers, and it rewrites
+`tasks-v1.json` byte for byte (sha256 `c7a521d4…0a99a`, pinned in `run.mjs`).
 
 This benchmark calls a real model. It is opt-in and needs a local
 OpenAI-compatible endpoint, such as LM Studio or llama.cpp.
@@ -25,7 +26,8 @@ Each task runs in two arms with the same author settings:
 
 | Option | Effect |
 | --- | --- |
-| `--max-tokens N` | Output-token cap per call (default 1,024) |
+| `--max-tokens N` | Output-token cap per call (default 4,096, the adapter default) |
+| `--timeout-ms N` | Timeout per model call (default 120,000, the adapter default) |
 | `--reasoning EFFORT` | Sends `reasoning_effort` (`none`, `minimal`, `low`, `medium`, `high`) |
 | `--tests shape` | Tests check only the answer form, as on a host with no answer oracle |
 | `--judge MODULE --plan` | Jev pre-analysis picks the settings per task |
@@ -44,15 +46,26 @@ calls.
 
 ## Results so far
 
-`qwen3.8-27b` on LM Studio, arm C, one run per setting, 2026-11-07:
+`qwen3.8-27b` on LM Studio, one run per setting, 2026-11-07. "One draft" is
+arm A and "Nisi" is arm C, correct out of 16; time is for arm C and excludes
+Jev planning calls.
 
-| Settings | Correct | Time |
-| --- | --- | --- |
-| 1,024-token cap, reasoning on | 10/16 | 9.8 min |
-| 4,096-token cap, reasoning on | 14/16 | 15.4 min |
-| `--reasoning none` | 8/16 | 2.7 min |
-| `--plan` (Jev per task) | 14/16 | 12.7 min |
+| Flags | One draft | Nisi | Time |
+| --- | --- | --- | --- |
+| `--max-tokens 1024 --timeout-ms 300000` | 10 | 10 | 9.8 min |
+| none (library defaults: 4,096 tokens, 120 s) | 14 | 14 | 14.0 min |
+| `--timeout-ms 300000` | 14 | 14 | 15.4 min |
+| `--max-tokens 1024 --timeout-ms 300000 --reasoning none` | 7 | 8 | 2.7 min |
+| `--timeout-ms 300000 --judge <module> --plan` | 14 | 14 | 12.7 min |
 
-These are single runs on one host and one model. They show where the token
-budget and the reasoning setting matter. They do not estimate accuracy on
-other models or task sets.
+- The library defaults already solve 14 of 16, so 16 is the most any setting can
+  add. A single unchecked draft scores the same as the Nisi arm in four of the
+  five rows; the checks and repair loop helped only with reasoning off (7 to 8).
+- The 1,024-token row is a cap a host might choose, not the default.
+- With the same 300 s timeout, Jev planning solved 14 in 12.7 min against
+  15.4 min without it, and 14.0 min at the 120 s defaults. The time excludes the
+  planning calls, and one run cannot separate this from run-to-run variation.
+- Reasoning off alone is fastest but solves about half the tasks. A staged setup
+  (draft with reasoning off, repair with reasoning on) scored 12 in 13.8 min,
+  against 7 for its one-draft arm, and is not part of the package.
+- Every figure is one run on one model and one machine.

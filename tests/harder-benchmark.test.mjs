@@ -88,9 +88,11 @@ test('a Jev plan sets the wire settings and the Jev reviewer stays advisory', as
 test('the CLI needs explicit opt-in, a judge module for Jev, and a new output file', async () => {
   assert.throws(() => parseArgs([ENDPOINT, 'm', 'out.json']), /USAGE/u);
   assert.throws(() => parseArgs(['--allow-live', ENDPOINT, 'm', 'out.json', '--tests', 'all']), /USAGE/u);
+  assert.throws(() => parseArgs(['--allow-live', ENDPOINT, 'm', 'out.json', '--timeout-ms', '10']), /USAGE/u);
+  assert.equal(parseArgs(['--allow-live', ENDPOINT, 'm', 'out.json', '--timeout-ms', '300000']).timeoutMs, 300000);
   assert.throws(() => parseArgs(['--allow-live', ENDPOINT, 'm', 'out.json', '--plan']), /HARDER_JUDGE_REQUIRED/u);
   assert.deepEqual(parseArgs(['--allow-live', ENDPOINT, 'm', 'o', '--max-tokens', '4096', '--reasoning', 'none', '--task', 'x']),
-    { endpoint: ENDPOINT, model: 'm', outputFile: 'o', maxOutputTokens: 4096, plan: false, jevReview: false, shapeOnly: false,
+    { endpoint: ENDPOINT, model: 'm', outputFile: 'o', maxOutputTokens: 4096, timeoutMs: 120000, plan: false, jevReview: false, shapeOnly: false,
       reasoningEffort: 'none', selectedTaskIds: ['x'] });
   const dir = await fs.mkdtemp(path.join(os.tmpdir(), 'nisi-harder-'));
   try {
