@@ -1,5 +1,15 @@
 # Nisi v0.2 verification record
 
+> **Scope: v0.2.0 only.** This record covers the v0.2.0 source (release tag
+> `v0.2.0`, commit `e5f73b7`, tree `cb0d664`, which merges `91744af`) and the
+> release candidates before it. v0.2.1 later
+> changed journal reopen, store writes, the consent gate, snapshot limits and
+> the CLI, and v0.3.0 added the `reasoningEffort` option and the Jev advisor.
+> The v0.2.1 changes are covered by the regression tests listed in
+> [the 2026-11-03 review](reviews/2026-11-03-main-findings.md); v0.2.1 and v0.3.0
+> have no verification record equivalent to this one. Statements below about reopen,
+> pruning and the CLI describe v0.2.0 and are not current behaviour.
+
 This record covers the public v0.2 command line, run journal, and journal store.
 It does not carry forward v0.1 integration results or private experiments.
 
@@ -56,9 +66,11 @@ with 18 declared archive files, offline installation, help, version, the fixed
 demo, a preserved-symlink entrypoint, and refusal of malformed local-model
 arguments before inference. The fixed demo returned `COMPLETED`, one repair,
 `reportStored: true`, and `modelCalls: 0`. The editable v0.1 README consistency
-check passed 12/12. Hosted Windows/Linux results for the stable CLI commit
-must be checked separately; these Mac results do not establish live provider
-behavior.
+check passed 12/12. These Mac results do not establish live provider behavior.
+The hosted Windows/Linux Node 22/24 run for the stable commit
+([run 35907095428](https://github.com/louiscalata/nisi/actions/runs/35907095428))
+passed on commit `41fb6ae`, the `v0.2.0` release target, whose tree (`cb0d664`) is
+identical to the tag commit `e5f73b7`.
 
 Run both focused journal and store test files separately when investigating
 those APIs:
@@ -100,8 +112,9 @@ The rc.2 source candidate checks that every retained entry's stored fingerprint
 matches its validated, redacted entry during reopen. A regression builds a
 canonical journal with a recomputed record chain and a mismatched fingerprint;
 reopen reports `INVALID` and seals the journal, and the store refuses it.
-An entry whose payload was legitimately pruned still reopens with its original
-historical fingerprint.
+In v0.2.0, an entry whose payload was legitimately pruned still reopened with
+its original historical fingerprint. From v0.2.1, `reopen` rejects such rows
+because the fingerprint is recomputed from the stored null-payload entry.
 
 On macOS arm64 with Node v24.18.0, the focused journal/store tests passed
 27/27. The full `npm run check` passed the structural check and 200 Node tests
@@ -111,8 +124,8 @@ vulnerabilities. These checks do not verify native Windows operation or live
 provider behavior. The published rc.2 tag targets
 `b7fc3e23089c2ef8b5197e10d0d4671130fe7bd3`; its
 [four-job Windows/Linux Node 22/24 CI run](https://github.com/louiscalata/nisi/actions/runs/35901126815)
-passed on that source tree. The CLI added for stable v0.2.0 requires fresh
-checks on the final stable commit.
+passed on that source tree. The stable v0.2.0 CLI was checked on the
+final stable commit, as recorded above.
 
 The prior v0.1 workflow, local-chat and platform evidence remains in the
 [version-scoped v0.1 verification record](verification.md); it is not evidence

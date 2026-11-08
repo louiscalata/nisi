@@ -38,7 +38,7 @@ to 965. The first command appears at line 20 instead of line 145.
 lead to the documented `COMPLETED`, one-repair, stored-report result.
 
 Compare the [previous README](https://github.com/louiscalata/nisi/blob/fc8bf1b11d613c7bd0d3ed3494c3f64d7cd45d18/README.md)
-with the [revised README](../../README.md). Download and open the
+with the [revised README](https://github.com/louiscalata/nisi/blob/02a0b39146596da6abaf279316ff7086cd70ec52/README.md) (pinned to the revision this record describes; the README has been rewritten since). Download and open the
 [rendered comparison](../editor/review-before-after.html) to read both versions
 side by side, or use the [editable manuscript](../editor/README.md).
 

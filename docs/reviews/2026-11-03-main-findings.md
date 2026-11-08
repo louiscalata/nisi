@@ -1,8 +1,10 @@
 # Public main review findings — November 3, 2026
 
-Base: `f85ec6595413f9b091ee2bc6bdd6fd7a9525fb45`. All changes are local and
-uncommitted. No branch, tag, PR, release, service, login, signing or notarization
-operation was performed. Review inputs came from an external review. Its claims
+Base: `f85ec6595413f9b091ee2bc6bdd6fd7a9525fb45`. At the time of this review all
+changes were local and uncommitted, and no branch, tag, PR, release, service,
+login, signing or notarization operation had been performed; the changes later
+landed in commit `4fc09e7` and PR #15 and shipped in v0.2.1. The test counts
+below are those of the review-time working tree, not of any later commit. Review inputs came from an external review. Its claims
 were checked against the working tree; externally scoped claims were not
 promoted to verified facts.
 

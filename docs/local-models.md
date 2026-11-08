@@ -115,7 +115,9 @@ independent billing measurements.
 
 An earlier example run completed with Qwen as author, four real configuration
 assertions, and GPT-OSS as reviewer, before JSON-schema requests were added.
-With the current JSON-schema request format, Gemma 3 (`google/gemma-3-4b`)
+On 11 September 2026, with the JSON-schema request format of that revision (the
+schema has since gained length and non-blank constraints), Gemma 3
+(`google/gemma-3-4b`)
 authored a valid candidate, four assertions passed, and Gemma 4
 (`google/gemma-4-26b-a4b-qat`) reviewed the same candidate successfully. That
 configuration completed within a 90-second total deadline. Other configurations
@@ -131,14 +133,29 @@ service that returns typed answers and probabilities), to make two judgments
 around a run. Nisi does not call Jev itself. You pass a
 `judge({ state, questions })` function that sends one System One request and
 returns `{ model, answers }`, so the key and transport stay with the host.
-Whatever you put in `state` leaves your machine: the task text for pre-analysis,
-and the task plus the candidate's files for the reviewer.
+
+**What leaves your machine.** Nisi builds `state` and hands it to your `judge`;
+your function decides what is actually sent. For pre-analysis `state` is
+`{ task: { taskId, mode, language, allowedFiles, acceptanceCriteria } }` (not
+`protectedFiles`, `protectedSnapshots` or `policy`). For the reviewer it also
+holds `candidate: { files }` and `testsPassed`.
+
+**The judge contract.** `questions` maps a name to `{ type, instructions,
+criteria? }`. Pre-analysis asks `plan` (`type: 'choice'`, with the criteria
+`direct` and `reason`) and `underspecified` (`type: 'noul'`); the reviewer asks
+`satisfies` (`type: 'noul'`). `answers` must have exactly one entry per question
+name: `{ choice }` for a choice question (one of its criteria), `{ noul }` for a
+probability between 0 and 1, and an optional `confidence` between 0 and 1. An
+invalid answer is refused with `JEV_RESPONSE_INVALID`; a judge that throws gives
+`JEV_UNAVAILABLE`. Other codes: `JEV_JUDGE_REQUIRED`, `JEV_POLICY_INVALID`,
+`JEV_TASK_INVALID`, `JEV_ID_INVALID`, `JEV_GATE_INVALID`, `JEV_THRESHOLD_INVALID`.
 
 ```js
 import { planWithJev, createJevReviewer } from 'nisi/adapters/jev-advisor';
 
 const plan = await planWithJev(task, { judge });          // before the run
 const author = createLocalChatAuthorAdapter({ ...config, ...plan.settings });
+// task.policy.requiredReviewers must equal reviewers.length, so raise it by one.
 const reviewers = [myReviewer, createJevReviewer({ id: 'jev.review', judge })];
 ```
 
@@ -148,20 +165,36 @@ const reviewers = [myReviewer, createJevReviewer({ id: 'jev.review', judge })];
   `reason` tasks 4,096 output tokens, and `direct` tasks no reasoning
   (`reasoningEffort: 'none'`) and a 1,024-token cap.
 - **Post-analysis** is a reviewer that records Jev's probability that the
-  candidate meets every acceptance criterion. It is advisory by default: it
-  passes and puts the probability in the review summary. With `gate: true` it
-  fails below `threshold` and sends the candidate to repair.
+  candidate meets every acceptance criterion. By default it is advisory: it
+  passes and puts the probability in the review summary, so it adds a recorded
+  number but no independent check, and it should not be the only reviewer. It
+  counts as one of the task's required reviewers. If the judge fails or returns
+  an invalid answer, the review is `UNAVAILABLE` and the run ends `BLOCKED` with
+  `REVIEW_UNAVAILABLE`. With `gate: true` it fails below `threshold` (default
+  0.5) and sends the candidate to repair.
 
-Measured on 16 harder tasks with `qwen3.8-27b` (single runs): the adapter
-defaults (4,096 tokens, 120 s) solve 14, and Jev planning solves 14 in 12.7 min
-against 15.4 min without it at the same 300 s timeout, with the planning calls
-excluded from the time. A single unchecked draft scores the same 14, so these
-are speed results, not accuracy gains. The full table, the flags for each row and
-the caveats are in the [harder-task benchmark](../benchmarks/harder/README.md).
+### Measured results
 
-Jev's post-analysis is not reliable enough to gate a run. On 31 labelled
-answers it ranked correct above incorrect with AUC 0.78. At a threshold of 0.3
-it caught 10 of the 13 wrong answers and failed 7 of the 18 right ones. At the
-default threshold of 0.5 it caught all 13 and failed 14 of the 18, so `gate: true`
-with the default would send most correct candidates to repair.
+On 16 harder tasks with `qwen3.8-27b` (single runs), the adapter defaults
+(4,096 tokens, 120 s) solve 14. A single unchecked draft also solves 14, and so
+does the Jev plan. The Jev run took 12.7 min against 15.4 min for a flat
+4,096-token budget at the same 300 s timeout, not counting the planning calls,
+but that gap is almost entirely one task: Both runs got the base64 task (t06) wrong.
+Jev planned it as `direct` (1,024 tokens, no reasoning), so the planned run
+failed after two repairs in 18 s, while the flat run spent 168 s before its call
+failed. Apart from that task and the run-length encoding task (about
+22 s), the per-task times differ by seconds. Treat it as no demonstrated gain
+in accuracy or speed. The table, the flags and the raw run files are in the
+[harder-task benchmark](../benchmarks/harder/README.md).
 
+Jev's post-analysis is not reliable enough to gate a run. On the 31 distinct
+final answers collected from three earlier runs it ranked correct above
+incorrect with AUC 0.78. At a threshold of 0.3 it caught 10 of the 13 wrong
+answers and failed 7 of the 18 right ones; at 0.5 it caught all 13 and failed
+14 of the 18. Those thresholds were scored on the same answers, the reviewer was
+called without test results, and gating inside a workflow, where tests have
+already passed, was not measured. Read the numbers as a ranking signal, not a
+tuned gate. The labels and probabilities are in
+[`benchmarks/harder/results/jev-post-calibration.json`](../benchmarks/harder/results/README.md);
+the answers themselves are the `final` fields of the three run files, which the
+earlier harness cut to 300 characters (one answer was scored from its truncation).

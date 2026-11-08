@@ -1,0 +1,188 @@
+[
+ {
+  "task": "t02-multikey-sort",
+  "correct": true,
+  "status": "PASS",
+  "p": 0.55
+ },
+ {
+  "task": "t03-merge-intervals",
+  "correct": true,
+  "status": "PASS",
+  "p": 0.64
+ },
+ {
+  "task": "t04-topo-sort",
+  "correct": true,
+  "status": "PASS",
+  "p": 0.56
+ },
+ {
+  "task": "t05-business-days",
+  "correct": true,
+  "status": "FAIL",
+  "p": 0.16
+ },
+ {
+  "task": "t08-rle",
+  "correct": true,
+  "status": "FAIL",
+  "p": 0.34
+ },
+ {
+  "task": "t09-expression",
+  "correct": true,
+  "status": "FAIL",
+  "p": 0.18
+ },
+ {
+  "task": "t11-e164",
+  "correct": true,
+  "status": "FAIL",
+  "p": 0.47
+ },
+ {
+  "task": "t12-word-freq",
+  "correct": true,
+  "status": "FAIL",
+  "p": 0.1
+ },
+ {
+  "task": "t14-fraction",
+  "correct": true,
+  "status": "FAIL",
+  "p": 0.27
+ },
+ {
+  "task": "t16-semver-sort",
+  "correct": true,
+  "status": "FAIL",
+  "p": 0.45
+ },
+ {
+  "task": "t01-iso-week",
+  "correct": false,
+  "status": "FAIL",
+  "p": 0.01
+ },
+ {
+  "task": "t02-multikey-sort",
+  "correct": true,
+  "status": "PASS",
+  "p": 0.61
+ },
+ {
+  "task": "t03-merge-intervals",
+  "correct": false,
+  "status": "FAIL",
+  "p": 0.45
+ },
+ {
+  "task": "t04-topo-sort",
+  "correct": true,
+  "status": "FAIL",
+  "p": 0.34
+ },
+ {
+  "task": "t05-business-days",
+  "correct": false,
+  "status": "FAIL",
+  "p": 0.17
+ },
+ {
+  "task": "t06-base64",
+  "correct": false,
+  "status": "FAIL",
+  "p": 0.06
+ },
+ {
+  "task": "t06-base64",
+  "correct": false,
+  "status": "FAIL",
+  "p": 0.32
+ },
+ {
+  "task": "t07-levenshtein",
+  "correct": true,
+  "status": "FAIL",
+  "p": 0.23
+ },
+ {
+  "task": "t08-rle",
+  "correct": true,
+  "status": "FAIL",
+  "p": 0.43
+ },
+ {
+  "task": "t09-expression",
+  "correct": false,
+  "status": "FAIL",
+  "p": 0.12
+ },
+ {
+  "task": "t10-group-round",
+  "correct": false,
+  "status": "FAIL",
+  "p": 0.33
+ },
+ {
+  "task": "t11-e164",
+  "correct": true,
+  "status": "FAIL",
+  "p": 0.47
+ },
+ {
+  "task": "t12-word-freq",
+  "correct": true,
+  "status": "FAIL",
+  "p": 0.14
+ },
+ {
+  "task": "t13-roman-sum",
+  "correct": false,
+  "status": "FAIL",
+  "p": 0.22
+ },
+ {
+  "task": "t14-fraction",
+  "correct": false,
+  "status": "FAIL",
+  "p": 0.19
+ },
+ {
+  "task": "t15-weekday",
+  "correct": false,
+  "status": "FAIL",
+  "p": 0.26
+ },
+ {
+  "task": "t15-weekday",
+  "correct": true,
+  "status": "FAIL",
+  "p": 0.28
+ },
+ {
+  "task": "t16-semver-sort",
+  "correct": true,
+  "status": "FAIL",
+  "p": 0.4
+ },
+ {
+  "task": "t05-business-days",
+  "correct": false,
+  "status": "FAIL",
+  "p": 0.22
+ },
+ {
+  "task": "t06-base64",
+  "correct": false,
+  "status": "FAIL",
+  "p": 0.25
+ },
+ {
+  "task": "t09-expression",
+  "correct": false,
+  "status": "FAIL",
+  "p": 0.12
+ }
+]

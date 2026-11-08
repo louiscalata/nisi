@@ -1,0 +1,82 @@
+{
+ "t01-iso-week": {
+  "plan": "reason",
+  "confidence": 0.98,
+  "underspecified": 0.1
+ },
+ "t02-multikey-sort": {
+  "plan": "reason",
+  "confidence": 0.92,
+  "underspecified": 0.05
+ },
+ "t03-merge-intervals": {
+  "plan": "reason",
+  "confidence": 0.98,
+  "underspecified": 0.06
+ },
+ "t04-topo-sort": {
+  "plan": "reason",
+  "confidence": 0.96,
+  "underspecified": 0.09
+ },
+ "t05-business-days": {
+  "plan": "reason",
+  "confidence": 1,
+  "underspecified": 0.34
+ },
+ "t06-base64": {
+  "plan": "direct",
+  "confidence": 0.34,
+  "underspecified": 0.08
+ },
+ "t07-levenshtein": {
+  "plan": "reason",
+  "confidence": 0.96,
+  "underspecified": 0.08
+ },
+ "t08-rle": {
+  "plan": "direct",
+  "confidence": 0.1,
+  "underspecified": 0.12
+ },
+ "t09-expression": {
+  "plan": "reason",
+  "confidence": 0.98,
+  "underspecified": 0.06
+ },
+ "t10-group-round": {
+  "plan": "reason",
+  "confidence": 0.98,
+  "underspecified": 0.13
+ },
+ "t11-e164": {
+  "plan": "reason",
+  "confidence": 0.86,
+  "underspecified": 0.16
+ },
+ "t12-word-freq": {
+  "plan": "reason",
+  "confidence": 0.92,
+  "underspecified": 0.11
+ },
+ "t13-roman-sum": {
+  "plan": "reason",
+  "confidence": 0.98,
+  "underspecified": 0.08
+ },
+ "t14-fraction": {
+  "plan": "reason",
+  "confidence": 1,
+  "underspecified": 0.07
+ },
+ "t15-weekday": {
+  "plan": "reason",
+  "confidence": 0.9,
+  "underspecified": 0.1
+ },
+ "t16-semver-sort": {
+  "plan": "reason",
+  "confidence": 0.92,
+  "underspecified": 0.07
+ }
+}

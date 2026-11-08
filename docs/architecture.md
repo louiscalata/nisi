@@ -13,7 +13,12 @@ deep-copy and freeze behavior, stable serialization, fingerprints, and result
 schemas. `policy/file-access.mjs` controls the separate file-admission
 boundary. `serialization/canonical-json-v1.mjs` gives supported JSON a stable
 representation and digest. The Apple Foundation Models and local chat modules
-are adapters; neither is required by the workflow orchestrator.
+are adapters; neither is required by the workflow orchestrator. The optional Jev
+advisor (`adapters/jev-advisor.mjs`) plans local-chat settings and provides an
+advisory reviewer; it is a separate data boundary, because the host's `judge`
+function sends the task (and, for the reviewer, the candidate's files) to a
+hosted service. Nisi builds the `state` the judge receives and never calls the
+service itself.
 
 The application supplies all executable work through adapters. The engine does
 not read files, start processes, call a model endpoint, modify a candidate on
@@ -41,8 +46,10 @@ The Workflow Orchestrator carries one task through a fixed path:
 4. **Review:** each required reviewer receives the candidate and fresh check
    and test records. Review mode uses a supplied candidate and reaches review only after
    authorization, checks, and tests.
-5. **Repair or finish:** a failed check, test, or review may invoke the author
-   within the repair budget. The repaired candidate begins a fresh cycle.
+5. **Repair or finish:** in edit mode, a failed check, test, or review may
+   invoke the author within the repair budget, and the repaired candidate begins
+   a fresh cycle. In review mode a failed stage ends the run as `FAILED` without
+   repair. A failed static check skips the tests, and a failed test skips review.
 
 The engine binds every stage to a run ID, complete task fingerprint, repair
 attempt, and candidate fingerprint. A stale or contradictory record stops the
@@ -54,9 +61,9 @@ run. A repeated candidate or explicit no-change repair produces `NO_PROGRESS`.
 |---|---|
 | **Pipeline** | The ordered processing path from task intake through authorization, candidate work, checks, tests, review, repair, and report creation. |
 | **Workflow** | The rules and steps for completing a task, including authorization, stage order, acceptance criteria, repair policy, and stopping conditions. A run executes those rules. |
-| **Run** | A single invocation of `runWorkflow`, identified by a fresh `runId` and represented by one immutable report. |
+| **Run** | A single invocation of `runWorkflow`, identified by a fresh `runId` once setup validation passes (a setup refusal returns a `BLOCKED` report with `runId: null`), and represented by one immutable report. |
 | **Stage** | One named step in a run, such as `authorizeContext`, `draft`, `staticChecks`, `tests`, `review`, or `repair`. Its record contains status, binding, and evidence. |
-| **Status** | The result returned by an adapter: `PASS`, `FAIL`, `NOT_RUN`, or `UNAVAILABLE`. Repair additionally permits `REPAIRED` and `NO_CHANGE`; draft returns candidate and evidence without a status field. |
+| **Status** | The result returned by an adapter: `PASS`, `FAIL`, `NOT_RUN`, or `UNAVAILABLE`. Repair uses its own set, `REPAIRED`, `NO_CHANGE`, `FAIL`, `NOT_RUN` and `UNAVAILABLE` (no `PASS`); draft returns candidate and evidence without a status field. |
 | **Outcome** | The engine's final run result: `COMPLETED`, `FAILED`, `BLOCKED`, `CANCELLED`, `TIMED_OUT`, `REPAIR_LIMIT`, or `NO_PROGRESS`. |
 | **Candidate** | A nonempty, normalized snapshot of changed relative file names and complete file contents. It has a stable fingerprint and an author ID. It is not a patch and does not apply itself. |
 | **Adapter** | An application-supplied callback object for authorization, authoring, checks, tests, review, or storage. The engine validates its declared identity and returned data; the host remains responsible for its behavior. |

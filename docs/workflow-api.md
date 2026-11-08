@@ -40,7 +40,12 @@ The host must resolve them under its project root using its platform's rules.
 They do not grant filesystem access or prevent another process writing files.
 
 The task and candidate are copied and frozen. Accessor properties, symbol
-properties, cycles and non-data objects are refused. The complete normalized
+properties, cycles and non-data objects are refused. Snapshots also refuse
+nesting deeper than 64 levels (`INPUT_DEPTH_LIMIT`) and more than 1,000,000
+copied values (`INPUT_SIZE_LIMIT`), counting an object reached by several paths
+once per path. A candidate has 1–256 files, and each path is at most 512
+characters. Findings lists hold at most 256 entries, and a finding's message at
+most 2,048 characters. The complete normalized
 task is hashed under `nisi/workflow-task/v1`. Criteria, scope and policy are
 therefore part of the evidence identity.
 
@@ -101,7 +106,10 @@ or the filesystem read-only.
 Each stage receives frozen `task`, `candidate`, `acceptanceCriteria`, `binding`
 and an `AbortSignal`. Draft has `candidate: null`. Tests also receive the static
 check result. Reviewers receive `checks`, `tests`, and `reviewerId`. Repair
-receives the preceding attempt's frozen stage records. The engine performs no
+also receives `stages`, the frozen stage records bound to the attempt just
+finished: on the first repair these include intake, authorization and the draft;
+later repairs receive the previous repair record plus that attempt's checks,
+tests and reviews (only those that ran). The engine performs no
 file reads, process launches, model requests, candidate writes or publication.
 
 ## Evidence schemas
@@ -164,7 +172,7 @@ their assertions or models, performed independent review, or reported honestly.
 |---|---|
 | COMPLETED | All configured required stages supplied valid PASS evidence |
 | FAILED | A check, test or review failed with no permitted repair, or repair reported FAIL |
-| BLOCKED | Invalid configuration, missing/unavailable/malformed required work or a required storage failure |
+| BLOCKED | Invalid configuration, missing/unavailable/malformed required work (including authorization returning `FAIL`, `NOT_RUN` or `UNAVAILABLE`: a refused authorization is never `FAILED` or repairable) or a required storage failure |
 | CANCELLED | External cancellation was observed |
 | TIMED_OUT | The workflow total deadline or the required terminal storage deadline expired |
 | REPAIR_LIMIT | The configured repair attempts were used and a required stage still failed |
@@ -206,7 +214,9 @@ it does not independently prove durability or retention. The example performs
 an actual write, file sync and read-back digest check.
 
 `workflowOutcome` preserves the outcome before storage. Ordinary optional-store
-failures leave `outcome` unchanged and set `reportStoreCode`. Required-store
+failures leave `outcome` unchanged and set `reportStoreCode`; an optional store
+attempt that observes the caller's cancellation or the run deadline still changes
+`outcome` to `CANCELLED` or `TIMED_OUT`. Required-store
 failures make it BLOCKED, except that storage deadline expiry produces TIMED_OUT.
 Storage using the caller's signal produces CANCELLED if caller cancellation is
 observed. A missing required store blocks before any work.

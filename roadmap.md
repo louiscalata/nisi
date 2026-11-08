@@ -1,7 +1,9 @@
 # Nisi roadmap
 
-Canonical project roadmap. Updated November 3, 2026. Product name: Nisi.
-Public v0.2.0 scope: a Node.js CLI and library with the existing workflow APIs,
+Canonical project roadmap. Updated November 7, 2026 (Pacific time). Product name: Nisi.
+Current release: v0.3.0 (v0.2.1 and v0.3.0 shipped the items listed below under
+v0.2.1, and v0.3.0 added the `reasoningEffort` option, the optional Jev advisor and
+the harder-task benchmark). Public v0.2.0 scope: a Node.js CLI and library with the existing workflow APIs,
 the run journal, and its store. The CLI exposes fixed demonstrations; the private
 native repository workflow and other private features remain outside this
 public release. GitHub rc.1 and rc.2 remain historical prereleases. Package
@@ -9,7 +11,7 @@ registry publication is a separate action.
 The September 12 documentation and onboarding revision started from public
 commit `fc8bf1b`.
 
-## Unreleased review corrections
+## v0.2.1 review corrections (shipped)
 
 - [x] Reproduce and fix journal identity, consent lifetime, normalized candidate,
   unsafe example execution, safe CLI diagnostics and bounded journal history.
@@ -20,12 +22,23 @@ commit `fc8bf1b`.
 - [x] Preserve the clock watermark across terminal storage and reconcile the
   grace-budget API documentation, review disposition and changelog.
 - [ ] Review journal format migration/authentication before adding either feature.
-- [ ] Release/CI/tag provenance remains a separate task; this local review makes
-  no publication or historical verification claim. Package-registry publication
-  remains open independently of the existing GitHub archive.
+- [x] Release/CI/tag provenance: v0.2.1 and v0.3.0 were published from commits
+  whose hosted Windows/Linux Node 22/24 runs passed. Package-registry publication
+  remains open independently of the GitHub archives.
 
 See [the finding dispositions](docs/reviews/2026-11-03-main-findings.md) for
 scope, regressions, deferred work and local verification.
+
+## v0.3.0 (shipped)
+
+- [x] Add the optional Jev advisor (`planWithJev`, `createJevReviewer`), the
+  `reasoningEffort` local-chat option, and the opt-in harder-task benchmark (its
+  raw results were published on `main` after the release).
+- [ ] Re-measure on a task set or model with headroom: the 27B model already
+  solves 14 of 16 at the adapter defaults, and a single unchecked draft ties the
+  Nisi arm, so the current numbers cannot show an accuracy gain.
+- [ ] Ship a harness that records its own settings, so each table row can be
+  regenerated from its output file.
 
 ## Public v0.2.0 CLI release
 
@@ -173,7 +186,7 @@ names are supplied by the host application.
 ## Historical v0.1 prototype gates
 
 These retained checklist entries describe the v0.1 verification boundary, not
-the current GitHub archive status. Current unreleased work is listed above.
+the current GitHub archive status. Current status and open items are listed above.
 
 - [ ] Host-specific integration for applying candidates, actual independent
   author/reviewer isolation and durable production report storage.

@@ -18,7 +18,9 @@ gains one file, `adapters/jev-advisor.mjs` (19 files; the new import path is
   (`direct`: `reasoningEffort: 'none'`, 1,024 tokens; `reason`: 4,096 tokens).
   `createJevReviewer({ id, judge })` is a reviewer that records Jev's
   probability that the candidate meets every criterion. It is advisory unless
-  created with `gate: true`. Nisi never calls Jev itself: the host supplies
+  created with `gate: true`, but it counts as one of the task's required
+  reviewers and, if `judge` fails or returns an invalid answer, reports
+  `UNAVAILABLE`, which blocks the run (`REVIEW_UNAVAILABLE`). Nisi never calls Jev itself: the host supplies
   `judge`, which sends the task (and, for the reviewer, the candidate's files)
   to Jev's hosted service, and every typed answer is validated.
 
@@ -27,7 +29,8 @@ gains one file, `adapters/jev-advisor.mjs` (19 files; the new import path is
   `none` stops hidden thinking from spending the output budget, which otherwise
   ends calls with `LOCAL_CHAT_FINISH_REFUSED`. Without the option, requests are
   byte-identical to before. Invalid values are refused with
-  `LOCAL_CHAT_REASONING_EFFORT_INVALID`. The live pilot accepts the same option.
+  `LOCAL_CHAT_REASONING_EFFORT_INVALID`. `runPilot()` in `benchmarks/value/live-pilot.mjs` accepts the same option; the
+  pilot's command line has no flag for it.
 
 - Add `benchmarks/harder/`, the opt-in benchmark behind the Jev and
   reasoning figures: 16 frozen tasks whose answers `make_tasks.py` computes,
@@ -41,7 +44,8 @@ Fixes found by review of v0.2.0. Runtime behavior changes only for inputs that
 were mishandled. **Compatibility:** an `fs` passed to `writeSerializedJournal`
 must now provide `lstatSync`; older pruned journal rows whose fingerprints cannot
 be recomputed are rejected on reopen; some refusal codes are more specific (see
-below).
+below). Running `nisi` with no arguments now prints help and exits 0 (it was a
+usage error with exit 2).
 
 - Resolve content-consent paths the way the operating system opens them. On
   POSIX, Node's JavaScript `realpath` removed `link/..` before following
@@ -59,7 +63,9 @@ below).
 
 - Bound workflow snapshots and journal entry copies to 1,000,000 copied values.
   An object reached by two paths is copied and hashed once per path, so a
-  shared chain 40 levels deep would run for hours before any schema check.
+  shared chain 20 levels deep took about a second to snapshot, each extra level
+  roughly doubled that, and about 23 levels exhausted the heap and crashed Node,
+  all before any schema check.
   Workflow snapshots refuse with `INPUT_SIZE_LIMIT`; journal entries with
   `ENTRY`. Journal entry copies also stop after 64 Mi UTF-16 code units of
   copied strings, since one large string reached by many paths is scanned and
@@ -89,7 +95,8 @@ below).
   expiry terminal, and refuse files with multiple hard links.
 - Accept revalidated normalized candidates at workflow boundaries. Treat demo
   source as data, remove CLI demo reports after verification, expose allowlisted
-  local-model failure diagnostics, and align review schema string constraints.
+  local-model failure diagnostics, and tighten response-schema string constraints for notes, summaries and finding
+  fields (this changes the request body and its hash).
 - Correct journal authentication, redaction, recovery, storage-order and clock
   wording; document report-store deadline limits and the source-only Swift helper.
   Earlier main-only redaction/liveness wording corrections are included here;
