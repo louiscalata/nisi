@@ -14,12 +14,18 @@ import { createCandidate, sha256Text, stableStringify } from '../../workflow/con
 import { runWorkflow } from '../../workflow/engine.mjs';
 
 export const TASKS_SHA256 = 'c7a521d443d9fff5a1244a1773d7cfa91c132e999a03de96b4239fa889c0a99a';
-const TASKS_URL = new URL('./tasks-v1.json', import.meta.url);
+// Frozen task sets. v1 has 16 tasks; v2 has 42 harder tasks in six categories.
+export const TASK_SETS = Object.freeze({
+  v1: Object.freeze({ file: 'tasks-v1.json', sha256: TASKS_SHA256, count: 16 }),
+  v2: Object.freeze({ file: 'tasks-v2.json', sha256: '63007882ea7bb02195abdf6b5eb8c1a09e87829ce26391fd4c4d2cde70350f5c', count: 42 }),
+});
 
-export async function loadTasks() {
-  const bytes = await fs.readFile(TASKS_URL);
-  if (createHash('sha256').update(bytes).digest('hex') !== TASKS_SHA256) throw new Error('HARDER_TASKS_CHANGED');
-  return JSON.parse(bytes);
+export async function loadTasks(version = 'v1') {
+  const set = TASK_SETS[version];
+  if (!set) throw new Error('HARDER_TASK_SET_INVALID');
+  const bytes = await fs.readFile(new URL(`./${set.file}`, import.meta.url));
+  if (createHash('sha256').update(bytes).digest('hex') !== set.sha256) throw new Error('HARDER_TASKS_CHANGED');
+  return { ...JSON.parse(bytes), taskSetSha256: set.sha256 };
 }
 
 const finding = (code, message) => ({ code, message });
@@ -43,6 +49,8 @@ export function diffAnswer(got, want) {
     if (!Array.isArray(got)) return [finding('TYPE', `answer must be an array, got ${got === null ? 'null' : typeof got}.`)];
     if (got.length !== want.length) return [finding('LENGTH', `answer has ${got.length} elements; the task requires ${want.length}.`)];
     const bad = want.map((w, i) => same(got[i], w) ? null : i).filter(i => i !== null);
+    // With at most two distinct values the wrong positions determine the answer, so report only the count.
+    if (new Set(want.map(stableStringify)).size <= 2) return [finding('ELEMENTS', `${bad.length} of ${want.length} elements are incorrect.`)];
     return [finding('ELEMENTS', `${bad.length} of ${want.length} elements are incorrect, at positions ${bad.join(', ')} (0-based).`)];
   }
   if (want && typeof want === 'object') {
@@ -132,19 +140,20 @@ export async function runHarder({ endpoint, model, fetch, dataset, maxOutputToke
     const mine = rows.filter(r => r.arm === arm);
     return [arm, { correct: mine.filter(r => r.correct).length, of: mine.length, ms: mine.reduce((s, r) => s + r.ms, 0) }];
   }));
-  return { datasetId: dataset.datasetId, datasetSha256: TASKS_SHA256, model,
+  return { datasetId: dataset.datasetId, datasetSha256: dataset.taskSetSha256 ?? TASKS_SHA256, model,
     settings: { maxOutputTokens, timeoutMs, reasoningEffort: reasoningEffort ?? null, plan, jevReview, tests: shapeOnly ? 'shape' : 'semantic' }, summary, rows };
 }
 
-const USAGE = 'USAGE: --allow-live <loopback-endpoint> <model> <output-file> [--max-tokens N] [--timeout-ms N] [--reasoning EFFORT] [--tests shape] [--judge MODULE] [--plan] [--jev-review] [--task ID]';
+const USAGE = 'USAGE: --allow-live <loopback-endpoint> <model> <output-file> [--tasks v1|v2] [--max-tokens N] [--timeout-ms N] [--reasoning EFFORT] [--tests shape] [--judge MODULE] [--plan] [--jev-review] [--task ID]';
 
 export function parseArgs(argv) {
   if (argv[0] !== '--allow-live' || argv.length < 4) throw new Error(USAGE);
   const [, endpoint, model, outputFile, ...rest] = argv;
-  const options = { endpoint, model, outputFile, maxOutputTokens: 4096, timeoutMs: 120_000, plan: false, jevReview: false, shapeOnly: false };
+  const options = { endpoint, model, outputFile, taskSet: 'v1', maxOutputTokens: 4096, timeoutMs: 120_000, plan: false, jevReview: false, shapeOnly: false };
   for (let i = 0; i < rest.length; i += 1) {
     const flag = rest[i], value = () => { if (rest[i + 1] === undefined) throw new Error(USAGE); return rest[++i]; };
-    if (flag === '--max-tokens') { options.maxOutputTokens = Number(value()); if (!Number.isSafeInteger(options.maxOutputTokens) || options.maxOutputTokens < 1) throw new Error(USAGE); }
+    if (flag === '--tasks') { options.taskSet = value(); if (!Object.hasOwn(TASK_SETS, options.taskSet)) throw new Error(USAGE); }
+    else if (flag === '--max-tokens') { options.maxOutputTokens = Number(value()); if (!Number.isSafeInteger(options.maxOutputTokens) || options.maxOutputTokens < 1) throw new Error(USAGE); }
     else if (flag === '--timeout-ms') { options.timeoutMs = Number(value()); if (!Number.isSafeInteger(options.timeoutMs) || options.timeoutMs < 1000) throw new Error(USAGE); }
     else if (flag === '--reasoning') options.reasoningEffort = value();
     else if (flag === '--tests') { if (value() !== 'shape') throw new Error(USAGE); options.shapeOnly = true; }
@@ -160,7 +169,7 @@ export function parseArgs(argv) {
 
 export async function main(argv = process.argv.slice(2), { fetch } = {}) {
   const options = parseArgs(argv);
-  const dataset = await loadTasks();
+  const dataset = await loadTasks(options.taskSet);
   // The judge module exports judge({ state, questions }) -> { model, answers }; the key and transport stay with it.
   const judge = options.judgeModule ? (await import(pathToFileURL(path.resolve(options.judgeModule)).href)).judge : undefined;
   // Refuse bad input before the output file exists, so a rejected run leaves nothing behind.

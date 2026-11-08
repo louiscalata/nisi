@@ -45,6 +45,20 @@ task and arm (outcome, correctness, repairs, calls, tokens, time) and a per-arm
 summary; the summary time covers that arm's calls only, not the Jev planning
 calls.
 
+## Task set v2
+
+`--tasks v2` runs 42 harder tasks in six categories of seven (state simulation,
+text formats, algorithms, calendar and time, exact numbers, structured data),
+18 medium and 24 hard. The prompts are procedural and self-contained: every
+tie-break, rounding and output rule is stated, so the answer is the result of
+careful execution, not knowledge. Every expected answer is computed by a standard-
+library generator in `v2/generators/` (fixed seeds, no network), and an independent
+solver that never saw the answers re-solved each prompt; all 42 matched.
+`python3 make_tasks_v2.py` regenerates `tasks-v2.json` byte for byte (sha256
+`63007882…350f5c`, pinned in `run.mjs`). For answers with at most two distinct
+values (one task), the repair feedback gives only the count of wrong elements, not
+their positions, because the positions would reveal the answer.
+
 ## Results so far
 
 `qwen3.8-27b` on LM Studio, 2026-11-07. "One draft" is arm A and "Nisi" is arm C,

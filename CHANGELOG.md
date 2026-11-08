@@ -5,6 +5,22 @@ public source tree and does not include private experiments.
 
 ## Unreleased
 
+- Add `nisi/adapters/jev-client`, a built-in client for TypeSafe's hosted Jev, so
+  setup is one environment variable. `planWithJev` and `createJevReviewer` now use
+  it when no `judge` is passed and `TYPESAFE_API_KEY` is set; without either they
+  still throw `JEV_JUDGE_REQUIRED` and send nothing. `createJevJudge({ apiKey,
+  model, timeoutMs })` is also exported. The endpoint is fixed, redirects are
+  errors, request and response are bounded to 1 MiB, the call times out (60 s by
+  default), and neither the key nor the response body appears in an error. New
+  codes: `JEV_API_KEY_REQUIRED`, `JEV_API_KEY_INVALID`, `JEV_MODEL_INVALID`,
+  `JEV_TIMEOUT_INVALID`, `JEV_REQUEST_INVALID`, `JEV_REQUEST_TOO_LARGE`,
+  `JEV_AUTH_FAILED`, `JEV_RATE_LIMITED`, `JEV_HTTP_ERROR`, `JEV_TIMEOUT`,
+  `JEV_RESPONSE_TOO_LARGE`. A custom `judge` still works as before.
+- Add `benchmarks/harder` task set v2: 42 harder tasks in six categories (state
+  simulation, text formats, algorithms, calendar and time, exact numbers and
+  structured data), every answer computed by a generator and checked by an
+  independent blind solver. Run it with `--tasks v2`; the default stays v1.
+
 - Tests remove the temporary folders they create. `npm run check` had left about
   96 `consent-*`, `afm-content-*` and `afm-stub-*` folders per run.
 - Add a [Windows hardware check](docs/verification-v0.3-windows.md) of v0.3.0 on one

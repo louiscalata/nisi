@@ -3,6 +3,11 @@ import assert from 'node:assert/strict';
 import { planWithJev, createJevReviewer, DEFAULT_JEV_PLAN_POLICY } from '../adapters/jev-advisor.mjs';
 import { runWorkflow, createCandidate } from '../workflow/engine.mjs';
 
+// A TYPESAFE_API_KEY in the environment would switch the advisor to the real client and send the test task.
+const savedKey = process.env.TYPESAFE_API_KEY;
+delete process.env.TYPESAFE_API_KEY;
+test.after(() => { if (savedKey !== undefined) process.env.TYPESAFE_API_KEY = savedKey; });
+
 const task = { taskId: 'jev.task', mode: 'edit', language: 'json', allowedFiles: ['answer.json'], protectedFiles: [], protectedSnapshots: {},
   acceptanceCriteria: ['Return {"answer": 391} for 17*23.'], policy: { repairBudget: 1, totalDeadlineMs: 5000, requiredReviewers: 2, requireReportStore: false } };
 const answer = (questions, values) => ({ model: 'jev-test', answers: Object.fromEntries(Object.keys(questions).map(k => [k, values[k]])) });

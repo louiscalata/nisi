@@ -5,7 +5,7 @@ import assert from 'node:assert/strict';
 import fs from 'node:fs/promises';
 import os from 'node:os';
 import path from 'node:path';
-import { loadTasks, diffAnswer, runHarder, parseArgs, main } from '../benchmarks/harder/run.mjs';
+import { loadTasks, diffAnswer, runHarder, parseArgs, main, TASK_SETS } from '../benchmarks/harder/run.mjs';
 
 const ENDPOINT = 'http://127.0.0.1:9999/v1/chat/completions';
 
@@ -92,7 +92,7 @@ test('the CLI needs explicit opt-in, a judge module for Jev, and a new output fi
   assert.equal(parseArgs(['--allow-live', ENDPOINT, 'm', 'out.json', '--timeout-ms', '300000']).timeoutMs, 300000);
   assert.throws(() => parseArgs(['--allow-live', ENDPOINT, 'm', 'out.json', '--plan']), /HARDER_JUDGE_REQUIRED/u);
   assert.deepEqual(parseArgs(['--allow-live', ENDPOINT, 'm', 'o', '--max-tokens', '4096', '--reasoning', 'none', '--task', 'x']),
-    { endpoint: ENDPOINT, model: 'm', outputFile: 'o', maxOutputTokens: 4096, timeoutMs: 120000, plan: false, jevReview: false, shapeOnly: false,
+    { endpoint: ENDPOINT, model: 'm', outputFile: 'o', taskSet: 'v1', maxOutputTokens: 4096, timeoutMs: 120000, plan: false, jevReview: false, shapeOnly: false,
       reasoningEffort: 'none', selectedTaskIds: ['x'] });
   const dir = await fs.mkdtemp(path.join(os.tmpdir(), 'nisi-harder-'));
   try {
@@ -152,6 +152,20 @@ export async function judge({ questions }) {
   } finally { await fs.rm(dir, { recursive: true, force: true }); }
 });
 
+test('repair feedback never lets a two-valued answer be rebuilt from positions', async () => {
+  const dataset = await loadTasks('v2');
+  const t = dataset.tasks.find(x => x.id === 'algorithms-03');
+  assert.ok(t.expectedAnswer.every(x => typeof x === 'boolean'));
+  const flipped = t.expectedAnswer.map((x, i) => i % 3 === 0 ? !x : x);
+  const [finding] = diffAnswer(flipped, t.expectedAnswer);
+  assert.equal(finding.code, 'ELEMENTS');
+  assert.doesNotMatch(finding.message, /positions|\d+, \d+/u);
+  assert.match(finding.message, /^\d+ of 17 elements are incorrect\.$/u);
+  // A wide answer still names its wrong positions.
+  const names = dataset.tasks.find(x => x.id === 't02-multikey-sort') ?? (await loadTasks('v1')).tasks.find(x => x.id === 't02-multikey-sort');
+  assert.match(diffAnswer([...names.expectedAnswer].reverse(), names.expectedAnswer)[0].message, /positions/u);
+});
+
 test('the semantic-version task is computed, not typed', async () => {
   const dataset = await loadTasks();
   const t = dataset.tasks.find(x => x.id === 't16-semver-sort');
@@ -162,4 +176,31 @@ test('the semantic-version task is computed, not typed', async () => {
     if (x.pre === null || y.pre === null) return (x.pre === null) - (y.pre === null); return cmpArr(x.pre, y.pre); };
   const listed = JSON.parse(t.prompt.slice(t.prompt.indexOf('['), t.prompt.lastIndexOf(']') + 1));
   assert.deepEqual([...listed].sort(cmp), t.expectedAnswer);
+});
+
+test('the v2 task set is frozen, varied, well-formed and runs through the runner', async () => {
+  const dataset = await loadTasks('v2');
+  assert.equal(dataset.datasetId, 'nisi-harder-v2');
+  assert.equal(dataset.tasks.length, TASK_SETS.v2.count);
+  assert.equal(new Set(dataset.tasks.map(t => t.id)).size, 42);
+  const categories = new Map();
+  for (const t of dataset.tasks) {
+    assert.deepEqual(Object.keys(t).sort(), ['category', 'expectedAnswer', 'id', 'prompt', 'tier']);
+    assert.ok(t.id.startsWith(`${t.category}-`));
+    assert.ok(['medium', 'hard'].includes(t.tier));
+    assert.match(t.prompt, /Return answer as /u);
+    assert.ok(t.prompt.length >= 300 && t.prompt.length <= 1800, t.id);
+    assert.deepEqual(JSON.parse(JSON.stringify(t.expectedAnswer)), t.expectedAnswer);
+    categories.set(t.category, (categories.get(t.category) ?? 0) + 1);
+  }
+  assert.deepEqual([...categories.values()], [7, 7, 7, 7, 7, 7]);
+  assert.equal(categories.size, 6);
+  await assert.rejects(() => loadTasks('v3'), /HARDER_TASK_SET_INVALID/u);
+  const t = dataset.tasks[0];
+  const fixture = fakeFetch(() => t.expectedAnswer);
+  const result = await runHarder({ endpoint: ENDPOINT, model: 'synthetic.model', fetch: fixture.fetch, dataset, selectedTaskIds: [t.id], arms: ['A', 'C'] });
+  assert.equal(result.datasetSha256, TASK_SETS.v2.sha256);
+  assert.deepEqual(result.rows.map(r => [r.arm, r.correct]), [['A', true], ['C', true]]);
+  assert.equal(parseArgs(['--allow-live', ENDPOINT, 'm', 'o', '--tasks', 'v2']).taskSet, 'v2');
+  assert.throws(() => parseArgs(['--allow-live', ENDPOINT, 'm', 'o', '--tasks', 'v9']), /USAGE/u);
 });
