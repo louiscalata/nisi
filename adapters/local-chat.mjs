@@ -3,6 +3,7 @@
 // Local OpenAI-compatible chat adapter.
 // This adapter is deliberately separate from the Apple Foundation Models consent path.
 
+import http from 'node:http';
 import { createCandidate, cloneFreeze, sha256Text, validateFindings } from '../workflow/contracts.mjs';
 
 const DEFAULT_MAX_BYTES = 1_048_576;
@@ -26,6 +27,48 @@ function validateEndpoint(value) {
   return url.href;
 }
 
+// Default transport for the loopback endpoint. Node's global fetch ends a request that
+// has received no response headers for 300 s (undici's headersTimeout), and these
+// requests are not streamed, so a slow local model would be cut off at five minutes
+// whatever `timeoutMs` says. node:http has no such cap; `timeoutMs` and the caller's
+// signal alone decide when the call stops. It does not follow redirects, and any
+// non-2xx status is refused by the caller, as with `redirect: 'error'`.
+function loopbackFetch(url, { method = 'POST', headers = {}, body, signal } = {}) {
+  // Node's socket errors carry codes such as ECONNREFUSED; the adapter reports its own.
+  const unavailable = cause => Object.assign(new Error('LOCAL_CHAT_UNAVAILABLE'), { code: 'LOCAL_CHAT_UNAVAILABLE', cause });
+  return new Promise((resolve, reject) => {
+    const target = new URL(url);
+    const payload = body === undefined ? undefined : Buffer.from(body);
+    const request = http.request({ host: target.hostname.replace(/^\[|\]$/gu, ''), port: target.port || 80, path: target.pathname + target.search,
+      method, signal, headers: { ...headers, ...(payload ? { 'content-length': String(payload.length) } : {}) } }, res => {
+      const status = res.statusCode;
+      // Statuses a Response cannot carry a body for (204, 205, 304) or cannot represent at all have no body for the caller to read.
+      if (status === 204 || status === 205 || status === 304 || status < 200 || status > 599) {
+        res.destroy();
+        resolve(new Response(null, { status: status >= 200 && status <= 599 ? status : 502 }));
+        return;
+      }
+      // A hand-written body stream: Readable.toWeb throws "Controller is already closed" on
+      // Node 22 when the reader cancels while data is still flowing.
+      let finished = false;
+      const body = new ReadableStream({
+        start(controller) {
+          const finish = action => { if (finished) return; finished = true; try { action(); } catch { /* already closed or cancelled */ } };
+          res.on('data', chunk => { if (finished) return; try { controller.enqueue(chunk); } catch { finished = true; res.destroy(); return; } if (controller.desiredSize !== null && controller.desiredSize <= 0) res.pause(); });
+          res.on('end', () => finish(() => controller.close()));
+          res.on('error', cause => finish(() => controller.error(unavailable(cause))));
+          res.on('aborted', () => finish(() => controller.error(unavailable())));
+        },
+        pull() { res.resume(); },
+        cancel() { finished = true; res.destroy(); },
+      });
+      resolve(new Response(body, { status }));
+    });
+    request.on('error', cause => reject(unavailable(cause)));
+    request.end(payload);
+  });
+}
+
 function config(input, role) {
   if (!isRecord(input)) fail('LOCAL_CHAT_CONFIG_INVALID');
   const keys = ['endpoint', 'destination', 'model', 'id', 'maxResponseBytes', 'maxRequestBytes', 'maxOutputTokens', 'reasoningEffort', 'timeoutMs', 'fetch'];
@@ -45,7 +88,7 @@ function config(input, role) {
   if (input.reasoningEffort !== undefined && !LOCAL_CHAT_REASONING_EFFORTS.includes(input.reasoningEffort)) fail('LOCAL_CHAT_REASONING_EFFORT_INVALID');
   return Object.freeze({ endpoint, model: input.model, id: input.id, maxResponseBytes, maxRequestBytes, maxOutputTokens,
     reasoningEffort: input.reasoningEffort ?? null,
-    timeoutMs: input.timeoutMs ?? 120000, fetch: input.fetch ?? globalThis.fetch, role });
+    timeoutMs: input.timeoutMs ?? 120000, fetch: input.fetch ?? loopbackFetch, role });
 }
 
 // JSON.parse accepts duplicate names. This small recursive codec rejects them first,
