@@ -1,4 +1,4 @@
-# Local model author and reviewer
+# Local models and Jev
 
 `adapters/local-chat.mjs` implements author and reviewer callbacks for a local
 HTTP chat-completions endpoint. It uses the request form documented by
@@ -28,7 +28,7 @@ const reviewer = createLocalChatReviewerAdapter({
 });
 ```
 
-Pass `author` and `[reviewer]` to the Workflow Orchestrator along with your context
+Pass `author` and `[reviewer]` to the orchestrator (`runWorkflow`) along with your context
 authorization, static checks and tests. The application supplies the task and
 enforces which project data these callbacks may receive. The Apple-only file
 grant does not authorize this destination. For the runnable configuration-data
@@ -38,11 +38,13 @@ example, which never executes model-generated programs:
 npm run example:local-model -- http://127.0.0.1:1234/v1/chat/completions AUTHOR_MODEL REVIEWER_MODEL
 ```
 
-The command requires exactly three arguments and two different model names.
-It validates arguments before requesting inference. Missing or invalid configuration
-prints an error and usage with exit code `2`; a completed workflow exits `0`,
-and an incomplete workflow exits `1`. The Node preflight refuses unsupported
-runtimes before loading the example.
+The same fixed example runs as `nisi local-model ENDPOINT AUTHOR_MODEL REVIEWER_MODEL` (in a source checkout, `node bin/nisi.mjs local-model ...`).
+
+- It needs exactly three arguments and two different model names.
+- It checks four fixed assertions and sends the candidate and results to the reviewer.
+- It evaluates JSON as data and changes no repository.
+- Invalid arguments print an error and usage, exit code `2`, before any model request. A completed workflow exits `0`, an incomplete one `1`.
+- A Node preflight refuses unsupported runtimes before loading the example.
 
 ## Configuration and boundaries
 
@@ -53,7 +55,7 @@ references are captured at construction.
 | --- | --- | --- |
 | `id`, `destination`, `endpoint`, `model` | required | `destination` must be `'LOOPBACK_HTTP'` |
 | `maxOutputTokens` | 4,096 | 1 to 32,768 |
-| `timeoutMs` | 120,000 | 1 to 86,400,000; the engine's total deadline can be shorter. Reasoning models can need several minutes per call, so raise it for hard tasks |
+| `timeoutMs` | 120,000 | 1 to 86,400,000; the orchestrator's total deadline can be shorter. Reasoning models can need several minutes per call, so raise it for hard tasks |
 | `maxRequestBytes`, `maxResponseBytes` | 1 MiB each | 256 bytes to 16 MiB |
 | `reasoningEffort` | omitted | `none`, `minimal`, `low`, `medium` or `high`; see below |
 | `fetch` | built-in loopback transport | for tests; an injected implementation is trusted |
@@ -62,8 +64,8 @@ references are captured at construction.
 
 `reasoningEffort` is sent as the OpenAI-compatible `reasoning_effort` field. With
 a reasoning model, `none` stops hidden reasoning from using up the output budget.
-Without the option the request body is unchanged, and servers that ignore the
-field behave as before.
+Without the option the request body is unchanged (byte-identical to v0.2.1), and
+servers that ignore the field behave as before.
 
 ### Transport and timeouts
 
@@ -94,7 +96,7 @@ The author receives fixed task requirements and generates `{ candidate, note }`.
 Repair receives the previous candidate and failed stage evidence and generates
 `{ status, candidate, note }`, with REPAIRED or NO_CHANGE. Review receives the
 candidate and fresh check/test results and generates `{ findings, summary }`.
-The adapter supplies engine bindings, candidate digests and configured identity;
+The adapter supplies orchestrator bindings, candidate digests and configured identity;
 the model cannot return replacement test counts, permissions or a final verdict.
 
 Both the transport envelope and model JSON are parsed with duplicate-key,
@@ -106,7 +108,7 @@ integer-only canonical JSON v1 profile.
 There must be exactly one choice, `finish_reason: "stop"`, a nonempty content
 string, no requested tools or refusal, and a reported model name exactly matching
 the configured name. Malformed or truncated results are unavailable, never a
-passing review. The engine still trusts the adapter and the endpoint's reports.
+passing review. The orchestrator still trusts the adapter and the endpoint's reports.
 
 ## Receipts and measured scope
 
@@ -116,7 +118,7 @@ input and result candidate fingerprints, request/response/content digests, elaps
 the requested output-token cap,
 and provider-reported token counts when supplied. Missing usage is `null`, not
 zero. Failures retain an UNAVAILABLE receipt and a specific code. The generic
-engine reports a rejected adapter promise as ADAPTER_EXCEPTION.
+orchestrator reports a rejected adapter promise as ADAPTER_EXCEPTION.
 
 Receipts remain in adapter memory; the host may store them with the run report.
 They contain hashes rather than copies of prompts or responses. The endpoint
@@ -138,15 +140,13 @@ token savings.
 
 ## Jev pre- and post-analysis (optional)
 
-`nisi/adapters/jev-advisor` uses Jev, TypeSafe's System One model (a hosted
-service that returns typed answers and probabilities), to make two judgments
-around a run. There is no free or open-weight version of Jev: it is TypeSafe's
-paid API, priced per million input tokens, so check typesafe.ai for current
-rates and any free credit. These calls are small (a task, and for the reviewer
-one candidate), so a call costs a fraction of a cent at the rates third-party
-trackers list.
+`nisi/adapters/jev-advisor` (a separate module that loads only if you import it) uses Jev, TypeSafe's System One model (a hosted service that returns typed answers and probabilities), to make two judgments around a run.
 
-**Quick setup.** Put your TypeSafe key in the `TYPESAFE_API_KEY` environment
+**What is sent, by whom, when.** Jev is a hosted service, so the data below leaves your machine. Nisi builds a `state` record: the task's id, mode, language, allowed file names and acceptance criteria and, for the reviewer, the candidate's files and whether the tests passed. A `judge` is a function that receives the `state` and calls Jev. The `judge` you write decides what is sent. On main only (not in v0.3.0), if you pass no `judge` and `TYPESAFE_API_KEY` is set, a built-in client sends the `state` as is to `https://api.typesafe.ai/v1/systemone`. The send happens when you call `planWithJev` before the run and when the Jev reviewer runs. With no `judge` and no `TYPESAFE_API_KEY`, nothing is sent. Field-level details are in **What leaves your machine**, below.
+
+Cost: there is no free or open-weight version of Jev. It is TypeSafe's paid API, priced per million input tokens, so check typesafe.ai for current rates and any free credit. These calls are small (a task, and for the reviewer one candidate), so a call costs a fraction of a cent at the rates third-party trackers list.
+
+**Quick setup (main only).** Put your TypeSafe key in the `TYPESAFE_API_KEY` environment
 variable and call the advisor without a judge. Nisi then uses its built-in client
 (`nisi/adapters/jev-client`):
 
@@ -181,11 +181,11 @@ appears in any error. Its failures use these codes: `JEV_API_KEY_REQUIRED`,
 `judge({ state, questions })` yourself; it must return `{ model, answers }` and
 Nisi never needs the key.
 
-**What leaves your machine.** Nisi builds `state` and hands it to the judge (the
-built-in client sends it as is; a judge you write decides what is sent). For pre-analysis `state` is
+**What leaves your machine.** For pre-analysis the `state` is
 `{ task: { taskId, mode, language, allowedFiles, acceptanceCriteria } }` (not
 `protectedFiles`, `protectedSnapshots` or `policy`). For the reviewer it also
-holds `candidate: { files }` and `testsPassed`.
+holds `candidate: { files }` and `testsPassed`. The built-in client sends it as
+is; a judge you write decides what is sent.
 
 **The judge contract.** `questions` maps a name to `{ type, instructions,
 criteria? }`. Pre-analysis asks `plan` (`type: 'choice'`, with the criteria
@@ -222,11 +222,13 @@ const reviewers = [myReviewer, createJevReviewer({ id: 'jev.review', judge })];
 
 ### Measured results
 
+The harder-task benchmark has 16 frozen tasks in v0.3.0. On main, `--tasks v2` adds 42 more tasks in six categories; every answer is computed by a generator and checked by an independent solver.
+
 On 16 harder tasks with `qwen3.8-27b` (single runs), the adapter defaults
 (4,096 tokens, 120 s) solve 14. A single unchecked draft also solves 14, and so
 does the Jev plan. The Jev run took 12.7 min against 15.4 min for a flat
 4,096-token budget at the same 300 s timeout, not counting the planning calls,
-but that gap is almost entirely one task: Both runs got the base64 task (t06) wrong.
+but that gap is almost entirely one task. Both runs got the base64 task (t06) wrong.
 Jev planned it as `direct` (1,024 tokens, no reasoning), so the planned run
 failed after two repairs in 18 s, while the flat run spent 168 s before its call
 failed. Apart from that task and the run-length encoding task (about

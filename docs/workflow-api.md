@@ -1,9 +1,22 @@
-# Workflow Orchestrator API
+# Workflow API
 
 Nisi is a Node.js ES module library. Import `runWorkflow`, `createCandidate`, and
-`createTaskSpecification` from `nisi/workflow` when installed, or from
-`./workflow/engine.mjs` in this checkout. Run `npm run example:workflow` for a
-complete executable example.
+`createTaskSpecification` from `nisi/workflow` when installed; in a source checkout,
+`./workflow/engine.mjs` is the same module. Run `npm run example:workflow` for a
+complete executable example. See [Install and use](install.md) for installation.
+
+The orchestrator is `runWorkflow`. It runs one task through the stages and returns the report; see the [Architecture glossary](architecture.md#glossary).
+
+## Calling the workflow
+
+Start from the complete [workflow example](../examples/workflow.mjs) and replace
+its fixed task and callbacks with your own. A task defines allowed file names,
+acceptance criteria, a deadline, a repair budget and the required reviewer count.
+`task` and the callbacks are supplied by your application. The full call shape is under [Host adapters](#host-adapters).
+
+Your application decides whether to apply the candidate's file contents; see
+[Architecture](architecture.md#evidence-and-trust). For report storage, including
+`requireReportStore` and `storeTimeoutMs`, see [Run report and storage](#run-report-and-storage).
 
 ## Task specification
 
@@ -109,7 +122,7 @@ check result. Reviewers receive `checks`, `tests`, and `reviewerId`. Repair
 also receives `stages`, the frozen stage records bound to the attempt just
 finished: on the first repair these include intake, authorization and the draft;
 later repairs receive the previous repair record plus that attempt's checks,
-tests and reviews (only those that ran). The engine performs no
+tests and reviews (only those that ran). The orchestrator performs no
 file reads, process launches, model requests, candidate writes or publication.
 
 ## Evidence schemas
@@ -188,7 +201,7 @@ nonnegative, nondecreasing safe-integer milliseconds. Clock exceptions,
 regression and unsafe deadline arithmetic block the run. A total deadline is
 checked before calls and after settlement; asynchronous work is raced against a
 timer. Late results are ignored. JavaScript synchronous work cannot be preempted;
-the engine rejects its late result after control returns. Host adapters must
+the orchestrator rejects its late result after control returns. Host adapters must
 cooperate with cancellation and clean up their own processes and requests.
 
 ## Run report and storage
@@ -199,7 +212,7 @@ fields. A setup refusal after a valid task retains task identity; invalid tasks
 have null identity. Setup refusals do not invoke adapters or the store.
 
 An optional `store({ report, reportSha256, binding, signal })` receives the frozen
-**preliminary** report. The digest uses `nisi/run-report/v1` and the engine's
+**preliminary** report. The digest uses `nisi/run-report/v1` and the orchestrator's
 sorted-key serialization. Its return is exactly:
 
 ```js
@@ -209,7 +222,7 @@ sorted-key serialization. Its return is exactly:
 Other allowed statuses are FAIL, NOT_RUN and UNAVAILABLE with the same fields.
 An exact PASS acknowledgement sets `reportStored: true`, `storedReportSha256`
 and `reportStoreEvidence`. These refer to the preliminary report, not the final
-report that adds the storage result. The engine trusts that acknowledgement;
+report that adds the storage result. The orchestrator trusts that acknowledgement;
 it does not independently prove durability or retention. The example performs
 an actual write, file sync and read-back digest check.
 
@@ -221,7 +234,7 @@ failures make it BLOCKED, except that storage deadline expiry produces TIMED_OUT
 Storage using the caller's signal produces CANCELLED if caller cancellation is
 observed. A missing required store blocks before any work.
 When `requireReportStore: true` and the workflow has already reached TIMED_OUT or
-CANCELLED, the engine offers that terminal report to the store once, using a
+CANCELLED, the orchestrator offers that terminal report to the store once, using a
 fresh, non-aborted signal independent of the caller's signal; caller cancellation
 during this attempt does not cancel storage. This includes
 cancellation before the first adapter runs. Its separate deadline starts just
