@@ -3,7 +3,14 @@
 Changes to the public Nisi package are recorded here. This file describes the
 public source tree and does not include private experiments.
 
-## Unreleased
+## 0.3.0
+
+Adds optional Jev pre- and post-analysis, a reasoning-effort option for local
+chat models, and the harder-task benchmark. Nothing existing changes: requests
+that do not set `reasoningEffort` are byte-identical to v0.2.1, and the new
+module is only loaded if you import it. **Compatibility:** the package archive
+gains one file, `adapters/jev-advisor.mjs` (19 files; the new import path is
+`nisi/adapters/jev-advisor`).
 
 - Add `nisi/adapters/jev-advisor`, optional Jev (TypeSafe System One)
   pre- and post-analysis. `planWithJev(task, { judge })` asks Jev whether a task

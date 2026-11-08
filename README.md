@@ -8,7 +8,7 @@ Nisi returns proposed file contents and a report showing what passed, what
 failed, and why the run stopped. Fixed criteria and repair limits keep each
 attempt tied to the original request.
 
-**v0.2.1 is the current public CLI release**, a fix release for v0.2.0, the first public one. Its command runs a fixed workflow
+**v0.3.0 is the current public CLI release**, which adds optional Jev analysis and a reasoning-effort option to v0.2.1. Its command runs a fixed workflow
 demonstration or a fixed local-model JSON demonstration. Applications can use
 the workflow, journal, and store APIs directly. This release does not run
 arbitrary repositories from the command line. The [v0.1 verification
@@ -21,7 +21,7 @@ records the checks for this release and their limits.
 Install Node.js 22 or newer, then run the fixed, model-free demonstration:
 
 ```bash
-git clone --branch v0.2.1 --depth 1 https://github.com/louiscalata/nisi.git
+git clone --branch v0.3.0 --depth 1 https://github.com/louiscalata/nisi.git
 cd nisi
 node bin/nisi.mjs demo
 ```
@@ -43,8 +43,8 @@ The completed demo prints:
 
 Run `npm ci` followed by `npm run check` to check the codec and run the test
 suite. The package declares Node.js 22 or newer, and the check script validates
-it directly. The [GitHub release](https://github.com/louiscalata/nisi/releases/tag/v0.2.1)
-also provides an npm-format archive for local installation; Nisi v0.2.1 is not
+it directly. The [GitHub release](https://github.com/louiscalata/nisi/releases/tag/v0.3.0)
+also provides an npm-format archive for local installation; Nisi v0.3.0 is not
 published to the npm registry.
 
 ## Command line
@@ -57,9 +57,9 @@ loopback chat server. It does not execute model-generated programs or apply
 changes to a repository. The host application remains responsible for any
 broader coding task and for deciding whether to apply proposed files.
 
-To use the downloadable `nisi-0.2.1.tgz` archive without cloning the source,
+To use the downloadable `nisi-0.3.0.tgz` archive without cloning the source,
 install it into a new project folder with
-`npm install /path/to/nisi-0.2.1.tgz --ignore-scripts`. Run
+`npm install /path/to/nisi-0.3.0.tgz --ignore-scripts`. Run
 `./node_modules/.bin/nisi demo` on macOS or Linux, or
 `.\node_modules\.bin\nisi.cmd demo` in Windows PowerShell. The archive does not
 install models or start a model server.
@@ -69,8 +69,8 @@ install models or start a model server.
 v0.2 adds the public `nisi` command, a **run journal**, and a disk store for it.
 The journal is an append-only, hash-chained record of what a run observed. A host can write it,
 reopen it after a process restart, and check it before relying on its rows.
-These modules live under `history/`. This section describes v0.2.1;
-[What changed in v0.2.1](#what-changed-in-v021) lists the differences from v0.2.0.
+These modules live under `history/`. This section describes v0.3.0;
+[What changed in v0.3.0](#what-changed-in-v030) lists the differences from v0.2.1.
 The [changelog](CHANGELOG.md) records changes by version;
 results measured with a separate private adapter do not apply to this public package.
 
@@ -143,9 +143,27 @@ A stopped write may leave a file named
 destination before removing an orphan. Journal views and recovery reports carry
 `authorizing: false`; they record observations and grant no authority.
 
+## What changed in v0.3.0
+
+These are new since v0.2.1. See [CHANGELOG.md](CHANGELOG.md) for the full list.
+
+- **Jev pre- and post-analysis (optional).** `nisi/adapters/jev-advisor` exports
+  `planWithJev` and `createJevReviewer`. Nisi never calls Jev itself: you pass a
+  `judge({ state, questions })` function, so the key and transport stay with
+  you. Pre-analysis chooses reasoning settings per task; the reviewer records
+  Jev's probability that a candidate meets every criterion and is advisory
+  unless created with `gate: true`. On 31 labelled answers it was too weak to
+  gate a run (AUC 0.78). See [local models](docs/local-models.md).
+- **`reasoningEffort` for local chat models.** Sent as `reasoning_effort`
+  (`none`, `minimal`, `low`, `medium`, `high`); invalid values are refused with
+  `LOCAL_CHAT_REASONING_EFFORT_INVALID`. Without it, requests are unchanged.
+- **Harder-task benchmark.** `benchmarks/harder/` holds 16 frozen tasks and an
+  opt-in runner behind the Jev and reasoning figures. It is a source-checkout
+  tool, not part of the package archive.
+
 ## What changed in v0.2.1
 
-These behaviors are new since v0.2.0. See [CHANGELOG.md](CHANGELOG.md) for the
+These behaviors were new in v0.2.1, since v0.2.0. See [CHANGELOG.md](CHANGELOG.md) for the
 full list.
 
 - **Required review cannot be skipped.** The engine reads the reviewer list and
