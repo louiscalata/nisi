@@ -89,7 +89,8 @@ journal and store. v0.2.1 later changed the journal, store, consent gate and
 CLI, and v0.3.0 adds the `reasoningEffort` option, the Jev advisor and an
 error-code entry in the CLI. Those changes are covered by the tests (for v0.3.0,
 `tests/jev-advisor.test.mjs`, `tests/local-chat.test.mjs` and
-`tests/harder-benchmark.test.mjs`) and have no separate verification record.
+`tests/harder-benchmark.test.mjs`) and have no verification record of their own;
+a short [Windows hardware check](https://github.com/louiscalata/nisi/blob/main/docs/verification-v0.3-windows.md) covers the CLI and journal store on one real PC.
 
 ### Earlier: v0.2.1
 
@@ -369,7 +370,7 @@ savings claim.
 - [Architecture](https://github.com/louiscalata/nisi/blob/main/docs/architecture.md): components, terminology and trust boundaries.
 - [Local models and Jev](https://github.com/louiscalata/nisi/blob/main/docs/local-models.md), [file access](https://github.com/louiscalata/nisi/blob/main/docs/file-policy.md) and [Apple integration](https://github.com/louiscalata/nisi/blob/main/docs/apple-foundation-models.md): integration setup and limits.
 - [Harder-task benchmark](https://github.com/louiscalata/nisi/blob/main/benchmarks/harder/README.md): the opt-in model benchmark behind the v0.3.0 figures.
-- [v0.1 verification](https://github.com/louiscalata/nisi/blob/main/docs/verification.md) and [v0.2 verification](https://github.com/louiscalata/nisi/blob/main/docs/verification-v0.2.md): version-scoped results and limits.
+- [v0.1 verification](https://github.com/louiscalata/nisi/blob/main/docs/verification.md), [v0.2 verification](https://github.com/louiscalata/nisi/blob/main/docs/verification-v0.2.md) and the [v0.3.0 Windows hardware check](https://github.com/louiscalata/nisi/blob/main/docs/verification-v0.3-windows.md): version-scoped results and limits.
 - [Changelog](https://github.com/louiscalata/nisi/blob/main/CHANGELOG.md): public changes by version.
 - [v0.1 editable README manuscript](https://github.com/louiscalata/nisi/blob/main/docs/editor): a standalone editor for the earlier README text.
 

@@ -3,6 +3,13 @@
 Changes to the public Nisi package are recorded here. This file describes the
 public source tree and does not include private experiments.
 
+## Unreleased
+
+- Tests remove the temporary folders they create. `npm run check` had left about
+  96 `consent-*`, `afm-content-*` and `afm-stub-*` folders per run.
+- Add a [Windows hardware check](docs/verification-v0.3-windows.md) of v0.3.0 on one
+  real PC.
+
 ## 0.3.0
 
 Adds optional Jev pre- and post-analysis, a reasoning-effort option for local
