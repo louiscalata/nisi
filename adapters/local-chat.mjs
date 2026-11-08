@@ -4,7 +4,6 @@
 // This adapter is deliberately separate from the Apple Foundation Models consent path.
 
 import http from 'node:http';
-import { PassThrough, Readable } from 'node:stream';
 import { createCandidate, cloneFreeze, sha256Text, validateFindings } from '../workflow/contracts.mjs';
 
 const DEFAULT_MAX_BYTES = 1_048_576;
@@ -49,12 +48,21 @@ function loopbackFetch(url, { method = 'POST', headers = {}, body, signal } = {}
         resolve(new Response(null, { status: status >= 200 && status <= 599 ? status : 502 }));
         return;
       }
-      const out = new PassThrough();
-      res.on('error', cause => out.destroy(unavailable(cause)));
-      res.on('aborted', () => out.destroy(unavailable()));
-      out.on('close', () => { if (!res.destroyed) res.destroy(); });
-      res.pipe(out);
-      resolve(new Response(Readable.toWeb(out), { status }));
+      // A hand-written body stream: Readable.toWeb throws "Controller is already closed" on
+      // Node 22 when the reader cancels while data is still flowing.
+      let finished = false;
+      const body = new ReadableStream({
+        start(controller) {
+          const finish = action => { if (finished) return; finished = true; try { action(); } catch { /* already closed or cancelled */ } };
+          res.on('data', chunk => { if (finished) return; try { controller.enqueue(chunk); } catch { finished = true; res.destroy(); return; } if (controller.desiredSize !== null && controller.desiredSize <= 0) res.pause(); });
+          res.on('end', () => finish(() => controller.close()));
+          res.on('error', cause => finish(() => controller.error(unavailable(cause))));
+          res.on('aborted', () => finish(() => controller.error(unavailable())));
+        },
+        pull() { res.resume(); },
+        cancel() { finished = true; res.destroy(); },
+      });
+      resolve(new Response(body, { status }));
     });
     request.on('error', cause => reject(unavailable(cause)));
     request.end(payload);
