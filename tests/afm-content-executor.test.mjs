@@ -22,11 +22,17 @@ import { afmStubLaunches, registerAFMStub, restoreAFMStubLauncher } from './afm-
 
 test.after(restoreAFMStubLauncher);
 
+// Every temp folder a test makes is removed after the file finishes, so a run
+// does not leave dozens of directories behind (observed on Windows and macOS).
+const created = [];
+const track = dir => { created.push(dir); return dir; };
+test.after(() => { for (const dir of created) { try { fs.rmSync(dir, { recursive: true, force: true }); } catch { /* best effort */ } } });
+
 const sha = b => createHash('sha256').update(b).digest('hex');
 const packet = Buffer.from('{"kind":"nisi-request-v1"}', 'utf8');
 
 function tempRoot() {
-  return fs.realpathSync(fs.mkdtempSync(path.join(os.tmpdir(), 'afm-content-')));
+  return track(fs.realpathSync(fs.mkdtempSync(path.join(os.tmpdir(), 'afm-content-'))));
 }
 
 function grantBytes(scopeRoot, overrides = {}) {
@@ -52,7 +58,7 @@ function consent(scopeRoot, overrides) {
  *  JavaScript expression applied to the evidence object before it is emitted,
  *  which is how the negative cases forge dishonest evidence. */
 function stubProbe(mutate = '', { marker = null, extra = '', output = 'JSON.stringify(evidence)', register = true } = {}) {
-  const dir = fs.mkdtempSync(path.join(os.tmpdir(), 'afm-stub-'));
+  const dir = track(fs.mkdtempSync(path.join(os.tmpdir(), 'afm-stub-')));
   const file = path.join(dir, 'stub');
   const body = `#!${process.execPath}
 const fs = require('fs'), crypto = require('crypto');
@@ -86,7 +92,7 @@ process.stdout.write(${output});
 }
 
 function childFailureProbe(script) {
-  const dir = fs.mkdtempSync(path.join(os.tmpdir(), 'afm-stub-'));
+  const dir = track(fs.mkdtempSync(path.join(os.tmpdir(), 'afm-stub-')));
   const file = path.join(dir, 'stub');
   fs.writeFileSync(file, `#!${process.execPath}\nprocess.stdin.resume();\nprocess.stdin.on('end', () => { ${script} });\n`,
     { mode: 0o755 });

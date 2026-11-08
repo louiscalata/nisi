@@ -18,7 +18,12 @@ import { canonicalizeJSONV1 } from '../canonical/canonical-json-v1.mjs';
 import { createContentConsent, CONTENT_CONSENT_LIMITS, ALLOWED_CONTENT_KINDS } from '../gate/content-consent.mjs';
 
 const sha = b => createHash('sha256').update(b).digest('hex');
-const tempRoot = () => fs.realpathSync(fs.mkdtempSync(path.join(os.tmpdir(), 'consent-')));
+// Every temp folder a test makes is removed after the file finishes, so a run
+// does not leave dozens of directories behind (observed on Windows and macOS).
+const created = [];
+const track = dir => { created.push(dir); return dir; };
+test.after(() => { for (const dir of created) { try { fs.rmSync(dir, { recursive: true, force: true }); } catch { /* best effort */ } } });
+const tempRoot = () => track(fs.realpathSync(fs.mkdtempSync(path.join(os.tmpdir(), 'consent-'))));
 
 function declaration(scopeRoot, overrides = {}) {
   return {
@@ -118,7 +123,7 @@ test('a valid grant admits content inside its scope and returns the file, not th
 
 test('scope is a path boundary, not a string prefix', () => {
   const root = tempRoot();
-  const sibling = `${root}-evil`;
+  const sibling = track(`${root}-evil`);
   fs.mkdirSync(sibling);
   const grant = grantOf(root);
   const smuggled = write(sibling, 'a.json', '{"secret":true}');
