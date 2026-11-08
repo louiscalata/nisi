@@ -46,13 +46,14 @@ async function readBounded(response, cap, signal) {
 // Returns a `judge({ state, questions })` for planWithJev / createJevReviewer.
 // `apiKey` defaults to the TYPESAFE_API_KEY environment variable. `model` defaults
 // to `jev-latest`; pin a version (for example `jev-1.14.0`) for repeatable runs.
-// `fetch` is for tests.
+// The call can run at most 300 s: Node's fetch itself gives up on a request that has
+// received no response headers for that long. `fetch` is for tests.
 export function createJevJudge({ apiKey, model = DEFAULT_MODEL, timeoutMs = 60_000, fetch: fetchImpl = globalThis.fetch } = {}) {
   const key = apiKey ?? process.env[KEY_ENV];
   if (typeof key !== 'string' || key.length === 0) fail('JEV_API_KEY_REQUIRED');
   if (key.length > 512 || !/^[\x21-\x7e]+$/u.test(key)) fail('JEV_API_KEY_INVALID');
   if (typeof model !== 'string' || !/^[a-z0-9][a-z0-9._-]{0,63}$/u.test(model)) fail('JEV_MODEL_INVALID');
-  if (!Number.isSafeInteger(timeoutMs) || timeoutMs < 1000 || timeoutMs > 600_000) fail('JEV_TIMEOUT_INVALID');
+  if (!Number.isSafeInteger(timeoutMs) || timeoutMs < 1000 || timeoutMs > 300_000) fail('JEV_TIMEOUT_INVALID');
   if (typeof fetchImpl !== 'function') fail('JEV_UNAVAILABLE');
   return async function judge({ state, questions } = {}) {
     if (!isRecord(state) || !isRecord(questions) || Object.keys(questions).length === 0) fail('JEV_REQUEST_INVALID');

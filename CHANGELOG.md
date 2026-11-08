@@ -5,6 +5,14 @@ public source tree and does not include private experiments.
 
 ## Unreleased
 
+- Fix: a local-chat `timeoutMs` longer than 300 s now takes effect. The adapters used
+  Node's global `fetch`, which ends a request that has received no response headers
+  for 300 s, and these requests are not streamed, so a slow model's call failed at
+  exactly five minutes as `LOCAL_CHAT_UNAVAILABLE`. The default transport is now
+  Node's `http` module (loopback only, no redirects, non-2xx refused); an injected
+  `fetch` is unchanged. The Jev client's `timeoutMs` range is 1 to 300 s for the
+  same reason (it still uses `fetch`).
+
 - Add `nisi/adapters/jev-client`, a built-in client for TypeSafe's hosted Jev, so
   setup is one environment variable. `planWithJev` and `createJevReviewer` now use
   it when no `judge` is passed and `TYPESAFE_API_KEY` is set; without either they

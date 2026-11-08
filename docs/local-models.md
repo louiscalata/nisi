@@ -53,10 +53,10 @@ references are captured at construction.
 | --- | --- | --- |
 | `id`, `destination`, `endpoint`, `model` | required | `destination` must be `'LOOPBACK_HTTP'` |
 | `maxOutputTokens` | 4,096 | 1 to 32,768 |
-| `timeoutMs` | 120,000 | 1 to 86,400,000; the engine's total deadline can be shorter |
+| `timeoutMs` | 120,000 | 1 to 86,400,000; the engine's total deadline can be shorter. Reasoning models can need several minutes per call, so raise it for hard tasks |
 | `maxRequestBytes`, `maxResponseBytes` | 1 MiB each | 256 bytes to 16 MiB |
 | `reasoningEffort` | omitted | `none`, `minimal`, `low`, `medium` or `high`; see below |
-| `fetch` | global `fetch` | for tests; an injected implementation is trusted |
+| `fetch` | built-in loopback transport | for tests; an injected implementation is trusted |
 
 ### Reasoning effort
 
@@ -64,6 +64,16 @@ references are captured at construction.
 a reasoning model, `none` stops hidden reasoning from using up the output budget.
 Without the option the request body is unchanged, and servers that ignore the
 field behave as before.
+
+### Transport and timeouts
+
+The default transport is Node's `http` module, not `fetch`. Node's `fetch` gives up
+on a request that has received no response headers for 300 s, and these requests
+are not streamed, so a slow local model was cut off at five minutes whatever
+`timeoutMs` said (the call failed as `LOCAL_CHAT_UNAVAILABLE`). With the built-in
+transport, only `timeoutMs` and the caller's signal end a call. It does not follow
+redirects, and any status other than 2xx is refused with
+`LOCAL_CHAT_RESPONSE_UNAVAILABLE`. A `fetch` you inject keeps its own limits.
 
 ### Destination
 
@@ -160,7 +170,7 @@ runs, and the served model is recorded in `evidence.jevModel`.
 questions }` to `https://api.typesafe.ai/v1/systemone` with your key as a Bearer
 token. The endpoint is fixed, so the key is never sent anywhere else; redirects are
 errors; the request and the response are each limited to 1 MiB; the call times out
-after 60 s by default (1 to 600 s); and neither the key nor the response body
+after 60 s by default (1 to 300 s, the longest Node's fetch allows); and neither the key nor the response body
 appears in any error. Its failures use these codes: `JEV_API_KEY_REQUIRED`,
 `JEV_API_KEY_INVALID`, `JEV_MODEL_INVALID`, `JEV_TIMEOUT_INVALID`,
 `JEV_REQUEST_INVALID`, `JEV_REQUEST_TOO_LARGE`, `JEV_AUTH_FAILED` (401 or 403),

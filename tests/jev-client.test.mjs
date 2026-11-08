@@ -56,7 +56,7 @@ test('the key comes from the argument or TYPESAFE_API_KEY and is validated', () 
     }
   } finally { if (saved === undefined) delete process.env[JEV_API_KEY_ENV]; else process.env[JEV_API_KEY_ENV] = saved; }
   for (const bad of ['Jev', 'a b', '', 7]) assert.throws(() => createJevJudge({ apiKey: KEY, model: bad }), { code: 'JEV_MODEL_INVALID' });
-  for (const bad of [10, 0.5, 700_000]) assert.throws(() => createJevJudge({ apiKey: KEY, timeoutMs: bad }), { code: 'JEV_TIMEOUT_INVALID' });
+  for (const bad of [10, 0.5, 300_001, 700_000]) assert.throws(() => createJevJudge({ apiKey: KEY, timeoutMs: bad }), { code: 'JEV_TIMEOUT_INVALID' });
 });
 
 test('failures map to named codes and never expose the key or the response body', async () => {
