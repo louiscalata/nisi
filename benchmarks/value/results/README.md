@@ -5,12 +5,14 @@ against other products. The [raw 36-row result](pilot-local-gemma-20260924.json)
 is SHA-256 `17c117821d347bf4ad248b70b319d8847bbedc2647edebf6b0a2e8edf996b10a`.
 The [source manifest](pilot-local-gemma-source-sha256.json) pins the exact runner,
 released workflow, local-chat adapter, checked-loop reference, dataset, and test
-source used for this run. The current runner was subsequently revised to make
-the optional router gate configurable and to retain partial output on interruption;
-its source hash therefore differs from the historical collection manifest.
-Those operational changes did not alter the model prompts or scoring rule. The
-retained candidate contents below allow independent rescoring without relying
-on that claim. The [frozen dataset](../fixtures/live-pilot-v1.json)
+source used for this run. The manifest pins the sources of that run. Since then the
+runner, its test, the local-chat adapter, `workflow/contracts.mjs` and
+`workflow/engine.mjs` have all changed (the runner to make the optional router
+gate configurable, retain partial output on interruption and accept a reasoning
+effort; the adapter in v0.2.1 and v0.3.0, the contracts and engine in v0.2.1), so only the
+dataset fixture and the checked loop still match the manifest. The runner changes
+did not alter the model prompts or scoring rule; the retained candidate contents
+below allow independent rescoring regardless. The [frozen dataset](../fixtures/live-pilot-v1.json)
 has 12 public synthetic tasks: four JSON configuration transforms, four
 classifications, and four text extractions.
 

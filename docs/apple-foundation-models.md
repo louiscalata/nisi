@@ -11,17 +11,20 @@ the records do not include a Swift version. The source targets macOS 26 or later
 Build it locally:
 
 ```bash
+mkdir -p ~/.nisi/bin && chmod 700 ~/.nisi/bin
 swiftc -O -parse-as-library -target arm64-apple-macos26.0 \
-  probes/afm-content-probe.swift -o /tmp/nisi-afm-content-probe
-shasum -a 256 /tmp/nisi-afm-content-probe
+  probes/afm-content-probe.swift -o ~/.nisi/bin/nisi-afm-content-probe
+shasum -a 256 ~/.nisi/bin/nisi-afm-content-probe
 ```
 
-Provide the resulting absolute binary path and its actual SHA-256, a ready
+Build into a private directory that only you can write: `/tmp` is shared, and
+the binary is hashed by path and launched by path later. Provide the resulting
+absolute binary path and its actual SHA-256, a ready
 File Access Policy grant, a task-to-file map, and an optional timeout:
 
 ```js
 const adapter = createAppleFoundationModelsAdapter({
-  binary: '/tmp/nisi-afm-content-probe',
+  binary: '/Users/you/.nisi/bin/nisi-afm-content-probe', // absolute path
   binarySHA256: actualBinaryDigest,
   grant,
   items: { 'task.read': { filePath: absoluteDocumentPath, kind: 'markdown' } },

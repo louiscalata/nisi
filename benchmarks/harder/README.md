@@ -3,8 +3,8 @@
 Sixteen frozen tasks chosen because a small local model often errs on them: ISO
 week numbers, multi-key sorts, interval merges, topological order, business
 days, Levenshtein distance, banker's rounding, Semantic Versioning order and
-similar. One `qwen3.8-27b` draft solves 7 to 14 of the 16, depending on the
-token budget and reasoning setting. `make_tasks.py` computes every expected
+similar. With the shipped options, one `qwen3.8-27b` draft solves 7 to 14 of the 16,
+depending on the token budget and reasoning setting. `make_tasks.py` computes every expected
 answer; none is typed by hand. Run it to check the answers, and it rewrites
 `tasks-v1.json` byte for byte (sha256 `c7a521d4…0a99a`, pinned in `run.mjs`).
 
@@ -37,7 +37,8 @@ Each task runs in two arms with the same author settings:
 `MODULE` is a file that exports `judge({ state, questions })`, which sends one
 TypeSafe System One request and resolves to `{ model, answers }`. The key and
 transport stay in that file; see [Jev pre- and post-analysis](../../docs/local-models.md).
-The output file must not exist yet. Bad options are refused before it is
+The output file must not exist yet. Unknown flags, a missing judge, an invalid reasoning effort,
+an out-of-range `--max-tokens` or `--timeout-ms`, an endpoint the adapter refuses and an unknown task id are refused before it is
 created. A run that fails midway still writes the rows it finished, marked
 `PARTIAL`. A finished run records the dataset hash, the settings, one row per
 task and arm (outcome, correctness, repairs, calls, tokens, time) and a per-arm
@@ -46,9 +47,12 @@ calls.
 
 ## Results so far
 
-`qwen3.8-27b` on LM Studio, one run per setting, 2026-11-07. "One draft" is
-arm A and "Nisi" is arm C, correct out of 16; time is for arm C and excludes
-Jev planning calls.
+`qwen3.8-27b` on LM Studio, 2026-11-07. "One draft" is arm A and "Nisi" is arm C,
+correct out of 16; time is for arm C and excludes Jev planning calls. Each row is
+one run, except reasoning off, which was run twice (Nisi arm 8, then 7). The raw
+files and how their settings were recovered are in [`results/`](results/README.md):
+they came from an earlier private harness, so the flags below are the equivalent
+`run.mjs` command, not values recorded in the files.
 
 | Flags | One draft | Nisi | Time |
 | --- | --- | --- | --- |
@@ -58,14 +62,24 @@ Jev planning calls.
 | `--max-tokens 1024 --timeout-ms 300000 --reasoning none` | 7 | 8 | 2.7 min |
 | `--timeout-ms 300000 --judge <module> --plan` | 14 | 14 | 12.7 min |
 
-- The library defaults already solve 14 of 16, so 16 is the most any setting can
-  add. A single unchecked draft scores the same as the Nisi arm in four of the
-  five rows; the checks and repair loop helped only with reasoning off (7 to 8).
+- The library defaults already solve 14 of 16, so at most 2 more tasks (16 of 16)
+  are possible from any setting.
+- A single unchecked draft scores the same as the Nisi arm in four of the five
+  rows. In the reasoning-off row the Nisi arm scored 8 and 7 in its two runs, so
+  that difference is within run-to-run noise.
 - The 1,024-token row is a cap a host might choose, not the default.
-- With the same 300 s timeout, Jev planning solved 14 in 12.7 min against
-  15.4 min without it, and 14.0 min at the 120 s defaults. The time excludes the
-  planning calls, and one run cannot separate this from run-to-run variation.
-- Reasoning off alone is fastest but solves about half the tasks. A staged setup
-  (draft with reasoning off, repair with reasoning on) scored 12 in 13.8 min,
-  against 7 for its one-draft arm, and is not part of the package.
-- Every figure is one run on one model and one machine.
+- Jev planning solved 14, as did the defaults, and its 12.7 min against 15.4 min
+  at the same 300 s timeout comes almost entirely from one task. Jev planned the
+  base64 task (t06) as `direct`; both runs got it wrong, but the planned run
+  failed after two repairs in 18 s while the flat run spent 168 s. The run-length
+  encoding task (t08) saved another 22 s, and the other 14 tasks differ by seconds.
+  This is not evidence that planning is faster or more accurate.
+- Reasoning off alone is fastest but solves about half the tasks, though it solves
+  t07 (Levenshtein) in about 4 s, where every reasoning run at 4,096 tokens or
+  less fails it; only the unshipped 8,192-ceiling run solves it, in 417 s.
+- A staged setup (draft with reasoning off, repair with reasoning on) solved 12 in
+  13.8 min against 7 for its one-draft arm, and was worse than the defaults
+  (14 in 14.0 min) because four reasoning repairs hit the 120 s timeout. A run
+  with an 8,192 output ceiling and a 300 s timeout solved 15 in 24.8 min. Both
+  need options that are not part of the package.
+- Every figure is one run (or two) on one model and one machine.

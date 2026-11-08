@@ -7,8 +7,10 @@ admission/refusal cases without model execution.
 
 ## Declaration
 
-The factory takes UTF-8 **canonical JSON bytes**, not a JavaScript object. Build
-those bytes with `canonicalizeJsonV1(Buffer.from(JSON.stringify(declaration)))`.
+The factory takes UTF-8 **canonical JSON bytes** in a `Buffer`, not a JavaScript
+object. `canonicalizeJsonV1` returns `{ profile, canonical, sha256 }`, where
+`canonical` is a string, so build the bytes with
+`Buffer.from(canonicalizeJsonV1(Buffer.from(JSON.stringify(declaration))).canonical)`.
 Every declaration has exactly these fields:
 
 | Field | Accepted value |

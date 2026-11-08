@@ -121,6 +121,12 @@ test('bad input is refused before any output file exists, and an interrupted run
       await assert.rejects(() => main(['--allow-live', ENDPOINT, 'm', out, ...args]), /HARDER_(SELECTION|REASONING)_INVALID/u);
       await assert.rejects(() => fs.access(out), { code: 'ENOENT' });
     }
+    for (const args of [['--max-tokens', '99999'], ['--timeout-ms', '999999999']]) {
+      await assert.rejects(() => main(['--allow-live', ENDPOINT, 'm', out, ...args]), { code: /^LOCAL_CHAT_(TOKEN_CAP|TIMEOUT)_INVALID$/u });
+      await assert.rejects(() => fs.access(out), { code: 'ENOENT' });
+    }
+    await assert.rejects(() => main(['--allow-live', 'http://example.com/v1/chat/completions', 'm', out]), { code: 'LOCAL_CHAT_DESTINATION_REFUSED' });
+    await assert.rejects(() => fs.access(out), { code: 'ENOENT' });
     const noJudge = path.join(dir, 'no-judge.mjs');
     await fs.writeFile(noJudge, 'export const other = 1;\n');
     await assert.rejects(() => main(['--allow-live', ENDPOINT, 'm', out, '--plan', '--judge', noJudge]), /HARDER_JUDGE_REQUIRED/u);

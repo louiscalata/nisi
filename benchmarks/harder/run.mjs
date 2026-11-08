@@ -87,10 +87,18 @@ function adaptersFor(t, author, { shapeOnly, jevReview, judge }) {
   };
 }
 
+// Builds the author adapter once so a bad endpoint, token cap, timeout or reasoning
+// effort is refused before any output file is created or any task starts.
+export function preflight({ endpoint, model, maxOutputTokens = 4096, timeoutMs = 120_000, reasoningEffort } = {}) {
+  createLocalChatAuthorAdapter({ endpoint, destination: 'LOOPBACK_HTTP', model, id: 'harder.author', timeoutMs, maxOutputTokens,
+    ...(reasoningEffort ? { reasoningEffort } : {}) });
+}
+
 export async function runHarder({ endpoint, model, fetch, dataset, maxOutputTokens = 4096, timeoutMs = 120_000, reasoningEffort, judge,
   plan = false, jevReview = false, shapeOnly = false, arms = ['A', 'C'], selectedTaskIds, onRow } = {}) {
   if ((plan || jevReview) && typeof judge !== 'function') throw new Error('HARDER_JUDGE_REQUIRED');
   if (reasoningEffort !== undefined && !LOCAL_CHAT_REASONING_EFFORTS.includes(reasoningEffort)) throw new Error('HARDER_REASONING_INVALID');
+  if (endpoint !== undefined) preflight({ endpoint, model, maxOutputTokens, timeoutMs, reasoningEffort });
   if (selectedTaskIds && !selectedTaskIds.every(id => dataset.tasks.some(t => t.id === id))) throw new Error('HARDER_SELECTION_INVALID');
   const tasks = dataset.tasks.filter(t => !selectedTaskIds || selectedTaskIds.includes(t.id));
   const rows = [];
@@ -159,6 +167,7 @@ export async function main(argv = process.argv.slice(2), { fetch } = {}) {
   if ((options.plan || options.jevReview) && typeof judge !== 'function') throw new Error('HARDER_JUDGE_REQUIRED');
   if (options.reasoningEffort !== undefined && !LOCAL_CHAT_REASONING_EFFORTS.includes(options.reasoningEffort)) throw new Error('HARDER_REASONING_INVALID');
   if (options.selectedTaskIds && !options.selectedTaskIds.every(id => dataset.tasks.some(t => t.id === id))) throw new Error('HARDER_SELECTION_INVALID');
+  preflight(options);
   const output = await fs.open(options.outputFile, 'wx', 0o600);
   const rows = [];
   try {

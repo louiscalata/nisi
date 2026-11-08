@@ -1,7 +1,8 @@
 # Controlled benchmark protocol, revision 2
 
-This is a development-time, openly authored benchmark of the released v0.2.0
-workflow implementation. It is not a held-out task evaluation, a provider
+This is a development-time, openly authored benchmark of the workflow
+implementation released as v0.2.0 (the code in later releases has since changed;
+the generated report headings still say v0.2.0). It is not a held-out task evaluation, a provider
 certification, or a preregistered clinical-style experiment. Source hashes and
 the exact scenario list are written before every run. Results use new directories
 so failed and superseded runs remain available.
