@@ -2,9 +2,14 @@
 
 ## Scope
 
-Nisi v0.2 adds a public command line for fixed workflow and local-model
+Nisi v0.2 added a public command line for fixed workflow and local-model
 demonstrations, plus the run journal and journal store in `history/`. The v0.1
-workflow and its local-chat adapters remain part of the package. The CLI does
+workflow and its local-chat adapters remain part of the package. v0.3.0 adds an
+optional Jev advisor (`adapters/jev-advisor.mjs`): it calls nothing itself, but
+the `judge` function you supply sends the task text, and for the reviewer the
+candidate's file contents, to a hosted service, so treat that function as a data
+boundary. The harder-task runner under `benchmarks/harder/` makes live model
+calls and exists only in the source checkout. The CLI does
 not execute arbitrary repository tasks or manage a model server. The v0.2
 journal-specific evidence record does not establish new security properties
 for every older API or external model service.
