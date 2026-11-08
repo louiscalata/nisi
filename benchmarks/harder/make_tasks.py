@@ -48,6 +48,12 @@ def roman(n):
     for k,r in v:
         while n>=k: s+=r; n-=k
     return s
+SEMVERS=["1.0.0","1.0.0-rc.1","1.0.0-alpha","1.0.0-alpha.1","1.0.0-beta.11","1.0.0-beta.2","1.0.0-alpha.beta","1.0.0-beta"]
+def semver_key(v):
+    core,_,pre=v.partition('-')
+    nums=tuple(int(x) for x in core.split('.'))
+    if not pre: return (nums,1,())
+    return (nums,0,tuple((0,int(x),'') if x.isdigit() else (1,0,x) for x in pre.split('.')))
 def r2(x): return float(Decimal(str(x)).quantize(Decimal('0.01'),rounding=ROUND_HALF_EVEN))
 
 recs=[{"name":"ivy","dept":"ops","age":31,"score":88},{"name":"abe","dept":"eng","age":45,"score":92},{"name":"kai","dept":"eng","age":31,"score":92},{"name":"bo","dept":"ops","age":27,"score":75},{"name":"cy","dept":"eng","age":27,"score":81},{"name":"dee","dept":"hr","age":31,"score":88}]
@@ -101,7 +107,7 @@ tasks=[
  ("t15-weekday","For each date give the English weekday name: 1969-07-20, 2000-02-29, 2038-01-19, 1900-03-01. Return answer as an array of strings in the given order.",
   [datetime.date.fromisoformat(d).strftime('%A') for d in ["1969-07-20","2000-02-29","2038-01-19","1900-03-01"]]),
  ("t16-semver-sort","Sort these versions by Semantic Versioning 2.0.0 precedence, lowest first: [\"1.0.0\",\"1.0.0-rc.1\",\"1.0.0-alpha\",\"1.0.0-alpha.1\",\"1.0.0-beta.11\",\"1.0.0-beta.2\",\"1.0.0-alpha.beta\",\"1.0.0-beta\"]. Return answer as the sorted array.",
-  ["1.0.0-alpha","1.0.0-alpha.1","1.0.0-alpha.beta","1.0.0-beta","1.0.0-beta.2","1.0.0-beta.11","1.0.0-rc.1","1.0.0"]),
+  sorted(SEMVERS,key=semver_key)),
 ]
 data={"datasetId":"nisi-harder-v1","frozenAt":"2026-11-07","tasks":[{"id":i,"prompt":p,"expectedAnswer":a} for i,p,a in tasks]}
 b=json.dumps(data,indent=1,ensure_ascii=False).encode()

@@ -71,12 +71,15 @@ test('a Jev plan sets the wire settings and the Jev reviewer stays advisory', as
   const dataset = await loadTasks();
   const t = dataset.tasks[0];
   const fixture = fakeFetch(() => t.expectedAnswer);
+  const asked = [];
   const judge = async request => Object.hasOwn(request.questions, 'plan')
     ? jevAnswer({ plan: { choice: 'direct', confidence: 0.8 }, underspecified: { noul: 0.05 } })(request)
-    : jevAnswer({ satisfies: { noul: 0.1 } })(request);
+    : (asked.push(Object.keys(request.questions)), jevAnswer({ satisfies: { noul: 0.1 } })(request));
   const result = await runHarder({ endpoint: ENDPOINT, model: 'synthetic.model', fetch: fixture.fetch, dataset,
     selectedTaskIds: [t.id], arms: ['C'], plan: true, jevReview: true, judge });
   assert.deepEqual([result.rows[0].plan, result.rows[0].correct, result.rows[0].outcome], ['direct', true, 'COMPLETED']);
+  assert.deepEqual(asked, [['satisfies']]);
+  assert.equal(fixture.wires.length, 1);
   assert.equal(fixture.wires[0].reasoning_effort, 'none');
   assert.equal(fixture.wires[0].max_tokens, 1024);
   await assert.rejects(() => runHarder({ dataset, plan: true }), /HARDER_JUDGE_REQUIRED/u);
@@ -102,4 +105,53 @@ test('the CLI needs explicit opt-in, a judge module for Jev, and a new output fi
     await assert.rejects(() => main(['--allow-live', ENDPOINT, 'synthetic.model', out, '--task', dataset.tasks[0].id], { fetch: fixture.fetch }), { code: 'EEXIST' });
     await assert.rejects(() => main(['--allow-live', ENDPOINT, 'synthetic.model', path.join(dir, 'n.json'), '--task', 'nope']), /HARDER_SELECTION_INVALID/u);
   } finally { await fs.rm(dir, { recursive: true, force: true }); }
+});
+
+test('bad input is refused before any output file exists, and an interrupted run keeps its finished rows', async () => {
+  const dataset = await loadTasks();
+  const t = dataset.tasks[0];
+  await assert.rejects(() => runHarder({ dataset, selectedTaskIds: [t.id, 'nope'] }), /HARDER_SELECTION_INVALID/u);
+  await assert.rejects(() => runHarder({ dataset, reasoningEffort: 'maximum' }), /HARDER_REASONING_INVALID/u);
+  const dir = await fs.mkdtemp(path.join(os.tmpdir(), 'nisi-harder-'));
+  try {
+    const out = path.join(dir, 'bad.json');
+    for (const args of [['--task', t.id, '--task', 'nope'], ['--reasoning', 'maximum']]) {
+      await assert.rejects(() => main(['--allow-live', ENDPOINT, 'm', out, ...args]), /HARDER_(SELECTION|REASONING)_INVALID/u);
+      await assert.rejects(() => fs.access(out), { code: 'ENOENT' });
+    }
+    const noJudge = path.join(dir, 'no-judge.mjs');
+    await fs.writeFile(noJudge, 'export const other = 1;\n');
+    await assert.rejects(() => main(['--allow-live', ENDPOINT, 'm', out, '--plan', '--judge', noJudge]), /HARDER_JUDGE_REQUIRED/u);
+    await assert.rejects(() => fs.access(out), { code: 'ENOENT' });
+    // The Jev judge fails when planning the second task: the first task's two rows survive in the partial file.
+    const judgeFile = path.join(dir, 'judge.mjs');
+    await fs.writeFile(judgeFile, `let n = 0;
+export async function judge({ questions }) {
+  n += 1;
+  if (n > 1) throw new Error('offline');
+  return { model: 'jev-test', answers: Object.fromEntries(Object.keys(questions).map(k => [k, k === 'plan' ? { choice: 'direct' } : { noul: 0.1 }])) };
+}
+`);
+    const partial = path.join(dir, 'partial.json');
+    const fixture = fakeFetch(() => t.expectedAnswer);
+    const log = console.log; console.log = () => {};
+    try { await assert.rejects(() => main(['--allow-live', ENDPOINT, 'synthetic.model', partial, '--plan', '--judge', judgeFile, '--task', t.id, '--task', dataset.tasks[1].id], { fetch: fixture.fetch }), { code: 'JEV_UNAVAILABLE' }); }
+    finally { console.log = log; }
+    const saved = JSON.parse(await fs.readFile(partial, 'utf8'));
+    assert.equal(saved.status, 'PARTIAL');
+    assert.equal(saved.code, 'JEV_UNAVAILABLE');
+    assert.deepEqual(saved.rows.map(r => [r.task, r.arm, r.correct]), [[t.id, 'A', true], [t.id, 'C', true]]);
+  } finally { await fs.rm(dir, { recursive: true, force: true }); }
+});
+
+test('the semantic-version task is computed, not typed', async () => {
+  const dataset = await loadTasks();
+  const t = dataset.tasks.find(x => x.id === 't16-semver-sort');
+  const key = v => { const [core, pre] = v.split(/-(.*)/u); const nums = core.split('.').map(Number);
+    return { nums, pre: pre === undefined ? null : pre.split('.').map(x => /^\d+$/u.test(x) ? [0, Number(x), ''] : [1, 0, x]) }; };
+  const cmpArr = (a, b) => { for (let i = 0; i < Math.min(a.length, b.length); i += 1) for (let j = 0; j < a[i].length; j += 1) if (a[i][j] !== b[i][j]) return a[i][j] < b[i][j] ? -1 : 1; return a.length - b.length; };
+  const cmp = (a, b) => { const x = key(a), y = key(b); for (let i = 0; i < 3; i += 1) if (x.nums[i] !== y.nums[i]) return x.nums[i] - y.nums[i];
+    if (x.pre === null || y.pre === null) return (x.pre === null) - (y.pre === null); return cmpArr(x.pre, y.pre); };
+  const listed = JSON.parse(t.prompt.slice(t.prompt.indexOf('['), t.prompt.lastIndexOf(']') + 1));
+  assert.deepEqual([...listed].sort(cmp), t.expectedAnswer);
 });

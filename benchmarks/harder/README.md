@@ -19,7 +19,9 @@ Each task runs in two arms with the same author settings:
 - **A**: one draft with no checks.
 - **C**: the Nisi workflow, with a shape check, tests and a repair budget of 2.
   A failing test says which part is wrong (for example "2 of 6 elements are
-  incorrect, at positions 0, 1"), never the expected value.
+  incorrect, at positions 0, 1") and the required length, never the expected
+  values. The workflow's 600-second total deadline covers the draft and both
+  repairs, so a slow model may not get its full repair budget.
 
 | Option | Effect |
 | --- | --- |
@@ -33,9 +35,12 @@ Each task runs in two arms with the same author settings:
 `MODULE` is a file that exports `judge({ state, questions })`, which sends one
 TypeSafe System One request and resolves to `{ model, answers }`. The key and
 transport stay in that file; see [Jev pre- and post-analysis](../../docs/local-models.md).
-The output file must not exist yet. It records the dataset hash, the settings,
-one row per task and arm (outcome, correctness, repairs, calls, tokens, time)
-and a per-arm summary.
+The output file must not exist yet. Bad options are refused before it is
+created. A run that fails midway still writes the rows it finished, marked
+`PARTIAL`. A finished run records the dataset hash, the settings, one row per
+task and arm (outcome, correctness, repairs, calls, tokens, time) and a per-arm
+summary; the summary time covers that arm's calls only, not the Jev planning
+calls.
 
 ## Results so far
 

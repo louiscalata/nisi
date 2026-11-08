@@ -8,7 +8,7 @@ import fs from 'node:fs/promises';
 import { createHash, randomUUID } from 'node:crypto';
 import { pathToFileURL, fileURLToPath } from 'node:url';
 import path from 'node:path';
-import { createLocalChatAuthorAdapter, strictJSON } from '../../adapters/local-chat.mjs';
+import { createLocalChatAuthorAdapter, strictJSON, LOCAL_CHAT_REASONING_EFFORTS } from '../../adapters/local-chat.mjs';
 import { planWithJev, createJevReviewer } from '../../adapters/jev-advisor.mjs';
 import { createCandidate, sha256Text, stableStringify } from '../../workflow/contracts.mjs';
 import { runWorkflow } from '../../workflow/engine.mjs';
@@ -90,6 +90,8 @@ function adaptersFor(t, author, { shapeOnly, jevReview, judge }) {
 export async function runHarder({ endpoint, model, fetch, dataset, maxOutputTokens = 1024, reasoningEffort, judge,
   plan = false, jevReview = false, shapeOnly = false, arms = ['A', 'C'], selectedTaskIds, onRow } = {}) {
   if ((plan || jevReview) && typeof judge !== 'function') throw new Error('HARDER_JUDGE_REQUIRED');
+  if (reasoningEffort !== undefined && !LOCAL_CHAT_REASONING_EFFORTS.includes(reasoningEffort)) throw new Error('HARDER_REASONING_INVALID');
+  if (selectedTaskIds && !selectedTaskIds.every(id => dataset.tasks.some(t => t.id === id))) throw new Error('HARDER_SELECTION_INVALID');
   const tasks = dataset.tasks.filter(t => !selectedTaskIds || selectedTaskIds.includes(t.id));
   const rows = [];
   for (const t of tasks) {
@@ -150,15 +152,24 @@ export function parseArgs(argv) {
 export async function main(argv = process.argv.slice(2), { fetch } = {}) {
   const options = parseArgs(argv);
   const dataset = await loadTasks();
-  if (options.selectedTaskIds && !dataset.tasks.some(t => options.selectedTaskIds.includes(t.id))) throw new Error('HARDER_SELECTION_INVALID');
   // The judge module exports judge({ state, questions }) -> { model, answers }; the key and transport stay with it.
   const judge = options.judgeModule ? (await import(pathToFileURL(path.resolve(options.judgeModule)).href)).judge : undefined;
+  // Refuse bad input before the output file exists, so a rejected run leaves nothing behind.
+  if ((options.plan || options.jevReview) && typeof judge !== 'function') throw new Error('HARDER_JUDGE_REQUIRED');
+  if (options.reasoningEffort !== undefined && !LOCAL_CHAT_REASONING_EFFORTS.includes(options.reasoningEffort)) throw new Error('HARDER_REASONING_INVALID');
+  if (options.selectedTaskIds && !options.selectedTaskIds.every(id => dataset.tasks.some(t => t.id === id))) throw new Error('HARDER_SELECTION_INVALID');
   const output = await fs.open(options.outputFile, 'wx', 0o600);
+  const rows = [];
   try {
     const result = await runHarder({ ...options, fetch, dataset, judge,
-      onRow: row => console.log(JSON.stringify({ task: row.task, arm: row.arm, outcome: row.outcome, correct: row.correct, repairs: row.repairs, ms: row.ms })) });
+      onRow: row => { rows.push(row); console.log(JSON.stringify({ task: row.task, arm: row.arm, outcome: row.outcome, correct: row.correct, repairs: row.repairs, ms: row.ms })); } });
     await output.writeFile(`${JSON.stringify(result, null, 1)}\n`);
     return result;
+  } catch (error) {
+    // An interrupted run keeps the rows it finished.
+    await output.writeFile(`${JSON.stringify({ status: 'PARTIAL', code: error?.code ?? error?.message ?? 'HARDER_INTERRUPTED',
+      datasetSha256: TASKS_SHA256, model: options.model, rows }, null, 1)}\n`);
+    throw error;
   } finally { await output.close(); }
 }
 
