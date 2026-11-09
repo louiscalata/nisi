@@ -11,7 +11,7 @@ Start with the [project README](../README.md) for what Nisi is and how to run th
 | [Local models and Jev](local-models.md) | You want a local chat model to act as author or reviewer, set `reasoningEffort`, or add the optional Jev advisor (Jev is a hosted model from TypeSafe). It lists what data leaves your machine. |
 | [File access policy](file-policy.md) | You need a written grant that limits which file content may reach the Apple on-device model. |
 | [Apple Foundation Models adapter](apple-foundation-models.md) | You are on an Apple Silicon Mac with Apple Intelligence and want the native advisory helper. |
-| [Run journal and store](run-journal.md) | You need an append-only, hash-chained record of run observations and want to save and reopen it from disk. |
+| [Run journal and store](run-journal.md) | You need an append-only, hash-chained record of run observations and want to save and reopen it from disk. `nisi validate` checks a file you already have. |
 
 ## Understand Nisi
 
@@ -48,6 +48,7 @@ Versions without a record:
 
 - **v0.2.1:** changed the journal, store, file access policy and CLI. Covered by tests only.
 - **v0.3.0:** adds `reasoningEffort`, the Jev advisor and one CLI error-code entry. Covered by `tests/jev-advisor.test.mjs`, `tests/local-chat.test.mjs` and `tests/harder-benchmark.test.mjs`.
+- **v0.3.1:** adds the Jev client, harder-task set v2, the local-chat transport timeout fix, and `nisi validate`. Covered by tests. No verification record. Jev was not called while this version was prepared (`docs/jev/`).
 
 ## Repository layout
 

@@ -1,9 +1,11 @@
 # Nisi roadmap
 
-Canonical project roadmap. Updated November 7, 2026 (Pacific time). Product name: Nisi.
-Current release: v0.3.0 (v0.2.1 and v0.3.0 shipped the items listed below under
+Canonical project roadmap. Updated November 9, 2026 (Pacific time). Product name: Nisi.
+Source version: 0.3.1, prepared and not tagged in this change. The last published
+tag is v0.3.0 (v0.2.1 and v0.3.0 shipped the items listed below under
 v0.2.1, and v0.3.0 added the `reasoningEffort` option, the optional Jev advisor and
-the harder-task benchmark). Public v0.2.0 scope: a Node.js CLI and library with the existing workflow APIs,
+the harder-task benchmark). v0.3.1 adds the built-in Jev client, harder-task set
+v2, the local-chat timeout fix, and `nisi validate`. Public v0.2.0 scope: a Node.js CLI and library with the existing workflow APIs,
 the run journal, and its store. The CLI exposes fixed demonstrations; the private
 native repository workflow and other private features remain outside this
 public release. GitHub rc.1 and rc.2 remain historical prereleases. Package

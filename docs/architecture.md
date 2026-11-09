@@ -80,7 +80,7 @@ disk, commit, publish, or release. A report store is also an injected callback.
 The Apple Foundation Models and local chat modules are adapters; neither is
 required by the orchestrator.
 
-Jev is hosted. The task, and for the reviewer the candidate's files, leave your machine when your `judge` function or, on main only, the built-in client (`adapters/jev-client.mjs`, needs `TYPESAFE_API_KEY`) calls it. A `judge` is a function you write that receives the `state` record Nisi builds and calls Jev. With neither, nothing is sent. See [Local models and Jev](local-models.md#jev-pre--and-post-analysis-optional).
+Jev is hosted. The task, and for the reviewer the candidate's files, leave your machine when your `judge` function or, in v0.3.1, the built-in client (`adapters/jev-client.mjs`, needs `TYPESAFE_API_KEY`) calls it. A `judge` is a function you write that receives the `state` record Nisi builds and calls Jev. With neither, nothing is sent. See [Local models and Jev](local-models.md#jev-pre--and-post-analysis-optional).
 
 ## Architectural patterns
 

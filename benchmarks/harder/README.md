@@ -52,8 +52,9 @@ text formats, algorithms, calendar and time, exact numbers, structured data),
 18 medium and 24 hard. The prompts are procedural and self-contained: every
 tie-break, rounding and output rule is stated, so the answer is the result of
 careful execution, not knowledge. Every expected answer is computed by a standard-
-library generator in `v2/generators/` (fixed seeds, no network), and an independent
-solver that never saw the answers re-solved each prompt; all 42 matched.
+library generator in `v2/generators/` (fixed seeds, no network). Some generators
+cross-check with a second implementation in the same file. A separate program
+that re-solved only the prompts is not in this repository.
 `python3 make_tasks_v2.py` regenerates `tasks-v2.json` byte for byte (sha256
 `63007882…350f5c`, pinned in `run.mjs`). For answers with at most two distinct
 values (one task), the repair feedback gives only the count of wrong elements, not

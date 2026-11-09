@@ -187,7 +187,7 @@ export async function main(argv = process.argv.slice(2), { fetch } = {}) {
   } catch (error) {
     // An interrupted run keeps the rows it finished.
     await output.writeFile(`${JSON.stringify({ status: 'PARTIAL', code: error?.code ?? error?.message ?? 'HARDER_INTERRUPTED',
-      datasetSha256: TASKS_SHA256, model: options.model, rows }, null, 1)}\n`);
+      datasetSha256: dataset.taskSetSha256, model: options.model, rows }, null, 1)}\n`);
     throw error;
   } finally { await output.close(); }
 }

@@ -6,13 +6,14 @@ Nisi v0.2 added a public command line for fixed workflow and local-model
 demonstrations, plus the run journal and journal store in `history/`. The v0.1
 workflow and its local-chat adapters remain part of the package. v0.3.0 adds an
 optional Jev advisor (`adapters/jev-advisor.mjs`) that sends the task text, and
-for the reviewer the candidate's file contents, to TypeSafe's hosted Jev service,
-so treat it as a data boundary. It does so only when you pass a `judge`
-function or set `TYPESAFE_API_KEY`, in which case the built-in client
-(`adapters/jev-client.mjs`) sends one HTTPS request to a fixed TypeSafe endpoint
-with that key as a Bearer token. The client refuses redirects, bounds the request
-and response, times out, and never puts the key or the response body in an
-error or log; the key is read from the environment, never stored by Nisi. The harder-task runner under `benchmarks/harder/` makes live model
+for the reviewer the candidate's file contents, to TypeSafe's hosted Jev service
+when you pass a `judge`. v0.3.1 adds a built-in client (`adapters/jev-client.mjs`)
+that sends the same state when `TYPESAFE_API_KEY` is set and no `judge` is
+passed. Treat both as a data boundary. The client refuses redirects, bounds the
+request and response, times out, and never puts the key or the response body in
+an error or log; the key is read from the environment, never stored by Nisi.
+`nisi validate` reads a journal or report you name and prints counts and reason
+codes, not payloads. The harder-task runner under `benchmarks/harder/` makes live model
 calls and exists only in the source checkout. The CLI does
 not execute arbitrary repository tasks or manage a model server. The v0.2
 journal-specific evidence record does not establish new security properties

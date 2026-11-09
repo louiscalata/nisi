@@ -5,40 +5,62 @@ public source tree and does not include private experiments.
 
 ## Unreleased
 
-- Docs: the README is a short landing page (what it is, try it, how it works, limits,
-  where to read more). The run journal and store reference moved to
-  `docs/run-journal.md`, the benchmark results to `docs/benchmarks.md`, installation
-  and library use to `docs/install.md`, and `docs/README.md` is a documentation
-  index with the repository layout. No behaviour changed.
+## 0.3.1
 
-- Fix: a local-chat `timeoutMs` longer than 300 s now takes effect. The adapters used
-  Node's global `fetch`, which ends a request that has received no response headers
-  for 300 s, and these requests are not streamed, so a slow model's call failed at
-  exactly five minutes as `LOCAL_CHAT_UNAVAILABLE`. The default transport is now
-  Node's `http` module (loopback only, no redirects, non-2xx refused); an injected
-  `fetch` is unchanged. The Jev client's `timeoutMs` range is 1 to 300 s for the
-  same reason (it still uses `fetch`).
+Prepared 9 November 2026 from the six commits after tag `v0.3.0` (#26–#31) plus
+the release-prep fixes below. This commit does not create the git tag, a GitHub
+Release, or an npm publication. **Compatibility:** `planWithJev` and
+`createJevReviewer` send the task state to TypeSafe when no `judge` is passed
+and `TYPESAFE_API_KEY` is set. v0.3.0 threw `JEV_JUDGE_REQUIRED` and sent
+nothing in that case. The local-chat default transport is Node's `http` module
+instead of global `fetch`; a caller-supplied `fetch` is unchanged, and the
+request JSON is unchanged. The package archive is 21 files. Relative to the
+v0.3.0 archive (19 files) it adds `adapters/jev-client.mjs` and
+`history/validate-data.mjs`.
 
-- Add `nisi/adapters/jev-client`, a built-in client for TypeSafe's hosted Jev, so
-  setup is one environment variable. `planWithJev` and `createJevReviewer` now use
-  it when no `judge` is passed and `TYPESAFE_API_KEY` is set; without either they
-  still throw `JEV_JUDGE_REQUIRED` and send nothing. `createJevJudge({ apiKey,
-  model, timeoutMs })` is also exported. The endpoint is fixed, redirects are
-  errors, request and response are bounded to 1 MiB, the call times out (60 s by
-  default), and neither the key nor the response body appears in an error. New
-  codes: `JEV_API_KEY_REQUIRED`, `JEV_API_KEY_INVALID`, `JEV_MODEL_INVALID`,
+- Add `nisi/adapters/jev-client`, a built-in client for TypeSafe's hosted Jev.
+  `planWithJev` and `createJevReviewer` use it when no `judge` is passed and
+  `TYPESAFE_API_KEY` is set. `createJevJudge({ apiKey, model, timeoutMs })` is
+  exported. The endpoint is fixed, redirects are errors, the request and
+  response are bounded to 1 MiB, the call times out (60 s by default, 1 to 300 s),
+  and neither the key nor the response body appears in an error. Client codes:
+  `JEV_API_KEY_REQUIRED`, `JEV_API_KEY_INVALID`, `JEV_MODEL_INVALID`,
   `JEV_TIMEOUT_INVALID`, `JEV_REQUEST_INVALID`, `JEV_REQUEST_TOO_LARGE`,
   `JEV_AUTH_FAILED`, `JEV_RATE_LIMITED`, `JEV_HTTP_ERROR`, `JEV_TIMEOUT`,
-  `JEV_RESPONSE_TOO_LARGE`. A custom `judge` still works as before.
-- Add `benchmarks/harder` task set v2: 42 harder tasks in six categories (state
-  simulation, text formats, algorithms, calendar and time, exact numbers and
-  structured data), every answer computed by a generator and checked by an
-  independent blind solver. Run it with `--tasks v2`; the default stays v1.
-
-- Tests remove the temporary folders they create. `npm run check` had left about
-  96 `consent-*`, `afm-content-*` and `afm-stub-*` folders per run.
-- Add a [Windows hardware check](docs/verification-v0.3-windows.md) of v0.3.0 on one
-  real PC.
+  `JEV_RESPONSE_TOO_LARGE`, `JEV_RESPONSE_INVALID`, `JEV_UNAVAILABLE`. A custom
+  `judge` still wins over the environment variable.
+- Add `benchmarks/harder` task set v2: 42 tasks in six categories. Every answer
+  is computed by a generator in `v2/generators/`. Regenerating `tasks-v2.json`
+  with `make_tasks_v2.py` reproduced the pinned sha256
+  `63007882ea7bb02195abdf6b5eb8c1a09e87829ce26391fd4c4d2cde70350f5c`. Some
+  generators cross-check with a second implementation in the same file. This
+  repository does not contain a separate solver that re-read only the prompts.
+  Run v2 with `--tasks v2`. The default stays the 16-task v1 set. For the one
+  v2 answer that has at most two distinct values, repair feedback reports the
+  count of wrong elements and not their positions.
+- Fix: a local-chat `timeoutMs` longer than 300 s now takes effect. Node's
+  global `fetch` ends a request that has received no response headers for 300 s,
+  and these requests are not streamed, so a slow model failed at five minutes
+  as `LOCAL_CHAT_UNAVAILABLE`. The default transport is loopback `http` only,
+  with no redirects, and a non-2xx status is refused. The Jev client still uses
+  `fetch`, so its timeout stays within 1 to 300 s.
+- Fix: an interrupted harder-task run wrote the v1 dataset hash into the
+  partial file for every task set. The partial file now records the hash of
+  the task set that was loaded.
+- Add `nisi validate --journal FILE` and `nisi validate --data-dir DIR`
+  (`NISI_JOURNAL` or `NISI_DATA_DIR` when the flag is omitted). The command
+  reopens run journals and checks the shape of workflow reports. It prints a
+  PASS/FAIL summary and does not print payloads. `scripts/validate-real-data.sh`
+  is the source-checkout wrapper. `fixtures/sample-data/` is a synthetic smoke
+  fixture, not working data.
+- Docs: the README is a short landing page. The run journal moved to
+  `docs/run-journal.md`, benchmarks to `docs/benchmarks.md`, install steps to
+  `docs/install.md`. v0.3.0 doc corrections (#26, #27) keep the Jev timing
+  claim limited to what the single runs showed, and record the Windows check
+  of tag `v0.3.0` on one PC in `docs/verification-v0.3-windows.md`. That check
+  was not repeated for v0.3.1.
+- Tests remove the temporary folders they create. `npm run check` had left
+  about 96 `consent-*`, `afm-content-*` and `afm-stub-*` folders per run.
 
 ## 0.3.0
 
