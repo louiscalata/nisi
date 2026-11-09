@@ -1,0 +1,14 @@
+{
+  "schemaVersion": 1,
+  "outcome": "COMPLETED",
+  "code": null,
+  "repairAttempts": 0,
+  "stages": [
+    {
+      "stage": "review",
+      "status": "PASS"
+    }
+  ],
+  "reportStored": false,
+  "note": "synthetic smoke fixture, not working data"
+}

@@ -1,31 +1,63 @@
 # Nisi
 
-Nisi is a Node.js library and command line tool that runs one coding task through draft, checks, tests, separate review and bounded repair, for developers who build tools around coding models.
+[![CI](https://github.com/louiscalata/nisi/actions/workflows/ci.yml/badge.svg)](https://github.com/louiscalata/nisi/actions/workflows/ci.yml)
+[![Apache-2.0](https://img.shields.io/badge/license-Apache--2.0-blue.svg)](https://github.com/louiscalata/nisi/blob/main/LICENSE)
+[![Node.js 22+](https://img.shields.io/badge/node-%3E%3D22-339933.svg)](https://github.com/louiscalata/nisi/blob/main/package.json)
 
-**Status:** v0.3.0 · Node.js 22 or newer (macOS, Linux, Windows) · Apache-2.0 license
+Nisi runs one coding task through draft, checks, tests, separate review and bounded repair, and returns a report. It does not apply the files.
 
-- **v0.3.0:** adds the `reasoningEffort` option for local chat models, an optional Jev advisor (Jev is a hosted model from TypeSafe; see Limits) and an opt-in 16-task harder benchmark.
-- **On main, not in v0.3.0:** a built-in Jev client (`TYPESAFE_API_KEY`) and 42 more harder tasks.
-- The [changelog](https://github.com/louiscalata/nisi/blob/main/CHANGELOG.md) lists every change.
+**Status:** source version 0.3.1, prepared 9 November 2026. The last published git tag is [`v0.3.0`](https://github.com/louiscalata/nisi/releases/tag/v0.3.0) (7 November 2026). This source change does not create the `v0.3.1` tag, a GitHub Release, or an npm publication. Node.js 22 or newer on macOS, Linux and Windows. Apache-2.0. Nisi is not on the npm registry. The v0.3.1 changes are covered by the test suite. There is no new verification record. The [Windows check](https://github.com/louiscalata/nisi/blob/main/docs/verification-v0.3-windows.md) is one PC on v0.3.0 and was not repeated here. Jev pre/post gates for this preparation were **not run** (no API key in the build environment); see [docs/jev](https://github.com/louiscalata/nisi/blob/main/docs/jev/pre-v0.3.1.md).
 
-## Try it
+## Quick start
+
+Install Node.js 22 or newer. In a checkout of this source:
 
 ```bash
-git clone --branch v0.3.0 --depth 1 https://github.com/louiscalata/nisi.git
+node bin/nisi.mjs demo
+```
+
+After the `v0.3.1` tag exists, this is the same tree:
+
+```bash
+git clone --branch v0.3.1 --depth 1 https://github.com/louiscalata/nisi.git
 cd nisi
 node bin/nisi.mjs demo
 ```
 
-You should see this JSON (indentation aside):
+You should see this JSON:
 
 ```json
-{ "outcome": "COMPLETED", "code": null, "repairAttempts": 1,
-  "reportStored": true, "modelCalls": 0 }
+{
+  "outcome": "COMPLETED",
+  "code": null,
+  "repairAttempts": 1,
+  "reportStored": true,
+  "modelCalls": 0
+}
 ```
 
-The demo calls no model. It repairs an intentionally incorrect module once, and writes then deletes a report in a temporary directory. Run `node examples/workflow.mjs` to keep the report.
+The demo calls no model. It repairs an intentionally incorrect module once, writes a report in a temporary directory, checks it by read-back, and deletes it. `node examples/workflow.mjs` keeps the report.
 
-To install the release archive, run Nisi's own tests or call the library, see [Install and use](https://github.com/louiscalata/nisi/blob/main/docs/install.md).
+From a source checkout, `npm ci` then `npm run check` runs the structural check and the tests. Install of a release archive, after one is published, is in [Install and use](https://github.com/louiscalata/nisi/blob/main/docs/install.md).
+
+## Jev pre- and post-analysis
+
+Jev is TypeSafe's hosted System One model, a paid API with no free or open-weight stand-in. Nisi can ask it two questions around a run. Nothing is sent unless you pass a `judge` function or, starting in this version, set `TYPESAFE_API_KEY`.
+
+**Pre-analysis** (`planWithJev`) asks whether the task needs the model to reason (`reason` or `direct`) and whether the task is missing information. The default map gives `direct` tasks `reasoningEffort: 'none'` and 1,024 output tokens, and `reason` tasks 4,096 tokens. That choice is a setting, not evidence that the setting is better.
+
+**Post-analysis** (`createJevReviewer`) records Jev's probability that the candidate meets every acceptance criterion. By default the review passes, and it still uses one of the task's required-reviewer slots. `gate: true` fails the review when the probability is below `threshold` (default 0.5) and sends the candidate to repair. If the judge throws or returns an invalid answer, the run ends `BLOCKED` with `REVIEW_UNAVAILABLE`.
+
+On 16 harder tasks with one local model, each figure from a single run, the Jev plan matched the adapter defaults (14 of 16) and showed no demonstrated gain in accuracy or speed. On 31 labelled answers, Jev's ranking was too weak to gate a run (AUC 0.78). Numbers and the exact data that leaves the machine are in [Local models and Jev](https://github.com/louiscalata/nisi/blob/main/docs/local-models.md#jev-pre--and-post-analysis-optional).
+
+## What is in 0.3.1
+
+- A built-in Jev client, `nisi/adapters/jev-client`, used when `TYPESAFE_API_KEY` is set and no `judge` is passed.
+- Forty-two more harder tasks, selected with `--tasks v2`. The default remains the 16-task set from v0.3.0.
+- Local-chat calls may run longer than five minutes. Node's `fetch` was cutting them off. An injected `fetch` is unchanged.
+- `nisi validate` checks a run journal, or a directory of journals and workflow reports, and prints PASS or FAIL without printing payloads.
+
+The [changelog](https://github.com/louiscalata/nisi/blob/main/CHANGELOG.md) is the full list. Draft notes for the unpublished tag are in [docs/release-notes/v0.3.1.md](https://github.com/louiscalata/nisi/blob/main/docs/release-notes/v0.3.1.md).
 
 ## How it works
 
@@ -40,29 +72,41 @@ An **adapter** is a callback object you supply that connects one role to your to
 
 Nisi never writes the files; your application decides whether to apply the candidate. In review mode you supply the candidate and Nisi skips drafting and repair. The full flow diagram is in [Architecture](https://github.com/louiscalata/nisi/blob/main/docs/architecture.md#execution-flow).
 
+## Check a journal on your machine
+
+Real run journals are not in this repository. Point the checker at a directory or one file. It reads locally and prints counts, sha256 and reason codes.
+
+```bash
+scripts/validate-real-data.sh --data-dir /absolute/path/to/your/nisi-data
+scripts/validate-real-data.sh --journal /absolute/path/to/journal.jsonl
+```
+
+`scripts/validate-real-data.sh --smoke` checks only `fixtures/sample-data/`, which is synthetic. `verified: true` on a journal means the hash chain matches the file, not that the events happened or that a signature was checked.
+
 ## Limits
 
-- **Scope.** The CLI runs two fixed demonstrations and does not run your repository. `demo` calls no model. `local-model` needs a loopback chat server that you run, an endpoint and two different model names. Neither command runs model-generated code or changes a repository.
+- **Scope.** The CLI runs two fixed demonstrations and `validate`. It does not run your repository. `demo` calls no model. `local-model` needs a loopback chat server that you run, an endpoint and two different model names. Neither command runs model-generated code or changes a repository.
 - **Distribution.** Nisi is not on the npm registry. The archive installs no models and starts no model server.
 - **Trust.** Nisi checks what your callbacks report. It cannot see what they did. `COMPLETED` does not authorize applying files or shipping.
 - **Generated code.** If you run generated code, isolate it.
 - **Run journal.** The optional run journal is a hash-chained record of a run. Its `verified: true` means internal consistency, not authenticity.
-- **Data sent to Jev.** Nisi builds a `state` record: the task's id, mode, language, allowed file names and acceptance criteria and, for the reviewer, the candidate's files and whether the tests passed. A `judge` is a function you write that receives the `state`, calls Jev and decides what is sent. The built-in client (main only) sends the `state` as is. Nothing is sent without a `judge` or, on main, `TYPESAFE_API_KEY`. See [Local models and Jev](https://github.com/louiscalata/nisi/blob/main/docs/local-models.md#jev-pre--and-post-analysis-optional).
-- **Jev as reviewer.** Jev is a paid API with no free or open-weight version. By default it is advisory: it always passes, yet counts as a required reviewer. If its judge fails, the run ends `BLOCKED` with `REVIEW_UNAVAILABLE`. It scored AUC 0.78 on 31 labelled answers (AUC measures how well it ranks right answers above wrong ones), too weak to gate a run. On 16 harder tasks with one local model (single runs), the Jev plan showed no demonstrated gain in accuracy or speed.
+- **Data sent to Jev.** Nisi builds a `state` record: the task's id, mode, language, allowed file names and acceptance criteria and, for the reviewer, the candidate's files and whether the tests passed. A `judge` you write decides what is sent. The built-in client sends that `state` as is when `TYPESAFE_API_KEY` is set and no `judge` is passed. With neither, nothing is sent.
+- **Jev as reviewer.** By default it passes, yet counts as a required reviewer. A failing judge blocks the run. The measured ranking was too weak to use as a gate. See the section above.
 - **Not measured.** The benchmarks are integration checks, not accuracy estimates. The local pilot used one loaded model and 12 tasks, and Nisi tied a handwritten checked loop.
-- **Verification.** The v0.3.0 changes are covered by tests and have no verification record of their own.
+- **Verification.** v0.3.0 and v0.3.1 are covered by tests. v0.3.0 has a one-PC Windows note. v0.3.1 has no verification record of its own, and the Jev gates for this preparation did not run.
 
 ## Learn more
 
-- [Documentation index](https://github.com/louiscalata/nisi/blob/main/docs/README.md): every other document, including verification records, repository layout and project background.
-- [Install and use](https://github.com/louiscalata/nisi/blob/main/docs/install.md): install the release archive, run the checks or call the library.
-- [Workflow API](https://github.com/louiscalata/nisi/blob/main/docs/workflow-api.md): write your own task, callbacks and report storage.
-- [Local models and Jev](https://github.com/louiscalata/nisi/blob/main/docs/local-models.md): connect a local model or the Jev advisor.
-- [Benchmarks](https://github.com/louiscalata/nisi/blob/main/docs/benchmarks.md): the measured numbers and how far to trust them.
-- [Changelog](https://github.com/louiscalata/nisi/blob/main/CHANGELOG.md): what changed in each version, including unreleased changes on main.
+- [Documentation index](https://github.com/louiscalata/nisi/blob/main/docs/README.md)
+- [Install and use](https://github.com/louiscalata/nisi/blob/main/docs/install.md)
+- [Workflow API](https://github.com/louiscalata/nisi/blob/main/docs/workflow-api.md)
+- [Local models and Jev](https://github.com/louiscalata/nisi/blob/main/docs/local-models.md)
+- [Run journal and store](https://github.com/louiscalata/nisi/blob/main/docs/run-journal.md)
+- [Benchmarks](https://github.com/louiscalata/nisi/blob/main/docs/benchmarks.md)
+- [Changelog](https://github.com/louiscalata/nisi/blob/main/CHANGELOG.md)
 
 ## License and support
 
 Apache-2.0, maintained by Louis Calata.
 
-Questions and reproducible reports are welcome in [GitHub Issues](https://github.com/louiscalata/nisi/issues); pull requests are not accepted. See [CONTRIBUTING.md](https://github.com/louiscalata/nisi/blob/main/CONTRIBUTING.md), [SECURITY.md](https://github.com/louiscalata/nisi/blob/main/SECURITY.md) and [LICENSE](https://github.com/louiscalata/nisi/blob/main/LICENSE).
+Questions and reproducible reports are welcome in [GitHub Issues](https://github.com/louiscalata/nisi/issues). Pull requests are not accepted. See [CONTRIBUTING.md](https://github.com/louiscalata/nisi/blob/main/CONTRIBUTING.md), [SECURITY.md](https://github.com/louiscalata/nisi/blob/main/SECURITY.md) and [LICENSE](https://github.com/louiscalata/nisi/blob/main/LICENSE).

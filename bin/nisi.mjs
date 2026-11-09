@@ -20,10 +20,15 @@ Usage:
   nisi --version
   nisi demo
   nisi local-model ENDPOINT AUTHOR_MODEL REVIEWER_MODEL
+  nisi validate --journal FILE
+  nisi validate --data-dir DIR
 
 Commands:
   demo          Run the deterministic workflow example. No model is called.
   local-model   Run the JSON workflow against two configured loopback models.
+  validate      Check one run journal, or the .jsonl journals and workflow reports
+                in one directory. NISI_JOURNAL or NISI_DATA_DIR may replace the
+                flag. The summary has counts and reason codes, not payloads.
 
 Use an HTTP endpoint at literal 127.0.0.1 or [::1], without credentials, query,
 or fragment. Configure two different model names.
@@ -127,6 +132,22 @@ export async function runCli(args, options = {}) {
   }
   if (args.length === 1 && (args[0] === '--version' || args[0] === '-V')) {
     return await emit(stdout, packageMetadata.version) ? 0 : 2;
+  }
+
+  if (args[0] === 'validate') {
+    // Resolve from the real CLI path. --preserve-symlinks-main would otherwise
+    // look for ../history next to the symlink.
+    const { parseValidateArgs, validateData } = await import(new URL('../history/validate-data.mjs', physicalEntryURL).href);
+    const parsed = parseValidateArgs(args.slice(1), options.env ?? process.env);
+    if (!parsed.ok) {
+      await emit(stderr, USAGE_ERROR);
+      return 2;
+    }
+    let summary;
+    try { summary = validateData(parsed); }
+    catch { return await emit(stderr, 'The journal check failed.') ? 1 : 2; }
+    if (!await emit(stdout, JSON.stringify(summary, null, 2))) return 2;
+    return summary.status === 'PASS' ? 0 : 1;
   }
 
   if (args.length === 1 && args[0] === 'demo') {

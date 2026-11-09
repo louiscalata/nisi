@@ -10,7 +10,7 @@ Nisi keeps its product name. Component names describe their software responsibil
 | JSON Canonicalizer | `serialization/canonical-json-v1.mjs`, `canonicalizeJsonV1` | `canonicalizeJSONV1`, legacy path and restricted v1 profile retained |
 | Apple Foundation Models Adapter | `adapters/apple-foundation-models.mjs`, `createAppleFoundationModelsAdapter` | `createAFMContentExecutor` and old import path retained |
 | Local Chat Author / Reviewer | `adapters/local-chat.mjs`, `createLocalChatAuthorAdapter`, `createLocalChatReviewerAdapter` | New explicit loopback destination |
-| Jev Advisor (optional) | `adapters/jev-advisor.mjs`, `planWithJev`, `createJevReviewer`; built-in client `adapters/jev-client.mjs`, `createJevJudge` | Advisor new in v0.3.0, client after it; subpath imports `nisi/adapters/jev-advisor` and `nisi/adapters/jev-client` |
+| Jev Advisor (optional) | `adapters/jev-advisor.mjs`, `planWithJev`, `createJevReviewer`; built-in client `adapters/jev-client.mjs`, `createJevJudge` | Advisor in v0.3.0, client in v0.3.1; subpath imports `nisi/adapters/jev-advisor` and `nisi/adapters/jev-client` |
 | Run Journal / Journal Store | `history/run-journal-v1.mjs`, `history/run-journal-store-v1.mjs` | Subpath imports `nisi/history/run-journal` and `nisi/history/run-journal-store` |
 | Static Analysis Check | `tools/check-side-effects.mjs`, `npm run check:static` | `npm run check:structural` and original CLI retained |
 | Native Model Bridge | `probes/afm-content-probe.swift` | Source path retained; descriptive documentation added |

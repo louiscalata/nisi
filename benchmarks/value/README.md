@@ -10,7 +10,7 @@ Use Node.js 22 or newer and clone a release tag from v0.2.1 onward (the v0.2.0
 tag predates these benchmark files):
 
 ```bash
-git clone --branch v0.3.0 --depth 1 https://github.com/louiscalata/nisi.git
+git clone --branch v0.3.1 --depth 1 https://github.com/louiscalata/nisi.git
 cd nisi
 ```
 

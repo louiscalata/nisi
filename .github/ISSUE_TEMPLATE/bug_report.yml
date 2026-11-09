@@ -1,0 +1,38 @@
+name: Bug report
+description: A wrong result, a refusal on a valid input, or a README claim the code does not support
+title: ""
+labels: []
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thank you. Do not paste API keys, tokens, journal payloads, or candidate source from a private project. `nisi validate` is read-only; paste its summary, not the journal.
+  - type: input
+    id: version
+    attributes:
+      label: Nisi version and Node.js version
+      description: "`node bin/nisi.mjs --version` and `node --version`"
+      placeholder: "0.3.1, Node 22.x"
+    validations:
+      required: true
+  - type: textarea
+    id: expected
+    attributes:
+      label: What you expected
+      description: Name the refusal code or JSON field when there is one.
+    validations:
+      required: true
+  - type: textarea
+    id: actual
+    attributes:
+      label: What happened
+      description: Include the command you ran and the exit code. Leave secrets out.
+    validations:
+      required: true
+  - type: textarea
+    id: input
+    attributes:
+      label: Smallest input that shows it
+      description: A few lines are enough. Skip this if the input itself is secret, and say so.
+    validations:
+      required: false

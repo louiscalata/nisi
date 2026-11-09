@@ -19,6 +19,9 @@ If you want to build on the code, the licence already permits it. Fork it.
 
 ## If you do open an issue
 
-State the exact input bytes and the exact refusal code you expected. Several of
-the tests here exist because an earlier version of a test asserted only that
-"some exception was thrown," which turned out to constrain nothing at all.
+Use the bug-report form. State the exact input bytes and the exact refusal code
+you expected, and leave out API keys and journal payloads. Several of the tests
+here exist because an earlier version of a test asserted only that "some
+exception was thrown," which turned out to constrain nothing at all.
+
+Security reports stay off the public issue list. See [SECURITY.md](SECURITY.md).

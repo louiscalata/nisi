@@ -70,6 +70,11 @@ try {
   requireSuccess(version, 'installed version');
   assert.equal(version.stdout.trim(), packageJson.version);
 
+  const validateUsage = cli(['validate']);
+  assert.equal(validateUsage.status, 2, validateUsage.stdout);
+  assert.match(validateUsage.stderr, /Invalid command or arguments/);
+  assert.equal(validateUsage.stdout, '');
+
   const installedEntry = path.join(consumerDir, 'node_modules', 'nisi', 'bin', 'nisi.mjs');
   const npmBin = path.join(consumerDir, 'node_modules', '.bin', process.platform === 'win32' ? 'nisi.cmd' : 'nisi');
   const preservedLink = path.join(tempRoot, 'nisi-preserved-link.mjs');
@@ -121,6 +126,7 @@ try {
     package: `${packageJson.name}@${packageJson.version}`,
     archiveFiles: packedPaths.size,
     checks: ['packed public contents', 'offline install', 'installed help', 'installed version',
+      'installed validate usage',
       `installed npm-bin preserved symlink and demo import (${preservedLinkCheck})`, 'installed demo',
       'malformed model args refuse without inference'],
   }, null, 2));

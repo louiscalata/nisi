@@ -148,7 +148,19 @@ export async function judge({ questions }) {
     const saved = JSON.parse(await fs.readFile(partial, 'utf8'));
     assert.equal(saved.status, 'PARTIAL');
     assert.equal(saved.code, 'JEV_UNAVAILABLE');
+    assert.equal(saved.datasetSha256, dataset.taskSetSha256);
     assert.deepEqual(saved.rows.map(r => [r.task, r.arm, r.correct]), [[t.id, 'A', true], [t.id, 'C', true]]);
+    const v2 = await loadTasks('v2');
+    const throwJudge = path.join(dir, 'throw.mjs');
+    await fs.writeFile(throwJudge, 'export async function judge() { const error = new Error("offline"); error.code = "JEV_UNAVAILABLE"; throw error; }\n');
+    const partialV2 = path.join(dir, 'partial-v2.json');
+    const logAgain = console.log; console.log = () => {};
+    try {
+      await assert.rejects(() => main(['--allow-live', ENDPOINT, 'synthetic.model', partialV2, '--tasks', 'v2', '--plan', '--judge', throwJudge, '--task', v2.tasks[0].id], { fetch: fixture.fetch }), { code: 'JEV_UNAVAILABLE' });
+    } finally { console.log = logAgain; }
+    const savedV2 = JSON.parse(await fs.readFile(partialV2, 'utf8'));
+    assert.equal(savedV2.datasetSha256, v2.taskSetSha256);
+    assert.notEqual(savedV2.datasetSha256, dataset.taskSetSha256);
   } finally { await fs.rm(dir, { recursive: true, force: true }); }
 });
 

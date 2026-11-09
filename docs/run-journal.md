@@ -4,6 +4,14 @@ Reference for the run journal and journal store APIs. Back to the [documentation
 
 The **run journal** (`history/run-journal-v1.mjs`, import `nisi/history/run-journal`) is an append-only, hash-chained record of what a run observed. A host can write it, reopen it after a restart and check it before relying on its rows. The **journal store** (`history/run-journal-store-v1.mjs`, import `nisi/history/run-journal-store`) moves a serialized journal to and from disk through a caller-supplied `fs`.
 
+To check a file that is already on disk, without printing its payload:
+
+```bash
+node bin/nisi.mjs validate --journal /absolute/path/to/journal.jsonl
+```
+
+`NISI_JOURNAL` is the same path when you omit `--journal`. A directory of `*.jsonl` journals and workflow-report `*.json` files uses `--data-dir` or `NISI_DATA_DIR`. In a source checkout, `scripts/validate-real-data.sh` wraps that command. `verified: true` in the summary is the store's chain check, not authenticity.
+
 The workflow does not write journal entries for you. Your host does; see [Architecture](architecture.md#journal-boundary).
 
 ## Example

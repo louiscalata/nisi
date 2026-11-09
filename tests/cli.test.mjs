@@ -41,7 +41,7 @@ test('help and version are side-effect free and print the package version', () =
     assert.deepEqual(fs.readdirSync(cwd), []);
     const help = invoke(['--help'], cwd);
     assert.equal(help.status, 0, help.stderr);
-    assert.match(help.stdout, /Usage:[\s\S]*nisi demo[\s\S]*nisi local-model/);
+    assert.match(help.stdout, /Usage:[\s\S]*nisi demo[\s\S]*nisi local-model[\s\S]*nisi validate/);
     assert.equal(help.stderr, '');
     assert.deepEqual(fs.readdirSync(cwd), []);
 

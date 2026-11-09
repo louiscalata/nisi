@@ -1,6 +1,6 @@
 {
   "name": "nisi",
-  "version": "0.3.0",
+  "version": "0.3.1",
   "private": false,
   "description": "A Node.js CLI and library for bounded AI-assisted coding workflows and validated run reports.",
   "license": "Apache-2.0",
@@ -27,7 +27,8 @@
     "check:static": "node scripts/require-node.cjs && node tools/check-side-effects.mjs",
     "example:workflow": "node scripts/require-node.cjs && node examples/workflow.mjs",
     "preflight": "node scripts/require-node.cjs",
-    "example:local-model": "node scripts/require-node.cjs && node examples/local-model-workflow.mjs"
+    "example:local-model": "node scripts/require-node.cjs && node examples/local-model-workflow.mjs",
+    "validate:data": "node scripts/require-node.cjs && node bin/nisi.mjs validate"
   },
   "devDependencies": {
     "typescript": "^6.0.3"
@@ -44,6 +45,7 @@
     "gate/*.mjs",
     "history/run-journal-v1.mjs",
     "history/run-journal-store-v1.mjs",
+    "history/validate-data.mjs",
     "policy/*.mjs",
     "serialization/*.mjs",
     "workflow/*.mjs"

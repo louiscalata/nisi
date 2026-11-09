@@ -142,11 +142,11 @@ token savings.
 
 `nisi/adapters/jev-advisor` (a separate module that loads only if you import it) uses Jev, TypeSafe's System One model (a hosted service that returns typed answers and probabilities), to make two judgments around a run.
 
-**What is sent, by whom, when.** Jev is a hosted service, so the data below leaves your machine. Nisi builds a `state` record: the task's id, mode, language, allowed file names and acceptance criteria and, for the reviewer, the candidate's files and whether the tests passed. A `judge` is a function that receives the `state` and calls Jev. The `judge` you write decides what is sent. On main only (not in v0.3.0), if you pass no `judge` and `TYPESAFE_API_KEY` is set, a built-in client sends the `state` as is to `https://api.typesafe.ai/v1/systemone`. The send happens when you call `planWithJev` before the run and when the Jev reviewer runs. With no `judge` and no `TYPESAFE_API_KEY`, nothing is sent. Field-level details are in **What leaves your machine**, below.
+**What is sent, by whom, when.** Jev is a hosted service, so the data below leaves your machine. Nisi builds a `state` record: the task's id, mode, language, allowed file names and acceptance criteria and, for the reviewer, the candidate's files and whether the tests passed. A `judge` is a function that receives the `state` and calls Jev. The `judge` you write decides what is sent. In v0.3.1, if you pass no `judge` and `TYPESAFE_API_KEY` is set, a built-in client sends the `state` as is to `https://api.typesafe.ai/v1/systemone`. The send happens when you call `planWithJev` before the run and when the Jev reviewer runs. With no `judge` and no `TYPESAFE_API_KEY`, nothing is sent. v0.3.0 had no built-in client. Field-level details are in **What leaves your machine**, below.
 
 Cost: there is no free or open-weight version of Jev. It is TypeSafe's paid API, priced per million input tokens, so check typesafe.ai for current rates and any free credit. These calls are small (a task, and for the reviewer one candidate), so a call costs a fraction of a cent at the rates third-party trackers list.
 
-**Quick setup (main only).** Put your TypeSafe key in the `TYPESAFE_API_KEY` environment
+**Quick setup (v0.3.1).** Put your TypeSafe key in the `TYPESAFE_API_KEY` environment
 variable and call the advisor without a judge. Nisi then uses its built-in client
 (`nisi/adapters/jev-client`):
 
@@ -175,7 +175,7 @@ appears in any error. Its failures use these codes: `JEV_API_KEY_REQUIRED`,
 `JEV_API_KEY_INVALID`, `JEV_MODEL_INVALID`, `JEV_TIMEOUT_INVALID`,
 `JEV_REQUEST_INVALID`, `JEV_REQUEST_TOO_LARGE`, `JEV_AUTH_FAILED` (401 or 403),
 `JEV_RATE_LIMITED` (429), `JEV_HTTP_ERROR` (any other non-2xx status),
-`JEV_TIMEOUT`, `JEV_RESPONSE_TOO_LARGE` and `JEV_UNAVAILABLE` (no connection).
+`JEV_TIMEOUT`, `JEV_RESPONSE_TOO_LARGE`, `JEV_RESPONSE_INVALID` and `JEV_UNAVAILABLE` (no connection, or any other failure that is not one of the codes above).
 
 **Your own judge.** To use another transport, a proxy or a different model, pass
 `judge({ state, questions })` yourself; it must return `{ model, answers }` and
@@ -222,7 +222,7 @@ const reviewers = [myReviewer, createJevReviewer({ id: 'jev.review', judge })];
 
 ### Measured results
 
-The harder-task benchmark has 16 frozen tasks in v0.3.0. On main, `--tasks v2` adds 42 more tasks in six categories; every answer is computed by a generator and checked by an independent solver.
+The harder-task benchmark has 16 frozen tasks since v0.3.0. v0.3.1 adds `--tasks v2`, 42 more tasks in six categories. Every answer is computed by a generator. Some generators cross-check with a second implementation in the same file.
 
 On 16 harder tasks with `qwen3.8-27b` (single runs), the adapter defaults
 (4,096 tokens, 120 s) solve 14. A single unchecked draft also solves 14, and so
