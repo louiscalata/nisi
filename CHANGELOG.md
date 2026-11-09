@@ -52,7 +52,8 @@ v0.3.0 archive (19 files) it adds `adapters/jev-client.mjs` and
   reopens run journals and checks the shape of workflow reports. It prints a
   PASS/FAIL summary and does not print payloads. `scripts/validate-real-data.sh`
   is the source-checkout wrapper. `fixtures/sample-data/` is a synthetic smoke
-  fixture, not working data.
+  fixture, not working data, and is checked out with LF line endings so Windows
+  does not turn the journal into a non-canonical file.
 - Docs: the README is a short landing page. The run journal moved to
   `docs/run-journal.md`, benchmarks to `docs/benchmarks.md`, install steps to
   `docs/install.md`. v0.3.0 doc corrections (#26, #27) keep the Jev timing

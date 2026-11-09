@@ -48,7 +48,7 @@ test('argument parsing accepts one flag or one env var', () => {
 
 test('the shipped fixture passes and the summary omits payloads', () => {
   const summary = validateData({ dataDir: path.join(root, 'fixtures/sample-data') });
-  assert.equal(summary.status, 'PASS');
+  assert.equal(summary.status, 'PASS', JSON.stringify(summary));
   assert.equal(summary.reason, null);
   assert.equal(summary.passed, 2);
   assert.equal(summary.failed, 0);
@@ -123,9 +123,9 @@ test('the smoke script checks only the synthetic fixture', () => {
   const result = spawnSync('sh', [path.join(root, 'scripts/validate-real-data.sh'), '--smoke'], {
     cwd: root, encoding: 'utf8', timeout: 15_000,
   });
-  assert.equal(result.status, 0, result.stderr);
+  assert.equal(result.status, 0, `${result.stderr}\n${result.stdout}`);
   const summary = JSON.parse(result.stdout);
-  assert.equal(summary.status, 'PASS');
+  assert.equal(summary.status, 'PASS', result.stdout);
   assert.equal(summary.passed, 2);
   assert.doesNotMatch(`${result.stdout}\n${result.stderr}`, /synthetic smoke fixture/u);
 });
