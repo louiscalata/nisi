@@ -8,8 +8,8 @@ public source tree and does not include private experiments.
 ## 0.3.1
 
 Prepared 9 November 2026 from the six commits after tag `v0.3.0` (#26–#31) plus
-the release-prep fixes below. This commit does not create the git tag, a GitHub
-Release, or an npm publication. **Compatibility:** `planWithJev` and
+the release-prep fixes below. Tagged `v0.3.1` and published as a GitHub Release
+with `nisi-0.3.1.tgz` on 9 November 2026. Not published to the npm registry. **Compatibility:** `planWithJev` and
 `createJevReviewer` send the task state to TypeSafe when no `judge` is passed
 and `TYPESAFE_API_KEY` is set. v0.3.0 threw `JEV_JUDGE_REQUIRED` and sent
 nothing in that case. The local-chat default transport is Node's `http` module
