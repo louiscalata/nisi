@@ -35,7 +35,7 @@ See the [contract matches by task family](../benchmarks/value/charts/task-famili
 
 ## Package footprint
 
-The v0.3.0 archive is **51,377 bytes in 19 files**. The v0.2.0 archive was **42,439 bytes in 18 files**; the extra file is `adapters/jev-advisor.mjs`. The chart compares the pinned v0.2.0 archive with LangGraph.js 1.4.17 and Mastra core 1.69.0, excluding dependency packages. Those tools offer broader capabilities and use different packaging. Package size is not the amount of context sent to a model and cannot show token savings.
+The v0.3.0 archive is **51,377 bytes in 19 files**. The v0.2.0 archive was **42,439 bytes in 18 files**; the extra file is `adapters/jev-advisor.mjs`. The v0.3.1 archive is **50,552 bytes in 21 files**; it adds `adapters/jev-client.mjs` and `history/validate-data.mjs`. Those three figures are the GitHub Release archives, not an `npm pack` of later commits on main. The chart compares the pinned v0.2.0 archive with LangGraph.js 1.4.17 and Mastra core 1.69.0, excluding dependency packages. Those tools offer broader capabilities and use different packaging. Package size is not the amount of context sent to a model and cannot show token savings.
 
 ![Compressed package archive size on a logarithmic scale: Nisi v0.2.0 42,439 bytes; LangGraph.js 1.4.17 1,001,919 bytes; Mastra core 1.69.0 14,587,291 bytes. Package size is not model-token use.](../benchmarks/value/charts/package-footprint.svg)
 
