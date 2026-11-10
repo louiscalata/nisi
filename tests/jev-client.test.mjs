@@ -56,7 +56,11 @@ test('the key comes from the argument or TYPESAFE_API_KEY and is validated', () 
     }
   } finally { if (saved === undefined) delete process.env[JEV_API_KEY_ENV]; else process.env[JEV_API_KEY_ENV] = saved; }
   for (const bad of ['Jev', 'a b', '', 7]) assert.throws(() => createJevJudge({ apiKey: KEY, model: bad }), { code: 'JEV_MODEL_INVALID' });
-  for (const bad of [10, 0.5, 300_001, 700_000]) assert.throws(() => createJevJudge({ apiKey: KEY, timeoutMs: bad }), { code: 'JEV_TIMEOUT_INVALID' });
+  assert.equal(typeof createJevJudge({ apiKey: KEY, timeoutMs: 301_000, fetch: async () => reply({}) }), 'function');
+  assert.equal(typeof createJevJudge({ apiKey: KEY, timeoutMs: 86_400_000, fetch: async () => reply({}) }), 'function');
+  for (const bad of [10, 0.5, 999, 86_400_001]) assert.throws(() => createJevJudge({ apiKey: KEY, timeoutMs: bad }), { code: 'JEV_TIMEOUT_INVALID' });
+  assert.throws(() => createJevJudge({ apiKey: KEY, fetch: 1 }), { code: 'JEV_UNAVAILABLE' });
+  assert.throws(() => createJevJudge({ apiKey: KEY, request: 1 }), { code: 'JEV_UNAVAILABLE' });
 });
 
 test('failures map to named codes and never expose the key or the response body', async () => {
@@ -93,25 +97,30 @@ test('a call that outlives its timeout is aborted and reported as JEV_TIMEOUT', 
 test('the advisor uses the built-in client when TYPESAFE_API_KEY is set and no judge is passed', async () => {
   const saved = process.env[JEV_API_KEY_ENV], savedFetch = globalThis.fetch;
   const s = server();
+  let globalFetches = 0;
   try {
     delete process.env[JEV_API_KEY_ENV];
     await assert.rejects(() => planWithJev(task), { code: 'JEV_JUDGE_REQUIRED' });
+    await assert.rejects(() => planWithJev(task, { fetch: s.fetch }), { code: 'JEV_JUDGE_REQUIRED' });
     assert.throws(() => createJevReviewer({ id: 'jev.review' }), { code: 'JEV_JUDGE_REQUIRED' });
+    assert.throws(() => createJevReviewer({ id: 'jev.review', fetch: s.fetch }), { code: 'JEV_JUDGE_REQUIRED' });
+    assert.equal(s.seen.length, 0);
     process.env[JEV_API_KEY_ENV] = KEY;
-    globalThis.fetch = s.fetch;
-    const plan = await planWithJev(task);
+    globalThis.fetch = () => { globalFetches += 1; throw new Error('global fetch must not be used'); };
+    const plan = await planWithJev(task, { fetch: s.fetch });
     assert.equal(plan.plan, 'direct');
     assert.equal(plan.evidence.jevModel, 'jev-1.14.0');
     assert.equal(s.seen[0].url, 'https://api.typesafe.ai/v1/systemone');
     assert.deepEqual(Object.keys(s.seen[0].body.state), ['task']);
-    const review = await createJevReviewer({ id: 'jev.review' }).review({ task, candidate: { files: [{ path: 'answer.json', content: '{"answer":391}' }] }, tests: { status: 'PASS' }, binding: {} });
+    const review = await createJevReviewer({ id: 'jev.review', fetch: s.fetch }).review({ task, candidate: { files: [{ path: 'answer.json', content: '{"answer":391}' }] }, tests: { status: 'PASS' }, binding: {} });
     assert.equal(review.status, 'PASS');
     assert.match(review.evidence.summary, /0\.25 \(advisory\)/u);
     // An explicit judge always wins over the environment.
     let explicit = 0;
-    await planWithJev(task, { judge: async request => { explicit += 1; return { model: 'x', answers: answersFor(request.questions) }; } });
+    await planWithJev(task, { fetch: s.fetch, judge: async request => { explicit += 1; return { model: 'x', answers: answersFor(request.questions) }; } });
     assert.equal(explicit, 1);
     assert.equal(s.seen.length, 2);
+    assert.equal(globalFetches, 0);
     // A bad key in the environment is refused before any request.
     process.env[JEV_API_KEY_ENV] = 'bad key';
     await assert.rejects(() => planWithJev(task), { code: 'JEV_API_KEY_INVALID' });

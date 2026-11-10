@@ -5,6 +5,8 @@ public source tree and does not include private experiments.
 
 ## Unreleased
 
+- The built-in Jev client uses Node's `https` module by default. `timeoutMs` may be from 1 s to 24 h (default 60 s). v0.3.1 used global `fetch` and refused a timeout above 300 s with `JEV_TIMEOUT_INVALID`; `fetch` also gave up after 300 s with no response headers. A `fetch` passed to `createJevJudge`, `planWithJev` or `createJevReviewer` is unchanged and keeps that limit. The endpoint, request JSON, size limits and error codes are unchanged.
+
 ## 0.3.1
 
 Prepared 9 November 2026 from the six commits after tag `v0.3.0` (#26–#31) plus
