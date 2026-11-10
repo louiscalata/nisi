@@ -35,7 +35,8 @@ const tricky = '\n\n## Editor test  \r\nCafé & "quotes"  \r\n</script><script>a
 state.sections[0].current += tricky;
 const edited = vm.runInContext('allMarkdown()', context);
 let saved = vm.runInContext('buildDocument()', context);
-const scriptCount = Number(execFileSync('python3', ['-c', `
+const python = process.platform === 'win32' ? 'python' : 'python3';
+const scriptCount = Number(execFileSync(python, ['-c', `
 from html.parser import HTMLParser
 import sys
 class Tags(HTMLParser):
