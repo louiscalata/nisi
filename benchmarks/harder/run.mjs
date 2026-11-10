@@ -111,20 +111,25 @@ export function preflight({ endpoint, model, maxOutputTokens = 4096, timeoutMs =
 
 // Enough to repeat a finished or partial run: the flags, the fixed repair budget,
 // which judge was used (never the key or a module path), and the package that ran.
-export function recordedSettings({ endpoint, dataset, maxOutputTokens = 4096, timeoutMs = 120_000, reasoningEffort, plan = false, jevReview = false, shapeOnly = false, arms = ['A', 'C'], judgeSource = null } = {}) {
+export function recordedSettings({ endpoint, dataset, maxOutputTokens = 4096, timeoutMs = 120_000, reasoningEffort, plan = false, jevReview = false, shapeOnly = false, arms = ['A', 'C'], judgeSource = null, jevTimeoutMs } = {}) {
   return { endpoint: endpoint ?? null, taskSet: dataset?.datasetId ?? null, maxOutputTokens, timeoutMs,
     reasoningEffort: reasoningEffort ?? null, plan: Boolean(plan), jevReview: Boolean(jevReview),
     tests: shapeOnly ? 'shape' : 'semantic', arms: [...arms], repairBudget: REPAIR_BUDGET, totalDeadlineMs: TOTAL_DEADLINE_MS,
-    judge: plan || jevReview ? judgeSource : null, packageVersion: PACKAGE_VERSION, runtime: process.version };
+    judge: plan || jevReview ? judgeSource : null,
+    jevTimeoutMs: (plan || jevReview) && judgeSource === 'builtin' ? (jevTimeoutMs ?? 60_000) : null,
+    packageVersion: PACKAGE_VERSION, runtime: process.version };
 }
 
 export async function runHarder({ endpoint, model, fetch, dataset, maxOutputTokens = 4096, timeoutMs = 120_000, reasoningEffort, judge,
-  judgeSource = null, plan = false, jevReview = false, shapeOnly = false, arms = ['A', 'C'], selectedTaskIds, onRow } = {}) {
+  judgeSource = null, plan = false, jevReview = false, shapeOnly = false, arms = ['A', 'C'], selectedTaskIds, onRow, jevTimeoutMs, jevFetch } = {}) {
   if (plan || jevReview) {
     if (typeof judge !== 'function') {
       if (judge !== undefined) throw new Error('HARDER_JUDGE_REQUIRED');
-      // Reads TYPESAFE_API_KEY. Throws JEV_API_KEY_REQUIRED or JEV_API_KEY_INVALID before any task.
-      judge = createJevJudge();
+      // Reads TYPESAFE_API_KEY. Throws JEV_API_KEY_REQUIRED, JEV_API_KEY_INVALID, or JEV_TIMEOUT_INVALID before any task.
+      judge = createJevJudge({
+        ...(jevTimeoutMs !== undefined ? { timeoutMs: jevTimeoutMs } : {}),
+        ...(jevFetch ? { fetch: jevFetch } : {}),
+      });
       judgeSource = judgeSource ?? 'builtin';
     } else judgeSource = judgeSource ?? 'function';
   }
@@ -164,10 +169,10 @@ export async function runHarder({ endpoint, model, fetch, dataset, maxOutputToke
     return [arm, { correct: mine.filter(r => r.correct).length, of: mine.length, ms: mine.reduce((s, r) => s + r.ms, 0) }];
   }));
   return { datasetId: dataset.datasetId, datasetSha256: dataset.taskSetSha256 ?? TASKS_SHA256, model,
-    settings: recordedSettings({ endpoint, dataset, maxOutputTokens, timeoutMs, reasoningEffort, plan, jevReview, shapeOnly, arms, judgeSource }), summary, rows };
+    settings: recordedSettings({ endpoint, dataset, maxOutputTokens, timeoutMs, reasoningEffort, plan, jevReview, shapeOnly, arms, judgeSource, jevTimeoutMs }), summary, rows };
 }
 
-const USAGE = 'USAGE: --allow-live <loopback-endpoint> <model> <output-file> [--tasks v1|v2] [--max-tokens N] [--timeout-ms N] [--reasoning EFFORT] [--tests shape] [--judge MODULE] [--plan] [--jev-review] [--task ID]';
+const USAGE = 'USAGE: --allow-live <loopback-endpoint> <model> <output-file> [--tasks v1|v2] [--max-tokens N] [--timeout-ms N] [--reasoning EFFORT] [--tests shape] [--judge MODULE] [--plan] [--jev-review] [--jev-timeout-ms N] [--task ID]';
 
 export function parseArgs(argv) {
   if (argv[0] !== '--allow-live' || argv.length < 4) throw new Error(USAGE);
@@ -178,6 +183,7 @@ export function parseArgs(argv) {
     if (flag === '--tasks') { options.taskSet = value(); if (!Object.hasOwn(TASK_SETS, options.taskSet)) throw new Error(USAGE); }
     else if (flag === '--max-tokens') { options.maxOutputTokens = Number(value()); if (!Number.isSafeInteger(options.maxOutputTokens) || options.maxOutputTokens < 1) throw new Error(USAGE); }
     else if (flag === '--timeout-ms') { options.timeoutMs = Number(value()); if (!Number.isSafeInteger(options.timeoutMs) || options.timeoutMs < 1000) throw new Error(USAGE); }
+    else if (flag === '--jev-timeout-ms') { options.jevTimeoutMs = Number(value()); if (!Number.isSafeInteger(options.jevTimeoutMs) || options.jevTimeoutMs < 1000 || options.jevTimeoutMs > 86_400_000) throw new Error(USAGE); }
     else if (flag === '--reasoning') options.reasoningEffort = value();
     else if (flag === '--tests') { if (value() !== 'shape') throw new Error(USAGE); options.shapeOnly = true; }
     else if (flag === '--judge') options.judgeModule = value();
@@ -200,7 +206,10 @@ export async function main(argv = process.argv.slice(2), { fetch, jevFetch } = {
     judge = (await import(pathToFileURL(path.resolve(options.judgeModule)).href)).judge;
     judgeSource = 'module';
   } else if (options.plan || options.jevReview) {
-    judge = createJevJudge(jevFetch ? { fetch: jevFetch } : {});
+    judge = createJevJudge({
+      ...(options.jevTimeoutMs !== undefined ? { timeoutMs: options.jevTimeoutMs } : {}),
+      ...(jevFetch ? { fetch: jevFetch } : {}),
+    });
     judgeSource = 'builtin';
   }
   const settings = recordedSettings({ ...options, dataset, judgeSource });

@@ -27,7 +27,8 @@ Each task runs in two arms with the same author settings:
 | Option | Effect |
 | --- | --- |
 | `--max-tokens N` | Output-token cap per call (default 4,096, the adapter default) |
-| `--timeout-ms N` | Timeout per model call (default 120,000, the adapter default) |
+| `--timeout-ms N` | Timeout per model call (default 120,000, the adapter default). This does not change the Jev call. |
+| `--jev-timeout-ms N` | Timeout for the built-in Jev client (default 60,000; 1,000 to 86,400,000). Ignored when `--judge` is set. |
 | `--reasoning EFFORT` | Sends `reasoning_effort` (`none`, `minimal`, `low`, `medium`, `high`) |
 | `--tests shape` | Tests check only the answer form, as on a host with no answer oracle |
 | `--plan` | Jev pre-analysis picks the settings per task |
@@ -51,7 +52,7 @@ task and arm (outcome, correctness, repairs, calls, tokens, time) and a per-arm
 summary; the summary time covers that arm's calls only, not the Jev planning
 calls. `settings` in that file records the token cap, timeout, reasoning effort,
 plan and review flags, task-set id, arms, repair budget, total deadline, judge
-source (`builtin`, `module` or `function`), package version and runtime. It does
+source (`builtin`, `module` or `function`), the built-in Jev timeout when that client is used, package version and runtime. It does
 not record the API key or the judge module path. The endpoint is included so the
 host that ran it can be seen; repeating the run still needs a live server there.
 

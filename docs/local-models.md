@@ -170,7 +170,7 @@ runs, and the served model is recorded in `evidence.jevModel`.
 questions }` to `https://api.typesafe.ai/v1/systemone` with your key as a Bearer
 token. The endpoint is fixed, so the key is never sent anywhere else; redirects are
 errors; the request and the response are each limited to 1 MiB; the call times out
-after 60 s by default (1 s to 24 h). The default transport is Node's `https` module,
+after 60 s by default (1 s to 24 h). `planWithJev(task, { timeoutMs })` and `createJevReviewer({ id, timeoutMs })` pass that value to the built-in client. A `judge` you pass is used as is, and this timeout does not apply to it. The default transport is Node's `https` module,
 so a timeout longer than five minutes is not cut off by `fetch`. A `fetch` you pass
 to `createJevJudge`, `planWithJev` or `createJevReviewer` replaces that transport
 and keeps `fetch`'s own limits, including the five-minute header timeout. A `request`
