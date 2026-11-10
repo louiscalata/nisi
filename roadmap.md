@@ -1,11 +1,12 @@
 # Nisi roadmap
 
-Canonical project roadmap. Updated November 9, 2026 (Pacific time). Product name: Nisi.
-Source version: 0.3.1, prepared and not tagged in this change. The last published
-tag is v0.3.0 (v0.2.1 and v0.3.0 shipped the items listed below under
-v0.2.1, and v0.3.0 added the `reasoningEffort` option, the optional Jev advisor and
-the harder-task benchmark). v0.3.1 adds the built-in Jev client, harder-task set
-v2, the local-chat timeout fix, and `nisi validate`. Public v0.2.0 scope: a Node.js CLI and library with the existing workflow APIs,
+Canonical project roadmap. Updated November 10, 2026 (Pacific time). Product name: Nisi.
+Source version: 0.3.1. The published tag is v0.3.1 (9 November 2026). It is not on
+the npm registry. v0.2.1 and v0.3.0 shipped the items listed under those headings.
+v0.3.0 added the `reasoningEffort` option, the optional Jev advisor and the
+harder-task benchmark. v0.3.1 added the built-in Jev client, harder-task set v2,
+the local-chat timeout fix, and `nisi validate`. Unreleased changes after that
+tag are in the changelog. Public v0.2.0 scope: a Node.js CLI and library with the existing workflow APIs,
 the run journal, and its store. The CLI exposes fixed demonstrations; the private
 native repository workflow and other private features remain outside this
 public release. GitHub rc.1 and rc.2 remain historical prereleases. Package
@@ -38,9 +39,17 @@ scope, regressions, deferred work and local verification.
   raw results were published on `main` after the release).
 - [ ] Re-measure on a task set or model with headroom: the 27B model already
   solves 14 of 16 at the adapter defaults, and a single unchecked draft ties the
-  Nisi arm, so the current numbers cannot show an accuracy gain.
-- [ ] Ship a harness that records its own settings, so each table row can be
-  regenerated from its output file.
+  Nisi arm, so the current numbers cannot show an accuracy gain. This has not
+  been run. There is no local model in the current environment, and the v0.3.1
+  release notes record the Mac local-model check as not run.
+- [x] Ship a harness that records its own settings, so a new run can be read
+  back from its output file. `benchmarks/harder/run.mjs` writes the token cap,
+  timeout, reasoning effort, plan and review flags, task-set id, arms, repair
+  budget, deadline, judge source, endpoint, package version and runtime.
+  `--plan` and `--jev-review` use `TYPESAFE_API_KEY` when no `--judge` module
+  is passed. The files under `benchmarks/harder/results/` are from 2026-11-07
+  and an earlier private harness. They still omit the token cap and timeout, so
+  those table rows cannot be regenerated from the file alone.
 
 ## Public v0.2.0 CLI release
 

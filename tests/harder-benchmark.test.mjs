@@ -6,6 +6,7 @@ import fs from 'node:fs/promises';
 import os from 'node:os';
 import path from 'node:path';
 import { loadTasks, diffAnswer, runHarder, parseArgs, main, TASK_SETS } from '../benchmarks/harder/run.mjs';
+import { JEV_API_KEY_ENV } from '../adapters/jev-client.mjs';
 
 const ENDPOINT = 'http://127.0.0.1:9999/v1/chat/completions';
 
@@ -82,15 +83,24 @@ test('a Jev plan sets the wire settings and the Jev reviewer stays advisory', as
   assert.equal(fixture.wires.length, 1);
   assert.equal(fixture.wires[0].reasoning_effort, 'none');
   assert.equal(fixture.wires[0].max_tokens, 1024);
-  await assert.rejects(() => runHarder({ dataset, plan: true }), /HARDER_JUDGE_REQUIRED/u);
+  assert.equal(result.settings.judge, 'function');
+  assert.deepEqual(result.settings.arms, ['C']);
+  assert.equal(result.settings.repairBudget, 2);
+  assert.equal(result.settings.totalDeadlineMs, 600_000);
+  const savedKey = process.env[JEV_API_KEY_ENV];
+  delete process.env[JEV_API_KEY_ENV];
+  try { await assert.rejects(() => runHarder({ dataset, plan: true }), { code: 'JEV_API_KEY_REQUIRED' }); }
+  finally { if (savedKey === undefined) delete process.env[JEV_API_KEY_ENV]; else process.env[JEV_API_KEY_ENV] = savedKey; }
 });
 
-test('the CLI needs explicit opt-in, a judge module for Jev, and a new output file', async () => {
+test('the CLI needs explicit opt-in and a new output file; --plan can omit a judge module', async () => {
   assert.throws(() => parseArgs([ENDPOINT, 'm', 'out.json']), /USAGE/u);
   assert.throws(() => parseArgs(['--allow-live', ENDPOINT, 'm', 'out.json', '--tests', 'all']), /USAGE/u);
   assert.throws(() => parseArgs(['--allow-live', ENDPOINT, 'm', 'out.json', '--timeout-ms', '10']), /USAGE/u);
   assert.equal(parseArgs(['--allow-live', ENDPOINT, 'm', 'out.json', '--timeout-ms', '300000']).timeoutMs, 300000);
-  assert.throws(() => parseArgs(['--allow-live', ENDPOINT, 'm', 'out.json', '--plan']), /HARDER_JUDGE_REQUIRED/u);
+  const planned = parseArgs(['--allow-live', ENDPOINT, 'm', 'out.json', '--plan']);
+  assert.equal(planned.plan, true);
+  assert.equal(planned.judgeModule, undefined);
   assert.deepEqual(parseArgs(['--allow-live', ENDPOINT, 'm', 'o', '--max-tokens', '4096', '--reasoning', 'none', '--task', 'x']),
     { endpoint: ENDPOINT, model: 'm', outputFile: 'o', taskSet: 'v1', maxOutputTokens: 4096, timeoutMs: 120000, plan: false, jevReview: false, shapeOnly: false,
       reasoningEffort: 'none', selectedTaskIds: ['x'] });
@@ -104,6 +114,12 @@ test('the CLI needs explicit opt-in, a judge module for Jev, and a new output fi
     finally { console.log = log; }
     const saved = JSON.parse(await fs.readFile(out, 'utf8'));
     assert.deepEqual(saved.summary.A.correct + saved.summary.C.correct, 2);
+    assert.equal(saved.settings.taskSet, dataset.datasetId);
+    assert.equal(saved.settings.judge, null);
+    assert.equal(saved.settings.endpoint, ENDPOINT);
+    assert.equal(saved.settings.packageVersion, JSON.parse(await fs.readFile(new URL('../package.json', import.meta.url), 'utf8')).version);
+    assert.equal(saved.settings.runtime, process.version);
+    assert.deepEqual(saved.settings.arms, ['A', 'C']);
     await assert.rejects(() => main(['--allow-live', ENDPOINT, 'synthetic.model', out, '--task', dataset.tasks[0].id], { fetch: fixture.fetch }), { code: 'EEXIST' });
     await assert.rejects(() => main(['--allow-live', ENDPOINT, 'synthetic.model', path.join(dir, 'n.json'), '--task', 'nope']), /HARDER_SELECTION_INVALID/u);
   } finally { await fs.rm(dir, { recursive: true, force: true }); }
@@ -149,6 +165,9 @@ export async function judge({ questions }) {
     assert.equal(saved.status, 'PARTIAL');
     assert.equal(saved.code, 'JEV_UNAVAILABLE');
     assert.equal(saved.datasetSha256, dataset.taskSetSha256);
+    assert.equal(saved.settings.judge, 'module');
+    assert.equal(saved.settings.plan, true);
+    assert.equal(saved.settings.taskSet, dataset.datasetId);
     assert.deepEqual(saved.rows.map(r => [r.task, r.arm, r.correct]), [[t.id, 'A', true], [t.id, 'C', true]]);
     const v2 = await loadTasks('v2');
     const throwJudge = path.join(dir, 'throw.mjs');
@@ -160,6 +179,7 @@ export async function judge({ questions }) {
     } finally { console.log = logAgain; }
     const savedV2 = JSON.parse(await fs.readFile(partialV2, 'utf8'));
     assert.equal(savedV2.datasetSha256, v2.taskSetSha256);
+    assert.equal(savedV2.settings.taskSet, v2.datasetId);
     assert.notEqual(savedV2.datasetSha256, dataset.taskSetSha256);
   } finally { await fs.rm(dir, { recursive: true, force: true }); }
 });
@@ -215,4 +235,67 @@ test('the v2 task set is frozen, varied, well-formed and runs through the runner
   assert.deepEqual(result.rows.map(r => [r.arm, r.correct]), [['A', true], ['C', true]]);
   assert.equal(parseArgs(['--allow-live', ENDPOINT, 'm', 'o', '--tasks', 'v2']).taskSet, 'v2');
   assert.throws(() => parseArgs(['--allow-live', ENDPOINT, 'm', 'o', '--tasks', 'v9']), /USAGE/u);
+});
+
+test('TYPESAFE_API_KEY drives --plan when no judge module is given, and a module still wins', async () => {
+  const saved = process.env[JEV_API_KEY_ENV];
+  const key = 'nisi-bench-test';
+  const dir = await fs.mkdtemp(path.join(os.tmpdir(), 'nisi-harder-'));
+  const dataset = await loadTasks();
+  const t = dataset.tasks[0];
+  const answersFor = questions => Object.fromEntries(Object.entries(questions).map(([name, question]) => [name,
+    question.type === 'choice' ? { choice: 'direct', confidence: 0.8 } : { noul: 0.05 }]));
+  const jevSeen = [];
+  const jevFetch = async (url, request) => {
+    jevSeen.push({ url, authorization: request.headers.authorization, body: JSON.parse(request.body) });
+    const bytes = new TextEncoder().encode(JSON.stringify({ model: 'jev-1.14.0', answers: answersFor(JSON.parse(request.body).questions) }));
+    return { ok: true, status: 200, body: { getReader() { let done = false; return {
+      async read() { if (done) return { done: true }; done = true; return { done: false, value: bytes }; },
+      cancel() { return Promise.resolve(); }, releaseLock() {} };
+    } } };
+  };
+  const log = console.log;
+  console.log = () => {};
+  try {
+    delete process.env[JEV_API_KEY_ENV];
+    const missing = path.join(dir, 'missing.json');
+    await assert.rejects(() => main(['--allow-live', ENDPOINT, 'synthetic.model', missing, '--plan', '--task', t.id]), { code: 'JEV_API_KEY_REQUIRED' });
+    await assert.rejects(() => fs.access(missing), { code: 'ENOENT' });
+    process.env[JEV_API_KEY_ENV] = 'bad key';
+    await assert.rejects(() => main(['--allow-live', ENDPOINT, 'synthetic.model', missing, '--plan', '--task', t.id]), { code: 'JEV_API_KEY_INVALID' });
+    await assert.rejects(() => fs.access(missing), { code: 'ENOENT' });
+    process.env[JEV_API_KEY_ENV] = key;
+    const fixture = fakeFetch(() => t.expectedAnswer);
+    const out = path.join(dir, 'builtin.json');
+    await main(['--allow-live', ENDPOINT, 'synthetic.model', out, '--plan', '--task', t.id], { fetch: fixture.fetch, jevFetch });
+    const savedRun = JSON.parse(await fs.readFile(out, 'utf8'));
+    assert.equal(savedRun.settings.judge, 'builtin');
+    assert.equal(savedRun.rows[0].plan, 'direct');
+    assert.equal(fixture.wires[0].reasoning_effort, 'none');
+    assert.equal(fixture.wires[0].max_tokens, 1024);
+    assert.equal(jevSeen.length, 1);
+    assert.equal(jevSeen[0].url, 'https://api.typesafe.ai/v1/systemone');
+    assert.equal(jevSeen[0].authorization, `Bearer ${key}`);
+    assert.equal(jevSeen[0].body.model, 'jev-latest');
+    const text = await fs.readFile(out, 'utf8');
+    assert.ok(!text.includes(key));
+    const moduleSeen = [];
+    const judgeFile = path.join(dir, 'judge.mjs');
+    await fs.writeFile(judgeFile, `export async function judge({ questions }) {
+  return { model: 'from-module', answers: Object.fromEntries(Object.entries(questions).map(([name, question]) => [name, question.type === 'choice' ? { choice: 'reason' } : { noul: 0.1 }])) };
+}
+`);
+    const jevFetchUnused = async () => { moduleSeen.push('fetch'); throw new Error('builtin client must not run'); };
+    const moduleOut = path.join(dir, 'module.json');
+    await main(['--allow-live', ENDPOINT, 'synthetic.model', moduleOut, '--plan', '--judge', judgeFile, '--task', t.id, '--jev-review'], { fetch: fixture.fetch, jevFetch: jevFetchUnused });
+    const moduleRun = JSON.parse(await fs.readFile(moduleOut, 'utf8'));
+    assert.equal(moduleRun.settings.judge, 'module');
+    assert.equal(moduleRun.rows.find(row => row.arm === 'C').plan, 'reason');
+    assert.equal(moduleSeen.length, 0);
+    assert.ok(!(await fs.readFile(moduleOut, 'utf8')).includes(key));
+  } finally {
+    console.log = log;
+    if (saved === undefined) delete process.env[JEV_API_KEY_ENV]; else process.env[JEV_API_KEY_ENV] = saved;
+    await fs.rm(dir, { recursive: true, force: true });
+  }
 });

@@ -6,12 +6,19 @@
 // wrong, never the expected values.
 import fs from 'node:fs/promises';
 import { createHash, randomUUID } from 'node:crypto';
+import { createRequire } from 'node:module';
 import { pathToFileURL, fileURLToPath } from 'node:url';
 import path from 'node:path';
 import { createLocalChatAuthorAdapter, strictJSON, LOCAL_CHAT_REASONING_EFFORTS } from '../../adapters/local-chat.mjs';
 import { planWithJev, createJevReviewer } from '../../adapters/jev-advisor.mjs';
+import { createJevJudge } from '../../adapters/jev-client.mjs';
 import { createCandidate, sha256Text, stableStringify } from '../../workflow/contracts.mjs';
 import { runWorkflow } from '../../workflow/engine.mjs';
+
+const require = createRequire(import.meta.url);
+const PACKAGE_VERSION = require('../../package.json').version;
+const REPAIR_BUDGET = 2;
+const TOTAL_DEADLINE_MS = 600_000;
 
 export const TASKS_SHA256 = 'c7a521d443d9fff5a1244a1773d7cfa91c132e999a03de96b4239fa889c0a99a';
 // Frozen task sets. v1 has 16 tasks; v2 has 42 harder tasks in six categories.
@@ -70,7 +77,7 @@ export function diffAnswer(got, want) {
 function taskFor(t, jevReview) {
   return { taskId: `harder.${t.id}`, mode: 'edit', language: 'json', allowedFiles: ['answer.json'], protectedFiles: [], protectedSnapshots: {},
     acceptanceCriteria: [t.prompt, 'Return exactly one answer.json file containing a JSON object with only the answer key.'],
-    policy: { repairBudget: 2, totalDeadlineMs: 600_000, requiredReviewers: jevReview ? 2 : 1, requireReportStore: false } };
+    policy: { repairBudget: REPAIR_BUDGET, totalDeadlineMs: TOTAL_DEADLINE_MS, requiredReviewers: jevReview ? 2 : 1, requireReportStore: false } };
 }
 
 function adaptersFor(t, author, { shapeOnly, jevReview, judge }) {
@@ -102,9 +109,25 @@ export function preflight({ endpoint, model, maxOutputTokens = 4096, timeoutMs =
     ...(reasoningEffort ? { reasoningEffort } : {}) });
 }
 
+// Enough to repeat a finished or partial run: the flags, the fixed repair budget,
+// which judge was used (never the key or a module path), and the package that ran.
+export function recordedSettings({ endpoint, dataset, maxOutputTokens = 4096, timeoutMs = 120_000, reasoningEffort, plan = false, jevReview = false, shapeOnly = false, arms = ['A', 'C'], judgeSource = null } = {}) {
+  return { endpoint: endpoint ?? null, taskSet: dataset?.datasetId ?? null, maxOutputTokens, timeoutMs,
+    reasoningEffort: reasoningEffort ?? null, plan: Boolean(plan), jevReview: Boolean(jevReview),
+    tests: shapeOnly ? 'shape' : 'semantic', arms: [...arms], repairBudget: REPAIR_BUDGET, totalDeadlineMs: TOTAL_DEADLINE_MS,
+    judge: plan || jevReview ? judgeSource : null, packageVersion: PACKAGE_VERSION, runtime: process.version };
+}
+
 export async function runHarder({ endpoint, model, fetch, dataset, maxOutputTokens = 4096, timeoutMs = 120_000, reasoningEffort, judge,
-  plan = false, jevReview = false, shapeOnly = false, arms = ['A', 'C'], selectedTaskIds, onRow } = {}) {
-  if ((plan || jevReview) && typeof judge !== 'function') throw new Error('HARDER_JUDGE_REQUIRED');
+  judgeSource = null, plan = false, jevReview = false, shapeOnly = false, arms = ['A', 'C'], selectedTaskIds, onRow } = {}) {
+  if (plan || jevReview) {
+    if (typeof judge !== 'function') {
+      if (judge !== undefined) throw new Error('HARDER_JUDGE_REQUIRED');
+      // Reads TYPESAFE_API_KEY. Throws JEV_API_KEY_REQUIRED or JEV_API_KEY_INVALID before any task.
+      judge = createJevJudge();
+      judgeSource = judgeSource ?? 'builtin';
+    } else judgeSource = judgeSource ?? 'function';
+  }
   if (reasoningEffort !== undefined && !LOCAL_CHAT_REASONING_EFFORTS.includes(reasoningEffort)) throw new Error('HARDER_REASONING_INVALID');
   if (endpoint !== undefined) preflight({ endpoint, model, maxOutputTokens, timeoutMs, reasoningEffort });
   if (selectedTaskIds && !selectedTaskIds.every(id => dataset.tasks.some(t => t.id === id))) throw new Error('HARDER_SELECTION_INVALID');
@@ -141,7 +164,7 @@ export async function runHarder({ endpoint, model, fetch, dataset, maxOutputToke
     return [arm, { correct: mine.filter(r => r.correct).length, of: mine.length, ms: mine.reduce((s, r) => s + r.ms, 0) }];
   }));
   return { datasetId: dataset.datasetId, datasetSha256: dataset.taskSetSha256 ?? TASKS_SHA256, model,
-    settings: { maxOutputTokens, timeoutMs, reasoningEffort: reasoningEffort ?? null, plan, jevReview, tests: shapeOnly ? 'shape' : 'semantic' }, summary, rows };
+    settings: recordedSettings({ endpoint, dataset, maxOutputTokens, timeoutMs, reasoningEffort, plan, jevReview, shapeOnly, arms, judgeSource }), summary, rows };
 }
 
 const USAGE = 'USAGE: --allow-live <loopback-endpoint> <model> <output-file> [--tasks v1|v2] [--max-tokens N] [--timeout-ms N] [--reasoning EFFORT] [--tests shape] [--judge MODULE] [--plan] [--jev-review] [--task ID]';
@@ -163,15 +186,24 @@ export function parseArgs(argv) {
     else if (flag === '--task') options.selectedTaskIds = [...(options.selectedTaskIds ?? []), value()];
     else throw new Error(USAGE);
   }
-  if ((options.plan || options.jevReview) && !options.judgeModule) throw new Error('HARDER_JUDGE_REQUIRED');
   return options;
 }
 
-export async function main(argv = process.argv.slice(2), { fetch } = {}) {
+export async function main(argv = process.argv.slice(2), { fetch, jevFetch } = {}) {
   const options = parseArgs(argv);
   const dataset = await loadTasks(options.taskSet);
-  // The judge module exports judge({ state, questions }) -> { model, answers }; the key and transport stay with it.
-  const judge = options.judgeModule ? (await import(pathToFileURL(path.resolve(options.judgeModule)).href)).judge : undefined;
+  // A --judge module wins. Otherwise --plan / --jev-review use the built-in client,
+  // which reads TYPESAFE_API_KEY and sends nothing until that key is set.
+  // jevFetch is a test stand-in for that client's transport.
+  let judge, judgeSource = null;
+  if (options.judgeModule) {
+    judge = (await import(pathToFileURL(path.resolve(options.judgeModule)).href)).judge;
+    judgeSource = 'module';
+  } else if (options.plan || options.jevReview) {
+    judge = createJevJudge(jevFetch ? { fetch: jevFetch } : {});
+    judgeSource = 'builtin';
+  }
+  const settings = recordedSettings({ ...options, dataset, judgeSource });
   // Refuse bad input before the output file exists, so a rejected run leaves nothing behind.
   if ((options.plan || options.jevReview) && typeof judge !== 'function') throw new Error('HARDER_JUDGE_REQUIRED');
   if (options.reasoningEffort !== undefined && !LOCAL_CHAT_REASONING_EFFORTS.includes(options.reasoningEffort)) throw new Error('HARDER_REASONING_INVALID');
@@ -180,14 +212,14 @@ export async function main(argv = process.argv.slice(2), { fetch } = {}) {
   const output = await fs.open(options.outputFile, 'wx', 0o600);
   const rows = [];
   try {
-    const result = await runHarder({ ...options, fetch, dataset, judge,
+    const result = await runHarder({ ...options, fetch, dataset, judge, judgeSource,
       onRow: row => { rows.push(row); console.log(JSON.stringify({ task: row.task, arm: row.arm, outcome: row.outcome, correct: row.correct, repairs: row.repairs, ms: row.ms })); } });
     await output.writeFile(`${JSON.stringify(result, null, 1)}\n`);
     return result;
   } catch (error) {
-    // An interrupted run keeps the rows it finished.
+    // An interrupted run keeps the rows it finished, with the settings that produced them.
     await output.writeFile(`${JSON.stringify({ status: 'PARTIAL', code: error?.code ?? error?.message ?? 'HARDER_INTERRUPTED',
-      datasetSha256: dataset.taskSetSha256, model: options.model, rows }, null, 1)}\n`);
+      datasetSha256: dataset.taskSetSha256, model: options.model, settings, rows }, null, 1)}\n`);
     throw error;
   } finally { await output.close(); }
 }

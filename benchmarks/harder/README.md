@@ -30,20 +30,30 @@ Each task runs in two arms with the same author settings:
 | `--timeout-ms N` | Timeout per model call (default 120,000, the adapter default) |
 | `--reasoning EFFORT` | Sends `reasoning_effort` (`none`, `minimal`, `low`, `medium`, `high`) |
 | `--tests shape` | Tests check only the answer form, as on a host with no answer oracle |
-| `--judge MODULE --plan` | Jev pre-analysis picks the settings per task |
-| `--judge MODULE --jev-review` | Adds the advisory Jev reviewer to arm C |
+| `--plan` | Jev pre-analysis picks the settings per task |
+| `--jev-review` | Adds the advisory Jev reviewer to arm C |
+| `--judge MODULE` | Use this module instead of the built-in Jev client |
 | `--task ID` | Runs one task; repeat it to run several |
 
-`MODULE` is a file that exports `judge({ state, questions })`, which sends one
-TypeSafe System One request and resolves to `{ model, answers }`. The key and
-transport stay in that file; see [Jev pre- and post-analysis](../../docs/local-models.md).
-The output file must not exist yet. Unknown flags, a missing judge, an invalid reasoning effort,
-an out-of-range `--max-tokens` or `--timeout-ms`, an endpoint the adapter refuses and an unknown task id are refused before it is
-created. A run that fails midway still writes the rows it finished, marked
+`--plan` and `--jev-review` use the built-in Jev client when `TYPESAFE_API_KEY` is
+set. They send the task state to `https://api.typesafe.ai/v1/systemone`. With no
+key and no `--judge` file, the run is refused before it creates the output file
+and nothing is sent. `--judge MODULE` still wins over the environment variable.
+`MODULE` exports `judge({ state, questions })`, which resolves to `{ model, answers }`.
+The key and transport stay in that file when you use one; see
+[Jev pre- and post-analysis](../../docs/local-models.md).
+The output file must not exist yet. Unknown flags, a judge module that does not
+export `judge`, an invalid reasoning effort, an out-of-range `--max-tokens` or
+`--timeout-ms`, an endpoint the adapter refuses, and an unknown task id are
+refused before it is created. A run that fails midway still writes the rows it finished, marked
 `PARTIAL`. A finished run records the dataset hash, the settings, one row per
 task and arm (outcome, correctness, repairs, calls, tokens, time) and a per-arm
 summary; the summary time covers that arm's calls only, not the Jev planning
-calls.
+calls. `settings` in that file records the token cap, timeout, reasoning effort,
+plan and review flags, task-set id, arms, repair budget, total deadline, judge
+source (`builtin`, `module` or `function`), package version and runtime. It does
+not record the API key or the judge module path. The endpoint is included so the
+host that ran it can be seen; repeating the run still needs a live server there.
 
 ## Task set v2
 
