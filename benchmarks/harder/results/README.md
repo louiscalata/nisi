@@ -8,10 +8,13 @@ with outcome, correctness, repairs, calls, tokens and milliseconds. All use
 
 **Provenance.** These runs were made on 2026-11-07 with an earlier private harness
 that drives the same workflow as `run.mjs` but takes its settings from environment
-variables and does not record them in the output. The settings below are therefore
-the harness defaults and the commands that were run, not values stored in the
-files. The harness itself is not shipped. The `tree` field is the name of the
-source checkout that was measured, with its local path removed.
+variables and does not record the token cap or timeout in the output. The settings
+below are therefore the harness defaults and the commands that were run, not a
+complete record stored in the files. That harness is not shipped. A run made with
+the current `run.mjs` writes those values in `settings`, including on a partial
+file. These historical files cannot be repeated from the file alone. The `tree`
+field is the name of the source checkout that was measured, with its local path
+removed.
 
 | File | Settings | Notes |
 | --- | --- | --- |

@@ -6,6 +6,7 @@ public source tree and does not include private experiments.
 ## Unreleased
 
 - The built-in Jev client uses Node's `https` module by default. `timeoutMs` may be from 1 s to 24 h (default 60 s). v0.3.1 used global `fetch` and refused a timeout above 300 s with `JEV_TIMEOUT_INVALID`; `fetch` also gave up after 300 s with no response headers. A `fetch` passed to `createJevJudge`, `planWithJev` or `createJevReviewer` is unchanged and keeps that limit. The endpoint, request JSON, size limits and error codes are unchanged.
+- `benchmarks/harder/run.mjs` uses the built-in Jev client for `--plan` and `--jev-review` when `TYPESAFE_API_KEY` is set and `--judge` is omitted. A `--judge` module still wins. With neither, the run stops before creating the output file and sends nothing. Finished and partial output files record the settings needed to read the run back: token cap, timeout, reasoning effort, plan and review flags, task-set id, arms, repair budget, deadline, judge source (`builtin`, `module` or `function`), endpoint, package version and runtime. The API key and the judge module path are not written. The 2026-11-07 files in `benchmarks/harder/results/` still come from the older private harness and do not contain the token cap or timeout.
 
 ## 0.3.1
 
