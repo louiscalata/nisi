@@ -3,7 +3,12 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { createHash } from 'node:crypto';
+import fs from 'node:fs';
+import os from 'node:os';
+import path from 'node:path';
 import { createRunJournal, reopen } from '../history/run-journal-v1.mjs';
+import { readSerializedJournal } from '../history/run-journal-store-v1.mjs';
+import { validateData } from '../history/validate-data.mjs';
 
 const hash = value => createHash('sha256').update(value).digest('hex');
 const canonical = value => Array.isArray(value) ? '[' + value.map(canonical).join(',') + ']'
@@ -190,6 +195,62 @@ function rehash(lines) {
   lines.at(-1).lastHash = previousHash;
   return lines.map(canonical).join('\n') + '\n';
 }
+
+test('a pruned row whose fingerprint was not recomputed is rejected and not authorized', () => {
+  // Pre-4fc09e7 retirement cleared the payload and left the old fingerprint.
+  // The hash chain still matches the stored record. Reopen must refuse the file.
+  const journal = createRunJournal(config());
+  assert.equal(journal.append(entry('target', { payload: { note: 'target' } }), 100).status, 'APPENDED');
+  assert.equal(journal.append(entry('revoker', { state: 'REVOKED', revokes: 'target', payload: { note: 'revocation-body' } }), 100).status, 'APPENDED');
+  const lines = journal.serialize().trimEnd().split('\n').map(JSON.parse);
+  const stored = lines[2].record;
+  assert.equal(stored.entry.state, 'REVOKED');
+  stored.retained = false;
+  stored.entry.payload = null;
+  const stale = stored.fingerprint;
+  const recomputed = hash('nisi-run-journal/input/v1\n' + canonical(stored.entry));
+  assert.notEqual(stale, recomputed);
+  const serialized = rehash(lines);
+  const recovered = reopen(serialized);
+  assert.equal(recovered.report.status, 'INVALID');
+  assert.equal(recovered.report.reason, 'LEGACY_UNRETAINED_FINGERPRINT');
+  assert.equal(recovered.report.rejectedLine, 3);
+  assert.equal(recovered.report.authorizing, false);
+  assert.deepEqual(recovered.report.recoveredIds, ['target']);
+  assert.equal(recovered.journal.append(entry('later'), 100).reason, 'SEALED');
+  assert.throws(() => recovered.journal.serialize(), { code: 'SEALED' });
+
+  const dir = fs.mkdtempSync(path.join(os.tmpdir(), 'nisi-legacy-fp-'));
+  try {
+    const file = path.join(dir, 'legacy.jsonl');
+    fs.writeFileSync(file, serialized);
+    const read = readSerializedJournal({ path: file, fs });
+    assert.equal(read.status, 'REFUSED');
+    assert.equal(read.reason, 'LEGACY_UNRETAINED_FINGERPRINT');
+    const summary = validateData({ journal: file });
+    assert.equal(summary.status, 'FAIL');
+    assert.equal(summary.files[0].reason, 'LEGACY_UNRETAINED_FINGERPRINT');
+    assert.equal(summary.files[0].status, 'FAIL');
+    assert.doesNotMatch(JSON.stringify(summary), /revocation-body/u);
+
+    stored.fingerprint = recomputed;
+    const repaired = rehash(lines);
+    assert.equal(reopen(repaired).report.status, 'COMPLETE');
+    const broken = serialized.replace(stale, '0'.repeat(64));
+    assert.equal(reopen(broken).report.reason, 'RECORD');
+    assert.equal(readSerializedJournal({ path: file, fs }).reason, 'LEGACY_UNRETAINED_FINGERPRINT');
+  } finally { fs.rmSync(dir, { recursive: true, force: true }); }
+});
+
+test('a retained fingerprint mismatch stays a generic record failure', () => {
+  const journal = createRunJournal(config());
+  journal.append(entry(), 100);
+  const lines = journal.serialize().trimEnd().split('\n').map(JSON.parse);
+  lines[1].record.entry.payload = { note: 'swapped' };
+  const recovered = reopen(rehash(lines));
+  assert.equal(recovered.report.status, 'INVALID');
+  assert.equal(recovered.report.reason, 'RECORD');
+});
 
 test('non-retained fingerprints cannot plant duplicate identity in a rehashed journal', () => {
   const journal = createRunJournal(config()); journal.append(entry(), 100);
