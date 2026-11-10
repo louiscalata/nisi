@@ -42,7 +42,7 @@ Jev is TypeSafe's hosted System One model, a paid API with no free or open-weigh
 
 **Post-analysis** (`createJevReviewer`) records Jev's probability that the candidate meets every acceptance criterion. By default the review passes, and it still uses one of the task's required-reviewer slots. `gate: true` fails the review when the probability is below `threshold` (default 0.5) and sends the candidate to repair. If the judge throws or returns an invalid answer, the run ends `BLOCKED` with `REVIEW_UNAVAILABLE`.
 
-On 16 harder tasks with one local model, each figure from a single run, the Jev plan matched the adapter defaults (14 of 16) and showed no demonstrated gain in accuracy or speed. On 31 labelled answers, Jev's ranking was too weak to gate a run (AUC 0.78). Numbers and the exact data that leaves the machine are in [Local models and Jev](https://github.com/louiscalata/nisi/blob/main/docs/local-models.md#jev-pre--and-post-analysis-optional).
+On 16 harder tasks with one local model, each figure from a single run, the Jev plan matched the adapter defaults (14 of 16) and showed no demonstrated gain in accuracy or speed. On 31 labeled answers, Jev's ranking was too weak to gate a run (AUC 0.78). Numbers and the exact data that leaves the machine are in [Local models and Jev](https://github.com/louiscalata/nisi/blob/main/docs/local-models.md#jev-pre--and-post-analysis-optional).
 
 ## What is in 0.3.1
 

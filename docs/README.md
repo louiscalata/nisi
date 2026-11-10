@@ -20,7 +20,7 @@ Start with the [project README](../README.md) for what Nisi is and how to run th
 | [Architecture](architecture.md) | You want the terms, execution flow, components and trust boundaries. |
 | [Component names and core design](naming-and-core-design.md) | You want to know why components are named as they are and which legacy names still work. |
 | [Benchmarks](benchmarks.md) | You want the measured token use, the package size comparison and their limits. |
-| [Harder-task benchmark](../benchmarks/harder/README.md) | You want the opt-in 16-task model benchmark behind the Jev and reasoning figures. |
+| [Harder-task benchmark](../benchmarks/harder/README.md) | You want the opt-in model benchmark behind the Jev and reasoning figures. The default set has 16 tasks. `--tasks v2` runs 42 more. |
 | [Canonical JSON v1 profile](../contracts/canonical-json-v1-profile.md) | You need the exact byte format Nisi uses for its JSON codec. |
 | [Roadmap](../roadmap.md) | You want to know what is planned next. |
 
@@ -49,6 +49,7 @@ Versions without a record:
 - **v0.2.1:** changed the journal, store, file access policy and CLI. Covered by tests only.
 - **v0.3.0:** adds `reasoningEffort`, the Jev advisor and one CLI error-code entry. Covered by `tests/jev-advisor.test.mjs`, `tests/local-chat.test.mjs` and `tests/harder-benchmark.test.mjs`.
 - **v0.3.1:** adds the Jev client, harder-task set v2, the local-chat transport timeout fix, and `nisi validate`. Covered by tests. No verification record. Jev was not called while this version was prepared (`docs/jev/`).
+- **After v0.3.1, not tagged:** the Jev client uses Node's `https` module, and the harder-task runner can use `TYPESAFE_API_KEY` without a `--judge` module. See the changelog Unreleased section and [the v0.3.2 proposal](release-notes/v0.3.2.md). That proposal is not a release.
 
 ## Repository layout
 

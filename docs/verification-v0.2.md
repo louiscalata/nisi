@@ -8,7 +8,7 @@
 > The v0.2.1 changes are covered by the regression tests listed in
 > [the 2026-11-03 review](reviews/2026-11-03-main-findings.md); v0.2.1 and v0.3.0
 > have no verification record equivalent to this one. Statements below about reopen,
-> pruning and the CLI describe v0.2.0 and are not current behaviour.
+> pruning and the CLI describe v0.2.0 and are not current behavior.
 
 This record covers the public v0.2 command line, run journal, and journal store.
 It does not carry forward v0.1 integration results or private experiments.
