@@ -178,7 +178,7 @@ function reopenData(serialized) {
   const h=parseLine(ls[0]);
   if (!h || !exact(h,['type','schema','config','now']) || h.type!=='header' || h.schema!=='nisi-run-journal-v1' || !safe(h.now)) return {journal:null,report:report('INVALID',[],1,'HEADER')};
   let c; try { c=configOf(h.config); } catch (_) { return {journal:null,report:report('INVALID',[],1,'HEADER')}; }
-  const b=build(c,h.now), ids=[]; let prev=H('nisi-run-journal/header/v1\n'+C(h)), footer=false, bad=null, retained=0;
+  const b=build(c,h.now), ids=[]; let prev=H('nisi-run-journal/header/v1\n'+C(h)), footer=false, bad=null, retained=0, legacy=null;
   const failAt=(line,reason='RECORD',status='INVALID')=>{bad={line,reason,status};};
   for(let n=1;n<ls.length&&!bad;n++) {
     const v=parseLine(ls[n]); if (!v) { failAt(n+1); break; }
@@ -191,7 +191,13 @@ function reopenData(serialized) {
         H('nisi-run-journal/record/v1\n'+C({seq:v.seq,previousHash:v.previousHash,record:v.record}))!==v.hash || !exact(v.record,RECORD_KEYS) || typeof v.record.fingerprint!=='string' || !/^[0-9a-f]{64}$/.test(v.record.fingerprint) || typeof v.record.retained!=='boolean') { failAt(n+1); break; }
     let e; try { e=entryOf(v.record.entry,h.now); } catch (_) { failAt(n+1); break; }
     if (ids.length>=MAX_RECORDS || e.projectId!==c.projectId || b.byId.has(e.id) || (!v.record.retained && e.payload!==null)) { failAt(n+1); break; }
-    if (v.record.fingerprint!==fingerprint(e)) { failAt(n+1); break; }
+    // A writer before 4fc09e7 cleared a retired payload and left the old fingerprint.
+    // The record hash still matches. That file stays unauthorized. A retained-row
+    // mismatch, or any other failure in the same file, stays a generic RECORD.
+    if (v.record.fingerprint!==fingerprint(e)) {
+      if (v.record.retained) { failAt(n+1); break; }
+      if (!legacy) legacy={line:n+1,prefix:ids.length};
+    }
     if (v.record.retained) {
       const redacted=copy(e); redact(redacted,c._paths);
       if (C(redacted)!==C(e) || expired({entry:e},h.now)) { failAt(n+1); break; }
@@ -202,6 +208,7 @@ function reopenData(serialized) {
   }
   if (!bad && !footer) bad={line:ls.length+1,reason:trailing?'TRUNCATED':'MISSING_FOOTER',status:'INCOMPLETE'};
   if (bad) { const sealed=build(c,h.now,b.records,true); return {journal:sealed.api,report:report(bad.status,ids,bad.line,bad.reason)}; }
+  if (legacy) { const prefix=b.records.slice(0,legacy.prefix), sealed=build(c,h.now,prefix,true); return {journal:sealed.api,report:report('INVALID',ids.slice(0,legacy.prefix),legacy.line,'LEGACY_UNRETAINED_FINGERPRINT')}; }
   return {journal:b.api,report:report('COMPLETE',ids,null,null)};
 }
 
