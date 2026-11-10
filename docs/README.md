@@ -49,7 +49,7 @@ Versions without a record:
 - **v0.2.1:** changed the journal, store, file access policy and CLI. Covered by tests only.
 - **v0.3.0:** adds `reasoningEffort`, the Jev advisor and one CLI error-code entry. Covered by `tests/jev-advisor.test.mjs`, `tests/local-chat.test.mjs` and `tests/harder-benchmark.test.mjs`.
 - **v0.3.1:** adds the Jev client, harder-task set v2, the local-chat transport timeout fix, and `nisi validate`. Covered by tests. No verification record. Jev was not called while this version was prepared (`docs/jev/`).
-- **After v0.3.1, not tagged:** the Jev client uses Node's `https` module, and the harder-task runner can use `TYPESAFE_API_KEY` without a `--judge` module. See the changelog Unreleased section and [the v0.3.2 proposal](release-notes/v0.3.2.md). That proposal is not a release.
+- **After v0.3.1, not tagged:** the Jev client uses Node's `https` module. The remote judge is opt-in: `judge: 'typesafe'` or, on the harder-task runner, `--judge typesafe`. `TYPESAFE_API_KEY` alone prints one line and sends nothing. See the changelog Unreleased section and [the v0.3.2 proposal](release-notes/v0.3.2.md). That proposal is not a release.
 
 ## Repository layout
 

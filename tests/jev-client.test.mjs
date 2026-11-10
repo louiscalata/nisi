@@ -3,7 +3,7 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { createJevJudge, JEV_API_KEY_ENV } from '../adapters/jev-client.mjs';
-import { planWithJev, createJevReviewer } from '../adapters/jev-advisor.mjs';
+import { planWithJev, createJevReviewer, REMOTE_JUDGE_NOTICE } from '../adapters/jev-advisor.mjs';
 
 const KEY = 'tsk_test_0123456789abcdef';
 const task = { taskId: 'jev.client', mode: 'edit', language: 'json', allowedFiles: ['answer.json'], protectedFiles: [], protectedSnapshots: {},
@@ -94,10 +94,12 @@ test('a call that outlives its timeout is aborted and reported as JEV_TIMEOUT', 
   assert.ok(Date.now() - started < 4000);
 });
 
-test('the advisor uses the built-in client when TYPESAFE_API_KEY is set and no judge is passed', async () => {
-  const saved = process.env[JEV_API_KEY_ENV], savedFetch = globalThis.fetch;
+test('the hosted judge is opt-in; a set TYPESAFE_API_KEY alone prints one line and sends nothing', async () => {
+  const saved = process.env[JEV_API_KEY_ENV], savedFetch = globalThis.fetch, savedError = console.error;
   const s = server();
+  const lines = [];
   let globalFetches = 0;
+  console.error = line => lines.push(String(line));
   try {
     delete process.env[JEV_API_KEY_ENV];
     await assert.rejects(() => planWithJev(task), { code: 'JEV_JUDGE_REQUIRED' });
@@ -105,27 +107,50 @@ test('the advisor uses the built-in client when TYPESAFE_API_KEY is set and no j
     assert.throws(() => createJevReviewer({ id: 'jev.review' }), { code: 'JEV_JUDGE_REQUIRED' });
     assert.throws(() => createJevReviewer({ id: 'jev.review', fetch: s.fetch }), { code: 'JEV_JUDGE_REQUIRED' });
     assert.equal(s.seen.length, 0);
+    assert.deepEqual(lines, []);
     process.env[JEV_API_KEY_ENV] = KEY;
     globalThis.fetch = () => { globalFetches += 1; throw new Error('global fetch must not be used'); };
-    const plan = await planWithJev(task, { fetch: s.fetch });
+    await assert.rejects(() => planWithJev(task, { fetch: s.fetch }), { code: 'JEV_JUDGE_REQUIRED' });
+    assert.throws(() => createJevReviewer({ id: 'jev.review', fetch: s.fetch }), { code: 'JEV_JUDGE_REQUIRED' });
+    assert.equal(REMOTE_JUDGE_NOTICE.includes('\n'), false);
+    assert.equal(REMOTE_JUDGE_NOTICE.includes(KEY), false);
+    assert.deepEqual(lines, [REMOTE_JUDGE_NOTICE, REMOTE_JUDGE_NOTICE]);
+    assert.equal(s.seen.length, 0);
+    lines.length = 0;
+    await assert.rejects(() => planWithJev(task, { judge: 'local', fetch: s.fetch }), { code: 'JEV_JUDGE_INVALID' });
+    assert.throws(() => createJevReviewer({ id: 'jev.review', judge: true }), { code: 'JEV_JUDGE_INVALID' });
+    assert.deepEqual(lines, []);
+    const plan = await planWithJev(task, { judge: 'typesafe', fetch: s.fetch });
     assert.equal(plan.plan, 'direct');
     assert.equal(plan.evidence.jevModel, 'jev-1.14.0');
     assert.equal(s.seen[0].url, 'https://api.typesafe.ai/v1/systemone');
     assert.deepEqual(Object.keys(s.seen[0].body.state), ['task']);
-    const review = await createJevReviewer({ id: 'jev.review', fetch: s.fetch }).review({ task, candidate: { files: [{ path: 'answer.json', content: '{"answer":391}' }] }, tests: { status: 'PASS' }, binding: {} });
+    const review = await createJevReviewer({ id: 'jev.review', judge: 'typesafe', fetch: s.fetch }).review({ task, candidate: { files: [{ path: 'answer.json', content: '{"answer":391}' }] }, tests: { status: 'PASS' }, binding: {} });
     assert.equal(review.status, 'PASS');
     assert.match(review.evidence.summary, /0\.25 \(advisory\)/u);
-    // An explicit judge always wins over the environment.
+    // A judge function wins over the environment and over the opt-in string.
     let explicit = 0;
     await planWithJev(task, { fetch: s.fetch, judge: async request => { explicit += 1; return { model: 'x', answers: answersFor(request.questions) }; } });
     assert.equal(explicit, 1);
     assert.equal(s.seen.length, 2);
     assert.equal(globalFetches, 0);
-    // A bad key in the environment is refused before any request.
+    assert.deepEqual(lines, []);
+    // A bad key is checked only after opt-in, and still before any request.
     process.env[JEV_API_KEY_ENV] = 'bad key';
-    await assert.rejects(() => planWithJev(task), { code: 'JEV_API_KEY_INVALID' });
+    await assert.rejects(() => planWithJev(task, { fetch: s.fetch }), { code: 'JEV_JUDGE_REQUIRED' });
+    assert.deepEqual(lines, [REMOTE_JUDGE_NOTICE]);
+    assert.equal(lines[0].includes('bad key'), false);
+    await assert.rejects(() => planWithJev(task, { judge: 'typesafe', fetch: s.fetch }), { code: 'JEV_API_KEY_INVALID' });
     assert.equal(s.seen.length, 2);
-  } finally { globalThis.fetch = savedFetch; if (saved === undefined) delete process.env[JEV_API_KEY_ENV]; else process.env[JEV_API_KEY_ENV] = saved; }
+    delete process.env[JEV_API_KEY_ENV];
+    lines.length = 0;
+    await assert.rejects(() => planWithJev(task, { judge: 'typesafe' }), { code: 'JEV_API_KEY_REQUIRED' });
+    assert.deepEqual(lines, []);
+  } finally {
+    console.error = savedError;
+    globalThis.fetch = savedFetch;
+    if (saved === undefined) delete process.env[JEV_API_KEY_ENV]; else process.env[JEV_API_KEY_ENV] = saved;
+  }
 });
 
 test('timeoutMs on planWithJev and createJevReviewer reaches the built-in client', async () => {
@@ -134,12 +159,12 @@ test('timeoutMs on planWithJev and createJevReviewer reaches the built-in client
   const hang = (_url, request) => new Promise((_, reject) => request.signal.addEventListener('abort', () => reject(new Error('aborted'))));
   const quick = async () => reply({ model: 'jev-1.14.0', answers: { plan: { choice: 'direct' }, underspecified: { noul: 0.1 } } });
   try {
-    await planWithJev(task, { fetch: quick, timeoutMs: 301_000 });
-    await assert.rejects(() => planWithJev(task, { fetch: hang, timeoutMs: 86_400_001 }), { code: 'JEV_TIMEOUT_INVALID' });
+    await planWithJev(task, { judge: 'typesafe', fetch: quick, timeoutMs: 301_000 });
+    await assert.rejects(() => planWithJev(task, { judge: 'typesafe', fetch: hang, timeoutMs: 86_400_001 }), { code: 'JEV_TIMEOUT_INVALID' });
     const started = Date.now();
-    await assert.rejects(() => planWithJev(task, { fetch: hang, timeoutMs: 1000 }), { code: 'JEV_TIMEOUT' });
+    await assert.rejects(() => planWithJev(task, { judge: 'typesafe', fetch: hang, timeoutMs: 1000 }), { code: 'JEV_TIMEOUT' });
     assert.ok(Date.now() - started < 4000);
-    const reviewer = createJevReviewer({ id: 'jev.review', fetch: hang, timeoutMs: 1000 });
+    const reviewer = createJevReviewer({ id: 'jev.review', judge: 'typesafe', fetch: hang, timeoutMs: 1000 });
     const startedReview = Date.now();
     const review = await reviewer.review({ task, candidate: { files: [{ path: 'answer.json', content: '{"answer":1}' }] }, tests: { status: 'PASS' }, binding: {} });
     assert.equal(review.status, 'UNAVAILABLE');

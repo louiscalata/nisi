@@ -2,29 +2,37 @@
 // SPDX-License-Identifier: Apache-2.0
 // Jev (TypeSafe System One) pre- and post-analysis for Nisi runs.
 //
-// The host supplies `judge({ state, questions })`, which sends one System One
-// request and resolves to `{ model, answers }`; when it does not, and the
-// TYPESAFE_API_KEY environment variable is set, the built-in client in
-// jev-client.mjs is used. This
-// module frames the questions, validates every typed answer and turns it into
-// either adapter settings (pre) or a reviewer verdict (post). Jev's answers are
-// judgments, not proof: the pre-analysis only picks settings, and the reviewer
-// is one reviewer among the ones the task requires.
+// The host supplies `judge`. A function receives `{ state, questions }` and
+// resolves to `{ model, answers }`. The string `typesafe` selects the built-in
+// client in jev-client.mjs, which reads TYPESAFE_API_KEY and sends `state`.
+// A set key with no judge does not: one line goes to stderr and the call stays
+// on the no-judge path. This module frames the questions, validates every typed
+// answer and turns it into either adapter settings (pre) or a reviewer verdict
+// (post). Jev's answers are judgments, not proof: the pre-analysis only picks
+// settings, and the reviewer is one reviewer among the ones the task requires.
 
 import { cloneFreeze, sha256Text, stableStringify } from '../workflow/contracts.mjs';
 import { createJevJudge, JEV_API_KEY_ENV } from './jev-client.mjs';
 
 const isRecord = value => value !== null && typeof value === 'object' && !Array.isArray(value);
 const fail = code => { const error = new Error(code); error.code = code; throw error; };
-// The judge the caller passed, else the built-in client when TYPESAFE_API_KEY is set.
-// `fetchImpl` and `timeoutMs` are forwarded only to that client, and only when no judge was passed.
+// Opt in to the hosted client. The same word is the harder runner's `--judge typesafe`.
+export const REMOTE_JUDGE_OPT_IN = 'typesafe';
+export const REMOTE_JUDGE_NOTICE = "TYPESAFE_API_KEY is set; the remote judge is off. Opt in with --judge typesafe or judge: 'typesafe'.";
+// A function is the caller's judge. `typesafe` builds the client and forwards
+// `fetchImpl` and `timeoutMs` only to that client. Any other value is refused.
+// A set key with no judge prints one line and returns no judge, so nothing is sent.
 const resolveJudge = (judge, fetchImpl, timeoutMs) => {
-  if (judge !== undefined) return judge;
-  if (!process.env[JEV_API_KEY_ENV]) return undefined;
-  return createJevJudge({
-    ...(fetchImpl ? { fetch: fetchImpl } : {}),
-    ...(timeoutMs !== undefined ? { timeoutMs } : {}),
-  });
+  if (typeof judge === 'function') return judge;
+  if (judge === REMOTE_JUDGE_OPT_IN) {
+    return createJevJudge({
+      ...(fetchImpl ? { fetch: fetchImpl } : {}),
+      ...(timeoutMs !== undefined ? { timeoutMs } : {}),
+    });
+  }
+  if (judge !== undefined) fail('JEV_JUDGE_INVALID');
+  if (process.env[JEV_API_KEY_ENV]) console.error(REMOTE_JUDGE_NOTICE);
+  return undefined;
 };
 const probability = value => typeof value === 'number' && Number.isFinite(value) && value >= 0 && value <= 1;
 

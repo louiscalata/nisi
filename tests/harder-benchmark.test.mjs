@@ -7,6 +7,7 @@ import os from 'node:os';
 import path from 'node:path';
 import { loadTasks, diffAnswer, runHarder, parseArgs, main, TASK_SETS } from '../benchmarks/harder/run.mjs';
 import { JEV_API_KEY_ENV } from '../adapters/jev-client.mjs';
+import { REMOTE_JUDGE_NOTICE } from '../adapters/jev-advisor.mjs';
 
 const ENDPOINT = 'http://127.0.0.1:9999/v1/chat/completions';
 
@@ -89,8 +90,21 @@ test('a Jev plan sets the wire settings and the Jev reviewer stays advisory', as
   assert.equal(result.settings.totalDeadlineMs, 600_000);
   const savedKey = process.env[JEV_API_KEY_ENV];
   delete process.env[JEV_API_KEY_ENV];
-  try { await assert.rejects(() => runHarder({ dataset, plan: true }), { code: 'JEV_API_KEY_REQUIRED' }); }
-  finally { if (savedKey === undefined) delete process.env[JEV_API_KEY_ENV]; else process.env[JEV_API_KEY_ENV] = savedKey; }
+  const lines = [];
+  const savedError = console.error;
+  console.error = line => lines.push(String(line));
+  try {
+    await assert.rejects(() => runHarder({ dataset, plan: true }), /HARDER_JUDGE_REQUIRED/u);
+    assert.deepEqual(lines, []);
+    process.env[JEV_API_KEY_ENV] = 'present-but-not-opt-in';
+    await assert.rejects(() => runHarder({ dataset, plan: true }), /HARDER_JUDGE_REQUIRED/u);
+    await assert.rejects(() => runHarder({ dataset, plan: true, judge: 'local' }), /HARDER_JUDGE_REQUIRED/u);
+    assert.equal(REMOTE_JUDGE_NOTICE.includes('present-but-not-opt-in'), false);
+    assert.deepEqual(lines, [REMOTE_JUDGE_NOTICE]);
+  } finally {
+    console.error = savedError;
+    if (savedKey === undefined) delete process.env[JEV_API_KEY_ENV]; else process.env[JEV_API_KEY_ENV] = savedKey;
+  }
 });
 
 test('the CLI needs explicit opt-in and a new output file; --plan can omit a judge module', async () => {
@@ -240,7 +254,7 @@ test('the v2 task set is frozen, varied, well-formed and runs through the runner
   assert.throws(() => parseArgs(['--allow-live', ENDPOINT, 'm', 'o', '--tasks', 'v9']), /USAGE/u);
 });
 
-test('TYPESAFE_API_KEY drives --plan when no judge module is given, and a module still wins', async () => {
+test('--judge typesafe opts into the built-in client; the key alone does not, and a module still wins', async () => {
   const saved = process.env[JEV_API_KEY_ENV];
   const key = 'nisi-bench-test';
   const dir = await fs.mkdtemp(path.join(os.tmpdir(), 'nisi-harder-'));
@@ -258,25 +272,44 @@ test('TYPESAFE_API_KEY drives --plan when no judge module is given, and a module
     } } };
   };
   const log = console.log;
+  const savedError = console.error;
+  const lines = [];
   console.log = () => {};
+  console.error = line => lines.push(String(line));
   try {
     delete process.env[JEV_API_KEY_ENV];
     const missing = path.join(dir, 'missing.json');
-    await assert.rejects(() => main(['--allow-live', ENDPOINT, 'synthetic.model', missing, '--plan', '--task', t.id]), { code: 'JEV_API_KEY_REQUIRED' });
+    await assert.rejects(() => main(['--allow-live', ENDPOINT, 'synthetic.model', missing, '--plan', '--task', t.id]), /HARDER_JUDGE_REQUIRED/u);
     await assert.rejects(() => fs.access(missing), { code: 'ENOENT' });
+    assert.deepEqual(lines, []);
     process.env[JEV_API_KEY_ENV] = 'bad key';
-    await assert.rejects(() => main(['--allow-live', ENDPOINT, 'synthetic.model', missing, '--plan', '--task', t.id]), { code: 'JEV_API_KEY_INVALID' });
+    await assert.rejects(() => main(['--allow-live', ENDPOINT, 'synthetic.model', missing, '--plan', '--task', t.id], { jevFetch }), /HARDER_JUDGE_REQUIRED/u);
     await assert.rejects(() => fs.access(missing), { code: 'ENOENT' });
+    assert.equal(lines.join('\n').includes('bad key'), false);
+    assert.deepEqual(lines, [REMOTE_JUDGE_NOTICE]);
+    assert.equal(jevSeen.length, 0);
+    lines.length = 0;
     process.env[JEV_API_KEY_ENV] = key;
+    await assert.rejects(() => main(['--allow-live', ENDPOINT, 'synthetic.model', missing, '--plan', '--task', t.id], { jevFetch }), /HARDER_JUDGE_REQUIRED/u);
+    assert.deepEqual(lines, [REMOTE_JUDGE_NOTICE]);
+    assert.equal(lines[0].includes(key), false);
+    assert.equal(jevSeen.length, 0);
+    lines.length = 0;
     const fixture = fakeFetch(() => t.expectedAnswer);
+    const localOut = path.join(dir, 'local.json');
+    await main(['--allow-live', ENDPOINT, 'synthetic.model', localOut, '--task', t.id], { fetch: fixture.fetch, jevFetch });
+    assert.deepEqual(lines, []);
+    assert.equal(jevSeen.length, 0);
+    assert.equal(JSON.parse(await fs.readFile(localOut, 'utf8')).settings.judge, null);
     const out = path.join(dir, 'builtin.json');
-    await main(['--allow-live', ENDPOINT, 'synthetic.model', out, '--plan', '--task', t.id], { fetch: fixture.fetch, jevFetch });
+    const beforePlan = fixture.wires.length;
+    await main(['--allow-live', ENDPOINT, 'synthetic.model', out, '--plan', '--judge', 'typesafe', '--task', t.id], { fetch: fixture.fetch, jevFetch });
     const savedRun = JSON.parse(await fs.readFile(out, 'utf8'));
     assert.equal(savedRun.settings.judge, 'builtin');
     assert.equal(savedRun.settings.jevTimeoutMs, 60_000);
     assert.equal(savedRun.rows[0].plan, 'direct');
-    assert.equal(fixture.wires[0].reasoning_effort, 'none');
-    assert.equal(fixture.wires[0].max_tokens, 1024);
+    assert.equal(fixture.wires[beforePlan].reasoning_effort, 'none');
+    assert.equal(fixture.wires[beforePlan].max_tokens, 1024);
     assert.equal(jevSeen.length, 1);
     assert.equal(jevSeen[0].url, 'https://api.typesafe.ai/v1/systemone');
     assert.equal(jevSeen[0].authorization, `Bearer ${key}`);
@@ -298,8 +331,19 @@ test('TYPESAFE_API_KEY drives --plan when no judge module is given, and a module
     assert.equal(moduleRun.rows.find(row => row.arm === 'C').plan, 'reason');
     assert.equal(moduleSeen.length, 0);
     assert.ok(!(await fs.readFile(moduleOut, 'utf8')).includes(key));
+    assert.deepEqual(lines, []);
+    delete process.env[JEV_API_KEY_ENV];
+    const noKey = path.join(dir, 'no-key.json');
+    await assert.rejects(() => main(['--allow-live', ENDPOINT, 'synthetic.model', noKey, '--plan', '--judge', 'typesafe', '--task', t.id], { jevFetch }), { code: 'JEV_API_KEY_REQUIRED' });
+    await assert.rejects(() => fs.access(noKey), { code: 'ENOENT' });
+    process.env[JEV_API_KEY_ENV] = 'bad key';
+    await assert.rejects(() => main(['--allow-live', ENDPOINT, 'synthetic.model', noKey, '--plan', '--judge', 'typesafe', '--task', t.id], { jevFetch }), { code: 'JEV_API_KEY_INVALID' });
+    await assert.rejects(() => fs.access(noKey), { code: 'ENOENT' });
+    assert.deepEqual(lines, []);
+    assert.equal(parseArgs(['--allow-live', ENDPOINT, 'm', 'o', '--judge', 'typesafe']).judgeModule, 'typesafe');
   } finally {
     console.log = log;
+    console.error = savedError;
     if (saved === undefined) delete process.env[JEV_API_KEY_ENV]; else process.env[JEV_API_KEY_ENV] = saved;
     await fs.rm(dir, { recursive: true, force: true });
   }
@@ -316,11 +360,11 @@ test('--jev-timeout-ms is the built-in client deadline, not the model timeout', 
   console.log = () => {};
   try {
     const started = Date.now();
-    await assert.rejects(() => runHarder({ endpoint: ENDPOINT, model: 'synthetic.model', dataset, selectedTaskIds: [t.id], plan: true, jevTimeoutMs: 1000, jevFetch: hang, fetch: fakeFetch(() => t.expectedAnswer).fetch }), { code: 'JEV_TIMEOUT' });
+    await assert.rejects(() => runHarder({ endpoint: ENDPOINT, model: 'synthetic.model', dataset, selectedTaskIds: [t.id], plan: true, judge: 'typesafe', jevTimeoutMs: 1000, jevFetch: hang, fetch: fakeFetch(() => t.expectedAnswer).fetch }), { code: 'JEV_TIMEOUT' });
     assert.ok(Date.now() - started < 4000);
     const out = path.join(dir, 'partial.json');
     const startedMain = Date.now();
-    await assert.rejects(() => main(['--allow-live', ENDPOINT, 'synthetic.model', out, '--plan', '--task', t.id, '--jev-timeout-ms', '1000'], { fetch: fakeFetch(() => t.expectedAnswer).fetch, jevFetch: hang }), { code: 'JEV_TIMEOUT' });
+    await assert.rejects(() => main(['--allow-live', ENDPOINT, 'synthetic.model', out, '--plan', '--judge', 'typesafe', '--task', t.id, '--jev-timeout-ms', '1000'], { fetch: fakeFetch(() => t.expectedAnswer).fetch, jevFetch: hang }), { code: 'JEV_TIMEOUT' });
     assert.ok(Date.now() - startedMain < 4000);
     const partial = JSON.parse(await fs.readFile(out, 'utf8'));
     assert.equal(partial.status, 'PARTIAL');

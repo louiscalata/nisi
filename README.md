@@ -36,7 +36,7 @@ From a source checkout, `npm ci` then `npm run check` runs the structural check 
 
 ## Jev pre- and post-analysis
 
-Jev is TypeSafe's hosted System One model, a paid API with no free or open-weight stand-in. Nisi can ask it two questions around a run. Nothing is sent unless you pass a `judge` function or, starting in this version, set `TYPESAFE_API_KEY`.
+Jev is TypeSafe's hosted System One model, a paid API with no free or open-weight stand-in. Nisi can ask it two questions around a run. Nothing is sent unless you pass a `judge` function or `judge: 'typesafe'` (on the harder-task runner, `--judge typesafe`). `TYPESAFE_API_KEY` alone prints one line to stderr and leaves the call on the local or no-judge path. v0.3.1 did send when that variable was set and no `judge` was passed.
 
 **Pre-analysis** (`planWithJev`) asks whether the task needs the model to reason (`reason` or `direct`) and whether the task is missing information. The default map gives `direct` tasks `reasoningEffort: 'none'` and 1,024 output tokens, and `reason` tasks 4,096 tokens. That choice is a setting, not evidence that the setting is better.
 
@@ -84,7 +84,7 @@ scripts/validate-real-data.sh --journal /absolute/path/to/journal.jsonl
 - **Trust.** Nisi checks what your callbacks report. It cannot see what they did. `COMPLETED` does not authorize applying files or shipping.
 - **Generated code.** If you run generated code, isolate it.
 - **Run journal.** The optional run journal is a hash-chained record of a run. Its `verified: true` means internal consistency, not authenticity.
-- **Data sent to Jev.** Nisi builds a `state` record: the task's id, mode, language, allowed file names and acceptance criteria and, for the reviewer, the candidate's files and whether the tests passed. A `judge` you write decides what is sent. The built-in client sends that `state` as is when `TYPESAFE_API_KEY` is set and no `judge` is passed. With neither, nothing is sent.
+- **Data sent to Jev.** Nisi builds a `state` record: the task's id, mode, language, allowed file names and acceptance criteria and, for the reviewer, the candidate's files and whether the tests passed. A `judge` function decides what is sent. `judge: 'typesafe'` sends that `state` as is with the built-in client, which reads `TYPESAFE_API_KEY`. The variable alone does not send.
 - **Jev as reviewer.** By default it passes, yet counts as a required reviewer. A failing judge blocks the run. The measured ranking was too weak to use as a gate. See the section above.
 - **Not measured.** The benchmarks are integration checks, not accuracy estimates. The local pilot used one loaded model and 12 tasks, and Nisi tied a handwritten checked loop.
 - **Verification.** v0.3.0 and v0.3.1 are covered by tests. v0.3.0 has a one-PC Windows note. v0.3.1 has no verification record of its own beyond CI and the checks listed in its release notes.
