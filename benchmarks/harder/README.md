@@ -28,20 +28,22 @@ Each task runs in two arms with the same author settings:
 | --- | --- |
 | `--max-tokens N` | Output-token cap per call (default 4,096, the adapter default) |
 | `--timeout-ms N` | Timeout per model call (default 120,000, the adapter default). This does not change the Jev call. |
-| `--jev-timeout-ms N` | Timeout for the built-in Jev client (default 60,000; 1,000 to 86,400,000). Ignored when `--judge` is set. |
+| `--jev-timeout-ms N` | Timeout for `--judge typesafe` (default 60,000; 1,000 to 86,400,000). A `--judge` module does not use it. |
 | `--reasoning EFFORT` | Sends `reasoning_effort` (`none`, `minimal`, `low`, `medium`, `high`) |
 | `--tests shape` | Tests check only the answer form, as on a host with no answer oracle |
 | `--plan` | Jev pre-analysis picks the settings per task |
 | `--jev-review` | Adds the advisory Jev reviewer to arm C |
-| `--judge MODULE` | Use this module instead of the built-in Jev client |
+| `--judge typesafe` or `--judge MODULE` | `typesafe` selects the built-in client. `MODULE` exports `judge` |
 | `--task ID` | Runs one task; repeat it to run several |
 
-`--plan` and `--jev-review` use the built-in Jev client when `TYPESAFE_API_KEY` is
-set. They send the task state to `https://api.typesafe.ai/v1/systemone`. With no
-key and no `--judge` file, the run is refused before it creates the output file
-and nothing is sent. `--judge MODULE` still wins over the environment variable.
-`MODULE` exports `judge({ state, questions })`, which resolves to `{ model, answers }`.
-The key and transport stay in that file when you use one; see
+`--plan` and `--jev-review` send the task state to `https://api.typesafe.ai/v1/systemone`
+only with `--judge typesafe` (the built-in client, which reads `TYPESAFE_API_KEY`)
+or `--judge MODULE`. `MODULE` exports `judge({ state, questions })`, which resolves
+to `{ model, answers }`. The bare word `typesafe` is the built-in client; a module
+path is anything else, including `./typesafe.mjs`. If `TYPESAFE_API_KEY` is set
+and `--judge` is omitted, the command prints one line to stderr, refuses the run
+before it creates the output file, and sends nothing. The same refusal happens
+when the variable is unset. The key and transport stay in the module when you use one; see
 [Jev pre- and post-analysis](../../docs/local-models.md).
 The output file must not exist yet. Unknown flags, a judge module that does not
 export `judge`, an invalid reasoning effort, an out-of-range `--max-tokens` or

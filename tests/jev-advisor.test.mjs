@@ -3,7 +3,7 @@ import assert from 'node:assert/strict';
 import { planWithJev, createJevReviewer, DEFAULT_JEV_PLAN_POLICY } from '../adapters/jev-advisor.mjs';
 import { runWorkflow, createCandidate } from '../workflow/engine.mjs';
 
-// A TYPESAFE_API_KEY in the environment would switch the advisor to the real client and send the test task.
+// A set TYPESAFE_API_KEY must not select the hosted client. Clearing it also keeps a regression from sending this task.
 const savedKey = process.env.TYPESAFE_API_KEY;
 delete process.env.TYPESAFE_API_KEY;
 test.after(() => { if (savedKey !== undefined) process.env.TYPESAFE_API_KEY = savedKey; });

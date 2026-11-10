@@ -46,8 +46,9 @@ scope, regressions, deferred work and local verification.
   back from its output file. `benchmarks/harder/run.mjs` writes the token cap,
   timeout, reasoning effort, plan and review flags, task-set id, arms, repair
   budget, deadline, judge source, endpoint, package version and runtime.
-  `--plan` and `--jev-review` use `TYPESAFE_API_KEY` when no `--judge` module
-  is passed. The files under `benchmarks/harder/results/` are from 2026-11-07
+  `--plan` and `--jev-review` use the built-in client when `--judge typesafe`
+  is passed, or a module when `--judge` names one. `TYPESAFE_API_KEY` alone does
+  not. The files under `benchmarks/harder/results/` are from 2026-11-07
   and an earlier private harness. They still omit the token cap and timeout, so
   those table rows cannot be regenerated from the file alone.
 

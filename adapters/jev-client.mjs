@@ -1,7 +1,7 @@
 // Copyright 2026 Louis Calata
 // SPDX-License-Identifier: Apache-2.0
-// Built-in client for TypeSafe's hosted Jev (System One) API, so `planWithJev` and
-// `createJevReviewer` work with one environment variable and no hand-written judge.
+// Built-in client for TypeSafe's hosted Jev (System One) API. `planWithJev` and
+// `createJevReviewer` call it when `judge` is `'typesafe'`. The key alone does not.
 //
 // What it does: POST `{ model, state, questions }` to one fixed HTTPS endpoint with
 // a Bearer key and return `{ model, answers }` for the advisor to validate. The
