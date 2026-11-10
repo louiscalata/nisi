@@ -53,7 +53,7 @@ Merge a pull request only when all four jobs are green. A queued job is not a pa
 
 ## Hard rules
 
-- Do not commit secrets, API keys, or journal payloads. Errors must not echo keys or response bodies.
+- Do not commit secrets, API keys, or journal payloads. Errors must not echo keys or response bodies. `TYPESAFE_API_KEY` alone does not send task state. `planWithJev` and `createJevReviewer` need `remote: true`. The harder-task runner needs `--judge typesafe`. `createJevJudge()` is an explicit call and may read the key.
 - Report `NOT_RUN` when a check was not run. A skipped live model, a skipped Jev call, or a Linux-only run is not a pass for that thing. Do not invent scores.
 - Do not tag, create a GitHub Release, or publish to npm unless Louis says yes. v0.3.2 is waiting for that yes. `package.json` stays 0.3.1 until a release commit.
 - Do not edit `AGIW.md`.

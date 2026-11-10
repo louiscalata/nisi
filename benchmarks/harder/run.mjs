@@ -10,8 +10,8 @@ import { createRequire } from 'node:module';
 import { pathToFileURL, fileURLToPath } from 'node:url';
 import path from 'node:path';
 import { createLocalChatAuthorAdapter, strictJSON, LOCAL_CHAT_REASONING_EFFORTS } from '../../adapters/local-chat.mjs';
-import { planWithJev, createJevReviewer } from '../../adapters/jev-advisor.mjs';
-import { createJevJudge } from '../../adapters/jev-client.mjs';
+import { planWithJev, createJevReviewer, JEV_REMOTE_NOTICE } from '../../adapters/jev-advisor.mjs';
+import { createJevJudge, JEV_API_KEY_ENV } from '../../adapters/jev-client.mjs';
 import { createCandidate, sha256Text, stableStringify } from '../../workflow/contracts.mjs';
 import { runWorkflow } from '../../workflow/engine.mjs';
 
@@ -120,18 +120,24 @@ export function recordedSettings({ endpoint, dataset, maxOutputTokens = 4096, ti
     packageVersion: PACKAGE_VERSION, runtime: process.version };
 }
 
+const keyIsSet = () => typeof process.env[JEV_API_KEY_ENV] === 'string' && process.env[JEV_API_KEY_ENV].length > 0;
 export async function runHarder({ endpoint, model, fetch, dataset, maxOutputTokens = 4096, timeoutMs = 120_000, reasoningEffort, judge,
-  judgeSource = null, plan = false, jevReview = false, shapeOnly = false, arms = ['A', 'C'], selectedTaskIds, onRow, jevTimeoutMs, jevFetch } = {}) {
+  judgeSource = null, plan = false, jevReview = false, shapeOnly = false, arms = ['A', 'C'], selectedTaskIds, onRow, jevTimeoutMs, jevFetch, remote = false } = {}) {
   if (plan || jevReview) {
-    if (typeof judge !== 'function') {
-      if (judge !== undefined) throw new Error('HARDER_JUDGE_REQUIRED');
+    if (typeof judge === 'function') judgeSource = judgeSource ?? 'function';
+    else if (judge !== undefined) throw new Error('HARDER_JUDGE_REQUIRED');
+    else if (remote === true) {
       // Reads TYPESAFE_API_KEY. Throws JEV_API_KEY_REQUIRED, JEV_API_KEY_INVALID, or JEV_TIMEOUT_INVALID before any task.
       judge = createJevJudge({
         ...(jevTimeoutMs !== undefined ? { timeoutMs: jevTimeoutMs } : {}),
         ...(jevFetch ? { fetch: jevFetch } : {}),
       });
       judgeSource = judgeSource ?? 'builtin';
-    } else judgeSource = judgeSource ?? 'function';
+    } else if (keyIsSet()) {
+      process.stderr.write(`${JEV_REMOTE_NOTICE}\n`);
+      plan = false;
+      jevReview = false;
+    } else throw new Error('HARDER_JUDGE_REQUIRED');
   }
   if (reasoningEffort !== undefined && !LOCAL_CHAT_REASONING_EFFORTS.includes(reasoningEffort)) throw new Error('HARDER_REASONING_INVALID');
   if (endpoint !== undefined) preflight({ endpoint, model, maxOutputTokens, timeoutMs, reasoningEffort });
@@ -172,7 +178,7 @@ export async function runHarder({ endpoint, model, fetch, dataset, maxOutputToke
     settings: recordedSettings({ endpoint, dataset, maxOutputTokens, timeoutMs, reasoningEffort, plan, jevReview, shapeOnly, arms, judgeSource, jevTimeoutMs }), summary, rows };
 }
 
-const USAGE = 'USAGE: --allow-live <loopback-endpoint> <model> <output-file> [--tasks v1|v2] [--max-tokens N] [--timeout-ms N] [--reasoning EFFORT] [--tests shape] [--judge MODULE] [--plan] [--jev-review] [--jev-timeout-ms N] [--task ID]';
+const USAGE = 'USAGE: --allow-live <loopback-endpoint> <model> <output-file> [--tasks v1|v2] [--max-tokens N] [--timeout-ms N] [--reasoning EFFORT] [--tests shape] [--judge typesafe|MODULE] [--plan] [--jev-review] [--jev-timeout-ms N] [--task ID]';
 
 export function parseArgs(argv) {
   if (argv[0] !== '--allow-live' || argv.length < 4) throw new Error(USAGE);
@@ -186,7 +192,11 @@ export function parseArgs(argv) {
     else if (flag === '--jev-timeout-ms') { options.jevTimeoutMs = Number(value()); if (!Number.isSafeInteger(options.jevTimeoutMs) || options.jevTimeoutMs < 1000 || options.jevTimeoutMs > 86_400_000) throw new Error(USAGE); }
     else if (flag === '--reasoning') options.reasoningEffort = value();
     else if (flag === '--tests') { if (value() !== 'shape') throw new Error(USAGE); options.shapeOnly = true; }
-    else if (flag === '--judge') options.judgeModule = value();
+    else if (flag === '--judge') {
+      const spec = value();
+      if (spec === 'typesafe') { if (options.judgeModule) throw new Error(USAGE); options.remote = true; }
+      else { if (options.remote) throw new Error(USAGE); options.judgeModule = spec; }
+    }
     else if (flag === '--plan') options.plan = true;
     else if (flag === '--jev-review') options.jevReview = true;
     else if (flag === '--task') options.selectedTaskIds = [...(options.selectedTaskIds ?? []), value()];
@@ -198,19 +208,23 @@ export function parseArgs(argv) {
 export async function main(argv = process.argv.slice(2), { fetch, jevFetch } = {}) {
   const options = parseArgs(argv);
   const dataset = await loadTasks(options.taskSet);
-  // A --judge module wins. Otherwise --plan / --jev-review use the built-in client,
-  // which reads TYPESAFE_API_KEY and sends nothing until that key is set.
-  // jevFetch is a test stand-in for that client's transport.
+  // --judge typesafe is the explicit opt-in for the built-in client. A module path wins
+  // over that flag (the two together are a usage error). The key alone does not send.
+  // jevFetch is a test stand-in for the built-in client's transport.
   let judge, judgeSource = null;
   if (options.judgeModule) {
     judge = (await import(pathToFileURL(path.resolve(options.judgeModule)).href)).judge;
     judgeSource = 'module';
-  } else if (options.plan || options.jevReview) {
+  } else if (options.remote) {
     judge = createJevJudge({
       ...(options.jevTimeoutMs !== undefined ? { timeoutMs: options.jevTimeoutMs } : {}),
       ...(jevFetch ? { fetch: jevFetch } : {}),
     });
     judgeSource = 'builtin';
+  } else if ((options.plan || options.jevReview) && keyIsSet()) {
+    process.stderr.write(`${JEV_REMOTE_NOTICE}\n`);
+    options.plan = false;
+    options.jevReview = false;
   }
   const settings = recordedSettings({ ...options, dataset, judgeSource });
   // Refuse bad input before the output file exists, so a rejected run leaves nothing behind.

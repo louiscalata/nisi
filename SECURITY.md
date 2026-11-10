@@ -7,9 +7,11 @@ demonstrations, plus the run journal and journal store in `history/`. The v0.1
 workflow and its local-chat adapters remain part of the package. v0.3.0 adds an
 optional Jev advisor (`adapters/jev-advisor.mjs`) that sends the task text, and
 for the reviewer the candidate's file contents, to TypeSafe's hosted Jev service
-when you pass a `judge`. v0.3.1 adds a built-in client (`adapters/jev-client.mjs`)
-that sends the same state when `TYPESAFE_API_KEY` is set and no `judge` is
-passed. Treat both as a data boundary. The client refuses redirects, bounds the
+when you pass a `judge`. v0.3.1 added a built-in client (`adapters/jev-client.mjs`)
+that sent the same state when `TYPESAFE_API_KEY` was set and no `judge` was
+passed. On current main that client sends only when you also pass `remote: true`
+or `--judge typesafe`. The key alone prints one line and sends nothing. Treat
+both as a data boundary. The client refuses redirects, bounds the
 request and response, times out, and never puts the key or the response body in
 an error or log; the key is read from the environment, never stored by Nisi.
 `nisi validate` reads a journal or report you name and prints counts and reason

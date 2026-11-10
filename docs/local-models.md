@@ -142,27 +142,29 @@ token savings.
 
 `nisi/adapters/jev-advisor` (a separate module that loads only if you import it) uses Jev, TypeSafe's System One model (a hosted service that returns typed answers and probabilities), to make two judgments around a run.
 
-**What is sent, by whom, when.** Jev is a hosted service, so the data below leaves your machine. Nisi builds a `state` record: the task's id, mode, language, allowed file names and acceptance criteria and, for the reviewer, the candidate's files and whether the tests passed. A `judge` is a function that receives the `state` and calls Jev. The `judge` you write decides what is sent. In v0.3.1, if you pass no `judge` and `TYPESAFE_API_KEY` is set, a built-in client sends the `state` as is to `https://api.typesafe.ai/v1/systemone`. The send happens when you call `planWithJev` before the run and when the Jev reviewer runs. With no `judge` and no `TYPESAFE_API_KEY`, nothing is sent. v0.3.0 had no built-in client. Field-level details are in **What leaves your machine**, below.
+**What is sent, by whom, when.** Jev is a hosted service, so the data below leaves your machine. Nisi builds a `state` record: the task's id, mode, language, allowed file names and acceptance criteria and, for the reviewer, the candidate's files and whether the tests passed. A `judge` is a function that receives the `state` and calls Jev. The `judge` you write decides what is sent. The built-in client sends that `state` as is to `https://api.typesafe.ai/v1/systemone` only when you also pass `remote: true` and `TYPESAFE_API_KEY` is set. The send happens inside `planWithJev` and when the Jev reviewer runs. `TYPESAFE_API_KEY` alone prints one line to stderr and sends nothing; `planWithJev` and `createJevReviewer` then throw `JEV_JUDGE_REQUIRED`. v0.3.1 sent whenever the key was set and no `judge` was passed. v0.3.0 had no built-in client. Field-level details are in **What leaves your machine**, below.
 
 Cost: there is no free or open-weight version of Jev. It is TypeSafe's paid API, priced per million input tokens, so check typesafe.ai for current rates and any free credit. These calls are small (a task, and for the reviewer one candidate), so a call costs a fraction of a cent at the rates third-party trackers list.
 
-**Quick setup (v0.3.1).** Put your TypeSafe key in the `TYPESAFE_API_KEY` environment
-variable and call the advisor without a judge. Nisi then uses its built-in client
-(`nisi/adapters/jev-client`):
+**Quick setup.** Put your TypeSafe key in the `TYPESAFE_API_KEY` environment
+variable and pass `remote: true`. Nisi then uses its built-in client
+(`nisi/adapters/jev-client`). The key alone does not send:
 
 ```bash
 export TYPESAFE_API_KEY=...   # never commit it
 ```
 
 ```js
-const plan = await planWithJev(task);                          // uses TYPESAFE_API_KEY
-const reviewer = createJevReviewer({ id: 'jev.review' });      // same
+const plan = await planWithJev(task, { remote: true });
+const reviewer = createJevReviewer({ id: 'jev.review', remote: true });
 ```
 
-Without the variable, and without a `judge` you pass, both throw
-`JEV_JUDGE_REQUIRED`: nothing is sent anywhere unless you opted in with a key or a
-judge. The client is also available directly, for a pinned model or an explicit
-key: `createJevJudge({ apiKey, model: 'jev-1.14.0', timeoutMs })`. The default
+Without `remote: true` and without a `judge` you pass, both throw
+`JEV_JUDGE_REQUIRED`. If the key is set, they also print one line and send nothing.
+The client is also available directly, for a pinned model or an explicit
+key: `createJevJudge({ apiKey, model: 'jev-1.14.0', timeoutMs })`. Calling
+`createJevJudge` is itself the opt-in; it reads `TYPESAFE_API_KEY` when you omit
+`apiKey`. The default
 model is `jev-latest`, which can change; pin a version when you need repeatable
 runs, and the served model is recorded in `evidence.jevModel`.
 
@@ -170,7 +172,7 @@ runs, and the served model is recorded in `evidence.jevModel`.
 questions }` to `https://api.typesafe.ai/v1/systemone` with your key as a Bearer
 token. The endpoint is fixed, so the key is never sent anywhere else; redirects are
 errors; the request and the response are each limited to 1 MiB; the call times out
-after 60 s by default (1 s to 24 h). `planWithJev(task, { timeoutMs })` and `createJevReviewer({ id, timeoutMs })` pass that value to the built-in client. A `judge` you pass is used as is, and this timeout does not apply to it. The default transport is Node's `https` module,
+after 60 s by default (1 s to 24 h). `planWithJev(task, { remote: true, timeoutMs })` and `createJevReviewer({ id, remote: true, timeoutMs })` pass that value to the built-in client. A `judge` you pass is used as is, and this timeout does not apply to it. `remote: true` is required; the timeout does not turn the client on by itself. The default transport is Node's `https` module,
 so a timeout longer than five minutes is not cut off by `fetch`. A `fetch` you pass
 to `createJevJudge`, `planWithJev` or `createJevReviewer` replaces that transport
 and keeps `fetch`'s own limits, including the five-minute header timeout. A `request`
