@@ -18,7 +18,8 @@ jobs:
     # Every Node test runs on Linux and Windows. The Apple executor tests use
     # stand-in probes; their Windows fixture launcher does not run Apple models.
     # Swift probes under probes/ need a separate Apple environment.
-    runs-on: ${{ matrix.os }}
+    # Same-repo events use Louis's PC runner; fork pull requests stay on GitHub-hosted runners.
+    runs-on: ${{ (github.event_name != 'pull_request' || github.event.pull_request.head.repo.full_name == github.repository) && fromJSON('["self-hosted","pc-win"]') || matrix.os }}
     strategy:
       fail-fast: false
       matrix:
