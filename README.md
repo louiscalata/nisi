@@ -6,17 +6,11 @@
 
 Nisi runs one coding task through draft, checks, tests, separate review and bounded repair, and returns a report. It does not apply the files.
 
-**Status:** source version 0.3.1, prepared 9 November 2026. The last published git tag is [`v0.3.0`](https://github.com/louiscalata/nisi/releases/tag/v0.3.0) (7 November 2026). This source change does not create the `v0.3.1` tag, a GitHub Release, or an npm publication. Node.js 22 or newer on macOS, Linux and Windows. Apache-2.0. Nisi is not on the npm registry. The v0.3.1 changes are covered by the test suite. There is no new verification record. The [Windows check](https://github.com/louiscalata/nisi/blob/main/docs/verification-v0.3-windows.md) is one PC on v0.3.0 and was not repeated here. Jev pre/post gates for this preparation were **not run** (no API key in the build environment); see [docs/jev](https://github.com/louiscalata/nisi/blob/main/docs/jev/pre-v0.3.1.md).
+**Status:** work in progress. The current release is [v0.3.1](https://github.com/louiscalata/nisi/releases/tag/v0.3.1) (9 November 2026), published on GitHub with `nisi-0.3.1.tgz` and `SHA256SUMS`. Nisi is not on the npm registry. Node.js 22 or newer on macOS, Linux and Windows. Apache-2.0. The v0.3.1 changes are covered by the test suite and CI (Linux and Windows, Node.js 22 and 24). The [Windows check](https://github.com/louiscalata/nisi/blob/main/docs/verification-v0.3-windows.md) is one PC on v0.3.0 and was not repeated for v0.3.1. A local-model end-to-end run for v0.3.1 was **not run**. Jev pre- and post-analysis did not run while the source was prepared ([docs/jev](https://github.com/louiscalata/nisi/blob/main/docs/jev/pre-v0.3.1.md)); the post-analysis run at publish time is recorded in the [release notes](https://github.com/louiscalata/nisi/releases/tag/v0.3.1).
 
 ## Quick start
 
-Install Node.js 22 or newer. In a checkout of this source:
-
-```bash
-node bin/nisi.mjs demo
-```
-
-After the `v0.3.1` tag exists, this is the same tree:
+Install Node.js 22 or newer. Then:
 
 ```bash
 git clone --branch v0.3.1 --depth 1 https://github.com/louiscalata/nisi.git
@@ -38,7 +32,7 @@ You should see this JSON:
 
 The demo calls no model. It repairs an intentionally incorrect module once, writes a report in a temporary directory, checks it by read-back, and deletes it. `node examples/workflow.mjs` keeps the report.
 
-From a source checkout, `npm ci` then `npm run check` runs the structural check and the tests. Install of a release archive, after one is published, is in [Install and use](https://github.com/louiscalata/nisi/blob/main/docs/install.md).
+From a source checkout, `npm ci` then `npm run check` runs the structural check and the tests. Installing the release archive is described in [Install and use](https://github.com/louiscalata/nisi/blob/main/docs/install.md).
 
 ## Jev pre- and post-analysis
 
@@ -57,7 +51,7 @@ On 16 harder tasks with one local model, each figure from a single run, the Jev 
 - Local-chat calls may run longer than five minutes. Node's `fetch` was cutting them off. An injected `fetch` is unchanged.
 - `nisi validate` checks a run journal, or a directory of journals and workflow reports, and prints PASS or FAIL without printing payloads.
 
-The [changelog](https://github.com/louiscalata/nisi/blob/main/CHANGELOG.md) is the full list. Draft notes for the unpublished tag are in [docs/release-notes/v0.3.1.md](https://github.com/louiscalata/nisi/blob/main/docs/release-notes/v0.3.1.md).
+The [changelog](https://github.com/louiscalata/nisi/blob/main/CHANGELOG.md) is the full list. The published notes are on the [v0.3.1 release](https://github.com/louiscalata/nisi/releases/tag/v0.3.1).
 
 ## How it works
 
@@ -93,7 +87,7 @@ scripts/validate-real-data.sh --journal /absolute/path/to/journal.jsonl
 - **Data sent to Jev.** Nisi builds a `state` record: the task's id, mode, language, allowed file names and acceptance criteria and, for the reviewer, the candidate's files and whether the tests passed. A `judge` you write decides what is sent. The built-in client sends that `state` as is when `TYPESAFE_API_KEY` is set and no `judge` is passed. With neither, nothing is sent.
 - **Jev as reviewer.** By default it passes, yet counts as a required reviewer. A failing judge blocks the run. The measured ranking was too weak to use as a gate. See the section above.
 - **Not measured.** The benchmarks are integration checks, not accuracy estimates. The local pilot used one loaded model and 12 tasks, and Nisi tied a handwritten checked loop.
-- **Verification.** v0.3.0 and v0.3.1 are covered by tests. v0.3.0 has a one-PC Windows note. v0.3.1 has no verification record of its own, and the Jev gates for this preparation did not run.
+- **Verification.** v0.3.0 and v0.3.1 are covered by tests. v0.3.0 has a one-PC Windows note. v0.3.1 has no verification record of its own beyond CI and the checks listed in its release notes.
 
 ## Learn more
 

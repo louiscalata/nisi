@@ -12,8 +12,6 @@ cd nisi
 node bin/nisi.mjs demo
 ```
 
-The `--branch v0.3.1` clone works after that tag exists. Until then, use a checkout of the commit that contains this page. The demo command is the same.
-
 The demo drafts an intentionally incorrect JavaScript module, runs a syntax check and two assertions, repairs it once and collects a separate review result. It then writes a report to a temporary directory, verifies it by read-back and removes it. Run `node examples/workflow.mjs` to keep the report.
 
 The demo calls no model. It treats the candidate as data and never imports it. A completed run prints:
@@ -30,7 +28,7 @@ The demo calls no model. It treats the candidate as data and never imports it. A
 
 ## Install the release archive
 
-The v0.3.1 archive is not published with this source change. The last published archive is `nisi-0.3.0.tgz` from the [v0.3.0 release](https://github.com/louiscalata/nisi/releases/tag/v0.3.0). After a v0.3.1 archive exists, download `nisi-0.3.1.tgz` and, in a new folder, run:
+Download `nisi-0.3.1.tgz` and `SHA256SUMS` from the [v0.3.1 release](https://github.com/louiscalata/nisi/releases/tag/v0.3.1). Check the archive with `shasum -a 256 -c SHA256SUMS` (or `sha256sum -c SHA256SUMS`), then, in a new folder, run:
 
 ```bash
 npm install /path/to/nisi-0.3.1.tgz --ignore-scripts
