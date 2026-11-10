@@ -34,6 +34,8 @@ From a source checkout, after `npm ci`. These were run on commit `bfcc24d` with 
 | `npm run check` | Structural check, then the same test result |
 | `npm run check:cli-package` | `"status": "PASS"`, 21 archive files, installed demo |
 
+`npm run check:static` is `node tools/check-side-effects.mjs`, which imports `scripts/structural-check.mjs`. It is the same check as `npm run check:structural`. Before `npm ci`, both exit 1 with `ERR_MODULE_NOT_FOUND` for `typescript`.
+
 The skipped test on Linux is `an unregistered script still reports a real Windows spawn refusal`. It runs on Windows. Do not count that skip as a failure, and do not count a Linux run as a Windows run.
 
 `node bin/nisi.mjs demo` prints `outcome` `COMPLETED`, one repair, and `modelCalls` 0. It calls no model. `node examples/workflow.mjs` keeps the report. `node examples/local-model-workflow.mjs` needs a loopback server and two model names; with no arguments it exits 2 and prints usage. `scripts/validate-real-data.sh --smoke` checks only `fixtures/sample-data/`.
@@ -56,8 +58,8 @@ Merge a pull request only when all four jobs are green. A queued job is not a pa
 - Do not commit secrets, API keys, or journal payloads. Errors must not echo keys or response bodies.
 - Report `NOT_RUN` when a check was not run. A skipped live model, a skipped Jev call, or a Linux-only run is not a pass for that thing. Do not invent scores.
 - Do not tag, create a GitHub Release, or publish to npm unless Louis says yes. v0.3.2 is waiting for that yes. `package.json` stays 0.3.1 until a release commit.
-- Do not edit `AGIW.md`.
-- Do not repair journals or fingerprints silently. A pre-v0.2.1 pruned row whose fingerprint was not recomputed fails `reopen` with `INVALID` and `LEGACY_UNRETAINED_FINGERPRINT`. The store refuses it with that reason. The file is not authorized and is not rewritten. The remedy is to run the work again with v0.2.1 or later. See `docs/run-journal.md`.
+- Do not edit `AGIW.md`. It is not in this tree. Do not create it.
+- Do not repair journals or fingerprints silently. A pre-v0.2.1 pruned row whose fingerprint was not recomputed fails `reopen` with `INVALID` and `LEGACY_UNRETAINED_FINGERPRINT`. The store refuses it with that reason. The file is not authorized. The stored fingerprint is not recomputed, and the bytes are not rewritten. Any other fingerprint mismatch stays `RECORD` or `INVALID_JOURNAL`. The remedy is to run the work again with v0.2.1 or later. See `docs/run-journal.md`.
 
 ## Deeper docs
 
