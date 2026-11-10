@@ -98,6 +98,9 @@ test('the CLI needs explicit opt-in and a new output file; --plan can omit a jud
   assert.throws(() => parseArgs(['--allow-live', ENDPOINT, 'm', 'out.json', '--tests', 'all']), /USAGE/u);
   assert.throws(() => parseArgs(['--allow-live', ENDPOINT, 'm', 'out.json', '--timeout-ms', '10']), /USAGE/u);
   assert.equal(parseArgs(['--allow-live', ENDPOINT, 'm', 'out.json', '--timeout-ms', '300000']).timeoutMs, 300000);
+  assert.equal(parseArgs(['--allow-live', ENDPOINT, 'm', 'out.json', '--jev-timeout-ms', '301000']).jevTimeoutMs, 301000);
+  assert.throws(() => parseArgs(['--allow-live', ENDPOINT, 'm', 'out.json', '--jev-timeout-ms', '999']), /USAGE/u);
+  assert.throws(() => parseArgs(['--allow-live', ENDPOINT, 'm', 'out.json', '--jev-timeout-ms', '86400001']), /USAGE/u);
   const planned = parseArgs(['--allow-live', ENDPOINT, 'm', 'out.json', '--plan']);
   assert.equal(planned.plan, true);
   assert.equal(planned.judgeModule, undefined);
@@ -270,6 +273,7 @@ test('TYPESAFE_API_KEY drives --plan when no judge module is given, and a module
     await main(['--allow-live', ENDPOINT, 'synthetic.model', out, '--plan', '--task', t.id], { fetch: fixture.fetch, jevFetch });
     const savedRun = JSON.parse(await fs.readFile(out, 'utf8'));
     assert.equal(savedRun.settings.judge, 'builtin');
+    assert.equal(savedRun.settings.jevTimeoutMs, 60_000);
     assert.equal(savedRun.rows[0].plan, 'direct');
     assert.equal(fixture.wires[0].reasoning_effort, 'none');
     assert.equal(fixture.wires[0].max_tokens, 1024);
@@ -290,9 +294,40 @@ test('TYPESAFE_API_KEY drives --plan when no judge module is given, and a module
     await main(['--allow-live', ENDPOINT, 'synthetic.model', moduleOut, '--plan', '--judge', judgeFile, '--task', t.id, '--jev-review'], { fetch: fixture.fetch, jevFetch: jevFetchUnused });
     const moduleRun = JSON.parse(await fs.readFile(moduleOut, 'utf8'));
     assert.equal(moduleRun.settings.judge, 'module');
+    assert.equal(moduleRun.settings.jevTimeoutMs, null);
     assert.equal(moduleRun.rows.find(row => row.arm === 'C').plan, 'reason');
     assert.equal(moduleSeen.length, 0);
     assert.ok(!(await fs.readFile(moduleOut, 'utf8')).includes(key));
+  } finally {
+    console.log = log;
+    if (saved === undefined) delete process.env[JEV_API_KEY_ENV]; else process.env[JEV_API_KEY_ENV] = saved;
+    await fs.rm(dir, { recursive: true, force: true });
+  }
+});
+
+test('--jev-timeout-ms is the built-in client deadline, not the model timeout', async () => {
+  const saved = process.env[JEV_API_KEY_ENV];
+  process.env[JEV_API_KEY_ENV] = 'nisi-bench-test';
+  const dataset = await loadTasks();
+  const t = dataset.tasks[0];
+  const hang = (_url, request) => new Promise((_, reject) => request.signal.addEventListener('abort', () => reject(new Error('aborted'))));
+  const dir = await fs.mkdtemp(path.join(os.tmpdir(), 'nisi-harder-'));
+  const log = console.log;
+  console.log = () => {};
+  try {
+    const started = Date.now();
+    await assert.rejects(() => runHarder({ endpoint: ENDPOINT, model: 'synthetic.model', dataset, selectedTaskIds: [t.id], plan: true, jevTimeoutMs: 1000, jevFetch: hang, fetch: fakeFetch(() => t.expectedAnswer).fetch }), { code: 'JEV_TIMEOUT' });
+    assert.ok(Date.now() - started < 4000);
+    const out = path.join(dir, 'partial.json');
+    const startedMain = Date.now();
+    await assert.rejects(() => main(['--allow-live', ENDPOINT, 'synthetic.model', out, '--plan', '--task', t.id, '--jev-timeout-ms', '1000'], { fetch: fakeFetch(() => t.expectedAnswer).fetch, jevFetch: hang }), { code: 'JEV_TIMEOUT' });
+    assert.ok(Date.now() - startedMain < 4000);
+    const partial = JSON.parse(await fs.readFile(out, 'utf8'));
+    assert.equal(partial.status, 'PARTIAL');
+    assert.equal(partial.settings.jevTimeoutMs, 1000);
+    assert.equal(partial.settings.timeoutMs, 120_000);
+    await assert.rejects(() => main(['--allow-live', ENDPOINT, 'm', path.join(dir, 'bad.json'), '--plan', '--jev-timeout-ms', '999']), /USAGE/u);
+    await assert.rejects(() => fs.access(path.join(dir, 'bad.json')), { code: 'ENOENT' });
   } finally {
     console.log = log;
     if (saved === undefined) delete process.env[JEV_API_KEY_ENV]; else process.env[JEV_API_KEY_ENV] = saved;
