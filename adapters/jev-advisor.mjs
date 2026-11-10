@@ -17,7 +17,8 @@ import { createJevJudge, JEV_API_KEY_ENV } from './jev-client.mjs';
 const isRecord = value => value !== null && typeof value === 'object' && !Array.isArray(value);
 const fail = code => { const error = new Error(code); error.code = code; throw error; };
 // The judge the caller passed, else the built-in client when TYPESAFE_API_KEY is set.
-const resolveJudge = judge => judge ?? (process.env[JEV_API_KEY_ENV] ? createJevJudge() : undefined);
+// `fetchImpl` is forwarded only to that client, and only when no judge was passed.
+const resolveJudge = (judge, fetchImpl) => judge ?? (process.env[JEV_API_KEY_ENV] ? createJevJudge(fetchImpl ? { fetch: fetchImpl } : {}) : undefined);
 const probability = value => typeof value === 'number' && Number.isFinite(value) && value >= 0 && value <= 1;
 
 export const JEV_PLAN_CHOICES = Object.freeze({
@@ -60,13 +61,14 @@ const taskState = task => {
 };
 
 // Pre-analysis: does this task need the model to reason, and is it answerable as written?
-export async function planWithJev(task, { judge, policy = DEFAULT_JEV_PLAN_POLICY } = {}) {
+export async function planWithJev(task, { judge, policy = DEFAULT_JEV_PLAN_POLICY, fetch: fetchImpl } = {}) {
+  if (fetchImpl !== undefined && typeof fetchImpl !== 'function') fail('JEV_UNAVAILABLE');
   if (!isRecord(policy) || !isRecord(policy.direct) || !isRecord(policy.reason)) fail('JEV_POLICY_INVALID');
   const questions = {
     plan: { type: 'choice', instructions: 'How much working-through does a careful model need to answer `task` correctly?', criteria: { ...JEV_PLAN_CHOICES } },
     underspecified: { type: 'noul', instructions: 'Is `task` missing information needed to produce exactly one correct answer?' },
   };
-  const { model, answers, requestSha256 } = await ask(resolveJudge(judge), taskState(task), questions);
+  const { model, answers, requestSha256 } = await ask(resolveJudge(judge, fetchImpl), taskState(task), questions);
   const plan = answers.plan.choice;
   return cloneFreeze({ plan, settings: { ...policy[plan] }, confidence: answers.plan.confidence ?? null,
     underspecified: answers.underspecified.noul, evidence: { jevModel: model, requestSha256 } });
@@ -79,9 +81,10 @@ export async function planWithJev(task, { judge, policy = DEFAULT_JEV_PLAN_POLIC
 // and failed 7 of 18 right ones; at the default 0.5 it caught 13 of 13 and
 // failed 14 of 18. Pass `gate: true` to FAIL below `threshold`,
 // which sends the candidate to repair.
-export function createJevReviewer({ id, judge: given, gate = false, threshold = 0.5 } = {}) {
+export function createJevReviewer({ id, judge: given, gate = false, threshold = 0.5, fetch: fetchImpl } = {}) {
   if (typeof id !== 'string' || !/^[a-z][a-z0-9_.-]{0,95}$/u.test(id)) fail('JEV_ID_INVALID');
-  const judge = resolveJudge(given);
+  if (fetchImpl !== undefined && typeof fetchImpl !== 'function') fail('JEV_UNAVAILABLE');
+  const judge = resolveJudge(given, fetchImpl);
   if (typeof judge !== 'function') fail('JEV_JUDGE_REQUIRED');
   if (typeof gate !== 'boolean') fail('JEV_GATE_INVALID');
   if (!probability(threshold)) fail('JEV_THRESHOLD_INVALID');

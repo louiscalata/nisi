@@ -170,8 +170,13 @@ runs, and the served model is recorded in `evidence.jevModel`.
 questions }` to `https://api.typesafe.ai/v1/systemone` with your key as a Bearer
 token. The endpoint is fixed, so the key is never sent anywhere else; redirects are
 errors; the request and the response are each limited to 1 MiB; the call times out
-after 60 s by default (1 to 300 s, the longest Node's fetch allows); and neither the key nor the response body
-appears in any error. Its failures use these codes: `JEV_API_KEY_REQUIRED`,
+after 60 s by default (1 s to 24 h). The default transport is Node's `https` module,
+so a timeout longer than five minutes is not cut off by `fetch`. A `fetch` you pass
+to `createJevJudge`, `planWithJev` or `createJevReviewer` replaces that transport
+and keeps `fetch`'s own limits, including the five-minute header timeout. A `request`
+function replaces `https.request` for tests; it is still called with the fixed host,
+port and path. Neither
+the key nor the response body appears in any error. Its failures use these codes: `JEV_API_KEY_REQUIRED`,
 `JEV_API_KEY_INVALID`, `JEV_MODEL_INVALID`, `JEV_TIMEOUT_INVALID`,
 `JEV_REQUEST_INVALID`, `JEV_REQUEST_TOO_LARGE`, `JEV_AUTH_FAILED` (401 or 403),
 `JEV_RATE_LIMITED` (429), `JEV_HTTP_ERROR` (any other non-2xx status),
