@@ -12,6 +12,46 @@ typing. Recovery is tied to the manuscript revision and offered explicitly.
 Use **Download Markdown** and **Download editable copy** to retain portable files.
 Browser storage is a convenience, not a replacement for those downloads.
 
+The private `EditorState` keeps provider, backup, save and recovery independent.
+Only `transition()` changes it; view tables retain the existing words and backup
+success boolean. A successful backup clears a prior failure, including on a timer
+tick; timer updates touch only the backup footer. The stored manuscript format is unchanged.
+
+```mermaid
+stateDiagram-v2
+    state Provider {
+        state "unavailable" as providerUnavailable
+        connecting --> private: provider ready
+        connecting --> browser: no artifact
+        connecting --> providerUnavailable: provider failed
+    }
+    state Backup {
+        state "unavailable" as backupUnavailable
+        available --> backupUnavailable: read or write failed
+        backupUnavailable --> available: write succeeded
+        available --> available: write succeeded
+    }
+    state Save {
+        idle --> saving_browser: browser save
+        idle --> saving_private: private save
+        saving_browser --> browser_saved: backup succeeded
+        saving_browser --> browser_failed: backup failed
+        saving_private --> private_saved: publish succeeded
+        saving_private --> conflict: publish conflict
+        saving_private --> private_failed: publish failed
+    }
+    state Recovery {
+        none --> offered: newer different valid backup
+        offered --> restored: restore and consume payload
+        offered --> kept: hide offer and retain payload
+        kept --> restored: restore retained payload
+    }
+```
+
+Each save result can start another save; diagram underscores denote enum hyphens.
+Without a provider, startup uses `browser`; backup starts `available` and recovery
+starts `none`. These regions coexist; private publication can succeed while browser backup fails.
+
 `editor.js`, `editor.css` and `chrome.html` are the source. To rebuild from
 `../README-draft.md` with new baselines:
 
