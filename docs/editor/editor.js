@@ -3,11 +3,6 @@
   const state = JSON.parse(document.getElementById('state').textContent);
   const storageKey = `nisi-editor:${state.id}:${state.baseRevision}`;
   const $ = selector => document.querySelector(selector);
-  let artifact = null;
-  let localAvailable = true;
-  let providerLoading = typeof claude !== 'undefined' && typeof claude.use === 'function';
-  let saving = false;
-  let recovery = null;
   let editorReady = false;
   const esc = value => String(value).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;').replace(/'/g, '&#39;');
   function syncFields() {
@@ -19,8 +14,71 @@
     }
   }
   const snapshot = () => { syncFields(); return JSON.stringify({ about: state.about, sections: state.sections }); };
-  let localSavedSnapshot = snapshot();
-  let artifactSavedSnapshot = snapshot();
+  /** @typedef {{
+   * provider: 'connecting' | 'browser' | 'private' | 'unavailable',
+   * backup: 'available' | 'unavailable',
+   * save: 'idle' | 'saving-browser' | 'saving-private' | 'browser-saved' | 'browser-failed' | 'private-saved' | 'conflict' | 'private-failed',
+   * recovery: 'none' | 'offered' | 'restored' | 'kept',
+   * artifact: any, recoveryDraft: any,
+   * localSavedSnapshot: string, artifactSavedSnapshot: string, lastBackup: string
+   * }} EditorState */
+  /** @type {EditorState} */
+  const editor = {
+    provider: typeof claude !== 'undefined' && typeof claude.use === 'function' ? 'connecting' : 'browser',
+    backup: 'available', save: 'idle', recovery: 'none', artifact: null, recoveryDraft: null,
+    localSavedSnapshot: snapshot(), artifactSavedSnapshot: snapshot(), lastBackup: snapshot(),
+  };
+  /** @type {Record<EditorState['provider'], {label: string, disabled: boolean, message: string | null}>} */
+  const providerView = {
+    connecting: { label: 'Connecting save…', disabled: true, message: null },
+    browser: { label: 'Save in browser', disabled: false, message: null },
+    private: { label: 'Save private draft', disabled: false, message: null },
+    unavailable: { label: 'Save in browser', disabled: false, message: 'Claude save is unavailable; browser backup and downloads still work.' },
+  };
+  /** @type {Record<EditorState['backup'], {value: boolean, label: (changed: boolean) => string}>} */
+  const backupView = {
+    available: { value: true, label: changed => changed ? 'Edits backed up in this browser' : 'Draft ready to edit' },
+    unavailable: { value: false, label: () => 'Browser backup unavailable · save or download your draft' },
+  };
+  /** @type {Record<EditorState['save'], {busy: boolean, message: string | null}>} */
+  const saveView = {
+    idle: { busy: false, message: null },
+    'saving-browser': { busy: true, message: null },
+    'saving-private': { busy: true, message: 'Saving this private draft…' },
+    'browser-saved': { busy: false, message: 'Saved in this browser. Download a copy to keep it elsewhere.' },
+    'browser-failed': { busy: false, message: 'Browser storage is unavailable. Download Markdown or editable HTML to keep your work.' },
+    'private-saved': { busy: false, message: 'Draft saved. GitHub has not changed.' },
+    conflict: { busy: false, message: 'Another version was saved. Your browser backup remains available; export your text before reloading.' },
+    'private-failed': { busy: false, message: 'Could not save to Claude. Your text is still here; download a copy.' },
+  };
+  /** @type {Record<EditorState['recovery'], {hidden: boolean, message: string | null}>} */
+  const recoveryView = {
+    none: { hidden: true, message: null },
+    offered: { hidden: false, message: null },
+    restored: { hidden: true, message: 'Browser edits restored. Save this version or download it.' },
+    kept: { hidden: true, message: 'Keeping this document. The older browser backup is unchanged until you edit or save.' },
+  };
+  // All lifecycle and saved-snapshot writes belong here; manuscript data stays separate.
+  function transition(event, value = undefined) {
+    switch (event) {
+      case 'BACKUP_WRITTEN': editor.backup = 'available'; break;
+      case 'BACKUP_FAILED': editor.backup = 'unavailable'; break;
+      case 'BACKUP_TICK': editor.lastBackup = value; break;
+      case 'PROVIDER_READY': editor.artifact = value; editor.provider = value ? 'private' : 'browser'; break;
+      case 'PROVIDER_FAILED': editor.provider = 'unavailable'; break;
+      case 'RECOVERY_OFFERED': editor.recoveryDraft = value; editor.recovery = 'offered'; break;
+      case 'RECOVERY_RESTORED': editor.recoveryDraft = null; editor.recovery = 'restored'; break;
+      case 'RECOVERY_KEPT': editor.recovery = 'kept'; break;
+      case 'SAVE_STARTED': editor.save = editor.artifact ? 'saving-private' : 'saving-browser'; break;
+      case 'PRIVATE_SAVED':
+        editor.artifactSavedSnapshot = value; editor.localSavedSnapshot = value; editor.save = 'private-saved'; break;
+      case 'BROWSER_SAVED': editor.localSavedSnapshot = value; editor.save = 'browser-saved'; break;
+      case 'BROWSER_SAVE_FAILED': editor.save = 'browser-failed'; break;
+      case 'PUBLISH_CONFLICT': editor.save = 'conflict'; break;
+      case 'PUBLISH_FAILED': editor.save = 'private-failed'; break;
+      default: throw new Error('Unknown editor transition');
+    }
+  }
   function message(text) { $('#message').textContent = text; }
   function validSaved(value) {
     return value && value.id === state.id && value.baseRevision === state.baseRevision && value.schemaVersion === 1 &&
@@ -32,11 +90,12 @@
   try {
     const restored = JSON.parse(localStorage.getItem(storageKey) || 'null');
     if (validSaved(restored) && restored.savedAt > state.savedAt &&
-        JSON.stringify({ about: restored.about, sections: restored.sections }) !== snapshot()) recovery = restored;
-  } catch { localAvailable = false; }
+        JSON.stringify({ about: restored.about, sections: restored.sections }) !== snapshot()) transition('RECOVERY_OFFERED', restored);
+  } catch { transition('BACKUP_FAILED'); }
   function persistLocal() {
-    try { localStorage.setItem(storageKey, JSON.stringify({ ...state, savedAt: Date.now() })); return true; }
-    catch { localAvailable = false; return false; }
+    try { localStorage.setItem(storageKey, JSON.stringify({ ...state, savedAt: Date.now() })); transition('BACKUP_WRITTEN'); }
+    catch { transition('BACKUP_FAILED'); }
+    return backupView[editor.backup].value;
   }
   function titleOf(section) {
     const match = section.current.match(/^#{1,6}\s+(.+)$/m);
@@ -138,13 +197,16 @@
     }
     return out.join('\n');
   }
+  function showBackup() {
+    const changed = snapshot() !== (editor.artifact ? editor.artifactSavedSnapshot : editor.localSavedSnapshot);
+    $('#storage').textContent = backupView[editor.backup].label(changed);
+  }
   function tally() {
     const words = state.sections.map(s => s.current).join(' ').trim().split(/\s+/).filter(Boolean).length;
     $('#stats').textContent = `${state.sections.length} sections · ${words.toLocaleString()} words`;
-    const changed = snapshot() !== (artifact ? artifactSavedSnapshot : localSavedSnapshot);
-    $('#save').disabled = saving || providerLoading;
-    $('#save').textContent = providerLoading ? 'Connecting save…' : artifact ? 'Save private draft' : 'Save in browser';
-    $('#storage').textContent = localAvailable ? (changed ? 'Edits backed up in this browser' : 'Draft ready to edit') : 'Browser backup unavailable · save or download your draft';
+    $('#save').disabled = saveView[editor.save].busy || providerView[editor.provider].disabled;
+    $('#save').textContent = providerView[editor.provider].label;
+    showBackup();
   }
   function onEdit() { persistLocal(); tally(); }
   function buildNav() {
@@ -192,18 +254,19 @@
   $('#about').value = state.about;
   $('#about-preview').textContent = state.about;
   $('#about').addEventListener('change', event => { state.about = event.target.value; $('#about-preview').textContent = state.about; onEdit(); });
-  if (recovery) $('#recovery').hidden = false;
+  $('#recovery').hidden = recoveryView[editor.recovery].hidden;
   $('#restore').addEventListener('click', () => {
+    const recovery = editor.recoveryDraft;
     if (!recovery) return;
     const baseline = new Map(state.sections.map(s => [s.id, s.baseline]));
     state.about = recovery.about;
     state.sections = recovery.sections.map(s => ({ id: s.id, current: s.current, baseline: baseline.get(s.id) ?? '' }));
     $('#about').value = state.about; $('#about-preview').textContent = state.about;
-    $('#recovery').hidden = true; recovery = null; buildSections(); onEdit();
-    message('Browser edits restored. Save this version or download it.');
+    transition('RECOVERY_RESTORED'); $('#recovery').hidden = recoveryView[editor.recovery].hidden; buildSections(); onEdit();
+    message(recoveryView[editor.recovery].message);
   });
-  $('#keep').addEventListener('click', () => { $('#recovery').hidden = true; message('Keeping this document. The older browser backup is unchanged until you edit or save.'); });
-  $('#backup').addEventListener('click', () => { if (recovery) download('Nisi-recovered-backup.md', recovery.sections.map(s => s.current).join(''), 'text/markdown;charset=utf-8'); });
+  $('#keep').addEventListener('click', () => { transition('RECOVERY_KEPT'); $('#recovery').hidden = recoveryView[editor.recovery].hidden; message(recoveryView[editor.recovery].message); });
+  $('#backup').addEventListener('click', () => { if (editor.recoveryDraft) download('Nisi-recovered-backup.md', editor.recoveryDraft.sections.map(s => s.current).join(''), 'text/markdown;charset=utf-8'); });
   $('#copy').addEventListener('click', async () => {
     try { await navigator.clipboard.writeText(allMarkdown()); message('README Markdown copied.'); }
     catch { message('Clipboard unavailable. Use Download Markdown.'); }
@@ -216,37 +279,39 @@
     document.getElementById(`edit-${section.id}`).focus();
   });
   $('#save').addEventListener('click', async () => {
-    saving = true; tally();
+    transition('SAVE_STARTED'); tally();
     document.querySelectorAll('textarea').forEach(element => { element.disabled = true; });
     $('#add').disabled = true; $('#restore').disabled = true;
     const savingSnapshot = snapshot();
-    if (artifact) {
-      message('Saving this private draft…');
-      try { await artifact.publish(buildDocument()); artifactSavedSnapshot = savingSnapshot; localSavedSnapshot = savingSnapshot; persistLocal(); message('Draft saved. GitHub has not changed.'); }
-      catch (error) { message(error?.code === 'conflict' ? 'Another version was saved. Your browser backup remains available; export your text before reloading.' : 'Could not save to Claude. Your text is still here; download a copy.'); }
+    if (editor.artifact) {
+      message(saveView[editor.save].message);
+      try { await editor.artifact.publish(buildDocument()); transition('PRIVATE_SAVED', savingSnapshot); persistLocal(); }
+      catch (error) { transition(error?.code === 'conflict' ? 'PUBLISH_CONFLICT' : 'PUBLISH_FAILED'); }
     } else {
-      if (persistLocal()) { localSavedSnapshot = savingSnapshot; message('Saved in this browser. Download a copy to keep it elsewhere.'); }
-      else message('Browser storage is unavailable. Download Markdown or editable HTML to keep your work.');
+      transition(persistLocal() ? 'BROWSER_SAVED' : 'BROWSER_SAVE_FAILED', savingSnapshot);
     }
-    saving = false;
+    message(saveView[editor.save].message);
     document.querySelectorAll('textarea').forEach(element => { element.disabled = false; });
     $('#add').disabled = false; $('#restore').disabled = false; tally();
   });
   window.addEventListener('beforeunload', event => {
-    if (snapshot() !== localSavedSnapshot && !persistLocal()) { event.preventDefault(); event.returnValue = ''; }
+    if (snapshot() !== editor.localSavedSnapshot && !persistLocal()) { event.preventDefault(); event.returnValue = ''; }
   });
   buildSections();
   editorReady = true;
   $('#editor-build').textContent = `Editor ${state.editorBuild.slice(0, 8)} · preview refreshes after leaving a text box`;
-  let lastBackup = snapshot();
+  transition('BACKUP_TICK', snapshot());
   setInterval(() => {
-    // Read and back up values without altering DOM, layout, focus or selection.
+    // Back up values and refresh the footer without changing typing fields or previews.
     const current = snapshot();
-    if (current !== lastBackup && persistLocal()) lastBackup = current;
+    if (current !== editor.lastBackup) {
+      if (persistLocal()) transition('BACKUP_TICK', current);
+      showBackup();
+    }
   }, 750);
   (async () => {
-    try { if (typeof claude !== 'undefined' && typeof claude.use === 'function') artifact = await claude.use('artifact'); }
-    catch { message('Claude save is unavailable; browser backup and downloads still work.'); }
-    finally { providerLoading = false; tally(); }
+    try { if (editor.provider === 'connecting') transition('PROVIDER_READY', await claude.use('artifact')); }
+    catch { transition('PROVIDER_FAILED'); message(providerView[editor.provider].message); }
+    finally { tally(); }
   })();
 })();
