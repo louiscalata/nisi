@@ -9,7 +9,7 @@ Before any v0.3.1 source edit, this environment was checked for a way to call Je
 - `TYPESAFE_API_KEY` is unset. Nisi's `planWithJev` throws `JEV_JUDGE_REQUIRED` in that case and does not open a connection.
 - `security` (macOS Keychain) is not installed.
 - `secret-tool` (Linux Secret Service) is not installed.
-- `~/.config/agiw-mcp` does not exist, so there is no agiw-mcp consent record and no keychain account.
+- The agiw-mcp configuration directory does not exist, so there is no agiw-mcp consent record and no keychain account.
 - [agiw-mcp](https://github.com/louiscalata/agiw-mcp) exposes `agiw_jev_pre` only as an MCP tool. Its CLI is `readiness`, `status`, and `consent`. Those commands cannot grant consent from a non-interactive shell, and the Jev tools refuse to send until consent and a key exist.
 - [agiw-suite](https://github.com/louiscalata/agiw-suite) `jev_connection.py` reads the macOS Keychain. This VM is Linux and has no Keychain.
 

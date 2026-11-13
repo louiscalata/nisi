@@ -1,6 +1,6 @@
 # Nisi roadmap
 
-Canonical project roadmap. Updated November 10, 2026 (Pacific time). Product name: Nisi.
+Canonical project roadmap. Updated November 13, 2026 (Pacific time). Product name: Nisi.
 Source version: 0.3.1. The published tag is v0.3.1 (9 November 2026). It is not on
 the npm registry. v0.2.1 and v0.3.0 shipped the items listed under those headings.
 v0.3.0 added the `reasoningEffort` option, the optional Jev advisor and the
@@ -47,8 +47,12 @@ scope, regressions, deferred work and local verification.
   Studio. The harder-task re-measure and the local-model example stay
   `NOT_RUN`. See [the 10 November 2026 note](docs/reviews/2026-11-10-live-model-remeasure.md).
   The v0.3.1 local-model end-to-end run was also not run.
-- [x] Ship a harness that records its own settings, so a new run can be read
-  back from its output file. `benchmarks/harder/run.mjs` writes the token cap,
+
+## Unreleased after v0.3.1
+
+- [x] Implement the expanded harder-task settings record and explicit
+  `--judge typesafe` selection on main. These changes are not in v0.3.1.
+  `benchmarks/harder/run.mjs` writes the token cap,
   timeout, reasoning effort, plan and review flags, task-set id, arms, repair
   budget, deadline, judge source, endpoint, package version and runtime.
   `--plan` and `--jev-review` use the built-in client when `--judge typesafe`

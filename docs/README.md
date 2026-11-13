@@ -44,11 +44,11 @@ Each record is scoped to the version it names. The Windows check is one machine 
 | [Raw verification files](verification/) | You want the logs, manifests and summaries behind those records, in the dated folders `2026-09-11`, `2026-09-12` and `2026-09-12-v0.1`. |
 | [Review records](reviews/) | You want the written reviews of earlier pushes and of the main branch. |
 
-Versions without a record:
+Coverage by version:
 
 - **v0.2.1:** changed the journal, store, file access policy and CLI. Covered by tests only.
-- **v0.3.0:** adds `reasoningEffort`, the Jev advisor and one CLI error-code entry. Covered by `tests/jev-advisor.test.mjs`, `tests/local-chat.test.mjs` and `tests/harder-benchmark.test.mjs`.
-- **v0.3.1:** adds the Jev client, harder-task set v2, the local-chat transport timeout fix, and `nisi validate`. Covered by tests. No verification record. Jev was not called while this version was prepared (`docs/jev/`).
+- **v0.3.0:** adds `reasoningEffort`, the Jev advisor and one CLI error-code entry. Covered by `tests/jev-advisor.test.mjs`, `tests/local-chat.test.mjs` and `tests/harder-benchmark.test.mjs`, plus the [Windows hardware check](verification-v0.3-windows.md) on one PC. That check did not include a live model task.
+- **v0.3.1:** adds the Jev client, harder-task set v2, the local-chat transport timeout fix, and `nisi validate`. Covered by tests and Linux/Windows CI on Node.js 22 and 24, with publication checks in the [release notes](https://github.com/louiscalata/nisi/releases/tag/v0.3.1). No local-model end-to-end run or repeated Windows hardware check was performed. Jev was not called during [source preparation](jev/pre-v0.3.1.md).
 - **After v0.3.1, not tagged:** the Jev client uses Node's `https` module. The remote judge is opt-in: `judge: 'typesafe'` or, on the harder-task runner, `--judge typesafe`. `TYPESAFE_API_KEY` alone prints one line and sends nothing. See the changelog Unreleased section and [the v0.3.2 proposal](release-notes/v0.3.2.md). That proposal is not a release. A 10 November 2026 Mac check of the harder-task re-measure is [recorded as `NOT_RUN`](reviews/2026-11-10-live-model-remeasure.md).
 
 ## Repository layout

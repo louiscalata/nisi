@@ -1,6 +1,6 @@
 # Live-model re-measure check — 10 November 2026
 
-Machine: Louis-M5-Pro-MacBook-Pro.local. Source checked: `origin/main` at `280abd5` (merge of PR #43). Nothing was tagged, released, or published. No process was stopped, including the existing `http.server` on port 4173. No model was downloaded, and no credit was purchased.
+Environment: the development Mac. Source checked: `origin/main` at `280abd5` (merge of PR #43). Nothing was tagged, released, or published. No process was stopped, including the existing `http.server` on port 4173. No model was downloaded, and no credit was purchased.
 
 **Verdict: NOT_RUN.** This is not a pass. The harder-task re-measure and the local-model end-to-end example were not executed.
 
@@ -24,5 +24,5 @@ Nisi's local-chat adapter only calls an unauthenticated HTTP loopback chat-compl
 
 ## Other open items, still not run
 
-- The two nx05 revoke-scratch journals were not copied in and were not re-checked in this pass. They remain outside the repository. The earlier read-only check and the `LEGACY_UNRETAINED_FINGERPRINT` reason in the run journal guide still stand. The files stay rejected.
+- The two scratch journals from a revocation check were not copied in and were not re-checked in this pass. They remain outside the repository. The earlier read-only check and the `LEGACY_UNRETAINED_FINGERPRINT` reason in the run journal guide still stand. The files stay rejected.
 - The one-PC Windows note in `docs/verification-v0.3-windows.md` is still the v0.3.0 check. It was not repeated.
