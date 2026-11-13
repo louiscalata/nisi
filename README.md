@@ -6,7 +6,7 @@
 
 Nisi runs one coding task through draft, checks, tests, separate review and bounded repair, and returns a report. It does not apply the files.
 
-**Status:** The published release is [v0.3.1](https://github.com/louiscalata/nisi/releases/tag/v0.3.1) (9 November 2026), on GitHub with `nisi-0.3.1.tgz` and `SHA256SUMS`. Nisi is not on the npm registry. This source tree has unreleased changes after that tag; see the [changelog](https://github.com/louiscalata/nisi/blob/main/CHANGELOG.md). Node.js 22 or newer on macOS, Linux and Windows. Apache-2.0. The v0.3.1 changes are covered by the test suite and CI (Linux and Windows, Node.js 22 and 24). The [Windows check](https://github.com/louiscalata/nisi/blob/main/docs/verification-v0.3-windows.md) is one PC on v0.3.0 and was not repeated for v0.3.1. A local-model end-to-end run for v0.3.1 was **not run**. A 10 November 2026 Mac re-measure of the harder tasks was also **not run**; models were present on disk, but no usable loopback endpoint was available ([note](https://github.com/louiscalata/nisi/blob/main/docs/reviews/2026-11-10-live-model-remeasure.md)). Jev pre- and post-analysis did not run while the source was prepared ([docs/jev](https://github.com/louiscalata/nisi/blob/main/docs/jev/pre-v0.3.1.md)); the post-analysis run at publish time is recorded in the [release notes](https://github.com/louiscalata/nisi/releases/tag/v0.3.1). v0.3.2 is in preparation; see [docs/release-notes/v0.3.2.md](https://github.com/louiscalata/nisi/blob/main/docs/release-notes/v0.3.2.md). The latest release is v0.3.1.
+**Status:** [v0.3.1](https://github.com/louiscalata/nisi/releases/tag/v0.3.1) was released on 9 November 2026 as a GitHub Release with `nisi-0.3.1.tgz` and `SHA256SUMS`. Requires Node.js 22 or newer on macOS, Linux or Windows. Apache-2.0. Nisi is not on npm. This checkout includes [unreleased changes](https://github.com/louiscalata/nisi/blob/main/CHANGELOG.md); v0.3.2 has not been released.
 
 ## Quick start
 
@@ -30,13 +30,13 @@ You should see this JSON:
 }
 ```
 
-The demo calls no model. It repairs an intentionally incorrect module once, writes a report in a temporary directory, checks it by read-back, and deletes it. `node examples/workflow.mjs` keeps the report.
+The demo uses deterministic callbacks to simulate model drafting and review; it calls no model. It repairs an intentionally incorrect module once, writes a report in a temporary directory, checks it by read-back, and deletes it. `node examples/workflow.mjs` keeps the report.
 
 From a source checkout, `npm ci` then `npm run check` runs the structural check and the tests. Installing the release archive is described in [Install and use](https://github.com/louiscalata/nisi/blob/main/docs/install.md).
 
 ## Jev pre- and post-analysis
 
-Jev is TypeSafe's hosted System One model, a paid API with no free or open-weight stand-in. Nisi can ask it two questions around a run. Nothing is sent unless you pass a `judge` function or `judge: 'typesafe'` (on the harder-task runner, `--judge typesafe`). `TYPESAFE_API_KEY` alone prints one line to stderr and leaves the call on the local or no-judge path. v0.3.1 did send when that variable was set and no `judge` was passed.
+Jev is TypeSafe's hosted System One model. In v0.3.1, calling `planWithJev` without a `judge` uses the hosted client when `TYPESAFE_API_KEY` is set; a reviewer created without a judge uses that client when its review runs. Creating the reviewer does not send a request. Unreleased source on main requires a `judge` function or `judge: 'typesafe'`. With the key set and no judge, `planWithJev` rejects and `createJevReviewer` throws `JEV_JUDGE_REQUIRED`; each prints one line to stderr and sends nothing. The unreleased harder-task runner requires `--judge typesafe` or a judge module for Jev planning or review.
 
 **Pre-analysis** (`planWithJev`) asks whether the task needs the model to reason (`reason` or `direct`) and whether the task is missing information. The default map gives `direct` tasks `reasoningEffort: 'none'` and 1,024 output tokens, and `reason` tasks 4,096 tokens. That choice is a setting, not evidence that the setting is better.
 
@@ -84,10 +84,17 @@ scripts/validate-real-data.sh --journal /absolute/path/to/journal.jsonl
 - **Trust.** Nisi checks what your callbacks report. It cannot see what they did. `COMPLETED` does not authorize applying files or shipping.
 - **Generated code.** If you run generated code, isolate it.
 - **Run journal.** The optional run journal is a hash-chained record of a run. Its `verified: true` means internal consistency, not authenticity.
-- **Data sent to Jev.** Nisi builds a `state` record: the task's id, mode, language, allowed file names and acceptance criteria and, for the reviewer, the candidate's files and whether the tests passed. A `judge` function decides what is sent. `judge: 'typesafe'` sends that `state` as is with the built-in client, which reads `TYPESAFE_API_KEY`. The variable alone does not send.
+- **Data sent to Jev.** In v0.3.1, invoking Jev planning or review without a `judge` can send data to TypeSafe when `TYPESAFE_API_KEY` is set. Planning sends the task's id, mode, language, allowed file names and acceptance criteria. Review also sends the candidate's file contents and whether the tests passed. A supplied `judge` function controls its own transmission. Unreleased source on main requires explicit selection of the built-in client with `judge: 'typesafe'`; the key alone does not enable it.
 - **Jev as reviewer.** By default it passes, yet counts as a required reviewer. A failing judge blocks the run. The measured ranking was too weak to use as a gate. See the section above.
 - **Not measured.** The benchmarks are integration checks, not accuracy estimates. The local pilot used one loaded model and 12 tasks, and Nisi tied a handwritten checked loop.
-- **Verification.** v0.3.0 and v0.3.1 are covered by tests. v0.3.0 has a one-PC Windows note. v0.3.1 has no verification record of its own beyond CI and the checks listed in its release notes.
+
+## Verification
+
+v0.3.1 is covered by the test suite and Linux/Windows CI on Node.js 22 and 24. A local-model end-to-end run of v0.3.1 was **not run**. The [Windows hardware check](https://github.com/louiscalata/nisi/blob/main/docs/verification-v0.3-windows.md) covers one PC on v0.3.0 and was not repeated for v0.3.1.
+
+The [10 November harder-task re-measure](https://github.com/louiscalata/nisi/blob/main/docs/reviews/2026-11-10-live-model-remeasure.md) was **NOT_RUN**: models were present on disk, but no usable loopback endpoint was available. Jev pre- and post-analysis did not run during [source preparation](https://github.com/louiscalata/nisi/blob/main/docs/jev/pre-v0.3.1.md); the [published release notes](https://github.com/louiscalata/nisi/releases/tag/v0.3.1) record checks performed at publication.
+
+The [v0.3.2 notes](https://github.com/louiscalata/nisi/blob/main/docs/release-notes/v0.3.2.md) describe proposed, unreleased changes.
 
 ## Learn more
 
