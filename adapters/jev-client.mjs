@@ -92,6 +92,8 @@ async function readBounded(response, cap, signal) {
       if (total > cap) fail('JEV_RESPONSE_TOO_LARGE');
       chunks.push(part.value);
     }
+    // Cancelling on abort ends a pending read as done. That body is truncated, not complete.
+    if (signal.aborted) fail('JEV_UNAVAILABLE');
   } catch (error) { cancel(); throw error; }
   finally { signal.removeEventListener('abort', cancel); try { reader.releaseLock(); } catch { /* released */ } }
   const bytes = new Uint8Array(total); let offset = 0;

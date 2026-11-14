@@ -91,6 +91,28 @@ test('a server that never answers is cut off at timeoutMs and the socket closes'
   } finally { await s.close(); }
 });
 
+test('a body that stalls after the headers is cut off at timeoutMs as JEV_TIMEOUT and the socket closes', async () => {
+  const closed = [];
+  const s = await serve((req, res) => {
+    req.socket.on('close', () => closed.push('closed'));
+    res.writeHead(200, { 'content-type': 'application/json' });
+    res.write(okBody.slice(0, 20));
+  });
+  try {
+    const started = Date.now();
+    const judge = createJevJudge({ apiKey: KEY, timeoutMs: 1000, request: s.request });
+    await assert.rejects(() => call(judge), error => {
+      assert.equal(error.code, 'JEV_TIMEOUT');
+      assert.equal(error.message, 'JEV_TIMEOUT');
+      assert.ok(!error.message.includes(KEY));
+      return true;
+    });
+    assert.ok(Date.now() - started < 4000);
+    for (let i = 0; i < 40 && closed.length < 1; i += 1) await new Promise(r => setTimeout(r, 50));
+    assert.equal(closed.length, 1);
+  } finally { await s.close(); }
+});
+
 test('redirects are not followed, and error text omits the key and the response body', async () => {
   const cases = [
     [(req, res) => { res.writeHead(302, { location: 'https://evil.example/steal' }); res.end(KEY); }, 'JEV_HTTP_ERROR'],
