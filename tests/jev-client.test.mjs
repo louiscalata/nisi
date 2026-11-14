@@ -94,6 +94,20 @@ test('a call that outlives its timeout is aborted and reported as JEV_TIMEOUT', 
   assert.ok(Date.now() - started < 4000);
 });
 
+test('a response body that stalls past the timeout is JEV_TIMEOUT, not JEV_RESPONSE_INVALID', async () => {
+  // Headers arrive and part of the body, then nothing. Cancelling the reader on abort
+  // ends the pending read as done, so the truncated text must not reach JSON.parse.
+  const stall = async () => new Response(new ReadableStream({ start(controller) { controller.enqueue(new TextEncoder().encode('{"model":"jev-1.14.0","ans')); } }), { status: 200 });
+  const judge = createJevJudge({ apiKey: KEY, timeoutMs: 1000, fetch: stall });
+  const started = Date.now();
+  await assert.rejects(() => call(judge), error => {
+    assert.equal(error.code, 'JEV_TIMEOUT');
+    assert.equal(error.message, 'JEV_TIMEOUT');
+    return true;
+  });
+  assert.ok(Date.now() - started < 4000);
+});
+
 test('the hosted judge is opt-in; a set TYPESAFE_API_KEY alone prints one line and sends nothing', async () => {
   const saved = process.env[JEV_API_KEY_ENV], savedFetch = globalThis.fetch, savedError = console.error;
   const s = server();
