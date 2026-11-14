@@ -7,6 +7,7 @@ import fs from 'node:fs';
 import os from 'node:os';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
+import { readPackInfo } from './pack-info.mjs';
 
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const packageJson = JSON.parse(fs.readFileSync(path.join(root, 'package.json'), 'utf8'));
@@ -40,7 +41,7 @@ function requireSuccess(result, label) {
 try {
   const packResult = npm(['pack', '--json', '--pack-destination', packDir], root, 'npm pack');
   requireSuccess(packResult, 'npm pack');
-  const packInfo = JSON.parse(packResult.stdout)[0];
+  const packInfo = readPackInfo(packResult.stdout, packageJson.name);
   const archive = path.join(packDir, packInfo.filename);
   const packedPaths = new Set(packInfo.files.map(file => file.path));
   for (const required of [
@@ -59,7 +60,10 @@ try {
   requireSuccess(install, 'offline package install');
 
   function cli(args) {
-    return npm(['exec', '--offline', '--', 'nisi', ...args], consumerDir, `nisi ${args[0] ?? ''}`);
+    // npm 12 echoes the exec command line as an `npm notice` on stderr; keep
+    // stderr to what nisi itself prints so the no-echo checks below hold.
+    return npm(['exec', '--offline', '--loglevel=warn', '--', 'nisi', ...args], consumerDir,
+      `nisi ${args[0] ?? ''}`);
   }
 
   const help = cli(['--help']);
