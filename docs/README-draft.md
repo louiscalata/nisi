@@ -1,5 +1,11 @@
 # Nisi v0.1
 
+> **Historical document.** This is the README text drafted for Nisi v0.1 in
+> September 2026. It does not describe the current release. For current
+> documentation, read the
+> [README](https://github.com/louiscalata/nisi/blob/main/README.md) and the
+> [roadmap](https://github.com/louiscalata/nisi/blob/main/roadmap.md).
+
 **A Node.js library for running AI-assisted coding workflows.**
 
 Use Nisi when your application needs to coordinate drafting, checks, tests,
