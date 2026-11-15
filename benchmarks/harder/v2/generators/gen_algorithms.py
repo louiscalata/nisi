@@ -9,8 +9,8 @@ Running this script writes, next to itself:
   algorithms.tasks.json    full tasks (with expectedAnswer)
   algorithms.prompts.json  the same tasks with expectedAnswer removed
 """
+
 import heapq
-import itertools
 import json
 import os
 import random
@@ -109,8 +109,7 @@ def task_topo():
         prompt = (
             "A build has 12 tasks: " + ", ".join(shown_names) + ".\n"
             "Each line below means the left task must be completed before the right task. "
-            "A line may appear more than once; a repeated line is still just one constraint.\n"
-            + lines + "\n"
+            "A line may appear more than once; a repeated line is still just one constraint.\n" + lines + "\n"
             "Build the completion order with this procedure, repeated 12 times: among the "
             "not-yet-completed tasks whose prerequisites are ALL already completed, pick the one "
             "whose name is smallest when compared as plain text, character by character from the "
@@ -160,8 +159,8 @@ def task_rooms():
         rng = random.Random(9200 + seed)
         meetings = []
         for num in range(1, 13):
-            s = 480 + 15 * rng.randrange(0, 17)       # 08:00 .. 12:00
-            d = 15 * rng.randrange(2, 9)              # 30 .. 120 min
+            s = 480 + 15 * rng.randrange(0, 17)  # 08:00 .. 12:00
+            d = 15 * rng.randrange(2, 9)  # 30 .. 120 min
             meetings.append((num, s, s + d))
         ends = {e for _, _, e in meetings}
         touching = sum(1 for _, s, _ in meetings if s in ends)
@@ -178,8 +177,7 @@ def task_rooms():
         prompt = (
             "Twelve meetings must be placed into numbered rooms (Room 1, Room 2, ...). "
             "Times are 24-hour HH:MM and each meeting's end time is exclusive, so a meeting "
-            "ending at 10:00 and one starting at 10:00 may use the same room.\n"
-            + lines + "\n"
+            "ending at 10:00 and one starting at 10:00 may use the same room.\n" + lines + "\n"
             "Process the meetings in this order: earliest start time first; if starts are equal, "
             "the earlier end time first; if still equal, the smaller meeting number first. "
             "Put each meeting in the LOWEST-numbered room that is free at its start time (a room "
@@ -277,10 +275,7 @@ def glob_match_regex(p, s):
         elif t[0] == "any":
             out.append(".")
         else:
-            body = "".join(
-                (re.escape(lo) if lo == hi else re.escape(lo) + "-" + re.escape(hi))
-                for lo, hi in t[2]
-            )
+            body = "".join((re.escape(lo) if lo == hi else re.escape(lo) + "-" + re.escape(hi)) for lo, hi in t[2])
             out.append("[" + ("^" if t[1] else "") + body + "]")
     return re.fullmatch("".join(out), s, re.S) is not None
 
@@ -322,8 +317,7 @@ def task_glob():
         "literal '-'; the first ']' after the opening bracket closes the set; a backslash makes "
         "the next character literal (so \\* is a star, \\[ is a bracket, \\\\ is one backslash). "
         "Every character in P and S is shown exactly as it is, with no extra quoting and no "
-        "surrounding spaces.\n"
-        + lines + "\n"
+        "surrounding spaces.\n" + lines + "\n"
         f"Return answer as a JSON array of {len(pairs)} booleans (true or false), one per pair in order."
     )
     return {
@@ -455,8 +449,7 @@ def task_path():
         lines = "\n".join(f"{a}>{b}:{w}" for (a, b), w in shown)
         prompt = (
             "A directed road network has these one-way roads, each written FROM>TO:COST "
-            "(all costs are positive integers):\n"
-            + lines + "\n"
+            "(all costs are positive integers):\n" + lines + "\n"
             f"Travel from {src} to {dst}. Rules: the node M4 is closed, so no route may enter "
             "M4 (it is not the start or destination). A route must not visit any node twice. "
             "You hold ONE coupon: you may make any single road on your route cost 0 "
@@ -532,8 +525,7 @@ def task_knapsack():
         cap = rng.randrange(26, 34)
         ids = list(range(1, n + 1))
         rng.shuffle(ids)
-        excl = [tuple(sorted((ids[0], ids[1]))), tuple(sorted((ids[2], ids[3]))),
-                tuple(sorted((ids[4], ids[5])))]
+        excl = [tuple(sorted((ids[0], ids[1]))), tuple(sorted((ids[2], ids[3]))), tuple(sorted((ids[4], ids[5])))]
         requires = [(ids[6], ids[7])]  # ids[6] may only be taken together with ids[7]
         feas = knapsack_all(items, cap, excl, requires)
         best_v = max(v for v, _, _ in feas)
@@ -558,8 +550,7 @@ def task_knapsack():
         lines = "\n".join(f"{i}: weight {items[i - 1][0]}, value {items[i - 1][1]}" for i in range(1, n + 1))
         ex = "; ".join(f"{a} and {b}" for a, b in excl)
         prompt = (
-            f"Choose a subset of the 12 numbered items below with total weight at most {cap}.\n"
-            + lines + "\n"
+            f"Choose a subset of the 12 numbered items below with total weight at most {cap}.\n" + lines + "\n"
             f"Conflicts: these pairs can never both be chosen: {ex}. "
             f"Dependency: item {requires[0][0]} may be chosen only if item {requires[0][1]} is also chosen "
             f"(item {requires[0][1]} may be chosen without item {requires[0][0]}).\n"
@@ -777,8 +768,7 @@ def task_mst():
         prompt = (
             f"An undirected weighted graph has vertices 1..{n} and these edges (label: endpoints, weight); "
             "the labels e1, e2, ... define the listing order, with the number after 'e' compared as a number "
-            "(e2 is listed before e10). An edge such as 7-7 is a self-loop.\n"
-            + lines + "\n"
+            "(e2 is listed before e10). An edge such as 7-7 is a self-loop.\n" + lines + "\n"
             f"Edges {bl} are out of service and must be ignored completely. Run Kruskal's algorithm on the "
             "rest: sort by weight ascending, breaking weight ties by listing order (earlier-listed edge "
             "first); go through the sorted edges once, and accept an edge only if its two endpoints are not "
