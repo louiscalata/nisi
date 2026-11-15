@@ -29,9 +29,12 @@ exact named code. `contracts/canonical-json-v1-profile.md` states what the codec
 guarantees and, more importantly, what it does not.
 
 The run journal validates its documented entry schema and hash-chain structure;
-the store validates serialized journals before writing and refuses malformed or
-incomplete journal files when reading. The Workflow Orchestrator validates
-scoped task/candidate records, adapter-result schemas and
+the store validates serialized journals before writing and refuses malformed
+journal files, and files that end before a valid footer, when reading. Neither
+detects a file shortened to an earlier entry with a rewritten footer, or an
+older complete copy put back in place; see `docs/run-journal.md` (Store).
+The Workflow Orchestrator validates scoped task/candidate records,
+adapter-result schemas and
 run/task/attempt/candidate bindings. It derives a completion status
 from configured required stages. That status describes those checks; it is not
 a security certification or permission to release software.

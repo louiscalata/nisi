@@ -8,6 +8,7 @@ Running it writes next to this file:
   structured-data.tasks.json    (with expectedAnswer)
   structured-data.prompts.json  (expectedAnswer removed)
 """
+
 import copy
 import json
 import math
@@ -27,11 +28,9 @@ def strict_eq(a, b):
     if isinstance(a, bool) or isinstance(b, bool):
         return isinstance(a, bool) and isinstance(b, bool) and a == b
     if isinstance(a, dict):
-        return (isinstance(b, dict) and set(a) == set(b)
-                and all(strict_eq(a[k], b[k]) for k in a))
+        return isinstance(b, dict) and set(a) == set(b) and all(strict_eq(a[k], b[k]) for k in a)
     if isinstance(a, list):
-        return (isinstance(b, list) and len(a) == len(b)
-                and all(strict_eq(x, y) for x, y in zip(a, b)))
+        return isinstance(b, list) and len(a) == len(b) and all(strict_eq(x, y) for x, y in zip(a, b))
     if isinstance(b, (dict, list)):
         return False
     if a is None or b is None:
@@ -120,7 +119,7 @@ def parse_path(raw):
                 cur = []
                 have_key = False
             j = raw.index("]", i)
-            toks.append(("i", int(raw[i + 1:j])))
+            toks.append(("i", int(raw[i + 1 : j])))
             i = j + 1
             if i < n and raw[i] == ".":
                 i += 1
@@ -419,7 +418,7 @@ def apply_op(doc, op):
     elif kind in ("move", "copy"):
         ft = ptoks(op["from"])
         if kind == "move":
-            if len(toks) > len(ft) and toks[:len(ft)] == ft:
+            if len(toks) > len(ft) and toks[: len(ft)] == ft:
                 raise PatchError("from is a proper prefix of path")
             resolve(doc, ft)
             v = p_remove(doc, ft)
@@ -467,38 +466,50 @@ def task_json_patch():
         "meta": {"v": 1},
     }
     patches = [
-        ("P1", [
-            O("add", "/cfg/a~1b/1", "new"),
-            O("remove", "/cfg/a~1b/0"),
-            O("move", "/cfg/a~1b/0", frm="/cfg/a~1b/3"),
-            O("copy", "/list/-", frm="/cfg/m~0n/y"),
-            O("replace", "/cfg/m~0n/y/0", False),
-            O("test", "/list/3/0", True),
-            O("add", "/meta/tags", ["t"]),
-            O("move", "/list/2", frm="/list/0"),
-            O("test", "/meta", {"tags": ["t"], "v": 1}),
-            O("replace", "/meta/v", 2),
-            O("remove", "/cfg/m~0n/x"),
-        ]),
-        ("P2", [
-            O("add", "/list/0", "head"),
-            O("test", "/meta/v", 2),
-            O("copy", "/cfg/clone", frm="/cfg/m~0n"),
-            O("test", "/cfg/clone/y/0", True),
-        ]),
-        ("P3", [
-            O("test", "/list", ["q", "r", "p", [True, False]]),
-            O("test", "/cfg/m~0n", {"y": [False, False]}),
-            O("replace", "/list/3/1", True),
-            O("add", "/cfg/a~1b/4", "end"),
-            O("move", "/cfg/tags", frm="/meta/tags"),
-            O("copy", "/cfg/a~1b/0", frm="/cfg/tags/0"),
-            O("remove", "/list/1"),
-        ]),
-        ("P4", [
-            O("add", "/zzz", 1),
-            O("move", "/cfg/inner", frm="/cfg"),
-        ]),
+        (
+            "P1",
+            [
+                O("add", "/cfg/a~1b/1", "new"),
+                O("remove", "/cfg/a~1b/0"),
+                O("move", "/cfg/a~1b/0", frm="/cfg/a~1b/3"),
+                O("copy", "/list/-", frm="/cfg/m~0n/y"),
+                O("replace", "/cfg/m~0n/y/0", False),
+                O("test", "/list/3/0", True),
+                O("add", "/meta/tags", ["t"]),
+                O("move", "/list/2", frm="/list/0"),
+                O("test", "/meta", {"tags": ["t"], "v": 1}),
+                O("replace", "/meta/v", 2),
+                O("remove", "/cfg/m~0n/x"),
+            ],
+        ),
+        (
+            "P2",
+            [
+                O("add", "/list/0", "head"),
+                O("test", "/meta/v", 2),
+                O("copy", "/cfg/clone", frm="/cfg/m~0n"),
+                O("test", "/cfg/clone/y/0", True),
+            ],
+        ),
+        (
+            "P3",
+            [
+                O("test", "/list", ["q", "r", "p", [True, False]]),
+                O("test", "/cfg/m~0n", {"y": [False, False]}),
+                O("replace", "/list/3/1", True),
+                O("add", "/cfg/a~1b/4", "end"),
+                O("move", "/cfg/tags", frm="/meta/tags"),
+                O("copy", "/cfg/a~1b/0", frm="/cfg/tags/0"),
+                O("remove", "/list/1"),
+            ],
+        ),
+        (
+            "P4",
+            [
+                O("add", "/zzz", 1),
+                O("move", "/cfg/inner", frm="/cfg"),
+            ],
+        ),
     ]
     cur = doc
     failures = []
@@ -507,16 +518,14 @@ def task_json_patch():
         if bad is not None:
             failures.append({"patch": name, "opIndex": bad})
     ans = {"doc": cur, "failures": failures}
-    blocks = "\n".join(
-        f"{name}: " + "; ".join(render_op(o) for o in ops) for name, ops in patches
-    )
+    blocks = "\n".join(f"{name}: " + "; ".join(render_op(o) for o in ops) for name, ops in patches)
     prompt = (
         "Apply RFC 6902 JSON Patches P1, P2, P3, P4 in order. Paths are RFC 6901 pointers (~1 = '/', ~0 = '~'; '-' as an array "
         "index appends). Notation: `add PATH VALUE`, `remove PATH`, `replace PATH VALUE`, `test PATH VALUE`, `move FROM -> PATH`, "
         "`copy FROM -> PATH`. add into an array inserts before that index (index = length appends; larger is an error); add on an "
         "object key overwrites. Everything else needs an existing location and in-range indexes. move = remove FROM then add at PATH "
         "(PATH indexes are evaluated after the removal); it is an error if FROM is a proper prefix of PATH. copy duplicates the value. "
-        "test passes only on deep equality (object key order ignored; true is not 1; \"2\" is not 2). Each patch is ATOMIC: if any op "
+        'test passes only on deep equality (object key order ignored; true is not 1; "2" is not 2). Each patch is ATOMIC: if any op '
         "errors or a test fails, the whole patch is discarded (document unchanged) and later patches still run. Record the 0-based "
         "index of the first failing op of each discarded patch.\n"
         f"document = {J(doc)}\n{blocks}\n"
@@ -540,6 +549,7 @@ def dm(base, over):
                 res[k] = dm(res[k], v) if k in res else dm(None, v)
         return res
     if isinstance(over, list) and isinstance(base, list):
+
         def all_id(a):
             return all(isinstance(e, dict) and "id" in e for e in a)
 
@@ -574,29 +584,46 @@ def dm(base, over):
 def task_deep_merge():
     base = {
         "app": {
-            "name": "core", "ports": [80, 443], "features": ["a", "b"],
+            "name": "core",
+            "ports": [80, 443],
+            "features": ["a", "b"],
             "limits": {"cpu": 1, "mem": 512},
             "hooks": [{"id": "h1", "cmd": "x", "env": {"A": "1", "B": "2"}}, {"id": "h2", "cmd": "y"}],
         },
-        "owner": "ops", "labels": {"tier": "gold"}, "retries": 3,
+        "owner": "ops",
+        "labels": {"tier": "gold"},
+        "retries": 3,
     }
     o1 = {
         "app": {
-            "ports": [443, 8080, 80, 9000], "features": ["c", "a"],
+            "ports": [443, 8080, 80, 9000],
+            "features": ["c", "a"],
             "limits": {"mem": None, "disk": 10},
-            "hooks": [{"id": "h1", "env": {"B": None, "C": "3"}}, {"id": "h3", "cmd": "z"},
-                      {"id": "h2", "_delete": True}],
+            "hooks": [
+                {"id": "h1", "env": {"B": None, "C": "3"}},
+                {"id": "h3", "cmd": "z"},
+                {"id": "h2", "_delete": True},
+            ],
         },
-        "owner": {"team": "sre", "pager": None}, "labels": ["x"], "retries": None,
+        "owner": {"team": "sre", "pager": None},
+        "labels": ["x"],
+        "retries": None,
         "extra": {"a": None, "b": []},
     }
     o2 = {
         "app": {
-            "name": "core2", "ports": [], "features": [1, "a"],
-            "hooks": [{"id": "h3", "cmd": None, "env": {"Z": "9"}}, {"id": "h9", "_delete": True},
-                      {"id": "h4", "note": None}, {"id": "h3", "cmd": "w"}],
+            "name": "core2",
+            "ports": [],
+            "features": [1, "a"],
+            "hooks": [
+                {"id": "h3", "cmd": None, "env": {"Z": "9"}},
+                {"id": "h9", "_delete": True},
+                {"id": "h4", "note": None},
+                {"id": "h3", "cmd": "w"},
+            ],
         },
-        "owner": {"team": None, "pager": "p1"}, "labels": [{"id": 1, "v": 2}],
+        "owner": {"team": None, "pager": "p1"},
+        "labels": [{"id": 1, "v": 2}],
         "extra": {"b": [{"id": 7}]},
     }
     ans = dm(dm(base, o1), o2)
@@ -604,10 +631,10 @@ def task_deep_merge():
         "Compute merge(merge(base, o1), o2). merge(A, B): "
         "(a) B an object: if A is not an object use {}; for each key k of B: B[k] null -> delete k from the result; else "
         "result[k] = merge(A[k], B[k]) (an absent A[k] is neither object nor array). "
-        "(b) A and B both arrays: if every element of both is an object with an \"id\" key (empty arrays qualify), merge by id: "
+        '(b) A and B both arrays: if every element of both is an object with an "id" key (empty arrays qualify), merge by id: '
         "start with A's elements; for each B element in order, if an element with an equal id exists (same type and value) then "
-        "remove it if the B element has \"_delete\": true, else replace it with merge(existing, B element); if none exists, append "
-        "merge({}, B element) unless it has \"_delete\": true (then ignore it). Else if every element of both is a scalar (empty "
+        'remove it if the B element has "_delete": true, else replace it with merge(existing, B element); if none exists, append '
+        'merge({}, B element) unless it has "_delete": true (then ignore it). Else if every element of both is a scalar (empty '
         "qualifies): A's elements followed by B's elements not already present (same type and value). Else the result is B. "
         "(c) Anything else: the result is B.\n"
         f"base = {J(base)}\no1 = {J(o1)}\no2 = {J(o2)}\n"
@@ -645,18 +672,22 @@ def diff(a, b, path, ops):
 
 def task_diff():
     a = {
-        "id": 7, "Name": "x",
+        "id": 7,
+        "Name": "x",
         "a/b": {"k~": [1, 2, 3, 4, 5], "z": None},
         "a-b": True,
         "list": [{"n": 1, "t": ["p"]}, {"n": 2}, 5],
-        "old": 1, "flag": 1,
+        "old": 1,
+        "flag": 1,
     }
     b = {
-        "id": 7, "name": "x",
+        "id": 7,
+        "name": "x",
         "a/b": {"k~": [1, 9, 3], "z": 0, "w": {}},
         "a-b": True,
         "list": [{"n": 1, "t": ["p", "q"]}, [2], 5, 6, 7],
-        "flag": True, "new": [],
+        "flag": True,
+        "new": [],
     }
     ops = []
     diff(a, b, "", ops)
@@ -670,7 +701,7 @@ def task_diff():
         "then for i = len(x)-1 down to m emit remove at path/i. Otherwise, if the two values are not equal, emit replace at path "
         "with y's whole value (this covers different types, null vs anything, and true vs 1; equality is deep, key order ignored). "
         "Equal values emit nothing. Paths are RFC 6901 pointers: escape '~' as ~0 first, then '/' as ~1. Objects are "
-        "{\"op\",\"path\",\"value\"}; remove ops have no \"value\" key.\n"
+        '{"op","path","value"}; remove ops have no "value" key.\n'
         f"A = {J(a)}\nB = {J(b)}\n"
         'Return answer as a JSON array of op objects in emission order, e.g. [{"op":"remove","path":"/x"},{"op":"add","path":"/y","value":1}].'
     )
@@ -721,8 +752,16 @@ def task_group_by():
         top = None
         if g["prod"]:
             top = sorted(g["prod"].items(), key=lambda kv: (-kv[1], kv[0]))[0][0]
-        rows.append({"region": r, "orders": g["orders"], "units": g["units"],
-                     "revenue": g["revenue"], "avgUnitPrice": avg, "topProduct": top})
+        rows.append(
+            {
+                "region": r,
+                "orders": g["orders"],
+                "units": g["units"],
+                "revenue": g["revenue"],
+                "avgUnitPrice": avg,
+                "topProduct": top,
+            }
+        )
     rows.sort(key=lambda x: (-x["revenue"], x["region"]))
     lines = "\n".join(J(r) for r in recs)
     prompt = (
@@ -733,7 +772,7 @@ def task_group_by():
         "(3) Per group compute: orders = number of records; units = sum of qty over records whose qty is not null; "
         "revenue = sum of qty*price_cents over records where BOTH qty and price are non-null (so a record with a null price still "
         "adds its qty to units but nothing to revenue); avgUnitPrice = revenue/units as a fully reduced fraction "
-        "{\"numerator\":n,\"denominator\":d} (an integer value still has denominator 1; if units is 0 use null); "
+        '{"numerator":n,"denominator":d} (an integer value still has denominator 1; if units is 0 use null); '
         "topProduct = the product (trimmed, lowercased; null products ignored) with the largest sum of qty (null qty counts as 0), "
         "ties broken by alphabetically smaller name, or null if no record has a product. "
         "(4) Keep only groups with orders >= 2. (5) Sort by revenue descending, ties by region ascending.\n"
@@ -745,8 +784,13 @@ def task_group_by():
 # ---------------------------------------------------------------- main
 def build():
     makers = [
-        task_merge_patch, task_unflatten, task_validate,
-        task_json_patch, task_deep_merge, task_diff, task_group_by,
+        task_merge_patch,
+        task_unflatten,
+        task_validate,
+        task_json_patch,
+        task_deep_merge,
+        task_diff,
+        task_group_by,
     ]
     tasks = []
     for n, mk in enumerate(makers, 1):
@@ -755,8 +799,9 @@ def build():
         assert "Return answer as" in prompt.splitlines()[-1]
         if isinstance(ans, list):
             assert 1 <= len(ans) <= 40, (n, len(ans))
-        tasks.append({"id": f"{CATEGORY}-{n:02d}", "category": CATEGORY, "tier": tier,
-                      "prompt": prompt, "expectedAnswer": ans})
+        tasks.append(
+            {"id": f"{CATEGORY}-{n:02d}", "category": CATEGORY, "tier": tier, "prompt": prompt, "expectedAnswer": ans}
+        )
     assert sum(t["tier"] == "medium" for t in tasks) == 3
     assert sum(t["tier"] == "hard" for t in tasks) == 4
     return tasks

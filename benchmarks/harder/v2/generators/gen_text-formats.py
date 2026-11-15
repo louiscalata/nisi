@@ -7,6 +7,7 @@ by reference implementations of the rules stated in each prompt.
 Run: python3 gen_text-formats.py
 Writes text-formats.tasks.json and text-formats.prompts.json next to this file.
 """
+
 import csv
 import datetime
 import io
@@ -26,18 +27,18 @@ def nfc(s):
 # ---------------------------------------------------------------- 01 CSV
 def task_csv():
     text = (
-        'id,customer,category,amount_cents,status,note\n'
+        "id,customer,category,amount_cents,status,note\n"
         '101,"Ng, Alice",Books,"1,250",paid,"gift ""wrap"""\n'
-        '102,Bob,books ,800,Paid,\n'
+        "102,Bob,books ,800,Paid,\n"
         '103,"Cruz, ""Dee""",Games,2400,REFUNDED,"line one\nline two"\n'
         '104,Eli,Games,"3,100", paid ,\n'
-        '102,Bob,Toys,9999,paid,duplicate id\n'
-        '105,Fay,TOYS,1500,void,\n'
+        "102,Bob,Toys,9999,paid,duplicate id\n"
+        "105,Fay,TOYS,1500,void,\n"
         '106,Gus,Toys ,700,paid,"a,b,c"\n'
-        '107,Hal,games,450,pending,\n'
+        "107,Hal,games,450,pending,\n"
         '108," Ivy ",Books,300,paid,"say ""hi"""\n'
-        '109,Jo,Music,1999,paid,\n'
-        '110,Kim,music,1,paid,\n'
+        "109,Jo,Music,1999,paid,\n"
+        "110,Kim,music,1,paid,\n"
     )
     rows = list(csv.reader(io.StringIO(text, newline="")))
     header, body = rows[0], rows[1:]
@@ -60,7 +61,7 @@ def task_csv():
     prompt = (
         "Below is CSV text between the lines <<< and >>> (the marker lines are not part of the data). "
         "It follows RFC 4180: fields may be wrapped in double quotes; inside a quoted field a comma is literal, "
-        "a doubled quote \"\" is one literal quote, and a line break is part of the field. The first record is the header.\n"
+        'a doubled quote "" is one literal quote, and a line break is part of the field. The first record is the header.\n'
         "<<<\n" + text + ">>>\n"
         "Process the data records in the order they appear. (1) If a record's id (after trimming spaces) was already seen in an "
         "earlier record, ignore this record entirely; otherwise remember the id, even if the record is excluded in the next step. "
@@ -76,17 +77,62 @@ def task_csv():
 # ---------------------------------------------------------- 02 Unicode keys
 def task_unicode():
     table = {
-        "ß": "ss", "ø": "o", "Ø": "o", "Æ": "ae", "İ": "i", "ı": "i",
-        "Ł": "l", "ó": "o", "ü": "u", "Ü": "u", "ñ": "n", "Ñ": "n",
-        "Œ": "oe", "ſ": "s", "é": "e", "ö": "o", "ç": "c",
+        "ß": "ss",
+        "ø": "o",
+        "Ø": "o",
+        "Æ": "ae",
+        "İ": "i",
+        "ı": "i",
+        "Ł": "l",
+        "ó": "o",
+        "ü": "u",
+        "Ü": "u",
+        "ñ": "n",
+        "Ñ": "n",
+        "Œ": "oe",
+        "ſ": "s",
+        "é": "e",
+        "ö": "o",
+        "ç": "c",
     }
     table = {nfc(k): v for k, v in table.items()}
     words = [
-        "Straße", "STRASSE", "Ørsted", "Strasse", "Æther", "Orsted", "strasse",
-        "Istanbul", "İstanbul", "Ko-ko", "Łódź", "Lodz", "Koko", "aether",
-        "O'Neil", "Müller", "MÜLLER", "Mueller", "ıstanbul", "Cañon", "Canon",
-        "ko ko", "Œuvre", "oeuvre", "Zoë", "Zoe", "Aether", "Koko", "ørsted",
-        "oneil", "ONeil", "CAÑON", "Muller", "ſun", "SUN", "Sun",
+        "Straße",
+        "STRASSE",
+        "Ørsted",
+        "Strasse",
+        "Æther",
+        "Orsted",
+        "strasse",
+        "Istanbul",
+        "İstanbul",
+        "Ko-ko",
+        "Łódź",
+        "Lodz",
+        "Koko",
+        "aether",
+        "O'Neil",
+        "Müller",
+        "MÜLLER",
+        "Mueller",
+        "ıstanbul",
+        "Cañon",
+        "Canon",
+        "ko ko",
+        "Œuvre",
+        "oeuvre",
+        "Zoë",
+        "Zoe",
+        "Aether",
+        "Koko",
+        "ørsted",
+        "oneil",
+        "ONeil",
+        "CAÑON",
+        "Muller",
+        "ſun",
+        "SUN",
+        "Sun",
     ]
     words = [nfc(w) for w in words]
 
@@ -115,7 +161,8 @@ def task_unicode():
         "Step 3: delete every hyphen, apostrophe and space. "
         "Note that any non-ASCII character not in the table (for example ë or ź) stays unchanged and keeps words apart.\n"
         "Words (a word may be listed more than once; identical strings count as one word): "
-        + json.dumps(words, ensure_ascii=False) + "\n"
+        + json.dumps(words, ensure_ascii=False)
+        + "\n"
         "Group the distinct words by key. Keep only groups with at least 2 distinct words. Inside a group, sort the words "
         "by Unicode code point (so every capital ASCII letter sorts before every lowercase one, and non-ASCII characters sort after ASCII). "
         "Sort the groups by their key, using code point order. "
@@ -289,7 +336,7 @@ def tpl_render(t, data):
             i += 2
         elif t[i] == "{":
             j = t.index("}", i)
-            body = t[i + 1: j]
+            body = t[i + 1 : j]
             i = j + 1
             path, sep, fb = body.partition("|")
             v = tpl_lookup(data, path)
@@ -311,8 +358,7 @@ def tpl_render(t, data):
 
 def task_template():
     data = {
-        "user": {"name": "Ada", "nick": "", "tags": ["x", "y"], "age": 36,
-                 "admin": False, "manager": None},
+        "user": {"name": "Ada", "nick": "", "tags": ["x", "y"], "age": 36, "admin": False, "manager": None},
         "note": "use {braces} here",
         "items": [{"name": "pen", "qty": 3}, {"name": "ink", "qty": 0}],
     }
@@ -326,7 +372,8 @@ def task_template():
     out = [tpl_render(t, data) for t in templates]
     prompt = (
         "Render each template against this JSON data (values are never re-scanned for braces): "
-        + json.dumps(data, separators=(",", ":")) + "\n"
+        + json.dumps(data, separators=(",", ":"))
+        + "\n"
         "Scan a template left to right. At each position: if the text starts with {{ output one literal { and skip both characters; "
         "else if it starts with }} output one literal } and skip both; else if it starts with a single { , the placeholder body runs up to the next } "
         "(consumed) and is evaluated; any other character is copied. E.g. {{x}} gives {x}, and {{{x}}} gives { + value of x + }.\n"
@@ -335,8 +382,7 @@ def task_template():
         "Present values print as is: strings raw, integers in decimal, booleans as true or false. "
         "If PATH is missing: with no FALLBACK print <?PATH>; if FALLBACK starts with @, look up the rest as a path and print it (nothing if also missing); "
         "otherwise print FALLBACK literally.\n"
-        "Templates:\n"
-        + "\n".join("%d) %s" % (i + 1, t) for i, t in enumerate(templates)) + "\n"
+        "Templates:\n" + "\n".join("%d) %s" % (i + 1, t) for i, t in enumerate(templates)) + "\n"
         "Return answer as a JSON array of the 5 rendered strings."
     )
     return ("hard", prompt, out)
@@ -345,24 +391,24 @@ def task_template():
 # --------------------------------------------------------------- 06 INI
 def task_ini():
     text = (
-        'timeout = 30 ; seconds\n'
-        'name=Top\n'
-        '[Server]\n'
+        "timeout = 30 ; seconds\n"
+        "name=Top\n"
+        "[Server]\n"
         'Host = "example.com ; main"   # comment\n'
-        'port=80\n'
-        'PORT = 8080\n'
-        'tag[] = a\n'
-        'Tag[] = b\n'
-        'path = C:\\temp\\x\n'
-        '; a comment line\n'
-        '[db]\n'
+        "port=80\n"
+        "PORT = 8080\n"
+        "tag[] = a\n"
+        "Tag[] = b\n"
+        "path = C:\\temp\\x\n"
+        "; a comment line\n"
+        "[db]\n"
         'user = "adm\\"in"\n'
-        'url = postgres://h/db#frag\n'
-        'pass = abc;def\n'
-        'empty =\n'
-        '[server]\n'
-        'port = 9090 #  override\n'
-        'tag[] = c\n'
+        "url = postgres://h/db#frag\n"
+        "pass = abc;def\n"
+        "empty =\n"
+        "[server]\n"
+        "port = 9090 #  override\n"
+        "tag[] = c\n"
         'quote = say "hi"\n'
     )
 
@@ -405,9 +451,19 @@ def task_ini():
         else:
             d[k] = v
     queries = [
-        "global.timeout", "global.name", "server.host", "server.port", "server.tag[]",
-        "server.path", "db.user", "db.url", "db.pass", "db.empty", "server.quote",
-        "server.missing", "db.tag[]",
+        "global.timeout",
+        "global.name",
+        "server.host",
+        "server.port",
+        "server.tag[]",
+        "server.path",
+        "db.user",
+        "db.url",
+        "db.pass",
+        "db.empty",
+        "server.quote",
+        "server.missing",
+        "db.tag[]",
     ]
     out = []
     for q in queries:
@@ -441,8 +497,8 @@ def task_url():
         s = s.replace("+", " ")
         b, i = bytearray(), 0
         while i < len(s):
-            if s[i] == "%" and re.fullmatch(r"[0-9A-Fa-f]{2}", s[i + 1: i + 3]):
-                b.append(int(s[i + 1: i + 3], 16))
+            if s[i] == "%" and re.fullmatch(r"[0-9A-Fa-f]{2}", s[i + 1 : i + 3]):
+                b.append(int(s[i + 1 : i + 3], 16))
                 i += 3
             else:
                 b.extend(s[i].encode("utf-8"))
@@ -482,13 +538,15 @@ def build():
         assert 300 <= len(prompt) <= 1800, (n, len(prompt))
         assert prompt.rstrip().endswith("."), n
         assert "Return answer as" in prompt.split("\n")[-1], n
-        tasks.append({
-            "id": "%s-%02d" % (CATEGORY, n),
-            "category": CATEGORY,
-            "tier": tier,
-            "prompt": prompt,
-            "expectedAnswer": ans,
-        })
+        tasks.append(
+            {
+                "id": "%s-%02d" % (CATEGORY, n),
+                "category": CATEGORY,
+                "tier": tier,
+                "prompt": prompt,
+                "expectedAnswer": ans,
+            }
+        )
     assert sum(t["tier"] == "medium" for t in tasks) == 3
     assert sum(t["tier"] == "hard" for t in tasks) == 4
     return tasks

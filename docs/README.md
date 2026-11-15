@@ -31,6 +31,7 @@ Start with the [project README](../README.md) for what Nisi is and how to run th
 | [CHANGELOG.md](../CHANGELOG.md) | You want the changes in each version, including unreleased changes on main. |
 | [CONTRIBUTING.md](../CONTRIBUTING.md) | You want to know how to report an issue and why pull requests are not accepted. |
 | [SECURITY.md](../SECURITY.md) | You are about to report a security problem. |
+| [Python style](python-style.md) | You are changing one of the Python scripts (benchmark generators, chart renderers). It gives the Ruff rules and what CI checks. |
 
 ## Verification records
 
