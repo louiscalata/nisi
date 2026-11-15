@@ -8,6 +8,7 @@ Running `python3 gen_numbers.py` writes, next to this script:
   numbers.tasks.json    full tasks (with expectedAnswer)
   numbers.prompts.json  the same tasks with expectedAnswer removed
 """
+
 import heapq
 import itertools
 import json
@@ -29,8 +30,7 @@ def fr(x):
 # numbers-01 (medium): 12-bit two's complement, wrapped deltas, run-length
 # --------------------------------------------------------------------------
 def task_01():
-    deltas_build = [-100, 7, 7, 7, 0, 0, 0, 0, -2048, 5, 5, 1999, 1999,
-                    -3, -3, -3, 2047, 2047, -1, 0, 0, 12]
+    deltas_build = [-100, 7, 7, 7, 0, 0, 0, 0, -2048, 5, 5, 1999, 1999, -3, -3, -3, 2047, 2047, -1, 0, 0, 12]
     cur = 0
     samples = []
     for d in deltas_build:
@@ -61,8 +61,7 @@ def task_01():
 
     prompt = (
         "A sensor emits 12-bit two's-complement samples, written as 3-digit "
-        "uppercase hexadecimal strings. The sample sequence, in order, is:\n"
-        + " ".join(hexes) + "\n\n"
+        "uppercase hexadecimal strings. The sample sequence, in order, is:\n" + " ".join(hexes) + "\n\n"
         "Step 1: decode each sample to its signed decimal value (range -2048..2047).\n"
         "Step 2: build a delta list: the first delta is the first decoded value "
         "itself; every later delta is (current value minus previous value), "
@@ -72,10 +71,9 @@ def task_01():
         "Step 3: run-length encode the delta list: collapse each maximal run of "
         "equal consecutive deltas into a pair [delta, count].\n"
         "Return answer as a JSON array of [delta, count] pairs of integers, in "
-        "order, e.g. {\"answer\": [[-5, 1], [3, 2]]}."
+        'order, e.g. {"answer": [[-5, 1], [3, 2]]}.'
     )
-    return {"id": "numbers-01", "category": CATEGORY, "tier": "medium",
-            "prompt": prompt, "expectedAnswer": rle}
+    return {"id": "numbers-01", "category": CATEGORY, "tier": "medium", "prompt": prompt, "expectedAnswer": rle}
 
 
 # --------------------------------------------------------------------------
@@ -123,20 +121,25 @@ def task_02():
                 return v
 
     luhn_a = pick(lambda: "4" + rand_digits(14), lambda b: luhn_check_digit(b) == 0)
-    luhn_b = pick(lambda: "5" + rand_digits(14),
-                  lambda b: luhn_check_digit(b) not in (0,) and "9" in b[-3:])
+    luhn_b = pick(lambda: "5" + rand_digits(14), lambda b: luhn_check_digit(b) not in (0,) and "9" in b[-3:])
     isbn_a = pick(lambda: "978" + rand_digits(9), lambda b: isbn13_check_digit(b) == 0)
     isbn_b = pick(lambda: "979" + rand_digits(9), lambda b: isbn13_check_digit(b) not in (0,))
     letters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
     # IBAN A: GB, BBAN = 4 letters + 14 digits ; require check digits < 10 (leading zero)
-    iban_a_bban = pick(lambda: "".join(rng.choice(letters) for _ in range(4)) + rand_digits(14),
-                       lambda b: int(iban_check("GB", b)) < 10)
+    iban_a_bban = pick(
+        lambda: "".join(rng.choice(letters) for _ in range(4)) + rand_digits(14),
+        lambda b: int(iban_check("GB", b)) < 10,
+    )
     # IBAN B: DE, BBAN = 18 digits
     iban_b_bban = pick(lambda: rand_digits(18), lambda b: int(iban_check("DE", b)) >= 10)
 
     items = [
-        ("L", luhn_a), ("I", isbn_a), ("N", ("GB", iban_a_bban)),
-        ("N", ("DE", iban_b_bban)), ("L", luhn_b), ("I", isbn_b),
+        ("L", luhn_a),
+        ("I", isbn_a),
+        ("N", ("GB", iban_a_bban)),
+        ("N", ("DE", iban_b_bban)),
+        ("L", luhn_b),
+        ("I", isbn_b),
     ]
     lines = []
     answer = []
@@ -154,8 +157,7 @@ def task_02():
 
     prompt = (
         "Compute the missing check data for six items and return each completed "
-        "identifier as a string, in the listed order.\n"
-        + "\n".join(lines) + "\n\n"
+        "identifier as a string, in the listed order.\n" + "\n".join(lines) + "\n\n"
         "Rules.\n"
         "LUHN: the body has no check digit yet. Working from the RIGHTMOST digit "
         "of the body, double that digit and every second digit moving left; if a "
@@ -165,16 +167,15 @@ def task_02():
         "ISBN13: the body has 12 digits. Multiply the digits by weights 1,3,1,3,... "
         "from the left, sum them as S; the check digit is (10 - S mod 10) mod 10, "
         "appended to the right.\n"
-        "IBAN: form the string bban + country + \"00\", replace each letter by its "
+        'IBAN: form the string bban + country + "00", replace each letter by its '
         "two-digit value (A=10, B=11, ..., Z=35), read the result as one decimal "
         "integer N, and compute check = 98 - (N mod 97), written as exactly two "
         "digits with a leading zero if needed. The completed IBAN is country + "
         "check + bban, with no spaces.\n"
-        "Return answer as a JSON array of 6 strings, e.g. {\"answer\": "
-        "[\"...\", \"...\", \"...\", \"...\", \"...\", \"...\"]}."
+        'Return answer as a JSON array of 6 strings, e.g. {"answer": '
+        '["...", "...", "...", "...", "...", "..."]}.'
     )
-    return {"id": "numbers-02", "category": CATEGORY, "tier": "medium",
-            "prompt": prompt, "expectedAnswer": answer}
+    return {"id": "numbers-02", "category": CATEGORY, "tier": "medium", "prompt": prompt, "expectedAnswer": answer}
 
 
 # --------------------------------------------------------------------------
@@ -182,7 +183,7 @@ def task_02():
 # --------------------------------------------------------------------------
 def round_fraction(v, places, mode):
     """Independent Fraction-based rounding (for cross-checking Decimal)."""
-    scale = 10 ** places
+    scale = 10**places
     q = v * scale
     sign = -1 if q < 0 else 1
     a = abs(q)
@@ -206,7 +207,7 @@ def round_fraction(v, places, mode):
 
 def fmt_fixed(fr_val, places):
     """Exact decimal string of a Fraction with exactly `places` decimals."""
-    scale = 10 ** places
+    scale = 10**places
     num = fr_val * scale
     assert num.denominator == 1
     n = num.numerator
@@ -223,10 +224,18 @@ def fmt_fixed(fr_val, places):
 def task_03():
     # (value, places, mode)
     rows = [
-        ("2.5", 0, "HE"), ("-2.5", 0, "HU"), ("0.125", 2, "HE"),
-        ("-0.135", 2, "HE"), ("7.0449", 2, "TZ"), ("-7.0451", 2, "TZ"),
-        ("-0.0049", 2, "TZ"), ("1.0005", 3, "HU"), ("-1.0005", 3, "HE"),
-        ("123.4565", 3, "HE"), ("-0.5", 0, "HE"), ("99.9995", 3, "HU"),
+        ("2.5", 0, "HE"),
+        ("-2.5", 0, "HU"),
+        ("0.125", 2, "HE"),
+        ("-0.135", 2, "HE"),
+        ("7.0449", 2, "TZ"),
+        ("-7.0451", 2, "TZ"),
+        ("-0.0049", 2, "TZ"),
+        ("1.0005", 3, "HU"),
+        ("-1.0005", 3, "HE"),
+        ("123.4565", 3, "HE"),
+        ("-0.5", 0, "HE"),
+        ("99.9995", 3, "HU"),
     ]
     out = []
     total = Fraction(0)
@@ -242,12 +251,10 @@ def task_03():
         total += r_frac
     out.append(fmt_fixed(total, 3))
 
-    lines = ["%d. value %s, %d decimal places, mode %s" % (i, v, p, m)
-             for i, (v, p, m) in enumerate(rows, 1)]
+    lines = ["%d. value %s, %d decimal places, mode %s" % (i, v, p, m) for i, (v, p, m) in enumerate(rows, 1)]
     prompt = (
         "Round each decimal value below to the given number of decimal places "
-        "using the named mode, then add up the twelve ROUNDED values exactly.\n"
-        + "\n".join(lines) + "\n\n"
+        "using the named mode, then add up the twelve ROUNDED values exactly.\n" + "\n".join(lines) + "\n\n"
         "Modes. HE = half-even: a value exactly halfway between two candidates "
         "goes to the candidate whose last kept digit is even. HU = half-up as "
         "taught in school: an exact tie goes to the candidate farther from zero "
@@ -257,13 +264,12 @@ def task_03():
         "Format. Write every rounded value as a plain decimal string with exactly "
         "the requested number of decimal places (for 0 places, no decimal "
         "point). Never write negative zero: a result equal to zero is written "
-        "without a minus sign, e.g. \"0.00\". The final element is the exact sum "
+        'without a minus sign, e.g. "0.00". The final element is the exact sum '
         "of the twelve rounded values, written with exactly 3 decimal places.\n"
         "Return answer as a JSON array of 13 strings (twelve rounded values in "
-        "order, then the sum), e.g. {\"answer\": [\"1.50\", \"-2\", ..., \"0.000\"]}."
+        'order, then the sum), e.g. {"answer": ["1.50", "-2", ..., "0.000"]}.'
     )
-    return {"id": "numbers-03", "category": CATEGORY, "tier": "medium",
-            "prompt": prompt, "expectedAnswer": out}
+    return {"id": "numbers-03", "category": CATEGORY, "tier": "medium", "prompt": prompt, "expectedAnswer": out}
 
 
 # --------------------------------------------------------------------------
@@ -302,8 +308,7 @@ def huffman(freqs):
 
 
 def task_04():
-    freqs = {"A": 5, "B": 9, "C": 12, "D": 13, "E": 16, "F": 5, "G": 9,
-             "H": 3, "I": 3, "J": 14}
+    freqs = {"A": 5, "B": 9, "C": 12, "D": 13, "E": 16, "F": 5, "G": 9, "H": 3, "I": 3, "J": 14}
     codes = huffman(freqs)
     total_bits = sum(freqs[s] * len(c) for s, c in codes.items())
     # check prefix-freeness and Kraft equality
@@ -323,8 +328,8 @@ def task_04():
         "symbol in alphabetical order; two internal nodes of equal weight are "
         "ordered by creation order (the node created earlier comes first). "
         "Repeat until one node remains: remove the two smallest nodes under this "
-        "order; the FIRST one removed becomes the left child (edge label \"0\"), "
-        "the SECOND one removed becomes the right child (edge label \"1\"); "
+        'order; the FIRST one removed becomes the left child (edge label "0"), '
+        'the SECOND one removed becomes the right child (edge label "1"); '
         "create an internal node whose weight is the sum, and which counts as "
         "newly created (internal nodes are numbered 1, 2, 3, ... in creation "
         "order). A symbol's code is the string of edge labels from the root "
@@ -332,13 +337,16 @@ def task_04():
         "Report the code of every symbol and the total number of bits needed to "
         "encode a message that contains each symbol exactly as many times as its "
         "frequency (sum of frequency times code length).\n"
-        "Return answer as a JSON object {\"codes\": {\"A\": \"<bits>\", ... for "
-        "all 10 symbols}, \"total_bits\": <integer>}."
+        'Return answer as a JSON object {"codes": {"A": "<bits>", ... for '
+        'all 10 symbols}, "total_bits": <integer>}.'
     )
-    return {"id": "numbers-04", "category": CATEGORY, "tier": "hard",
-            "prompt": prompt,
-            "expectedAnswer": {"codes": {s: codes[s] for s in order},
-                               "total_bits": total_bits}}
+    return {
+        "id": "numbers-04",
+        "category": CATEGORY,
+        "tier": "hard",
+        "prompt": prompt,
+        "expectedAnswer": {"codes": {s: codes[s] for s in order}, "total_bits": total_bits},
+    }
 
 
 # --------------------------------------------------------------------------
@@ -347,11 +355,11 @@ def task_04():
 def task_05():
     x0 = 12
     steps = [  # (exponent, addend c, modulus m)
-        (10 ** 12 + 7, -5, 101),
-        (2 ** 40 + 1, 18, 91),
-        (10 ** 9 + 6, -40, 360),
-        (3 ** 25, 7, 1001),
-        (10 ** 15 + 3, 1, 97),
+        (10**12 + 7, -5, 101),
+        (2**40 + 1, 18, 91),
+        (10**9 + 6, -40, 360),
+        (3**25, 7, 1001),
+        (10**15 + 3, 1, 97),
     ]
     xs = []
     x = x0
@@ -366,21 +374,18 @@ def task_05():
         assert r == pow(x, e, m)
         x = (r + c) % m
         xs.append(x)
-    lines = ["step %d: exponent %d, addend %d, modulus %d" % (i, e, c, m)
-             for i, (e, c, m) in enumerate(steps, 1)]
+    lines = ["step %d: exponent %d, addend %d, modulus %d" % (i, e, c, m) for i, (e, c, m) in enumerate(steps, 1)]
     prompt = (
         "Start with x0 = " + str(x0) + ". Apply the five steps below in order. "
         "In step i, x_i = ((x_(i-1) ^ exponent_i) + addend_i) mod modulus_i, "
         "where x_(i-1) is the exact integer produced by the previous step and "
         "^ is ordinary exponentiation. The final mod always yields a value in "
         "0..modulus_i - 1 (a negative sum is wrapped up into that range). "
-        "Exponents are given in full decimal.\n"
-        + "\n".join(lines) + "\n\n"
+        "Exponents are given in full decimal.\n" + "\n".join(lines) + "\n\n"
         "Return answer as a JSON array of the five integers [x_1, x_2, x_3, x_4, "
-        "x_5], e.g. {\"answer\": [1, 2, 3, 4, 5]}."
+        'x_5], e.g. {"answer": [1, 2, 3, 4, 5]}.'
     )
-    return {"id": "numbers-05", "category": CATEGORY, "tier": "hard",
-            "prompt": prompt, "expectedAnswer": xs}
+    return {"id": "numbers-05", "category": CATEGORY, "tier": "hard", "prompt": prompt, "expectedAnswer": xs}
 
 
 # --------------------------------------------------------------------------
@@ -442,13 +447,17 @@ def task_06():
         "Finally list the convergents of that expansion in order (the k-th "
         "convergent is the value of [c0; c1, ..., ck] in lowest terms) and report "
         "the FIRST convergent whose denominator is at least 20.\n"
-        "Return answer as a JSON object {\"fraction\": {\"numerator\": <int>, "
-        "\"denominator\": <int>}, \"cf\": [<ints>], \"convergent\": "
-        "{\"numerator\": <int>, \"denominator\": <int>}}."
+        'Return answer as a JSON object {"fraction": {"numerator": <int>, '
+        '"denominator": <int>}, "cf": [<ints>], "convergent": '
+        '{"numerator": <int>, "denominator": <int>}}.'
     )
-    return {"id": "numbers-06", "category": CATEGORY, "tier": "hard",
-            "prompt": prompt,
-            "expectedAnswer": {"fraction": fr(X), "cf": cf, "convergent": fr(conv)}}
+    return {
+        "id": "numbers-06",
+        "category": CATEGORY,
+        "tier": "hard",
+        "prompt": prompt,
+        "expectedAnswer": {"fraction": fr(X), "cf": cf, "convergent": fr(conv)},
+    }
 
 
 # --------------------------------------------------------------------------
@@ -493,18 +502,20 @@ def task_07():
         "Report three integers: the number of valid ways; the smallest total "
         "number of coins used by any valid way; and how many valid ways use "
         "exactly that smallest number of coins.\n"
-        "Return answer as a JSON object {\"ways\": <int>, \"fewest_coins\": "
-        "<int>, \"ways_with_fewest\": <int>}."
+        'Return answer as a JSON object {"ways": <int>, "fewest_coins": '
+        '<int>, "ways_with_fewest": <int>}.'
     )
-    return {"id": "numbers-07", "category": CATEGORY, "tier": "hard",
-            "prompt": prompt,
-            "expectedAnswer": {"ways": count, "fewest_coins": fewest,
-                               "ways_with_fewest": n_fewest}}
+    return {
+        "id": "numbers-07",
+        "category": CATEGORY,
+        "tier": "hard",
+        "prompt": prompt,
+        "expectedAnswer": {"ways": count, "fewest_coins": fewest, "ways_with_fewest": n_fewest},
+    }
 
 
 def main():
-    tasks = [task_01(), task_02(), task_03(), task_04(), task_05(), task_06(),
-             task_07()]
+    tasks = [task_01(), task_02(), task_03(), task_04(), task_05(), task_06(), task_07()]
     for t in tasks:
         assert 300 <= len(t["prompt"]) <= 1800, (t["id"], len(t["prompt"]))
         json.dumps(t["expectedAnswer"])

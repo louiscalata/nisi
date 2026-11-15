@@ -1,0 +1,58 @@
+# Ruff configuration for the Python scripts in this repository (benchmark generators and chart
+# renderers). Nisi itself is a Node.js package and ships no Python. CI pins ruff==0.17.4.
+# The rules are explained in docs/python-style.md.
+line-length = 120
+target-version = "py310"
+
+# docs/editor/build-editor.py is excluded from formatting and linting: its sha256 is recorded in the
+# dated evidence records docs/verification/2026-09-11/editor-manifest.json,
+# 2026-09-12/source-manifest.json and 2026-09-12-v0.1/source-manifest.json.
+# Reformat it only when the editor is rebuilt for a new release.
+extend-exclude = ["docs/editor/build-editor.py"]
+# Keep the exclusion when a file is passed by name (editor integrations, pre-commit).
+force-exclude = true
+# Python files only. Ruff 0.17 also formats Python blocks inside Markdown, which would let a local
+# `ruff format .` rewrite dated evidence records under docs/verification.
+include = ["*.py", "*.pyi"]
+
+[format]
+quote-style = "double"
+indent-style = "space"
+skip-magic-trailing-comma = false
+line-ending = "lf"
+
+[lint]
+select = [
+  "E4", "E7", "E9", "F", # pycodestyle errors and pyflakes
+  "W",                   # whitespace
+  "I",                   # import order
+  "B",                   # bugbear
+  "UP",                  # pyupgrade, limited by target-version
+  "N",                   # pep8-naming
+  "C90",                 # complexity
+  "RUF100",              # unused noqa
+  "PTH",                 # pathlib
+  "EXE",                 # shebangs and executable bits
+]
+
+[lint.mccabe]
+max-complexity = 15
+
+[lint.per-file-ignores]
+# The generators under benchmarks/harder produce the frozen task sets that benchmarks/harder/run.mjs
+# pins by sha256. Fixing these findings changes code, not layout, so each one needs the
+# reproducibility check (benchmarks/harder/check_reproducible.py) and its own review. They are listed
+# here so that new findings fail CI while existing ones stay visible.
+# The two chart renderers are listed for the same reason: I001 and EXE001 are fixed in their own change.
+# N999 (hyphenated module names) does not fire on these stand-alone scripts. They must keep their names:
+# make_tasks_v2.py builds the file name gen_<category>.py from the category ids.
+"benchmarks/harder/make_tasks.py" = ["E401", "E402", "I001", "PTH"]
+"benchmarks/harder/make_tasks_v2.py" = ["E401", "I001", "PTH"]
+"benchmarks/harder/v2/generators/gen_algorithms.py" = ["EXE001", "N806", "PTH"]
+"benchmarks/harder/v2/generators/gen_calendar-time.py" = ["EXE001", "PTH"]
+"benchmarks/harder/v2/generators/gen_numbers.py" = ["B905", "E741", "EXE001", "I001", "N806", "PTH", "UP031"]
+"benchmarks/harder/v2/generators/gen_state-sim.py" = ["E741", "EXE001", "PTH"]
+"benchmarks/harder/v2/generators/gen_structured-data.py" = ["B905", "C901", "E743", "EXE001", "N802", "PTH"]
+"benchmarks/harder/v2/generators/gen_text-formats.py" = ["B905", "E741", "EXE001", "PTH", "UP031"]
+"benchmarks/value/charts/render.py" = ["B905", "EXE001", "I001"]
+"benchmarks/value/footprint/render.py" = ["EXE001", "I001"]
