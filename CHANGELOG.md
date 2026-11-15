@@ -5,6 +5,7 @@ public source tree and does not include private experiments.
 
 ## Unreleased
 
+- `nisi validate` opens each file with `O_NONBLOCK` as well as `O_NOFOLLOW` where the platform has them. A journal or workflow report replaced by a FIFO between the `lstat` check and the open made the open wait for a writer, so `validate` could hang. It now fails at once with `NOT_A_FILE`. Windows still opens with `'r'`. Regular files read as before.
 - The built-in Jev client reports a response body that stalls past `timeoutMs` as `JEV_TIMEOUT`. It reported `JEV_RESPONSE_INVALID` before, because the read cancelled at the deadline ended as if the body were complete and the truncated text failed to parse.
 - `npm run check:cli-package` runs on npm 12. It read `npm pack --json` as an array, and npm 12 prints an object keyed by package name, so the check failed before packing anything; it now accepts both shapes and fails with a clear message on any other. npm 12 also echoes the `npm exec` command line as a notice on stderr, so the check runs the installed CLI with `--loglevel=warn` and still asserts that `nisi` does not echo its arguments. This does not change the package.
 - The editable README centralizes backup/save/recovery transitions and clears stale backup warnings after successful writes, including timer backups, without changing stored manuscript data or save messages.

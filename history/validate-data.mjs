@@ -58,10 +58,12 @@ function statOf(fileSystem, file) {
 // The lstat size is only a first check: the file can grow or be replaced
 // before it is opened. Read from one descriptor, check its fstat size, and
 // never read more than maxBytes + 1 bytes, so the limit bounds what is read.
+// O_NONBLOCK keeps the open from waiting on a FIFO swapped in after lstat; the
+// fstat check below then refuses it. It has no effect on a regular file.
 function boundedRead(fileSystem, file, maxBytes) {
   const noFollow = fileSystem.constants?.O_NOFOLLOW;
   let fd;
-  try { fd = fileSystem.openSync(file, noFollow === undefined ? 'r' : fileSystem.constants.O_RDONLY | noFollow); }
+  try { fd = fileSystem.openSync(file, noFollow === undefined ? 'r' : fileSystem.constants.O_RDONLY | noFollow | (fileSystem.constants.O_NONBLOCK || 0)); }
   catch (error) { return { error: error?.code === 'ELOOP' ? 'SYMLINK' : 'READ_FAILED' }; }
   try {
     const stat = fileSystem.fstatSync(fd);
