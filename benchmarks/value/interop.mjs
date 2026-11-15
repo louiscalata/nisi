@@ -2,10 +2,11 @@
 // SPDX-License-Identifier: Apache-2.0
 // Synthetic inference-interface adaptation specimens. No provider is contacted.
 import fs from 'node:fs/promises';
+import { realpathSync } from 'node:fs';
 import path from 'node:path';
 import os from 'node:os';
 import { createHash } from 'node:crypto';
-import { fileURLToPath, pathToFileURL } from 'node:url';
+import { fileURLToPath } from 'node:url';
 import { runWorkflow } from '../../workflow/engine.mjs';
 import { createCandidate } from '../../workflow/contracts.mjs';
 import { createLocalChatAuthorAdapter, createLocalChatReviewerAdapter } from '../../adapters/local-chat.mjs';
@@ -240,4 +241,11 @@ export async function main(output) {
   return result;
 }
 
-if (process.argv[1] && import.meta.url === pathToFileURL(path.resolve(process.argv[1])).href) await main(process.argv[2]);
+// Compare real paths so a symlinked checkout or install still runs as main.
+let invokedAsMain = false;
+try {
+  invokedAsMain = Boolean(process.argv[1]) && realpathSync(process.argv[1]) === realpathSync(fileURLToPath(import.meta.url));
+} catch {
+  // A missing argv path means this module was imported, not invoked.
+}
+if (invokedAsMain) await main(process.argv[2]);

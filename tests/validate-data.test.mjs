@@ -201,6 +201,46 @@ test('a journal swapped for a symlink after the lstat check is refused', t => {
   } finally { fs.rmSync(dir, { recursive: true, force: true }); }
 });
 
+// A FIFO swapped in between the lstat check and the open must not block the
+// open. The child process has a deadline because a blocking open never returns.
+test('a journal or report swapped for a FIFO after the lstat check is refused at once', t => {
+  if (process.platform === 'win32') {
+    t.skip('Windows has no mkfifo');
+    return;
+  }
+  const dir = fs.mkdtempSync(path.join(os.tmpdir(), 'nisi-validate-fifo-'));
+  try {
+    const made = ['journal.jsonl', 'report.json'].map(name => spawnSync('mkfifo', [path.join(dir, name)], { encoding: 'utf8' }));
+    if (made.some(result => result.error || result.status !== 0)) {
+      t.skip('mkfifo is not available');
+      return;
+    }
+    const regular = path.join(dir, 'regular.txt');
+    fs.writeFileSync(regular, 'x');
+    const child = `
+      import fs from 'node:fs';
+      import path from 'node:path';
+      const [moduleUrl, dir, regular] = process.argv.slice(1);
+      const { validateData } = await import(moduleUrl);
+      const fifos = new Set(['journal.jsonl', 'report.json'].map(name => path.join(dir, name)));
+      const staleStat = { ...fs, lstatSync: target => fifos.has(target) ? fs.lstatSync(regular) : fs.lstatSync(target) };
+      const one = validateData({ journal: path.join(dir, 'journal.jsonl'), fs: staleStat });
+      const many = validateData({ dataDir: dir, fs: staleStat });
+      console.log(JSON.stringify({ one: one.files.map(item => item.reason), many: many.files.map(item => [item.name, item.reason]) }));
+    `;
+    const moduleUrl = new URL('../history/validate-data.mjs', import.meta.url).href;
+    const result = spawnSync(process.execPath, ['--input-type=module', '-e', child, moduleUrl, dir, regular], {
+      encoding: 'utf8', timeout: 5_000,
+    });
+    assert.equal(result.error?.code, undefined, 'validateData did not return within 5 s');
+    assert.equal(result.status, 0, result.stderr);
+    assert.deepEqual(JSON.parse(result.stdout), {
+      one: ['NOT_A_FILE'],
+      many: [['journal.jsonl', 'NOT_A_FILE'], ['report.json', 'NOT_A_FILE']],
+    });
+  } finally { fs.rmSync(dir, { recursive: true, force: true }); }
+});
+
 test('the smoke script checks only the synthetic fixture', () => {
   const result = spawnSync('sh', [path.join(root, 'scripts/validate-real-data.sh'), '--smoke'], {
     cwd: root, encoding: 'utf8', timeout: 15_000,
