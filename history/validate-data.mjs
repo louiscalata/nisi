@@ -55,13 +55,41 @@ function statOf(fileSystem, file) {
   catch (error) { return { error: error?.code === 'ENOENT' ? 'NOT_FOUND' : 'READ_FAILED' }; }
 }
 
+// The lstat size is only a first check: the file can grow or be replaced
+// before it is opened. Read from one descriptor, check its fstat size, and
+// never read more than maxBytes + 1 bytes, so the limit bounds what is read.
+function boundedRead(fileSystem, file, maxBytes) {
+  const noFollow = fileSystem.constants?.O_NOFOLLOW;
+  let fd;
+  try { fd = fileSystem.openSync(file, noFollow === undefined ? 'r' : fileSystem.constants.O_RDONLY | noFollow); }
+  catch (error) { return { error: error?.code === 'ELOOP' ? 'SYMLINK' : 'READ_FAILED' }; }
+  try {
+    const stat = fileSystem.fstatSync(fd);
+    if (!stat.isFile()) return { error: 'NOT_A_FILE' };
+    if (stat.size > maxBytes) return { error: 'FILE_TOO_LARGE', bytes: stat.size };
+    // One byte past the fstat size shows a file that grew during the read.
+    const buffer = Buffer.alloc(stat.size + 1);
+    let length = 0;
+    while (length < buffer.length) {
+      const count = fileSystem.readSync(fd, buffer, length, buffer.length - length, null);
+      if (count === 0) break;
+      length += count;
+    }
+    if (length > stat.size) return { error: 'FILE_CHANGED' };
+    return { bytes: buffer.subarray(0, length) };
+  } catch { return { error: 'READ_FAILED' }; }
+  finally { try { fileSystem.closeSync(fd); } catch { /* the read result stands */ } }
+}
+
 function journalRecord(name, file, limits, fileSystem) {
   const found = statOf(fileSystem, file);
   if (found.error) return { name, kind: 'journal', status: 'FAIL', reason: found.error };
   if (found.stat.isSymbolicLink()) return { name, kind: 'journal', status: 'FAIL', reason: 'SYMLINK' };
   if (!found.stat.isFile()) return { name, kind: 'journal', status: 'FAIL', reason: 'NOT_A_FILE' };
   if (found.stat.size > limits.maxBytes) return { name, kind: 'journal', status: 'FAIL', reason: 'FILE_TOO_LARGE', bytes: found.stat.size };
-  const read = readSerializedJournal({ path: file, fs: fileSystem });
+  const bounded = boundedRead(fileSystem, file, limits.maxBytes);
+  if (bounded.error) return { name, kind: 'journal', status: 'FAIL', reason: bounded.error, ...(bounded.bytes === undefined ? {} : { bytes: bounded.bytes }) };
+  const read = readSerializedJournal({ path: file, fs: { readFileSync: () => bounded.bytes } });
   if (read.status !== 'READ') return { name, kind: 'journal', status: 'FAIL', reason: read.reason };
   const recovered = reopen(read.serialized);
   const entries = recovered.report.recoveredIds.length;
@@ -94,9 +122,9 @@ function reportRecord(name, file, limits, fileSystem) {
   if (found.stat.isSymbolicLink()) return { name, kind: 'workflow-report', status: 'FAIL', reason: 'SYMLINK' };
   if (!found.stat.isFile()) return { name, kind: 'workflow-report', status: 'FAIL', reason: 'NOT_A_FILE' };
   if (found.stat.size > limits.maxBytes) return { name, kind: 'workflow-report', status: 'FAIL', reason: 'FILE_TOO_LARGE', bytes: found.stat.size };
-  let bytes;
-  try { bytes = fileSystem.readFileSync(file); }
-  catch { return { name, kind: 'workflow-report', status: 'FAIL', reason: 'READ_FAILED' }; }
+  const bounded = boundedRead(fileSystem, file, limits.maxBytes);
+  if (bounded.error) return { name, kind: 'workflow-report', status: 'FAIL', reason: bounded.error, ...(bounded.bytes === undefined ? {} : { bytes: bounded.bytes }) };
+  const { bytes } = bounded;
   let text;
   try { text = new TextDecoder('utf-8', { fatal: true }).decode(bytes); }
   catch { return { name, kind: 'json', status: 'SKIP', reason: 'NOT_A_NISI_RECORD' }; }

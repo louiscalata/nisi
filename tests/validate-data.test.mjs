@@ -119,6 +119,88 @@ test('a symlinked journal is refused without reading it', t => {
   } finally { fs.rmSync(dir, { recursive: true, force: true }); }
 });
 
+// The size check must bound the bytes actually read, not only what an earlier
+// lstat saw. A file that grows or is swapped after lstat stays FILE_TOO_LARGE.
+test('a file larger than maxBytes after the lstat check is refused, not read', () => {
+  const dir = fs.mkdtempSync(path.join(os.tmpdir(), 'nisi-validate-size-'));
+  try {
+    const file = writeJournal(dir);
+    fs.writeFileSync(path.join(dir, 'report.json'), JSON.stringify({ schemaVersion: 1, outcome: 'COMPLETED', stages: [{ stage: 'test', status: 'PASS', note: 'x'.repeat(200) }] }));
+    const small = path.join(dir, 'small.txt');
+    fs.writeFileSync(small, 'x');
+    const staleStat = { ...fs, lstatSync: target => target === dir ? fs.lstatSync(target) : fs.lstatSync(small) };
+    const maxBytes = 64;
+    assert.ok(fs.statSync(file).size > maxBytes);
+
+    const one = validateData({ journal: file, fs: staleStat, maxBytes });
+    assert.equal(one.status, 'FAIL', JSON.stringify(one));
+    assert.equal(one.files[0].reason, 'FILE_TOO_LARGE');
+
+    const many = validateData({ dataDir: dir, fs: staleStat, maxBytes });
+    assert.equal(many.files.find(item => item.name === 'journal.jsonl').reason, 'FILE_TOO_LARGE', JSON.stringify(many));
+    assert.equal(many.files.find(item => item.name === 'report.json').reason, 'FILE_TOO_LARGE', JSON.stringify(many));
+    assert.doesNotMatch(JSON.stringify(many), new RegExp(SECRET, 'u'));
+
+    const normal = validateData({ journal: file });
+    assert.equal(normal.status, 'PASS', JSON.stringify(normal));
+  } finally { fs.rmSync(dir, { recursive: true, force: true }); }
+});
+
+// A file that grows while it is being read must not be accepted, even when
+// its fstat size was within the limit.
+test('a journal that grows during the read fails with FILE_CHANGED', () => {
+  const dir = fs.mkdtempSync(path.join(os.tmpdir(), 'nisi-validate-grow-'));
+  try {
+    const file = writeJournal(dir);
+    let reads = 0;
+    const growing = {
+      ...fs,
+      readSync: (...args) => {
+        const count = fs.readSync(...args);
+        reads += 1;
+        if (reads === 1) fs.appendFileSync(file, '\n');
+        return count;
+      },
+    };
+    const summary = validateData({ journal: file, fs: growing });
+    assert.equal(summary.status, 'FAIL', JSON.stringify(summary));
+    assert.equal(summary.files[0].reason, 'FILE_CHANGED', JSON.stringify(summary));
+    assert.doesNotMatch(JSON.stringify(summary), new RegExp(SECRET, 'u'));
+  } finally { fs.rmSync(dir, { recursive: true, force: true }); }
+});
+
+// The lstat symlink check runs before the open. A file swapped for a symlink
+// in between must still be refused, which the open's O_NOFOLLOW provides.
+test('a journal swapped for a symlink after the lstat check is refused', t => {
+  if (fs.constants.O_NOFOLLOW === undefined) {
+    t.skip('this platform has no O_NOFOLLOW');
+    return;
+  }
+  const dir = fs.mkdtempSync(path.join(os.tmpdir(), 'nisi-validate-swap-'));
+  try {
+    const file = writeJournal(dir, { secret: 'swap-secret-should-stay-unread' });
+    const moved = path.join(dir, 'moved.jsonl');
+    let seen;
+    const swapping = {
+      ...fs,
+      lstatSync: target => {
+        if (target !== file) return fs.lstatSync(target);
+        if (seen === undefined) {
+          seen = fs.lstatSync(file);
+          fs.renameSync(file, moved);
+          fs.symlinkSync(moved, file);
+        }
+        return seen;
+      },
+    };
+    const summary = validateData({ journal: file, fs: swapping });
+    assert.ok(fs.lstatSync(file).isSymbolicLink());
+    assert.equal(summary.status, 'FAIL', JSON.stringify(summary));
+    assert.equal(summary.files[0].reason, 'SYMLINK', JSON.stringify(summary));
+    assert.doesNotMatch(JSON.stringify(summary), /swap-secret-should-stay-unread/u);
+  } finally { fs.rmSync(dir, { recursive: true, force: true }); }
+});
+
 test('the smoke script checks only the synthetic fixture', () => {
   const result = spawnSync('sh', [path.join(root, 'scripts/validate-real-data.sh'), '--smoke'], {
     cwd: root, encoding: 'utf8', timeout: 15_000,
