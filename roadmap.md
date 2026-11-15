@@ -1,6 +1,6 @@
 # Nisi roadmap
 
-Canonical project roadmap. Updated November 13, 2026 (Pacific time). Product name: Nisi.
+Canonical project roadmap. Updated November 14, 2026 (Pacific time). Product name: Nisi.
 Source version: 0.3.1. The published tag is v0.3.1 (9 November 2026). It is not on
 the npm registry. v0.2.1 and v0.3.0 shipped the items listed under those headings.
 v0.3.0 added the `reasoningEffort` option, the optional Jev advisor and the
@@ -24,7 +24,15 @@ commit `fc8bf1b`.
   CANCELLED report storage, preserving existing behavior for other storage.
 - [x] Preserve the clock watermark across terminal storage and reconcile the
   grace-budget API documentation, review disposition and changelog.
-- [ ] Review journal format migration/authentication before adding either feature.
+- [x] Review journal format migration/authentication before adding either feature.
+  Done 14 November 2026 in [the journal authentication review](docs/reviews/2026-11-14-journal-auth-review.md)
+  (PR #57). It found that the journal has no authentication and bounded the
+  bytes `nisi validate` reads. It ran on macOS only; Windows was not covered.
+- [ ] Follow-ups from that review, not started: R1, a host-held anchor of the last
+  good `count` and `lastHash`; R3, host-supplied `projectId`, `redactPaths` and a
+  clock bound on reopen; R5, a `maxBytes` read limit in the store. R2, keyed
+  authentication in a v2 format, waits on a decision on the key owner and
+  rotation, and still needs R1 to detect replay.
 - [x] Release/CI/tag provenance: v0.2.1 and v0.3.0 were published from commits
   whose hosted Windows/Linux Node 22/24 runs passed. Package-registry publication
   remains open independently of the GitHub archives.
