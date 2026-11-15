@@ -28,11 +28,12 @@ commit `fc8bf1b`.
   Done 14 November 2026 in [the journal authentication review](docs/reviews/2026-11-14-journal-auth-review.md)
   (PR #57). It found that the journal has no authentication and bounded the
   bytes `nisi validate` reads. It ran on macOS only; Windows was not covered.
-- [ ] Follow-ups from that review, not started: R1, a host-held anchor of the last
-  good `count` and `lastHash`; R3, host-supplied `projectId`, `redactPaths` and a
-  clock bound on reopen; R5, a `maxBytes` read limit in the store. R2, keyed
-  authentication in a v2 format, waits on a decision on the key owner and
-  rotation, and still needs R1 to detect replay.
+- [x] R3 from that review, host-supplied `projectId`, `redactPaths` and a clock
+  bound on reopen: `reopen(serialized, {projectId, redactPaths, maxNow})`.
+- [ ] Other follow-ups from that review, not started: R1, a host-held anchor of
+  the last good `count` and `lastHash`; R5, a `maxBytes` read limit in the
+  store. R2, keyed authentication in a v2 format, waits on a decision on the
+  key owner and rotation, and still needs R1 to detect replay.
 - [x] Release/CI/tag provenance: v0.2.1 and v0.3.0 were published from commits
   whose hosted Windows/Linux Node 22/24 runs passed. Package-registry publication
   remains open independently of the GitHub archives.
