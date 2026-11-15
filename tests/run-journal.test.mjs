@@ -7,7 +7,7 @@ import fs from 'node:fs';
 import os from 'node:os';
 import path from 'node:path';
 import { createRunJournal, reopen } from '../history/run-journal-v1.mjs';
-import { readSerializedJournal } from '../history/run-journal-store-v1.mjs';
+import { readSerializedJournal, writeSerializedJournal } from '../history/run-journal-store-v1.mjs';
 import { validateData } from '../history/validate-data.mjs';
 
 const hash = value => createHash('sha256').update(value).digest('hex');
@@ -331,4 +331,45 @@ test('journal refuses total history beyond 10000 records without discarding iden
   extra.record.fingerprint = hash('nisi-run-journal/input/v1\n' + canonical(extra.record.entry));
   lines.splice(-1, 0, extra); lines.at(-1).count = 10001;
   assert.equal(reopen(rehash(lines)).report.status, 'INVALID');
+});
+
+// Documented limit (docs/run-journal.md, Authenticity; SECURITY.md). A cut-off
+// file is refused, but dropping trailing entries and writing a footer from
+// values already in the file needs no hashing and reopens COMPLETE, and an
+// older complete copy can replace the current file. If a later change detects
+// rollback, update those documents with this test.
+test('rollback to an earlier entry with a rewritten footer is not detected (documented limit)', () => {
+  const journal = createRunJournal(config());
+  for (const id of ['entry-a', 'entry-b']) assert.equal(journal.append(entry(id), 100).status, 'APPENDED');
+  const older = journal.serialize();
+  assert.equal(journal.append(entry('entry-c'), 100).status, 'APPENDED');
+  const current = journal.serialize();
+
+  const lines = current.slice(0, -1).split('\n');
+  const dropped = JSON.parse(lines[3]);
+  const cutOff = lines.slice(0, 3).join('\n') + '\n';
+  const rolledBack = cutOff + canonical({ type: 'footer', count: 2, lastHash: dropped.previousHash }) + '\n';
+  assert.equal(rolledBack, older);
+  assert.equal(reopen(cutOff).report.status, 'INCOMPLETE');
+  assert.equal(reopen(cutOff).report.reason, 'MISSING_FOOTER');
+  assert.equal(reopen(rolledBack).report.status, 'COMPLETE');
+  assert.deepEqual(reopen(rolledBack).report.recoveredIds, ['entry-a', 'entry-b']);
+
+  const dir = fs.mkdtempSync(path.join(os.tmpdir(), 'nisi-rollback-'));
+  try {
+    const file = path.join(dir, 'journal.jsonl');
+    fs.writeFileSync(file, cutOff);
+    assert.equal(readSerializedJournal({ path: file, fs }).reason, 'INVALID_JOURNAL');
+    fs.writeFileSync(file, rolledBack);
+    const read = readSerializedJournal({ path: file, fs });
+    assert.equal(read.status, 'READ');
+    assert.equal(read.verified, true);
+    const summary = validateData({ journal: file });
+    assert.equal(summary.status, 'PASS', JSON.stringify(summary));
+
+    fs.writeFileSync(file, current);
+    const replaced = writeSerializedJournal({ path: file, serialized: older, fs, expectedPreviousSha256: hash(current) });
+    assert.equal(replaced.status, 'WRITTEN');
+    assert.equal(fs.readFileSync(file, 'utf8'), older);
+  } finally { fs.rmSync(dir, { recursive: true, force: true }); }
 });

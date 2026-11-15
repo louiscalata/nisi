@@ -61,7 +61,12 @@ def parsed_candidate(candidate: dict | None) -> tuple[bool, object]:
     if not isinstance(candidate, dict):
         return False, None
     files = candidate.get("files")
-    if not isinstance(files, list) or len(files) != 1 or not isinstance(files[0], dict) or files[0].get("path") != "answer.json":
+    if (
+        not isinstance(files, list)
+        or len(files) != 1
+        or not isinstance(files[0], dict)
+        or files[0].get("path") != "answer.json"
+    ):
         return False, None
     content = files[0].get("content")
     if not isinstance(content, str):
@@ -76,8 +81,11 @@ def parsed_candidate(candidate: dict | None) -> tuple[bool, object]:
         return output
 
     try:
-        parsed = json.loads(content, object_pairs_hook=unique_keys,
-                            parse_constant=lambda _: (_ for _ in ()).throw(ValueError("Nonfinite JSON number")))
+        parsed = json.loads(
+            content,
+            object_pairs_hook=unique_keys,
+            parse_constant=lambda _: (_ for _ in ()).throw(ValueError("Nonfinite JSON number")),
+        )
     except (ValueError, TypeError, json.JSONDecodeError):
         return False, None
     return True, parsed
@@ -92,7 +100,11 @@ def classify_output(candidate: dict | None, expected_answer: object) -> tuple[bo
     parsed_ok, parsed = parsed_candidate(candidate)
     if not parsed_ok:
         return False, False
-    strict = isinstance(parsed, dict) and set(parsed) == {"answer"} and canonical(parsed["answer"]) == canonical(expected_answer)
+    strict = (
+        isinstance(parsed, dict)
+        and set(parsed) == {"answer"}
+        and canonical(parsed["answer"]) == canonical(expected_answer)
+    )
     content_only = (
         not strict
         and isinstance(parsed, dict)
@@ -149,31 +161,39 @@ def load_summary() -> tuple[dict, dict]:
             },
         }
     if [(summary[a]["correct"], summary[a]["calls"], summary[a]["repairs"], summary[a]["tokens"]) for a in ARMS] != [
-        (6, 12, 0, 4803), (12, 18, 6, 8295), (12, 18, 6, 8291)
+        (6, 12, 0, 4803),
+        (12, 18, 6, 8295),
+        (12, 18, 6, 8291),
     ]:
         raise ValueError("Pilot totals changed; review all figures before regenerating")
-    if [summary[a]["content_only"] for a in ARMS] != [6, 0, 0] or summary["A"]["missed"] != summary["A"]["content_only"]:
+    if [summary[a]["content_only"] for a in ARMS] != [6, 0, 0] or summary["A"]["missed"] != summary["A"][
+        "content_only"
+    ]:
         raise ValueError("The six one-shot contract misses must have correct values with a missing answer wrapper")
     return result, summary
 
 
 def style() -> None:
-    plt.rcParams.update({
-        "font.family": "DejaVu Sans",
-        "font.size": 11,
-        "text.color": INK,
-        "axes.labelcolor": INK,
-        "xtick.color": MUTED,
-        "ytick.color": INK,
-        "svg.fonttype": "none",
-        "svg.hashsalt": RESULT_SHA,
-        "savefig.facecolor": "white",
-    })
+    plt.rcParams.update(
+        {
+            "font.family": "DejaVu Sans",
+            "font.size": 11,
+            "text.color": INK,
+            "axes.labelcolor": INK,
+            "xtick.color": MUTED,
+            "ytick.color": INK,
+            "svg.fonttype": "none",
+            "svg.hashsalt": RESULT_SHA,
+            "savefig.facecolor": "white",
+        }
+    )
 
 
 def save(fig, filename: str, title: str, description: str) -> None:
     path = HERE / filename
-    fig.savefig(path, format="svg", dpi=120, metadata={"Date": "2026-09-24", "Creator": "Nisi benchmark chart renderer"})
+    fig.savefig(
+        path, format="svg", dpi=120, metadata={"Date": "2026-09-24", "Creator": "Nisi benchmark chart renderer"}
+    )
     plt.close(fig)
     svg_ns = "http://www.w3.org/2000/svg"
     xlink_ns = "http://www.w3.org/1999/xlink"
@@ -204,7 +224,16 @@ def chart_outcomes(s: dict) -> None:
             ax.barh(y, bad, left=good, height=0.57, color=MISS)
         ax.text(good / 2, y, f"{good} contract matches", ha="center", va="center", color="white", weight="bold")
         if bad:
-            ax.text(good + bad / 2, y, f"{bad} value right; wrapper missing", ha="center", va="center", color="white", weight="bold", fontsize=10)
+            ax.text(
+                good + bad / 2,
+                y,
+                f"{bad} value right; wrapper missing",
+                ha="center",
+                va="center",
+                color="white",
+                weight="bold",
+                fontsize=10,
+            )
     ax.set_yticks(ys, [LABELS[a] for a in ARMS])
     ax.set_xlim(0, 12)
     ax.set_xticks([0, 3, 6, 9, 12])
@@ -215,9 +244,22 @@ def chart_outcomes(s: dict) -> None:
     ax.tick_params(axis="both", length=0, pad=8)
     fig.suptitle("Output contract across 12 synthetic tasks", x=0.08, ha="left", fontsize=18, weight="bold")
     fig.text(0.08, 0.87, "One local Gemma endpoint · strict answer.json contract oracle", color=MUTED, fontsize=10)
-    fig.text(0.08, 0.13, "All six A misses held the right value but lacked the answer wrapper. B and C each repaired six and tied.", color=MUTED, fontsize=10)
-    fig.text(0.08, 0.065, f"Exploratory repeated-task pilot · result SHA-256 {RESULT_SHA[:16]}…", color=MUTED, fontsize=9)
-    save(fig, "exact-match.svg", "Output contract across 12 synthetic tasks", "A one-shot draft met the answer.json output contract for 6 tasks; its other 6 outputs held the correct value but omitted the required answer wrapper. B checked loop and C Nisi workflow each met the contract for all 12 after one repair opportunity. One local Gemma endpoint; exploratory repeated-task pilot.")
+    fig.text(
+        0.08,
+        0.13,
+        "All six A misses held the right value but lacked the answer wrapper. B and C each repaired six and tied.",
+        color=MUTED,
+        fontsize=10,
+    )
+    fig.text(
+        0.08, 0.065, f"Exploratory repeated-task pilot · result SHA-256 {RESULT_SHA[:16]}…", color=MUTED, fontsize=9
+    )
+    save(
+        fig,
+        "exact-match.svg",
+        "Output contract across 12 synthetic tasks",
+        "A one-shot draft met the answer.json output contract for 6 tasks; its other 6 outputs held the correct value but omitted the required answer wrapper. B checked loop and C Nisi workflow each met the contract for all 12 after one repair opportunity. One local Gemma endpoint; exploratory repeated-task pilot.",
+    )
 
 
 def chart_work(s: dict) -> None:
@@ -232,7 +274,9 @@ def chart_work(s: dict) -> None:
     for x, arm in zip(xs, ARMS):
         ax1.text(x, s[arm]["calls"] + 0.25, str(s[arm]["calls"]), ha="center", weight="bold")
         if s[arm]["repairs"]:
-            ax1.text(x, drafts[x] + repairs[x] / 2, f"+{repairs[x]}", ha="center", va="center", weight="bold", color=INK)
+            ax1.text(
+                x, drafts[x] + repairs[x] / 2, f"+{repairs[x]}", ha="center", va="center", weight="bold", color=INK
+            )
     ax1.set_ylim(0, 21)
     ax1.set_yticks([0, 6, 12, 18])
     ax1.set_ylabel("Model calls across 12 tasks")
@@ -253,9 +297,26 @@ def chart_work(s: dict) -> None:
         ax.tick_params(axis="both", length=0, pad=6)
     fig.suptitle("Checking and repair used more model work", x=0.055, ha="left", fontsize=18, weight="bold")
     fig.text(0.055, 0.85, "12 synthetic tasks · one local Gemma endpoint", color=MUTED, fontsize=10)
-    fig.text(0.055, 0.13, "The checked loop and Nisi each made 12 draft + 6 repair calls; both met the contract 12/12.", color=MUTED, fontsize=10)
-    fig.text(0.055, 0.065, f"One local Gemma endpoint · exploratory repeated-task pilot · result SHA-256 {RESULT_SHA[:16]}…", color=MUTED, fontsize=9)
-    save(fig, "calls-and-tokens.svg", "Model calls and reported tokens across the three pilot arms", "One-shot draft had 12 draft calls, no repairs, and 4803 reported tokens. Checked loop had 12 draft calls, 6 repair calls, and 8295 tokens. Nisi workflow had 12 draft calls, 6 repair calls, and 8291 tokens. Checked loop and Nisi tied on strict output-contract matches. All 48 receipts had reported token usage; the server cache state was unmeasured.")
+    fig.text(
+        0.055,
+        0.13,
+        "The checked loop and Nisi each made 12 draft + 6 repair calls; both met the contract 12/12.",
+        color=MUTED,
+        fontsize=10,
+    )
+    fig.text(
+        0.055,
+        0.065,
+        f"One local Gemma endpoint · exploratory repeated-task pilot · result SHA-256 {RESULT_SHA[:16]}…",
+        color=MUTED,
+        fontsize=9,
+    )
+    save(
+        fig,
+        "calls-and-tokens.svg",
+        "Model calls and reported tokens across the three pilot arms",
+        "One-shot draft had 12 draft calls, no repairs, and 4803 reported tokens. Checked loop had 12 draft calls, 6 repair calls, and 8295 tokens. Nisi workflow had 12 draft calls, 6 repair calls, and 8291 tokens. Checked loop and Nisi tied on strict output-contract matches. All 48 receipts had reported token usage; the server cache state was unmeasured.",
+    )
 
 
 def chart_families(s: dict) -> None:
@@ -265,8 +326,19 @@ def chart_families(s: dict) -> None:
         for xi, arm in enumerate(ARMS):
             good = s[arm]["families"][category]
             color = CORRECT if good == 4 else ("#ebaa91" if good == 1 else "#d5e1e4")
-            ax.add_patch(plt.Rectangle((xi - 0.4, yi - 0.39), 0.8, 0.78, facecolor=color, edgecolor="white", linewidth=2))
-            ax.text(xi, yi, f"{good}/4", ha="center", va="center", color="white" if good == 4 else INK, weight="bold", fontsize=16)
+            ax.add_patch(
+                plt.Rectangle((xi - 0.4, yi - 0.39), 0.8, 0.78, facecolor=color, edgecolor="white", linewidth=2)
+            )
+            ax.text(
+                xi,
+                yi,
+                f"{good}/4",
+                ha="center",
+                va="center",
+                color="white" if good == 4 else INK,
+                weight="bold",
+                fontsize=16,
+            )
     ax.set_xlim(-0.55, 2.55)
     ax.set_ylim(2.55, -0.55)
     ax.set_xticks(range(3), [LABELS[a] for a in ARMS])
@@ -275,9 +347,26 @@ def chart_families(s: dict) -> None:
     ax.spines[:].set_visible(False)
     fig.suptitle("Output contract by task family", x=0.10, ha="left", fontsize=18, weight="bold")
     fig.text(0.10, 0.87, "Strict contract matches · four synthetic tasks per family", color=MUTED, fontsize=10)
-    fig.text(0.10, 0.13, "All six one-shot misses had correct values but omitted the answer wrapper; both checked arms repaired them.", color=MUTED, fontsize=10)
-    fig.text(0.10, 0.065, f"One local Gemma endpoint · exploratory repeated-task pilot · result SHA-256 {RESULT_SHA[:16]}…", color=MUTED, fontsize=9)
-    save(fig, "task-families.svg", "Output-contract matches by synthetic task family", "On four JSON configuration tasks one-shot draft met the output contract once; checked loop and Nisi each met it four times. On four classification tasks all arms met the contract four times. On four text extraction tasks one-shot draft met it once; checked loop and Nisi each met it four times. All six one-shot contract misses had the correct value but omitted the required answer wrapper. One-shot had no repair opportunity; checked loop and Nisi had one.")
+    fig.text(
+        0.10,
+        0.13,
+        "All six one-shot misses had correct values but omitted the answer wrapper; both checked arms repaired them.",
+        color=MUTED,
+        fontsize=10,
+    )
+    fig.text(
+        0.10,
+        0.065,
+        f"One local Gemma endpoint · exploratory repeated-task pilot · result SHA-256 {RESULT_SHA[:16]}…",
+        color=MUTED,
+        fontsize=9,
+    )
+    save(
+        fig,
+        "task-families.svg",
+        "Output-contract matches by synthetic task family",
+        "On four JSON configuration tasks one-shot draft met the output contract once; checked loop and Nisi each met it four times. On four classification tasks all arms met the contract four times. On four text extraction tasks one-shot draft met it once; checked loop and Nisi each met it four times. All six one-shot contract misses had the correct value but omitted the required answer wrapper. One-shot had no repair opportunity; checked loop and Nisi had one.",
+    )
 
 
 if __name__ == "__main__":
@@ -288,4 +377,8 @@ if __name__ == "__main__":
     chart_families(summary)
     for arm in ARMS:
         print(arm, summary[arm])
-    print("Wrote:", *(str(HERE / name) for name in ("exact-match.svg", "calls-and-tokens.svg", "task-families.svg")), sep="\n")
+    print(
+        "Wrote:",
+        *(str(HERE / name) for name in ("exact-match.svg", "calls-and-tokens.svg", "task-families.svg")),
+        sep="\n",
+    )
