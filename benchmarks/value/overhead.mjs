@@ -1,10 +1,11 @@
 // Copyright 2026 Louis Calata
 // SPDX-License-Identifier: Apache-2.0
 import fs from 'node:fs/promises';
+import { realpathSync } from 'node:fs';
 import path from 'node:path';
 import assert from 'node:assert/strict';
 import { performance } from 'node:perf_hooks';
-import { pathToFileURL } from 'node:url';
+import { fileURLToPath } from 'node:url';
 import { runWorkflow } from '../../workflow/engine.mjs';
 import { runCheckedLoop } from './checked-loop.mjs';
 import { makeFixture, scenarios } from './fixtures.mjs';
@@ -88,4 +89,11 @@ export async function main() {
   console.log(JSON.stringify({ output, measuredPairs: result.rows.length,
     measuredWorkflowExecutions: result.rows.length * 2, modelCalls: 0, summaries: result.summaries }, null, 2));
 }
-if (process.argv[1] && import.meta.url === pathToFileURL(path.resolve(process.argv[1])).href) await main();
+// Compare real paths so a symlinked checkout or install still runs as main.
+let invokedAsMain = false;
+try {
+  invokedAsMain = Boolean(process.argv[1]) && realpathSync(process.argv[1]) === realpathSync(fileURLToPath(import.meta.url));
+} catch {
+  // A missing argv path means this module was imported, not invoked.
+}
+if (invokedAsMain) await main();

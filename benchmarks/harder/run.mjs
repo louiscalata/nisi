@@ -5,6 +5,7 @@
 // check, tests and a repair budget of 2. Test failures say WHICH parts are
 // wrong, never the expected values.
 import fs from 'node:fs/promises';
+import { realpathSync } from 'node:fs';
 import { createHash, randomUUID } from 'node:crypto';
 import { createRequire } from 'node:module';
 import { pathToFileURL, fileURLToPath } from 'node:url';
@@ -238,6 +239,13 @@ export async function main(argv = process.argv.slice(2), { fetch, jevFetch } = {
   } finally { await output.close(); }
 }
 
-if (process.argv[1] && fileURLToPath(import.meta.url) === process.argv[1]) {
+// Compare real paths so a symlinked checkout or install still runs as main.
+let invokedAsMain = false;
+try {
+  invokedAsMain = Boolean(process.argv[1]) && realpathSync(process.argv[1]) === realpathSync(fileURLToPath(import.meta.url));
+} catch {
+  // A missing argv path means this module was imported, not invoked.
+}
+if (invokedAsMain) {
   main().then(result => console.log(JSON.stringify(result.summary)), error => { console.error(error.message); process.exitCode = 1; });
 }
