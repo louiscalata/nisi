@@ -8,6 +8,7 @@ Running it writes, next to this script:
   calendar-time.tasks.json    full tasks (with expectedAnswer)
   calendar-time.prompts.json  same tasks with expectedAnswer removed
 """
+
 import calendar
 import datetime as dt
 import json
@@ -44,8 +45,7 @@ def last_sunday(y, m):
 
 # ---------------------------------------------------------------- 01 medium
 def t_business_days():
-    nominal = [D(2027, 7, 4), D(2027, 9, 6), D(2027, 11, 25),
-               D(2027, 12, 25), D(2028, 1, 1), D(2028, 1, 17)]
+    nominal = [D(2027, 7, 4), D(2027, 9, 6), D(2027, 11, 25), D(2027, 12, 25), D(2028, 1, 1), D(2028, 1, 17)]
 
     def observed(d):
         if d.weekday() == 5:
@@ -69,9 +69,17 @@ def t_business_days():
                 d += step
         return d
 
-    queries = [(D(2027, 6, 30), 3), (D(2027, 7, 2), 1), (D(2027, 7, 5), -1),
-               (D(2027, 9, 3), 1), (D(2027, 11, 24), 2), (D(2027, 12, 23), 4),
-               (D(2027, 12, 30), 3), (D(2028, 1, 4), -3), (D(2028, 1, 14), 5)]
+    queries = [
+        (D(2027, 6, 30), 3),
+        (D(2027, 7, 2), 1),
+        (D(2027, 7, 5), -1),
+        (D(2027, 9, 3), 1),
+        (D(2027, 11, 24), 2),
+        (D(2027, 12, 23), 4),
+        (D(2027, 12, 30), 3),
+        (D(2028, 1, 4), -3),
+        (D(2028, 1, 14), 5),
+    ]
     ans = [move(d, n).isoformat() for d, n in queries]
     qtxt = "; ".join(f"{i + 1}) {d.isoformat()} N={n:+d}" for i, (d, n) in enumerate(queries))
     prompt = (
@@ -84,7 +92,7 @@ def t_business_days():
         "calendar day in that direction, and keep stepping until you land on a business day. D itself "
         "need not be a business day. Reference fact: 2027-01-01 is a Friday. "
         "Queries (start date, N): " + qtxt + ". "
-        f"Return answer as a JSON array of {len(queries)} strings of the form \"YYYY-MM-DD\", one per query, in query order."
+        f'Return answer as a JSON array of {len(queries)} strings of the form "YYYY-MM-DD", one per query, in query order.'
     )
     return "medium", prompt, ans
 
@@ -98,9 +106,18 @@ def t_iso_weeks():
             if d >= w1:
                 return y, (d - w1).days // 7 + 1, d.weekday() + 1
 
-    items = [("d", D(2020, 12, 31)), ("d", D(2021, 1, 3)), ("o", 2024, 366),
-             ("d", D(2024, 12, 29)), ("d", D(2026, 12, 31)), ("d", D(2027, 1, 3)),
-             ("d", D(2028, 1, 2)), ("o", 2026, 365), ("o", 2021, 3), ("d", D(2032, 12, 31))]
+    items = [
+        ("d", D(2020, 12, 31)),
+        ("d", D(2021, 1, 3)),
+        ("o", 2024, 366),
+        ("d", D(2024, 12, 29)),
+        ("d", D(2026, 12, 31)),
+        ("d", D(2027, 1, 3)),
+        ("d", D(2028, 1, 2)),
+        ("o", 2026, 365),
+        ("o", 2021, 3),
+        ("d", D(2032, 12, 31)),
+    ]
     ans, txt = [], []
     for it in items:
         if it[0] == "d":
@@ -120,8 +137,9 @@ def t_iso_weeks():
         "week, so it can differ from the date's own year. A year has 52 or 53 ISO weeks. Day-of-year counts "
         "January 1 as day 1 and uses Gregorian leap years (divisible by 4, except centuries not divisible "
         "by 400). Reference fact: 2024-01-01 is a Monday. For each input below give its ISO week-date as "
-        "\"<week-year>-W<two-digit week>-<weekday>\" (example form: 2019-W07-3). Inputs, in order: "
-        + "; ".join(f"{i + 1}) {t}" for i, t in enumerate(txt)) + ". "
+        '"<week-year>-W<two-digit week>-<weekday>" (example form: 2019-W07-3). Inputs, in order: '
+        + "; ".join(f"{i + 1}) {t}" for i, t in enumerate(txt))
+        + ". "
         f"Return answer as a JSON array of {len(items)} strings of that form, one per input, in input order."
     )
     return "medium", prompt, ans
@@ -166,7 +184,7 @@ def t_month_end_chains():
         "date's current month. Each operation uses only the date produced by the previous one (no memory of "
         "an earlier, larger day-of-month). Apply the operations of each chain left to right to its start "
         "date. Chains: " + " | ".join(lines) + ". "
-        f"Return answer as a JSON array of {len(chains)} strings of the form \"YYYY-MM-DD\", one final date per chain, in chain order."
+        f'Return answer as a JSON array of {len(chains)} strings of the form "YYYY-MM-DD", one final date per chain, in chain order.'
     )
     return "medium", prompt, ans
 
@@ -202,7 +220,7 @@ def t_cron():
         "on 2028-03-07 or 2028-03-29. All times are in one fixed time zone with no daylight saving. 2028 is "
         "a leap year. Reference fact: 2028-01-01 is a Saturday. List the next 18 firing times strictly "
         "after 2028-02-29 00:05, in chronological order. "
-        "Return answer as a JSON array of 18 strings of the form \"YYYY-MM-DD HH:MM\" (24-hour clock)."
+        'Return answer as a JSON array of 18 strings of the form "YYYY-MM-DD HH:MM" (24-hour clock).'
     )
     return "hard", prompt, out
 
@@ -296,12 +314,14 @@ def t_dst():
         "(first) marks the daylight-time occurrence and (second) the standard-time one). All timestamps are "
         "Zeta local times in format YYYY-MM-DD HH:MM. Gregorian leap years apply. Reference fact: "
         "2027-03-01 is a Monday. Part A, real elapsed minutes from the first to the second timestamp: "
-        + "; ".join(f"A{i + 1}) {t}" for i, t in enumerate(a_txt)) + ". "
+        + "; ".join(f"A{i + 1}) {t}" for i, t in enumerate(a_txt))
+        + ". "
         "Part B, the Zeta local timestamp reached after adding the stated real elapsed minutes (append "
-        "\" (first)\" or \" (second)\" to the result only if the result falls in a repeated hour): "
-        + "; ".join(f"B{i + 1}) {t}" for i, t in enumerate(b_txt)) + ". "
+        '" (first)" or " (second)" to the result only if the result falls in a repeated hour): '
+        + "; ".join(f"B{i + 1}) {t}" for i, t in enumerate(b_txt))
+        + ". "
         f"Return answer as a JSON array of {len(ans)} items in order A1..A{len(el)}, B1..B{len(fw)}: the first "
-        f"{len(el)} are integers, the last {len(fw)} are strings like \"YYYY-MM-DD HH:MM\"."
+        f'{len(el)} are integers, the last {len(fw)} are strings like "YYYY-MM-DD HH:MM".'
     )
     return "hard", prompt, ans
 
@@ -348,10 +368,12 @@ def t_overlap():
             people.append((off, s, e, ls, le))
         else:
             ans = feasible(people)
-            if (3 <= len(ans) <= 9
-                    and feasible(people, check_weekday=False) != ans
-                    and feasible(people, check_lunch=False) != ans
-                    and len({p[0] for p in people}) == 4):
+            if (
+                3 <= len(ans) <= 9
+                and feasible(people, check_weekday=False) != ans
+                and feasible(people, check_lunch=False) != ans
+                and len({p[0] for p in people}) == 4
+            ):
                 chosen = (people, ans)
                 break
     assert chosen, "no parameter set found"
@@ -366,7 +388,8 @@ def t_overlap():
 
     plines = "; ".join(
         f"P{i + 1} is at {offs(o)}, works {hhmm(s)}-{hhmm(e)} local with lunch {hhmm(ls)}-{hhmm(le)} local"
-        for i, (o, s, e, ls, le) in enumerate(people))
+        for i, (o, s, e, ls, le) in enumerate(people)
+    )
     prompt = (
         "Four people have fixed UTC offsets (no daylight saving): " + plines + ". Each person works only on "
         "their own local Monday to Friday; local Saturday and Sunday are fully off. A candidate meeting "
@@ -377,7 +400,7 @@ def t_overlap():
         "(a meeting may end exactly when lunch starts or start exactly when lunch ends). Working hours "
         "include their start and end instants. Reference fact: 2026-12-07 is a Monday in UTC. List every "
         "feasible start time as a UTC time. "
-        "Return answer as a JSON array of strings \"HH:MM\" (UTC, 24-hour), in ascending order."
+        'Return answer as a JSON array of strings "HH:MM" (UTC, 24-hour), in ascending order.'
     )
     return "hard", prompt, ans
 
@@ -390,8 +413,7 @@ def t_recurring():
     byday = {0, 3}  # Monday, Thursday
     exdates = [D(2026, 12, 28), D(2027, 1, 14)]
     moves = [(D(2027, 2, 11), D(2027, 2, 8)), (D(2027, 1, 11), D(2027, 1, 16))]
-    holidays = [D(2026, 12, 25), D(2026, 12, 31), D(2027, 1, 1), D(2027, 1, 18),
-                D(2027, 1, 25), D(2027, 2, 8)]
+    holidays = [D(2026, 12, 25), D(2026, 12, 31), D(2027, 1, 1), D(2027, 1, 18), D(2027, 1, 25), D(2027, 2, 8)]
     hol = set(holidays)
 
     first_monday = start - TD(days=start.weekday())
@@ -424,30 +446,31 @@ def t_recurring():
         "the start date are not part of the series. Reference fact: 2026-12-14 is a Monday. Generate the "
         "first 16 occurrences in chronological order (COUNT is counted before any exception below). Then "
         "apply, in this order: (1) EXDATES: delete every occurrence whose original date is "
-        + " or ".join(x.isoformat() for x in exdates) + ". "
+        + " or ".join(x.isoformat() for x in exdates)
+        + ". "
         "(2) MOVES: an occurrence whose original date is on the left of an arrow is relocated to the date "
         "on the right: " + ", ".join(f"{a.isoformat()} -> {b.isoformat()}" for a, b in moves) + " (a moved "
         "date may fall on any weekday). (3) HOLIDAYS: " + ", ".join(h.isoformat() for h in holidays) + ". "
         "Every remaining occurrence whose current date (after step 2) is a holiday is moved to the first "
         "later date that is neither a Saturday, a Sunday nor a holiday; this uses only the holiday list, "
         "ignoring other occurrences. If two occurrences end on the same date, keep both entries. "
-        "Return answer as a JSON array of the final dates as \"YYYY-MM-DD\" strings sorted ascending."
+        'Return answer as a JSON array of the final dates as "YYYY-MM-DD" strings sorted ascending.'
     )
     return "hard", prompt, ans
 
 
 # ---------------------------------------------------------------- main
 def main():
-    builders = [t_business_days, t_iso_weeks, t_month_end_chains,
-                t_cron, t_dst, t_overlap, t_recurring]
+    builders = [t_business_days, t_iso_weeks, t_month_end_chains, t_cron, t_dst, t_overlap, t_recurring]
     tasks = []
     for i, b in enumerate(builders, 1):
         tier, prompt, ans = b()
         assert 300 <= len(prompt) <= 1800, (b.__name__, len(prompt))
         assert isinstance(ans, list) and 1 <= len(ans) <= 40, b.__name__
         assert all(isinstance(x, (str, int)) and not isinstance(x, bool) for x in ans)
-        tasks.append({"id": f"{CATEGORY}-{i:02d}", "category": CATEGORY, "tier": tier,
-                      "prompt": prompt, "expectedAnswer": ans})
+        tasks.append(
+            {"id": f"{CATEGORY}-{i:02d}", "category": CATEGORY, "tier": tier, "prompt": prompt, "expectedAnswer": ans}
+        )
     assert sum(t["tier"] == "medium" for t in tasks) == 3
     assert sum(t["tier"] == "hard" for t in tasks) == 4
     with open(os.path.join(HERE, f"{CATEGORY}.tasks.json"), "w") as f:

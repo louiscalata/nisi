@@ -10,6 +10,7 @@ Running it writes, next to this script:
 
 Every expectedAnswer is computed by the simulators below; none is typed by hand.
 """
+
 import json
 import os
 import random
@@ -155,6 +156,7 @@ DENOMS = [100, 25, 10, 5]
 
 def exact_change_possible(amount, stock):
     """Brute force: can amount be made from the stock at all?"""
+
     def rec(i, rem):
         if rem == 0:
             return True
@@ -165,6 +167,7 @@ def exact_change_possible(amount, stock):
             if rec(i + 1, rem - k * d):
                 return True
         return False
+
     return rec(0, amount)
 
 
@@ -319,8 +322,14 @@ def task_bank():
             else:
                 ops.append(("MONTH",))
         ans, st = bank_sim(init, ops)
-        if (st["limit_reject"] >= 1 and st["frozen_reject"] >= 1 and st["unfreeze"] >= 1
-                and st["odfee"] >= 3 and st["month"] >= 1 and st["freeze"] >= 2):
+        if (
+            st["limit_reject"] >= 1
+            and st["frozen_reject"] >= 1
+            and st["unfreeze"] >= 1
+            and st["odfee"] >= 3
+            and st["month"] >= 1
+            and st["freeze"] >= 2
+        ):
             break
     else:
         raise RuntimeError("bank seed search failed")
@@ -507,8 +516,7 @@ def task_lfu():
             else:
                 ops.append(("get", k))
         ans, st = lfu_sim(cap, ops)
-        if (st["evict"] >= 5 and st["tie_evict"] >= 3 and st["reinsert"] >= 2
-                and st["update"] >= 2 and st["miss"] >= 3):
+        if st["evict"] >= 5 and st["tie_evict"] >= 3 and st["reinsert"] >= 2 and st["update"] >= 2 and st["miss"] >= 3:
             break
     else:
         raise RuntimeError("lfu seed search failed")
@@ -613,8 +621,13 @@ def task_elevator():
 # --------------------------------------------------------------------------
 def build():
     builders = [
-        task_lru, task_bucket, task_vending,      # medium
-        task_bank, task_inventory, task_lfu, task_elevator,  # hard
+        task_lru,
+        task_bucket,
+        task_vending,  # medium
+        task_bank,
+        task_inventory,
+        task_lfu,
+        task_elevator,  # hard
     ]
     tasks = []
     for n, b in enumerate(builders, 1):
@@ -622,13 +635,15 @@ def build():
         assert 300 <= len(prompt) <= 1800, (n, len(prompt))
         assert prompt.rstrip().endswith("."), n
         assert "Return answer as" in prompt, n
-        tasks.append({
-            "id": f"{CATEGORY}-{n:02d}",
-            "category": CATEGORY,
-            "tier": tier,
-            "prompt": prompt,
-            "expectedAnswer": ans,
-        })
+        tasks.append(
+            {
+                "id": f"{CATEGORY}-{n:02d}",
+                "category": CATEGORY,
+                "tier": tier,
+                "prompt": prompt,
+                "expectedAnswer": ans,
+            }
+        )
     assert sum(1 for t in tasks if t["tier"] == "medium") == 3
     assert sum(1 for t in tasks if t["tier"] == "hard") == 4
     return tasks

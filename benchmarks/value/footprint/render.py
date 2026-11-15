@@ -55,9 +55,9 @@ def source_data() -> tuple[dict, str]:
 
 
 def x_for(value: int, low: int, high: int) -> float:
-    return PLOT_LEFT + (math.log10(value) - math.log10(low)) / (
-        math.log10(high) - math.log10(low)
-    ) * (PLOT_RIGHT - PLOT_LEFT)
+    return PLOT_LEFT + (math.log10(value) - math.log10(low)) / (math.log10(high) - math.log10(low)) * (
+        PLOT_RIGHT - PLOT_LEFT
+    )
 
 
 def render() -> str:
@@ -65,8 +65,7 @@ def render() -> str:
     packages = data["packages"]
     low, high = data["axis"]["minimumBytes"], data["axis"]["maximumBytes"]
     descriptions = "; ".join(
-        f"{row['package']}: {row['compressedArchiveBytes']:,} compressed bytes"
-        for row in packages
+        f"{row['package']}: {row['compressedArchiveBytes']:,} compressed bytes" for row in packages
     )
     description = (
         f"Logarithmic compressed-archive comparison. {descriptions}. "
@@ -92,35 +91,39 @@ def render() -> str:
     for tick, label in TICKS:
         if low <= tick <= high:
             x = x_for(tick, low, high)
-            lines.extend((
-                f'  <line x1="{x:.2f}" y1="134" x2="{x:.2f}" y2="351" stroke="{GRID}" stroke-width="1"/>',
-                f'  <text x="{x:.2f}" y="377" text-anchor="middle" font-family="system-ui, sans-serif" '
-                f'font-size="14" fill="{MUTED}">{escape(label)}</text>',
-            ))
-    lines.append(
-        f'  <line x1="{PLOT_LEFT}" y1="351" x2="{PLOT_RIGHT}" y2="351" stroke="{MUTED}" stroke-width="1.5"/>'
-    )
+            lines.extend(
+                (
+                    f'  <line x1="{x:.2f}" y1="134" x2="{x:.2f}" y2="351" stroke="{GRID}" stroke-width="1"/>',
+                    f'  <text x="{x:.2f}" y="377" text-anchor="middle" font-family="system-ui, sans-serif" '
+                    f'font-size="14" fill="{MUTED}">{escape(label)}</text>',
+                )
+            )
+    lines.append(f'  <line x1="{PLOT_LEFT}" y1="351" x2="{PLOT_RIGHT}" y2="351" stroke="{MUTED}" stroke-width="1.5"/>')
     for row, y, color in zip(packages, ROW_Y, COLORS, strict=True):
         x = x_for(row["compressedArchiveBytes"], low, high)
-        lines.extend((
-            f'  <line x1="{PLOT_LEFT}" y1="{y}" x2="{PLOT_RIGHT}" y2="{y}" stroke="{GRID}" stroke-width="2"/>',
-            f'  <line x1="{PLOT_LEFT}" y1="{y}" x2="{x:.2f}" y2="{y}" stroke="{color}" stroke-width="5"/>',
-            f'  <circle cx="{x:.2f}" cy="{y}" r="8" fill="{color}" stroke="#ffffff" stroke-width="2"/>',
-            f'  <text x="36" y="{y - 8}" font-family="system-ui, sans-serif" font-size="19" '
-            f'font-weight="700" fill="{INK}">{escape(row["product"])}</text>',
-            f'  <text x="36" y="{y + 14}" font-family="system-ui, sans-serif" font-size="13" '
-            f'fill="{MUTED}">{escape(row["package"])}</text>',
-            f'  <text x="960" y="{y + 6}" text-anchor="end" font-family="system-ui, sans-serif" '
-            f'font-size="18" font-weight="700" fill="{INK}">{row["compressedArchiveBytes"]:,} bytes</text>',
-        ))
-    lines.extend((
-        '  <rect x="28" y="398" width="944" height="108" rx="9" fill="#f3f8f8" stroke="#cadcdd"/>',
-        f'  <text x="44" y="427" font-family="system-ui, sans-serif" font-size="18" font-weight="700" fill="{INK}">Package size does not measure model token usage.</text>',
-        f'  <text x="44" y="451" font-family="system-ui, sans-serif" font-size="14" fill="{INK}">These products serve different functions and include different files.</text>',
-        f'  <text x="44" y="473" font-family="system-ui, sans-serif" font-size="14" fill="{INK}">Transitive dependency sizes and installed size are excluded.</text>',
-        f'  <text x="44" y="495" font-family="system-ui, sans-serif" font-size="14" fill="{INK}">Nisi: GitHub release asset. Others: npm pack dry-run, {escape(data["capturedOn"])}.</text>',
-        '</svg>',
-    ))
+        lines.extend(
+            (
+                f'  <line x1="{PLOT_LEFT}" y1="{y}" x2="{PLOT_RIGHT}" y2="{y}" stroke="{GRID}" stroke-width="2"/>',
+                f'  <line x1="{PLOT_LEFT}" y1="{y}" x2="{x:.2f}" y2="{y}" stroke="{color}" stroke-width="5"/>',
+                f'  <circle cx="{x:.2f}" cy="{y}" r="8" fill="{color}" stroke="#ffffff" stroke-width="2"/>',
+                f'  <text x="36" y="{y - 8}" font-family="system-ui, sans-serif" font-size="19" '
+                f'font-weight="700" fill="{INK}">{escape(row["product"])}</text>',
+                f'  <text x="36" y="{y + 14}" font-family="system-ui, sans-serif" font-size="13" '
+                f'fill="{MUTED}">{escape(row["package"])}</text>',
+                f'  <text x="960" y="{y + 6}" text-anchor="end" font-family="system-ui, sans-serif" '
+                f'font-size="18" font-weight="700" fill="{INK}">{row["compressedArchiveBytes"]:,} bytes</text>',
+            )
+        )
+    lines.extend(
+        (
+            '  <rect x="28" y="398" width="944" height="108" rx="9" fill="#f3f8f8" stroke="#cadcdd"/>',
+            f'  <text x="44" y="427" font-family="system-ui, sans-serif" font-size="18" font-weight="700" fill="{INK}">Package size does not measure model token usage.</text>',
+            f'  <text x="44" y="451" font-family="system-ui, sans-serif" font-size="14" fill="{INK}">These products serve different functions and include different files.</text>',
+            f'  <text x="44" y="473" font-family="system-ui, sans-serif" font-size="14" fill="{INK}">Transitive dependency sizes and installed size are excluded.</text>',
+            f'  <text x="44" y="495" font-family="system-ui, sans-serif" font-size="14" fill="{INK}">Nisi: GitHub release asset. Others: npm pack dry-run, {escape(data["capturedOn"])}.</text>',
+            "</svg>",
+        )
+    )
     return "\n".join(lines) + "\n"
 
 

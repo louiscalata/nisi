@@ -18,3 +18,5 @@ npm-debug.log*
 *.tgz
 # live-pilot progress sidecars written beside the chosen output file
 *.rows.jsonl
+# ruff
+.ruff_cache/
