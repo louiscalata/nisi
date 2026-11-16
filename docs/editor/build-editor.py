@@ -39,9 +39,16 @@ state = {
 if len(sys.argv) > 2:
     supplied = json.loads(Path(sys.argv[2]).read_text())
     assert ''.join(s['current'] for s in supplied['sections']) == markdown, 'Editor state must match Markdown exactly'
+    if any(not isinstance(s.get('id'), str) or re.fullmatch(r'[a-z0-9-]+', s['id']) is None for s in supplied['sections']):
+        raise ValueError('Invalid section ID')
     assert len({s['id'] for s in supplied['sections']}) == len(supplied['sections']), 'Duplicate section IDs'
     state['sections'] = [{**s, 'baseline': s.get('baseline', s['current'])} for s in supplied['sections']]
     state['about'] = supplied['about']
+    if 'baseRevision' in supplied:
+        revision = supplied['baseRevision']
+        if not isinstance(revision, str) or re.fullmatch(r'[0-9a-f]{64}', revision) is None:
+            raise ValueError('Invalid base revision')
+        state['baseRevision'] = revision
 assert ''.join(s['current'] for s in sections) == markdown, 'Section split must preserve every source byte'
 css = (base / 'editor.css').read_text()
 app = (base / 'editor.js').read_text()
