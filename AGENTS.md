@@ -24,19 +24,19 @@ Nisi is a Node.js CLI and library (version 0.3.1, Node.js 22 or newer, Apache-2.
 
 ## Commands
 
-From a source checkout, after `npm ci`. These were run on commit `bfcc24d` with Node `v22.23.4` on Linux. Each exited 0.
+From a source checkout, after `npm ci`. The results below are from the `test (ubuntu-latest, 24)` job of main CI [run 43719693869](https://github.com/louiscalata/nisi/actions/runs/43719693869) on commit `3bfc602` (Node `v24.22.2`, GitHub-hosted Linux, read from the job log). Each step in that job passed. The same run's Linux Node 22 job also reports 351 tests, 350 passed, 1 skipped.
 
 | Command | What a clean run shows |
 | --- | --- |
 | `npm run check:structural` | JSON `"status":"PASS"` and `"sourceFindings":[]` |
 | `npm run check:static` | JSON `"status":"PASS"` and `"sourceFindings":[]` |
-| `npm test` | 305 passed, 0 failed, 1 skipped |
+| `npm test` | 351 tests, 350 passed, 0 failed, 1 skipped |
 | `npm run check` | Structural check, then the same test result |
 | `npm run check:cli-package` | `"status": "PASS"`, 21 archive files, installed demo |
 
 `npm run check:static` is `node tools/check-side-effects.mjs`, which imports `scripts/structural-check.mjs`. It is the same check as `npm run check:structural`. Before `npm ci`, both exit 1 with `ERR_MODULE_NOT_FOUND` for `typescript`.
 
-The skipped test on Linux is `an unregistered script still reports a real Windows spawn refusal`. It runs on Windows. Do not count that skip as a failure, and do not count a Linux run as a Windows run.
+The skipped test on Linux is `an unregistered script still reports a real Windows spawn refusal`. It runs on Windows. In the same run the Windows jobs report 351 tests, 349 passed, 0 failed, 2 skipped (the symlink-swap test, because Windows has no `O_NOFOLLOW`, and the FIFO test, because Windows has no `mkfifo`). Do not count those skips as failures, and do not count a Linux run as a Windows run.
 
 `node bin/nisi.mjs demo` prints `outcome` `COMPLETED`, one repair, and `modelCalls` 0. It calls no model. `node examples/workflow.mjs` keeps the report. `node examples/local-model-workflow.mjs` needs a loopback server and two model names; with no arguments it exits 2 and prints usage. `scripts/validate-real-data.sh --smoke` checks only `fixtures/sample-data/`.
 

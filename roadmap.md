@@ -1,6 +1,6 @@
 # Nisi roadmap
 
-Canonical project roadmap. Updated November 14, 2026 (Pacific time). Product name: Nisi.
+Canonical project roadmap. Updated November 16, 2026 (Pacific time). Product name: Nisi.
 Source version: 0.3.1. The published tag is v0.3.1 (9 November 2026). It is not on
 the npm registry. v0.2.1 and v0.3.0 shipped the items listed under those headings.
 v0.3.0 added the `reasoningEffort` option, the optional Jev advisor and the
@@ -69,6 +69,23 @@ scope, regressions, deferred work and local verification.
   not. The files under `benchmarks/harder/results/` are from 2026-11-07
   and an earlier private harness. They still omit the token cap and timeout, so
   those table rows cannot be regenerated from the file alone.
+- [x] Changes merged to main after the harder-task settings record, in order of
+  PR number. Details are in the changelog; none is in v0.3.1.
+  - #51: the editable README centralizes backup/save/recovery transitions.
+  - #54: a Jev response body that stalls past `timeoutMs` is `JEV_TIMEOUT`, not
+    `JEV_RESPONSE_INVALID`.
+  - #55: `npm run check:cli-package` accepts the npm 12 `npm pack --json` shape.
+  - #57: the journal authentication review, and `nisi validate` reads each file
+    from one descriptor with a size bound (`FILE_TOO_LARGE`, `FILE_CHANGED`).
+  - #58: Ruff for the Python scripts, with the frozen task sets checked in CI.
+  - #60: `nisi validate` fails at once with `NOT_A_FILE` on a FIFO swapped in
+    after the `lstat` check, instead of hanging.
+  - #61: the examples and benchmark runners run when started through a
+    symlinked path.
+  - #62: `reopen` accepts `{projectId, redactPaths, maxNow}` expectations
+    (review R3).
+- Main CI on `3bfc602` (merge of #62) passed in all five jobs, [run 43719693869](https://github.com/louiscalata/nisi/actions/runs/43719693869).
+  Linux Node 24 reports 351 tests, 350 passed, 0 failed, 1 skipped.
 
 ## Public v0.2.0 CLI release
 
@@ -222,8 +239,17 @@ the current GitHub archive status. Current status and open items are listed abov
   author/reviewer isolation and durable production report storage.
 - [ ] Broader model/server compatibility and real project workflow evaluation.
 - [x] Hosted Linux CI passed for the published implementation.
-- [ ] Native Windows validation and a supported-platform matrix.
+- [ ] Native Windows validation and a supported-platform matrix. Open as a
+  gate. Evidence since: the `test (windows-latest, 22)` and `test (windows-latest, 24)`
+  jobs of [run 43719693869](https://github.com/louiscalata/nisi/actions/runs/43719693869)
+  (commit `3bfc602`) each passed with 351 tests, 349 passed, 0 failed, 2 skipped.
+  Their logs name the machine `LOUISAURORAR12` (the self-hosted `pc-win`
+  runner), not a GitHub-hosted image. That is a Windows CI result on one PC;
+  it is not a supported-platform matrix or a repeat of the v0.3.0 one-PC note.
 - [ ] Distribution, installation and release checks before package publication.
+  Open for the npm registry only. `npm run check:cli-package` passed in the
+  same run's Linux and Windows jobs (21 archive files), and v0.3.1 is a tagged
+  GitHub Release with `nisi-0.3.1.tgz`; the package is not on the npm registry.
 - [x] Source-update approval received for commit/push.
 - [ ] Versioned package publication and distribution release, if requested.
 
