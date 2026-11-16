@@ -52,7 +52,7 @@ Files read: `history/run-journal-v1.mjs`, `history/run-journal-store-v1.mjs`, `h
 2. **R2: keyed authentication in v2 (design).** An HMAC-SHA-256 over the header hash and the footer (`count`, `lastHash`, a new random `journalId`), with a `keyId`, would authenticate "a holder of the key". It would not identify a specific writer, and it would not prevent replay of an older MAC'd file unless R1's anchor is also kept. Per-writer signatures (for example Ed25519) are needed only if attribution matters. Decide the key owner and rotation before choosing.
 3. **R3: host-supplied expectations on reopen (small API addition, follow-up).** Add an optional second argument, `reopen(serialized, {projectId, redactPaths, maxNow})`, that refuses a mismatch with a named reason. This closes F4 and F5 for read-only consumers without changing the format. Existing one-argument calls keep their behaviour.
 4. **R4: documentation (follow-up).** In `docs/run-journal.md` (Authenticity) and `SECURITY.md`, state that truncation to an earlier entry and replay of an older copy need no rehashing, and that the header supplies its own redaction and project policy on reopen.
-5. **R5: a store read limit (optional).** Add `maxBytes` to `readSerializedJournal` and refuse symlinked reads to match writes. `validate` already bounds its reads after this change.
+5. **R5: a store read limit (optional).** Add `maxBytes` to `readSerializedJournal` and refuse symlinked reads to match writes. `validate` already bounds its reads after this change. Implemented afterwards: `readSerializedJournal` reads from one descriptor with a `maxBytes` limit (default 64 MiB) and refuses symlinks and non-regular files.
 
 ## For the Jaryo Nisi-journal adaptor
 
