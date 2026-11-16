@@ -83,15 +83,76 @@ function syncFile(fs, fd, state, kind) {
   }
 }
 
+// The read limit. A larger file is refused with FILE_TOO_LARGE; one of exactly
+// this many bytes is read. Callers can pass options.maxBytes to change it.
+export const MAX_READ_BYTES = 64 * 1024 * 1024;
+const validLimit = value => typeof value === 'number' && value >= 0;
+
+// The lstat size is only a first check: the file can grow or be replaced
+// before it is opened. Read from one descriptor, check its fstat size, and
+// never read more than maxBytes + 1 bytes, so the limit bounds what is read.
+// O_NOFOLLOW refuses a link swapped in after the lstat; O_NONBLOCK keeps the
+// open from waiting on a FIFO swapped in after it, and the fstat check then
+// refuses it. Neither has an effect on a regular file. The same checks as
+// `nisi validate` (history/validate-data.mjs), with the same reason codes.
+function boundedRead(fs, path, maxBytes) {
+  if (typeof fs.lstatSync === 'function') {
+    let stat;
+    try { stat = fs.lstatSync(path); }
+    catch (error) { return { error: error?.code === 'ENOENT' ? 'NOT_FOUND' : 'READ_FAILED' }; }
+    if (!stat || typeof stat.isSymbolicLink !== 'function' || typeof stat.isFile !== 'function') return { error: 'READ_FAILED' };
+    if (stat.isSymbolicLink()) return { error: 'SYMLINK' };
+    if (!stat.isFile()) return { error: 'NOT_A_FILE' };
+  }
+  const constants = fs.constants;
+  const noFollow = constants?.O_NOFOLLOW;
+  let fd;
+  try { fd = fs.openSync(path, noFollow === undefined ? 'r' : constants.O_RDONLY | noFollow | (constants.O_NONBLOCK || 0)); }
+  catch (error) {
+    return { error: error?.code === 'ELOOP' ? 'SYMLINK' : error?.code === 'ENOENT' ? 'NOT_FOUND' : 'READ_FAILED' };
+  }
+  try {
+    const stat = fs.fstatSync(fd);
+    if (!stat || typeof stat.isFile !== 'function' || !Number.isSafeInteger(stat.size)) return { error: 'READ_FAILED' };
+    if (!stat.isFile()) return { error: 'NOT_A_FILE' };
+    if (stat.size > maxBytes) return { error: 'FILE_TOO_LARGE', bytes: stat.size };
+    // One byte past the fstat size shows a file that grew during the read.
+    const buffer = Buffer.alloc(stat.size + 1);
+    let length = 0;
+    while (length < buffer.length) {
+      const count = fs.readSync(fd, buffer, length, buffer.length - length, null);
+      if (count === 0) break;
+      length += count;
+    }
+    if (length > stat.size) return { error: 'FILE_CHANGED' };
+    return { bytes: buffer.subarray(0, length) };
+  } catch { return { error: 'READ_FAILED' }; }
+  finally { try { fs.closeSync(fd); } catch { /* the read result stands */ } }
+}
+
+// With openSync, fstatSync, readSync and closeSync the read is bounded and
+// refuses links and non-regular files. A caller-supplied fs with only
+// readFileSync reads as before, and checks the bytes it returns only when
+// options.maxBytes is given.
 export function readSerializedJournal(options) {
   const state = initial();
   if (!options || !validPath(options.path) || !hasMethods(options.fs, ['readFileSync'])) return refusal(state, 'INVALID_INPUT');
-  const found = existingBytes(options.fs, options.path);
-  if (found.error) return refusal(state, found.error);
-  if (found.absent) return refusal(state, 'NOT_FOUND');
-  const decoded = decode(found.bytes);
+  if (options.maxBytes !== undefined && !validLimit(options.maxBytes)) return refusal(state, 'INVALID_INPUT');
+  let bytes;
+  if (hasMethods(options.fs, ['openSync', 'fstatSync', 'readSync', 'closeSync'])) {
+    const bounded = boundedRead(options.fs, options.path, options.maxBytes ?? MAX_READ_BYTES);
+    if (bounded.error) return { ...refusal(state, bounded.error), ...(bounded.bytes === undefined ? {} : { bytes: bounded.bytes }) };
+    bytes = bounded.bytes;
+  } else {
+    const found = existingBytes(options.fs, options.path);
+    if (found.error) return refusal(state, found.error);
+    if (found.absent) return refusal(state, 'NOT_FOUND');
+    if (options.maxBytes !== undefined && Buffer.isBuffer(found.bytes) && found.bytes.length > options.maxBytes) return { ...refusal(state, 'FILE_TOO_LARGE'), bytes: found.bytes.length };
+    bytes = found.bytes;
+  }
+  const decoded = decode(bytes);
   if (decoded.problem) return refusal(state, decoded.problem);
-  return { ...state, status: 'READ', serialized: decoded.serialized, sha256: digest(found.bytes), bytes: found.bytes.length, verified: true };
+  return { ...state, status: 'READ', serialized: decoded.serialized, sha256: digest(bytes), bytes: bytes.length, verified: true };
 }
 
 // readFileSync follows a symlink but renameSync replaces it. On a symlinked
