@@ -1,0 +1,362 @@
+[
+  {
+    "id": "s0001",
+    "file": "history/run-journal-anchor-v1.mjs",
+    "before": "if (insideJournalDirectory(fs, resolvedJournalPath, resolvedAnchorDir)) return { problem: 'ANCHOR_INSIDE_JOURNAL_DIR' };",
+    "after": ""
+  },
+  {
+    "id": "s0002",
+    "file": "history/run-journal-anchor-v1.mjs",
+    "before": "ino === '0' || stat.ino",
+    "after": "stat.ino"
+  },
+  {
+    "id": "s0003",
+    "file": "history/run-journal-anchor-v1.mjs",
+    "before": "if (relation !== '..' && !relation.startsWith('..' + sep) && !isAbsolute(relation)) return true;",
+    "after": ""
+  },
+  {
+    "id": "s0004",
+    "file": "history/run-journal-anchor-v1.mjs",
+    "before": "if (relation !== '..' && !relation.startsWith('..' + sep) && !isAbsolute(relation)) return true;",
+    "after": "if (relation !== '' && relation !== '..' && !relation.startsWith('..' + sep) && !isAbsolute(relation)) return true;"
+  },
+  {
+    "id": "s0005",
+    "file": "history/run-journal-anchor-v1.mjs",
+    "before": "if (relation !== '..' && ",
+    "after": "if ("
+  },
+  {
+    "id": "s0006",
+    "file": "history/run-journal-anchor-v1.mjs",
+    "before": "String(stat.dev) + ':' + ino",
+    "after": "ino"
+  },
+  {
+    "id": "s0007",
+    "file": "history/run-journal-anchor-v1.mjs",
+    "before": "if (!stat || typeof stat.isDirectory !== 'function' || !stat.isDirectory()) return null;",
+    "after": ""
+  },
+  {
+    "id": "s0008",
+    "file": "history/run-journal-anchor-v1.mjs",
+    "before": "fs.lstatSync(path, { bigint: true })",
+    "after": "fs.lstatSync(path)"
+  },
+  {
+    "id": "s0009",
+    "file": "history/run-journal-anchor-v1.mjs",
+    "before": "if (next.fileSha256 !== top.fileSha256 && !generationOf(top.generation + 1)) return refused('GENERATION_EXHAUSTED');",
+    "after": ""
+  },
+  {
+    "id": "s0010",
+    "file": "history/run-journal-anchor-v1.mjs",
+    "before": "next.fileSha256 !== top.fileSha256 && !generationOf(top.generation + 1)",
+    "after": "!generationOf(top.generation + 1)"
+  },
+  {
+    "id": "s0011",
+    "file": "history/run-journal-anchor-v1.mjs",
+    "before": "const top = status === 'OK_PENDING' ? anchor.pending : anchor.current;",
+    "after": "const top = anchor.current;"
+  },
+  {
+    "id": "s0012",
+    "file": "history/run-journal-anchor-v1.mjs",
+    "before": "  if (!generationOf(current.generation + 1)) return refused('GENERATION_EXHAUSTED');\n  const target",
+    "after": "  const target"
+  },
+  {
+    "id": "s0013",
+    "file": "history/run-journal-anchor-v1.mjs",
+    "before": "if (!generationOf(found.anchor.current.generation + 1)) return refused('GENERATION_EXHAUSTED');",
+    "after": ""
+  },
+  {
+    "id": "s0014",
+    "file": "history/run-journal-anchor-v1.mjs",
+    "before": "if (!generationOf(found.anchor.current.generation + 1)) return refused('GENERATION_EXHAUSTED');",
+    "after": "if (!generationOf(found.anchor.current.generation + 1)) return refused('NOT_AHEAD');"
+  },
+  {
+    "id": "s0015",
+    "file": "history/run-journal-anchor-v1.mjs",
+    "before": "return refused('GENERATION_EXHAUSTED');\n      if (status === 'OK_PENDING') {",
+    "after": "return refused('NOT_EXTENSION');\n      if (status === 'OK_PENDING') {"
+  },
+  {
+    "id": "s0016",
+    "file": "history/run-journal-anchor-v1.mjs",
+    "before": "if (owned) { owned = false;",
+    "after": "if (false) { owned = false;"
+  },
+  {
+    "id": "s0017",
+    "file": "history/run-journal-anchor-v1.mjs",
+    "before": "if (!Buffer.isBuffer(back) || !back.equals(bytes)) return fail('ANCHOR_WRITE_FAILED');",
+    "after": "if (!Buffer.isBuffer(back)) return fail('ANCHOR_WRITE_FAILED');"
+  },
+  {
+    "id": "s0018",
+    "file": "history/run-journal-anchor-v1.mjs",
+    "before": "fs.openSync(dirname(path), directoryFlags)",
+    "after": "fs.openSync(dirname(path) + '/', directoryFlags)"
+  },
+  {
+    "id": "s0019",
+    "file": "history/run-journal-anchor-v1.mjs",
+    "before": "const first = writeAnchorFile(fs, anchorPath, pendingBytes, unchangedOnDisk, sleep);\n  if (!first.committed) return refused(first.reason);",
+    "after": "const first = { committed: true, durable: true };"
+  },
+  {
+    "id": "s0020",
+    "file": "history/run-journal-anchor-v1.mjs",
+    "before": "const promoted = writeAnchorFile(fs, anchorPath, encode(target, null), unchangedSince, sleep);\n  if (!promoted.committed) return refused('ANCHOR_WRITE_FAILED', { committed: true, durable: false });",
+    "after": "const promoted = { committed: true, durable: true };"
+  },
+  {
+    "id": "s0021",
+    "file": "history/run-journal-anchor-v1.mjs",
+    "before": "status, ok: status === 'OK' || status === 'OK_PENDING',",
+    "after": "status, ok: status === 'OK' || status === 'OK_PENDING' || status === 'AHEAD',"
+  },
+  {
+    "id": "s0022",
+    "file": "history/run-journal-anchor-v1.mjs",
+    "before": "if (status !== 'OK' && status !== 'OK_PENDING') return refused(status);",
+    "after": "if (status !== 'OK' && status !== 'OK_PENDING' && status !== 'AHEAD') return refused(status);"
+  },
+  {
+    "id": "s0023",
+    "file": "history/run-journal-anchor-v1.mjs",
+    "before": "...(previous === null ? {} : { expectedPreviousSha256: current.fileSha256 }),",
+    "after": ""
+  },
+  {
+    "id": "s0024",
+    "file": "history/run-journal-anchor-v1.mjs",
+    "before": "fd = fs.openSync(temp, 'wx', 0o600);",
+    "after": "fd = fs.openSync(temp, 'wx', 0o644);"
+  },
+  {
+    "id": "s0025",
+    "file": "history/run-journal-anchor-v1.mjs",
+    "before": "typeof error?.code === 'string' && /^[A-Z0-9_]{1,32}$/.test(error.code) ? error.code : 'IO_ERROR'",
+    "after": "typeof error?.code === 'string' ? error.code : 'IO_ERROR'"
+  },
+  {
+    "id": "s0026",
+    "file": "history/run-journal-anchor-v1.mjs",
+    "before": "|| value.pending.generation !== value.current.generation + 1) return null;",
+    "after": ") return null;"
+  },
+  {
+    "id": "s0027",
+    "file": "history/run-journal-anchor-v1.mjs",
+    "before": "|| value.pending.projectId !== value.current.projectId",
+    "after": ""
+  },
+  {
+    "id": "s0028",
+    "file": "history/run-journal-anchor-v1.mjs",
+    "before": "function insideJournalDirectory(fs, journalPath, anchorDir) {\n  const journalDir = dirname(journalPath);\n  const target = anchorDir;\n  const relation = relative(journalDir, target);\n  // '' is the same directory; a path that leaves it, or is on another drive, is outside.\n  if (relation !== '..' && !relation.startsWith('..' + sep) && !isAbsolute(relation)) return true;\n  const identity = identityOf(fs, journalDir);\n  if (identity === null) return false;\n  // Do not take string parents here: an alias of a descendant may have unrelated\n  // spelled parents. The kernel resolves each literal /.. to its physical parent.\n  const seen = new Set();\n  for (let probe = target; ;) {\n    const current = identityOf(fs, probe);\n    if (current === identity) return true;\n    if (current === null) {\n      const parent = dirname(probe);\n      if (parent === probe) return false;\n      probe = parent;\n    } else {\n      if (seen.has(current)) return false;\n      seen.add(current);\n      probe += sep + '..';\n    }\n  }\n}\n\n",
+    "after": "function insideJournalDirectory() { return false; }\n\n"
+  },
+  {
+    "id": "s0029",
+    "file": "history/run-journal-anchor-v1.mjs",
+    "before": "function resolveExisting(fs, path) {\n  const absolute = isAbsolute(path) ? path : resolve('.') + sep + path;\n  const root = parse(absolute).root;\n  const parts = absolute.slice(root.length).split(sep === '\\\\' ? /[\\\\/]/ : /\\//);\n  let probe = root;\n  let unresolved = typeof fs.realpathSync !== 'function';\n  for (const part of parts) {\n    if (part === '' || part === '.') continue;\n    const next = probe.endsWith(sep) ? probe + part : probe + sep + part;\n    if (!unresolved) {\n      try { probe = fs.realpathSync(next); continue; }\n      catch { unresolved = true; }\n    }\n    probe = next;\n  }\n  return probe;\n}\n",
+    "after": "function resolveExisting(fs, path) { return resolve(path); }\n"
+  },
+  {
+    "id": "s0030",
+    "file": "history/run-journal-anchor-v1.mjs",
+    "before": "if (description.count < current.count) return 'ROLLED_BACK';",
+    "after": "if (description.count < current.count) return 'AHEAD';"
+  },
+  {
+    "id": "s0031",
+    "file": "history/run-journal-anchor-v1.mjs",
+    "before": "|| value.schema !== ANCHOR_SCHEMA ",
+    "after": " "
+  },
+  {
+    "id": "s0032",
+    "file": "history/run-journal-anchor-v1.mjs",
+    "before": "resolveExisting(fs, dirname(journalPath)) + sep + basename(journalPath) + trailingSeparator",
+    "after": "resolve(journalPath)"
+  },
+  {
+    "id": "s0033",
+    "file": "history/run-journal-anchor-v1.mjs",
+    "before": "const resolvedAnchorDir = resolveExisting(fs, anchorDir);",
+    "after": "const resolvedAnchorDir = resolve(anchorDir);"
+  },
+  {
+    "id": "s0034",
+    "file": "history/run-journal-anchor-v1.mjs",
+    "before": "path: context.journalPath, serialized, fs,",
+    "after": "path: options.journalPath, serialized, fs,"
+  },
+  {
+    "id": "s0035",
+    "file": "history/run-journal-anchor-v1.mjs",
+    "before": "fs, journalPath: resolvedJournalPath, expectations,",
+    "after": "fs, journalPath, expectations,"
+  },
+  {
+    "id": "s0036",
+    "file": "history/run-journal-anchor-v1.mjs",
+    "before": "probe += sep + '..';",
+    "after": "probe = dirname(probe);"
+  },
+  {
+    "id": "s0037",
+    "file": "history/run-journal-anchor-v1.mjs",
+    "before": "for (let probe = target; ;) {",
+    "after": "for (let probe = dirname(target); ;) {"
+  },
+  {
+    "id": "s0038",
+    "file": "history/run-journal-anchor-v1.mjs",
+    "before": "if (current === identity) return true;",
+    "after": ""
+  },
+  {
+    "id": "s0039",
+    "file": "history/run-journal-anchor-v1.mjs",
+    "before": "insideJournalDirectory(fs, resolvedJournalPath, resolvedAnchorDir)",
+    "after": "insideJournalDirectory(fs, journalPath, resolvedAnchorDir)"
+  },
+  {
+    "id": "s0040",
+    "file": "history/run-journal-anchor-v1.mjs",
+    "before": "insideJournalDirectory(fs, resolvedJournalPath, resolvedAnchorDir)",
+    "after": "insideJournalDirectory(fs, resolvedJournalPath, anchorDir)"
+  },
+  {
+    "id": "s0041",
+    "file": "history/run-journal-anchor-v1.mjs",
+    "before": "const journalDir = dirname(journalPath);",
+    "after": "const journalDir = journalPath;"
+  },
+  {
+    "id": "s0042",
+    "file": "history/run-journal-anchor-v1.mjs",
+    "before": "probe += sep + '..';",
+    "after": "return false;"
+  },
+  {
+    "id": "s0043",
+    "file": "history/run-journal-anchor-v1.mjs",
+    "before": "try { probe = fs.realpathSync(next); continue; }",
+    "after": "try { probe = next; continue; }"
+  },
+  {
+    "id": "s0044",
+    "file": "history/run-journal-anchor-v1.mjs",
+    "before": "    probe = next;\n",
+    "after": "    probe = part + sep + probe;\n"
+  },
+  {
+    "id": "s0045",
+    "file": "history/run-journal-anchor-v1.mjs",
+    "before": "    probe = next;\n",
+    "after": "    continue;\n"
+  },
+  {
+    "id": "uncapped-request",
+    "file": "history/run-journal-store-v1.mjs",
+    "before": "Math.min(buffer.length - length, 2 ** 30)",
+    "after": "buffer.length - length"
+  },
+  {
+    "id": "shrink-accepted",
+    "file": "history/run-journal-store-v1.mjs",
+    "before": "if (length !== stat.size)",
+    "after": "if (length > stat.size)"
+  },
+  {
+    "id": "changed-extra-field",
+    "file": "history/run-journal-store-v1.mjs",
+    "before": "return { error: 'FILE_CHANGED' };",
+    "after": "return { error: 'FILE_CHANGED', bytes: length };"
+  },
+  {
+    "id": "nonbuffer-reason",
+    "file": "history/run-journal-store-v1.mjs",
+    "before": "if (!Buffer.isBuffer(bytes)) return { problem: 'INVALID_JOURNAL' };",
+    "after": "if (!Buffer.isBuffer(bytes)) return { problem: 'READ_FAILED' };"
+  },
+  {
+    "id": "decode-rethrows",
+    "file": "history/run-journal-store-v1.mjs",
+    "before": "catch { return { problem: 'READ_FAILED' }; }",
+    "after": "catch (error) { throw error; }"
+  },
+  {
+    "id": "writer-conversion-reason",
+    "file": "history/run-journal-store-v1.mjs",
+    "before": "if (!before.absent && decode(before.bytes).problem) return refusal(state, 'EXISTING_INVALID');",
+    "after": "if (!before.absent && decode(before.bytes).problem) return refusal(state, 'READ_FAILED');"
+  },
+  {
+    "id": "probe-omitted",
+    "file": "history/run-journal-store-v1.mjs",
+    "before": "const buffer = Buffer.alloc(stat.size + 1);",
+    "after": "const buffer = Buffer.alloc(stat.size);"
+  },
+  {
+    "id": "no-descriptor-close",
+    "file": "history/run-journal-store-v1.mjs",
+    "before": "finally { try { fs.closeSync(fd); } catch { /* the read result stands */ } }",
+    "after": "finally { /* descriptor close omitted */ }"
+  },
+  {
+    "id": "exact-limit-refused",
+    "file": "history/run-journal-store-v1.mjs",
+    "before": "if (stat.size > maxBytes)",
+    "after": "if (stat.size >= maxBytes)"
+  },
+  {
+    "id": "fallback-exact-refused",
+    "file": "history/run-journal-store-v1.mjs",
+    "before": "found.bytes.length > options.maxBytes",
+    "after": "found.bytes.length >= options.maxBytes"
+  },
+  {
+    "id": "bad-default-limit",
+    "file": "history/run-journal-store-v1.mjs",
+    "before": "export const MAX_READ_BYTES = 64 * 1024 * 1024;",
+    "after": "export const MAX_READ_BYTES = 32 * 1024 * 1024;"
+  },
+  {
+    "id": "bad-negative-limit",
+    "file": "history/run-journal-store-v1.mjs",
+    "before": "const validLimit = value => typeof value === 'number' && value >= 0;",
+    "after": "const validLimit = value => typeof value === 'number';"
+  },
+  {
+    "id": "hash-string-fileSha256",
+    "file": "history/run-journal-anchor-v1.mjs",
+    "before": "typeof state.fileSha256 === 'string'",
+    "after": "true"
+  },
+  {
+    "id": "hash-string-lastHash",
+    "file": "history/run-journal-anchor-v1.mjs",
+    "before": "typeof state.lastHash === 'string'",
+    "after": "true"
+  },
+  {
+    "id": "hash-string-stemTip",
+    "file": "history/run-journal-anchor-v1.mjs",
+    "before": "typeof state.stemTip === 'string'",
+    "after": "true"
+  }
+]
