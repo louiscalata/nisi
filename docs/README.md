@@ -18,6 +18,7 @@ Start with the [project README](../README.md) for what Nisi is and how to run th
 | Document | Read it when |
 |---|---|
 | [Architecture](architecture.md) | You want the terms, execution flow, components and trust boundaries. |
+| [Journal anchor design](design/journal-anchor.md) | You want the proposed way to detect journal rollback and rewrite with a host-held anchor (review item R1). It is a design only; nothing in it is implemented. |
 | [Component names and core design](naming-and-core-design.md) | You want to know why components are named as they are and which legacy names still work. |
 | [Benchmarks](benchmarks.md) | You want the measured token use, the package size comparison and their limits. |
 | [Harder-task benchmark](../benchmarks/harder/README.md) | You want the opt-in model benchmark behind the Jev and reasoning figures. The default set has 16 tasks. `--tasks v2` runs 42 more. |
