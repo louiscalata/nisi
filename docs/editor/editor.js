@@ -1,6 +1,8 @@
 (() => {
   'use strict';
   const state = JSON.parse(document.getElementById('state').textContent);
+  const validSectionId = value => typeof value === 'string' && value.length > 0 && !/[^a-z0-9-]/.test(value);
+  if (!state.sections.every(section => section && validSectionId(section.id))) throw new Error('Invalid section ID');
   const storageKey = `nisi-editor:${state.id}:${state.baseRevision}`;
   const $ = selector => document.querySelector(selector);
   let editorReady = false;
@@ -84,7 +86,7 @@
     return value && value.id === state.id && value.baseRevision === state.baseRevision && value.schemaVersion === 1 &&
       typeof value.about === 'string' && Number.isFinite(value.savedAt) &&
       Array.isArray(value.sections) && value.sections.length > 0 &&
-      value.sections.every(s => s && typeof s.id === 'string' && /^[a-z0-9-]+$/.test(s.id) && typeof s.current === 'string' && typeof s.baseline === 'string') &&
+      value.sections.every(s => s && validSectionId(s.id) && typeof s.current === 'string' && typeof s.baseline === 'string') &&
       new Set(value.sections.map(s => s.id)).size === value.sections.length;
   }
   try {
@@ -220,9 +222,11 @@
     const host = $('#sections'); host.replaceChildren();
     state.sections.forEach((section, index) => {
       const element = document.createElement('section'); element.id = section.id; element.className = 'editor-section';
-      element.innerHTML = `<header class="section-bar"><span class="number">${String(index + 1).padStart(2, '0')}</span><span class="section-title"></span><span class="edited" hidden>Edited</span></header><div class="columns"><div class="writing"><label for="edit-${section.id}">Your text · Markdown</label><textarea id="edit-${section.id}" spellcheck="true"></textarea><details><summary>Read the starting draft</summary><pre class="baseline"></pre></details></div><div class="reading"><div class="preview-label">Safe preview · Markdown subset</div><div class="rendered"></div></div></div>`;
+      element.innerHTML = `<header class="section-bar"><span class="number"></span><span class="section-title"></span><span class="edited" hidden>Edited</span></header><div class="columns"><div class="writing"><label>Your text · Markdown</label><textarea spellcheck="true"></textarea><details><summary>Read the starting draft</summary><pre class="baseline"></pre></details></div><div class="reading"><div class="preview-label">Safe preview · Markdown subset</div><div class="rendered"></div></div></div>`;
       const textarea = element.querySelector('textarea'), preview = element.querySelector('.rendered');
       const title = element.querySelector('.section-title');
+      element.querySelector('.number').textContent = String(index + 1).padStart(2, '0');
+      textarea.id = `edit-${section.id}`; element.querySelector('label').htmlFor = textarea.id;
       textarea.value = section.current;
       textarea.setAttribute('aria-label', `Edit ${titleOf(section)}`);
       element.querySelector('.baseline').textContent = section.baseline;
