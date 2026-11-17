@@ -209,61 +209,142 @@ function writeAnchorFile(fs, path, bytes, guard, sleep) {
   return { ...result, durable: result.fileSynced && result.directorySynced };
 }
 
-// Resolve each existing component before handling the next one. Node's non-native
-// realpath itself collapses symlink/.. lexically if given both at once. Once a
-// component cannot be resolved, retain the remaining spelling for checks and I/O.
+// All traversal is bounded and uses only the caller's filesystem. Resolve a link
+// before consuming the next component: neither Windows normalization nor realpath
+// given a whole link/.. spelling preserves the physical parent in every case.
+const MAX_DIRECTORY_LINKS = 40;
+const MAX_DIRECTORY_COMPONENTS = 4096;
+const appendComponent = (parent, part) => parent.endsWith(sep) ? parent + part : parent + sep + part;
+const componentsOf = path => path.split(sep === '\\' ? /[\\/]/ : /\//);
+const unresolvedPath = () => ({ problem: 'ANCHOR_PATH_UNRESOLVED' });
+
 function resolveExisting(fs, path) {
-  const absolute = isAbsolute(path) ? path : resolve('.') + sep + path;
+  // Drive-relative Windows names depend on per-drive process state. Do not guess.
+  if (!isAbsolute(path) && parse(path).root !== '') return unresolvedPath();
+  const absolute = isAbsolute(path) ? path : appendComponent(resolve('.'), path);
   const root = parse(absolute).root;
-  const parts = absolute.slice(root.length).split(sep === '\\' ? /[\\/]/ : /\//);
-  let probe = root;
-  let unresolved = typeof fs.realpathSync !== 'function';
-  for (const part of parts) {
+  let probe = sep === '\\' ? resolve(root) : root;
+  let parts = componentsOf(absolute.slice(root.length));
+  let index = 0;
+  let links = 0;
+  let steps = 0;
+  let missing = false;
+  let canonical = true;
+  let useRealpath = typeof fs.realpathSync === 'function';
+  while (index < parts.length) {
+    const part = parts[index++];
     if (part === '' || part === '.') continue;
-    const next = probe.endsWith(sep) ? probe + part : probe + sep + part;
-    if (!unresolved) {
-      try { probe = fs.realpathSync(next); continue; }
-      catch { unresolved = true; }
+    if (++steps > MAX_DIRECTORY_COMPONENTS) return unresolvedPath();
+    // Some virtual aliases (volfs) have missing spelled ancestors but a usable
+    // complete directory name. Observe that directory before accepting its '..';
+    // a genuinely missing/.. path must never be lexically rescued.
+    if (missing && part === '..') {
+      let parent;
+      try { parent = fs.lstatSync(probe, { bigint: true }); } catch { return unresolvedPath(); }
+      if (!parent || typeof parent.isDirectory !== 'function' || !parent.isDirectory()
+        || typeof parent.isSymbolicLink !== 'function' || parent.isSymbolicLink()) return unresolvedPath();
+      missing = false;
+      canonical = false;
     }
-    probe = next;
+    const next = appendComponent(probe, part);
+    if (useRealpath) {
+      try {
+        const resolved = fs.realpathSync(next);
+        if (validPath(resolved) && isAbsolute(resolved)) {
+          probe = resolved;
+          canonical = true;
+          continue;
+        }
+      } catch { /* try the supplied component/link capabilities */ }
+      // A later non-native realpath could collapse a physical alias/.. spelling.
+      useRealpath = false;
+    }
+    let stat;
+    try { stat = fs.lstatSync(next, { bigint: true }); }
+    catch (error) {
+      if (error?.code !== 'ENOENT') return unresolvedPath();
+      missing = true;
+      probe = next;
+      continue;
+    }
+    if (!stat || typeof stat.isSymbolicLink !== 'function' || typeof stat.isDirectory !== 'function') return unresolvedPath();
+    const parentMissing = missing;
+    missing = false;
+    if (stat.isSymbolicLink()) {
+      if (++links > MAX_DIRECTORY_LINKS || typeof fs.readlinkSync !== 'function') return unresolvedPath();
+      let target;
+      try { target = fs.readlinkSync(next); } catch { return unresolvedPath(); }
+      if (!validPath(target)) return unresolvedPath();
+      if (isAbsolute(target)) {
+        const targetRoot = parse(target).root;
+        // A rooted Windows link without a drive uses the link's current volume.
+        probe = sep === '\\' && /^[\\/]$/.test(targetRoot) ? parse(probe).root : targetRoot;
+        parts = componentsOf(target.slice(targetRoot.length)).concat(parts.slice(index));
+      } else {
+        if (parentMissing || parse(target).root !== '') return unresolvedPath();
+        parts = componentsOf(target).concat(parts.slice(index));
+      }
+      index = 0;
+      continue;
+    }
+    if (!stat.isDirectory()) return unresolvedPath();
+    canonical = false;
+    // On POSIX, literal /.. retains the physical parent of non-symlink aliases
+    // such as volfs. Windows can use string parents only after links are expanded.
+    probe = part === '..' && sep === '\\' ? dirname(probe) : next;
   }
-  return probe;
+  return { path: probe, canonical };
 }
-// Device and inode of a directory, or null when the file system does not report them.
-// The final /. follows a directory symlink even when realpath is unavailable.
+// Exact device/inode identities only; imprecise or missing metadata proves nothing.
 function identityOf(fs, path) {
   try {
-    let stat = fs.lstatSync(path, { bigint: true });
-    if (typeof stat?.isSymbolicLink === 'function' && stat.isSymbolicLink()) stat = fs.lstatSync(path + sep + '.', { bigint: true });
+    const stat = fs.lstatSync(path, { bigint: true });
     if (!stat || typeof stat.isDirectory !== 'function' || !stat.isDirectory()) return null;
+    for (const value of [stat.dev, stat.ino]) {
+      if (typeof value !== 'bigint' && !(typeof value === 'number' && Number.isSafeInteger(value))) return null;
+      if (value < 0) return null;
+    }
     const ino = String(stat.ino);
     return ino === '0' || stat.ino === undefined || stat.dev === undefined ? null : String(stat.dev) + ':' + ino;
   } catch { return null; }
 }
-function insideJournalDirectory(fs, journalPath, anchorDir) {
+function insideJournalDirectory(fs, journalPath, anchorDir, canonical) {
   const journalDir = dirname(journalPath);
   const target = anchorDir;
   const relation = relative(journalDir, target);
   // '' is the same directory; a path that leaves it, or is on another drive, is outside.
   if (relation !== '..' && !relation.startsWith('..' + sep) && !isAbsolute(relation)) return true;
   const identity = identityOf(fs, journalDir);
-  if (identity === null) return false;
-  // Do not take string parents here: an alias of a descendant may have unrelated
-  // spelled parents. The kernel resolves each literal /.. to its physical parent.
+  if (identity === null) return canonical ? false : null;
+  const rootIdentity = identityOf(fs, parse(target).root);
+  // POSIX physical parents also catch volfs aliases. Windows paths have already
+  // had every directory link expanded, so their string parents are now usable.
   const seen = new Set();
-  for (let probe = target; ;) {
+  for (let probe = target, steps = 0; steps < MAX_DIRECTORY_COMPONENTS; steps++) {
     const current = identityOf(fs, probe);
     if (current === identity) return true;
     if (current === null) {
+      if (!canonical) {
+        // Only an ordinary missing suffix may be skipped without an identity.
+        try { fs.lstatSync(probe, { bigint: true }); return null; }
+        catch (error) { if (error?.code !== 'ENOENT') return null; }
+      }
       const parent = dirname(probe);
-      if (parent === probe) return false;
+      if (parent === probe) return canonical ? false : null;
       probe = parent;
     } else {
-      if (seen.has(current)) return false;
+      if (seen.has(current)) return canonical || current === rootIdentity ? false : null;
       seen.add(current);
-      probe += sep + '..';
+      if (sep === '\\') {
+        const parent = dirname(probe);
+        if (parent === probe) return canonical || current === rootIdentity ? false : null;
+        probe = parent;
+      } else {
+        probe += sep + '..';
+      }
     }
   }
+  return null;
 }
 
 // Shared argument checks. Returns { problem } or { context }.
@@ -279,9 +360,14 @@ function contextOf(options) {
     try { reopen('\n', expectations); } catch { return { problem: 'INVALID_INPUT' }; }
   }
   const trailingSeparator = journalPath.endsWith(sep) || (sep === '\\' && journalPath.endsWith('/')) ? sep : '';
-  const resolvedJournalPath = resolveExisting(fs, dirname(journalPath)) + sep + basename(journalPath) + trailingSeparator;
-  const resolvedAnchorDir = resolveExisting(fs, anchorDir);
-  if (insideJournalDirectory(fs, resolvedJournalPath, resolvedAnchorDir)) return { problem: 'ANCHOR_INSIDE_JOURNAL_DIR' };
+  const journalDirectory = resolveExisting(fs, dirname(journalPath));
+  const anchorDirectory = resolveExisting(fs, anchorDir);
+  if (journalDirectory.problem || anchorDirectory.problem) return unresolvedPath();
+  const resolvedJournalPath = appendComponent(journalDirectory.path, basename(journalPath)) + trailingSeparator;
+  const resolvedAnchorDir = anchorDirectory.path;
+  const inside = insideJournalDirectory(fs, resolvedJournalPath, resolvedAnchorDir, journalDirectory.canonical && anchorDirectory.canonical);
+  if (inside === true) return { problem: 'ANCHOR_INSIDE_JOURNAL_DIR' };
+  if (inside === null) return unresolvedPath();
   return {
     context: {
       fs, journalPath: resolvedJournalPath, expectations, expectedGeneration, maxBytes,

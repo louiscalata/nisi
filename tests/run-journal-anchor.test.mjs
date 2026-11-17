@@ -6,8 +6,9 @@ import assert from 'node:assert/strict';
 import { createHash } from 'node:crypto';
 import * as realFs from 'node:fs';
 import { tmpdir } from 'node:os';
-import { join, dirname, resolve, relative } from 'node:path';
+import { join, dirname, resolve, relative, posix } from 'node:path';
 import { fileURLToPath } from 'node:url';
+import { loadAnchorWithPaths, loadWindowsAnchor, windowsFixture } from './helpers/anchor-win32-fs.mjs';
 import { createRunJournal, reopen } from '../history/run-journal-v1.mjs';
 import { readSerializedJournal, writeSerializedJournal } from '../history/run-journal-store-v1.mjs';
 import {
@@ -53,7 +54,7 @@ function rebuild(serialized, edit, { keepFingerprints = false } = {}) {
   return out.join('\n') + '\n';
 }
 
-const NAMES = ['lstatSync', 'openSync', 'fstatSync', 'readSync', 'writeSync', 'fsyncSync', 'closeSync', 'readFileSync', 'renameSync', 'unlinkSync', 'realpathSync'];
+const NAMES = ['lstatSync', 'openSync', 'fstatSync', 'readSync', 'writeSync', 'fsyncSync', 'closeSync', 'readFileSync', 'renameSync', 'unlinkSync', 'realpathSync', 'readlinkSync'];
 function makeFs(hooks = {}) {
   const fs = { constants: realFs.constants };
   const descriptors = new Map();
@@ -1294,11 +1295,14 @@ test('14 a damaged, oversized, linked or misplaced anchor is refused without lea
     preciseLinks = true;
   } catch { /* symlinks unavailable */ }
   if (preciseLinks) {
+    const identityHits = new Set();
     const fs = makeFs({ lstatSync: (event, invoke) => {
       const stat = invoke();
-      const inode = event.args[0] === preciseJournal + '/.' ? BIG + 1n : event.args[0] === preciseAnchor + '/.' ? BIG + 2n : null;
+      const inode = event.args[0] === precise.journalDir ? BIG + 1n : event.args[0] === precise.anchorDir ? BIG + 2n : null;
       if (inode === null) return stat;
       const exact = event.args[1]?.bigint === true;
+      assert.equal(exact, true);
+      identityHits.add(event.args[0]);
       return { isDirectory: () => true, isSymbolicLink: () => false, isFile: () => false, dev: exact ? 7n : 7, ino: exact ? inode : Number(inode) };
     } });
     delete fs.realpathSync;
@@ -1306,6 +1310,7 @@ test('14 a damaged, oversized, linked or misplaced anchor is refused without lea
     verdict(verifyAnchoredJournal(view), 'ANCHOR_MISSING');
     wrote(writeAnchoredJournal({ ...view, serialized }));
     verdict(verifyAnchoredJournal(view), 'OK');
+    assert.deepEqual([...identityHits].sort(), [precise.journalDir, precise.anchorDir].sort());
   }
 
   // The identity fallback permits a sibling on a filesystem with no usable ancestor IDs.
@@ -1910,6 +1915,9 @@ test('20 docs say what an unanchored and an anchored read do not detect, and the
     /`anchorFileName` throws an error with `code` `INVALID_INPUT`/,
     /`describeJournal` throws `INVALID_JOURNAL`[\s\S]{0,200}`JOURNAL_NOT_COMPLETE`/,
     /device and inode of the journal's directory/,
+    /`readlinkSync`/,
+    /`ANCHOR_PATH_UNRESOLVED`/,
+    /unknown ancestry is never treated as outside/,
     /`GENERATION_EXHAUSTED`/,
     /verify again[\s\S]{0,120}before acting on `AHEAD`/,
     /a false alarm and never a false `OK`/,
@@ -1939,4 +1947,280 @@ test('20 docs say what an unanchored and an anchored read do not detect, and the
       }
     }
   }
+});
+
+
+// These controls run the production module with win32 path bindings and an
+// independent tiny filesystem graph. They do not replace native Windows CI.
+const windowsAnchor = await loadWindowsAnchor();
+function refusesWithoutIO(api, fixture, options, status) {
+  const before = fixture.snapshot();
+  const calls = fixture.calls.length;
+  assert.deepEqual(api.verifyAnchoredJournal(options), { status, ok: false });
+  for (const call of [api.writeAnchoredJournal, api.adoptJournal, api.reanchorJournal]) {
+    assert.deepEqual(call({ ...options, serialized: build(['entry-a']) }), { status: 'REFUSED', reason: status });
+  }
+  assert.deepEqual(fixture.snapshot(), before);
+  assert.deepEqual(fixture.writes, []);
+  assert.equal(fixture.openDescriptors(), 0);
+  assert.ok(fixture.calls.slice(calls).every(event => ['lstatSync', 'realpathSync', 'readlinkSync'].includes(event.name)));
+}
+
+for (const realpath of ['absent', 'throws']) {
+  test(`win32 ${realpath} realpath resolves direct and ancestor directory aliases`, () => {
+    for (const targetName of ['journal', 'journal\\anchors']) {
+      for (const relative of [false, true]) {
+        const f = windowsFixture({ realpath });
+        f.directory(f.journalDir + '\\anchors');
+        f.directory(f.journalDir + '\\anchors\\deeper');
+        const alias = f.root + '\\alias';
+        f.link(alias, relative ? targetName : f.root + '\\' + targetName);
+        for (const anchorDir of [alias, alias + '\\anchors', alias + '\\not-yet\\deeper']) {
+          refusesWithoutIO(windowsAnchor, f, { ...f.options, anchorDir }, 'ANCHOR_INSIDE_JOURNAL_DIR');
+        }
+      }
+    }
+    // An alias in an ancestor, rather than at the final component, is resolved too.
+    const f = windowsFixture({ realpath });
+    f.directory(f.journalDir + '\\anchors');
+    f.link(f.root + '\\ancestor', 'journal');
+    refusesWithoutIO(windowsAnchor, f, { ...f.options, anchorDir: f.root + '\\ancestor\\anchors' }, 'ANCHOR_INSIDE_JOURNAL_DIR');
+  });
+
+  test(`win32 ${realpath} realpath preserves sibling I/O and link parent semantics`, () => {
+    const f = windowsFixture({ realpath });
+    f.directory(f.journalDir + '\\sub');
+    const alias = f.root + '\\journal-alias';
+    f.link(alias, 'journal\\sub');
+    const journalPath = alias + '\\..\\journal.jsonl';
+    const options = { ...f.options, journalPath };
+    const serialized = build(['entry-a']);
+    wrote(windowsAnchor.writeAnchoredJournal({ ...options, serialized }));
+    verdict(windowsAnchor.verifyAnchoredJournal(options), 'OK');
+    assert.equal(windowsAnchor.writeAnchoredJournal({ ...options, serialized }).status, 'UNCHANGED');
+    const journalCalls = f.calls.filter(event => event.path.endsWith('journal.jsonl') && !['realpathSync', 'readlinkSync'].includes(event.name));
+    assert.ok(journalCalls.length > 0);
+    assert.deepEqual([...new Set(journalCalls.map(event => event.path))], [f.journalPath]);
+    assert.equal(f.openDescriptors(), 0);
+    const inside = windowsFixture({ realpath });
+    inside.directory(inside.journalDir + '\\sub');
+    inside.link(inside.root + '\\alias', 'journal\\sub');
+    refusesWithoutIO(windowsAnchor, inside, { ...inside.options, anchorDir: inside.root + '\\alias\\..' }, 'ANCHOR_INSIDE_JOURNAL_DIR');
+  });
+}
+
+test('win32 unresolved link capabilities fail closed before reads or writes', () => {
+  for (const realpath of ['absent', 'throws']) {
+    for (const readlink of ['absent', 'throws', 'empty', 'nul', 'buffer', 'drive-relative']) {
+      const f = windowsFixture({ realpath, readlink });
+      const alias = f.root + '\\alias';
+      f.link(alias, 'journal');
+      if (readlink === 'empty') f.fs.readlinkSync = () => '';
+      if (readlink === 'nul') f.fs.readlinkSync = () => '\0';
+      if (readlink === 'buffer') f.fs.readlinkSync = () => Buffer.from('journal');
+      if (readlink === 'drive-relative') f.fs.readlinkSync = () => 'C:journal';
+      refusesWithoutIO(windowsAnchor, f, { ...f.options, anchorDir: alias }, 'ANCHOR_PATH_UNRESOLVED');
+      refusesWithoutIO(windowsAnchor, f, { ...f.options, journalPath: alias + '\\journal.jsonl' }, 'ANCHOR_PATH_UNRESOLVED');
+    }
+  }
+  // Neither a following stat capability nor working realpath requires readlink.
+  const canonical = windowsFixture({ realpath: 'present', readlink: 'absent', stat: 'absent' });
+  canonical.link(canonical.root + '\\alias', 'journal');
+  refusesWithoutIO(windowsAnchor, canonical, { ...canonical.options, anchorDir: canonical.root + '\\alias' }, 'ANCHOR_INSIDE_JOURNAL_DIR');
+  const ordinary = windowsFixture({ readlink: 'absent', stat: 'absent' });
+  wrote(windowsAnchor.writeAnchoredJournal({ ...ordinary.options, serialized: build(['entry-a']) }));
+  verdict(windowsAnchor.verifyAnchoredJournal(ordinary.options), 'OK');
+  assert.equal(ordinary.openDescriptors(), 0);
+});
+
+test('win32 link cycles, component limits and unproven root are refused', () => {
+  for (const kind of ['self', 'mutual', 'too-deep']) {
+    const f = windowsFixture();
+    const alias = f.root + '\\link-0';
+    if (kind === 'self') f.link(alias, 'link-0');
+    if (kind === 'mutual') { f.link(alias, 'link-1'); f.link(f.root + '\\link-1', 'link-0'); }
+    if (kind === 'too-deep') {
+      for (let index = 0; index < 41; index++) f.link(f.root + '\\link-' + index, index === 40 ? 'anchor' : 'link-' + (index + 1));
+    }
+    refusesWithoutIO(windowsAnchor, f, { ...f.options, anchorDir: alias }, 'ANCHOR_PATH_UNRESOLVED');
+    assert.ok(f.calls.filter(event => event.name === 'readlinkSync').length <= 4 * 40);
+  }
+  const boundary = windowsFixture();
+  for (let index = 0; index < 40; index++) boundary.link(boundary.root + '\\link-' + index, index === 39 ? 'anchor' : 'link-' + (index + 1));
+  wrote(windowsAnchor.writeAnchoredJournal({ ...boundary.options, anchorDir: boundary.root + '\\link-0', serialized: build(['entry-a']) }));
+  const components = windowsFixture();
+  refusesWithoutIO(windowsAnchor, components, { ...components.options, anchorDir: components.anchorDir + '\\x'.repeat(4097) }, 'ANCHOR_PATH_UNRESOLVED');
+  // Refusal must come from bounded component work, not a later ancestry bound.
+  assert.ok(components.calls.filter(event => event.name === 'lstatSync').length <= 4 * (4096 + 2));
+  // IDs that never repeat, including at root, cannot turn an unbounded walk into permission.
+  const ancestry = windowsFixture();
+  const lstat = ancestry.fs.lstatSync;
+  let inode = 2n ** 61n;
+  ancestry.fs.lstatSync = (...args) => ({ ...lstat(...args), ino: ++inode });
+  refusesWithoutIO(windowsAnchor, ancestry, ancestry.options, 'ANCHOR_PATH_UNRESOLVED');
+});
+
+test('win32 unknown ancestry and broken directory metadata are refused', () => {
+  for (const field of ['dev', 'ino']) for (const identity of [null, undefined, Number.MAX_SAFE_INTEGER + 1, {}, -1n, ...(field === 'ino' ? [0n] : [])]) {
+    const f = windowsFixture();
+    const lstat = f.fs.lstatSync;
+    f.fs.lstatSync = (...args) => {
+      const stat = lstat(...args);
+      return { ...stat, [field]: identity };
+    };
+    refusesWithoutIO(windowsAnchor, f, f.options, 'ANCHOR_PATH_UNRESOLVED');
+  }
+  for (const capability of ['error', 'shape', 'not-directory']) {
+    const f = windowsFixture();
+    const lstat = f.fs.lstatSync;
+    f.fs.lstatSync = (...args) => {
+      if (args[0] !== f.anchorDir) return lstat(...args);
+      if (capability === 'error') throw eio();
+      if (capability === 'shape') return {};
+      return { isSymbolicLink: () => false, isDirectory: () => false };
+    };
+    refusesWithoutIO(windowsAnchor, f, f.options, 'ANCHOR_PATH_UNRESOLVED');
+  }
+  const missing = windowsFixture();
+  refusesWithoutIO(windowsAnchor, missing, { ...missing.options, anchorDir: missing.anchorDir + '\\absent\\..' }, 'ANCHOR_PATH_UNRESOLVED');
+  verdict(windowsAnchor.verifyAnchoredJournal({ ...missing.options, anchorDir: missing.anchorDir + '\\absent' }), 'ANCHOR_MISSING');
+});
+
+test('native optional realpath fallback keeps physical parent and refusal semantics', t => {
+  const f = fixture(t);
+  const sub = join(f.journalDir, 'sub');
+  const alias = join(f.root, 'alias');
+  realFs.mkdirSync(sub);
+  // Keep the cross-platform graph controls above even on hosts without symlink privilege.
+  try { realFs.symlinkSync(sub, alias, 'dir'); }
+  catch { t.diagnostic('NOT_RUN: native directory symlink creation unavailable'); return; }
+  for (const mode of ['absent', 'throws']) {
+    const fs = makeFs();
+    if (mode === 'absent') delete fs.realpathSync;
+    else fs.realpathSync = () => { throw eio(); };
+    const options = { ...f.ctx, fs, journalPath: alias + '/..//journal.jsonl' };
+    wrote(writeAnchoredJournal({ ...options, serialized: build(['entry-a']) }));
+    verdict(verifyAnchoredJournal(options), 'OK');
+    const inside = { ...options, anchorDir: alias + '/..' };
+    verdict(verifyAnchoredJournal(inside), 'ANCHOR_INSIDE_JOURNAL_DIR');
+    for (const call of [writeAnchoredJournal, adoptJournal, reanchorJournal]) {
+      assert.equal(call({ ...inside, serialized: build(['entry-a']) }).reason, 'ANCHOR_INSIDE_JOURNAL_DIR');
+    }
+    // Make the next pass create a fresh journal/anchor pair.
+    realFs.unlinkSync(f.journalPath);
+    realFs.unlinkSync(f.anchorPath);
+  }
+});
+
+
+test('win32 link targets retain relative parents and current-volume roots', () => {
+  for (const target of ['journal\\sub\\..\\anchors', '\\fixture\\journal\\anchors']) {
+    const f = windowsFixture();
+    f.directory(f.journalDir + '\\sub');
+    f.directory(f.journalDir + '\\anchors');
+    f.link(f.root + '\\alias', target);
+    refusesWithoutIO(windowsAnchor, f, { ...f.options, anchorDir: f.root + '\\alias' }, 'ANCHOR_INSIDE_JOURNAL_DIR');
+  }
+});
+
+test('POSIX physical identity traversal stops at its work limit', async () => {
+  const api = await loadAnchorWithPaths('posix');
+  let inode = 100n;
+  let stats = 0;
+  let opens = 0;
+  const fs = Object.fromEntries(NAMES.map(name => [name, () => { opens++; throw eio(); }]));
+  delete fs.realpathSync;
+  fs.lstatSync = path => {
+    stats++;
+    return { isDirectory: () => true, isSymbolicLink: () => false, dev: 7n, ino: path === '/journal' ? 2n : ++inode };
+  };
+  assert.deepEqual(api.verifyAnchoredJournal({ journalPath: '/journal/input.jsonl', anchorDir: '/anchor', key: 'bounded-key', fs }),
+    { status: 'ANCHOR_PATH_UNRESOLVED', ok: false });
+  // Two directory components, journal/root identities, then the capped parent walk.
+  assert.equal(stats, 2 + 2 + 4096);
+  assert.equal(opens, 0);
+});
+
+test('native broken optional link capabilities preserve journal and anchor bytes', t => {
+  const f = fixture(t);
+  wrote(put(f, build(['entry-a'])));
+  const heldJournal = realFs.readFileSync(f.journalPath);
+  const heldAnchor = realFs.readFileSync(f.anchorPath);
+  const alias = join(f.root, 'alias');
+  try { realFs.symlinkSync(f.journalDir, alias, 'dir'); }
+  catch { t.diagnostic('NOT_RUN: native directory symlink creation unavailable'); return; }
+  for (const realpath of ['absent', 'throws']) for (const readlink of ['absent', 'throws']) {
+    let io = 0;
+    const fs = makeFs(Object.fromEntries(['openSync', 'readFileSync', 'writeSync', 'renameSync', 'unlinkSync'].map(name => [name, () => { io++; throw eio(); }])));
+    if (realpath === 'absent') delete fs.realpathSync;
+    else fs.realpathSync = () => { throw eio(); };
+    if (readlink === 'absent') delete fs.readlinkSync;
+    else fs.readlinkSync = () => { throw eio(); };
+    for (const options of [{ ...f.ctx, fs, anchorDir: alias }, { ...f.ctx, fs, journalPath: join(alias, 'journal.jsonl') }]) {
+      assert.deepEqual(verifyAnchoredJournal(options), { status: 'ANCHOR_PATH_UNRESOLVED', ok: false });
+      for (const call of [writeAnchoredJournal, adoptJournal, reanchorJournal]) {
+        assert.deepEqual(call({ ...options, serialized: build(['entry-a']) }), { status: 'REFUSED', reason: 'ANCHOR_PATH_UNRESOLVED' });
+      }
+    }
+    assert.equal(io, 0);
+    assert.deepEqual(realFs.readFileSync(f.journalPath), heldJournal);
+    assert.deepEqual(realFs.readFileSync(f.anchorPath), heldAnchor);
+  }
+});
+
+
+test('POSIX fallback never retries realpath on a physical alias parent', async () => {
+  const api = await loadAnchorWithPaths('posix');
+  const directories = new Map([['/', 1n], ['/spelled', 2n], ['/journal', 3n], ['/journal/sub', 4n]]);
+  const physical = path => posix.normalize(path.replace(/^\/spelled\/alias(?=\/|$)/, '/journal/sub').replace(/^\/virtual\/volume\/alias(?=\/|$)/, '/journal/sub'));
+  const canonicalCalls = [];
+  let io = 0;
+  const fs = Object.fromEntries(NAMES.map(name => [name, () => { io++; throw eio(); }]));
+  fs.lstatSync = path => {
+    const inode = directories.get(physical(path));
+    if (inode === undefined) throw Object.assign(new Error('missing'), { code: 'ENOENT' });
+    return { isDirectory: () => true, isSymbolicLink: () => false, dev: 7n, ino: inode };
+  };
+  fs.realpathSync = path => {
+    canonicalCalls.push(path);
+    if (path === '/spelled/alias') throw eio();
+    const lexical = posix.normalize(path);
+    if (!directories.has(lexical)) throw Object.assign(new Error('missing'), { code: 'ENOENT' });
+    return lexical;
+  };
+  const options = { journalPath: '/spelled/alias/../journal.jsonl', anchorDir: '/journal', key: 'physical-alias-key', fs };
+  assert.deepEqual(api.verifyAnchoredJournal(options), { status: 'ANCHOR_INSIDE_JOURNAL_DIR', ok: false });
+  for (const call of [api.writeAnchoredJournal, api.adoptJournal, api.reanchorJournal]) {
+    assert.equal(call({ ...options, serialized: build(['entry-a']) }).reason, 'ANCHOR_INSIDE_JOURNAL_DIR');
+  }
+  assert.equal(canonicalCalls.some(path => path.startsWith('/spelled/alias/')), false);
+  const virtual = { ...options, journalPath: '/virtual/volume/alias/../journal.jsonl' };
+  assert.deepEqual(api.verifyAnchoredJournal(virtual), { status: 'ANCHOR_INSIDE_JOURNAL_DIR', ok: false });
+  assert.equal(io, 0);
+});
+
+
+test('POSIX virtual symlinks require a proven parent for relative targets', async () => {
+  const api = await loadAnchorWithPaths('posix');
+  const directories = new Map([['/', 1n], ['/virtual', 2n], ['/journal', 3n], ['/anchor', 4n]]);
+  let target = 'sibling';
+  let io = 0;
+  const fs = Object.fromEntries(NAMES.map(name => [name, () => { io++; throw eio(); }]));
+  delete fs.realpathSync;
+  fs.lstatSync = path => {
+    const symlink = path === '/virtual/volume/link';
+    const physical = posix.normalize(path.replace(/^\/virtual\/volume\/sibling(?=\/|$)/, '/anchor'));
+    const inode = symlink ? 5n : directories.get(physical);
+    if (inode === undefined) throw Object.assign(new Error('missing'), { code: 'ENOENT' });
+    return { isDirectory: () => !symlink, isSymbolicLink: () => symlink, dev: 7n, ino: inode };
+  };
+  fs.readlinkSync = () => target;
+  const options = { journalPath: '/journal/input.jsonl', anchorDir: '/virtual/volume/link', key: 'virtual-link-key', fs };
+  assert.deepEqual(api.verifyAnchoredJournal(options), { status: 'ANCHOR_PATH_UNRESOLVED', ok: false });
+  for (const call of [api.writeAnchoredJournal, api.adoptJournal, api.reanchorJournal]) {
+    assert.deepEqual(call({ ...options, serialized: build(['entry-a']) }), { status: 'REFUSED', reason: 'ANCHOR_PATH_UNRESOLVED' });
+  }
+  target = '/anchor';
+  verdict(api.verifyAnchoredJournal(options), 'ANCHOR_MISSING');
+  assert.equal(io, 0);
 });
