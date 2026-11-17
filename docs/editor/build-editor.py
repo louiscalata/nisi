@@ -37,7 +37,7 @@ state = {
     'sections': sections,
 }
 if len(sys.argv) > 2:
-    supplied = json.loads(Path(sys.argv[2]).read_text())
+    supplied = json.loads(Path(sys.argv[2]).read_text(encoding='utf-8'))
     assert ''.join(s['current'] for s in supplied['sections']) == markdown, 'Editor state must match Markdown exactly'
     if any(not isinstance(s.get('id'), str) or re.fullmatch(r'[a-z0-9-]+', s['id']) is None for s in supplied['sections']):
         raise ValueError('Invalid section ID')
@@ -50,14 +50,14 @@ if len(sys.argv) > 2:
             raise ValueError('Invalid base revision')
         state['baseRevision'] = revision
 assert ''.join(s['current'] for s in sections) == markdown, 'Section split must preserve every source byte'
-css = (base / 'editor.css').read_text()
-app = (base / 'editor.js').read_text()
-chrome = (base / 'chrome.html').read_text()
+css = (base / 'editor.css').read_text(encoding='utf-8')
+app = (base / 'editor.js').read_text(encoding='utf-8')
+chrome = (base / 'chrome.html').read_text(encoding='utf-8')
 state['editorBuild'] = hashlib.sha256(json.dumps([app, css, chrome], ensure_ascii=False).encode('utf-8')).hexdigest()
 assert '</script' not in app.lower(), 'App source must not terminate its HTML script element'
 data = json.dumps(state, ensure_ascii=False).replace('<', '\\u003c')
 html = '<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Nisi v0.1 on GitHub — Editable Draft</title><style id="editor-style">' + css + '</style></head><body><script id="state" type="application/json">' + data + '</script>' + chrome + '<template id="chrome">' + chrome + '</template><script id="editor-app">' + app + '</script></body></html>'
 output_name = sys.argv[1] if len(sys.argv) > 1 else 'index.html'
 assert Path(output_name).name == output_name and output_name.endswith('.html'), 'Output must be a local HTML filename'
-(base / output_name).write_text(html)
+(base / output_name).write_bytes(html.encode('utf-8'))
 print(json.dumps({'sections': len(sections), 'html_bytes': len(html.encode()), 'draft_words': len(markdown.split())}))

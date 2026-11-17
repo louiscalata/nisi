@@ -67,7 +67,7 @@ test('generated editor artifacts reproduce the current source and preserve both 
     const markdown = fs.readFileSync(path.join(root, 'docs/README-draft.md'));
     fs.writeFileSync(path.join(dir, 'README-draft.md'), markdown);
     for (const name of ['index.html', 'index-typing-revision.html']) {
-      const original = fs.readFileSync(path.join(editorDir, name), 'utf8');
+      const original = fs.readFileSync(path.join(editorDir, name));
       const state = sourceState(path.join(editorDir, name));
       assert.equal(state.sections.map(section => section.current).join(''), markdown.toString('utf8'));
       const stateFile = path.join(dir, 'state.json'); fs.writeFileSync(stateFile, JSON.stringify(state));
@@ -75,7 +75,7 @@ test('generated editor artifacts reproduce the current source and preserve both 
         encoding: 'utf8', timeout: 10_000, env: { ...process.env, PYTHONDONTWRITEBYTECODE: '1' },
       });
       assert.equal(result.status, 0, result.stderr);
-      assert.equal(fs.readFileSync(path.join(base, name), 'utf8'), original, name);
+      assert.deepEqual(fs.readFileSync(path.join(base, name)), original, name);
     }
   } finally { fs.rmSync(dir, { recursive: true, force: true }); }
 });
@@ -91,10 +91,19 @@ test('editor regeneration preserves a supplied manuscript revision for browser r
 test('editor generation refuses malformed supplied manuscript revisions', () => {
   buildFixture(({ base, state, build }) => {
     for (const baseRevision of ['', 'A'.repeat(64), 'a'.repeat(63), 'a'.repeat(65), 'g'.repeat(64), 'a'.repeat(64) + '\n', null, 7]) {
-      const result = build({ ...state, baseRevision });
-      assert.notEqual(result.status, 0, JSON.stringify(baseRevision));
-      assert.match(result.stderr, /Invalid base revision/);
-      assert.equal(fs.existsSync(path.join(base, 'result.html')), false);
+      for (const optimize of [false, true]) {
+        const result = build({ ...state, baseRevision }, { optimize });
+        assert.notEqual(result.status, 0, JSON.stringify(baseRevision));
+        assert.match(result.stderr, /Invalid base revision/);
+        assert.equal(fs.existsSync(path.join(base, 'result.html')), false);
+      }
     }
   });
+});
+
+test('editor generation preserves UTF-8 inputs and exact HTML bytes across text defaults', () => {
+  const result = spawnSync('python3', [path.join(root, 'tests/editor-encoding.py')], {
+    encoding: 'utf8', timeout: 10_000, env: { ...process.env, PYTHONDONTWRITEBYTECODE: '1' },
+  });
+  assert.equal(result.status, 0, result.stderr);
 });
