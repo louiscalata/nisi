@@ -2033,6 +2033,55 @@ test('win32 unresolved link capabilities fail closed before reads or writes', ()
   assert.equal(ordinary.openDescriptors(), 0);
 });
 
+// Node on Windows strips a trailing separator before the call (path.toNamespacedPath);
+// the path model's normalize-then-lookup does the same, so this reproduces that host.
+test('win32 a trailing separator on the journal path is not stripped into the journal file', () => {
+  const serialized = build(['entry-a']);
+  const longer = build(['entry-a', 'entry-b']);
+  const journalKey = path => path.toLowerCase();
+  for (const separator of ['\\', '/']) {
+    // A regular journal file: refused as POSIX refuses it (ENOTDIR), and nothing changes.
+    const f = windowsFixture();
+    wrote(windowsAnchor.writeAnchoredJournal({ ...f.options, serialized }));
+    verdict(windowsAnchor.verifyAnchoredJournal(f.options), 'OK');
+    const before = f.snapshot();
+    const writes = f.writes.length;
+    const options = { ...f.options, journalPath: f.journalPath + separator };
+    assert.deepEqual(windowsAnchor.verifyAnchoredJournal(options), { status: 'JOURNAL_NOT_COMPLETE', ok: false, cause: 'READ_FAILED' });
+    for (const call of [windowsAnchor.writeAnchoredJournal, windowsAnchor.reanchorJournal]) {
+      assert.deepEqual(call({ ...options, serialized: longer }), { status: 'REFUSED', reason: 'JOURNAL_NOT_COMPLETE', cause: 'READ_FAILED' });
+    }
+    assert.deepEqual(windowsAnchor.adoptJournal(options), { status: 'REFUSED', reason: 'ANCHOR_EXISTS' });
+    assert.deepEqual(f.snapshot(), before);
+    assert.equal(f.writes.length, writes);
+    assert.equal(f.openDescriptors(), 0);
+    verdict(windowsAnchor.verifyAnchoredJournal(f.options), 'OK');
+
+    // No anchor yet: an existing journal is still refused before the anchor is written.
+    const unanchored = windowsFixture();
+    unanchored.file(unanchored.journalPath, serialized);
+    const unanchoredOptions = { ...unanchored.options, journalPath: unanchored.journalPath + separator };
+    assert.deepEqual(windowsAnchor.writeAnchoredJournal({ ...unanchoredOptions, serialized: longer }), { status: 'REFUSED', reason: 'JOURNAL_NOT_COMPLETE', cause: 'READ_FAILED' });
+    assert.deepEqual(windowsAnchor.adoptJournal(unanchoredOptions), { status: 'REFUSED', reason: 'JOURNAL_NOT_COMPLETE', cause: 'READ_FAILED' });
+    assert.deepEqual(unanchored.writes, []);
+
+    // No journal and no anchor: a write must not create the stripped journal file.
+    const fresh = windowsFixture();
+    const created = windowsAnchor.writeAnchoredJournal({ ...fresh.options, journalPath: fresh.journalPath + separator, serialized });
+    assert.equal(created.status, 'REFUSED');
+    assert.equal(created.committed, false);
+    assert.ok(!fresh.snapshot().some(([name]) => name === journalKey(fresh.journalPath)));
+    assert.equal(fresh.openDescriptors(), 0);
+
+    // A directory at the path is still a directory and not a file, as on POSIX.
+    const folder = windowsFixture();
+    wrote(windowsAnchor.writeAnchoredJournal({ ...folder.options, serialized }));
+    const folderPath = folder.journalDir + '\\folder';
+    folder.directory(folderPath);
+    assert.deepEqual(windowsAnchor.verifyAnchoredJournal({ ...folder.options, journalPath: folderPath + separator }), { status: 'JOURNAL_NOT_COMPLETE', ok: false, cause: 'NOT_A_FILE' });
+  }
+});
+
 test('win32 link cycles, component limits and unproven root are refused', () => {
   for (const kind of ['self', 'mutual', 'too-deep']) {
     const f = windowsFixture();

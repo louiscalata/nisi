@@ -347,6 +347,37 @@ function insideJournalDirectory(fs, journalPath, anchorDir, canonical) {
   return null;
 }
 
+// A trailing separator names a directory. POSIX refuses a journal path such as
+// 'journal.jsonl/' that is not a directory (ENOTDIR). Node on Windows strips the
+// separator before the call (path.toNamespacedPath), so the regular file would be
+// read or replaced. On Windows the journal calls see the same refusal instead.
+const notDirectory = () => Object.assign(new Error('not a directory'), { code: 'ENOTDIR' });
+function directoryPathFs(fs, journalPath) {
+  const writeBits = ['O_CREAT', 'O_WRONLY', 'O_RDWR'].reduce((bits, name) => bits | (fs.constants?.[name] | 0), 0);
+  const creates = flags => typeof flags === 'string' ? /[wa+]/.test(flags) : typeof flags === 'number' && (flags & writeBits) !== 0;
+  const refuses = (name, args) => {
+    let stat;
+    try { stat = fs.lstatSync(journalPath); } catch (error) {
+      // A missing path is reported by the call itself, unless the call would create it.
+      if (error?.code !== 'ENOENT') return false;
+      return name === 'renameSync' || (name === 'openSync' && creates(args[1]));
+    }
+    return !(stat && typeof stat.isDirectory === 'function' && stat.isDirectory());
+  };
+  const view = {};
+  const names = new Set([...FS_METHODS, 'constants', 'fsyncSync', 'statSync', 'realpathSync', 'readlinkSync']);
+  for (const name in fs) names.add(name);
+  for (const name of names) {
+    if (!(name in fs)) continue;
+    const value = fs[name];
+    view[name] = typeof value !== 'function' ? value : (...args) => {
+      if ((args[0] === journalPath || (name === 'renameSync' && args[1] === journalPath)) && refuses(name, args)) throw notDirectory();
+      return value.apply(fs, args);
+    };
+  }
+  return view;
+}
+
 // Shared argument checks. Returns { problem } or { context }.
 function contextOf(options) {
   if (!object(options)) return { problem: 'INVALID_INPUT' };
@@ -370,7 +401,8 @@ function contextOf(options) {
   if (inside === null) return unresolvedPath();
   return {
     context: {
-      fs, journalPath: resolvedJournalPath, expectations, expectedGeneration, maxBytes,
+      fs: trailingSeparator === '\\' ? directoryPathFs(fs, resolvedJournalPath) : fs,
+      journalPath: resolvedJournalPath, expectations, expectedGeneration, maxBytes,
       anchorPath: resolvedAnchorDir + sep + anchorFileName(key), policy: policy ?? 'require', sleep: sleep ?? sleepMs,
     },
   };
