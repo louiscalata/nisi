@@ -47,7 +47,7 @@ On 16 harder tasks with one local model, each figure from a single run, the Jev 
 ## What is in 0.3.1
 
 - A built-in Jev client, `nisi/adapters/jev-client`, used when `TYPESAFE_API_KEY` is set and no `judge` is passed.
-- Forty-two more harder tasks, selected with `--tasks v2`. The default remains the 16-task set from v0.3.0.
+- `--tasks v2` runs a separate set of 42 harder tasks instead of the default 16-task v1 set from v0.3.0. The two sets share no tasks.
 - Local-chat calls may run longer than five minutes. Node's `fetch` was cutting them off. An injected `fetch` is unchanged.
 - `nisi validate` checks a run journal, or a directory of journals and workflow reports, and prints PASS or FAIL without printing payloads.
 
