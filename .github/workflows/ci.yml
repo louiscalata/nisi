@@ -62,5 +62,7 @@ jobs:
         run: ruff format --check --diff .
       - name: Frozen harder task sets are reproduced byte for byte
         run: python -I benchmarks/harder/check_reproducible.py
+      - name: Harder-v2 generator unit tests
+        run: python -I benchmarks/harder/v2/test_generators.py
       - name: Package footprint chart matches its manifest
         run: python -I benchmarks/value/footprint/render.py --check
