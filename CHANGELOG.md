@@ -5,6 +5,15 @@ public source tree and does not include private experiments.
 
 ## Unreleased
 
+## 0.3.2
+
+Prepared 18 November 2026 from the commits on main after tag `v0.3.1`, including
+#66 (journal-read hardening and host-held anchors), #68 (docs: `--tasks v2` is a
+separate 42-task set), #69 (changelog note for UTF-8 editor portability) and #70
+(test-only macOS fixture fix). Tagged `v0.3.2` and published as a GitHub Release
+with `nisi-0.3.2.tgz`. Not published to the npm registry.
+
+- Tests: journal-anchor fixtures canonicalize the temp root with `realpathSync` so hook path comparisons match the product, which realpaths directories. On macOS, `os.tmpdir()` is a `/var` symlink to `/private/var`, and 29 hook-based tests failed until this change. No production code changed (PR #70).
 - `docs/editor/build-editor.py` reads supplied state and editor templates explicitly as UTF-8, then writes HTML as UTF-8 bytes. This preserves LF output across platform defaults without changing manuscript bytes, template interpretation or validation. Tests cover non-ASCII content, strict UTF-8, a BOM, and byte-for-byte reproduction (`tests/editor-encoding.py`, and additions in `tests/editor-builder.test.mjs`). The full suite, native Windows Node, hosted CI, structural and package checks, browser and release were **NOT_RUN** on that change.
 
 - `readSerializedJournal` caps each descriptor read request at 1 GiB so a raised `maxBytes` or `Infinity` cannot wrap Node's signed 32-bit request length and report `READ` for a prefix. Shrinkage, like growth, now returns `FILE_CHANGED` when the byte count differs from the initial descriptor size. UTF-8 conversion errors, including the runtime string-length limit, return `REFUSED` with `READ_FAILED`. When UTF-8 conversion of an existing destination throws, `writeSerializedJournal` returns `REFUSED` with `EXISTING_INVALID` instead of throwing. Normal journal bytes and result fields are unchanged. The run-journal guide explains wrapped-filesystem behaviour, final-component-only symlink checks, and the unverified native Windows cases.
