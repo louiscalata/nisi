@@ -3,16 +3,21 @@
 """Direct tests for the harder-v2 generators (LOU-87).
 
 check_reproducible.py pins the whole task set by hash; these tests pin the reference
-validator in gen_structured-data.py case by case, and check that every generator with a
-build() step returns well-formed tasks and is deterministic. Standard library only, writes
-nothing. Run from anywhere:
+validator in gen_structured-data.py case by case, and check that every generator returns
+well-formed tasks and is deterministic: through build() where there is one, otherwise by
+running main() into a temporary directory. Standard library only, writes nothing to the
+repository. Run from anywhere:
 
     python3 -I benchmarks/harder/v2/test_generators.py
 """
 
 from __future__ import annotations
 
+import contextlib
 import importlib.util
+import io
+import json
+import tempfile
 import unittest
 from pathlib import Path
 
@@ -105,6 +110,37 @@ class BuildTests(unittest.TestCase):
                     self.assertEqual(set(task), {"id", "category", "tier", "prompt", "expectedAnswer"})
                     self.assertEqual(task["category"], module.CATEGORY)
                     self.assertIn(task["tier"], {"medium", "hard"})
+
+
+class MainTests(unittest.TestCase):
+    """The generators without build() only write files from main(); run it twice into a temp dir."""
+
+    def run_main(self, module):
+        with tempfile.TemporaryDirectory() as folder:
+            for attr in ("HERE", "OUT_DIR"):
+                if hasattr(module, attr):
+                    setattr(module, attr, folder)
+            with contextlib.redirect_stdout(io.StringIO()):
+                module.main()
+            return {path.name: path.read_text() for path in Path(folder).iterdir()}
+
+    def test_main_is_deterministic_and_well_formed(self):
+        for name in ("gen_algorithms", "gen_calendar-time", "gen_numbers"):
+            with self.subTest(generator=name):
+                module = load(name)
+                self.assertFalse(hasattr(module, "build"))
+                first, second = self.run_main(module), self.run_main(module)
+                self.assertEqual(first, second)
+                category = module.CATEGORY
+                self.assertEqual(set(first), {f"{category}.tasks.json", f"{category}.prompts.json"})
+                tasks = json.loads(first[f"{category}.tasks.json"])
+                prompts = json.loads(first[f"{category}.prompts.json"])
+                self.assertEqual(len({task["id"] for task in tasks}), len(tasks))
+                for task in tasks:
+                    self.assertEqual(set(task), {"id", "category", "tier", "prompt", "expectedAnswer"})
+                    self.assertEqual(task["category"], category)
+                    self.assertIn(task["tier"], {"medium", "hard"})
+                self.assertEqual(prompts, [{k: v for k, v in t.items() if k != "expectedAnswer"} for t in tasks])
 
 
 if __name__ == "__main__":
