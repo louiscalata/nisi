@@ -59,10 +59,12 @@ function journalProblem(serialized) {
 
 function decode(bytes) {
   if (!Buffer.isBuffer(bytes)) return { problem: 'INVALID_JOURNAL' };
-  const serialized = bytes.toString('utf8');
-  if (!Buffer.from(serialized, 'utf8').equals(bytes)) return { problem: 'INVALID_JOURNAL' };
-  const problem = journalProblem(serialized);
-  return problem ? { problem } : { serialized };
+  try {
+    const serialized = bytes.toString('utf8');
+    if (!Buffer.from(serialized, 'utf8').equals(bytes)) return { problem: 'INVALID_JOURNAL' };
+    const problem = journalProblem(serialized);
+    return problem ? { problem } : { serialized };
+  } catch { return { problem: 'READ_FAILED' }; }
 }
 
 function existingBytes(fs, path) {
@@ -93,8 +95,9 @@ const validLimit = value => typeof value === 'number' && value >= 0;
 // never read more than maxBytes + 1 bytes, so the limit bounds what is read.
 // O_NOFOLLOW refuses a link swapped in after the lstat; O_NONBLOCK keeps the
 // open from waiting on a FIFO swapped in after it, and the fstat check then
-// refuses it. Neither has an effect on a regular file. The same checks as
-// `nisi validate` (history/validate-data.mjs), with the same reason codes.
+// refuses it. Neither has an effect on a regular file. Descriptor requests
+// are capped at 1 GiB; FILE_CHANGED covers growth and shrinkage relative to
+// the initial fstat size.
 function boundedRead(fs, path, maxBytes) {
   if (typeof fs.lstatSync === 'function') {
     let stat;
@@ -116,15 +119,16 @@ function boundedRead(fs, path, maxBytes) {
     if (!stat || typeof stat.isFile !== 'function' || !Number.isSafeInteger(stat.size)) return { error: 'READ_FAILED' };
     if (!stat.isFile()) return { error: 'NOT_A_FILE' };
     if (stat.size > maxBytes) return { error: 'FILE_TOO_LARGE', bytes: stat.size };
-    // One byte past the fstat size shows a file that grew during the read.
+    // One byte past the fstat size shows growth; early EOF shows shrinkage.
     const buffer = Buffer.alloc(stat.size + 1);
     let length = 0;
     while (length < buffer.length) {
-      const count = fs.readSync(fd, buffer, length, buffer.length - length, null);
+      // Node coerces the requested length to a signed 32-bit integer.
+      const count = fs.readSync(fd, buffer, length, Math.min(buffer.length - length, 2 ** 30), null);
       if (count === 0) break;
       length += count;
     }
-    if (length > stat.size) return { error: 'FILE_CHANGED' };
+    if (length !== stat.size) return { error: 'FILE_CHANGED' };
     return { bytes: buffer.subarray(0, length) };
   } catch { return { error: 'READ_FAILED' }; }
   finally { try { fs.closeSync(fd); } catch { /* the read result stands */ } }

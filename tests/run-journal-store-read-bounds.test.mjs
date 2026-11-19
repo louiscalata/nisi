@@ -123,7 +123,14 @@ test('a file that grows during the read is refused, and the read asks for at mos
   const { fs: spied, calls } = spy({
     fstatSync: fd => { const stat = fs.fstatSync(fd); return { isFile: () => stat.isFile(), size: stat.size - 3 }; },
   });
-  refused(read({ path: file, fs: spied }), 'FILE_CHANGED');
+  assert.deepEqual(read({ path: file, fs: spied }), {
+    durable: false,
+    committed: false,
+    fsync: { file: false, directory: false },
+    fsyncErrors: { file: null, directory: null },
+    status: 'REFUSED',
+    reason: 'FILE_CHANGED',
+  });
   const asked = calls.filter(call => call.name === 'readSync').reduce((sum, call) => sum + call.args[3], 0);
   assert.ok(asked <= Buffer.byteLength(text) - 3 + 1, `asked for ${asked} bytes`);
 });
@@ -250,4 +257,203 @@ test('an fs with only readFileSync reads as before and applies maxBytes only whe
   const over = read({ path: 'x', fs: minimal, maxBytes: bytes.length - 1 });
   refused(over, 'FILE_TOO_LARGE');
   assert.equal(over.bytes, bytes.length);
+});
+
+test('a readFileSync fallback returning a valid journal string is INVALID_JOURNAL', () => {
+  assert.deepEqual(read({ path: 'journal.jsonl', fs: { readFileSync: () => journal() } }), {
+    durable: false,
+    committed: false,
+    fsync: { file: false, directory: false },
+    fsyncErrors: { file: null, directory: null },
+    status: 'REFUSED',
+    reason: 'INVALID_JOURNAL',
+  });
+});
+
+// Model large sparse files without allocating or reading gigabytes. The count
+// coercion matches Node's readSync length conversion; the first read is short.
+test('large reads never wrap a request length or accept only a valid prefix', async t => {
+  const prefix = Buffer.from(journal());
+  for (const size of [2 ** 31 - 1, 2 ** 31, 2 ** 32 - 1, 2 ** 32, 2 ** 32 + prefix.length - 1, 2 ** 33 + prefix.length - 1]) {
+    for (const maxBytes of [size, Infinity]) await t.test(`size ${size}, limit ${maxBytes}`, t => {
+      const requests = [];
+      let consumed = 0;
+      let closed = 0;
+      const buffer = {
+        length: size + 1,
+        subarray(start, end) {
+          assert.equal(start, 0);
+          assert.equal(end, consumed);
+          return end === prefix.length ? prefix : Buffer.from('invalid trailing bytes');
+        },
+      };
+      t.mock.method(Buffer, 'alloc', requested => {
+        assert.equal(requested, size + 1);
+        return buffer;
+      });
+      const virtual = {
+        readFileSync() { assert.fail('descriptor reads must not call readFileSync'); },
+        openSync: () => 17,
+        fstatSync: () => ({ size, isFile: () => true }),
+        readSync(fd, target, offset, length, position) {
+          requests.push({ fd, target, offset, length, position });
+          const coerced = length | 0;
+          const count = coerced <= 0 ? 0 : Math.min(offset === 0 ? prefix.length : coerced, size - consumed);
+          consumed += count;
+          return count;
+        },
+        closeSync(fd) { assert.equal(fd, 17); closed++; },
+      };
+      const result = read({ path: 'journal.jsonl', fs: virtual, maxBytes });
+      refused(result, 'INVALID_JOURNAL');
+      assert.equal(consumed, size);
+      assert.equal(closed, 1);
+      let offset = 0;
+      for (const request of requests) {
+        assert.equal(request.fd, 17);
+        assert.equal(request.target, buffer);
+        assert.equal(request.offset, offset);
+        assert.equal(request.position, null);
+        assert.ok(request.length > 0 && request.length <= 2 ** 30);
+        assert.equal(request.length, Math.min(size + 1 - offset, 2 ** 30));
+        offset += Math.min(offset === 0 ? prefix.length : request.length, size - offset);
+      }
+      assert.equal(requests.at(-1).length, 1, 'probe for growth after all original bytes');
+    });
+  }
+});
+
+test('shrinking during the read refuses even a complete valid prefix', async t => {
+  for (const suffix of ['x', 'unread trailing bytes']) await t.test(suffix, t => {
+    const file = path.join(workdir(t), 'journal.jsonl');
+    const text = journal();
+    fs.writeFileSync(file, text + suffix);
+    const { fs: spied, calls } = spy({
+      fstatSync(fd) {
+        const stat = fs.fstatSync(fd);
+        fs.truncateSync(file, Buffer.byteLength(text));
+        return stat;
+      },
+    });
+    assert.deepEqual(read({ path: file, fs: spied }), {
+      durable: false,
+      committed: false,
+      fsync: { file: false, directory: false },
+      fsyncErrors: { file: null, directory: null },
+      status: 'REFUSED',
+      reason: 'FILE_CHANGED',
+    });
+    assert.equal(calls.filter(call => call.name === 'closeSync').length, 1);
+  });
+});
+
+test('shrinking to an empty or incomplete journal is FILE_CHANGED', async t => {
+  for (const size of [0, 1, Buffer.byteLength(journal()) - 1]) await t.test(`size ${size}`, t => {
+    const file = path.join(workdir(t), 'journal.jsonl');
+    fs.writeFileSync(file, journal());
+    const { fs: spied } = spy({
+      fstatSync(fd) {
+        const stat = fs.fstatSync(fd);
+        fs.truncateSync(file, size);
+        return stat;
+      },
+    });
+    assert.deepEqual(read({ path: file, fs: spied }), {
+      durable: false,
+      committed: false,
+      fsync: { file: false, directory: false },
+      fsyncErrors: { file: null, directory: null },
+      status: 'REFUSED',
+      reason: 'FILE_CHANGED',
+    });
+  });
+});
+
+test('growth by one byte is FILE_CHANGED', t => {
+  const file = path.join(workdir(t), 'journal.jsonl');
+  fs.writeFileSync(file, journal());
+  const { fs: spied } = spy({
+    fstatSync(fd) {
+      const stat = fs.fstatSync(fd);
+      fs.appendFileSync(file, 'x');
+      return stat;
+    },
+  });
+  assert.deepEqual(read({ path: file, fs: spied }), {
+    durable: false,
+    committed: false,
+    fsync: { file: false, directory: false },
+    fsyncErrors: { file: null, directory: null },
+    status: 'REFUSED',
+    reason: 'FILE_CHANGED',
+  });
+});
+
+// The runtime string ceiling is exercised by throwing the same error from a
+// small real Buffer, keeping this regression safe on machines with little RAM.
+test('UTF-8 conversion failures return READ_FAILED on both fs interfaces', async t => {
+  for (const bounded of [false, true]) {
+    for (const operation of ['toString', 'from']) await t.test(`${bounded ? 'descriptor' : 'readFileSync'} ${operation}`, t => {
+      const text = journal();
+      const bytes = Buffer.from(text);
+      const file = path.join(workdir(t), 'journal.jsonl');
+      fs.writeFileSync(file, bytes);
+      const fail = () => { throw Object.assign(new RangeError('private conversion detail'), { code: 'ERR_STRING_TOO_LONG' }); };
+      if (operation === 'toString') {
+        const original = Buffer.prototype.toString;
+        t.mock.method(Buffer.prototype, 'toString', function (encoding, ...args) {
+          return encoding === 'utf8' && this.equals(bytes) ? fail() : original.call(this, encoding, ...args);
+        });
+      } else {
+        const original = Buffer.from;
+        t.mock.method(Buffer, 'from', function (value, encoding, ...args) {
+          return value === text && encoding === 'utf8' ? fail() : original.call(this, value, encoding, ...args);
+        });
+      }
+      const spied = spy();
+      const result = read({ path: file, fs: bounded ? spied.fs : { readFileSync: () => bytes }, maxBytes: Infinity });
+      refused(result, 'READ_FAILED');
+      assert.doesNotMatch(JSON.stringify(result), /private conversion detail|ERR_STRING_TOO_LONG/u);
+      assert.equal(spied.calls.filter(call => call.name === 'closeSync').length, bounded ? 1 : 0);
+    });
+  }
+});
+
+test('a wrapped fs with descriptor methods bypasses its readFileSync override', t => {
+  const file = path.join(workdir(t), 'journal.jsonl');
+  fs.writeFileSync(file, journal());
+  const { fs: spied, calls } = spy({ readFileSync() { throw new Error('readFileSync override'); } });
+  const result = read({ path: file, fs: spied });
+  assert.equal(result.status, 'READ');
+  assert.equal(result.serialized, journal());
+  assert.equal(calls.filter(call => call.name === 'readFileSync').length, 0);
+});
+
+test('symlinked parents and hard links are read as regular files', t => {
+  const dir = workdir(t);
+  const parent = path.join(dir, 'parent');
+  const alias = path.join(dir, 'alias');
+  fs.mkdirSync(parent);
+  const file = path.join(parent, 'journal.jsonl');
+  fs.writeFileSync(file, journal());
+  const hard = path.join(dir, 'hard.jsonl');
+  fs.linkSync(file, hard);
+  assert.equal(read({ path: hard, fs }).serialized, journal());
+  try { fs.symlinkSync(parent, alias, process.platform === 'win32' ? 'junction' : 'dir'); }
+  catch { t.skip('directory symlinks are not available'); return; }
+  assert.equal(read({ path: path.join(alias, 'journal.jsonl'), fs }).serialized, journal());
+});
+
+test('without O_NOFOLLOW a stale lstat can still follow a final symlink', t => {
+  const dir = workdir(t);
+  const file = path.join(dir, 'journal.jsonl');
+  const link = path.join(dir, 'link.jsonl');
+  fs.writeFileSync(file, journal());
+  try { fs.symlinkSync(file, link); } catch { t.skip('symlinks are not available'); return; }
+  const { fs: spied, calls } = spy({ lstatSync: () => fs.lstatSync(file) });
+  spied.constants = {};
+  const result = read({ path: link, fs: spied });
+  assert.equal(result.status, 'READ');
+  assert.equal(result.serialized, journal());
+  assert.equal(calls.find(call => call.name === 'openSync').args[1], 'r');
 });

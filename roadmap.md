@@ -32,11 +32,17 @@ commit `fc8bf1b`.
   bound on reopen: `reopen(serialized, {projectId, redactPaths, maxNow})`.
 - [x] R5 from that review, a `maxBytes` read limit in the store, which also
   refuses symlinks and non-regular files: `readSerializedJournal({path, fs, maxBytes})`.
-- [ ] Other follow-ups from that review: R1, a host-held anchor of the last good
-  `count` and `lastHash`. A design was written on 16 November 2026 in
-  [the journal anchor design](docs/design/journal-anchor.md); the code is not
-  started. R2, keyed authentication in a v2 format, waits on a decision on the
-  key owner and rotation, and still needs R1 to detect replay.
+- [ ] Other follow-ups from that review: R1, a host-held anchor, is implemented:
+  `history/run-journal-anchor-v1.mjs`, the design in
+  [the journal anchor design](docs/design/journal-anchor.md) and the 20 tests of
+  `tests/run-journal-anchor.test.mjs`. The path check and journal I/O share one
+  physical resolution, and directory identities follow physical parents. Tests
+  cover alias paths, exact boundaries, conflict guards, failure-result fields
+  and malformed hash types.
+  The full suite, Windows and hardware checks were not run for this revision,
+  and `nisi validate --anchor` is not part of it. R2, keyed authentication in a
+  v2 format, is not started: it waits on a decision on the key owner and
+  rotation, and still needs R1 to detect replay.
 - [x] Release/CI/tag provenance: v0.2.1 and v0.3.0 were published from commits
   whose hosted Windows/Linux Node 22/24 runs passed. Package-registry publication
   remains open independently of the GitHub archives.
@@ -62,6 +68,10 @@ scope, regressions, deferred work and local verification.
 
 ## Unreleased after v0.3.1
 
+- [x] Prevent large store read requests from wrapping, refuse shrinkage as
+  `FILE_CHANGED`, and return `READ_FAILED` for UTF-8 conversion exceptions.
+  Document wrapped filesystem overrides, final-component symlink protection
+  and native Windows verification limits in the run-journal guide.
 - [x] Implement the expanded harder-task settings record and explicit
   `--judge typesafe` selection on main. These changes are not in v0.3.1.
   `benchmarks/harder/run.mjs` writes the token cap,
