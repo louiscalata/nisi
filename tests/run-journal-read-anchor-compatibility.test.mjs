@@ -36,7 +36,8 @@ const refusedRead = (consumer, cause) => consumer === 'verify'
   : { status: 'REFUSED', reason: 'JOURNAL_NOT_COMPLETE', cause };
 
 function fixture(t, consumer) {
-  const root = realFs.mkdtempSync(join(tmpdir(), 'nisi-read-anchor-'));
+  // realpath: the product resolves directories, and macOS tmpdir() is a /var symlink.
+  const root = realFs.realpathSync(realFs.mkdtempSync(join(tmpdir(), 'nisi-read-anchor-')));
   t.after(() => realFs.rmSync(root, { recursive: true, force: true }));
   const journalDir = join(root, 'journal');
   const anchorDir = join(root, 'anchor');
