@@ -2,7 +2,7 @@
 
 Measured results and method for Nisi. Back to the [documentation index](README.md).
 
-The benchmark tooling and graphs ship in the source checkout from v0.2.1 onward and are not in the package archive. The control, interface and overhead benchmarks exercise workflow controls, mocked inference interfaces and orchestration overhead, and call no model. The local pilot below and the [harder-task benchmark](../benchmarks/harder/README.md) (new in v0.3.0) call a model, and both are opt-in. Harder-task results are in [Local models and Jev](local-models.md#measured-results).
+The benchmark tooling and graphs ship in the source checkout from v0.2.1 onward and are not in the package archive. The control, interface and overhead benchmarks exercise workflow controls, mocked inference interfaces and orchestration overhead, and call no model. The local pilot below and the [harder-task benchmark](../benchmarks/harder/README.md) (new in v0.3.0) call a model, and both are opt-in. Historical harder-task results (v0.3.0, 2026-11-07, `qwen3.8-27b`) are in [Local models and Jev](local-models.md#measured-results).
 
 ## Local pilot: 12 tasks, one model
 

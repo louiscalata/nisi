@@ -3,8 +3,9 @@
 Sixteen frozen tasks chosen because a small local model often errs on them: ISO
 week numbers, multi-key sorts, interval merges, topological order, business
 days, Levenshtein distance, banker's rounding, Semantic Versioning order and
-similar. With the shipped options, one `qwen3.8-27b` draft solves 7 to 14 of the 16,
-depending on the token budget and reasoning setting. `make_tasks.py` computes every expected
+similar. A historical v0.3.0 single-run result from 2026-11-07, on `qwen3.8-27b`,
+found that one draft solved 7 to 14 of the 16, depending on the token budget and
+reasoning setting. Those figures are not a current measurement. `make_tasks.py` computes every expected
 answer; none is typed by hand. Run it to check the answers, and it rewrites
 `tasks-v1.json` byte for byte (sha256 `c7a521d4…0a99a`, pinned in `run.mjs`).
 
@@ -73,9 +74,10 @@ that re-solved only the prompts is not in this repository.
 values (one task), the repair feedback gives only the count of wrong elements, not
 their positions, because the positions would reveal the answer.
 
-## Results so far
+## Historical v0.3.0 results
 
-`qwen3.8-27b` on LM Studio, 2026-11-07. "One draft" is arm A and "Nisi" is arm C,
+Historical v0.3.0 single-run results: `qwen3.8-27b` on LM Studio, 2026-11-07.
+These figures are not a current measurement. "One draft" is arm A and "Nisi" is arm C,
 correct out of 16; time is for arm C and excludes Jev planning calls. Each row is
 one run, except reasoning off, which was run twice (Nisi arm 8, then 7). The raw
 files and how their settings were recovered are in [`results/`](results/README.md):
@@ -90,8 +92,8 @@ they came from an earlier private harness, so the flags below are the equivalent
 | `--max-tokens 1024 --timeout-ms 300000 --reasoning none` | 7 | 8 | 2.7 min |
 | `--timeout-ms 300000 --judge <module> --plan` | 14 | 14 | 12.7 min |
 
-- The library defaults already solve 14 of 16, so at most 2 more tasks (16 of 16)
-  are possible from any setting.
+- In that historical run, the library defaults already solved 14 of 16, so at most 2 more tasks (16 of 16)
+  were possible from any setting on that model.
 - A single unchecked draft scores the same as the Nisi arm in four of the five
   rows. In the reasoning-off row the Nisi arm scored 8 and 7 in its two runs, so
   that difference is within run-to-run noise.

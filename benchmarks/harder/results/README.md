@@ -1,5 +1,8 @@
 # Raw results
 
+These are historical v0.3.0 single-run results from 2026-11-07, on `qwen3.8-27b`.
+They are not a current measurement. The JSON files themselves are unchanged.
+
 The run files behind the tables in [the harder-task benchmark](../README.md) and
 [the Jev section of the local-models guide](../../../docs/local-models.md#measured-results).
 Each `run-*.json` holds one row per task and arm (`A` one draft, `C` Nisi workflow)

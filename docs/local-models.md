@@ -231,9 +231,12 @@ const reviewers = [myReviewer, createJevReviewer({ id: 'jev.review', judge })];
 
 Since v0.3.0, the harder-task benchmark has defaulted to the 16 frozen v1 tasks. v0.3.1 adds `--tasks v2`, which selects a separate set of 42 tasks in six categories with no overlap with v1. Every answer is computed by a generator. Some generators cross-check with a second implementation in the same file.
 
+The 14-of-16 figures below are a historical v0.3.0 single-run result from
+2026-11-07, on `qwen3.8-27b`. They are not a current measurement.
+
 On 16 harder tasks with `qwen3.8-27b` (single runs), the adapter defaults
-(4,096 tokens, 120 s) solve 14. A single unchecked draft also solves 14, and so
-does the Jev plan. The Jev run took 12.7 min against 15.4 min for a flat
+(4,096 tokens, 120 s) solved 14. A single unchecked draft also solved 14, and so
+did the Jev plan. The Jev run took 12.7 min against 15.4 min for a flat
 4,096-token budget at the same 300 s timeout, not counting the planning calls,
 but that gap is almost entirely one task. Both runs got the base64 task (t06) wrong.
 Jev planned it as `direct` (1,024 tokens, no reasoning), so the planned run
