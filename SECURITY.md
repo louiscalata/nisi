@@ -81,6 +81,23 @@ Two limits are worth stating plainly because they are easy to misread:
   outside the journal; `expectedPreviousSha256` alone is a sequential stale-write
   guard, not an append-only or project-continuity guarantee. A valid chain does
   not prove that recorded events happened as described.
+- An unanchored read of a journal (`reopen`, `readSerializedJournal`, `nisi validate`)
+  does not detect a rollback to an earlier entry or an older copy, a deleted
+  journal followed by a fresh one, or a rewrite with every hash recomputed.
+  An anchored read (`history/run-journal-anchor-v1.mjs`, review item R1) detects
+  those, and a rewrite of a retained payload, when the host keeps the anchor
+  where the journal's other writers cannot write. It does not detect an attacker
+  who writes the anchor as well (for example, the same account when the anchor
+  directory is writable by that account) or who runs the host's own code, a
+  restore of the journal and the anchor together, anything written before
+  adoption, a deleted anchor when the host accepts `unanchored-ok`, or a false
+  entry written by anyone who can write the anchor. It also does not detect a
+  rewrite of a retained payload that comes with an appended entry (the journal is
+  then ahead of its anchor, and a re-anchor accepts it), or a one-write rollback
+  while a pending slot is set. It authenticates no writer
+  (keyed authentication, R2, is not started). Nothing in it was run on Windows or
+  on any hardware, and file permissions or ACLs on the anchor directory are the
+  host's to set. See [the run journal guide](docs/run-journal.md#anchor).
 - Journal redaction applies only at configured paths. Copies of a value at
   other paths remain stored. Neither redaction nor hashing proves that an
   original value cannot be inferred. Hosts must bound input bytes and rotate
