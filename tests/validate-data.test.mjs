@@ -241,10 +241,14 @@ test('a journal or report swapped for a FIFO after the lstat check is refused at
   } finally { fs.rmSync(dir, { recursive: true, force: true }); }
 });
 
-test('the smoke script checks only the synthetic fixture', () => {
+test('the smoke script checks only the synthetic fixture', t => {
   const result = spawnSync('sh', [path.join(root, 'scripts/validate-real-data.sh'), '--smoke'], {
     cwd: root, encoding: 'utf8', timeout: 15_000,
   });
+  if (result.error?.code === 'ENOENT') {
+    t.skip('sh is not available');
+    return;
+  }
   assert.equal(result.status, 0, `${result.stderr}\n${result.stdout}`);
   const summary = JSON.parse(result.stdout);
   assert.equal(summary.status, 'PASS', result.stdout);
