@@ -28,6 +28,8 @@ using the frozen answer key rather than the workflow report. The candidate
 file contents and full workflow reports are retained in the raw result, so
 those oracle verdicts can be recalculated.
 
+Each row in the table is a single run.
+
 | Arm | Output-contract matches | Model calls | Repairs | Reported tokens |
 |---|---:|---:|---:|---:|
 | A · direct one-shot draft | 6 / 12 | 12 | 0 | 4,803 |
