@@ -55,16 +55,13 @@ scope, regressions, deferred work and local verification.
 - [x] Add the optional Jev advisor (`planWithJev`, `createJevReviewer`), the
   `reasoningEffort` local-chat option, and the opt-in harder-task benchmark (its
   raw results were published on `main` after the release).
-- [ ] Re-measure on a task set or model with headroom: the 27B model already
-  solves 14 of 16 at the adapter defaults, and a single unchecked draft ties the
-  Nisi arm, so the current numbers cannot show an accuracy gain. This has not
-  been run. On 10 November 2026 a Mac check found four LM Studio chat models
-  already on disk, including `qwen3.8-27b`, but no unauthenticated loopback
-  chat-completions endpoint that Nisi can call. Port 1240 was down, and a new
-  load was not started because earlier loads on that machine had crashed LM
-  Studio. The harder-task re-measure and the local-model example stay
-  `NOT_RUN`. See [the 10 November 2026 note](docs/reviews/2026-11-10-live-model-remeasure.md).
-  The v0.3.1 local-model end-to-end run was also not run.
+- Dropped 19 November 2026: re-measure on a task set or model with headroom.
+  The 14 of 16 figure was a historical v0.3.0 single-run result from 2026-11-07
+  with `qwen3.8-27b`, not a current measurement. The raw files remain under
+  `benchmarks/harder/results/` and are labeled historical in the docs. The
+  10 November 2026 Mac check stays a `NOT_RUN` record in [the 10 November 2026
+  note](docs/reviews/2026-11-10-live-model-remeasure.md). The v0.3.1
+  local-model end-to-end run was also not run.
 
 ## Unreleased after v0.3.1
 
