@@ -88,7 +88,8 @@ function crashingFs(crashAfterRenames) {
 }
 
 function fixture(t, hooks, key = 'host-journal-key') {
-  const root = realFs.mkdtempSync(join(tmpdir(), 'nisi-anchor-'));
+  // realpath: the product resolves directories, and macOS tmpdir() is a /var symlink.
+  const root = realFs.realpathSync(realFs.mkdtempSync(join(tmpdir(), 'nisi-anchor-')));
   t.after(() => realFs.rmSync(root, { recursive: true, force: true }));
   const journalDir = join(root, 'journal');
   const anchorDir = join(root, 'anchor');
