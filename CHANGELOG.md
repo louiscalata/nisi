@@ -5,7 +5,7 @@ public source tree and does not include private experiments.
 
 ## Unreleased
 
-- Docs: the `qwen3.8-27b` 14/16 harder-task figures are now labeled as a historical v0.3.0 single-run result from 2026-11-07, not a current measurement. The raw files under `benchmarks/harder/results/` are unchanged. The planned re-measure was dropped. (PR #74).
+- Docs: the `qwen3.8-27b` 14/16 harder-task figures are now labeled as a historical v0.3.0 single-run result from 2026-11-07, not a current measurement. The raw files under `benchmarks/harder/results/` are unchanged. The planned re-measure was dropped (PR #74).
 
 - Tests: the measured-results docs test now matches the published contract-matches, reported-tokens, and harder-task tables, not only accuracy / tokens/s / solved / AUC headers, and scans README, docs, and benchmarks. The two local-pilot tables now say each row is a single run (PR #73).
 
