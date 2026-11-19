@@ -5,6 +5,8 @@ public source tree and does not include private experiments.
 
 ## Unreleased
 
+- Tests: the validate-data smoke-script test skips when `sh` is not available. On native Windows, `sh` is often not on PATH, so the spawn failed and the rest of the file was 48 pass, 1 fail, and 6 skipped. Named-pipe validation and Windows link-swap behavior were fine. No production code changed.
+
 ## 0.3.2
 
 Prepared 18 November 2026 from the commits on main after tag `v0.3.1`, including
