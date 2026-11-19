@@ -21,7 +21,7 @@ Start with the [project README](../README.md) for what Nisi is and how to run th
 | [Journal anchor design](design/journal-anchor.md) | You want the reasoning behind the host-held anchor that detects journal rollback and rewrite (review item R1). The recommended design is implemented in `history/run-journal-anchor-v1.mjs`; the guide is under Anchor in the run journal page. |
 | [Component names and core design](naming-and-core-design.md) | You want to know why components are named as they are and which legacy names still work. |
 | [Benchmarks](benchmarks.md) | You want the measured token use, the package size comparison and their limits. |
-| [Harder-task benchmark](../benchmarks/harder/README.md) | You want the opt-in model benchmark behind the Jev and reasoning figures. The default set has 16 tasks. `--tasks v2` runs 42 more. |
+| [Harder-task benchmark](../benchmarks/harder/README.md) | You want the opt-in model benchmark behind the Jev and reasoning figures. The default set has 16 tasks. `--tasks v2` runs a separate set of 42 harder tasks instead. |
 | [Canonical JSON v1 profile](../contracts/canonical-json-v1-profile.md) | You need the exact byte format Nisi uses for its JSON codec. |
 | [Roadmap](../roadmap.md) | You want to know what is planned next. |
 
@@ -43,6 +43,8 @@ Each record is scoped to the version it names. The Windows check is one machine 
 | [v0.1 verification](verification.md) | You want the September 2026 checks of Nisi v0.1. |
 | [v0.2 verification](verification-v0.2.md) | You want the checks of the v0.2.0 CLI, journal and store. |
 | [v0.3.0 Windows hardware check](verification-v0.3-windows.md) | You want to know how the CLI and journal store behaved on one real Windows PC. |
+| [v0.3.1 release preparation](release-notes/v0.3.1.md) | You want the preparation notes for the published v0.3.1 release. |
+| [v0.3.1 Jev post-analysis](jev/post-v0.3.1.md) | You want the record marking the Jev post-analysis as `NOT_RUN`. |
 | [Raw verification files](verification/) | You want the logs, manifests and summaries behind those records, in the dated folders `2026-09-11`, `2026-09-12` and `2026-09-12-v0.1`. |
 | [Review records](reviews/) | You want the written reviews of earlier pushes and of the main branch. |
 

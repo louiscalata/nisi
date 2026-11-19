@@ -229,7 +229,7 @@ const reviewers = [myReviewer, createJevReviewer({ id: 'jev.review', judge })];
 
 ### Measured results
 
-The harder-task benchmark has 16 frozen tasks since v0.3.0. v0.3.1 adds `--tasks v2`, 42 more tasks in six categories. Every answer is computed by a generator. Some generators cross-check with a second implementation in the same file.
+Since v0.3.0, the harder-task benchmark has defaulted to the 16 frozen v1 tasks. v0.3.1 adds `--tasks v2`, which selects a separate set of 42 tasks in six categories with no overlap with v1. Every answer is computed by a generator. Some generators cross-check with a second implementation in the same file.
 
 On 16 harder tasks with `qwen3.8-27b` (single runs), the adapter defaults
 (4,096 tokens, 120 s) solve 14. A single unchecked draft also solves 14, and so
