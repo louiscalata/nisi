@@ -8,7 +8,7 @@ The benchmark tooling and graphs ship in the source checkout from v0.2.1 onward 
 
 Both checked loops matched the output contract on 12 of 12 tasks against 6 of 12 for one-shot, and used about 3,500 more tokens. A handwritten checked loop and Nisi each repaired the six failing shapes once and tied on all 12 tasks; their draft and repair request bytes matched per task.
 
-The pilot used one already loaded Gemma model through Nisi's released loopback chat adapter. Commands and setup are in the [source-checkout benchmarks](../benchmarks/value/README.md); the [pilot notes](../benchmarks/value/results/README.md) describe this run.
+The pilot used one already loaded Gemma model through Nisi's released loopback chat adapter. Commands and setup are in the [source-checkout benchmarks](../benchmarks/value/README.md); the [pilot notes](../benchmarks/value/results/README.md) describe this run. Each row in the table is a single run.
 
 | Arm | Contract matches | Model calls (repairs) | Reported tokens |
 |---|---:|---:|---:|

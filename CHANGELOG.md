@@ -5,6 +5,8 @@ public source tree and does not include private experiments.
 
 ## Unreleased
 
+- Tests: the measured-results docs test now matches the published contract-matches, reported-tokens, and harder-task tables, not only accuracy / tokens/s / solved / AUC headers, and scans README, docs, and benchmarks. The two local-pilot tables now say each row is a single run (PR #73).
+
 - Tests: the validate-data smoke-script test skips when `sh` is not available (PR #72). On native Windows, `sh` is often not on PATH, so the spawn failed and the rest of the file was 48 pass, 1 fail, and 6 skipped. Named-pipe validation and Windows link-swap behavior were fine. No production code changed.
 
 ## 0.3.2
