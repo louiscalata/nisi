@@ -97,7 +97,9 @@ test('example repairs an acceptance failure, reruns checks/tests, and reviews wi
   const repairPrompt = JSON.parse(calls[1].request.body).messages[1].content;
   assert.match(repairPrompt, /RETRY_LIMIT/);
   assert.match(repairPrompt, /tests/);
-  const reviewPrompt = JSON.parse(calls[2].request.body).messages[1].content;
+  const reviewMessages = JSON.parse(calls[2].request.body).messages;
+  assert.match(reviewMessages[0].content, /"findings":\s*\[\s*\]/);
+  const reviewPrompt = reviewMessages[1].content;
   assert.match(reviewPrompt, /"checks"/);
   assert.match(reviewPrompt, /"tests"/);
   for (const item of calls) {
