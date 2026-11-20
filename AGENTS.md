@@ -4,7 +4,7 @@ Instructions for coding agents working in this repository. Product name: Nisi.
 
 ## Overview
 
-Nisi is a Node.js CLI and library (version 0.3.1, Node.js 22 or newer, Apache-2.0) that runs one coding task through draft, checks, tests, separate review, and bounded repair, then returns a report. It does not apply the files. The ethos is: propose and never apply, measure honestly, and keep data boundaries explicit. A completed report is not permission to ship. Jev calls and local-model calls leave the machine only when the caller opts in. The latest GitHub release is v0.3.1. v0.3.2 is in preparation (`docs/release-notes/v0.3.2.md`) and is not tagged.
+Nisi is a Node.js CLI and library (Node.js 22 or newer, Apache-2.0) that runs one coding task through draft, checks, tests, separate review, and bounded repair, then returns a report. It does not apply the files. The ethos is: propose and never apply, measure honestly, and keep data boundaries explicit. A completed report is not permission to ship. Hosted Jev calls require explicit opt-in in v0.3.2. Local-model examples call only the loopback endpoint supplied by the caller. The latest GitHub release is v0.3.2. See `docs/release-notes/v0.3.2.md` for the release scope.
 
 ## Repository map
 
@@ -59,7 +59,7 @@ Merge a pull request only when all five jobs are green. A queued job is not a pa
 
 - Do not commit secrets, API keys, or journal payloads. Errors must not echo keys or response bodies.
 - Report `NOT_RUN` when a check was not run. A skipped live model, a skipped Jev call, or a Linux-only run is not a pass for that thing. Do not invent scores.
-- Do not tag, create a GitHub Release, or publish to npm unless Louis says yes. v0.3.2 is waiting for that yes. `package.json` stays 0.3.1 until a release commit.
+- Do not tag, create a GitHub Release, or publish to npm unless Louis says yes. Keep the package version stable until the next authorized release.
 - Do not edit `AGIW.md`. It is not in this tree. Do not create it.
 - Do not repair journals or fingerprints silently. A pre-v0.2.1 pruned row whose fingerprint was not recomputed fails `reopen` with `INVALID` and `LEGACY_UNRETAINED_FINGERPRINT`. The store refuses it with that reason. The file is not authorized. The stored fingerprint is not recomputed, and the bytes are not rewritten. Any other fingerprint mismatch stays `RECORD` or `INVALID_JOURNAL`. The remedy is to run the work again with v0.2.1 or later. See `docs/run-journal.md`.
 
@@ -67,7 +67,7 @@ Merge a pull request only when all five jobs are green. A queued job is not a pa
 
 - `README.md` — what Nisi is and the demo
 - `docs/README.md` — documentation index
-- `docs/install.md` — install the v0.3.1 archive and run the CLI
+- `docs/install.md` — install the v0.3.2 archive and run the CLI
 - `docs/workflow-api.md` — task, callbacks, and report
 - `docs/architecture.md` — flow and trust boundaries
 - `docs/local-models.md` — loopback chat, `reasoningEffort`, and what is sent to Jev

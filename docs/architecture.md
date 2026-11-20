@@ -80,7 +80,7 @@ disk, commit, publish, or release. A report store is also an injected callback.
 The Apple Foundation Models and local chat modules are adapters; neither is
 required by the orchestrator.
 
-Jev is hosted. In v0.3.1, calling `planWithJev` without a `judge` uses the built-in hosted client when `TYPESAFE_API_KEY` is set. A reviewer created without a judge uses that client when its review runs; construction sends nothing. Planning sends the task's id, mode, language, allowed file names and acceptance criteria. Review also sends the candidate's file contents and whether the tests passed. Unreleased source on main requires a `judge` function or `judge: 'typesafe'`. With a set key and no judge, `planWithJev` rejects and `createJevReviewer` throws `JEV_JUDGE_REQUIRED`; each prints one line to stderr and sends nothing. A supplied `judge` function controls its own transmission. See [Local models and Jev](local-models.md#jev-pre--and-post-analysis-optional).
+Jev is hosted. In v0.3.2, pass `judge: 'typesafe'` to select the built-in client. Planning sends the task's id, mode, language, allowed file names and acceptance criteria. Review also sends the candidate's file contents and whether the tests passed. Creating the reviewer sends nothing. With a set key and no judge, `planWithJev` rejects and `createJevReviewer` throws `JEV_JUDGE_REQUIRED`. Each prints one notice to stderr and sends nothing. A supplied `judge` function controls its own transmission. See [Local models and Jev](local-models.md#jev-pre--and-post-analysis-optional) for the v0.3.1 behavior.
 
 ## Architectural patterns
 
