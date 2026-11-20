@@ -1,12 +1,12 @@
 # Nisi roadmap
 
-Canonical project roadmap. Updated November 16, 2026 (Pacific time). Product name: Nisi.
-Source version: 0.3.1. The published tag is v0.3.1 (9 November 2026). It is not on
-the npm registry. v0.2.1 and v0.3.0 shipped the items listed under those headings.
+Canonical project roadmap. Updated November 20, 2026 (Pacific time). Product name: Nisi.
+Source version: 0.3.2. [GitHub released v0.3.2](https://github.com/louiscalata/nisi/releases/tag/v0.3.2)
+on November 18, 2026 Pacific time. The npm registry has no Nisi release. v0.2.1 and v0.3.0 shipped the items listed under those headings.
 v0.3.0 added the `reasoningEffort` option, the optional Jev advisor and the
 harder-task benchmark. v0.3.1 added the built-in Jev client, harder-task set v2,
-the local-chat timeout fix, and `nisi validate`. Unreleased changes after that
-tag are in the changelog. Public v0.2.0 scope: a Node.js CLI and library with the existing workflow APIs,
+the local-chat timeout fix, and `nisi validate`. The v0.3.2 release adds explicit hosted-judge opt-in and the host-held journal
+anchor. The changelog tracks later unreleased changes. Public v0.2.0 scope: a Node.js CLI and library with the existing workflow APIs,
 the run journal, and its store. The CLI exposes fixed demonstrations; the private
 native repository workflow and other private features remain outside this
 public release. GitHub rc.1 and rc.2 remain historical prereleases. Package
@@ -63,14 +63,14 @@ scope, regressions, deferred work and local verification.
   note](docs/reviews/2026-11-10-live-model-remeasure.md). The v0.3.1
   local-model end-to-end run was also not run.
 
-## Unreleased after v0.3.1
+## v0.3.2 (shipped)
 
 - [x] Prevent large store read requests from wrapping, refuse shrinkage as
   `FILE_CHANGED`, and return `READ_FAILED` for UTF-8 conversion exceptions.
   Document wrapped filesystem overrides, final-component symlink protection
   and native Windows verification limits in the run-journal guide.
 - [x] Implement the expanded harder-task settings record and explicit
-  `--judge typesafe` selection on main. These changes are not in v0.3.1.
+  `--judge typesafe` selection in v0.3.2.
   `benchmarks/harder/run.mjs` writes the token cap,
   timeout, reasoning effort, plan and review flags, task-set id, arms, repair
   budget, deadline, judge source, endpoint, package version and runtime.
@@ -79,8 +79,8 @@ scope, regressions, deferred work and local verification.
   not. The files under `benchmarks/harder/results/` are from 2026-11-07
   and an earlier private harness. They still omit the token cap and timeout, so
   those table rows cannot be regenerated from the file alone.
-- [x] Changes merged to main after the harder-task settings record, in order of
-  PR number. Details are in the changelog; none is in v0.3.1.
+- [x] Changes shipped in v0.3.2 after the harder-task settings record, in order of
+  PR number. See the release notes for the full scope.
   - #51: the editable README centralizes backup/save/recovery transitions.
   - #54: a Jev response body that stalls past `timeoutMs` is `JEV_TIMEOUT`, not
     `JEV_RESPONSE_INVALID`.

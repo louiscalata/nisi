@@ -43,7 +43,7 @@ To work from source instead, run `git clone --branch v0.3.2 --depth 1 https://gi
 
 ## Jev pre- and post-analysis
 
-Jev is TypeSafe's hosted System One model. In v0.3.1, calling `planWithJev` without a `judge` uses the hosted client when `TYPESAFE_API_KEY` is set; a reviewer created without a judge uses that client when its review runs. Creating the reviewer does not send a request. Unreleased source on main requires a `judge` function or `judge: 'typesafe'`. With the key set and no judge, `planWithJev` rejects and `createJevReviewer` throws `JEV_JUDGE_REQUIRED`; each prints one line to stderr and sends nothing. The unreleased harder-task runner requires `--judge typesafe` or a judge module for Jev planning or review.
+Jev is TypeSafe's hosted System One model. In v0.3.2, pass `judge: 'typesafe'` to use the built-in client or supply your own judge function. Creating a reviewer sends nothing. With the key set and no judge, `planWithJev` rejects and `createJevReviewer` throws `JEV_JUDGE_REQUIRED`. Each prints one notice to stderr and sends nothing. The harder-task runner requires `--judge typesafe` or a judge module for Jev planning or review. In v0.3.1, the programmatic advisor used the built-in client when the key was set and no judge was supplied.
 
 **Pre-analysis** (`planWithJev`) asks whether the task needs the model to reason (`reason` or `direct`) and whether the task is missing information. The default map gives `direct` tasks `reasoningEffort: 'none'` and 1,024 output tokens, and `reason` tasks 4,096 tokens. That choice is a setting, not evidence that the setting is better.
 
