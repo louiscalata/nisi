@@ -5,6 +5,8 @@ public source tree and does not include private experiments.
 
 ## Unreleased
 
+- Docs: `docs/install.md` now describes v0.3.2: running the release archive directly after checking it against `SHA256SUMS`, cloning the v0.3.2 tag, and installing the downloaded `nisi-0.3.2.tgz` file into a project, matching the README quick start (PR #78).
+
 - Docs: the README quick start now downloads the v0.3.2 release archive, checks it against `SHA256SUMS`, extracts it and runs `node package/bin/nisi.mjs` directly (no install step; Nisi has no runtime dependencies), with a Windows PowerShell note. Cloning the tag is kept as the source route (PR #77).
 
 - Docs: the `qwen3.8-27b` 14/16 harder-task figures are now labeled as a historical v0.3.0 single-run result from 2026-11-07, not a current measurement. The raw files under `benchmarks/harder/results/` are unchanged. The planned re-measure was dropped (PR #74).
