@@ -227,7 +227,7 @@ async function call(state, payload, operation, receipts, transform) {
     try { raw = await Promise.race([request(), interrupted]); }
     finally { controller.signal.removeEventListener('abort', onStop); }
     const envelope = strictJSON(raw);
-    if (!Array.isArray(envelope.choices) || envelope.choices.length !== 1) fail('LOCAL_CHAT_CHOICES_INVALID');
+    if (!isRecord(envelope) || !Array.isArray(envelope.choices) || envelope.choices.length !== 1) fail('LOCAL_CHAT_CHOICES_INVALID');
     const choice = envelope.choices[0];
     if (choice.finish_reason !== 'stop') fail('LOCAL_CHAT_FINISH_REFUSED');
     if (envelope.model !== state.model) fail('LOCAL_CHAT_MODEL_MISMATCH');
