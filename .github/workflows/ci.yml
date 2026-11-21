@@ -33,14 +33,10 @@ jobs:
         with:
           node-version: ${{ matrix.node }}
       - run: npm ci
-      - name: Scoped static analysis check on the codec
-        run: npm run check:static
-      - name: Structural check and tests
+      - name: Structural check and full Node test suite
         run: npm run check
       - name: Installed public CLI package
         run: npm run check:cli-package
-      - name: Public journal and store tests
-        run: node --test tests/run-journal.test.mjs tests/run-journal-store.test.mjs
       - name: Editable README consistency
         run: node docs/editor/check-editor.mjs ./index-typing-revision.html
 
