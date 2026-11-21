@@ -203,7 +203,7 @@ function reopenData(serialized, expected) {
   for(let n=1;n<ls.length&&!bad;n++) {
     const v=parseLine(ls[n]); if (!v) { failAt(n+1); break; }
     if (v.type==='footer') {
-      if (!exact(v,['type','count','lastHash']) || v.type!=='footer' || !Number.isSafeInteger(v.count) || v.count!==ids.length || v.lastHash!==prev) failAt(n+1,'FOOTER'); else footer=true;
+      if (!exact(v,['type','count','lastHash']) || !Number.isSafeInteger(v.count) || v.count!==ids.length || v.lastHash!==prev) failAt(n+1,'FOOTER'); else footer=true;
       if (footer && (n+1<ls.length || trailing)) failAt(n+1<ls.length ? n+2 : ls.length+1,'TRAILING_DATA');
       break;
     }
