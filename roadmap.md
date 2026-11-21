@@ -24,14 +24,18 @@ commit `fc8bf1b`.
 - Added a deterministic regression in `tests/local-chat-extra.test.mjs`.
   Focused local-chat tests passed 25/25 on Node v24.22.2, and `git diff --check`
   passed in the public checkout. No live server or model was used. The full
-  repository suite and package checks were not run locally; hosted CI is still
-  required for the PR head.
+  repository suite and package checks were not run locally.
+- PR #83, "Reject malformed local chat envelopes as invalid choices," merged on
+  November 21, 2026 at merge commit `b1f4d91beb655d259fa945979d59a6ca9671e491`.
+  Current main `18894c43ed4b710c5713c69ab0a25400e1229780` passed all five CI jobs
+  in [run 44922793508](https://github.com/louiscalata/nisi/actions/runs/44922793508):
+  Python and the Ubuntu/Windows Node 22/24 matrix.
 - Claude Fable 5.1 supplied a design brainstorm from an abstract description;
   Claude Sonnet 5.5 reviewed the exact guard/test excerpt and returned PASS with
   no issues. Daybreak Blue then reviewed the exact source diff read-only and
   found no actionable issue; it did not run checks.
-- This is an unreleased source correction; package version and v0.3.2 release
-  remain unchanged.
+- The source correction is merged; the package version and v0.3.2 release
+  remain unchanged, with no npm registry release.
 
 ## v0.2.1 review corrections (shipped)
 
