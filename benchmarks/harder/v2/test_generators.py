@@ -114,10 +114,8 @@ class BuildTests(unittest.TestCase):
 
 class DeepMergeTests(unittest.TestCase):
     def test_object_ids_match_independent_of_nested_object_key_order(self):
-        base = [{"id": {"owner": "x", "meta": {"rank": 1, "enabled": True}, "tags": ["a", "b"]},
-                 "baseOnly": 1}]
-        overlay = [{"id": {"tags": ["a", "b"], "meta": {"enabled": True, "rank": 1}, "owner": "x"},
-                    "overlayOnly": 2}]
+        base = [{"id": {"owner": "x", "meta": {"rank": 1, "enabled": True}, "tags": ["a", "b"]}, "baseOnly": 1}]
+        overlay = [{"id": {"tags": ["a", "b"], "meta": {"enabled": True, "rank": 1}, "owner": "x"}, "overlayOnly": 2}]
 
         merged = SD.dm(base, overlay)
 

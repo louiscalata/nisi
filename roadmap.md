@@ -315,8 +315,10 @@ valid-prefix shrink race, reordered nested object keys, array order, and
 boolean/integer distinction. No new release is claimed.
 
 `node --test tests/validate-data.test.mjs` passed 10/10;
-`python3 -I benchmarks/harder/v2/test_generators.py` passed 11/11; targeted
-Ruff, the frozen-task reproducibility check, and `git diff --check` passed. Luna's
-read-only review found no actionable issue in the seven changed source/test
-files. The full repository suite, current-head hosted CI, and Claude review are
-NOT_RUN. No API Free Pool request was made.
+`python3 -I benchmarks/harder/v2/test_generators.py` passed 11/11. The first PR
+CI run found a Ruff formatting issue in that new test; after correction, Ruff
+lint and formatting, frozen-task reproducibility, the generator tests, package
+chart check, and `git diff --check` all passed locally. Luna's read-only review
+found no actionable issue in the seven changed source/test files. The full
+repository suite, current-head hosted CI, and Claude review are NOT_RUN. No API
+Free Pool request was made.
