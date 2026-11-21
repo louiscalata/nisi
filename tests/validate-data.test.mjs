@@ -169,6 +169,31 @@ test('a journal that grows during the read fails with FILE_CHANGED', () => {
   } finally { fs.rmSync(dir, { recursive: true, force: true }); }
 });
 
+test('a journal that shrinks to a valid prefix during the read fails with FILE_CHANGED', () => {
+  const dir = fs.mkdtempSync(path.join(os.tmpdir(), 'nisi-validate-shrink-'));
+  try {
+    const file = writeJournal(dir);
+    const validPrefix = fs.readFileSync(file);
+    fs.writeFileSync(file, Buffer.concat([validPrefix, Buffer.from(' '.repeat(64))]));
+    let shrunk = false;
+    const shrinking = {
+      ...fs,
+      readSync: (...args) => {
+        if (!shrunk) {
+          shrunk = true;
+          fs.writeFileSync(file, validPrefix);
+        }
+        return fs.readSync(...args);
+      },
+    };
+    const summary = validateData({ journal: file, fs: shrinking });
+    assert.equal(shrunk, true);
+    assert.equal(summary.status, 'FAIL', JSON.stringify(summary));
+    assert.equal(summary.files[0].reason, 'FILE_CHANGED', JSON.stringify(summary));
+    assert.doesNotMatch(JSON.stringify(summary), new RegExp(SECRET, 'u'));
+  } finally { fs.rmSync(dir, { recursive: true, force: true }); }
+});
+
 // The lstat symlink check runs before the open. A file swapped for a symlink
 // in between must still be refused, which the open's O_NOFOLLOW provides.
 test('a journal swapped for a symlink after the lstat check is refused', t => {

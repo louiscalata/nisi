@@ -83,7 +83,7 @@ function boundedRead(fileSystem, file, maxBytes) {
       if (count === 0) break;
       length += count;
     }
-    if (length > stat.size) return { error: 'FILE_CHANGED' };
+    if (length !== stat.size) return { error: 'FILE_CHANGED' };
     return { bytes: buffer.subarray(0, length) };
   } catch { return { error: 'READ_FAILED' }; }
   finally { try { fileSystem.closeSync(fd); } catch { /* the read result stands */ } }

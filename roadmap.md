@@ -304,3 +304,19 @@ network-share routing and automatic model selection remain host responsibilities
 
 The reproducible entry point is [benchmarks/value/README.md](benchmarks/value/README.md).
 These are development benchmarks, not a new release or a provider certification.
+
+## Local source safety candidate — 2026-11-21
+
+On audited main `a6a32b9150372c55f28355b0c59f3be243085b09`, a local-only
+candidate on `codex/nisi-deslop-fixes` rejects short reads after a file shrinks
+during validation, compares nested JSON object IDs independently of key order,
+and removes four declarations with no references. Regression cases cover the
+valid-prefix shrink race, reordered nested object keys, array order, and
+boolean/integer distinction. No new release is claimed.
+
+`node --test tests/validate-data.test.mjs` passed 10/10;
+`python3 -I benchmarks/harder/v2/test_generators.py` passed 11/11; targeted
+Ruff, the frozen-task reproducibility check, and `git diff --check` passed. Luna's
+read-only review found no actionable issue in the seven changed source/test
+files. The full repository suite, current-head hosted CI, and Claude review are
+NOT_RUN. No API Free Pool request was made.

@@ -41,8 +41,12 @@ def strict_eq(a, b):
 
 
 def skey(v):
-    """Hashable identity key distinguishing bool/int/str."""
-    return (type(v).__name__, v if not isinstance(v, (dict, list)) else J(v))
+    """Hashable JSON identity independent of object key order."""
+    if isinstance(v, dict):
+        return ("dict", tuple((key, skey(value)) for key, value in sorted(v.items())))
+    if isinstance(v, list):
+        return ("list", tuple(skey(value) for value in v))
+    return (type(v).__name__, v)
 
 
 # ---------------------------------------------------------------- task 1
