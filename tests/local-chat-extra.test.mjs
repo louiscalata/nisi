@@ -129,6 +129,7 @@ test('malformed model identity, finish reason, envelope schema, Unicode, and dup
   const cases = [
     ['identity', reviewer({ model: 'expected', fetch: async () => jsonResponse(envelope('actual', { findings: [], summary: 'x' })) }), 'LOCAL_CHAT_MODEL_MISMATCH'],
     ['finish reason', reviewer({ fetch: async () => reviewerResponse('review-model', { findings: [], summary: 'x' }, { finishReason: 'length' }) }), 'LOCAL_CHAT_FINISH_REFUSED'],
+    ['null envelope', reviewer({ fetch: async () => jsonResponse('null') }), 'LOCAL_CHAT_CHOICES_INVALID'],
     ['choices schema', reviewer({ fetch: async () => jsonResponse({ model: 'review-model', choices: [], usage: { prompt_tokens: 1, completion_tokens: 1, total_tokens: 2 } }) }), 'LOCAL_CHAT_CHOICES_INVALID'],
     ['output schema', reviewer({ fetch: async () => jsonResponse(envelope('review-model', { findings: [] })) }), 'LOCAL_CHAT_OUTPUT_SCHEMA'],
     ['Unicode', reviewer({ fetch: async () => reviewerResponse('review-model', '{"findings":[],"summary":"\\ud800"}') }), 'LOCAL_CHAT_JSON_UNICODE'],

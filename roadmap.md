@@ -1,6 +1,6 @@
 # Nisi roadmap
 
-Canonical project roadmap. Updated November 20, 2026 (Pacific time). Product name: Nisi.
+Canonical project roadmap. Updated November 21, 2026 (Pacific time). Product name: Nisi.
 Source version: 0.3.2. [GitHub released v0.3.2](https://github.com/louiscalata/nisi/releases/tag/v0.3.2)
 on November 18, 2026 Pacific time. The npm registry has no Nisi release. v0.2.1 and v0.3.0 shipped the items listed under those headings.
 v0.3.0 added the `reasoningEffort` option, the optional Jev advisor and the
@@ -13,6 +13,25 @@ public release. GitHub rc.1 and rc.2 remain historical prereleases. Package
 registry publication is a separate action.
 The September 12 documentation and onboarding revision started from public
 commit `fc8bf1b`.
+
+## 2026-11-21 — local-chat malformed envelope classification
+
+- The loopback chat adapter now rejects a valid JSON `null` response envelope
+  with the existing `LOCAL_CHAT_CHOICES_INVALID` code. Previously, reading
+  `envelope.choices` threw a `TypeError`, which was recorded as
+  `LOCAL_CHAT_UNAVAILABLE` and confused malformed model output with a transport
+  failure.
+- Added a deterministic regression in `tests/local-chat-extra.test.mjs`.
+  Focused local-chat tests passed 25/25 on Node v24.22.2, and `git diff --check`
+  passed in the public checkout. No live server or model was used. The full
+  repository suite and package checks were not run locally; hosted CI is still
+  required for the PR head.
+- Claude Fable 5.1 supplied a design brainstorm from an abstract description;
+  Claude Sonnet 5.5 reviewed the exact guard/test excerpt and returned PASS with
+  no issues. Daybreak Blue then reviewed the exact source diff read-only and
+  found no actionable issue; it did not run checks.
+- This is an unreleased source correction; package version and v0.3.2 release
+  remain unchanged.
 
 ## v0.2.1 review corrections (shipped)
 
