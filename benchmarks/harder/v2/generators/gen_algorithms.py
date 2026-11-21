@@ -20,11 +20,6 @@ CATEGORY = "algorithms"
 OUT_DIR = os.path.dirname(os.path.abspath(__file__))
 
 
-def jdump(value):
-    """Compact JSON used inside prompts."""
-    return json.dumps(value, separators=(",", ":"))
-
-
 # --------------------------------------------------------------------------
 # 01 (medium)  Topological order, smallest-text tie rule
 # --------------------------------------------------------------------------

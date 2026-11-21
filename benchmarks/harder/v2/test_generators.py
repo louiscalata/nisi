@@ -112,6 +112,27 @@ class BuildTests(unittest.TestCase):
                     self.assertIn(task["tier"], {"medium", "hard"})
 
 
+class DeepMergeTests(unittest.TestCase):
+    def test_object_ids_match_independent_of_nested_object_key_order(self):
+        base = [{"id": {"owner": "x", "meta": {"rank": 1, "enabled": True}, "tags": ["a", "b"]}, "baseOnly": 1}]
+        overlay = [{"id": {"tags": ["a", "b"], "meta": {"enabled": True, "rank": 1}, "owner": "x"}, "overlayOnly": 2}]
+
+        merged = SD.dm(base, overlay)
+
+        self.assertEqual(len(merged), 1)
+        self.assertEqual(merged[0]["baseOnly"], 1)
+        self.assertEqual(merged[0]["overlayOnly"], 2)
+
+    def test_object_id_identity_preserves_array_order_and_scalar_types(self):
+        cases = [
+            ([{"id": {"items": [1, 2]}}], [{"id": {"items": [2, 1]}}]),
+            ([{"id": {"enabled": True}}], [{"id": {"enabled": 1}}]),
+        ]
+        for base, overlay in cases:
+            with self.subTest(base=base, overlay=overlay):
+                self.assertEqual(len(SD.dm(base, overlay)), 2)
+
+
 class MainTests(unittest.TestCase):
     """The generators without build() only write files from main(); run it twice into a temp dir."""
 

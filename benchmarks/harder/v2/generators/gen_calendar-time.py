@@ -20,15 +20,10 @@ HERE = os.path.dirname(os.path.abspath(__file__))
 D = dt.date
 DT = dt.datetime
 TD = dt.timedelta
-WDN = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"]
 
 
 def last_dom(y, m):
     return calendar.monthrange(y, m)[1]
-
-
-def is_leap(y):
-    return y % 4 == 0 and (y % 100 != 0 or y % 400 == 0)
 
 
 def add_months(d, k):
