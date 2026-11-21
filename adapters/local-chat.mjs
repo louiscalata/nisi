@@ -183,7 +183,6 @@ function responseFormat(payload, operation) {
 }
 
 async function call(state, payload, operation, receipts, transform) {
-  if (typeof state.fetch !== 'function') fail('LOCAL_CHAT_UNAVAILABLE');
   // The host may replace or edit payload while the response is in flight.
   // Copy the binding now so the receipt names the candidate this call sent.
   const bound = isRecord(payload?.binding) ? Object.freeze({ ...payload.binding }) : undefined;
@@ -256,7 +255,6 @@ async function call(state, payload, operation, receipts, transform) {
 
 function bindingEvidence(bound, extra) { return { ...(isRecord(bound) ? bound : {}), ...extra }; }
 function note(value) { if (typeof value !== 'string' || value.trim() === '' || value.length > 4096) fail('LOCAL_CHAT_NOTE_INVALID'); return value; }
-function findingList(value) { if (!Array.isArray(value) || value.length > 256) fail('LOCAL_CHAT_FINDINGS_INVALID'); return value; }
 function exact(value, keys) {
   if (!isRecord(value) || JSON.stringify(Object.keys(value).sort()) !== JSON.stringify([...keys].sort())) fail('LOCAL_CHAT_OUTPUT_SCHEMA');
 }
@@ -284,7 +282,7 @@ export function createLocalChatReviewerAdapter(input) {
   return Object.freeze({ id: state.id,
     receipts: () => cloneFreeze(receipts),
     async review(payload) { return call(state, payload, 'review', receipts, (output, bound) => {
-      exact(output, ['findings', 'summary']); const findings = findingList(output.findings); validateFindings(findings, 'LOCAL_CHAT'); const summary = note(output.summary);
+      exact(output, ['findings', 'summary']); const findings = validateFindings(output.findings, 'LOCAL_CHAT'); const summary = note(output.summary);
       return { status: findings.length === 0 ? 'PASS' : 'FAIL', evidence: bindingEvidence(bound, { reviewerId: state.id, findings, summary, reason: findings.length === 0 ? '' : summary }) }; }); }
   });
 }
