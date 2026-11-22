@@ -68,8 +68,9 @@ function snapshotAdapters(task, source) {
 }
 
 function validateEvidence(evidence, binding, extraKeys, stage) {
-  exact(evidence, [...Object.keys(binding), ...extraKeys], `${label(stage)}_EVIDENCE_SCHEMA`);
-  for (const key of Object.keys(binding)) {
+  const bindingKeys = Object.keys(binding);
+  exact(evidence, [...bindingKeys, ...extraKeys], `${label(stage)}_EVIDENCE_SCHEMA`);
+  for (const key of bindingKeys) {
     if (evidence[key] !== binding[key]) reject(`${label(stage)}_EVIDENCE_STALE`);
   }
 }
