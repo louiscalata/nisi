@@ -158,7 +158,12 @@ function createInvoker(signal, clock, totalDeadlineMs, minimumSample = 0) {
         const stoppedAfterCopy = guard();
         if (stoppedAfterCopy) { controller.abort(); finish(stoppedAfterCopy); return; }
         finish({ kind: 'result', value: snapshot });
-      }, () => finish(guard() ?? { kind: 'error', code: 'ADAPTER_EXCEPTION' }));
+      }, () => {
+        const stoppedAfterCall = guard();
+        if (settled) return;
+        finish(stoppedAfterCall ?? { kind: 'error', code: 'ADAPTER_EXCEPTION' });
+        if (stoppedAfterCall?.kind === 'cancelled' || stoppedAfterCall?.kind === 'timed_out') controller.abort();
+      });
     });
   };
   return { invoke, guard, get lastSample() { return previous; } };
