@@ -363,6 +363,20 @@ test('journal rejects repeated retry target and attempt on append and reopen', (
   assert.equal(reopen(rehash(lines)).report.status, 'INVALID');
 });
 
+test('journal preserves well-formed UTF-16 and refuses lone surrogate units', () => {
+  const journal = createRunJournal(config());
+  const valid = ['', 'e\u0301', '\u0000\ud7ff\ue000\ufffe\uffff', '\ud800\udc00', '\udbff\udfff'];
+  assert.equal(journal.append(entry('valid', { payload: { strings: valid } }), 100).status, 'APPENDED');
+  for (const invalid of ['\ud800', '\udc00', '\ud800\udbff', '\udc00\ud800', '\ud800a', '\ud800\udc00\udfff']) {
+    assert.throws(() => journal.append(entry('invalid', { payload: { strings: [invalid] } }), 100), { code: 'ENTRY' });
+  }
+  const serialized = journal.serialize();
+  const restored = reopen(serialized);
+  assert.equal(restored.report.status, 'COMPLETE');
+  assert.deepEqual(restored.journal.list(100).map(row => row.entry.payload.strings), [valid]);
+  assert.equal(restored.journal.serialize(), serialized);
+});
+
 test('journal bounds the copied payload, so shared references cannot grow it exponentially', () => {
   let payload = { leaf: true }; for (let i = 0; i < 21; i++) payload = { a: payload, b: payload };
   const journal = createRunJournal(config());
