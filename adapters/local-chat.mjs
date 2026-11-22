@@ -256,7 +256,11 @@ async function call(state, payload, operation, receipts, transform) {
 function bindingEvidence(bound, extra) { return { ...(isRecord(bound) ? bound : {}), ...extra }; }
 function note(value) { if (typeof value !== 'string' || value.trim() === '' || value.length > 4096) fail('LOCAL_CHAT_NOTE_INVALID'); return value; }
 function exact(value, keys) {
-  if (!isRecord(value) || JSON.stringify(Object.keys(value).sort()) !== JSON.stringify([...keys].sort())) fail('LOCAL_CHAT_OUTPUT_SCHEMA');
+  if (isRecord(value)) {
+    const actual = Object.keys(value);
+    if (actual.length === keys.length && actual.every(key => keys.includes(key))) return;
+  }
+  fail('LOCAL_CHAT_OUTPUT_SCHEMA');
 }
 
 export function createLocalChatAuthorAdapter(input) {
