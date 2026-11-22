@@ -393,6 +393,107 @@ test('reviewers receive immutable fresh check and test evidence; all required re
   assert.equal((await runWorkflow(task, { adapters: a })).stages.filter(stage => stage.stage === 'review').length, 2);
 });
 
+test('review outcomes preserve binding and determine the remaining reviewers', async () => {
+  const supplied = candidate();
+  const task = makeTask('review'); task.policy.requiredReviewers = 2;
+  let firstResult;
+  const cases = [
+    ['pass', 'PASS', 'COMPLETED', null, 'PASS'],
+    ['fail', 'FAIL', 'FAILED', 'REVIEW_FAILED', 'FAIL'],
+    ['not run', 'NOT_RUN', 'BLOCKED', 'REVIEW_NOT_RUN', 'NOT_RUN'],
+    ['unavailable', 'UNAVAILABLE', 'BLOCKED', 'REVIEW_UNAVAILABLE', 'UNAVAILABLE'],
+    ['wrong reviewer', 'PASS', 'BLOCKED', 'REVIEWER_ID_MISMATCH', 'UNAVAILABLE'],
+    ['wrong result', 'PASS', 'BLOCKED', 'REVIEW_RESULT_SCHEMA', 'UNAVAILABLE'],
+    ['stale review', 'PASS', 'BLOCKED', 'REVIEW_EVIDENCE_STALE', 'UNAVAILABLE'],
+  ];
+  for (const [name, status, outcome, code, lastStatus] of cases) {
+    const events = [];
+    const receipts = [];
+    const source = adapters({ events });
+    source.reviewers = ['reviewer.one', 'reviewer.two'].map((id, index) => ({
+      id,
+      review({ candidate: reviewed, binding, reviewerId }) {
+        events.push(reviewerId);
+        receipts.push({ reviewed, binding });
+        const result = passReview(binding, reviewerId);
+        if (index !== 0) return result;
+        if (name === 'pass') { firstResult = result; return result; }
+        if (name === 'stale review') return firstResult;
+        if (name === 'wrong reviewer') return passReview(binding, 'reviewer.two');
+        if (name === 'wrong result') return { ...result, extra: true };
+        return { status, evidence: { ...result.evidence, reason: name,
+          findings: status === 'FAIL' ? [{ code: 'REVIEW', message: 'check failed' }] : [] } };
+      },
+    }));
+    let stored;
+    const report = await runWorkflow(task, { adapters: source, candidate: supplied, candidateAuthorId: 'author.one',
+      clock: () => 0, reportStore: { store({ report, binding, reportSha256 }) {
+        events.push('store');
+        stored = { report, binding, reportSha256 };
+        return { status: 'PASS', evidence: { ...binding, outcome: report.outcome, reportSha256 } };
+      } },
+    });
+    const expectedReviewers = name === 'pass' ? ['reviewer.one', 'reviewer.two'] : ['reviewer.one'];
+    assert.deepEqual(events, ['authorize', 'checks', 'tests', ...expectedReviewers, 'store'], name);
+    assert.equal(report.outcome, outcome, name);
+    assert.equal(report.workflowOutcome, outcome, name);
+    assert.equal(report.code, code, name);
+    assert.equal(report.repairAttempts, 0, name);
+    assert.equal(report.candidateFingerprint, supplied.fingerprint, name);
+    assert.equal(report.taskFingerprint, firstResult.evidence.taskFingerprint, name);
+    if (name !== 'pass') assert.notEqual(report.runId, firstResult.evidence.runId, name);
+    const bounds = { schemaVersion: 1, runId: report.runId, taskFingerprint: report.taskFingerprint,
+      attempt: 0, candidateFingerprint: supplied.fingerprint };
+    for (const {reviewed, binding} of receipts) {
+      assert.deepEqual(binding, bounds, name);
+      assert.ok(Object.isFrozen(binding), name);
+      assert.ok(Object.isFrozen(reviewed), name);
+      assert.ok(Object.isFrozen(reviewed.files), name);
+      assert.equal(reviewed.fingerprint, supplied.fingerprint, name);
+      assert.deepEqual(reviewed.files, supplied.files, name);
+    }
+    const reviews = report.stages.filter(stage => stage.stage === 'review');
+    const last = reviews.at(-1);
+    assert.equal(reviews.length, expectedReviewers.length, name);
+    assert.equal(last.status, lastStatus, name);
+    const invalidResult = ['wrong reviewer', 'wrong result', 'stale review'].includes(name);
+    assert.equal(last.code, invalidResult ? code : null, name);
+    assert.equal(report.reportStored, true, name);
+    assert.equal(stored.report.outcome, outcome, name);
+    assert.equal(stored.report.code, code, name);
+    assert.deepEqual(stored.binding, bounds, name);
+    assert.equal(stored.reportSha256, report.storedReportSha256, name);
+    assert.equal(report.reportStoreEvidence.status, 'PASS', name);
+    assert.equal(report.reportStoreEvidence.evidence.reportSha256, stored.reportSha256, name);
+  }
+});
+
+test('reviewer identity refuses invalid setup before callbacks or storage', async () => {
+  const supplied = candidate();
+  const task = makeTask('review'); task.policy.requiredReviewers = 2;
+  for (const [ids, code] of [
+    [['reviewer.one', 'reviewer.one'], 'DUPLICATE_REVIEWER'],
+    [['reviewer.one', 'author.one'], 'AUTHOR_REVIEWER_NOT_INDEPENDENT'],
+  ]) {
+    const events = [];
+    const source = adapters({ events });
+    source.reviewers = ids.map(id => ({ id, review({ binding, reviewerId }) {
+      events.push('review');
+      return passReview(binding, reviewerId);
+    } }));
+    const report = await runWorkflow(task, { adapters: source, candidate: supplied,
+      candidateAuthorId: 'author.one', clock: () => 0,
+      reportStore: { store() { events.push('store'); return null; } },
+    });
+    assert.equal(report.outcome, 'BLOCKED');
+    assert.equal(report.code, code);
+    assert.equal(report.runId, null);
+    assert.deepEqual(report.stages, []);
+    assert.equal(report.reportStored, false);
+    assert.deepEqual(events, []);
+  }
+});
+
 test('captured evidence cannot replay across task, run, candidate or repair attempt', async () => {
   let captured;
   const first = adapters({ checks: binding => { captured = passChecks(binding); return captured; } });
