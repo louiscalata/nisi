@@ -98,6 +98,7 @@ function strictJSON(source) {
   let text = source.replace(/^[ \t\r\n]+|[ \t\r\n]+$/gu, '');
   const fence = /^```(?:json)?[ \t\r\n]*([\s\S]*?)[ \t\r\n]*```$/iu.exec(text);
   if (fence) text = fence[1];
+  const scalar = /(?:true|false|null|-?(?:0|[1-9]\d*)(?:\.\d+)?(?:[eE][+-]?\d+)?)/uy;
   let index = 0;
   const ws = () => { while ([' ', '\t', '\r', '\n'].includes(text[index])) index += 1; };
   const string = () => {
@@ -140,8 +141,13 @@ function strictJSON(source) {
     if (c === '[') { index += 1; const out = []; ws(); if (text[index] === ']') { index += 1; return out; }
       while (true) { out.push(value(depth + 1)); ws(); if (text[index] === ']') { index += 1; return out; } if (text[index++] !== ',') fail('LOCAL_CHAT_JSON_INVALID'); }
     }
-    const match = /^(?:true|false|null|-?(?:0|[1-9]\d*)(?:\.\d+)?(?:[eE][+-]?\d+)?)/u.exec(text.slice(index));
-    if (!match) fail('LOCAL_CHAT_JSON_INVALID'); index += match[0].length; const parsed = JSON.parse(match[0]); if (typeof parsed === 'number' && !Number.isFinite(parsed)) fail('LOCAL_CHAT_JSON_INVALID'); return parsed;
+    scalar.lastIndex = index;
+    const match = scalar.exec(text);
+    if (!match) fail('LOCAL_CHAT_JSON_INVALID');
+    index = scalar.lastIndex;
+    const parsed = JSON.parse(match[0]);
+    if (typeof parsed === 'number' && !Number.isFinite(parsed)) fail('LOCAL_CHAT_JSON_INVALID');
+    return parsed;
   };
   ws(); const result = value(0); ws(); if (index !== text.length) fail('LOCAL_CHAT_JSON_INVALID'); return result;
 }
