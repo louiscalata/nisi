@@ -119,15 +119,19 @@ function entryOf(input, now) {
   return e;
 }
 function redact(e, paths) {
+  let changed = false;
   for (const path of paths) {
     let cur = e;
     for (let index = 0; index < path.length; index += 1) {
       const k = path[index];
       if (!cur || typeof cur !== 'object' || !own(cur,k) || (Array.isArray(cur) && k === 'length')) break;
-      if (index === path.length - 1) cur[k] = MARK;
-      else cur = cur[k];
+      if (index === path.length - 1) {
+        changed = changed || cur[k] !== MARK;
+        cur[k] = MARK;
+      } else cur = cur[k];
     }
   }
+  return changed;
 }
 const fingerprint = e => H('nisi-run-journal/input/v1\n'+C(e));
 const retryKey = e => e.retryOf+'\0'+e.attempt;
@@ -219,8 +223,7 @@ function reopenData(serialized, expected) {
       if (!legacy) legacy={line:n+1,prefix:ids.length};
     }
     if (v.record.retained) {
-      const redacted=copy(e); redact(redacted,c._paths);
-      if (C(redacted)!==C(e) || expired({entry:e},h.now)) { failAt(n+1); break; }
+      if (redact(e,c._paths) || expired({entry:e},h.now)) { failAt(n+1); break; }
       retained++; if(retained>c.maxEntries){failAt(n+1);break;} }
     if (e.retryOf!==null) { if(b.retries.has(retryKey(e))){failAt(n+1);break;} const t=b.byId.get(e.retryOf); if(!t || e.state!=='QUEUED' || t.entry.runId!==e.runId || e.attempt<=t.entry.attempt || e.createdAt<t.entry.createdAt || !(new Set(['SUCCEEDED','FAILED','CANCELLED','REVOKED'])).has(t.entry.state) && !expired(t,h.now) && !b.revoked.has(t.entry.id)) { failAt(n+1); break; } }
     if (e.revokes!==null) { const t=b.byId.get(e.revokes); if(!t || t.entry.runId!==e.runId || t.entry.attempt!==e.attempt || t.entry.candidateId!==e.candidateId || t.entry.createdAt>e.createdAt){failAt(n+1);break;} }
