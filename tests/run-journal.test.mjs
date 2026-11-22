@@ -295,6 +295,34 @@ test('redaction ignores absent paths including null payloads and revocations', (
   assert.equal(reopen(journal.serialize()).report.status, 'COMPLETE');
 });
 
+test('reopen requires every present redaction path to contain the marker', () => {
+  const journal = createRunJournal(config({ redactPaths: ['payload.secret', 'payload.rows.0.value', 'payload.absent'] }));
+  const payload = { secret: '[REDACTED]', rows: [{ value: '[REDACTED]' }], note: 'visible' };
+  assert.equal(journal.append(entry('prefix'), 100).status, 'APPENDED');
+  assert.equal(journal.append(entry('redacted', { payload }), 100).status, 'APPENDED');
+  const serialized = journal.serialize();
+  const restored = reopen(serialized);
+  assert.equal(restored.report.status, 'COMPLETE');
+  assert.deepEqual(restored.journal.list(100)[1].entry.payload, payload);
+  assert.equal(restored.journal.serialize(), serialized);
+
+  for (const incomplete of [
+    { ...payload, secret: null },
+    { ...payload, rows: [{ value: ['[REDACTED]'] }] },
+    { ...payload, absent: false },
+  ]) {
+    const lines = serialized.trimEnd().split('\n').map(JSON.parse);
+    const record = lines[2].record;
+    record.entry.payload = incomplete;
+    record.fingerprint = hash('nisi-run-journal/input/v1\n' + canonical(record.entry));
+    const recovered = reopen(rehash(lines));
+    assert.deepEqual(recovered.report, {
+      status: 'INVALID', recoveredIds: ['prefix'], rejectedLine: 3, reason: 'RECORD', authorizing: false,
+    });
+    assert.deepEqual(recovered.journal.list(100).map(row => row.entry.id), ['prefix']);
+  }
+});
+
 test('journal rejects repeated retry target and attempt on append and reopen', () => {
   const journal = createRunJournal(config()); journal.append(entry('target', { state: 'FAILED' }), 100);
   const retry = id => entry(id, { state: 'QUEUED', attempt: 1, retryOf: 'target' });
