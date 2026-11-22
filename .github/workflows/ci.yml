@@ -34,10 +34,14 @@ jobs:
           node-version: ${{ matrix.node }}
       - run: npm ci
       - name: Structural check and full Node test suite
+        env: &node_warnings_as_errors
+          NODE_OPTIONS: '--require=${{ toJSON(github.workspace) }}/scripts/warnings-as-errors.cjs'
         run: npm run check
       - name: Installed public CLI package
+        env: *node_warnings_as_errors
         run: npm run check:cli-package
       - name: Editable README consistency
+        env: *node_warnings_as_errors
         run: node docs/editor/check-editor.mjs ./index-typing-revision.html
 
   python:
