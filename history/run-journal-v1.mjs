@@ -172,11 +172,21 @@ function build(config, watermark = 0, initial = [], sealed = false) {
   for (const r of records) { byId.set(r.entry.id, r); if (r.retained) active.set(r.entry.id,r); if (r.entry.retryOf!==null) retries.add(retryKey(r.entry)); if (r.entry.revokes !== null) revoked.add(r.entry.revokes); }
   let mark = watermark;
   const prune = now => {
-    const retained = [...active.values()];
-    const retire = r => { r.retained=false; r.entry.payload=null; r.fingerprint=fingerprint(r.entry); active.delete(r.entry.id); };
-    for (const r of retained) if (expired(r,now)) retire(r);
-    for (const r of active.values()) { if (active.size<=config.maxEntries) break; retire(r); }
-    return retained.filter(r=>!r.retained).map(r=>r.entry.id);
+    const retired = [];
+    const retire = r => {
+      const id = r.entry.id;
+      r.retained = false;
+      r.entry.payload = null;
+      r.fingerprint = fingerprint(r.entry);
+      active.delete(id);
+      retired.push(id);
+    };
+    for (const r of active.values()) if (expired(r, now)) retire(r);
+    for (const r of active.values()) {
+      if (active.size <= config.maxEntries) break;
+      retire(r);
+    }
+    return retired;
   };
   const time = now => { if (!safe(now) || now < mark) throw err('TIME'); mark=now; };
   const view = (r, now) => {

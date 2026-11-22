@@ -201,6 +201,21 @@ test('pruned entry reopens with a verifiable null-payload fingerprint', () => {
   });
 });
 
+test('retain returns expired IDs in append order before and after reopen', () => {
+  const journal = createRunJournal(config({ maxEntries: 3 }));
+  for (const [id, ttlMs] of [['first', 10], ['survivor', 20], ['last', 5]]) {
+    assert.equal(journal.append(entry(id, { ttlMs }), 100).status, 'APPENDED');
+  }
+  const restored = reopen(journal.serialize());
+  assert.equal(restored.report.status, 'COMPLETE');
+  for (const current of [journal, restored.journal]) {
+    assert.deepEqual(current.retain(110), ['first', 'last']);
+    assert.deepEqual(current.retain(110), []);
+    assert.deepEqual(current.list(110).filter(row => row.retained).map(row => row.entry.id), ['survivor']);
+  }
+  assert.equal(restored.journal.serialize(), journal.serialize());
+});
+
 function rehash(lines) {
   let previousHash = hash('nisi-run-journal/header/v1\n' + canonical(lines[0]));
   for (const line of lines.slice(1, -1)) {
