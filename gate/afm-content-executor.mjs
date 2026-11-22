@@ -60,10 +60,14 @@ const EVIDENCE_KEYS = ['schemaVersion', 'status', 'evidenceClass', 'consentDiges
  *  shape, or any claimed authority, is refused rather than interpreted. */
 function readEvidence(raw, admitted) {
   if (!Buffer.isBuffer(raw) || raw.length < 2 || raw.length > MAX_EVIDENCE_BYTES) throw new Error('EVIDENCE_BYTES');
-  let value;
+  let value, sha256;
   // The restricted codec rejects malformed UTF-8, duplicate keys and malformed
   // Unicode before the schema reader sees an unambiguous JSON value.
-  try { value = JSON.parse(canonicalizeJSONV1(raw).canonical); } catch { throw new Error('EVIDENCE_REFUSED'); }
+  try {
+    const document = canonicalizeJSONV1(raw);
+    value = JSON.parse(document.canonical);
+    sha256 = document.sha256;
+  } catch { throw new Error('EVIDENCE_REFUSED'); }
   if (value === null || typeof value !== 'object' || Array.isArray(value)) throw new Error('EVIDENCE_SHAPE');
   if (Object.keys(value).sort().join('|') !== [...EVIDENCE_KEYS].sort().join('|')) throw new Error('EVIDENCE_SCHEMA');
   if (value.schemaVersion !== 1 || value.status !== 'PASS') throw new Error('EVIDENCE_STATUS');
@@ -94,7 +98,8 @@ function readEvidence(raw, admitted) {
   if (sha(Buffer.from(value.advisory, 'utf8')) !== value.advisorySha256) throw new Error('ADVISORY_DIGEST');
   if (!Array.isArray(value.limitationCodes) || value.limitationCodes.length !== LIMITATION_CODES.length ||
       value.limitationCodes.some((code, index) => code !== LIMITATION_CODES[index])) throw new Error('EVIDENCE_LIMITATIONS');
-  return Object.freeze({ ...value, limitationCodes: Object.freeze([...value.limitationCodes]) });
+  const evidence = Object.freeze({ ...value, limitationCodes: Object.freeze([...value.limitationCodes]) });
+  return { evidence, sha256 };
 }
 
 function verifyBinary(binary, binarySHA256) {
@@ -207,9 +212,9 @@ export function createAFMContentExecutor(options) {
         const run = await runProbe(binary, input, timeoutMs, signal);
         if (run.code !== 'OK') return refuse(run.code, taskId);
 
-        const evidence = readEvidence(run.raw, admitted);
+        const { evidence, sha256: evidenceSha256 } = readEvidence(run.raw, admitted);
         const executionSha256 = sha(Buffer.from(`nisi/content-execution/v1\0${APPLE_CONTENT_PROMPT_VERSION}\0` +
-          `${sha(Buffer.from(taskId, 'utf8'))}\0${binarySHA256}\0${requestSha256}\0${canonicalizeJSONV1(run.raw).sha256}`, 'utf8'));
+          `${sha(Buffer.from(taskId, 'utf8'))}\0${binarySHA256}\0${requestSha256}\0${evidenceSha256}`, 'utf8'));
         readings.push(Object.freeze({
           taskId,
           contentSha256: evidence.contentSha256,
