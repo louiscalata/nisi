@@ -408,6 +408,33 @@ test('journal preserves well-formed UTF-16 and refuses lone surrogate units', ()
   assert.equal(restored.journal.serialize(), serialized);
 });
 
+test('journal validates array keys without reading getters', () => {
+  const journal = createRunJournal(config());
+  const dense = Object.freeze([1, 2]);
+  const payload = Object.assign(Object.create(null), { dense });
+  assert.equal(journal.append(entry('dense', { payload }), 100).status, 'APPENDED');
+  const before = journal.serialize();
+  let getterCalls = 0;
+  const get = () => { getterCalls += 1; return 0; };
+  const hiddenArrayIndex = Object.defineProperty([1], '0', { enumerable: false });
+  const arrayAccessor = Object.defineProperty([1], '0', { get });
+  const holeWithExtraKey = Object.assign(new Array(1), { extra: true });
+  const symbol = Symbol('extra');
+  const holeWithSymbol = Object.assign(new Array(1), { [symbol]: true });
+  const invalid = [
+    hiddenArrayIndex, arrayAccessor, holeWithExtraKey, holeWithSymbol,
+    Object.assign([1], { extra: true }), Object.assign([1], { [symbol]: true }),
+  ];
+  for (const value of invalid) {
+    assert.throws(() => journal.append(entry('invalid', { payload: value }), 100), { code: 'ENTRY' });
+  }
+  assert.equal(getterCalls, 0);
+  assert.equal(journal.serialize(), before);
+  const restored = reopen(before);
+  assert.equal(restored.report.status, 'COMPLETE');
+  assert.deepEqual(restored.journal.list(100)[0].entry.payload, { dense });
+});
+
 test('append refuses a redacted entry that would exceed the retained string limit', () => {
   const journal = createRunJournal(config({ redactPaths: ['payload.hidden'] }));
   const input = entry('at-limit', { payload: { hidden: '' } });
