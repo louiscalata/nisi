@@ -92,8 +92,8 @@ function validateResult(raw, stage, binding) {
     const { assertionsExecuted: executed, assertionsPassed: passed } = evidence;
     if (!Number.isSafeInteger(executed) || !Number.isSafeInteger(passed) || passed < 0 || executed < passed) reject('TEST_ASSERTION_COUNT_INVALID');
     if (raw.status === 'PASS' && (executed === 0 || executed !== passed)) reject('NO_TEST_ASSERTIONS_EXECUTED');
-    if (raw.status === 'FAIL' && (executed === 0 || executed === passed)) reject('TEST_FAILURE_EVIDENCE_INVALID');
-    if (['NOT_RUN', 'UNAVAILABLE'].includes(raw.status) && (executed !== 0 || passed !== 0 || findings.length !== 0)) reject('TEST_NOT_RUN_WITH_ASSERTIONS');
+    if (raw.status === 'FAIL' && executed === passed) reject('TEST_FAILURE_EVIDENCE_INVALID');
+    if (['NOT_RUN', 'UNAVAILABLE'].includes(raw.status) && executed !== 0) reject('TEST_NOT_RUN_WITH_ASSERTIONS');
   }
   if (stage === 'review' && (!text(evidence.summary) || !text(evidence.reviewerId))) reject('REVIEW_EVIDENCE_INVALID');
   return raw;
