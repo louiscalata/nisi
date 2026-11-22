@@ -121,12 +121,12 @@ function entryOf(input, now) {
 function redact(e, paths) {
   for (const path of paths) {
     let cur = e;
-    for (const k of path.slice(0, -1)) {
-      if (!cur || typeof cur !== 'object' || !own(cur,k) || Array.isArray(cur) && !/^(0|[1-9][0-9]*)$/.test(k)) { cur=null; break; }
-      cur=cur[k];
+    for (let index = 0; index < path.length; index += 1) {
+      const k = path[index];
+      if (!cur || typeof cur !== 'object' || !own(cur,k) || (Array.isArray(cur) && k === 'length')) break;
+      if (index === path.length - 1) cur[k] = MARK;
+      else cur = cur[k];
     }
-    const k=path.at(-1);
-    if (cur && typeof cur === 'object' && own(cur,k) && (!Array.isArray(cur) || /^(0|[1-9][0-9]*)$/.test(k))) cur[k]=MARK;
   }
 }
 const fingerprint = e => H('nisi-run-journal/input/v1\n'+C(e));
