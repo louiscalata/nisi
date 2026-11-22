@@ -81,15 +81,20 @@ function configOf(input) {
       !Number.isSafeInteger(c.heartbeatTtlMs) || c.heartbeatTtlMs < 1) throw err('CONFIG');
   c._paths = pathsOf(c.redactPaths, 'CONFIG'); c.redactPaths = c.redactPaths.slice(); return c;
 }
-// Parses redaction paths. Rejects duplicates and paths that contain one another.
 function pathsOf(list, code) {
   if (!Array.isArray(list)) throw err(code);
-  const paths = []; for (const p of list) {
-    if (typeof p !== 'string' || !p.startsWith('payload.') || p.length < 9) throw err(code);
-    const a = p.split('.'); if (a.some(s => !SEG.test(s) || BAD.has(s))) throw err(code);
-    for (const q of paths) if (a.length === q.length ? a.every((s,i)=>s===q[i]) :
-      (a.length < q.length ? a.every((s,i)=>s===q[i]) : q.every((s,i)=>s===a[i]))) throw err(code);
-    paths.push(a);
+  const paths = [];
+  for (const path of list) {
+    if (typeof path !== 'string' || !path.startsWith('payload.') || path.length < 9) throw err(code);
+    const segments = path.split('.');
+    if (segments.some(segment => !SEG.test(segment) || BAD.has(segment))) throw err(code);
+    paths.push(segments);
+  }
+  const sorted = list.slice().sort();
+  for (let index = 1; index < sorted.length; index += 1) {
+    const previous = sorted[index - 1];
+    const current = sorted[index];
+    if (current === previous || current.startsWith(previous + '.')) throw err(code);
   }
   return paths;
 }
