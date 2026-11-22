@@ -182,9 +182,9 @@ function reportRecord(name, file, limits, fileSystem) {
 }
 
 function finish(summary) {
-  summary.checked = summary.files.filter(file => file.status !== 'SKIP').length;
   summary.passed = summary.files.filter(file => file.status === 'PASS').length;
   summary.failed = summary.files.filter(file => file.status === 'FAIL').length;
+  summary.checked = summary.passed + summary.failed;
   summary.skipped = summary.files.filter(file => file.status === 'SKIP').length;
   if (summary.failed > 0) summary.reason = 'FILES_FAILED';
   else if (summary.passed > 0) {
