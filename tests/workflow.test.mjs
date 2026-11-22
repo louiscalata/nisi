@@ -81,6 +81,40 @@ test('workflow captures each adapter ID once', async () => {
   assert.equal(report.stages.at(-1).evidence.reviewerId, 'reviewer.one');
 });
 
+test('author adapter capture follows workflow mode and repair budget', async () => {
+  const source = adapters({
+    checks: binding => ({ status: 'FAIL', evidence: {
+      ...binding, findings: [{ code: 'CHECK', message: 'repair needed' }], reason: 'check failed',
+    } }),
+  });
+  const author = source.author;
+  const reads = [];
+  Object.defineProperty(source, 'author', { get() { reads.push('author'); return author; } });
+  for (const name of ['draft', 'repair']) {
+    const method = author[name];
+    Object.defineProperty(author, name, { get() {
+      reads.push(name);
+      return function (payload) {
+        assert.equal(this, author);
+        return method.call(this, payload);
+      };
+    } });
+  }
+  for (const repairBudget of [0, 1]) {
+    const task = makeTask();
+    task.policy.repairBudget = repairBudget;
+    const report = await runWorkflow(task, { adapters: source });
+    assert.equal(report.outcome, repairBudget ? 'NO_PROGRESS' : 'FAILED');
+    assert.deepEqual(reads, repairBudget ? ['author', 'draft', 'repair'] : ['author', 'draft']);
+    reads.length = 0;
+  }
+  const report = await runWorkflow(makeTask('review'), {
+    adapters: source, candidate: { files: [file(BASE_TEXT)] }, candidateAuthorId: 'author.one',
+  });
+  assert.equal(report.outcome, 'FAILED');
+  assert.deepEqual(reads, []);
+});
+
 test('review mode validates the supplied candidate and never invokes draft or repair', async () => {
   const events = [];
   const supplied = { files: [file('export const answer = 7;\n')] };
