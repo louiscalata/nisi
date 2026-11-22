@@ -150,12 +150,13 @@ export function createTaskSpecification(value) {
   if (!TASK_MODES.includes(value.mode)) reject('TASK_MODE_INVALID');
   if (typeof value.language !== 'string' || value.language.trim().length === 0 || value.language.length > 64) reject('LANGUAGE_INVALID');
   if (!Array.isArray(value.allowedFiles) || value.allowedFiles.length === 0 || value.allowedFiles.length > 1024) reject('ALLOWED_FILES_INVALID');
-  const allowedFiles = [...new Set(value.allowedFiles.map(relativePath))].sort();
+  const allowedPaths = new Set(value.allowedFiles.map(relativePath));
+  const allowedFiles = [...allowedPaths].sort();
   if (allowedFiles.length !== value.allowedFiles.length) reject('ALLOWED_FILES_DUPLICATE');
   if (!Array.isArray(value.protectedFiles)) reject('PROTECTED_FILES_INVALID');
   const protectedFiles = [...new Set(value.protectedFiles.map(relativePath))].sort();
   if (protectedFiles.length !== value.protectedFiles.length) reject('PROTECTED_FILES_DUPLICATE');
-  if (protectedFiles.some(path => !allowedFiles.includes(path))) reject('PROTECTED_FILE_OUT_OF_SCOPE');
+  if (protectedFiles.some(path => !allowedPaths.has(path))) reject('PROTECTED_FILE_OUT_OF_SCOPE');
   if (!isPlainObject(value.protectedSnapshots)) reject('PROTECTED_SNAPSHOTS_INVALID');
   if (ownKeys(value.protectedSnapshots) !== JSON.stringify(protectedFiles)) reject('PROTECTED_SNAPSHOTS_SCHEMA');
   for (const path of protectedFiles) if (!isHex64(value.protectedSnapshots[path])) reject('PROTECTED_SNAPSHOT_INVALID');
