@@ -71,7 +71,7 @@ const { journal: again, report } = reopen(read.serialized);   // report.status i
 ## Limits
 
 - History is capped at 10,000 records. `REFUSED` with `HISTORY_LIMIT` applies to new IDs; duplicates and conflicts still resolve. Reopen rejects larger histories.
-- An entry that is malformed, nested deeper than 64 levels, or larger than 1,000,000 copied values or 64 Mi UTF-16 units of copied strings makes `append` throw an error with code `ENTRY`. So does an entry dated after the `now` you pass.
+- An entry that is malformed, nested deeper than 64 levels, or larger than 1,000,000 copied values or 64 Mi UTF-16 units of copied strings makes `append` throw an error with code `ENTRY`. So does an entry dated after the `now` you pass. An append that would retain an entry also throws `ENTRY` if its strings exceed 64 Mi UTF-16 units after redaction.
 - Project mismatches, a sealed journal, invalid retries and revocations, and the history cap are returned as `REFUSED` statuses instead of errors.
 - `readSerializedJournal` refuses a file larger than `maxBytes` (default 64 MiB) with `FILE_TOO_LARGE`. Nothing else bounds a serialized journal: hosts rotate journals and bound the bytes they write and pass to `reopen` themselves.
 - The module imports only `node:crypto` and `node:util`.
