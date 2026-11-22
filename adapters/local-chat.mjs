@@ -120,8 +120,22 @@ function strictJSON(source) {
     if (depth > 64) fail('LOCAL_CHAT_JSON_INVALID'); ws();
     const c = text[index];
     if (c === '"') return string();
-    if (c === '{') { index += 1; const out = Object.create(null); const keys = new Set(); ws(); if (text[index] === '}') { index += 1; return out; }
-      while (true) { ws(); const key = string(); if (keys.has(key)) fail('LOCAL_CHAT_JSON_DUPLICATE_KEY'); keys.add(key); ws(); if (text[index++] !== ':') fail('LOCAL_CHAT_JSON_INVALID'); out[key] = value(depth + 1); ws(); if (text[index] === '}') { index += 1; return out; } if (text[index++] !== ',') fail('LOCAL_CHAT_JSON_INVALID'); }
+    if (c === '{') {
+      index += 1;
+      const out = Object.create(null);
+      ws();
+      if (text[index] === '}') { index += 1; return out; }
+      while (true) {
+        ws();
+        const key = string();
+        if (Object.hasOwn(out, key)) fail('LOCAL_CHAT_JSON_DUPLICATE_KEY');
+        ws();
+        if (text[index++] !== ':') fail('LOCAL_CHAT_JSON_INVALID');
+        out[key] = value(depth + 1);
+        ws();
+        if (text[index] === '}') { index += 1; return out; }
+        if (text[index++] !== ',') fail('LOCAL_CHAT_JSON_INVALID');
+      }
     }
     if (c === '[') { index += 1; const out = []; ws(); if (text[index] === ']') { index += 1; return out; }
       while (true) { out.push(value(depth + 1)); ws(); if (text[index] === ']') { index += 1; return out; } if (text[index++] !== ',') fail('LOCAL_CHAT_JSON_INVALID'); }
