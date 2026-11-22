@@ -3,7 +3,8 @@
 import {createHash} from 'node:crypto';
 import {types as nodeTypes} from 'node:util';
 
-const STATES = new Set(['QUEUED','RUNNING','SUCCEEDED','FAILED','CANCELLED','REVOKED']);
+const TERMINAL_STATES = new Set(['SUCCEEDED','FAILED','CANCELLED','REVOKED']);
+const STATES = new Set(['QUEUED','RUNNING',...TERMINAL_STATES]);
 const ENTRY_KEYS = ['id','projectId','runId','attempt','candidateId','stage','receiptId','createdAt','ttlMs','state','heartbeatAt','retryOf','revokes','payload'];
 const RECORD_KEYS = ['entry','fingerprint','retained'];
 const ID = /^[A-Za-z0-9][A-Za-z0-9_.:-]{0,127}$/;
@@ -151,6 +152,22 @@ const fingerprint = e => H('nisi-run-journal/input/v1\n'+C(e));
 const retryKey = e => e.retryOf+'\0'+e.attempt;
 function expired(r, now) { return now >= r.entry.createdAt + r.entry.ttlMs; }
 
+function referenceProblem(entry, byId, retries, revoked, now) {
+  if (entry.retryOf !== null) {
+    if (retries.has(retryKey(entry))) return 'RETRY_DUPLICATE';
+    const target = byId.get(entry.retryOf);
+    if (!target || entry.state !== 'QUEUED' || target.entry.runId !== entry.runId ||
+        entry.attempt <= target.entry.attempt || entry.createdAt < target.entry.createdAt ||
+        (!TERMINAL_STATES.has(target.entry.state) && !expired(target, now) && !revoked.has(target.entry.id))) return 'RETRY';
+  }
+  if (entry.revokes !== null) {
+    const target = byId.get(entry.revokes);
+    if (!target || target.entry.runId !== entry.runId || target.entry.attempt !== entry.attempt ||
+        target.entry.candidateId !== entry.candidateId || target.entry.createdAt > entry.createdAt) return 'REVOCATION';
+  }
+  return null;
+}
+
 function build(config, watermark = 0, initial = [], sealed = false) {
   const records = initial.slice(), byId = new Map(), revoked = new Set(), active = new Map(), retries = new Set();
   for (const r of records) { byId.set(r.entry.id, r); if (r.retained) active.set(r.entry.id,r); if (r.entry.retryOf!==null) retries.add(retryKey(r.entry)); if (r.entry.revokes !== null) revoked.add(r.entry.revokes); }
@@ -164,10 +181,15 @@ function build(config, watermark = 0, initial = [], sealed = false) {
   };
   const time = now => { if (!safe(now) || now < mark) throw err('TIME'); mark=now; };
   const view = (r, now) => {
-    const terminal = new Set(['SUCCEEDED','FAILED','CANCELLED','REVOKED']);
-    let l = revoked.has(r.entry.id) ? 'REVOKED' : terminal.has(r.entry.state) ? r.entry.state : expired(r,now) ? 'EXPIRED' :
-      r.entry.state === 'RUNNING' && (r.entry.heartbeatAt === null || now-r.entry.heartbeatAt > config.heartbeatTtlMs) ? 'UNKNOWN' : r.entry.state;
-    return freeze({entry:copy(r.entry), historical:r.historical, retained:r.retained, revoked:revoked.has(r.entry.id), expired:expired(r,now), liveness:l, authorizing:false});
+    const isRevoked = revoked.has(r.entry.id);
+    const isExpired = expired(r, now);
+    let liveness = r.entry.state;
+    if (isRevoked) liveness = 'REVOKED';
+    else if (!TERMINAL_STATES.has(liveness)) {
+      if (isExpired) liveness = 'EXPIRED';
+      else if (liveness === 'RUNNING' && (r.entry.heartbeatAt === null || now-r.entry.heartbeatAt > config.heartbeatTtlMs)) liveness = 'UNKNOWN';
+    }
+    return freeze({entry:copy(r.entry), historical:r.historical, retained:r.retained, revoked:isRevoked, expired:isExpired, liveness, authorizing:false});
   };
   const append = (input, now) => {
     if (!safe(now) || now < mark) throw err('TIME');
@@ -181,12 +203,8 @@ function build(config, watermark = 0, initial = [], sealed = false) {
     const old=byId.get(e.id);
     if (old) return freeze(old.fingerprint===fingerprint(e) ? {status:'DUPLICATE',id:e.id} : {status:'CONFLICT',id:e.id,reason:'ID_CONTENT_MISMATCH'});
     if (records.length>=MAX_RECORDS) return freeze({status:'REFUSED',id:e.id,reason:'HISTORY_LIMIT'});
-    if (e.retryOf !== null) {
-      if (retries.has(retryKey(e))) return freeze({status:'REFUSED',id:e.id,reason:'RETRY_DUPLICATE'});
-      const t=byId.get(e.retryOf); if (!t || e.state!=='QUEUED' || t.entry.runId!==e.runId || e.attempt<=t.entry.attempt || e.createdAt<t.entry.createdAt ||
-        !(new Set(['SUCCEEDED','FAILED','CANCELLED','REVOKED'])).has(t.entry.state) && !expired(t,now) && !revoked.has(t.entry.id)) return freeze({status:'REFUSED',id:e.id,reason:'RETRY'});
-    }
-    if (e.revokes !== null) { const t=byId.get(e.revokes); if (!t || t.entry.runId!==e.runId || t.entry.attempt!==e.attempt || t.entry.candidateId!==e.candidateId || t.entry.createdAt>e.createdAt) return freeze({status:'REFUSED',id:e.id,reason:'REVOCATION'}); }
+    const problem = referenceProblem(e, byId, retries, revoked, now);
+    if (problem !== null) return freeze({status:'REFUSED',id:e.id,reason:problem});
     if (budget.units > MAX_COPY_STRING_UNITS) throw err('ENTRY');
     const r={entry:e,fingerprint:fingerprint(e),retained:true,historical:false}; records.push(r); byId.set(e.id,r); active.set(e.id,r); if(e.retryOf!==null) retries.add(retryKey(e)); if (e.revokes!==null) revoked.add(e.revokes);
     mark=now; prune(now); return freeze({status:'APPENDED',id:e.id});
@@ -241,8 +259,7 @@ function reopenData(serialized, expected) {
     if (v.record.retained) {
       if (redact(e,c._paths) || expired({entry:e},h.now)) { failAt(n+1); break; }
       retained++; if(retained>c.maxEntries){failAt(n+1);break;} }
-    if (e.retryOf!==null) { if(b.retries.has(retryKey(e))){failAt(n+1);break;} const t=b.byId.get(e.retryOf); if(!t || e.state!=='QUEUED' || t.entry.runId!==e.runId || e.attempt<=t.entry.attempt || e.createdAt<t.entry.createdAt || !(new Set(['SUCCEEDED','FAILED','CANCELLED','REVOKED'])).has(t.entry.state) && !expired(t,h.now) && !b.revoked.has(t.entry.id)) { failAt(n+1); break; } }
-    if (e.revokes!==null) { const t=b.byId.get(e.revokes); if(!t || t.entry.runId!==e.runId || t.entry.attempt!==e.attempt || t.entry.candidateId!==e.candidateId || t.entry.createdAt>e.createdAt){failAt(n+1);break;} }
+    if (referenceProblem(e, b.byId, b.retries, b.revoked, h.now) !== null) { failAt(n+1); break; }
     const r={entry:e,fingerprint:v.record.fingerprint,retained:v.record.retained,historical:true}; b.records.push(r); b.byId.set(e.id,r); if(r.retained)b.active.set(e.id,r); if(e.retryOf!==null)b.retries.add(retryKey(e)); if(e.revokes!==null)b.revoked.add(e.revokes); prev=v.hash; ids.push(e.id);
   }
   if (!bad && !footer) bad={line:ls.length+1,reason:trailing?'TRUNCATED':'MISSING_FOOTER',status:'INCOMPLETE'};
