@@ -162,7 +162,13 @@ export function createTaskSpecification(value) {
   if (!Array.isArray(value.acceptanceCriteria) || value.acceptanceCriteria.length === 0 || value.acceptanceCriteria.length > 128 ||
       !value.acceptanceCriteria.every(item => typeof item === 'string' && item.trim().length > 0 && item.length <= 2048)) reject('ACCEPTANCE_CRITERIA_INVALID');
   const policy = normalizePolicy(value.policy);
-  return cloneFreeze({ ...value, allowedFiles, protectedFiles, protectedSnapshots: { ...value.protectedSnapshots }, policy });
+  return Object.freeze({
+    __proto__: null,
+    ...value,
+    allowedFiles: Object.freeze(allowedFiles),
+    protectedFiles: Object.freeze(protectedFiles),
+    policy,
+  });
 }
 
 export function validateCandidateForTask(candidate, task, authorId) {
