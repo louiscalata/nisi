@@ -29,10 +29,10 @@ function copy(x, stack = new Set(), budget = { values: 0, units: 0 }) {
   if (stack.size > 64) throw err('ENTRY');
   if (++budget.values > MAX_COPY_VALUES) throw err('ENTRY');
   if (typeof x === 'string' && (budget.units += x.length) > MAX_COPY_STRING_UNITS) throw err('ENTRY');
-  // Reject ordinary and revoked Proxies before reflection, including nested data.
   if (nodeTypes.isProxy(x)) throw err('ENTRY');
-  if (x === null || typeof x === 'string' || typeof x === 'boolean') {
-    if (typeof x === 'string') for (let i=0;i<x.length;i++) { const n=x.charCodeAt(i); if (n>=0xd800&&n<=0xdbff) { const m=x.charCodeAt(++i); if (!(m>=0xdc00&&m<=0xdfff)) throw err('ENTRY'); } else if (n>=0xdc00&&n<=0xdfff) throw err('ENTRY'); }
+  if (x === null || typeof x === 'boolean') return x;
+  if (typeof x === 'string') {
+    if (!x.isWellFormed()) throw err('ENTRY');
     return x;
   }
   if (typeof x === 'number') { if (!Number.isSafeInteger(x) || Object.is(x, -0)) throw err('ENTRY'); return x; }
