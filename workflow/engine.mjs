@@ -38,9 +38,6 @@ function snapshotAdapters(task, source) {
   const authorize = method(source.authorizeContext, 'authorize', 'AUTHORIZATION_ADAPTER_REQUIRED');
   const check = method(source.staticChecks, 'check', 'STATIC_CHECK_ADAPTER_REQUIRED');
   const tests = method(source.tests, 'run', 'TEST_ADAPTER_REQUIRED');
-  // Read the list and its length once, then copy exactly the required number of
-  // entries. A getter or Proxy could otherwise pass the count check and then
-  // hand map() a shorter list, so the run would finish with fewer reviews.
   const reviewerSource = source.reviewers;
   const required = task.policy.requiredReviewers;
   if (!Array.isArray(reviewerSource) || reviewerSource.length !== required) reject('REVIEW_ADAPTER_COUNT');
@@ -53,7 +50,8 @@ function snapshotAdapters(task, source) {
     }));
   }
   const reviewers = Object.freeze(reviewerList);
-  if (new Set(reviewers.map(reviewer => reviewer.id)).size !== reviewers.length) reject('DUPLICATE_REVIEWER');
+  const reviewerIds = new Set(reviewers.map(reviewer => reviewer.id));
+  if (reviewerIds.size !== reviewers.length) reject('DUPLICATE_REVIEWER');
   let author = null;
   if (task.mode === 'edit') {
     const authorSource = source.author;
@@ -62,7 +60,7 @@ function snapshotAdapters(task, source) {
       draft: method(authorSource, 'draft', 'AUTHOR_ADAPTER_REQUIRED'),
       repair: task.policy.repairBudget > 0 ? method(authorSource, 'repair', 'REPAIR_ADAPTER_REQUIRED') : null,
     });
-    if (reviewers.some(reviewer => reviewer.id === author.id)) reject('AUTHOR_REVIEWER_NOT_INDEPENDENT');
+    if (reviewerIds.has(author.id)) reject('AUTHOR_REVIEWER_NOT_INDEPENDENT');
   }
   return Object.freeze({ authorize, check, tests, reviewers, author });
 }
