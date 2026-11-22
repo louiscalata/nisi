@@ -215,7 +215,9 @@ function build(config, watermark = 0, initial = [], sealed = false) {
     if (sealed) throw err('SEALED');
     time(now); prune(now);
     const header={type:'header',schema:'nisi-run-journal-v1',config:{projectId:config.projectId,maxEntries:config.maxEntries,heartbeatTtlMs:config.heartbeatTtlMs,redactPaths:config.redactPaths.slice()},now:mark};
-    let prev=H('nisi-run-journal/header/v1\n'+C(header)), lines=[C(header)];
+    const serializedHeader = C(header);
+    let prev = H('nisi-run-journal/header/v1\n' + serializedHeader);
+    const lines = [serializedHeader];
     records.forEach((r,i)=>{ const record={entry:r.entry,fingerprint:r.fingerprint,retained:r.retained}, env={type:'entry',seq:i+1,previousHash:prev,record,hash:H('nisi-run-journal/record/v1\n'+C({seq:i+1,previousHash:prev,record}))}; lines.push(C(env)); prev=env.hash; });
     lines.push(C({type:'footer',count:records.length,lastHash:prev})); return lines.join('\n')+'\n';
   };
