@@ -5,7 +5,7 @@ import assert from 'node:assert/strict';
 import { createHash } from 'node:crypto';
 import { readFileSync } from 'node:fs';
 import test from 'node:test';
-import { canonicalizeJSONV1, CanonicalJSONErrorV1, CANONICAL_JSON_PROFILE_V1 } from '../canonical/canonical-json-v1.mjs';
+import { canonicalizeJSONV1, CanonicalJSONErrorV1, CANONICAL_JSON_LIMITS_V1, CANONICAL_JSON_PROFILE_V1 } from '../canonical/canonical-json-v1.mjs';
 import { canonicalJson as independentCanonicalJson } from '../scripts/common.mjs';
 
 const bytes = text => Buffer.from(text, 'utf8');
@@ -106,6 +106,21 @@ test('canonical JSON v1 input-byte cap accepts exactly 1 MiB and refuses above i
   const input = '"' + 'x'.repeat(1_048_574) + '"';
   assert.equal(Buffer.byteLength(canonical(input).canonical), 1_048_576);
   refusal(input + ' ', 'INVALID_JSON_SIZE');
+});
+test('canonical JSON v1 reorders and shortens escaped keys at the byte limit', () => {
+  const open = '{"\\ud800\\udc00":"\\/\\u000b","\\ue000":"';
+  const close = '"}';
+  const remaining = CANONICAL_JSON_LIMITS_V1.bytes - Buffer.byteLength(open + close);
+  const value = 'é'.repeat(Math.floor(remaining / 2)) + 'a'.repeat(remaining % 2);
+  const input = bytes(open + value + close);
+  const expected = '{"\ue000":"' + value + '","\u{10000}":"/\\u000b"}';
+  assert.equal(input.length, CANONICAL_JSON_LIMITS_V1.bytes);
+  assert.ok(Buffer.byteLength(expected) < input.length);
+  assert.deepEqual(canonical(input), {
+    profile: CANONICAL_JSON_PROFILE_V1,
+    canonical: expected,
+    sha256: createHash('sha256').update(expected, 'utf8').digest('hex'),
+  });
 });
 test('canonical JSON v1 input cannot be an arbitrary object, string, proxy or shared buffer', () => {
   let hooks = 0;
