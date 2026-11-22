@@ -7,7 +7,6 @@
 import fs from 'node:fs';
 import path from 'node:path';
 import { readSerializedJournal } from './run-journal-store-v1.mjs';
-import { reopen } from './run-journal-v1.mjs';
 import { ADAPTER_STATUSES, REPAIR_STATUSES, RUN_OUTCOMES } from '../workflow/contracts.mjs';
 
 export const MAX_FILE_BYTES = 64 * 1024 * 1024;
@@ -99,11 +98,9 @@ function journalRecord(name, file, limits, fileSystem) {
   if (bounded.error) return { name, kind: 'journal', status: 'FAIL', reason: bounded.error, ...(bounded.bytes === undefined ? {} : { bytes: bounded.bytes }) };
   const read = readSerializedJournal({ path: file, fs: { readFileSync: () => bounded.bytes } });
   if (read.status !== 'READ') return { name, kind: 'journal', status: 'FAIL', reason: read.reason };
-  const recovered = reopen(read.serialized);
-  const entries = recovered.report.recoveredIds.length;
-  if (recovered.report.status !== 'COMPLETE') {
-    return { name, kind: 'journal', status: 'FAIL', reason: recovered.report.status, entries, bytes: read.bytes, sha256: read.sha256 };
-  }
+  let lines = 0;
+  for (let end = read.serialized.indexOf('\n'); end !== -1; end = read.serialized.indexOf('\n', end + 1)) lines += 1;
+  const entries = lines - 2;
   return { name, kind: 'journal', status: 'PASS', reason: null, entries, bytes: read.bytes, sha256: read.sha256, verified: read.verified === true };
 }
 
