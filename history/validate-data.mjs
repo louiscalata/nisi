@@ -182,16 +182,19 @@ function reportRecord(name, file, limits, fileSystem) {
 }
 
 function finish(summary) {
-  summary.passed = summary.files.filter(file => file.status === 'PASS').length;
-  summary.failed = summary.files.filter(file => file.status === 'FAIL').length;
+  const { files } = summary;
+  for (const { status } of files) {
+    if (status === 'PASS') summary.passed += 1;
+    else if (status === 'FAIL') summary.failed += 1;
+  }
   summary.checked = summary.passed + summary.failed;
-  summary.skipped = summary.files.filter(file => file.status === 'SKIP').length;
+  summary.skipped = files.length - summary.checked;
   if (summary.failed > 0) summary.reason = 'FILES_FAILED';
   else if (summary.passed > 0) {
     summary.status = 'PASS';
     summary.reason = null;
-  } else summary.reason = summary.files.length === 0 ? 'EMPTY' : 'NOTHING_CHECKED';
-  summary.files.sort((a, b) => a.name < b.name ? -1 : a.name > b.name ? 1 : 0);
+  } else summary.reason = files.length === 0 ? 'EMPTY' : 'NOTHING_CHECKED';
+  files.sort((a, b) => a.name < b.name ? -1 : a.name > b.name ? 1 : 0);
   return summary;
 }
 
