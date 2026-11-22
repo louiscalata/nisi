@@ -194,8 +194,9 @@ export function validateFindings(findings, stage) {
 }
 
 export function validateAdapterIdentity(adapter, label) {
-  if (!isPlainObject(adapter) || !isId(adapter.id)) reject(`${label.toUpperCase()}_IDENTITY_INVALID`);
-  return adapter.id;
+  const id = isPlainObject(adapter) ? adapter.id : undefined;
+  if (!isId(id)) reject(`${label.toUpperCase()}_IDENTITY_INVALID`);
+  return id;
 }
 
 export function freezeReport(value) { return cloneFreeze(value); }
