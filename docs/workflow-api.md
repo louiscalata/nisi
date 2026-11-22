@@ -213,7 +213,8 @@ have null identity. Setup refusals do not invoke adapters or the store.
 
 An optional `store({ report, reportSha256, binding, signal })` receives the frozen
 **preliminary** report. The digest uses `nisi/run-report/v1` and the orchestrator's
-sorted-key serialization. Its return is exactly:
+[stable workflow serialization](#stable-workflow-serialization).
+The store returns exactly the following fields.
 
 ```js
 { status: 'PASS', evidence: { ...binding, outcome: report.outcome, reportSha256 } }
@@ -261,3 +262,22 @@ already aborted: `reportStored` remains false and `reportStoreCode` is
 remains below the deadline, the optional store can still be invoked under the
 existing clock guards. Setup refusals still never invoke the store.
 COMPLETED is not a claim of universal correctness or permission to apply or ship.
+
+## Stable workflow serialization
+
+Import `stableStringify` and `cloneFreeze` from `nisi/workflow/contracts.mjs`.
+For acyclic data within the [workflow snapshot limits](#task-specification),
+`stableStringify(value)` returns compact JSON before or after freezing. It
+accepts null, booleans, strings, finite numbers, ordinary arrays with an own
+data property at every index and no own properties beyond the indices and
+`length`, and objects with `Object.prototype` or a null prototype whose own
+properties are all enumerable, string-keyed data properties. It keeps array
+elements in index order and sorts object keys by UTF-16 code units, including
+keys that look like numbers. Values read back with `JSON.parse` can be
+serialized directly when they fit this shape.
+
+Use `cloneFreeze(value)` before serialization to apply the workflow's snapshot
+checks and limits. It rejects holes, additional own array properties,
+accessors and symbol properties. Direct serialization outside the data shape
+above is unspecified. For example, a raw sparse array can produce text that
+`JSON.parse` rejects.

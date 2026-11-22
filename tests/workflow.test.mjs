@@ -2,7 +2,7 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import { createHash } from 'node:crypto';
 import { createCandidate, createTaskSpecification, runWorkflow } from '../workflow/engine.mjs';
-import { cloneFreeze, MAX_SNAPSHOT_VALUES, sha256Text, stableStringify } from '../workflow/contracts.mjs';
+import { cloneFreeze, MAX_SNAPSHOT_VALUES, sha256Text, stableStringify } from 'nisi/workflow/contracts.mjs';
 
 const BASE_TEXT = 'export const answer = 42;\n';
 const file = content => ({ path: 'src/app.js', content });
@@ -348,6 +348,26 @@ test('normalized workflow data serializes to the expected UTF-8 bytes', () => {
       Buffer.from(stringifySnapshot(generated), 'utf8'),
       String(index),
     );
+  }
+});
+
+test('the public workflow serializer accepts mutable JSON readback', () => {
+  const readBack = JSON.parse('{"2":[null,{"z":false,"a":[]}],"10":"ready"}');
+  const expected = '{"10":"ready","2":[null,{"a":[],"z":false}]}';
+  assert.equal(stableStringify(readBack), expected);
+  assert.equal(stableStringify(cloneFreeze(readBack)), expected);
+});
+
+test('snapshot validation rejects arrays outside workflow data', () => {
+  const inputArrays = [
+    [new Array(2), 'INPUT_ARRAY_INVALID'],
+    [[0, [1, , 3]], 'INPUT_ARRAY_INVALID'],
+    [Object.assign([1, 2], { label: 'extra' }), 'INPUT_ARRAY_INVALID'],
+    [[undefined], 'INPUT_VALUE_INVALID'],
+    [new Uint8Array([1]), 'INPUT_OBJECT_INVALID'],
+  ];
+  for (const [input, code] of inputArrays) {
+    assert.throws(() => cloneFreeze(input), { name: 'WorkflowInputError', code });
   }
 });
 
