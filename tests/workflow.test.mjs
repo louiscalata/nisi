@@ -290,6 +290,22 @@ test('async timeout and synchronous clock advancement are timed out before later
   assert.equal(syncTimed.outcome, 'TIMED_OUT');
 });
 
+test('abort notification from a late rejection preserves the observed timeout', async () => {
+  const task = makeTask();
+  const controller = new AbortController();
+  const source = adapters();
+  let now = 0;
+  source.authorizeContext.authorize = ({ signal }) => {
+    signal.addEventListener('abort', () => controller.abort(), { once: true });
+    now = task.policy.totalDeadlineMs;
+    throw new Error('Authorization rejected after the deadline.');
+  };
+  const report = await runWorkflow(task, { adapters: source, signal: controller.signal, clock: () => now });
+  assert.equal(report.outcome, 'TIMED_OUT');
+  assert.equal(report.code, 'DEADLINE_EXCEEDED');
+  assert.equal(controller.signal.aborted, true);
+});
+
 test('clock regression and deadline overflow fail closed', async () => {
   const values = [10, 11, 10];
   const regressed = await runWorkflow(makeTask(), { adapters: adapters(), clock: () => values.shift() ?? 10 });
@@ -809,6 +825,35 @@ test('required terminal storage honours its timeout even if the store never sett
   assert.equal(report.outcome, 'TIMED_OUT');
   assert.equal(report.reportStored, false);
   assert.equal(report.reportStoreCode, 'DEADLINE_EXCEEDED');
+});
+
+test('required terminal storage aborts its signal when the store rejects at the deadline', async () => {
+  for (const reject of [error => { throw error; }, error => Promise.reject(error)]) {
+    const task = makeTask();
+    task.policy.requireReportStore = true;
+    const controller = new AbortController();
+    controller.abort();
+    let now = 500;
+    let storeSignal;
+    let aborts = 0;
+    const report = await runWorkflow(task, {
+      adapters: adapters(), signal: controller.signal, clock: () => now, storeTimeoutMs: 25,
+      reportStore: { store({ signal }) {
+        storeSignal = signal;
+        signal.addEventListener('abort', () => { aborts += 1; }, { once: true });
+        now = 525;
+        return reject(new Error('Storage rejected the report.'));
+      } },
+    });
+    assert.equal(report.workflowOutcome, 'CANCELLED');
+    assert.equal(report.outcome, 'TIMED_OUT');
+    assert.equal(report.code, 'DEADLINE_EXCEEDED');
+    assert.equal(report.reportStoreCode, 'DEADLINE_EXCEEDED');
+    assert.equal(report.reportStored, false);
+    assert.equal(report.reportStoreEvidence, null);
+    assert.equal(storeSignal.aborted, true);
+    assert.equal(aborts, 1);
+  }
 });
 
 test('terminal storage starts its default or custom budget at storage and rejects late receipt copies', async () => {
