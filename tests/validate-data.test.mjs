@@ -60,6 +60,40 @@ test('the shipped fixture passes and the summary omits payloads', () => {
   assert.equal(summary.files.find(file => file.kind === 'workflow-report').outcome, 'COMPLETED');
 });
 
+test('the validator counts complete entries and ignores escaped payload newlines', () => {
+  const dir = fs.mkdtempSync(path.join(os.tmpdir(), 'nisi-validate-lines-'));
+  try {
+    const journal = createRunJournal({ projectId: 'sample-smoke', maxEntries: 1, heartbeatTtlMs: 1000, redactPaths: [] });
+    const file = path.join(dir, 'journal.jsonl');
+    fs.writeFileSync(file, journal.serialize());
+    const empty = validateData({ journal: file });
+    assert.equal(empty.status, 'PASS');
+    assert.equal(empty.files[0].entries, 0);
+
+    const target = {
+      id: 'target', projectId: 'sample-smoke', runId: 'run', attempt: 0,
+      candidateId: 'candidate', stage: 'test', receiptId: null, createdAt: 100, ttlMs: 1000,
+      state: 'RUNNING', heartbeatAt: null, retryOf: null, revokes: null,
+      payload: { text: 'first-line\nsecond-line\r\nthird-line' },
+    };
+    assert.equal(journal.append(target, 100).status, 'APPENDED');
+    assert.equal(journal.append({ ...target, id: 'revoke', state: 'REVOKED', revokes: 'target' }, 100).status, 'APPENDED');
+    assert.equal(journal.append({ ...target, id: 'retry', state: 'QUEUED', attempt: 1, retryOf: 'target' }, 100).status, 'APPENDED');
+    fs.writeFileSync(file, journal.serialize());
+    const populated = validateData({ journal: file });
+    assert.equal(populated.status, 'PASS');
+    assert.equal(populated.files[0].entries, 3);
+    assert.equal(populated.files[0].verified, true);
+
+    fs.appendFileSync(file, '\n');
+    const trailing = validateData({ journal: file });
+    assert.equal(trailing.status, 'FAIL');
+    assert.equal(trailing.files[0].reason, 'INVALID_JOURNAL');
+  } finally {
+    fs.rmSync(dir, { recursive: true, force: true });
+  }
+});
+
 test('a journal payload never appears in the CLI summary, and a bad file fails closed', () => {
   const dir = fs.mkdtempSync(path.join(os.tmpdir(), 'nisi-validate-'));
   try {
