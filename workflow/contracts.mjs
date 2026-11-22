@@ -55,10 +55,11 @@ export function cloneFreeze(value, seen = new WeakSet(), depth = 0, budget = { v
   seen.add(value);
   let copy;
   const descriptors = Object.getOwnPropertyDescriptors(value);
-  if (Reflect.ownKeys(descriptors).some(key => typeof key !== 'string' ||
+  const descriptorKeys = Reflect.ownKeys(descriptors);
+  if (descriptorKeys.some(key => typeof key !== 'string' ||
       !Object.hasOwn(descriptors[key], 'value'))) reject('INPUT_PROPERTY_INVALID');
   if (Array.isArray(value)) {
-    if (Reflect.ownKeys(descriptors).length !== value.length + 1) reject('INPUT_ARRAY_INVALID');
+    if (descriptorKeys.length !== value.length + 1) reject('INPUT_ARRAY_INVALID');
     copy = [];
     for (let index = 0; index < value.length; index += 1) {
       if (!Object.hasOwn(descriptors, index)) reject('INPUT_ARRAY_INVALID');
