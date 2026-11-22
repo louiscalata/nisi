@@ -110,6 +110,22 @@ test('revocation changes the target view and expiry retires payload data', () =>
   assert.equal(expired.entry.payload, null);
 });
 
+test('the serialized header bytes seed the hash chain', () => {
+  const settings = config({ redactPaths: ['payload.hidden'] });
+  const journal = createRunJournal(settings);
+  const header = canonical({ type: 'header', schema: 'nisi-run-journal-v1', config: settings, now: 100 });
+  const headerHash = hash('nisi-run-journal/header/v1\n' + header);
+  const footer = canonical({ type: 'footer', count: 0, lastHash: headerHash });
+  assert.equal(journal.serialize(100), `${header}\n${footer}\n`);
+
+  assert.equal(journal.append(entry(), 100).status, 'APPENDED');
+  const serialized = journal.serialize();
+  const [emittedHeader, firstEntry] = serialized.split('\n');
+  assert.equal(emittedHeader, header);
+  assert.equal(JSON.parse(firstEntry).previousHash, headerHash);
+  assert.equal(reopen(serialized).report.status, 'COMPLETE');
+});
+
 test('truncated journal reopens as incomplete and remains sealed', () => {
   const journal = createRunJournal(config());
   assert.equal(journal.append(entry(), 100).status, 'APPENDED');
