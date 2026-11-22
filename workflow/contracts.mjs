@@ -119,10 +119,10 @@ function normalizeFiles(files, authorId) {
     totalBytes += Buffer.byteLength(raw.content, 'utf8');
     if (totalBytes > 8 * 1_048_576) reject('CANDIDATE_TOO_LARGE');
     seen.add(path);
-    out.push({ path, content: raw.content });
+    out.push(Object.freeze({ __proto__: null, path, content: raw.content }));
   }
   out.sort((left, right) => left.path < right.path ? -1 : left.path > right.path ? 1 : 0);
-  return { schemaVersion: CANDIDATE_SCHEMA_VERSION, authorId, files: out };
+  return { schemaVersion: CANDIDATE_SCHEMA_VERSION, authorId, files: Object.freeze(out) };
 }
 
 export function createCandidate(value, { authorId } = {}) {
@@ -130,9 +130,8 @@ export function createCandidate(value, { authorId } = {}) {
   exactObject(value, ['files'], 'CANDIDATE_SCHEMA');
   if (!isId(authorId)) reject('AUTHOR_ID_INVALID');
   const normalized = normalizeFiles(value.files, authorId);
-  const frozen = cloneFreeze(normalized);
-  const identity = { schemaVersion: CANDIDATE_SCHEMA_VERSION, files: frozen.files };
-  return Object.freeze({ ...frozen, fingerprint: sha256Text(`nisi/workflow-candidate/v1\0${stableStringify(identity)}`) });
+  const identity = { schemaVersion: CANDIDATE_SCHEMA_VERSION, files: normalized.files };
+  return Object.freeze({ ...normalized, fingerprint: sha256Text(`nisi/workflow-candidate/v1\0${stableStringify(identity)}`) });
 }
 
 function normalizePolicy(value) {
