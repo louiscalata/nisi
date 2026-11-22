@@ -157,9 +157,11 @@ export function createTaskSpecification(value) {
   const protectedFiles = [...new Set(value.protectedFiles.map(relativePath))].sort();
   if (protectedFiles.length !== value.protectedFiles.length) reject('PROTECTED_FILES_DUPLICATE');
   if (protectedFiles.some(path => !allowedPaths.has(path))) reject('PROTECTED_FILE_OUT_OF_SCOPE');
-  if (!isPlainObject(value.protectedSnapshots)) reject('PROTECTED_SNAPSHOTS_INVALID');
-  if (ownKeys(value.protectedSnapshots) !== JSON.stringify(protectedFiles)) reject('PROTECTED_SNAPSHOTS_SCHEMA');
-  for (const path of protectedFiles) if (!isHex64(value.protectedSnapshots[path])) reject('PROTECTED_SNAPSHOT_INVALID');
+  const { protectedSnapshots } = value;
+  if (!isPlainObject(protectedSnapshots)) reject('PROTECTED_SNAPSHOTS_INVALID');
+  if (Object.keys(protectedSnapshots).length !== protectedFiles.length ||
+      protectedFiles.some(path => !Object.hasOwn(protectedSnapshots, path))) reject('PROTECTED_SNAPSHOTS_SCHEMA');
+  for (const path of protectedFiles) if (!isHex64(protectedSnapshots[path])) reject('PROTECTED_SNAPSHOT_INVALID');
   if (!Array.isArray(value.acceptanceCriteria) || value.acceptanceCriteria.length === 0 || value.acceptanceCriteria.length > 128 ||
       !value.acceptanceCriteria.every(item => typeof item === 'string' && item.trim().length > 0 && item.length <= 2048)) reject('ACCEPTANCE_CRITERIA_INVALID');
   const policy = normalizePolicy(value.policy);
