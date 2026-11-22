@@ -42,8 +42,7 @@ function copy(x, stack = new Set(), budget = { values: 0, units: 0 }) {
   stack.add(x);
   let out;
   if (Array.isArray(x)) {
-    const names = Object.getOwnPropertyNames(x);
-    if (names.length !== x.length + 1 || !names.includes('length') || Reflect.ownKeys(x).length !== names.length) throw err('ENTRY');
+    if (Object.getOwnPropertyNames(x).length !== x.length + 1 || Object.getOwnPropertySymbols(x).length !== 0) throw err('ENTRY');
     out = [];
     for (let i=0;i<x.length;i++) {
       const d = Object.getOwnPropertyDescriptor(x, String(i));
