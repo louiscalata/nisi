@@ -377,6 +377,17 @@ test('journal preserves well-formed UTF-16 and refuses lone surrogate units', ()
   assert.equal(restored.journal.serialize(), serialized);
 });
 
+test('append refuses a redacted entry that would exceed the retained string limit', () => {
+  const journal = createRunJournal(config({ redactPaths: ['payload.hidden'] }));
+  const input = entry('at-limit', { payload: { hidden: '' } });
+  const metadataUnits = Object.values(input).reduce((units, value) => units + (typeof value === 'string' ? value.length : 0), 0);
+  input.payload.visible = 'x'.repeat(64 * 1024 * 1024 - metadataUnits);
+  const before = journal.serialize();
+  assert.throws(() => journal.append(input, 100), { code: 'ENTRY' });
+  assert.equal(journal.serialize(), before);
+  assert.equal(input.payload.hidden, '');
+});
+
 test('journal bounds the copied payload, so shared references cannot grow it exponentially', () => {
   let payload = { leaf: true }; for (let i = 0; i < 21; i++) payload = { a: payload, b: payload };
   const journal = createRunJournal(config());

@@ -112,8 +112,8 @@ function expectationProblem(c, now, x) {
   if (now > x.maxNow) return 'CLOCK_AHEAD';
   return null;
 }
-function entryOf(input, now) {
-  let e; try { e = copy(input); } catch (_) { throw err('ENTRY'); }
+function entryOf(input, now, budget) {
+  let e; try { e = copy(input, undefined, budget); } catch (_) { throw err('ENTRY'); }
   if (!exact(e, ENTRY_KEYS) || !id(e.id) || !id(e.projectId) || !id(e.runId) || !id(e.candidateId) || !id(e.stage) ||
       !Number.isSafeInteger(e.attempt) || e.attempt < 0 || !safe(e.createdAt) || !Number.isSafeInteger(e.ttlMs) || e.ttlMs < 1 ||
       !safe(e.createdAt + e.ttlMs) || !STATES.has(e.state) || (e.heartbeatAt !== null && !safe(e.heartbeatAt)) ||
@@ -123,7 +123,12 @@ function entryOf(input, now) {
       (now !== undefined && e.createdAt > now)) throw err('ENTRY');
   return e;
 }
-function redact(e, paths) {
+function stringUnits(value) {
+  if (typeof value === 'string') return value.length;
+  if (value === null || typeof value !== 'object') return 0;
+  return Object.values(value).reduce((units, child) => units + stringUnits(child), 0);
+}
+function redact(e, paths, budget) {
   let changed = false;
   for (const path of paths) {
     let cur = e;
@@ -131,8 +136,12 @@ function redact(e, paths) {
       const k = path[index];
       if (!cur || typeof cur !== 'object' || !own(cur,k) || (Array.isArray(cur) && k === 'length')) break;
       if (index === path.length - 1) {
-        changed = changed || cur[k] !== MARK;
-        cur[k] = MARK;
+        const value = cur[k];
+        if (value !== MARK) {
+          if (budget !== undefined) budget.units += MARK.length - stringUnits(value);
+          cur[k] = MARK;
+          changed = true;
+        }
       } else cur = cur[k];
     }
   }
@@ -162,14 +171,15 @@ function build(config, watermark = 0, initial = [], sealed = false) {
   };
   const append = (input, now) => {
     if (!safe(now) || now < mark) throw err('TIME');
-    const e=entryOf(input,now);
+    const budget = { values: 0, units: 0 };
+    const e=entryOf(input,now,budget);
     if (sealed) return freeze({status:'REFUSED',id:e.id,reason:'SEALED'});
     if (e.projectId !== config.projectId) return freeze({status:'REFUSED',id:e.id,reason:'PROJECT'});
-    // Never persist a digest of fields that the caller asked to redact.
-    // Identity is intentionally defined over the retained projection.
-    redact(e,config._paths);
-    const fp=fingerprint(e), old=byId.get(e.id);
-    if (old) return freeze(old.fingerprint===fp ? {status:'DUPLICATE',id:e.id} : {status:'CONFLICT',id:e.id,reason:'ID_CONTENT_MISMATCH'});
+    const redactionBudget = budget.units + config._paths.length * MARK.length > MAX_COPY_STRING_UNITS && !expired({entry:e},now)
+      ? budget : undefined;
+    redact(e,config._paths,redactionBudget);
+    const old=byId.get(e.id);
+    if (old) return freeze(old.fingerprint===fingerprint(e) ? {status:'DUPLICATE',id:e.id} : {status:'CONFLICT',id:e.id,reason:'ID_CONTENT_MISMATCH'});
     if (records.length>=MAX_RECORDS) return freeze({status:'REFUSED',id:e.id,reason:'HISTORY_LIMIT'});
     if (e.retryOf !== null) {
       if (retries.has(retryKey(e))) return freeze({status:'REFUSED',id:e.id,reason:'RETRY_DUPLICATE'});
@@ -177,7 +187,8 @@ function build(config, watermark = 0, initial = [], sealed = false) {
         !(new Set(['SUCCEEDED','FAILED','CANCELLED','REVOKED'])).has(t.entry.state) && !expired(t,now) && !revoked.has(t.entry.id)) return freeze({status:'REFUSED',id:e.id,reason:'RETRY'});
     }
     if (e.revokes !== null) { const t=byId.get(e.revokes); if (!t || t.entry.runId!==e.runId || t.entry.attempt!==e.attempt || t.entry.candidateId!==e.candidateId || t.entry.createdAt>e.createdAt) return freeze({status:'REFUSED',id:e.id,reason:'REVOCATION'}); }
-    const r={entry:e,fingerprint:fp,retained:true,historical:false}; records.push(r); byId.set(e.id,r); active.set(e.id,r); if(e.retryOf!==null) retries.add(retryKey(e)); if (e.revokes!==null) revoked.add(e.revokes);
+    if (budget.units > MAX_COPY_STRING_UNITS) throw err('ENTRY');
+    const r={entry:e,fingerprint:fingerprint(e),retained:true,historical:false}; records.push(r); byId.set(e.id,r); active.set(e.id,r); if(e.retryOf!==null) retries.add(retryKey(e)); if (e.revokes!==null) revoked.add(e.revokes);
     mark=now; prune(now); return freeze({status:'APPENDED',id:e.id});
   };
   const list = now => { time(now); prune(now); return freeze(records.map(r=>view(r,now))); };
