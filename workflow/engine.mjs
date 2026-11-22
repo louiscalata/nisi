@@ -15,8 +15,9 @@ const codeOf = (error, fallback) => error instanceof WorkflowInputError ? error.
 const label = stage => stage.replace(/[A-Z]/gu, letter => `_${letter}`).toUpperCase();
 const text = value => typeof value === 'string' && value.trim().length > 0 && value.length <= 4096;
 const exact = (value, keys, code) => {
-  if (!value || typeof value !== 'object' || Array.isArray(value) ||
-      JSON.stringify(Object.keys(value).sort()) !== JSON.stringify([...keys].sort())) reject(code);
+  if (!value || typeof value !== 'object' || Array.isArray(value)) reject(code);
+  const actual = Object.keys(value);
+  if (actual.length !== keys.length || actual.some(key => !keys.includes(key))) reject(code);
 };
 const emptyReport = (code, task = null) => freezeReport({
   schemaVersion: 1, runId: null, taskId: task?.taskId ?? null,
