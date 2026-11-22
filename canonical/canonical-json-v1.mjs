@@ -205,7 +205,6 @@ class Parser {
 export function canonicalizeJSONV1(input) {
   const bytes = capture(input);
   const canonical = new Parser(bytes).document();
-  if (Buffer.byteLength(canonical, 'utf8') > CANONICAL_JSON_LIMITS_V1.bytes) refuse('INVALID_JSON_SIZE');
   return Object.freeze({
     profile: CANONICAL_JSON_PROFILE_V1,
     canonical,
