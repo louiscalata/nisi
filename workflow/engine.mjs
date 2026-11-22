@@ -198,6 +198,7 @@ export async function runWorkflow(taskInput, options = {}) {
   const runId = randomUUID();
   const taskFingerprint = fingerprintTask(task);
   let repairAttempts = 0, outcome = null, code = null;
+  let attemptStart = 0;
   const stages = [];
   const seen = new Set(candidate ? [candidate.fingerprint] : []);
   const binding = (fingerprint = candidate?.fingerprint ?? null) => Object.freeze({
@@ -263,7 +264,8 @@ export async function runWorkflow(taskInput, options = {}) {
       break;
     }
     const base = candidate.fingerprint;
-    const previousStages = cloneFreeze(stages.filter(item => item.evidence.attempt === repairAttempts));
+    const previousStages = cloneFreeze(stages.slice(attemptStart));
+    attemptStart = stages.length;
     repairAttempts += 1;
     const bound = binding(base);
     const call = await invoker.invoke(adapters.author.repair, { ...payload(bound), stages: previousStages });

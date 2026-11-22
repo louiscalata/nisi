@@ -160,6 +160,43 @@ test('a repair reruns all checks, tests, and reviewers with a new attempt bindin
   assert.equal(report.stages.filter(stage => stage.stage === 'staticChecks')[1].evidence.attempt, 1);
 });
 
+test('each repair receives only the frozen stage records of the preceding attempt', async () => {
+  const task = makeTask();
+  task.policy.repairBudget = 3;
+  const received = [];
+  const finding = { code: 'FIX', message: 'needs a repair' };
+  const report = await runWorkflow(task, { clock: () => 0, adapters: adapters({
+    checks: binding => binding.attempt !== 0 ? passChecks(binding) : {
+      status: 'FAIL', evidence: { ...binding, findings: [finding], reason: 'check failed' },
+    },
+    tests: binding => binding.attempt !== 1 ? passTests(binding) : {
+      status: 'FAIL', evidence: { ...binding, assertionsExecuted: 1, assertionsPassed: 0, failures: [finding], reason: 'test failed' },
+    },
+    review: (binding, reviewerId) => binding.attempt !== 2 ? passReview(binding, reviewerId) : {
+      status: 'FAIL', evidence: { ...binding, reviewerId, findings: [finding], summary: 'review failed', reason: 'review failed' },
+    },
+    repair: ({ candidate: current, binding, stages }) => {
+      received.push(stages);
+      const text = `${BASE_TEXT}export const attempt = ${binding.attempt};\n`;
+      return { status: 'REPAIRED', candidate: { files: [file(text)] }, evidence: {
+        ...binding, candidateFingerprint: candidate(text).fingerprint, baseCandidateFingerprint: current.fingerprint, note: 'repaired',
+      } };
+    },
+  }) });
+  assert.equal(report.outcome, 'COMPLETED');
+  assert.equal(report.repairAttempts, 3);
+  assert.deepEqual(received.map(stages => stages.map(stage => stage.stage)), [
+    ['intake', 'authorizeContext', 'draft', 'staticChecks'],
+    ['repair', 'staticChecks', 'tests'],
+    ['repair', 'staticChecks', 'tests', 'review'],
+  ]);
+  for (const [attempt, stages] of received.entries()) {
+    assert.ok(Object.isFrozen(stages));
+    assert.ok(stages.every(stage => Object.isFrozen(stage) && Object.isFrozen(stage.evidence)));
+    assert.deepEqual(stages, report.stages.filter(stage => stage.evidence.attempt === attempt));
+  }
+});
+
 test('failed, unavailable, and not-run statuses remain non-successes with distinct outcomes', async () => {
   const failed = adapters({
     checks: binding => ({
