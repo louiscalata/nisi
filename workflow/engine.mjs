@@ -55,10 +55,11 @@ function snapshotAdapters(task, source) {
   if (new Set(reviewers.map(reviewer => reviewer.id)).size !== reviewers.length) reject('DUPLICATE_REVIEWER');
   let author = null;
   if (task.mode === 'edit') {
+    const authorSource = source.author;
     author = Object.freeze({
-      id: validateAdapterIdentity(source.author, 'author'),
-      draft: method(source.author, 'draft', 'AUTHOR_ADAPTER_REQUIRED'),
-      repair: task.policy.repairBudget > 0 ? method(source.author, 'repair', 'REPAIR_ADAPTER_REQUIRED') : null,
+      id: validateAdapterIdentity(authorSource, 'author'),
+      draft: method(authorSource, 'draft', 'AUTHOR_ADAPTER_REQUIRED'),
+      repair: task.policy.repairBudget > 0 ? method(authorSource, 'repair', 'REPAIR_ADAPTER_REQUIRED') : null,
     });
     if (reviewers.some(reviewer => reviewer.id === author.id)) reject('AUTHOR_REVIEWER_NOT_INDEPENDENT');
   }
