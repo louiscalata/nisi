@@ -272,14 +272,14 @@ test('the declared limits are the module constants, not per-call opinions', () =
 });
 
 test('the consent digest is pinned to its v1 domain string', () => {
-  const root = tempRoot();
-  const grantBytes = bytesOf(declaration(root));
+  const root = path.join(tempRoot(), '\u00e9\u{10000}');
+  const grantBytes = bytesOf(declaration(root, { generation: Number.MAX_SAFE_INTEGER }));
   const made = createContentConsent(grantBytes, { clock: () => 0 });
-  // The digest is sha256("nisi/content-consent/v1" NUL canonical-grant-bytes).
-  // Pinning it here means a silent change to the domain string fails a test
-  // instead of quietly re-keying every grant in existence.
+  assert.equal(made.ok, true, made.code);
   const expected = sha(Buffer.concat([Buffer.from('nisi/content-consent/v1\0', 'utf8'), grantBytes]));
   assert.equal(made.consentDigest, expected);
+  const escaped = Buffer.from(grantBytes.toString('utf8').replace('\u00e9', '\\u00e9'));
+  assert.equal(createContentConsent(escaped, { clock: () => 0 }).code, 'CONSENT_NONCANONICAL');
 });
 
 test('later clock failures are named refusals and status samples the clock once', () => {
