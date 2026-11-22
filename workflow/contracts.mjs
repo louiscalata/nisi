@@ -98,7 +98,7 @@ function relativePath(value) {
       value.startsWith('/') || /^[a-zA-Z]:/u.test(value) || value.includes('\0')) reject('PATH_INVALID');
   const parts = value.split('/');
   if (parts.some(part => part === '' || part === '.' || part === '..')) reject('PATH_TRAVERSAL');
-  return parts.join('/');
+  return value;
 }
 
 function exactObject(value, expected, code = 'SCHEMA_INVALID') {
