@@ -16,6 +16,7 @@ import { types } from 'node:util';
 
 export const CANONICAL_JSON_PROFILE_V1 = 'nisi-canonical-json-v1';
 export const CANONICAL_JSON_LIMITS_V1 = Object.freeze({ bytes: 1_048_576, depth: 128, objectMembers: 4_096 });
+const MAX_SAFE_INTEGER_TEXT = String(Number.MAX_SAFE_INTEGER);
 
 export class CanonicalJSONErrorV1 extends Error {
   constructor(code) {
@@ -185,12 +186,16 @@ class Parser {
 
   number() {
     const start = this.index;
-    while (this.index < this.text.length && ![' ', '\t', '\r', '\n', ',', ']', '}'].includes(this.text[this.index])) this.index++;
+    const negative = this.text[start] === '-';
+    const end = start + MAX_SAFE_INTEGER_TEXT.length + (negative ? 1 : 0);
+    while (this.index < this.text.length && ![' ', '\t', '\r', '\n', ',', ']', '}'].includes(this.text[this.index])) {
+      if (this.index === end) refuse('INVALID_JSON_NUMBER');
+      this.index++;
+    }
     const token = this.text.slice(start, this.index);
     if (!/^-?(0|[1-9][0-9]*)$/.test(token) || token === '-0') refuse('INVALID_JSON_NUMBER');
-    const magnitude = token.startsWith('-') ? token.slice(1) : token;
-    if (magnitude.length > 16 || (magnitude.length === 16 && magnitude > '9007199254740991')) refuse('INVALID_JSON_NUMBER');
-    // Source digits, not a rounded Number: no fraction/exponent normalization.
+    const magnitude = negative ? token.slice(1) : token;
+    if (magnitude.length === MAX_SAFE_INTEGER_TEXT.length && magnitude > MAX_SAFE_INTEGER_TEXT) refuse('INVALID_JSON_NUMBER');
     return token;
   }
 }
