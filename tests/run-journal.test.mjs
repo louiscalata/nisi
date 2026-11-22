@@ -295,6 +295,34 @@ test('redaction ignores absent paths including null payloads and revocations', (
   assert.equal(reopen(journal.serialize()).report.status, 'COMPLETE');
 });
 
+test('redaction paths keep source order and reject duplicates and segment ancestors', () => {
+  const redactPaths = ['payload.a0', 'payload.rows.10.value', 'payload.a.b', 'payload.rows.1.value', 'payload.a_0'];
+  const journal = createRunJournal(config({ redactPaths }));
+  assert.equal(journal.append(entry('record', { payload: { a: { b: 'masked' }, a0: 'also masked', a_0: 'also masked' } }), 100).status, 'APPENDED');
+  const serialized = journal.serialize();
+  assert.deepEqual(JSON.parse(serialized.split('\n', 1)[0]).config.redactPaths, redactPaths);
+  const expectations = { projectId: 'project-a', redactPaths: [...redactPaths].reverse(), maxNow: 100 };
+  const restored = reopen(serialized, expectations);
+  assert.equal(restored.report.status, 'COMPLETE');
+  assert.deepEqual(restored.journal.list(100)[0].entry.payload, {
+    a: { b: '[REDACTED]' }, a0: '[REDACTED]', a_0: '[REDACTED]',
+  });
+  assert.equal(restored.journal.serialize(), serialized);
+
+  for (const paths of [
+    ['payload.a0', 'payload.a.b', 'payload.a_0', 'payload.a'],
+    ['payload.rows.10', 'payload.rows.1.value', 'payload.a', 'payload.rows.1'],
+    ['payload.a.b', 'payload.a_0', 'payload.a.b'],
+    ['payload.a.b', 'payload.a$b', 'payload.a'],
+    ['payload.a', 'payload.a-b', 'payload.a.b'],
+    ['payload.rows.01.value'],
+    ['payload.a.constructor'],
+  ]) {
+    assert.throws(() => createRunJournal(config({ redactPaths: paths })), { code: 'CONFIG' });
+    assert.throws(() => reopen(serialized, { ...expectations, redactPaths: paths }), { code: 'EXPECTATIONS' });
+  }
+});
+
 test('reopen requires every present redaction path to contain the marker', () => {
   const journal = createRunJournal(config({ redactPaths: ['payload.secret', 'payload.rows.0.value', 'payload.absent'] }));
   const payload = { secret: '[REDACTED]', rows: [{ value: '[REDACTED]' }], note: 'visible' };
