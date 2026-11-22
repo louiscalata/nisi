@@ -1,5 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
+import { createHash } from 'node:crypto';
 import { createCandidate, createTaskSpecification, runWorkflow } from '../workflow/engine.mjs';
 import { cloneFreeze, MAX_SNAPSHOT_VALUES, sha256Text, stableStringify } from '../workflow/contracts.mjs';
 
@@ -10,6 +11,19 @@ const makeTask = (mode = 'edit', overrides = {}) => ({
   protectedFiles: [], protectedSnapshots: {}, acceptanceCriteria: ['answer is 42'],
   policy: { repairBudget: 1, totalDeadlineMs: 2000, requiredReviewers: 1, requireReportStore: false }, ...overrides,
 });
+
+function stringifySnapshot(snapshot) {
+  const keys = new Set();
+  const values = [snapshot];
+  for (const value of values) {
+    if (value === null || typeof value !== 'object') continue;
+    if (!Array.isArray(value)) {
+      for (const key of Object.keys(value)) keys.add(key);
+    }
+    for (const child of Object.values(value)) values.push(child);
+  }
+  return JSON.stringify(snapshot, [...keys].sort());
+}
 
 function candidate(raw = BASE_TEXT, authorId = 'author.one') {
   return createCandidate({ files: [file(raw)] }, { authorId });
@@ -276,20 +290,65 @@ test('a storage acknowledgement copied after the deadline is rejected even when 
 });
 
 test('report stores receive exact frozen report and binding hashes; required failure blocks', async () => {
+  const task = makeTask();
   let received;
   const store = { async store({ report, reportSha256, binding }) {
     received = { report, reportSha256, binding };
     return { status: 'PASS', evidence: { ...binding, outcome: report.outcome, reportSha256 } };
   } };
-  const report = await runWorkflow(makeTask(), { adapters: adapters(), reportStore: store });
+  const report = await runWorkflow(task, { adapters: adapters(), reportStore: store });
   assert.equal(report.outcome, 'COMPLETED'); assert.equal(report.reportStored, true);
-  assert.equal(received.reportSha256, sha256Text(`nisi/run-report/v1\0${stableStringify(received.report)}`));
+  const candidateIdentity = cloneFreeze({ schemaVersion: report.candidate.schemaVersion, files: report.candidate.files });
+  for (const [domain, snapshot, digest] of [
+    ['nisi/workflow-candidate/v1', candidateIdentity, report.candidateFingerprint],
+    ['nisi/workflow-task/v1', createTaskSpecification(task), report.taskFingerprint],
+    ['nisi/run-report/v1', received.report, received.reportSha256],
+  ]) {
+    const expected = createHash('sha256').update(domain).update('\0').update(stringifySnapshot(snapshot), 'utf8').digest('hex');
+    assert.equal(digest, expected, domain);
+  }
+  assert.equal(report.storedReportSha256, received.reportSha256);
+  assert.equal(received.report.reportStored, false);
+  assert.equal(received.report.reportStoreEvidence, null);
   assert.equal(received.report.runId, report.runId);
   assert.equal(Object.isFrozen(received.report), true);
   const failingStore = { async store({ report, binding }) { return { status: 'FAIL', evidence: { ...binding, outcome: report.outcome, reportSha256: '0'.repeat(64) } }; } };
   const required = makeTask('edit', { policy: { repairBudget: 0, totalDeadlineMs: 2000, requiredReviewers: 1, requireReportStore: true } });
   const blocked = await runWorkflow(required, { adapters: adapters(), reportStore: failingStore });
   assert.equal(blocked.outcome, 'BLOCKED'); assert.equal(blocked.reportStored, false);
+});
+
+test('normalized workflow data serializes to the expected UTF-8 bytes', () => {
+  const snapshot = cloneFreeze({
+    '2': true, '10': '\ud800',
+    '\u{1f642}': { z: [null, -0, 1e21], a: '\u00e9' },
+    '\ue000': '\t\n\\',
+  });
+  const expected = '{"10":"\\ud800","2":true,"\u{1f642}":{"a":"\u00e9","z":[null,0,1e+21]},"\ue000":"\\t\\n\\\\"}';
+  assert.deepEqual(Buffer.from(stableStringify(snapshot), 'utf8'), Buffer.from(expected, 'utf8'));
+  assert.equal(stringifySnapshot(snapshot), expected);
+
+  const goldenCandidate = createCandidate({ files: [
+    { path: 'src/\ue000.js', content: '\u00e9\n' },
+    { path: 'src/\u{1f642}.js', content: '\ud800' },
+  ] }, { authorId: 'author.one' });
+  assert.equal(goldenCandidate.fingerprint, '04150f8a977bd28e000f543d85ac5f1cc7de0da2bba94eebd98482958ce5df18');
+
+  const keys = ['2', '10', '\u{1f642}', '\ue000', 'toJSON', 'constructor'];
+  const leaves = [null, true, false, -0, -1.125, 1e21, Number.MIN_VALUE, '', '\0\n"\\', '\ud800', '\udc00', '\u{1f642}', '\u00e9', 'e\u0301'];
+  for (let index = 0; index < 512; index += 1) {
+    const first = leaves[index % leaves.length];
+    const second = leaves[Math.floor(index / leaves.length) % leaves.length];
+    const record = { [keys[index % keys.length]]: second };
+    const nested = Math.floor(index / keys.length) % 2 === 0
+      ? [record, [], first] : { other: [second, {}, record] };
+    const generated = cloneFreeze({ '2': first, '10': nested, list: [record, second] });
+    assert.deepEqual(
+      Buffer.from(stableStringify(generated), 'utf8'),
+      Buffer.from(stringifySnapshot(generated), 'utf8'),
+      String(index),
+    );
+  }
 });
 
 test('task specification and candidate inputs are frozen and schema-checked', () => {
