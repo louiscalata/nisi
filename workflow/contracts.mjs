@@ -27,7 +27,6 @@ export class WorkflowInputError extends Error {
 }
 
 const reject = code => { throw new WorkflowInputError(code); };
-const ownKeys = value => JSON.stringify(Object.keys(value).sort());
 const isPlainObject = value => value !== null && typeof value === 'object' && !Array.isArray(value) &&
   (Object.getPrototypeOf(value) === Object.prototype || Object.getPrototypeOf(value) === null);
 const isId = value => typeof value === 'string' && /^[a-z][a-z0-9_.-]{0,95}$/u.test(value);
@@ -102,8 +101,11 @@ function relativePath(value) {
 }
 
 function exactObject(value, expected, code = 'SCHEMA_INVALID') {
-  if (!isPlainObject(value) || ownKeys(value) !== JSON.stringify([...expected].sort())) reject(code);
-  return value;
+  if (isPlainObject(value)) {
+    const keys = Object.keys(value);
+    if (keys.length === expected.length && keys.every(key => expected.includes(key))) return value;
+  }
+  reject(code);
 }
 
 function normalizeFiles(files, authorId) {
