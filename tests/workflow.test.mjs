@@ -67,6 +67,20 @@ test('normal edit mode produces a bound completed report', async () => {
   assert.equal(report.stages.at(-1).evidence.candidateFingerprint, report.candidateFingerprint);
 });
 
+test('workflow captures each adapter ID once', async () => {
+  const source = adapters();
+  const reads = [];
+  for (const adapter of [source.author, ...source.reviewers]) {
+    const { id } = adapter;
+    Object.defineProperty(adapter, 'id', { get() { reads.push(id); return id; } });
+  }
+  const report = await runWorkflow(makeTask(), { adapters: source });
+  assert.equal(report.outcome, 'COMPLETED');
+  assert.deepEqual(reads.sort(), ['author.one', 'reviewer.one']);
+  assert.equal(report.candidate.authorId, 'author.one');
+  assert.equal(report.stages.at(-1).evidence.reviewerId, 'reviewer.one');
+});
+
 test('review mode validates the supplied candidate and never invokes draft or repair', async () => {
   const events = [];
   const supplied = { files: [file('export const answer = 7;\n')] };
