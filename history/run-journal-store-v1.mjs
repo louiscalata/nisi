@@ -6,11 +6,6 @@ import { reopen } from './run-journal-v1.mjs';
 
 const digest = bytes => createHash('sha256').update(bytes).digest('hex');
 const hex = value => typeof value === 'string' && /^[0-9a-f]{64}$/.test(value);
-const object = value => value !== null && typeof value === 'object' && !Array.isArray(value);
-const exact = (value, keys) => object(value) && Object.keys(value).length === keys.length && keys.every(key => Object.hasOwn(value, key));
-const canonical = value => Array.isArray(value) ? '[' + value.map(canonical).join(',') + ']'
-  : object(value) ? '{' + Object.keys(value).sort().map(key => JSON.stringify(key) + ':' + canonical(value[key])).join(',') + '}'
-    : JSON.stringify(value);
 const errorCode = error => typeof error?.code === 'string' && error.code ? error.code : 'IO_ERROR';
 const validPath = path => typeof path === 'string' && path.length > 0 && !path.includes('\0');
 const hasMethods = (fs, names) => fs != null && names.every(name => typeof fs[name] === 'function');
@@ -20,38 +15,12 @@ const refusal = (state, reason) => ({ ...state, status: 'REFUSED', reason, durab
 // reject a read/write open. A failed sync still reports durable: false.
 const directoryFlags = sep === '\\' ? 'r+' : 'r';
 
-// null means the bytes are a complete journal. Any other string is a refusal reason.
-// A legacy pruned fingerprint is still a refusal: the store does not return READ.
 function journalProblem(serialized) {
   try {
     if (typeof serialized !== 'string' || !serialized.isWellFormed() || !serialized.endsWith('\n')) return 'INVALID_JOURNAL';
-    const lines = serialized.slice(0, -1).split('\n');
-    if (lines.length < 2 || lines.some(line => !line)) return 'INVALID_JOURNAL';
-    const values = lines.map(line => {
-      const value = JSON.parse(line);
-      if (canonical(value) !== line) throw new Error('NONCANONICAL');
-      return value;
-    });
-    const header = values[0];
-    if (!exact(header, ['type', 'schema', 'config', 'now']) || header.type !== 'header' || header.schema !== 'nisi-run-journal-v1'
-      || !object(header.config) || !Number.isSafeInteger(header.now) || header.now < 0) return 'INVALID_JOURNAL';
-    let previousHash = digest('nisi-run-journal/header/v1\n' + lines[0]);
-    for (let index = 1; index < values.length - 1; index++) {
-      const value = values[index];
-      if (!exact(value, ['type', 'seq', 'previousHash', 'record', 'hash']) || value.type !== 'entry'
-        || value.seq !== index || value.previousHash !== previousHash || !hex(value.hash)
-        || !exact(value.record, ['entry', 'fingerprint', 'retained']) || !object(value.record.entry)
-        || !hex(value.record.fingerprint) || typeof value.record.retained !== 'boolean') return 'INVALID_JOURNAL';
-      const expected = digest('nisi-run-journal/record/v1\n' + canonical({ seq: value.seq, previousHash: value.previousHash, record: value.record }));
-      if (value.hash !== expected) return 'INVALID_JOURNAL';
-      previousHash = value.hash;
-    }
-    const footer = values.at(-1);
-    if (!(exact(footer, ['type', 'count', 'lastHash']) && footer.type === 'footer'
-      && footer.count === values.length - 2 && footer.lastHash === previousHash)) return 'INVALID_JOURNAL';
-    const opened = reopen(serialized);
-    if (opened.report.status === 'COMPLETE') return null;
-    return opened.report.reason === 'LEGACY_UNRETAINED_FINGERPRINT' ? 'LEGACY_UNRETAINED_FINGERPRINT' : 'INVALID_JOURNAL';
+    const { report } = reopen(serialized);
+    if (report.status === 'COMPLETE') return null;
+    return report.reason === 'LEGACY_UNRETAINED_FINGERPRINT' ? 'LEGACY_UNRETAINED_FINGERPRINT' : 'INVALID_JOURNAL';
   } catch {
     return 'INVALID_JOURNAL';
   }

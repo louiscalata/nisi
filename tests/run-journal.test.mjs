@@ -236,9 +236,32 @@ test('a pruned row whose fingerprint was not recomputed is rejected and not auth
     stored.fingerprint = recomputed;
     const repaired = rehash(lines);
     assert.equal(reopen(repaired).report.status, 'COMPLETE');
+    fs.writeFileSync(file, repaired);
+    assert.equal(writeSerializedJournal({ path: file, serialized, fs }).reason, 'LEGACY_UNRETAINED_FINGERPRINT');
+    assert.equal(fs.readFileSync(file, 'utf8'), repaired);
     const broken = serialized.replace(stale, '0'.repeat(64));
     assert.equal(reopen(broken).report.reason, 'RECORD');
-    assert.equal(readSerializedJournal({ path: file, fs }).reason, 'LEGACY_UNRETAINED_FINGERPRINT');
+    const malformed = [broken, serialized + '\n'];
+    for (const change of [{ fingerprint: 'invalid' }, { retained: 0 }]) {
+      const changed = lines.map((line, index) => index === 2 ? { ...line, record: { ...stored, ...change } } : line);
+      malformed.push(rehash(changed));
+    }
+    const legacyLines = serialized.trimEnd().split('\n').map(JSON.parse);
+    const later = legacyLines[1];
+    legacyLines.splice(-1, 0, {
+      ...later,
+      seq: 3,
+      record: { ...later.record, entry: { ...later.record.entry, id: 'later', state: 'IMPOSSIBLE' } },
+    });
+    legacyLines.at(-1).count = 3;
+    malformed.push(rehash(legacyLines));
+    for (const invalid of malformed) {
+      fs.writeFileSync(file, invalid);
+      assert.equal(readSerializedJournal({ path: file, fs }).reason, 'INVALID_JOURNAL');
+      fs.writeFileSync(file, repaired);
+      assert.equal(writeSerializedJournal({ path: file, serialized: invalid, fs }).reason, 'INVALID_JOURNAL');
+      assert.equal(fs.readFileSync(file, 'utf8'), repaired);
+    }
   } finally { fs.rmSync(dir, { recursive: true, force: true }); }
 });
 
