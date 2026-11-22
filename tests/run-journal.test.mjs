@@ -363,6 +363,21 @@ test('journal rejects repeated retry target and attempt on append and reopen', (
   assert.equal(reopen(rehash(lines)).report.status, 'INVALID');
 });
 
+test('retry eligibility uses target expiry and preserves duplicate refusal precedence after reopen', () => {
+  const journal = createRunJournal(config());
+  assert.equal(journal.append(entry('target', { state: 'RUNNING', heartbeatAt: 100, ttlMs: 10 }), 100).status, 'APPENDED');
+  const retry = entry('retry', { state: 'QUEUED', attempt: 1, retryOf: 'target' });
+  assert.deepEqual(journal.append(retry, 109), { status: 'REFUSED', id: 'retry', reason: 'RETRY' });
+  assert.deepEqual(journal.append(retry, 110), { status: 'APPENDED', id: 'retry' });
+  const serialized = journal.serialize();
+  const reopened = reopen(serialized);
+  assert.equal(reopened.report.status, 'COMPLETE');
+  assert.deepEqual(reopened.journal.list(110).map(row => row.liveness), ['EXPIRED', 'QUEUED']);
+  const duplicate = { ...retry, id: 'duplicate', runId: 'other', state: 'FAILED' };
+  assert.deepEqual(reopened.journal.append(duplicate, 110), { status: 'REFUSED', id: 'duplicate', reason: 'RETRY_DUPLICATE' });
+  assert.equal(reopened.journal.serialize(), serialized);
+});
+
 test('journal preserves well-formed UTF-16 and refuses lone surrogate units', () => {
   const journal = createRunJournal(config());
   const valid = ['', 'e\u0301', '\u0000\ud7ff\ue000\ufffe\uffff', '\ud800\udc00', '\udbff\udfff'];
