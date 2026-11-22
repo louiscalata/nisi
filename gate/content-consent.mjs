@@ -29,7 +29,6 @@ const FLAGS = Object.freeze({ authorizing: false, modelExecuted: false,
 const answer = (ok, code, fields = {}) => Object.freeze({ ...fields, ok, code, ...FLAGS });
 const fail = (code, fields = {}) => answer(false, code, fields);
 const sha = bytes => createHash('sha256').update(bytes).digest('hex');
-const canonical = value => canonicalizeJSONV1(Buffer.from(JSON.stringify(value), 'utf8')).canonical;
 const isInt = (v, min, max = Number.MAX_SAFE_INTEGER) => Number.isSafeInteger(v) && v >= min && v <= max;
 const isID = v => typeof v === 'string' && v.length >= 1 && v.length <= 96 && /^[a-z][a-z0-9_.-]*$/.test(v);
 
@@ -219,10 +218,12 @@ export function createContentConsent(grantBytes, options) {
     let text;
     try { text = new TextDecoder('utf-8', { fatal: true }).decode(grantBytes); }
     catch { return fail('CONSENT_BYTES_REFUSED'); }
-    let value;
-    try { value = JSON.parse(canonicalizeJSONV1(grantBytes).canonical); }
-    catch { return fail('CONSENT_NONCANONICAL'); }
-    if (canonical(value) !== text) return fail('CONSENT_NONCANONICAL');
+    let document, value;
+    try {
+      document = canonicalizeJSONV1(grantBytes);
+      value = JSON.parse(document.canonical);
+    } catch { return fail('CONSENT_NONCANONICAL'); }
+    if (document.canonical !== text) return fail('CONSENT_NONCANONICAL');
     if (!grantValid(value)) return fail('CONSENT_DECLARATION_REFUSED');
     let issuedAtMs;
     try { issuedAtMs = clock(); } catch { return fail('CONSENT_CLOCK_INVALID'); }
