@@ -623,9 +623,6 @@ def task_lcs():
         brute = {x for x in common if len(x) == mx}
         assert mx == length and brute == set(all_set)
         smallest = min(all_set)
-        # tempting wrong answers: a plain DP backtrack preferring one direction
-        if len({x for x in all_set}) < 4:
-            continue
         prompt = (
             "A common subsequence of two strings is a string that can be obtained from each of them by "
             "deleting zero or more characters without reordering the rest.\n"
